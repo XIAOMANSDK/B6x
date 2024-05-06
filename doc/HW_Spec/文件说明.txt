@@ -1,0 +1,2 @@
+PCB画图软件：Altium Designer
+           版本号：19.0.4（Build 130）

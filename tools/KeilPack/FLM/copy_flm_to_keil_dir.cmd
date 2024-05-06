@@ -1,0 +1,1 @@
+cmd.exe /C copy *.flm C:\Keil_v5\ARM\Flash
