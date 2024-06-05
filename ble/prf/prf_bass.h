@@ -26,7 +26,7 @@
 
 /// Support Battery Power State Characteristic
 #if !defined(BAS_PWR_STA)
-    #define BAS_PWR_STA             (1)
+    #define BAS_PWR_STA             (0)
 #endif
 
 

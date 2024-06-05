@@ -76,7 +76,7 @@
 __VAR_ENV struct app_env_tag app_env;
 
 /// Ble local address (user customize)
-const bd_addr_t ble_dev_addr = { BLE_ADDR };
+bd_addr_t ble_dev_addr = { BLE_ADDR };
 
 /// GAP device configuration
 const struct gapm_dev_config ble_dev_config =
@@ -268,6 +268,7 @@ __weak void app_init(uint16_t rsn)
         #if (CFG_SLEEP || RC32K_CALIB_PERIOD)
         //rc32k_init(); - replace to watch calib result
         rc32k_conf(RCLK_DPLL, 7);
+//        rc32k_conf(RCLK_HSE, 0x1F);
 
         uint16_t trim = rc32k_calib();
         DEBUG("RC32K Calib(Msb:%d,Lsb:%d)", trim & 0xF, trim >> 4);

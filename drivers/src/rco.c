@@ -21,6 +21,7 @@
 
 #define HSE_CALIB_MULTI        500  // 16M/32K
 #define DPLL_CAKLIB_MULTI      2000 // 64M/32K
+#define DPLL48M_CAKLIB_MULTI   1500 // 48M/32K
 
 
 /*
@@ -58,7 +59,8 @@ void rc32k_conf(uint8_t ref_clk, uint8_t cal_ctrl)
     }
     else //if ((ref_clk == RCLK_DPLL64/*1*/) || (ref_clk == RCLK_DPLL128/*2*/))
     {
-        target = DPLL_CAKLIB_MULTI * ref_clk * (cycle + 1);
+        uint16_t multi = ((RCC->CFG.DPLL_CLK_SW == 0) || (ref_clk == RCLK_DPLL128) ? DPLL_CAKLIB_MULTI : DPLL48M_CAKLIB_MULTI);
+        target =  multi* ref_clk * (cycle + 1);
     }
     
     // bit[15:0]--rccalib_target, bit[20:16]--cycle, bit21--SCAL_EN, bit22--DLY

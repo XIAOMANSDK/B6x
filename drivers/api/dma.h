@@ -199,16 +199,16 @@ typedef union
 {
      struct
      {
-        uint32_t  CYCLE_CTRL    : 3;   // Operating mode of the DMA cycle
-        uint32_t  NEXT_USEBURST : 1;   // Next transfer use burst
-        uint32_t  N_MINUS_1     : 10;  // Total number of DMA transfers - 1
-        uint32_t  R_POWER       : 4;   // How many DMA transfers can occur before controller rearbitrates
-        uint32_t  SRC_PROT_CTRL : 3;   // Protect when controller reads the source data
-        uint32_t  DST_PROT_CTRL : 3;   // Protect when controller writes the destination data
-        uint32_t  SRC_SIZE      : 2;   // Size of the source data, 0-byte 1-halfword 2-word
-        uint32_t  SRC_INC       : 2;   // Source address increment
-        uint32_t  DST_SIZE      : 2;   // Destination data size, must same with src_size
-        uint32_t  DST_INC       : 2;   // Destination address increment
+        uint32_t  CYCLE_CTRL    : 3;   // bit[2:0]  --- Operating mode of the DMA cycle
+        uint32_t  NEXT_USEBURST : 1;   // bit[3:3]  --- Next transfer use burst
+        uint32_t  N_MINUS_1     : 10;  // bit[13:4] --- Total number of DMA transfers - 1
+        uint32_t  R_POWER       : 4;   // bit[17:14]--- How many DMA transfers can occur before controller rearbitrates
+        uint32_t  SRC_PROT_CTRL : 3;   // bit[20:18]--- Protect when controller reads the source data
+        uint32_t  DST_PROT_CTRL : 3;   // bit[23:21]--- Protect when controller writes the destination data
+        uint32_t  SRC_SIZE      : 2;   // bit[25:24]--- Size of the source data, 0-byte 1-halfword 2-word
+        uint32_t  SRC_INC       : 2;   // bit[27:26]--- Source address increment
+        uint32_t  DST_SIZE      : 2;   // bit[29:28]--- Destination data size, must same with src_size
+        uint32_t  DST_INC       : 2;   // bit[31:30]--- Destination address increment
      };
      uint32_t Word;
 } DMA_TRANS_CFG_Typedef;
@@ -401,7 +401,7 @@ bool dma_chnl_reload(uint8_t chidx);
  ****************************************************************************************
  */
 uint16_t dma_chnl_remain(uint8_t chidx);
-
+bool dma_chnl_remain_pingpong(uint8_t chidx, uint16_t *len);
 /**
  ****************************************************************************************
  * @brief Enable or disable DMA Channel after configured.

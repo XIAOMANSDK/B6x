@@ -207,6 +207,32 @@ void ota_init(void)
     DEBUG("OTA_BANK:0x%x", ota_env.bank);
 }
 
+uint8_t app_name_get(uint8_t size, uint8_t *name)
+{
+    uint8_t len = sizeof(BLE_DEV_NAME) - 1;
+
+    // eg. prefix(BLE_DEV_NAME) + suffix(Addr[0])
+    if (size < len + 2)
+    {
+        // no enough buffer, short copy
+        len = size;
+        memcpy(name, BLE_DEV_NAME, len);
+    }
+    else
+    {
+        // prefix + suffix
+        memcpy(name, BLE_DEV_NAME, len);
+        
+        if (ota_env.bank)
+        {
+        
+        }
+        name[len++] = (ota_env.bank == OTA_BANK_A ? 'B' : 'A');
+    }
+
+    return len;
+}
+
 /******************************************************************************
  * Name:    CRC-16/MODBUS
  * Poly:    0x8005  ( x16+x15+x2+1 )

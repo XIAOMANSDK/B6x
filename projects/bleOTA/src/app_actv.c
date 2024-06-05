@@ -14,7 +14,7 @@
 
 #if (DBG_ACTV)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<ACTV>" format "\r\n", ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -65,6 +65,15 @@ struct actv_env_tag actv_env;
  ****************************************************************************************
  */
 #if (BLE_EN_ADV)
+
+#undef DEBUG
+#if (DBG_ACTV)
+#include "dbg.h"
+#define DEBUG(format, ...)    debug("<ADV>" format "\r\n", ##__VA_ARGS__)
+#else
+#define DEBUG(format, ...)
+#endif
+
 
 /*
  * DEFINITIONS
@@ -214,7 +223,18 @@ static void app_adv_set_scan_rsp(void)
     length = app_name_get(DEV_NAME_MAX_LEN, &rsp_data[2]);
     rsp_data[0] = length + 1;
     rsp_data[1] = GAP_AD_TYPE_COMPLETE_NAME; // 0x09
-
+    rsp_data[length+2] =10; 
+    rsp_data[length+3] = GAP_AD_TYPE_MANU_SPECIFIC_DATA;
+    rsp_data[length+4] = 'B';
+    rsp_data[length+5] = '6';
+    rsp_data[length+6] = 'O';
+    rsp_data[length+7] = 'T';
+    rsp_data[length+8] = 'A';
+    rsp_data[length+9] = 'D';
+    rsp_data[length+10] = 'E';
+    rsp_data[length+11] = 'M';
+    rsp_data[length+12] = 'O';
+    length+=11;
     gapm_set_adv_data(actv_env.advidx, GAPM_SET_SCAN_RSP_DATA, length + 2, rsp_data);
 #endif
 }
@@ -351,6 +371,15 @@ void app_adv_event(uint8_t gapm_op, uint8_t status)
  */
 #if (BLE_EN_SCAN)
 
+#undef DEBUG
+#if (DBG_ACTV)
+#include "dbg.h"
+#define DEBUG(format, ...)    debug("<SCAN>" format "\r\n", ##__VA_ARGS__)
+#else
+#define DEBUG(format, ...)
+#endif
+
+
 /*
  * DEFINITIONS
  ****************************************************************************************
@@ -376,7 +405,7 @@ static void app_start_scanning(void)
     /// Properties for the scan procedure (@see enum gapm_scan_prop)
     scan_param.prop = GAPM_SCAN_PROP_PHY_1M_BIT | GAPM_SCAN_PROP_ACTIVE_1M_BIT | GAPM_SCAN_PROP_FILT_TRUNC_BIT;
     /// Duplicate packet filtering policy (@see enum gapm_dup_filter_pol)
-    scan_param.dup_filt_pol = GAPM_DUP_FILT_DIS;// GAPM_DUP_FILT_EN;
+    scan_param.dup_filt_pol = GAPM_DUP_FILT_EN;
     /// Scan window opening parameters for LE 1M PHY (in unit of 625us)
     scan_param.scan_param_1m.scan_intv = GAP_SCAN_FAST_INTV;
     scan_param.scan_param_1m.scan_wd   = GAP_SCAN_FAST_WIND;
@@ -598,6 +627,14 @@ void app_actv_report_ind(struct gapm_ext_adv_report_ind const* report)
  */
 #if (BLE_EN_INIT)
 
+#undef DEBUG
+#if (DBG_ACTV)
+#include "dbg.h"
+#define DEBUG(format, ...)    debug("<INIT>" format "\r\n", ##__VA_ARGS__)
+#else
+#define DEBUG(format, ...)
+#endif
+
 #if !defined(APP_INIT_TIMEOUT)
 #define APP_INIT_TIMEOUT      100 // timeout unit in 10ms
 #endif
@@ -635,20 +672,7 @@ const struct gapm_conn_param dflt_conn_param =
  * FUNCTION DEFINITIONS
  ****************************************************************************************
  */
-#define BLE_CHMAP_BYTE0     (0xBF) // [bit0--bit7: chnl0  -- chnl7 ]
-#define BLE_CHMAP_BYTE1     (0x9F) // [bit0--bit7: chnl8  -- chnl15]
-#define BLE_CHMAP_BYTE2     (0x03) // [bit0--bit7: chnl16 -- chnl23]
-#define BLE_CHMAP_BYTE3     (0xCD) // [bit0--bit7: chnl24 -- chnl31]
-#define BLE_CHMAP_BYTE4     (0x1F) // [bit0--bit7: chnl32 -- chnl39] Note:ADV chan37~39
 
-void llm_master_ch_map_get(le_chnl_map_t* ch_map)
-{
-    ch_map->map[0] = BLE_CHMAP_BYTE0;
-    ch_map->map[1] = BLE_CHMAP_BYTE1;
-    ch_map->map[2] = BLE_CHMAP_BYTE2;
-    ch_map->map[3] = BLE_CHMAP_BYTE3;
-    ch_map->map[4] = BLE_CHMAP_BYTE4;
-}
 /**
  ****************************************************************************************
  * @brief Start initiating to peer device

@@ -172,7 +172,7 @@ void pwm_start(uint8_t tmr);
  ****************************************************************************************
  * @brief Config special channel for PWM Capture/Compare
  *
- * @param[in] chnl  Timer ID @see enum pwm_timer
+ * @param[in] chnl  Channel ID @see enum pwm_channel
  * @param[in] conf  Pointer of channel configure @see struct pwm_channel_cfg
  *                  Channel stop when conf is NULL, else start.
  *

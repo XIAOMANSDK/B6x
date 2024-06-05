@@ -22,7 +22,7 @@
 #define BLE_NB_MASTER          (0)
 
 #define BLE_ADDR               {0x00, 0x09, 0x22, 0x20, 0x01, 0xD3}
-#define BLE_DEV_NAME           "myBle-OTA"
+#define BLE_DEV_NAME           "myBle-OTA-"
 #define BLE_DEV_ICON           0x0000
 
 #define APP_ADV_INT_MIN        (32) // unit in 0.625ms

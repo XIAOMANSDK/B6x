@@ -155,6 +155,26 @@ uint16_t dma_chnl_remain(uint8_t chidx)
         return 0;
 }
 
+bool dma_chnl_remain_pingpong(uint8_t chidx, uint16_t *len)
+{
+    bool pong = false;
+    DMA_CHNL_CTRL_Typedef *chnl_cur;
+
+    if (DMA->PRIALT_SET & (1UL << chidx))
+    {
+        pong = true;
+        chnl_cur = DMA_CHNL_CTRL(chidx | DMA_CH_ALT);
+    }
+    else
+    {
+        chnl_cur = DMA_CHNL_CTRL(chidx);
+    }
+
+    *len = (chnl_cur->TRANS_CFG_DATA.CYCLE_CTRL) ? (chnl_cur->TRANS_CFG_DATA.N_MINUS_1 + 1) : 0;
+
+    return pong;
+}
+
 void dma_chnl_ctrl(uint8_t chidx, uint8_t ctrl)
 {
     uint32_t chbit = 1UL << (chidx % DMA_CH_MAX);

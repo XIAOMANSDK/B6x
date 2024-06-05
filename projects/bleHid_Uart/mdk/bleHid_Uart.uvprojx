@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>bleOTA</TargetName>
+      <TargetName>bleHid_Uart</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
@@ -20,7 +20,7 @@
           <Cpu>CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll></FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20003000 -FC1000 -FN1 -FF0B6x_256kB_PY_D -FS018000000 -FL040000 -FP0($$Device:B6x$.\Flash\B6x_256kB_PY_D.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -48,7 +48,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\output\</OutputDirectory>
-          <OutputName>bleOTA</OutputName>
+          <OutputName>bleHid_Uart</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -79,10 +79,10 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg1>1</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name>fromelf.exe  --bin -o "$L@L.bin" "#L"</UserProg1Name>
-            <UserProg2Name>powershell -executionpolicy Unrestricted -file .\link_high_bank.PS1</UserProg2Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
@@ -109,7 +109,7 @@
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments>  </SimDllArguments>
+          <SimDllArguments> -REMAP </SimDllArguments>
           <SimDlgDll>DARMCM1.DLL</SimDlgDll>
           <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
@@ -190,8 +190,8 @@
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
-            <RoSelD>0</RoSelD>
-            <RwSelD>0</RwSelD>
+            <RoSelD>4</RoSelD>
+            <RwSelD>4</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
@@ -248,7 +248,7 @@
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0x1000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -333,10 +333,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99 --thumb --gnu --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
+              <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf</IncludePath>
+              <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf;..\protocol</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,7 +351,7 @@
             <useXO>0</useXO>
             <uClangAs>0</uClangAs>
             <VariousControls>
-              <MiscControls>--thumb </MiscControls>
+              <MiscControls>--thumb</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
@@ -367,7 +367,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\src\link_xip_ble_0x04000.sct</ScatterFile>
+            <ScatterFile>..\src\link_xip_blelite.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc>--diag_suppress=L6312,L6314,L6329</Misc>
@@ -377,16 +377,6 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>core</GroupName>
-          <Files>
-            <File>
-              <FileName>startup.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\core\mdk\startup.s</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>src</GroupName>
           <Files>
@@ -411,9 +401,19 @@
               <FilePath>..\src\proc.c</FilePath>
             </File>
             <File>
-              <FileName>ota.c</FileName>
+              <FileName>hid_desc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\ota.c</FilePath>
+              <FilePath>..\src\hid_desc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>core</GroupName>
+          <Files>
+            <File>
+              <FileName>startup.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\core\mdk\startup.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -436,11 +436,6 @@
           <GroupName>modules</GroupName>
           <Files>
             <File>
-              <FileName>uart1Rb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\modules\src\uart1Rb.c</FilePath>
-            </File>
-            <File>
               <FileName>leds.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\modules\src\leds.c</FilePath>
@@ -450,6 +445,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\modules\src\sftmr.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1Rb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\uart1Rb.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -458,12 +458,12 @@
             <File>
               <FileName>app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ble\app\app.c</FilePath>
+              <FilePath>..\src\app.c</FilePath>
             </File>
             <File>
               <FileName>app_actv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\app_actv.c</FilePath>
+              <FilePath>..\..\..\ble\app\app_actv.c</FilePath>
             </File>
             <File>
               <FileName>app_msg.c</FileName>
@@ -480,6 +480,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\ble\app\app_gapc.c</FilePath>
             </File>
+            <File>
+              <FileName>app_gatt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app_gatt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -491,14 +496,14 @@
               <FilePath>..\..\..\ble\prf\prf_diss.c</FilePath>
             </File>
             <File>
-              <FileName>prf_sess.c</FileName>
+              <FileName>prf_bass.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ble\prf\prf_sess.c</FilePath>
+              <FilePath>..\..\..\ble\prf\prf_bass.c</FilePath>
             </File>
             <File>
-              <FileName>prf_otas.c</FileName>
+              <FileName>prf_hids.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ble\prf\prf_otas.c</FilePath>
+              <FilePath>..\..\..\ble\prf\prf_hids.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -506,9 +511,9 @@
           <GroupName>ble\lib</GroupName>
           <Files>
             <File>
-              <FileName>ble6.lib</FileName>
+              <FileName>ble6_lite.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\ble\lib\ble6.lib</FilePath>
+              <FilePath>..\..\..\ble\lib\ble6_lite.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,6 +524,31 @@
               <FileName>debug.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\modules\src\debug.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>protocol</GroupName>
+          <Files>
+            <File>
+              <FileName>proto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\protocol\proto.c</FilePath>
+            </File>
+            <File>
+              <FileName>proto_rsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\protocol\proto_rsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>pt_pkt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\protocol\pt_pkt.c</FilePath>
+            </File>
+            <File>
+              <FileName>pt_sch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\protocol\pt_sch.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -263,19 +263,20 @@ uint32_t sadc_rand_num(void)
     
     for (uint8_t cnt = 0; cnt < 32; cnt++)
     {
-        SADC->CTRL.SADC_AUX_CLK_DIV = cnt;
-        
+        // clk must <= 16M.
+        SADC->CTRL.SADC_AUX_CLK_DIV = 3 + cnt;
+
         SADC->SADC_ANA_CTRL.Word    = ((cnt & 0x07) << SADC_IBSEL_CMP_LSB) | ((cnt & 0x07) << SADC_IBSEL_VCM_LSB)
                                       | ((cnt & 0x07) << SADC_IBSEL_VREF_LSB) | ((cnt & 0x07) << SADC_IBSEL_BUF_LSB)
                                       | ((cnt & 0x03) << SADC_CALCAP_LSB) | SADC_INBUF_BYPSS_BIT | SADC_VREF_VBG | SADC_EN_BIT;
         // start conversion
         SADC->CTRL.SADC_SOC         = 1;
-        
+
         SADC_AFLG_WAIT();
-        
+
         // clear flag
         SADC->STCTRL.SADC_AUX_FLG_CLR = 1;
-        
+
         random_num |= ((((SADC->AUX_ST.Word) & 0x01)) << (cnt));
     }
     

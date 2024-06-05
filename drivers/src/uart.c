@@ -44,7 +44,7 @@ void uart_init(uint8_t port, uint8_t io_tx, uint8_t io_rx)
     RCC_APBCLK_EN(1 << (RCC_UART1_CLKEN_RUN_POS + port));
     RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port));
     
-    uint8_t delay_cnt = 0x09;    
+    uint8_t delay_cnt = 0x10;    
     // Delay for Uart busy
     while (delay_cnt--)  //220ns/cnt(64Mhz test need delay 906ns)  --20231204 WHL
     {

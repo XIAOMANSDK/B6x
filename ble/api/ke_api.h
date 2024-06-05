@@ -354,7 +354,7 @@ bool ke_is_free(void* mem_ptr);
  ****************************************************************************************
  * @brief Retrieve kernel time.
  *
- * @return time value (unit 10 ms)
+ * @return time value (unit:312.5us).
  ****************************************************************************************
  */
 uint32_t ke_time(void);
@@ -372,7 +372,7 @@ uint32_t ke_time(void);
  *
  * @param[in] timer_id  Timer id (message id type).
  * @param[in] task      Task id which will be notified
- * @param[in] delay     Delay in time units(10ms).
+ * @param[in] delay     Delay in time units(1ms).
  ****************************************************************************************
  */
 void ke_timer_set(msg_id_t timer_id, task_id_t task, uint32_t delay);

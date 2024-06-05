@@ -12,7 +12,7 @@
 #include "rcc.h"
 #include "iopad.h"
 #include "reg_i2c.h"
-
+#include "reg_gpio.h"
 
 /*
  * DEFINES
@@ -64,6 +64,16 @@ void i2c_init(uint8_t io_scl, uint8_t io_sda, uint8_t sclk)
     RCC_APBCLK_EN(APB_I2C_BIT);
     //RCC_APBRST_REQ(APB_I2C_BIT);
     I2C->SRST = 0x07;
+    
+    uint32_t io_ctrl = IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN;
+    
+    iom_ctrl(io_sda, IOM_SEL_GPIO | IOM_PULLDOWN | IOM_INPUT);
+    
+    // if Extern Pull-Up, disable Internal Pull-Up 
+    if ((GPIO->PIN >> io_sda) & 0x01)
+    {
+        io_ctrl = IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_INPUT | IOM_OPENDRAIN;
+    }
 
     // iocsc_i2c(io_scl, io_sda);
     csc_output(io_scl, CSC_I2C_SCL);
@@ -71,8 +81,8 @@ void i2c_init(uint8_t io_scl, uint8_t io_sda, uint8_t sclk)
     csc_output(io_sda, CSC_I2C_SDA);
     csc_input(io_sda,  CSC_I2C_SDA);
 
-    iom_ctrl(io_scl, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN);
-    iom_ctrl(io_sda, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN);
+    iom_ctrl(io_scl, io_ctrl);
+    iom_ctrl(io_sda, io_ctrl);
 
     // SCL clock = PCLK/(2^clk_samp * (clk_scl+1) *10)
     I2C->CLK.Word = sclk;

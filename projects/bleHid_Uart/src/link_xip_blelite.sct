@@ -1,0 +1,52 @@
+#! armcc -E -I ..\src\ -I ..\..\..\ble\api
+#include "cfg.h"
+#include "blelib.h"
+
+#define SCT_FLASH_BASE          (0x18004000)
+#define SCT_FLASH_END           (0x18020000)
+#define SCT_FLASH_LEN           (SCT_FLASH_END - SCT_FLASH_BASE)
+
+LR_IROM1 SCT_FLASH_BASE SCT_FLASH_LEN
+{
+    ER_IROM1 SCT_FLASH_BASE SCT_FLASH_LEN
+    {
+        *.o (RESET, +First)
+        *(InRoot$$Sections)
+        startup*.o (+RO)
+        .ANY (+RO)
+    }
+    
+    RW_IRAM_VECT 0x20003000 EMPTY 152
+    {
+        ; sram vector
+    }
+    
+    RW_IRAM_USER +0
+    {
+        *.o(ram_func*)
+        dma.o(DMA_ALIGN)
+        ;.ANY (+RW +ZI)
+    }
+
+    RW_IRAM_STACK 0x20008000-0x600 UNINIT 0x600
+    {
+        .ANY (STACK)
+    }
+    
+    RW_IRAM_EXCH BLE_EXCH_BASE EMPTY BLE_EXCH_SIZE
+    {
+        ; configured with BLE HW
+    }
+    
+    RW_IRAM_HEAP BLE_HEAP_BASE EMPTY BLE_HEAP_SIZE
+    {
+        ; configured with ble_heap()
+    }
+    
+    RW_IRAM_RWZI BLE_RWZI_BASE UNINIT BLE_RWZI_SIZE
+    {
+        ; ZI data, manual inited in lib
+        *ble6*.lib (+RW +ZI)
+        .ANY (+RW +ZI)  ; retention
+    }
+}

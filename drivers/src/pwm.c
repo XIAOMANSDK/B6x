@@ -128,6 +128,7 @@ void pwm_chnl_set(uint8_t chnl, const pwm_chnl_cfg_t *conf)
 void pwm_duty_upd(uint8_t chnl, uint16_t duty)
 {
     uint8_t cidx = chnl % 4;
-    TIMER_TypeDef* TIMx = TMR_USED(chnl / 4);
+    //TIMER_TypeDef* TIMx = TMR_USED(chnl / 4);
+    TIMER_TypeDef* TIMx = TMR_USED(chnl > PWM_CTMR_CH4);//2024524 zsh
     TIMx->CCR[cidx]     = duty;
 }
