@@ -14,3 +14,4 @@ SW_Spec: 软件开发相关文档
 	2.IO映射表
 	3.Flash地址映射说明
 	4.Jflash烧录配置说明
+	5.Ble Sram分配说明
