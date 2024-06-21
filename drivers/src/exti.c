@@ -20,6 +20,12 @@ void exti_init(uint16_t debounce)
     EXTI->DBC.Word = debounce;
 }
 
+void exti_deinit(void)
+{
+    RCC_APBCLK_DIS(APB_EXTI_BIT);
+    RCC_APBRST_REQ(APB_EXTI_BIT);
+}
+
 void exti_set(uint8_t typ, uint32_t loca)
 {
     (*(volatile uint32_t*)(EXTI_BASE + typ * 4)) = loca;

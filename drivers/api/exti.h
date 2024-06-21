@@ -60,6 +60,14 @@ void exti_init(uint16_t dbc);
 
 /**
  ****************************************************************************************
+ * @brief Deinit EXTI Module. Diable EXTI Clock.
+ *
+ ****************************************************************************************
+ */
+void exti_deinit(void);
+
+/**
+ ****************************************************************************************
  * @brief Enable Bits Field of BUS Register 
  *
  * @param[in] typ  Type of local src @see enum exti_loca_typ

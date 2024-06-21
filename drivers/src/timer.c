@@ -18,13 +18,6 @@
  ****************************************************************************************
  */
 
-#if defined(CTMR_BASE)
-#define TMR_USED(tmr)         ((TIMER_TypeDef* )(CTMR_BASE + (tmr) * 0x1000))
-#else
-#define TMR_USED(tmr)         (((tmr) == PWM_CTMR) ? CTMR : ATMR)
-#endif
-
-
 /*
  * FUNCTION DEFINITIONS
  ****************************************************************************************
@@ -60,6 +53,12 @@ void ctmr_init(uint16_t psc, uint16_t arr)
     CTMR->ARR = arr;
 }
 
+void ctmr_deinit(void)
+{
+    RCC_APBCLK_DIS(APB_CTMR_BIT);
+    RCC_APBRST_REQ(APB_CTMR_BIT);
+}
+
 void ctmr_ctrl(uint16_t mode, uint16_t intr)
 {
     // clear interrupt, then enable
@@ -73,7 +72,7 @@ void ctmr_ctrl(uint16_t mode, uint16_t intr)
     CTMR->CR1.Word = mode;
 }
 
-void adtmr_init(uint16_t psc, uint16_t arr)
+void atmr_init(uint16_t psc, uint16_t arr)
 {
     RCC_APBCLK_EN(APB_ATMR_BIT);
     RCC_APBRST_REQ(APB_ATMR_BIT);
@@ -83,7 +82,13 @@ void adtmr_init(uint16_t psc, uint16_t arr)
     ATMR->ARR = arr;
 }
 
-void adtmr_ctrl(uint16_t mode, uint16_t intr)
+void atmr_deinit(void)
+{
+    RCC_APBCLK_DIS(APB_ATMR_BIT);
+    RCC_APBRST_REQ(APB_ATMR_BIT);
+}
+
+void atmr_ctrl(uint16_t mode, uint16_t intr)
 {
     // clear interrupt, then enable
     ATMR->ICR.Word = intr;

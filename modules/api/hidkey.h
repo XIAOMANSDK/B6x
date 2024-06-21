@@ -4,7 +4,7 @@
  * @file hidkey.h
  *
  * @brief HID KeyCode - USB usages
- *        https://www.usb.org/sites/default/files/hut1_4.pdf
+ *        https://www.usb.org/sites/default/files/hut1_5.pdf
  ****************************************************************************************
  */
 

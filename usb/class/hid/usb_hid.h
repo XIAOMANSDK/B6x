@@ -614,7 +614,7 @@ enum hid_kbd_code {
     HID_KEY_DOWN       = 81,
     HID_KEY_UP         = 82,
     HID_KEY_NUMLOCK    = 83,
-    HID_KEY_KPSLASH    = 84,    /* NUMPAD DIVIDE */
+    HID_KEY_KPSLASH    = 84, /* NUMPAD DIVIDE */
     HID_KEY_KPASTERISK = 85, /* NUMPAD MULTIPLY */
     HID_KEY_KPMINUS    = 86,
     HID_KEY_KPPLUS     = 87,
@@ -682,19 +682,19 @@ struct usb_hid_descriptor {
  */
 /* Keyboard input report (8 bytes) (HID B.1) */
 struct usb_hid_kbd_report {
-    uint8_t modifier; /* Modifier keys. See USBHID_MODIFIER_* definitions */
+    uint8_t modifier; /* Modifier keys. See @enum hid_kbd_modifier definitions */
     uint8_t reserved;
     uint8_t key[6];   /* Keycode 1-6 */
 };
 
 /* Keyboard output report (1 byte) (HID B.1),
- * see USBHID_KBDOUT_* definitions
+ * @see enum hid_kbd_led
  */
 
 /* Mouse input report (HID B.2) */
 struct usb_hid_mouse_send_report
 {
-    uint8_t buttons; /* See USBHID_MOUSEIN_* definitions */
+    uint8_t buttons; /* See HID_MOUSE_INPUT_REPORT_* definitions */
     uint8_t xdisp;   /* X displacement */
     uint8_t ydisp;   /* y displacement */
     
@@ -709,7 +709,7 @@ struct usb_hid_js_report
 {
     uint8_t xpos;     /* X position */
     uint8_t ypos;     /* X position */
-    uint8_t buttons;  /* See USBHID_JSIN_* definitions */
+    uint8_t buttons;  /* See HID_JS_INPUT_REPORT_BUTTON* definitions */
     uint8_t throttle; /* Throttle */
 };
 

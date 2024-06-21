@@ -16,7 +16,7 @@
 static usbd_hid_t usbd_hids[HID_INST_CNT];
 
 /// Interface number convert to hid instance
-static usbd_hid_t *find_hid_by_intf(uint8_t intf_num)
+usbd_hid_t *find_hid_by_intf(uint8_t intf_num)
 {
     for (uint8_t i = 0; i < HID_INST_CNT; i++) {
         if (usbd_hids[i].hid_intf && (usbd_hids[i].hid_intf->intf_num == intf_num)) {
@@ -28,7 +28,7 @@ static usbd_hid_t *find_hid_by_intf(uint8_t intf_num)
 }
 
 /// Endpoint address convert to hid instance
-static usbd_hid_t *find_hid_by_ep(uint8_t ep_addr)
+usbd_hid_t *find_hid_by_ep(uint8_t ep_addr)
 {
     for (uint8_t i = 0; i < HID_INST_CNT; i++) {
         if (usbd_hids[i].hid_intf && (usbd_hids[i].hid_intf->ep_in == ep_addr)) {
@@ -96,15 +96,14 @@ uint8_t usbd_hid_send_report(uint8_t ep, uint8_t len, const uint8_t *data)
     return status;
 }
 
-void usbd_hid_ep_in_handler(uint8_t ep)
+__WEAK void usbd_hid_ep_in_handler(uint8_t ep)
 {
     usbd_hid_t *curr_hid = find_hid_by_ep(ep);
-    GPIO_DAT_SET(GPIO18);
+
     if (curr_hid && (curr_hid->hid_state == HID_STATE_BUSY)) {
         /*!< transfer successfully, update the state */
         curr_hid->hid_state = HID_STATE_IDLE;
     }
-    GPIO_DAT_CLR(GPIO18);
 }
 
 /**

@@ -44,6 +44,15 @@ void iwdt_feed(void)
     IWDT->LOCK   = 0; // lock iwdt
 }
 
+void iwdt_deinit(void)
+{
+    IWDT->LOCK      = 0x1ACCE551; // unlock iwdt
+    IWDT->INTCLR    = 1; // clear int
+    IWDT->CTRL.Word = 0x08;
+    IWDT->LOCK      = 0; // lock iwdt
+    RCC_APBCLK_DIS(APB_IWDT_BIT);
+}
+
 #if (ROM_UNUSED)
 uint32_t iwdt_conf(uint32_t load) // add 6vp 1125
 {

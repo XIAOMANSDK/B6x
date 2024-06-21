@@ -18,7 +18,7 @@ typedef union   // 0x000 TIM_CR1
         uint32_t CMS:        2; // bit[6:5]  --- Center-aligned Mode Select
         uint32_t ARPE:       1; // bit7      --- Auto-Reload Preload Enable
         uint32_t CKD:        2; // bit[9:8]  --- Clock Division
-        uint32_t CMPSEL:     2; // bit[11:10]--- Compare input Select (Only ADTMR1)
+        uint32_t CMPSEL:     2; // bit[11:10]--- Compare input Select (Only ATMR)
         uint32_t RES:       20; // bit[31:12]--- Reserved
     };
     uint32_t Word;

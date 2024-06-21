@@ -84,6 +84,16 @@ void sadc_init(uint32_t ana_ctrl)
     sadc_calib();
 }
 
+void sadc_deinit(void)
+{
+//    SADC->CTRL.Word          = 0;
+//    SADC->MIC_CTRL.Word      = SADC_MIC_PWD_BIT;
+//    SADC->SADC_ANA_CTRL.Word = 0;
+
+    RCC_AHBCLK_DIS(AHB_ADC_BIT);
+    RCC_AHBRST_REQ(AHB_ADC_BIT);
+}
+
 void sadc_conf(uint32_t ctrl)
 {
     SADC->STCTRL.SADC_AUX_FLG_CLR = 1;

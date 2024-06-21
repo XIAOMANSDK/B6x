@@ -172,7 +172,7 @@ enum uart_intr_bfs
 
 /**
  ****************************************************************************************
- * @brief Init uart port (enable clock, reset, IO func map)
+ * @brief Init uart port (enable clock, reset, IO func map).
  *
  * @param[in] port   uart port @see enum uart_port
  * @param[in] io_tx  iopad of TXD @see enum pad_idx
@@ -184,7 +184,17 @@ void uart_init(uint8_t port, uint8_t io_tx, uint8_t io_rx);
 
 /**
  ****************************************************************************************
- * @brief Config uart hardware flow control (IO func map, enable auto RTS)
+ * @brief Deinit uart port(disable clock).
+ *
+ * @param[in] port   uart port @see enum uart_port
+ *
+ ****************************************************************************************
+ */
+void uart_deinit(uint8_t port);
+
+/**
+ ****************************************************************************************
+ * @brief Config uart hardware flow control (IO func map, enable auto RTS).
  *
  * @param[in] port   uart port @see enum uart_port
  * @param[in] io_rts  iopad of RTS @see enum pad_idx
@@ -196,7 +206,7 @@ void uart_hwfc(uint8_t port, uint8_t io_rts, uint8_t io_cts);
 
 /**
  ****************************************************************************************
- * @brief Config uart params, baudrate and ctrl bits
+ * @brief Config uart params, baudrate and ctrl bits.
  *
  * @param[in] port     index of port @see enum uart_port
  * @param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()
@@ -208,7 +218,7 @@ void uart_conf(uint8_t port, uint16_t cfg_BRR, uint16_t cfg_LCR);
 
 /**
  ****************************************************************************************
- * @brief Config uart fifo level and receive timeout
+ * @brief Config uart fifo level and receive timeout.
  *
  * @param[in] port      index of port @see enum uart_port
  * @param[in] fifo_ctl  fifo control @see enum uart_fcr_bfs
@@ -221,7 +231,7 @@ void uart_fctl(uint8_t port, uint8_t fifo_ctl, uint16_t bits_rto, uint16_t intr_
 
 /**
  ****************************************************************************************
- * @brief Config uart mode control
+ * @brief Config uart mode control.
  *
  * @param[in] port  index of port @see enum uart_port
  * @param[in] dma   enable DMA or not
@@ -232,7 +242,7 @@ void uart_mctl(uint8_t port, uint8_t dma);
 
 /**
  ****************************************************************************************
- * @brief Transmits one byte data through the UART port
+ * @brief Transmits one byte data through the UART port.
  *
  * @param[in] port  index of port @see enum uart_port
  * @param[in] ch    the data transmited
@@ -243,7 +253,7 @@ void uart_putc(uint8_t port, uint8_t ch);
 
 /**
  ****************************************************************************************
- * @brief Get the most recent received data by UART port
+ * @brief Get the most recent received data by UART port.
  *
  * @param[in] port  index of port @see enum uart_port
  *
@@ -254,7 +264,7 @@ uint8_t uart_getc(uint8_t port);
 
 /**
  ****************************************************************************************
- * @brief Wait uart transmit finish, in idle state
+ * @brief Wait uart transmit finish, in idle state.
  *
  * @param[in] port  index of port @see enum uart_port
  *
@@ -264,7 +274,7 @@ void uart_wait(uint8_t port);
 
 /**
  ****************************************************************************************
- * @brief Transmits bytes data through the UART port(Blocking Mode)
+ * @brief Transmits bytes data through the UART port(Blocking Mode).
  *
  * @param[in] port  index of port @see enum uart_port
  * @param[in] len    data length

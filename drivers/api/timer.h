@@ -68,7 +68,7 @@ enum tmr_mode_def
 
 /**
  ****************************************************************************************
- * @brief Init Common Timer
+ * @brief Init Common Timer.
  *
  * @param[in] psc  configure prescaler
  * @param[in] arr  configure Auto-reload
@@ -79,7 +79,15 @@ void ctmr_init(uint16_t psc, uint16_t arr);
 
 /**
  ****************************************************************************************
- * @brief Common Timer control
+ * @brief Deinit Common Timer.
+ * 
+ ****************************************************************************************
+ */
+void ctmr_deinit(void);
+
+/**
+ ****************************************************************************************
+ * @brief Common Timer control.
  *
  * @param[in] mode  Work Mode configure @see enum tmr_mode_def
  * @param[in] intr  Interrupt configure @see enum tmr_intr_bfs
@@ -90,24 +98,32 @@ void ctmr_ctrl(uint16_t mode, uint16_t intr);
 
 /**
  ****************************************************************************************
- * @brief Init Advance Timer
+ * @brief Init Advance Timer.
  *
  * @param[in] psc  configure prescaler
  * @param[in] arr  configure Auto-reload
  * 
  ****************************************************************************************
  */
-void adtmr_init(uint16_t psc, uint16_t arr);
+void atmr_init(uint16_t psc, uint16_t arr);
 
 /**
  ****************************************************************************************
- * @brief Advance Timer control
+ * @brief Deinit Advance Timer.
+ *
+ ****************************************************************************************
+ */
+void atmr_deinit(void);
+
+/**
+ ****************************************************************************************
+ * @brief Advance Timer control.
  *
  * @param[in] mode  Work Mode configure @see enum tmr_mode_def
  * @param[in] intr  Interrupt configure @see enum tmr_intr_bfs
  * 
  ****************************************************************************************
  */
-void adtmr_ctrl(uint16_t mode, uint16_t intr);
+void atmr_ctrl(uint16_t mode, uint16_t intr);
 
 #endif // _TIMER_H_

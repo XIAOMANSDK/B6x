@@ -53,6 +53,13 @@ void uart_init(uint8_t port, uint8_t io_tx, uint8_t io_rx)
     }
 }
 
+void uart_deinit(uint8_t port)
+{    
+    // uart_clk_dis rst_req
+    RCC_APBCLK_DIS(1 << (RCC_UART1_CLKEN_RUN_POS + port));
+    RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port));
+}
+
 void uart_hwfc(uint8_t port, uint8_t io_rts, uint8_t io_cts)
 {
     UART_TypeDef* uart = UART_PTR(port);

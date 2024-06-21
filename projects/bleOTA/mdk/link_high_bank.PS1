@@ -27,8 +27,6 @@ $Bank_A_name = $Pname
 $Bank_B_name = $Pname+$Bank_B
 
 # 获取不带路径且不带后缀的lnp文件名
-# (eg:QKIE_Keybd)
-# (eg:QKIE_Keybd_0x20000)
 $Bank_A_File_Name = (Get-Item $full_path).BaseName
 $Bank_B_File_Name = $Bank_A_File_Name+$Bank_B
 

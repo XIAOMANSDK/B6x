@@ -233,9 +233,9 @@ static __forceinline bool rbuf_getc(rbuf_t *rb, uint8_t *ch)
  */
 static __forceinline rblen_t rbuf_gets(rbuf_t *rb, uint8_t *out, rblen_t max)
 {
-    rblen_t head = rb->head;
-    rblen_t tail = rb->tail;
-    rblen_t dlen = RBUF_LEN(head, tail);
+    volatile rblen_t head = rb->head;
+    volatile rblen_t tail = rb->tail;
+    volatile rblen_t dlen = RBUF_LEN(head, tail);
     
     if (dlen > max) 
     {

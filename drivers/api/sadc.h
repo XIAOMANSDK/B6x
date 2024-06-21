@@ -131,7 +131,7 @@ enum sadc_mic_sel
     // bit[8:2] - Micbias output voltage trimming signal
     SADC_MIC_TRIM_LSB       = 2,
     SADC_MIC_TRIM_MSK       = (0x7F << SADC_MIC_TRIM_LSB),
-    // bit9 - Micbias Internal voltage reference(0:750mV, 1:1.5V)
+    // bit9 - Micbias Internal voltage reference(0:750mV, 1:1.5V) 
     SADC_MIC_VREF_POS       = 9,
     SADC_MIC_VREF_750MV     = (0 << SADC_MIC_VREF_POS),
     SADC_MIC_VREF_1V5       = (1 << SADC_MIC_VREF_POS),
@@ -155,6 +155,13 @@ enum sadc_mic_sel
 #define SADC_PGA_BIAS(val)    ((val) << SADC_PGA_BIAS_LSB)
 #define SADC_PGA_VOL(val)     ((val) << SADC_PGA_VOL_LSB)
 
+// Micbias output voltage = SADC_MIC_VREF_POS(voltage)*1.5
+//                        = 0.75V*1.5 = 1.125V
+//                        = 1.5V *1.5 = 2.25V (default)(2.25V <= VDD33) @The chip voltage is equal to the voltage on the VDD33 pin.
+//                                    = VDD33 (default)(2.25V > VDD33)  @The chip voltage is equal to the voltage on the VDD33 pin.
+// Micin voltage select   = SADC_PGA_VREF_POS(voltage) 
+//                        = 750mV                      @microphone output 0.7V.  Need SADC_VREF_TRIM_1V2.
+//                        = 1.5V (default)             @microphone output 1.5V.  Need SADC_VREF_TRIM_2V4(2.4V < VDD33).
 // .MIC_PD=0, .MIC_VREF_SEL=1, .PGA_BIAS_SEL=1, .PGA_EN=1
 #define SADC_MIC_DFLT         (SADC_PGA_VOL(0x1B) | SADC_PGA_BIAS(1) | SADC_MIC_TRIM(0x40) \
                                 | SADC_PGA_EN_BIT | SADC_PGA_VREF_1V5 | SADC_MIC_VREF_1V5) // 0x36502->0x77700
@@ -214,9 +221,9 @@ enum sadc_ctrl_bfs
 #define SADC_CR_HPF(coef)     ((coef) << SADC_CR_HPF_COEF_LSB)
 #define SADC_CR_CLK(div)      ((div) << SADC_CR_CLK_DIV_LSB)
 
-#define SADC_CR_DFLT          (SADC_CR_CLK(3) | SADC_CR_HPF(11) | SADC_CR_CLKPH_POSEDGE \
-                                | SADC_CR_SAMP_SOFT | SADC_CR_CONV_SINGLE) // 0x3B0010
-
+#define SADC_CLK_DIV         (((SYS_CLK + 1) * 4) - 1) // div_4M
+#define SADC_CR_DFLT         (SADC_CR_CLK(SADC_CLK_DIV) | SADC_CR_HPF(11) | SADC_CR_CLKPH_POSEDGE \
+                             | SADC_CR_SAMP_SOFT | SADC_CR_CONV_SINGLE)
 
 /*
  * FUNCTION DECLARATION
@@ -231,6 +238,14 @@ enum sadc_ctrl_bfs
  ****************************************************************************************
  */
 void sadc_init(uint32_t ana_ctrl);
+
+/**
+ ****************************************************************************************
+ * @brief Deinit SADC Module.
+ *
+ ****************************************************************************************
+ */
+void sadc_deinit(void);
 
 /**
  ****************************************************************************************

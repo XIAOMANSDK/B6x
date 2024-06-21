@@ -5,15 +5,15 @@
 #include "drvs.h"
 #include "dbg.h"
 
-#define LED1    (1 << 13)
-#define LED2    (1 << 14)
+#define LED1    (1 << 8)
+#define LED2    (1 << 9)
 #define LEDS    (LED2 | LED1)
 
-#define PA_BTN1 10
+#define PA_BTN1 15
 #define BTN1    (1 << PA_BTN1)
-#define PA_BTN2 11
+#define PA_BTN2 16
 #define BTN2    (1 << PA_BTN2)
-#define PA_BTN3 12
+#define PA_BTN3 17
 #define BTN3    (1 << PA_BTN3)
 #define BTNS    (BTN1 | BTN2 | BTN3)
 

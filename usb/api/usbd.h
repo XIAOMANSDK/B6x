@@ -208,14 +208,19 @@ uint16_t usbd_ep_read(uint8_t ep, uint16_t max_len, uint8_t *buff);
  */
 __USBIRQ void USB_IRQHandler(void);
 
-/** Handler for Application to notify events */
+
 /*
- * USB Event Notify Handler
+ * __WEAK USB Handler (user override)
  ****************************************************************************
  */
+
+/** Handler for Application to notify events */
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg);
 
 /** Handler for USB Vendor specific commands */
 __USBIRQ uint8_t usbd_vendor_handler(struct usb_setup_packet *setup, uint8_t **data, uint16_t *dlen);
+
+/** Handler for User's String descriptors, eg. iSerial Number */
+__USBIRQ bool usbd_get_string_handler(uint16_t index, uint8_t **data, uint16_t *len);
 
 #endif // _USBD_H_

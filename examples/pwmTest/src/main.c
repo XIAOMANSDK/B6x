@@ -102,22 +102,22 @@ static void pwmTest(void)
     pwm_init(PWM_CTMR, PWM_TMR_PSC, PWM_TMR_ARR);
 
     chnl_conf.duty = 15;
-    // 15% high, 85% low
+    // duty/(arr+1) = 15%(Duty Ratio). 15% high, 85% low
     chnl_conf.ccer = CFG_PWM_CCER_SIPH;
     pwm_chnl_set(PWM_CTMR_CH1, &chnl_conf);
 
-    chnl_conf.duty = 25;
-    // 25% low,  75% high
+    chnl_conf.duty = 25; 
+    // duty/(arr+1) = 25%(Duty Ratio). 25% low,  75% high
     chnl_conf.ccer = CFG_PWM_CCER_SIPL;
     pwm_chnl_set(PWM_CTMR_CH2, &chnl_conf);
     
-    chnl_conf.duty = 35;
-    // 35% high, 65% low
+    chnl_conf.duty = 35; 
+    // duty/(arr+1) = 35%(Duty Ratio). 35% high, 65% low
     chnl_conf.ccer = CFG_PWM_CCER_SIPH;
     pwm_chnl_set(PWM_CTMR_CH3, &chnl_conf);
 
-    chnl_conf.duty = 45;
-    // 45% low, 55% high
+    chnl_conf.duty = 45; 
+    // duty/(arr+1) = 45%(Duty Ratio). 45% low, 55% high
     chnl_conf.ccer = CFG_PWM_CCER_SIPL;
     pwm_chnl_set(PWM_CTMR_CH4, &chnl_conf);
     
@@ -128,27 +128,27 @@ static void pwmTest(void)
     
     chnl_conf.duty = 10;
     chnl_conf.ccer = CFG_PWM_CCER_SIPH;
-    // 10% high, 90% low
+    // duty/(arr+1) = 10%(Duty Ratio). 10% high, 90% low
     pwm_chnl_set(PWM_ATMR_CH1P, &chnl_conf);
     // 10% low,  90% high
     pwm_chnl_set(PWM_ATMR_CH1N, &chnl_conf);
     
     chnl_conf.duty = 20;
     chnl_conf.ccer = CFG_PWM_CCER_SIPL;
-    // 20% low,  80% high
+    // duty/(arr+1) = 20%(Duty Ratio). 20% low,  80% high
     pwm_chnl_set(PWM_ATMR_CH2P, &chnl_conf);
     // 20% high, 80% low
     pwm_chnl_set(PWM_ATMR_CH2N, &chnl_conf);
     
     chnl_conf.duty = 30;
     chnl_conf.ccer = CFG_PWM_CCER_SIPH;
-    // 30% high, 70% low
+    // duty/(arr+1) = 30%(Duty Ratio). 30% high, 70% low
     pwm_chnl_set(PWM_ATMR_CH3P, &chnl_conf);
     // 30% low,  70% high
     pwm_chnl_set(PWM_ATMR_CH3N, &chnl_conf);
     
     chnl_conf.duty = 40;
-    // 40% low, 60% high
+    // duty/(arr+1) = 40%(Duty Ratio). 40% low, 60% high
     chnl_conf.ccer = CFG_PWM_CCER_SIPL;
     pwm_chnl_set(PWM_ATMR_CH4P, &chnl_conf);
     
@@ -168,7 +168,7 @@ static void pwmTest(void)
 
     while (1)
     {
-        #if (CFG_CTMR_TEST)
+        #if (CTMR_USED)
         if (dma_chnl_done(PWM_CTMR_DMA_CHNL))
         {
             GPIO_DAT_SET(1 << PA_DONE_SEE);

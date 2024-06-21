@@ -64,17 +64,6 @@ uint8_t ke_task_create(uint8_t task_type, task_func_t p_desc);
 
 /**
  ****************************************************************************************
- * @brief Delete a task.
- *
- * @param[in] task_type  Task type.
- *
- * @return Task status
- ****************************************************************************************
- */
-uint8_t ke_task_delete(uint8_t task_type);
-
-/**
- ****************************************************************************************
  * @brief Retrieve the state of a task.
  *
  * @param[in] task  Task id.
@@ -220,70 +209,6 @@ void ke_msg_send_basic(msg_id_t msgid, task_id_t dest_id, task_id_t src_id);
  */
 void ke_msg_forward(const void *param_ptr, task_id_t dest_id, task_id_t src_id);
 
-/**
- ****************************************************************************************
- * @brief Forward a message to another task by changing its message ID and tasks IDs.
- *
- * @param[in] param_ptr  Pointer to the parameter member of the message.
- * @param[in] msgid      New ID of the message.
- * @param[in] dest_id    New destination task of the message.
- * @param[in] src_id     New source task of the message.
- ****************************************************************************************
- */
-void ke_msg_forward_new_id(const void *param_ptr, msg_id_t msgid, task_id_t dest_id, task_id_t src_id);
-
-/**
- ****************************************************************************************
- * @brief Marco wrapper to ke_msg_free() with the appropriate msg pointer as parameter.
- *
- * @param[in] param_ptr parameter structure pointer
- ****************************************************************************************
- */
-#define KE_MSG_FREE(param_ptr) ke_msg_free(ke_param2msg((param_ptr)))
-
-/**
- ****************************************************************************************
- * @brief Free allocated message
- *
- * @param[in] msg  Pointer to the message(not the parameter member!)
- ****************************************************************************************
- */
-void ke_msg_free(struct msg_elem const *msg);
-
-/**
- ****************************************************************************************
- * @brief Retrieve destination task id of a message
- *
- * @param[in] param_ptr  Pointer to the parameter member of the message.
- *
- * @return message destination task
- ****************************************************************************************
- */
-msg_id_t ke_msg_dest_id_get(const void *param_ptr);
-
-/**
- ****************************************************************************************
- * @brief Retrieve source task id of a message
- *
- * @param[in] param_ptr  Pointer to the parameter member of the message.
- *
- * @return message source task
- ****************************************************************************************
- */
-msg_id_t ke_msg_src_id_get(const void *param_ptr);
-
-/**
- ****************************************************************************************
- * @brief Used to know if message is present in kernel queue or not.
- *
- * @param[in] param_ptr  Pointer to the parameter member of the message.
- *
- * @return True if message is present in Kernel Queue, False else.
- ****************************************************************************************
- */
-bool ke_msg_in_queue(const void *param_ptr);
-
-
 /*
  * FUNCTION DECLARATIONS: Heap API
  ****************************************************************************************
@@ -303,18 +228,6 @@ void *ke_malloc(uint32_t size, uint8_t type);
 
 /**
  ****************************************************************************************
- * @brief Check if it's possible to allocate a block of memory with a specific size.
- *
- * @param[in] size  Size of the memory area that need to be allocated.
- * @param[in] type  Type of memory block(@see mem_type)
- *
- * @return True if memory block can be allocated, False else.
- ****************************************************************************************
- */
-bool ke_check_malloc(uint32_t size, uint8_t type);
-
-/**
- ****************************************************************************************
  * @brief Freeing of a block of memory.
  *
  * @param[in] mem_ptr  Pointer to the memory area that need to be freed.
@@ -322,42 +235,11 @@ bool ke_check_malloc(uint32_t size, uint8_t type);
  */
 void ke_free(void *mem_ptr);
 
-/**
- ****************************************************************************************
- * @brief Check if current heap is empty or not
- *
- * @param[in] type  Type of memory heap block(@see mem_type)
- *
- * @return true if heap not used, false else.
- ****************************************************************************************
- */
-bool ke_mem_is_empty(uint8_t type);
-
-/**
- ****************************************************************************************
- * @brief Check if current pointer is free or not
- *
- * @param[in] mem_ptr  pointer to a memory block
- *
- * @return true if already free, false else.
- ****************************************************************************************
- */
-bool ke_is_free(void* mem_ptr);
-
 
 /*
  * FUNCTION DECLARATIONS: Timer API
  ****************************************************************************************
  */
-
-/**
- ****************************************************************************************
- * @brief Retrieve kernel time.
- *
- * @return time value (unit:312.5us).
- ****************************************************************************************
- */
-uint32_t ke_time(void);
 
 /**
  ****************************************************************************************
@@ -399,16 +281,6 @@ void ke_timer_clear(msg_id_t timer_id, task_id_t task);
  ****************************************************************************************
  */
 bool ke_timer_active(msg_id_t timer_id, task_id_t task);
-
-/**
- ****************************************************************************************
- * @brief Adjust all timers to align to a new SCLK after a system clock adjust.
- *
- * @param[in] delay  Delay in time units(10ms).
- ****************************************************************************************
- */
-void ke_timer_adjust_all(uint32_t delay);
-
 
 #endif // KE_API_H_
 

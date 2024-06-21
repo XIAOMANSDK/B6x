@@ -53,6 +53,10 @@
 #include "uart.h"
 
 // Alter system clock(@see sys_clk_sel 0:16M 1:32M 2:48M 3:64M)
+#ifndef SYS_CLK
+#define SYS_CLK             (0)
+#endif
+
 #if (SYS_CLK)
 #define SYS_CLK_ALTER()     rcc_sysclk_set(SYS_CLK)
 #if (SYS_CLK == 1)

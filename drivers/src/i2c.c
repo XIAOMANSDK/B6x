@@ -91,8 +91,8 @@ void i2c_init(uint8_t io_scl, uint8_t io_sda, uint8_t sclk)
 
 void i2c_deinit(void)
 {
-    I2C_DISABLE();
-    RCC_APBCLK_DIS(1 << (RCC_I2C_CLKEN_RUN_POS));
+    RCC_APBCLK_DIS(APB_I2C_BIT);
+    RCC_APBRST_REQ(APB_I2C_BIT);
 }
 
 uint8_t i2c_start(uint8_t slv_addr)

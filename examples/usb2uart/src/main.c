@@ -30,11 +30,7 @@ extern void usbdTest(void);
 
 static void sysInit(void)
 {
-    // switch syclk to 48M for USB
-    rcc_sysclk_set(SYS_CLK_48M);
-
-    // enable USB clk and iopad
-    rcc_usb_en();
+    SYS_CLK_ALTER();
 }
 
 static void devInit(void)
@@ -54,8 +50,8 @@ int main(void)
     sysInit();
     devInit();
 
-    NVIC_EnableIRQ(USB_IRQn);
-    __enable_irq();
+    // Global Interrupt Enable
+    GLOBAL_INT_START();
 
     while (1)
     {

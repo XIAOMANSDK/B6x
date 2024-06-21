@@ -52,9 +52,8 @@ void dma_init(void)
 
 void dma_deinit(void)
 {
-    // dma disable
-    DMA->CFG.Word = 0;
-    DMA->CTRLBASE_POINTER.Word = 0;
+    RCC_APBCLK_DIS(APB_DMAC_BIT);
+    RCC_APBRST_REQ(APB_DMAC_BIT);
 }
 
 void dma_chnl_init(uint8_t chidx, uint8_t chsel)

@@ -20,6 +20,10 @@
 #define HID_INST_CNT              (2)
 #endif
 
+/* bcdHID define */
+#define HID_BCD_0111              0x0111 // v1.1.1
+#define HID_BCD_0201              0x0201 // v2.0.1
+
 /* Macro for template descriptor */
 #define HID_INTERFACE_INIT(intf_num, ep_cnt, subclass, proto, str_idx, desc_size)         \
     /* Descriptor of interface */                                                         \
@@ -40,8 +44,28 @@
     0x00,                         /* bCountryCode: Hardware target country */             \
     0x01,                         /* bNumDescriptors: Number of HID class descriptors */  \
     HID_DESC_TYPE_HID_REPORT,     /* bDescriptorType */                                   \
-    desc_size,                    /* wItemLength: Total length of Report descriptor */    \
-    0x00                                                                                  \
+    WBVAL(desc_size)              /* wItemLength: Total length of Report descriptor */
+
+// HID Init with 'bcdHID' parameter
+#define HID_INTERFACE_INIT1(intf_num, ep_cnt, subclass, proto, str_idx, desc_size, bcdHID) \
+    /* Descriptor of interface */                                                         \
+    0x09,                         /* bLength: Interface Descriptor size */                \
+    USB_DESC_TYPE_INTERFACE,      /* bDescriptorType: Interface descriptor type */        \
+    intf_num,                     /* bInterfaceNumber: Number of Interface */             \
+    0x00,                         /* bAlternateSetting: Alternate setting */              \
+    ep_cnt,                       /* bNumEndpoints */                                     \
+    0x03,                         /* bInterfaceClass: HID */                              \
+    subclass,                     /* bInterfaceSubClass : 1=BOOT, 0=no boot */            \
+    proto,                        /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */  \
+    str_idx,                      /* iInterface: Index of string descriptor */            \
+    /* Descriptor of HID Report */                                                        \
+    0x09,                         /* bLength: HID Descriptor size */                      \
+    HID_DESC_TYPE_HID,            /* bDescriptorType: HID */                              \
+    WBVAL(bcdHID),                /* bcdHID: HID Class Spec release number */             \
+    0x00,                         /* bCountryCode: Hardware target country */             \
+    0x01,                         /* bNumDescriptors: Number of HID class descriptors */  \
+    HID_DESC_TYPE_HID_REPORT,     /* bDescriptorType */                                   \
+    WBVAL(desc_size)              /* wItemLength: Total length of Report descriptor */
 
 #define HID_ENDPOINT_DESC(ep_addr, ep_mps, interval)                                      \
     0x07,                         /* bLength: Endpoint Descriptor size */                 \

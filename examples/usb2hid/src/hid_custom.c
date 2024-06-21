@@ -30,7 +30,8 @@
 #define KBD_IN_EP_INTERVAL        10   /*!< polling time */
 #define KBD_OUT_EP                0x01
 #define KBD_OUT_EP_SIZE           1
-#define KBD_OUT_EP_INTERVAL       10
+//INTERVAL:1, 2, 4, 8, 16, ... 2**n
+#define KBD_OUT_EP_INTERVAL       8
 #define KBD_REPORT_DESC_SIZE      sizeof(hid_kbd_report_desc)
 
 /*!< custom-raw interface config */
@@ -40,7 +41,8 @@
 #define RAW_IN_EP_INTERVAL        10
 #define RAW_OUT_EP                0x02
 #define RAW_OUT_EP_SIZE           64
-#define RAW_OUT_EP_INTERVAL       10
+//INTERVAL:1, 2, 4, 8, 16, ... 2**n
+#define RAW_OUT_EP_INTERVAL       8
 #define RAW_REPORT_DESC_SIZE      sizeof(hid_raw_report_desc)
 
 /*!< Declaration of endpoint Handlers  */
@@ -49,58 +51,58 @@ void usbd_hid_raw_out_handler(uint8_t ep);
 
 /*!< hid keyboard report descriptor */
 static const uint8_t hid_kbd_report_desc[] = {
-    0x05, 0x01, // USAGE_PAGE (Generic Desktop)
-    0x09, 0x06, // USAGE (Keyboard)
-    0xa1, 0x01, // COLLECTION (Application)
-    0x05, 0x07, // USAGE_PAGE (Keyboard)
-    0x19, 0xe0, // USAGE_MINIMUM (Keyboard LeftControl)
-    0x29, 0xe7, // USAGE_MAXIMUM (Keyboard Right GUI)
-    0x15, 0x00, // LOGICAL_MINIMUM (0)
-    0x25, 0x01, // LOGICAL_MAXIMUM (1)
-    0x75, 0x01, // REPORT_SIZE (1)
-    0x95, 0x08, // REPORT_COUNT (8)
-    0x81, 0x02, // INPUT (Data,Var,Abs)
-    0x95, 0x01, // REPORT_COUNT (1)
-    0x75, 0x08, // REPORT_SIZE (8)
-    0x81, 0x03, // INPUT (Cnst,Var,Abs)
-    0x95, 0x05, // REPORT_COUNT (5)
-    0x75, 0x01, // REPORT_SIZE (1)
-    0x05, 0x08, // USAGE_PAGE (LEDs)
-    0x19, 0x01, // USAGE_MINIMUM (Num Lock)
-    0x29, 0x05, // USAGE_MAXIMUM (Kana)
-    0x91, 0x02, // OUTPUT (Data,Var,Abs)
-    0x95, 0x01, // REPORT_COUNT (1)
-    0x75, 0x03, // REPORT_SIZE (3)
-    0x91, 0x03, // OUTPUT (Cnst,Var,Abs)
-    0x95, 0x06, // REPORT_COUNT (6)
-    0x75, 0x08, // REPORT_SIZE (8)
-    0x15, 0x00, // LOGICAL_MINIMUM (0)
-    0x25, 0xFF, // LOGICAL_MAXIMUM (255)
-    0x05, 0x07, // USAGE_PAGE (Keyboard)
-    0x19, 0x00, // USAGE_MINIMUM (Reserved (no event indicated))
-    0x29, 0x65, // USAGE_MAXIMUM (Keyboard Application)
-    0x81, 0x00, // INPUT (Data,Ary,Abs)
-    0xc0        // END_COLLECTION
+    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x06, // Usage (Keyboard)
+    0xA1, 0x01, // Collection (Application)
+    0x05, 0x07, //   Usage Page (Kbrd/Keypad)
+    0x19, 0xE0, //   Usage Minimum (0xE0)
+    0x29, 0xE7, //   Usage Maximum (0xE7)
+    0x15, 0x00, //   Logical Minimum (0)
+    0x25, 0x01, //   Logical Maximum (1)
+    0x75, 0x01, //   Report Size (1)
+    0x95, 0x08, //   Report Count (8)
+    0x81, 0x02, //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x01, //   Report Count (1)
+    0x75, 0x08, //   Report Size (8)
+    0x81, 0x03, //   Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x05, //   Report Count (5)
+    0x75, 0x01, //   Report Size (1)
+    0x05, 0x08, //   Usage Page (LEDs)
+    0x19, 0x01, //   Usage Minimum (Num Lock)
+    0x29, 0x05, //   Usage Maximum (Kana)
+    0x91, 0x02, //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x95, 0x01, //   Report Count (1)
+    0x75, 0x03, //   Report Size (3)
+    0x91, 0x03, //   Output (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x95, 0x06, //   Report Count (6)
+    0x75, 0x08, //   Report Size (8)
+    0x15, 0x00, //   Logical Minimum (0)
+    0x25, 0xFF, //   Logical Maximum (-1)
+    0x05, 0x07, //   Usage Page (Kbrd/Keypad)
+    0x19, 0x00, //   Usage Minimum (0x00)
+    0x29, 0x65, //   Usage Maximum (0x65)
+    0x81, 0x00, //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,       // End Collection
 };
 
 /*!< hid custom-raw report descriptor */
 static const uint8_t hid_raw_report_desc[] = {
-    0x06, 0x00, 0xff, // USAGE_PAGE (Vendor Defined Page 1)
-    0x09, 0x01,       // USAGE (Vendor Usage 1)
-    0xa1, 0x01,       // COLLECTION (Application)
-    0x09, 0x01,       // USAGE (Vendor Usage 1)
-    0x15, 0x00,       // LOGICAL_MINIMUM (0)
-    0x26, 0xff, 0x00, // LOGICAL_MAXIMUM (255)
-    0x95, 0x40,       // REPORT_COUNT (64)
-    0x75, 0x08,       // REPORT_SIZE (8)
-    0x81, 0x02,       // INPUT (Data,Var,Abs)
-    0x09, 0x01,       // USAGE (Vendor Usage 1)
-    0x15, 0x00,       // LOGICAL_MINIMUM (0)
-    0x26, 0xff, 0x00, // LOGICAL_MAXIMUM (255)
-    0x95, 0x40,       // REPORT_COUNT (64)
-    0x75, 0x08,       // REPORT_SIZE (8)
-    0x91, 0x02,       // OUTPUT (Data,Var,Abs)
-    0xC0              // END_COLLECTION
+    0x06, 0x00, 0xFF, // Usage Page (Vendor Defined 0xFF00)
+    0x09, 0x01,       // Usage (0x01)
+    0xA1, 0x01,       // Collection (Application)
+    0x09, 0x01,       //   Usage (0x01)
+    0x15, 0x00,       //   Logical Minimum (0)
+    0x26, 0xFF, 0x00, //   Logical Maximum (255)
+    0x95, 0x40,       //   Report Count (64)
+    0x75, 0x08,       //   Report Size (8)
+    0x81, 0x02,       //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x09, 0x01,       //   Usage (0x01)
+    0x15, 0x00,       //   Logical Minimum (0)
+    0x26, 0xFF, 0x00, //   Logical Maximum (255)
+    0x95, 0x40,       //   Report Count (64)
+    0x75, 0x08,       //   Report Size (8)
+    0x91, 0x02,       //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0xC0,             // End Collection
 };
 
 /*!< hid device descriptor */
@@ -247,8 +249,11 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 
 void usbdInit(void)
 {
+    // enable USB clk and iopad
+    rcc_usb_en();
     usbd_init();
     usbd_register(hid_descriptor, hid_configuration);
+    NVIC_EnableIRQ(USB_IRQn);
     
     for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {
         usbd_hid_init(idx, &hid_interface[idx]);

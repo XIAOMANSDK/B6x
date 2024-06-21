@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>usb2hid</TargetName>
+      <TargetName>usb2uart</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
@@ -48,7 +48,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\output\</OutputDirectory>
-          <OutputName>usb2hid</OutputName>
+          <OutputName>usb2uart</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -336,7 +336,7 @@
               <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\usb\api;..\..\..\usb\class\hid</IncludePath>
+              <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\usb\api;..\..\..\usb\class\hid;..\..\..\usb\class\cdc;..\..\..\usb\class\audio</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -401,14 +401,14 @@
               <FilePath>..\src\main.c</FilePath>
             </File>
             <File>
-              <FileName>hid_boot.c</FileName>
+              <FileName>audio_mic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\hid_boot.c</FilePath>
+              <FilePath>..\src\audio_mic.c</FilePath>
             </File>
             <File>
-              <FileName>hid_custom.c</FileName>
+              <FileName>audio_hid.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\hid_custom.c</FilePath>
+              <FilePath>..\src\audio_hid.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -424,6 +424,11 @@
               <FileName>usbd.lib</FileName>
               <FileType>4</FileType>
               <FilePath>..\..\..\usb\lib\usbd.lib</FilePath>
+            </File>
+            <File>
+              <FileName>usbd_audio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\usb\class\audio\usbd_audio.c</FilePath>
             </File>
             <File>
               <FileName>usbd_hid.c</FileName>

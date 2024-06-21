@@ -12,6 +12,7 @@
 #define _USB_DEF_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 
 /*******************************************************************************
@@ -834,6 +835,23 @@ struct usb_device_capability_descriptor {
 /* same iSerial problem.
  * https://blog.csdn.net/asmxpl/article/details/21243913
  */
+#define USB_DEVICE_DESCRIPTOR_INIT0(bcdUSB, bDeviceClass, bDeviceSubClass, bDeviceProtocol, idVendor, idProduct, bcdDevice, bNumConfigurations) \
+    0x12,                                /* bLength */             \
+    USB_DESC_TYPE_DEVICE,                /* bDescriptorType */     \
+    WBVAL(bcdUSB),                       /* bcdUSB */              \
+    bDeviceClass,                        /* bDeviceClass */        \
+    bDeviceSubClass,                     /* bDeviceSubClass */     \
+    bDeviceProtocol,                     /* bDeviceProtocol */     \
+    USB_EP0_MPS,                         /* bMaxPacketSize */      \
+    WBVAL(idVendor),                     /* idVendor */            \
+    WBVAL(idProduct),                    /* idProduct */           \
+    WBVAL(bcdDevice),                    /* bcdDevice */           \
+    USB_STRING_MFC_INDEX,                /* iManufacturer */       \
+    USB_STRING_PRODUCT_INDEX,            /* iProduct */            \
+    USB_STRING_SERIAL_INDEX,             /* iSerial  */            \
+    bNumConfigurations                   /* bNumConfigurations */  
+
+// Device Init without 'iSerial'
 #define USB_DEVICE_DESCRIPTOR_INIT(bcdUSB, bDeviceClass, bDeviceSubClass, bDeviceProtocol, idVendor, idProduct, bcdDevice, bNumConfigurations) \
     0x12,                                /* bLength */             \
     USB_DESC_TYPE_DEVICE,                /* bDescriptorType */     \
@@ -847,7 +865,7 @@ struct usb_device_capability_descriptor {
     WBVAL(bcdDevice),                    /* bcdDevice */           \
     USB_STRING_MFC_INDEX,                /* iManufacturer */       \
     USB_STRING_PRODUCT_INDEX,            /* iProduct */            \
-    0/*USB_STRING_SERIAL_INDEX*/,        /* iSerial */             \
+    0/*USB_STRING_SERIAL_INDEX*/,        /* iSerial (0 = None) */  \
     bNumConfigurations                   /* bNumConfigurations */  
 
 /* Macro for USB Configuration Descriptor */

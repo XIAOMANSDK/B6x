@@ -98,7 +98,6 @@ void gapc_update_param(uint8_t conidx, struct gapc_conn_param const* param);
  */
 void gapc_disconnect(uint8_t conidx);
 
-
 /**
  ****************************************************************************************
  * @brief Send gapc_get_info_cmd, Retrieve Connection information
@@ -144,16 +143,6 @@ uint8_t gapc_get_role(uint8_t conidx);
 
 /**
  ****************************************************************************************
- * @brief Retrieve link authentication level
- *
- * @param[in] conidx Connection index
- * @return Link authentication level
- ****************************************************************************************
- */
-uint8_t gapc_auth_get(uint8_t conidx);
-
-/**
- ****************************************************************************************
  * @brief Set resolvable address used for connection establishment as local address.
  * 
  * @brief conidx    Connection index
@@ -174,19 +163,6 @@ void gapc_set_local_addr(uint8_t conidx, uint8_t *p_addr);
  ****************************************************************************************
  */
 struct gap_bdaddr* gapc_get_bdaddr(uint8_t conidx, uint8_t src);
-
-/**
- ****************************************************************************************
- * @brief Get destination task id for asynchronous event, meaning events that are not
- * linked to an operation.
- * Note the provided connection index shall be valid (gapc_env[conidx] is not NULL)
- *
- * @param[in] conidx        Connection Index
- *
- * @return ID of the destination task.
- ****************************************************************************************
- */
-task_id_t gapc_get_dest_task(uint8_t conidx);
 
 /**
  ****************************************************************************************
@@ -222,28 +198,6 @@ uint8_t gapc_lk_sec_lvl_get(uint8_t conidx);
  ****************************************************************************************
  */
 uint8_t gapc_enc_keysize_get(uint8_t conidx);
-
-/**
- ****************************************************************************************
- * @brief Get Service Change Client Configuration
- *
- * @param[in] conidx Connection index
- *
- * @return Service Change Client Configuration
- ****************************************************************************************
- */
-bool gapc_svc_chg_ccc_get(uint8_t conidx);
-
-/**
- ****************************************************************************************
- * @brief Set Service Change Client Configuration
- *
- * @param[in] conidx Connection index
- * @param[in] enable True if CCC is enabled, False else
- *
- ****************************************************************************************
- */
-void gapc_svc_chg_ccc_set(uint8_t conidx, bool enable);
 
 /**
  ****************************************************************************************
@@ -308,19 +262,6 @@ uint8_t gapc_smp_pairing_rsp(uint8_t conidx, struct gapc_pairing *feat);
  ****************************************************************************************
  */
 uint8_t gapc_smp_pairing_ltk_exch(uint8_t conidx, struct gapc_ltk* ltk);
-
-/**
- ****************************************************************************************
- * @brief Handles IRK exchange part of pairing(GAPC_BOND_REQ_IND)
- *
- * @param[in] conidx   Connection Index
- * @param[in] irk      The Identity Resolving Key transmitted by application
- * @param[in] identity Device identity address
- *
- * @return status of pairing
- ****************************************************************************************
- */
-uint8_t gapc_smp_pairing_irk_exch(uint8_t conidx, struct gap_sec_key* irk, struct gap_bdaddr *identity);
 
 /**
  ****************************************************************************************

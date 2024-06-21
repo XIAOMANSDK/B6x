@@ -18,12 +18,7 @@
  ****************************************************************************************
  */
 
-#if defined(CTMR_BASE)
 #define TMR_USED(tmr)         ((TIMER_TypeDef* )(CTMR_BASE + (tmr) * 0x1000))
-#else
-#define TMR_USED(tmr)         (((tmr) == PWM_CTMR) ? CTMR : ATMR)
-#endif
-
 
 /*
  * FUNCTION DEFINITIONS
@@ -51,6 +46,14 @@ void pwm_init(uint8_t tmr, uint16_t psc, uint16_t arr)
     TIMx->CR1.CMS = 0; //Edge-aligned mode
 }
 
+void pwm_deinit(uint8_t tmr)
+{
+    uint32_t tmr_bit = 1UL << (1 + tmr); //APB_CTMR_BIT APB_ATMR_BIT
+
+    RCC_APBCLK_DIS(tmr_bit);
+    RCC_AHBRST_REQ(tmr_bit);
+}
+
 void pwm_conf(uint8_t tmr, uint16_t smcr, uint16_t intr)
 {
     TIMER_TypeDef* TIMx = TMR_USED(tmr);
@@ -72,6 +75,12 @@ void pwm_start(uint8_t tmr)
     TIMx->CR1.ARPE = 1;
     TIMx->CR1.CEN = 1;
     TIMx->EGR.UG = 1;
+}
+
+void pwm_stop(uint8_t tmr)
+{
+    TIMER_TypeDef* TIMx = TMR_USED(tmr);
+    TIMx->CR1.CEN = 0;
 }
 
 #if (0)

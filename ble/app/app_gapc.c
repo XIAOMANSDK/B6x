@@ -39,6 +39,7 @@
 
 APP_MSG_HANDLER(gapc_cmp_evt)
 {
+    // operation @see enum gapc_operation
     // Command complete, may ignore
     DEBUG("CMP_EVT(op:%d,sta:0x%x)", param->operation, param->status);
 }
@@ -374,7 +375,9 @@ APP_SUBTASK_HANDLER(gapc_msg)
 
         default:
         {
-            DEBUG("Unknow MsgId:0x%X", msgid);
+            uint16_t length = ke_param2msg(param)->param_len;
+            DEBUG("Unknow MsgId:0x%X, %d", msgid, length);
+            debugHex((uint8_t *)param, length);
         } break;
     }
 

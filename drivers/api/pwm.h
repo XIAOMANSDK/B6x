@@ -136,7 +136,7 @@ typedef struct pwm_channel_cfg
 
 /**
  ****************************************************************************************
- * @brief Init Timer(Source) for PWM Capture/Compare
+ * @brief Init Timer(Source) for PWM Capture/Compare.
  *
  * @param[in] tmr  Timer ID @see enum pwm_timer
  * @param[in] psc  PWM configure prescaler
@@ -148,7 +148,16 @@ void pwm_init(uint8_t tmr, uint16_t psc, uint16_t arr);
 
 /**
  ****************************************************************************************
- * @brief Config Timer(Source) for PWC(PWM Capture)
+ * @brief Deinit Timer Module.
+ *
+ * @param[in] tmr  Timer ID @see enum pwm_timer
+ ****************************************************************************************
+ */
+void pwm_deinit(uint8_t tmr);
+
+/**
+ ****************************************************************************************
+ * @brief Config Timer(Source) for PWC(PWM Capture).
  *
  * @param[in] tmr   Timer ID @see enum pwm_timer
  * @param[in] smcr  PWM Slave mode control
@@ -160,7 +169,7 @@ void pwm_conf(uint8_t tmr, uint16_t smcr, uint16_t intr);
 
 /**
  ****************************************************************************************
- * @brief Start/Enable Timer(Source) for PWM Capture/Compare
+ * @brief Start/Enable Timer(Source) for PWM Capture/Compare.
  *
  * @param[in] tmr   Timer ID @see enum pwm_timer
  * 
@@ -170,7 +179,19 @@ void pwm_start(uint8_t tmr);
 
 /**
  ****************************************************************************************
- * @brief Config special channel for PWM Capture/Compare
+ * @brief Stop Timer(Source) for PWM Capture/Compare.
+ *
+ * @param[in] tmr   Timer ID @see enum pwm_timer
+ *
+ * @Note This API will stop all PWM channels. 
+ *       If you want to stop a single PWM channel, please use pwm_chnl_stop API.
+ ****************************************************************************************
+ */
+void pwm_stop(uint8_t tmr);
+
+/**
+ ****************************************************************************************
+ * @brief Config special channel for PWM Capture/Compare.
  *
  * @param[in] chnl  Channel ID @see enum pwm_channel
  * @param[in] conf  Pointer of channel configure @see struct pwm_channel_cfg
@@ -180,14 +201,14 @@ void pwm_start(uint8_t tmr);
  */
 void pwm_chnl_set(uint8_t chnl, const pwm_chnl_cfg_t *conf);
 
-/// Macro for Channel stop
-#define pwm_chnl_stop(chnl)    pwm_chnl_set(chnl, NULL)
+/// Macro for Channel clear
+#define pwm_chnl_clr(chnl)    pwm_chnl_set(chnl, NULL)
 
 /**
  ****************************************************************************************
- * @brief Update special channel's duty for PWM Capture/Compare
+ * @brief Update special channel's duty for PWM Capture/Compare.
  *
- * @param[in] chnl  Timer ID @see enum pwm_timer
+ * @param[in] chnl  Channel ID @see enum pwm_channel
  * @param[in] duty  Value of Duty, ratio = duty / arr
  *
  ****************************************************************************************

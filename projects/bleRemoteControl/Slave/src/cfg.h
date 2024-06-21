@@ -30,9 +30,6 @@
 #else
 #define DBG_UART_TXD            (0) //PA00
 #define DBG_UART_RXD            (2) //PA02
-
-#define ADV_LED_GPIO            (GPIO00)
-
 #define BLE_DEV_NAME            "BluetoothRemote"
 #define INFO_PNP_ID             ("\x02\x49\x77\x6A\x32\x00\x03")  // PID:0x326A VID:0x7749
 #endif
@@ -75,6 +72,7 @@
 #define KEY_SCAN_PERIOD        (50)
 #define G_NO_ACTION_CNT        (1)  // 无操作n*RC32K_CALIB_PERIOD, 进入睡眠
 
+#define ADV_LED_GPIO           (GPIO00)
 #define IR_TX_PAD              (7)       // PA9  ATMR IO PA7~PA13
 #define KEY_IR_PERIOD          (110)     // 红外重复码处理110ms
 #define IR_TX_ADR              0x0816    // 地址0x16, 地址反码0x08

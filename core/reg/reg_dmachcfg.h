@@ -80,33 +80,23 @@ typedef union //0x104
 //BLOCK DMACHCFG top struct define 
 typedef struct
 {
-    __I   uint32_t                               IFLAG0              ; // 0x000, 
-                                                                       // dma interupt flag 
-    __I   uint32_t                               IFLAG1              ; // 0x004, 
-                                                                       // dma err flag 
+    __I   uint32_t                               IFLAG0              ; // 0x000, dma interupt flag 
+    __I   uint32_t                               IFLAG1              ; // 0x004, dma err flag 
     __IO  uint32_t                               ISFR0               ; // 0x008, 
-                                                                       // no use 
-    __IO  uint32_t                               ISFR1               ; // 0x00c, 
-                                                                       // no use 
-    __O   uint32_t                               ICFR0               ; // 0x010, 
-                                                                       // clear dma channel interupt 
-    __O   uint32_t                               ICFR1               ; // 0x014, 
-                                                                       // clear dma interupt error flag 
-    __IO  uint32_t                               IEFR0               ; // 0x018, 
-                                                                       // enable dma channel[x] interupt 
-    __IO  uint32_t                               IEFR1               ; // 0x01c, 
-                                                                       // enable dma error interrupt 
-    __I   uint32_t                               RSV0[56]            ;
+    __IO  uint32_t                               ISFR1               ; // 0x00C, 
+    __O   uint32_t                               ICFR0               ; // 0x010, clear dma channel interupt 
+    __O   uint32_t                               ICFR1               ; // 0x014, clear dma interupt error flag 
+    __IO  uint32_t                               IEFR0               ; // 0x018, enable dma channel[x] interupt 
+    __IO  uint32_t                               IEFR1               ; // 0x01C, enable dma error interrupt 
+    __I   uint32_t                               RSV0[56]            ; // 0x020 -- 0x0FC, Reserved 
 
     union 
     {
         __IO uint32_t                            CHSEL[2];
       struct
       {
-        __IO  DMACHCFG_CHSEL0_CONTAIN_TypeDef    CHSEL0_CONTAIN      ; // 0x100, 
-                                                                       // include channel(0~3) 
-        __IO  DMACHCFG_CHSEL1_CONTAIN_TypeDef    CHSEL1_CONTAIN      ; // 0x104, 
-                                                                       // include channel(4~7) 
+        __IO  DMACHCFG_CHSEL0_CONTAIN_TypeDef    CHSEL0_CONTAIN      ; // 0x100, include channel(0~3) 
+        __IO  DMACHCFG_CHSEL1_CONTAIN_TypeDef    CHSEL1_CONTAIN      ; // 0x104, include channel(4~7) 
       };
     };
 } DMACHCFG_TypeDef;

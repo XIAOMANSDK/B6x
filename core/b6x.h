@@ -123,7 +123,6 @@ do {                                          \
     __set_PRIMASK(__l_irq_rest);              \
 } while(0)
 
-
 #define WR_8(addr,value)  (*(volatile uint8_t  *)(addr)) = (value)
 #define WR_32(addr,value) (*(volatile uint32_t *)(addr)) = (value)
 #define RD_32(addr)       (*(volatile uint32_t *)(addr))

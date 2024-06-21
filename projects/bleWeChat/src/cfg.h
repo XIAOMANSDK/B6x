@@ -17,11 +17,6 @@
 /// Debug Mode(0=Disable, 1=via UART, 2=via RTT)
 #define DBG_MODE               (1)
 
-#define BLE_HEAP_BASE           (0x20003A00)
-#define BLE_HEAP_ENV_SIZE       (0xC00)
-#define BLE_HEAP_MSG_SIZE       (0x2000)
-#define BLE_HEAP_SIZE           (BLE_HEAP_ENV_SIZE + BLE_HEAP_MSG_SIZE)
-
 /// BLE Configure (Single or Multi-Connections)
 #define BLE_NB_SLAVE           (1)
 #define BLE_NB_MASTER          (0)
@@ -31,7 +26,7 @@
 
 #define BLE_DEV_NAME           "WX-AirSync"
 #define BLE_DEV_ICON           0x0000
-
+#define BLE_DEV_CFG            (CFG_FLAG_ADV_HOP_DIS)
 #define APP_ADV_INT_MIN        (32) // unit in 0.625ms
 #define APP_ADV_INT_MAX        (32) // unit in 0.625ms
 

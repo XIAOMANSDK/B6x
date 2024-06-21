@@ -381,9 +381,9 @@
           <GroupName>core</GroupName>
           <Files>
             <File>
-              <FileName>startup.s</FileName>
+              <FileName>startup_sram.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\core\mdk\startup.s</FilePath>
+              <FilePath>..\..\..\core\mdk\startup_sram.s</FilePath>
             </File>
           </Files>
         </Group>

@@ -16,10 +16,13 @@
 
 /// Debug Mode(0=Disable, 1=via UART, 2=via RTT)
 #define DBG_MODE               (1)
+#define DBG_UART_BAUD          (BRR_921600)
+#define UART_CMD               (1)
+#define UART1_CONF_BAUD        (DBG_UART_BAUD)
 
 /// BLE Configure (Single or Multi-Connections)
 #define BLE_NB_SLAVE           (0)
-#define BLE_NB_MASTER          (1)
+#define BLE_NB_MASTER          (2)
 
 #define BLE_ADDR               {0x11, 0x08, 0x33, 0xA1, 0x01, 0xD2}
 #define BLE_DEV_NAME           "myBle-Master"
@@ -41,7 +44,7 @@
     #define DBG_GAPC           (1)
     #define DBG_GATT           (1)
     
-    #define DBG_KEYS           (1)
+    #define DBG_KEYS           (0)
 
 #endif
 

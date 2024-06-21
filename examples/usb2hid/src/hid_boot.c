@@ -34,127 +34,118 @@
 #if (ENB_KEYBD)
 /*!< keyboard interface config */
 #define KEYBD_INTF_NUM            0
-#define KEYBD_IN_EP               0x82 // USB_FIFO_BUG - avoid 0x81
+#define KEYBD_IN_EP               0x81
 #define KEYBD_IN_EP_SIZE          8
-#define KEYBD_IN_EP_INTERVAL      10
+//INTERVAL:1, 2, 4, 8, 16, ... 2**n
+#define KEYBD_IN_EP_INTERVAL      8
 #define KEYBD_REPORT_DESC_SIZE    sizeof(hid_keybd_report_desc)
 
 /*!< keyboard report descriptor */
 static const uint8_t hid_keybd_report_desc[] = {
-    0x05, 0x01, // USAGE_PAGE (Generic Desktop)
-    0x09, 0x06, // USAGE (Keyboard)
-    0xa1, 0x01, // COLLECTION (Application)
-    0x05, 0x07, // USAGE_PAGE (Keyboard)
-    0x19, 0xe0, // USAGE_MINIMUM (Keyboard LeftControl)
-    0x29, 0xe7, // USAGE_MAXIMUM (Keyboard Right GUI)
-    0x15, 0x00, // LOGICAL_MINIMUM (0)
-    0x25, 0x01, // LOGICAL_MAXIMUM (1)
-    0x75, 0x01, // REPORT_SIZE (1)
-    0x95, 0x08, // REPORT_COUNT (8)
-    0x81, 0x02, // INPUT (Data,Var,Abs)
-    0x95, 0x01, // REPORT_COUNT (1)
-    0x75, 0x08, // REPORT_SIZE (8)
-    0x81, 0x03, // INPUT (Cnst,Var,Abs)
-    0x95, 0x05, // REPORT_COUNT (5)
-    0x75, 0x01, // REPORT_SIZE (1)
-    0x05, 0x08, // USAGE_PAGE (LEDs)
-    0x19, 0x01, // USAGE_MINIMUM (Num Lock)
-    0x29, 0x05, // USAGE_MAXIMUM (Kana)
-    0x91, 0x02, // OUTPUT (Data,Var,Abs)
-    0x95, 0x01, // REPORT_COUNT (1)
-    0x75, 0x03, // REPORT_SIZE (3)
-    0x91, 0x03, // OUTPUT (Cnst,Var,Abs)
-    0x95, 0x06, // REPORT_COUNT (6)
-    0x75, 0x08, // REPORT_SIZE (8)
-    0x15, 0x00, // LOGICAL_MINIMUM (0)
-    0x25, 0xFF, // LOGICAL_MAXIMUM (255)
-    0x05, 0x07, // USAGE_PAGE (Keyboard)
-    0x19, 0x00, // USAGE_MINIMUM (Reserved (no event indicated))
-    0x29, 0x65, // USAGE_MAXIMUM (Keyboard Application)
-    0x81, 0x00, // INPUT (Data,Ary,Abs)
-    0xc0        // END_COLLECTION
+    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x06, // Usage (Keyboard)
+    0xA1, 0x01, // Collection (Application)
+    0x05, 0x07, //   Usage Page (Kbrd/Keypad)
+    0x19, 0xE0, //   Usage Minimum (0xE0)
+    0x29, 0xE7, //   Usage Maximum (0xE7)
+    0x15, 0x00, //   Logical Minimum (0)
+    0x25, 0x01, //   Logical Maximum (1)
+    0x75, 0x01, //   Report Size (1)
+    0x95, 0x08, //   Report Count (8)
+    0x81, 0x02, //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x01, //   Report Count (1)
+    0x75, 0x08, //   Report Size (8)
+    0x81, 0x03, //   Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x05, //   Report Count (5)
+    0x75, 0x01, //   Report Size (1)
+    0x05, 0x08, //   Usage Page (LEDs)
+    0x19, 0x01, //   Usage Minimum (Num Lock)
+    0x29, 0x05, //   Usage Maximum (Kana)
+    0x91, 0x02, //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x95, 0x01, //   Report Count (1)
+    0x75, 0x03, //   Report Size (3)
+    0x91, 0x03, //   Output (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x95, 0x06, //   Report Count (6)
+    0x75, 0x08, //   Report Size (8)
+    0x15, 0x00, //   Logical Minimum (0)
+    0x25, 0xFF, //   Logical Maximum (-1)
+    0x05, 0x07, //   Usage Page (Kbrd/Keypad)
+    0x19, 0x00, //   Usage Minimum (0x00)
+    0x29, 0x65, //   Usage Maximum (0x65)
+    0x81, 0x00, //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,       // End Collection
 };
 #endif
 
 #if (ENB_MOUSE)
 /*!< mouse interface config */
 #define MOUSE_INTF_NUM            (0 + ENB_KEYBD)
-#define MOUSE_IN_EP               (0x82 + ENB_KEYBD) // USB_FIFO_BUG - avoid 0x81
+#define MOUSE_IN_EP               (0x81 + ENB_KEYBD)
 #define MOUSE_IN_EP_SIZE          4
-#define MOUSE_IN_EP_INTERVAL      1 //10
+//INTERVAL:1, 2, 4, 8, 16, ... 2**n
+#define MOUSE_IN_EP_INTERVAL      1
 #define MOUSE_REPORT_DESC_SIZE    sizeof(hid_mouse_report_desc)
 
 /*!< mouse report descriptor */
 static const uint8_t hid_mouse_report_desc[] = {
-    0x05, 0x01, // USAGE_PAGE (Generic Desktop)
-    0x09, 0x02, // USAGE (Mouse)
-    0xA1, 0x01, // COLLECTION (Application)
-    0x09, 0x01, // USAGE (Pointer)
-    0xA1, 0x00, // COLLECTION (Physical)
-    0x05, 0x09, // USAGE_PAGE (Button)
-    0x19, 0x01, // USAGE_MINIMUM (Button 1)
-    0x29, 0x03, // USAGE_MAXIMUM (Button 3)
-    0x15, 0x00, // LOGICAL_MINIMUM (0)
-    0x25, 0x01, // LOGICAL_MAXIMUM (1)
-    0x95, 0x03, // REPORT_COUNT (3)
-    0x75, 0x01, // REPORT_SIZE (1)
-    0x81, 0x02, // INPUT (Data,Var,Abs)
-    0x95, 0x01, // REPORT_COUNT (1)
-    0x75, 0x05, // REPORT_SIZE (5)
-    0x81, 0x01, // INPUT (Cnst,Var,Abs)
-    0x05, 0x01, // USAGE_PAGE (Generic Desktop)
-    0x09, 0x30, // USAGE (X)
-    0x09, 0x31, // USAGE (Y)
-    0x09, 0x38,
-    0x15, 0x81, // LOGICAL_MINIMUM (-127)
-    0x25, 0x7F, // LOGICAL_MAXIMUM (127)
-    0x75, 0x08, // REPORT_SIZE (8)
-    0x95, 0x03, // REPORT_COUNT (2)
-    0x81, 0x06, // INPUT (Data,Var,Rel)
-    0xC0, 
-    0x09, 0x3c, 
-    0x05, 0xff, 
-    0x09, 0x01, 
-    0x15, 0x00, 
-    0x25, 0x01, 
-    0x75, 0x01, 
-    0x95, 0x02, 
-    0xb1, 0x22, 
-    0x75, 0x06, 
-    0x95, 0x01, 
-    0xb1, 0x01, 
-    0xc0        // END_COLLECTION
+    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x02, // Usage (Mouse)
+    0xA1, 0x01, // Collection (Application)
+    0x09, 0x01, //   Usage (Pointer)
+    0xA1, 0x00, //   Collection (Physical)
+    0x05, 0x09, //     Usage Page (Button)
+    0x19, 0x01, //     Usage Minimum (0x01)
+    0x29, 0x03, //     Usage Maximum (0x03)
+    0x15, 0x00, //     Logical Minimum (0)
+    0x25, 0x01, //     Logical Maximum (1)
+    0x95, 0x03, //     Report Count (3)
+    0x75, 0x01, //     Report Size (1)
+    0x81, 0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x01, //     Report Count (1)
+    0x75, 0x05, //     Report Size (5)
+    0x81, 0x01, //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x05, 0x01, //     Usage Page (Generic Desktop Ctrls)
+    0x09, 0x30, //     Usage (X)
+    0x09, 0x31, //     Usage (Y)
+    0x09, 0x38, //     Usage (Wheel)
+    0x15, 0x81, //     Logical Minimum (-127)
+    0x25, 0x7F, //     Logical Maximum (127)
+    0x75, 0x08, //     Report Size (8)
+    0x95, 0x03, //     Report Count (3)
+    0x81, 0x06, //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,       //   End Collection
+    0xC0,       // End Collection
 };
 
 #if (COPY_MOUSE)
 static const uint8_t hid_mouse_report_desc[] = {
-    0x05, 0x01, 
-    0x09, 0x02, 
-    0xA1, 0x01, 
-    0x09, 0x01, 
-    0xA1, 0x00, 
-    0x05, 0x09, 
-    0x19, 0x01, 
-    0x29, 0x03, 
-    0x15, 0x00, 
-    0x25, 0x01, 
-    0x75, 0x01, 
-    0x95, 0x03, 
-    0x81, 0x02, 
-    0x75, 0x05, 
-    0x95, 0x01, 
-    0x81, 0x01, 
-    0x05, 0x01, 
-    0x09, 0x30, 
-    0x09, 0x31, 
-    0x09, 0x38, 
-    0x15, 0x81, 
-    0x25, 0x7F, 
-    0x75, 0x08, 
-    0x95, 0x03, 
-    0x81, 0x06, 
-    0xC0, 
-    0xC0 
+    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x02, // Usage (Mouse)
+    0xA1, 0x01, // Collection (Application)
+    0x09, 0x01, //   Usage (Pointer)
+    0xA1, 0x00, //   Collection (Physical)
+    0x05, 0x09, //     Usage Page (Button)
+    0x19, 0x01, //     Usage Minimum (0x01)
+    0x29, 0x03, //     Usage Maximum (0x03)
+    0x15, 0x00, //     Logical Minimum (0)
+    0x25, 0x01, //     Logical Maximum (1)
+    0x75, 0x01, //     Report Size (1)
+    0x95, 0x03, //     Report Count (3)
+    0x81, 0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x75, 0x05, //     Report Size (5)
+    0x95, 0x01, //     Report Count (1)
+    0x81, 0x01, //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x05, 0x01, //     Usage Page (Generic Desktop Ctrls)
+    0x09, 0x30, //     Usage (X)
+    0x09, 0x31, //     Usage (Y)
+    0x09, 0x38, //     Usage (Wheel)
+    0x15, 0x81, //     Logical Minimum (-127)
+    0x25, 0x7F, //     Logical Maximum (127)
+    0x75, 0x08, //     Report Size (8)
+    0x95, 0x03, //     Report Count (3)
+    0x81, 0x06, //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,       //   End Collection
+    0xC0,       // End Collection
 };
 
 static const uint8_t hid_descriptor[] = {
@@ -275,21 +266,24 @@ static const usbd_config_t hid_configuration[] = {
  ****************************************************************************
  */
 
-bool suspend = false;
+volatile bool suspend = false;
 
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
-    switch (event) {
+    switch (event)
+    {
         case USBD_EVENT_RESET:
             suspend = false;
             usbd_hid_reset();
             break;
+        
+        case USBD_EVENT_SUSPEND:
+            suspend = true;
+            break;
+        
         case USBD_EVENT_RESUME:
         case USBD_EVENT_CLR_REMOTE_WAKEUP:
             suspend = false;
-            break;
-        case USBD_EVENT_SUSPEND:
-            suspend = true;
             break;
 
         default:
@@ -327,7 +321,7 @@ uint8_t hid_mouse_send_report(int8_t x)
     uint8_t mouse_report[4] = {0x00/*btns*/, 0/*x*/, 0/*y*/, 0/*wheel*/};
     
     mouse_report[1] = x;
-    ret = usbd_hid_send_report(MOUSE_IN_EP, 4, mouse_report);
+    ret = usbd_hid_send_report(MOUSE_IN_EP, MOUSE_IN_EP_SIZE, mouse_report);
     USB_LOG_RAW("mouse(x:%d,ret:%d)\r\n", mouse_report[1],ret);
     #endif
     
@@ -335,7 +329,7 @@ uint8_t hid_mouse_send_report(int8_t x)
 }
 
 #if (USE_KEYS)
-void hid_wakeup(void)
+void usbd_wakeup(void)
 {
     if (suspend && usbd_resume(1))
     {
@@ -355,25 +349,25 @@ void usbd_hid_leds(uint8_t leds)
 void usbdTest(void)
 {
     // keys_scan to send report
-    static uint16_t btn_lvl = BTNS;
+    static uint32_t btn_lvl = BTNS;
     uint8_t ret = 0;
-    uint16_t value = GPIO_PIN_GET() & BTNS;
-    uint16_t chng = btn_lvl ^ value;
+    uint32_t value = GPIO_PIN_GET() & BTNS;
+    uint32_t chng = btn_lvl ^ value;
     btn_lvl = value;
     
     if (chng) {
         uint8_t code = 0;
         
-        hid_wakeup();
+        usbd_wakeup();
         
         if ((chng & BTN1) && ((value & BTN1) == 0)) {
-            code = 4;//HID_KEY_A; //code = 40;//HID_KEY_ENTER;
+            code = HID_KEY_A;
         }
         if ((chng & BTN2) && ((value & BTN2) == 0)) {
-            code = 5;//HID_KEY_B; //code = 82;//HID_KEY_UP;
+            code = HID_KEY_B;
         }
         if ((chng & BTN3) && ((value & BTN3) == 0)) {
-            code = 6;//HID_KEY_C; //code = 81;//HID_KEY_DOWN;
+            code = HID_KEY_C;
         }
         
         debug("keys(val:%X,chng:%X,code:%d)\r\n", btn_lvl, chng, code);
@@ -384,15 +378,18 @@ void usbdTest(void)
         
         if (code) {
             GPIO_DAT_CLR(LED1);
-            hid_mouse_send_report(10);
+            hid_mouse_send_report(100);
         }
         else {
             GPIO_DAT_SET(LED1);
-            hid_mouse_send_report(-10);
+            hid_mouse_send_report(-100);
         }
     }
 }
 #else
+/// circle data
+int8_t x_offset[] = {-1,-2,-4,-5,-6,-7,-8,-9,-8,-8,-9,-8,-7,-6,-5,-4,-2,-1, 1, 2, 4, 5, 6, 7, 8, 9, 8,8,9,8,7,6,5,4,2,1};
+int8_t y_offset[] = { 8, 9, 8, 7, 6, 5, 4, 2, 1,-1,-2,-4,-5,-6,-7,-8,-9,-8,-8,-9,-8,-7,-6,-5,-4,-2,-1,1,2,4,5,6,7,8,9,8};
 void usbdTest(void)
 {
     // circle polling to send report
@@ -417,37 +414,36 @@ void usbdTest(void)
     /*!< mouse test */
     {
         uint8_t mouse_report[4] = {0x00/*btns*/, 0/*x*/, 0/*y*/, 0/*wheel*/};
-        //if ((keynum % 2) == 0)
-        //    mouse_report[1] = 8;
-        //else
-        //    mouse_report[1] = -8;
-        mouse_report[1] = keynum;
-        mouse_report[2] = keynum;
-        ret = usbd_hid_send_report(MOUSE_IN_EP, 4, mouse_report);
+
+        mouse_report[1] = (x_offset[keynum] * 2);
+        mouse_report[2] = (y_offset[keynum] * 2);
+        ret = usbd_hid_send_report(MOUSE_IN_EP, MOUSE_IN_EP_SIZE, mouse_report);
         USB_LOG_RAW("hid_mouse(x:%d,ret:%d)\r\n", mouse_report[1],ret);
     }
     #endif
 
     if (ret == USBD_OK) {
-        //if (++keynum > 94*2) keynum = 0;
-    GPIO_DAT_SET(GPIO17);
-        ++keynum;
-    GPIO_DAT_CLR(GPIO17);
+        keynum = (keynum + 1) % sizeof(x_offset);
+        bootDelayUs(990);
     }
 }
+
 #endif
 
 void usbdInit(void)
 {
+    suspend = false;
+    // enable USB clk and iopad
+    rcc_usb_en();
     usbd_init();
     usbd_register(hid_descriptor, hid_configuration);
+    NVIC_EnableIRQ(USB_IRQn);
     
     for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {
         usbd_hid_init(idx, &hid_interface[idx]);
     }
     
     keys_init();
-    GPIO_DIR_SET_LO(GPIO17 | GPIO18);
 }
 
 #endif // (DEMO_HID_BOOT)

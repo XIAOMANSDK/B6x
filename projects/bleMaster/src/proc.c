@@ -32,14 +32,20 @@
 
 enum uart_cmd
 {
-    CMD_DISCONNECT = 0xA0,
-    CMD_CONNECT    = 0xA1,
-    CMD_SCAN       = 0xA2,
+    CMD_DISCONNECT       = 0xA0,
+    CMD_CONNECT          = 0xA1,
+    CMD_SCAN             = 0xA2,
     
-    CMD_GATT_EXMTU = 0xB0,
+    CMD_GATT_EXMTU       = 0xB0,
     CMD_GATT_DISC,
     CMD_GATT_READ,
     CMD_GATT_WRITE,
+    
+    CMD_SESS             = 0xBB,
+    
+    CMD_GAPC_LENGTH      = 0xC0,
+    CMD_GAPC_PEER_BDADDR,
+    CMD_GAPC_UPDATE_CONN,
 };
 
 #define CMD_MAX_LEN           20
@@ -53,7 +59,6 @@ static uint16_t buff_len = 0;
  * FUNCTIONS
  ****************************************************************************************
  */
-
 static void uart_proc(void)
 {
     static uint8_t null_cnt = 0;
@@ -86,13 +91,32 @@ static void uart_proc(void)
     {
         case CMD_DISCONNECT:
         {
-            DEBUG("Disconnect");
-            gapc_disconnect(app_env.curidx);
+            if (0 == ONE_BITS(app_env.conbits))
+            {
+                DEBUG("No connected(%d), disconnection not allowed.", ONE_BITS(app_env.conbits));
+            }
+            else
+            {
+                if (buff_len == 1)
+                {
+                    DEBUG("Disconnect ALL, num_conn:%d", ONE_BITS(app_env.conbits));
+                    for (uint8_t i = 0; i < ONE_BITS(app_env.conbits); ++i)
+                    {
+                        gapc_disconnect(i);
+                        DEBUG("Disconnect(cid:%d)", i);
+                    }
+                }
+                else if (buff_len == 2)
+                {
+                    gapc_disconnect(buff[1]);
+                    DEBUG("Disconnect(%d), num_conn:%d", buff[1], ONE_BITS(app_env.conbits));
+                }
+            }
         } break;
         
         case CMD_CONNECT:
         {
-            app_init_action(ACTV_STOP);  //20211101
+//            app_init_action(ACTV_STOP);  //20211101
             
             if (buff_len == 1)
             {
@@ -238,6 +262,18 @@ static void uart_proc(void)
                 }
             }
         } break;
+
+        #if (PRF_SESS)
+        case CMD_SESS:
+        {
+            if (buff_len >= 2)
+            {
+                uint8_t conidx = buff[1];
+                DEBUG("SESS NTF(cid:%d,len:%d)", conidx, buff_len-2);
+                sess_txd_send(conidx, buff_len-2, &buff[2]);
+            }
+        } break;
+        #endif
         
         case CMD_GATT_EXMTU:
         {           
@@ -246,7 +282,67 @@ static void uart_proc(void)
             DEBUG("GATT ExMTU:%d(23~512,blen:%d)", mtu, buff_len);           
             gatt_exmtu(app_env.curidx, mtu);
         } break;
+        
+        case CMD_GAPC_LENGTH:
+        {
+            uint8_t conidx = app_env.curidx;
+            DEBUG("Peer Length(cid:%d)", conidx);
+            if (buff_len >= 2)
+            {
+                conidx = buff[1];
+            }
+            gapc_update_dle(conidx, LE_MAX_OCTETS, LE_MAX_TIME);
+        } break;
+        
+        case CMD_GAPC_PEER_BDADDR:
+        {
+            uint8_t sta = app_state_get();
+            uint8_t conidx = app_env.curidx;
+            DEBUG("get bdaddr(cid:%d, sta:%d)", conidx, sta);
 
+            if (sta >= APP_CONNECTED)
+            {
+                if (buff_len >= 2)
+                {
+                    conidx = buff[1];
+                }
+                struct gap_bdaddr* peer_bdaddr = gapc_get_bdaddr(conidx, GAPC_SMP_INFO_PEER);
+                DEBUG("Peer BDaddr:");
+                debugHex((uint8_t *)peer_bdaddr, sizeof(struct gap_bdaddr));
+
+                peer_bdaddr = gapc_get_bdaddr(conidx, GAPC_SMP_INFO_LOCAL);
+                DEBUG("Local BDaddr:");
+                debugHex((uint8_t *)peer_bdaddr, sizeof(struct gap_bdaddr));
+            }
+            else
+            {
+                DEBUG("No connected. Get BDaddr not allowed.");
+            }
+        } break;
+        
+        case CMD_GAPC_UPDATE_CONN:
+        {
+            uint8_t conidx = app_env.curidx;
+            struct gapc_conn_param long_latency = 
+            {
+                .intv_min = 8,
+                .intv_max = 8,
+                .latency  = 247,
+                .time_out = 1500,
+            };
+            
+            if (buff_len >= 5)
+            {
+                conidx = buff[1];
+                long_latency.intv_min = buff[2];
+                long_latency.intv_max = buff[2];
+                long_latency.latency  = read16p(buff+3);
+            }
+            
+            DEBUG("update param(cid:%d, intv:%d, latency:%d)", conidx, long_latency.intv_min, long_latency.latency);
+            gapc_update_param(conidx, &long_latency);
+        } break;
+        
         default:
         {
 

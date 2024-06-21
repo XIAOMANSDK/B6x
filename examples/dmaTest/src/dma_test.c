@@ -25,7 +25,7 @@
 #define DMA_CH_UART_TX     DMA_CH1 // Basic mode
 
 /// Uart Port and Params
-#define TEST_PORT          UART1_PORT
+#define TEST_PORT          0 //0:UART1_PORT  1:UART2_PORT
 #define TEST_BAUD          BRR_DIV(115200, 16M)
 #define TEST_LCRS          LCR_BITS(8, 1, none)
 
@@ -121,14 +121,21 @@ static void dmaUartRxDone(void)
 
 static void dmaUartRxRtor(void)
 {
+    #if (TEST_PORT == 0)
     uint32_t iflag = UART1->IFM.Word; // UART1->RIF.Word;
-
+    #else
+    uint32_t iflag = UART2->IFM.Word; // UART2->RIF.Word;
+    #endif
+    
     if (iflag & UART_IR_RTO_BIT)
     {
         GPIO_DAT_SET(GPIO_RX_RTOR);
-        
-        // clear rto
-        UART1->ICR.Word = UART_IR_RTO_BIT;
+
+        #if (TEST_PORT == 0)
+            UART1->ICR.Word = UART_IR_RTO_BIT; // clear rto
+        #else
+            UART2->ICR.Word = UART_IR_RTO_BIT; // clear rto
+        #endif
         
         // update head to middle
         if (rxChnlAlt)
@@ -179,6 +186,11 @@ void UART1_IRQHandler(void)
     dmaUartRxRtor();
 }
 
+void UART2_IRQHandler(void)
+{
+    dmaUartRxRtor();
+}
+
 static void dmaUartLoop(void)
 {
     uint16_t len;
@@ -192,15 +204,25 @@ static void dmaUartLoop(void)
     if (len > 0)
     {
         txChnlBusy = true;
+        
+        #if (TEST_PORT == 0)
         DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, txdBuffer, len, CCM_BASIC);
+        #else
+        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, txdBuffer, len, CCM_BASIC);
+        #endif
     }
 }
 
 void dmaUartSend(const uint8_t *data, uint16_t len)
 {
     txChnlBusy = true;
-    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, data, len, CCM_BASIC);
 
+    #if (TEST_PORT == 0)
+    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, data, len, CCM_BASIC);
+    #else
+    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, data, len, CCM_BASIC);
+    #endif
+    
     while (txChnlBusy); // wait done
     //while (!(UART1->SR.TEM)); //Wait Transmitter Empty
 }
@@ -239,14 +261,23 @@ static void dmaUartLoop(void)
     if (len > 0)
     {
         txChnlBusy = true;
+        
+        #if (TEST_PORT == 0)
         DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, txdBuffer, len, CCM_BASIC);
+        #else
+        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, txdBuffer, len, CCM_BASIC);
+        #endif
     }
 }
 
 void dmaUartSend(const uint8_t *data, uint16_t len)
 {
+    #if (TEST_PORT == 0)
     DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, data, len, CCM_BASIC);
-
+    #else
+    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, data, len, CCM_BASIC);
+    #endif
+        
     while (!dma_chnl_done(DMA_CH_UART_TX)); // wait done
     //while (!(UART1->SR.TEM)); //Wait Transmitter Empty
 }
@@ -258,14 +289,23 @@ void dmaTest(void)
     
     dma_init();
     
+    #if (TEST_PORT == 0)
     // init dma chnl
     DMA_UARTx_TX_INIT(DMA_CH_UART_TX, 1);
     DMA_UARTx_RX_INIT(DMA_CH_UART_RX, 1);
     // config RX chnl
     DMA_UARTx_RX_CONF(DMA_CH_UART_RX, 1, &rxdBuffer[0], RXD_BUFF_HALF, CCM_PING_PONG);
     DMA_UARTx_RX_CONF(DMA_CH_UART_RX | DMA_CH_ALT, 1, &rxdBuffer[RXD_BUFF_HALF], RXD_BUFF_HALF, CCM_PING_PONG);
+    #else
+    // init dma chnl
+    DMA_UARTx_TX_INIT(DMA_CH_UART_TX, 2);
+    DMA_UARTx_RX_INIT(DMA_CH_UART_RX, 2);
+    // config RX chnl
+    DMA_UARTx_RX_CONF(DMA_CH_UART_RX, 2, &rxdBuffer[0], RXD_BUFF_HALF, CCM_PING_PONG);
+    DMA_UARTx_RX_CONF(DMA_CH_UART_RX | DMA_CH_ALT, 2, &rxdBuffer[RXD_BUFF_HALF], RXD_BUFF_HALF, CCM_PING_PONG);
+    #endif
     
-    #if !((DBG_MODE == 1) && (TEST_PORT == UART1_PORT))
+    #if !((DBG_MODE == 1) && (TEST_PORT == 0))
     // init uart param
     uart_init(TEST_PORT, PA_UART_TX, PA_UART_RX);
     uart_conf(TEST_PORT, TEST_BAUD, TEST_LCRS);
@@ -278,7 +318,13 @@ void dmaTest(void)
     // enable irq
     DMACHCFG->IEFR0 = (1UL << DMA_CH_UART_RX) | (1UL << DMA_CH_UART_TX);
     NVIC_EnableIRQ(DMAC_IRQn);
+    
+    #if (TEST_PORT == 0)
     NVIC_EnableIRQ(UART1_IRQn);
+    #else
+    NVIC_EnableIRQ(UART2_IRQn);
+    #endif
+    
     __enable_irq();
     #endif
     

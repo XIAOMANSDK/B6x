@@ -1,6 +1,6 @@
+#include "drvs.h"
 #include "usbd.h"
 #include "usbd_cdc.h"
-#include "uart.h"
 
 #define USBD_BCD                  USB_2_0 // Version
 #define USBD_VID                  0xFFFF  // Vendor ID
@@ -164,7 +164,7 @@ void usbd_cdc_bulk_out_handler(uint8_t ep)
     
     /*!< here you can output data to hardware */
     for (uint8_t i = 0; i < read_byte; i++) {
-        uart_putc(0, data[i]);
+        uart_putc(UART1_PORT, data[i]);
     }
 }
 
@@ -192,10 +192,13 @@ uint8_t cdc_bulk_buff[CDC_BULK_TX_SIZE];
 
 void usbdInit(void)
 {
+    // enable USB clk and iopad
+    rcc_usb_en();
     usbd_init();
     usbd_register(cdc_descriptor, cdc_configuration);
     
     usbd_cdc_init(0, CDC0_INTF_NUM, CDC0_IN_EP);
+    NVIC_EnableIRQ(USB_IRQn);
     #if (ENB_CDC_CNT > 1)
     usbd_cdc_init(1, CDC1_INTF_NUM, CDC1_IN_EP);
     #endif

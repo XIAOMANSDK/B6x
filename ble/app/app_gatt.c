@@ -37,6 +37,7 @@
 
 APP_MSG_HANDLER(gatt_cmp_evt)
 {
+    // operation @see enum gatt_operation
     DEBUG("Cmp_evt(op:%d,sta:0x%02x)", param->operation, param->status);
 }
 

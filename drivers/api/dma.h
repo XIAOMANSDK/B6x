@@ -325,6 +325,22 @@ extern volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
 #define DMA_MDM_RX_CONF(chidx, buff, len, ccm)       \
             dma_chnl_conf(chidx, DMA_PTR_MDM_RX, (uint32_t)&(buff)[(len)-1], TRANS_PER_RD(ccm, len, IN_BYTE, IN_BYTE))
 
+// chidx: @see enum dma_channel(Note:only primary channle enum dma_channel)
+// Enable DMA Channle Interrupt.
+#define DMACHNL_INT_EN(chidx)       ( DMACHCFG->IEFR0 |= (0x01UL << (chidx)) )
+
+// Disable DMA Channle Interrupt.
+#define DMACHNL_INT_DIS(chidx)      ( DMACHCFG->IEFR0 &= ~(0x01UL << (chidx)) )
+
+// Clear DMA Channle Interrupt Flag.
+#define DMACHNL_INT_CLR(chidx)      ( DMACHCFG->ICFR0 = (0x01UL << (chidx)) )
+
+// Get DMA Channle Interrupt Flag.
+#define DMACHNL_INT_GET(chidx)      ( (DMACHCFG->IFLAG0 >> chidx) & 0x01UL)
+
+// Get All DMA Channle Interrupt Flag.
+#define DMACHNL_INT_GET_ALL()       ( DMACHCFG->IFLAG0 )
+
 /*
  * FUNCTION DECLARATION
  ****************************************************************************************
@@ -332,7 +348,7 @@ extern volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
  
 /**
  ****************************************************************************************
- * @brief Init DMA Module
+ * @brief Init DMA Module.
  * 
  ****************************************************************************************
  */
@@ -340,7 +356,7 @@ void dma_init(void);
 
 /**
  ****************************************************************************************
- * @brief Deinit DMA Module
+ * @brief Deinit DMA Module.
  *
  ****************************************************************************************
  */
@@ -348,7 +364,7 @@ void dma_deinit(void);
 
 /**
  ****************************************************************************************
- * @brief Init DMA Channel
+ * @brief Init DMA Channel.
  *
  * @param[in] chidx  Channel index @see enum dma_channel, *only primary part*
  * @param[in] chsel  Selected peripheral @see enum dma_peripheral
@@ -359,7 +375,7 @@ void dma_chnl_init(uint8_t chidx, uint8_t chsel);
 
 /**
  ****************************************************************************************
- * @brief Deinit DMA Channel
+ * @brief Deinit DMA Channel.
  *
  * @param[in] chidx  Channel index @see enum dma_channel, *only primary part*
  *
@@ -369,7 +385,7 @@ void dma_chnl_deinit(uint8_t chidx);
 
 /**
  ****************************************************************************************
- * @brief Configure DMA Channel Control, then enable
+ * @brief Configure DMA Channel Control, then enable.
  *
  * @param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*
  * @param[in] src_ep Source data end pointer address, eg. (uint32_t)&buff[len-1]
@@ -393,7 +409,7 @@ bool dma_chnl_reload(uint8_t chidx);
 
 /**
  ****************************************************************************************
- * @brief Read DMA Channel remain cycles
+ * @brief Read DMA Channel remain cycles.
  *
  * @param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*
  *
@@ -401,7 +417,19 @@ bool dma_chnl_reload(uint8_t chidx);
  ****************************************************************************************
  */
 uint16_t dma_chnl_remain(uint8_t chidx);
+
+/**
+ ****************************************************************************************
+ * @brief Read DMA Channel CCM_PING_PONG Mode remain cycles.
+ *
+ * @param[in]  chidx  Channel index @see enum dma_channel, *incl alternate part*
+ * @param[out] len    remain cycles of wait transfer.
+ *
+ * @return true is alt-channel(pong), false is primary-channel(ping).
+ ****************************************************************************************
+ */
 bool dma_chnl_remain_pingpong(uint8_t chidx, uint16_t *len);
+
 /**
  ****************************************************************************************
  * @brief Enable or disable DMA Channel after configured.
@@ -423,6 +451,5 @@ void dma_chnl_ctrl(uint8_t chidx, uint8_t ctrl);
  ****************************************************************************************
  */
 bool dma_chnl_done(uint8_t chidx);
-
 
 #endif// _DMA_H_
