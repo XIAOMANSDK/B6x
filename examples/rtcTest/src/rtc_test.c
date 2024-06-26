@@ -106,8 +106,8 @@ void rtcTest(void)
     NVIC_EnableIRQ(RTC_IRQn);
 
     // tmr enable
-    adtmr_init(TMR_PSC, TMR_ARR);
-    adtmr_ctrl(TMR_PERIOD_MODE, TMR_IR_UI_BIT);
+    atmr_init(TMR_PSC, TMR_ARR);
+    atmr_ctrl(TMR_PERIOD_MODE, TMR_IR_UI_BIT);
     NVIC_EnableIRQ(ATMR_IRQn);
 
     __enable_irq();

@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>gfskTest</TargetName>
+      <TargetName>bleMasterSlave</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
@@ -20,7 +20,7 @@
           <Cpu>CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll></FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20003000 -FC1000 -FN1 -FF0B6x_256kB_PY_D -FS018000000 -FL040000 -FP0($$Device:B6x$.\Flash\B6x_256kB_PY_D.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -48,7 +48,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\output\</OutputDirectory>
-          <OutputName>gfskTest</OutputName>
+          <OutputName>bleMasterSlave</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -109,7 +109,7 @@
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments>  </SimDllArguments>
+          <SimDllArguments> -REMAP </SimDllArguments>
           <SimDlgDll>DARMCM1.DLL</SimDlgDll>
           <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
@@ -190,8 +190,8 @@
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
-            <RoSelD>0</RoSelD>
-            <RwSelD>0</RwSelD>
+            <RoSelD>4</RoSelD>
+            <RwSelD>4</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
@@ -248,7 +248,7 @@
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0x1000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -336,7 +336,7 @@
               <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\core;..\..\..\core\mdk;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf</IncludePath>
+              <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\..\..\core\mdk\link_xip.sct</ScatterFile>
+            <ScatterFile>..\..\..\core\mdk\link_xip_ble.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc>--diag_suppress=L6312,L6314,L6329</Misc>
@@ -401,9 +401,19 @@
               <FilePath>..\src\main.c</FilePath>
             </File>
             <File>
+              <FileName>myapp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\myapp.c</FilePath>
+            </File>
+            <File>
               <FileName>proc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\proc.c</FilePath>
+            </File>
+            <File>
+              <FileName>keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\keys.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -429,6 +439,76 @@
               <FileName>uart1Rb.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\modules\src\uart1Rb.c</FilePath>
+            </File>
+            <File>
+              <FileName>leds.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\modules\src\leds.c</FilePath>
+            </File>
+            <File>
+              <FileName>sftmr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\modules\src\sftmr.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ble\app</GroupName>
+          <Files>
+            <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_actv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app_actv.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app_msg.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gapm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app_gapm.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gapc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app_gapc.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gatt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app_gatt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ble\prf</GroupName>
+          <Files>
+            <File>
+              <FileName>prf_diss.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\prf\prf_diss.c</FilePath>
+            </File>
+            <File>
+              <FileName>prf_sess.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\prf\prf_sess.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ble\lib</GroupName>
+          <Files>
+            <File>
+              <FileName>ble6_8act_6con.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\..\ble\lib\ble6_8act_6con.lib</FilePath>
             </File>
           </Files>
         </Group>
