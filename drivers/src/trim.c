@@ -100,11 +100,14 @@ typedef struct
 
 void trim_load(void)
 {
+    // 10ms iwdt rst. 
+    // fixbug--Low temperature poweron run fly. 2024.06.27 --- 6vp.
+    iwdt_conf(160); 
+    
     // adjust coreldo and aonldo voltage to 1.2v
     // AONLDO VOL > CORELDO VOL, BKHOLD_CTRL defult:0x2008
 //    AON->BKHOLD_CTRL.CORELDO_TRIM_RUN      = 0x1B;
 //    AON->BKHOLD_CTRL.AONLDO_TRIM_RUN       = 0x01;
-    AON->BKHOLD_CTRL.Word = (0x01B1UL << AON_AONLDO_TRIM_RUN_LSB) | (AON->BKHOLD_CTRL.Word & 0xFFFFUL);
     
     // LDO_UD_CTRL default:0x100
     // deepsleep mode, coreldo auto undertension to 1.0v
@@ -114,7 +117,6 @@ void trim_load(void)
     // poweroff mode, aonldo auto undertension to 1.0v
 //    APBMISC->LDO_UD_CTRL.AONLDO_TRIM_OFF   = 0x04;
 //    APBMISC->LDO_UD_CTRL.AONLDO_UD_STEP    = 0x07;
-    APBMISC->LDO_UD_CTRL.Word = 0x00740314;
     
     // DBG_CTRL default:0x00
 //    SYSCFG->DBG_CTRL.IWDT_DEBUG            = 1;
@@ -123,6 +125,8 @@ void trim_load(void)
     // flash trim vaild judge
     if (RD_32(FSH_TRIM_ADDR + 0x18) != TRIM_VALID_VALUE) 
     {
+        AON->BKHOLD_CTRL.Word     = (0x01B1UL << AON_AONLDO_TRIM_RUN_LSB) | (AON->BKHOLD_CTRL.Word & 0xFFFFUL);
+        APBMISC->LDO_UD_CTRL.Word = 0x00740314;
         return ; // trim invaild
     }
 
@@ -142,13 +146,20 @@ void trim_load(void)
 
     if ((trim->VAL04.Word != 0xFFFFFFFF) && (trim->VAL04.Word & 0x0A) == 0x0A)
     {
+        AON->BKHOLD_CTRL.Word     = (trim->VAL04.CORELDO_TRIM_RUN << AON_CORELDO_TRIM_RUN_LSB) 
+                                    | (trim->VAL04.AONLDO_TRIM_RUN << AON_AONLDO_TRIM_RUN_LSB) 
+                                    | (AON->BKHOLD_CTRL.Word & 0xFFFFUL);
+        
+        APBMISC->LDO_UD_CTRL.Word = (trim->VAL04.CORELDO_TRIM_DP << APBMISC_CORELDO_TRIM_STEP_LSB)
+                                    | (trim->VAL04.AONLDO_TRIM_OFF << APBMISC_AONLDO_TRIM_OFF_LSB)
+                                    | (0x07 << APBMISC_AONLDO_UD_STEP_LSB) | (0x03 << APBMISC_CORELDO_TRIM_STEP_LSB);
         // coreldo
-        AON->BKHOLD_CTRL.CORELDO_TRIM_RUN    = trim->VAL04.CORELDO_TRIM_RUN;
-        APBMISC->LDO_UD_CTRL.CORELDO_TRIM_DP = trim->VAL04.CORELDO_TRIM_DP;
+//        AON->BKHOLD_CTRL.CORELDO_TRIM_RUN    = trim->VAL04.CORELDO_TRIM_RUN;
+//        APBMISC->LDO_UD_CTRL.CORELDO_TRIM_DP = trim->VAL04.CORELDO_TRIM_DP;
         
         // aonldo
-        AON->BKHOLD_CTRL.AONLDO_TRIM_RUN     = trim->VAL04.AONLDO_TRIM_RUN;
-        APBMISC->LDO_UD_CTRL.AONLDO_TRIM_OFF = trim->VAL04.AONLDO_TRIM_OFF;
+//        AON->BKHOLD_CTRL.AONLDO_TRIM_RUN     = trim->VAL04.AONLDO_TRIM_RUN;
+//        APBMISC->LDO_UD_CTRL.AONLDO_TRIM_OFF = trim->VAL04.AONLDO_TRIM_OFF;
     }
 
     if ((trim->VAL03.Word != 0xFFFFFFFF) && (trim->VAL03.Word & 0x0A) == 0x0A)
@@ -171,6 +182,7 @@ void trim_load(void)
 //    {        
 //        APBMISC->XOSC16M_CTRL.LDO_XOSC_TR = trim->VAL03.LDO_XOSC_TR;
 //    }
+    iwdt_conf(0x20000); //restore iwdt rst 8192ms.
 }
 
 uint32_t get_trim_rc16m_freq(void)

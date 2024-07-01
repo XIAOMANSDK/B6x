@@ -127,8 +127,18 @@ int __main(void)
     // AONLDO VOL > CORELDO VOL
     //AON->BKHOLD_CTRL.CORELDO_TRIM_RUN = 0x1B;
     //AON->BKHOLD_CTRL.AONLDO_TRIM_RUN  = 0x01;
-    AON->BKHOLD_CTRL.Word = 0x01B12008;
     
+//    if ((AON->BKHOLD_CTRL.Word & 0x01FF0000U) == 0)
+    {
+        // 10ms iwdt rst. 
+        // fixbug--Low temperature poweron run fly. 2024.06.27 --- 6vp.
+//        iwdt_conf(160); 
+//        AON->BKHOLD_CTRL.Word = 0x01B12008;
+//        // Re-enable WatchDog
+//        iwdt_conf(0x20000);
+    }
+    ///Program Size: Code=176 RO-data=24 RW-data=0 ZI-data=1536  
+    ///Program Size: Code=188 RO-data=24 RW-data=0 ZI-data=1536  
     // Close interrupt, already
     //__disable_irq();
 
