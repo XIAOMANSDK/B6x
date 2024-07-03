@@ -29,7 +29,7 @@
 #endif //(HID_BOOT_SUP)
 
 #if (HID_REPORT_SUP)
-    #define HID_RPT_KB              (0)
+    #define HID_RPT_KB              (1)
     #define HID_RPT_MEDIA           (0)
     #define HID_RPT_SYSTEM          (0)
     #define HID_RPT_MOUSE           (1)

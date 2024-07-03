@@ -87,6 +87,7 @@ enum rpt_ntf_idx
 #define keybd_report_send(conidx, p_data)   hids_report_send(conidx, RPT_IDX_KB,     RPT_LEN_KB,     p_data)
 #define media_report_send(conidx, p_data)   hids_report_send(conidx, RPT_IDX_MEDIA,  RPT_LEN_MEDIA,  p_data)
 #define system_report_send(conidx, p_data)  hids_report_send(conidx, RPT_IDX_SYSTEM, RPT_LEN_SYSTEM, p_data)
+#define ptp_report_send(conidx, p_data)     hids_report_send(conidx, RPT_IDX_TP,     RPT_LEN_TP, p_data)
 
 
 /*

@@ -24,9 +24,11 @@
 /// Debug Mode: 0=Disable, 1=via UART, 2=RTT Viewer
 #define DBG_MODE            (1)
 
-#define DBG_UART_TXD        (2) // PA02
-#define DBG_UART_RXD        (3) // PA03
+#define DBG_UART_TXD        (8) // PA08
+#define DBG_UART_RXD        (9) // PA09
 #define DBG_UART_BAUD       (BRR_921600)
+
+#define PCM_SAMPLE_NB       (8) // 256: 32ms  8000Hz
 
 /// USB Debug Level: 0=Disable, 1=Error, 2=Warning
 #if (DBG_MODE)

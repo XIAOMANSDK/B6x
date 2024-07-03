@@ -1031,6 +1031,8 @@ enum att_info_mask
     ATT_PROP_EXT_POS       = 15,
 };
 
+#define ATT_PERM(prop, auth) (((auth) & SEC_SECURE_CON) << ATT_PERM_##prop##_LSB)
+
 /**
  * Attribute extended information Bit Field
  *

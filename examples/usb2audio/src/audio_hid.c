@@ -20,7 +20,7 @@
 #define AUDIO_IN_EP                 0x83
 #define AUDIO_IN_EP_INTV            0x01   // unit in 1ms
 
-#define AUDIO_IN_FREQ               16000U // 16K
+#define AUDIO_IN_FREQ               8000U // 16K
 #define AUDIO_IN_FRAME_SIZE         2      // unit in byte
 #define AUDIO_IN_RESOL_BITS         16     // unit in bit
 #define AUDIO_IN_CHNLS              1      // Mono:1
@@ -196,7 +196,7 @@ enum intf_num {
 
 #define AUDIO_AS_DESC_SIZE          ( AUDIO_AS_DESCRIPTOR_INIT_LEN(1) )
 
-#define AUDIO_AC_STRING_INDEX       (6)
+#define AUDIO_AC_STRING_INDEX       (0)
 
 /// HID Desc Size
 #define HID_STD_DESC_SIZE           ( 18 + 7*1 ) // 1 EP: IN
@@ -211,7 +211,7 @@ enum intf_num {
 /*!< USB device descriptor */
 const uint8_t usb_descriptor[] = {
     /* Descriptor - Device (Size:18) */
-    USB_DEVICE_DESCRIPTOR_INIT0(USB_1_1, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, USBD_BCD, 0x01),
+    USB_DEVICE_DESCRIPTOR_INIT(USB_1_1, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, USBD_BCD, 0x01),
     
     /* Descriptor - Configuration (Total Size:9+Intf_Size) */
     USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT, 
@@ -306,7 +306,7 @@ const uint8_t usb_string_iSerial[] = {
     // String3 - iSerial
     0x22,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('H'),                 /* wcChar0 */
+    WCHAR('X'),                 /* wcChar0 */
     WCHAR('S'),                 /* wcChar1 */
     WCHAR('M'),                 /* wcChar2 */
     WCHAR('A'),                 /* wcChar3 */
@@ -501,12 +501,50 @@ void usbdInit()
     NVIC_EnableIRQ(USB_IRQn);
 }
 
+//void usbdTest()
+//{
+//    if (usbd_is_configured()) {
+//        if (mic_state == MIC_IDLE) {
+//            uint8_t status = 0;
+//            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
+
+//            GPIO_DAT_SET(GPIO16);
+//            mic_state = MIC_BUSY;
+//            status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
+
+//            if (status != USBD_OK) {
+//                if (mic_state != MIC_OFF) {
+//                    mic_state = MIC_IDLE;
+//                }
+//                USB_LOG_RAW("err:%d, tmp:%02X\r\n", status, mic_tmp);
+//            } else {
+//                USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
+//            }
+//            GPIO_DAT_CLR(GPIO16);
+//            
+//            mic_tmp++;
+//        }
+//    }
+//}
+
+
+#include "micphone.h"
+bool mic_flag = false;
+
 void usbdTest()
 {
+    uint8_t *ptr = micDataGet();  // PCM_SAMPLE_NB = 8;
+
+    if (ptr != NULL)
+    {
+        mic_flag = true;
+        memcpy(mic_buffer, ptr, AUDIO_IN_EP_MPS);
+    }
+    
     if (usbd_is_configured()) {
-        if (mic_state == MIC_IDLE) {
+        if ((mic_state == MIC_IDLE) && mic_flag) {
             uint8_t status = 0;
-            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
+//            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
 
             GPIO_DAT_SET(GPIO16);
             mic_state = MIC_BUSY;
@@ -523,6 +561,8 @@ void usbdTest()
             GPIO_DAT_CLR(GPIO16);
             
             mic_tmp++;
+            
+            mic_flag = false;
         }
     }
 }

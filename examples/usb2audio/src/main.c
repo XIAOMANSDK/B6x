@@ -11,7 +11,7 @@
 #include "b6x.h"
 #include "drvs.h"
 #include "dbg.h"
-
+#include "micphone.h"
 
 /*
  * DEFINES
@@ -43,6 +43,8 @@ static void devInit(void)
     debug("Start(rsn:0x%X)...\r\n", rsn);
     
     usbdInit();
+    
+    micInit();
 }
 
 int main(void)

@@ -453,6 +453,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>modules</GroupName>
+          <Files>
+            <File>
+              <FileName>micphone.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\modules\src\micphone.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>debug</GroupName>
           <Files>
             <File>

@@ -15,7 +15,7 @@
 #define AUDIO_IN_EP                 0x81
 #define AUDIO_IN_EP_INTV            0x01   // unit in 1ms
 
-#define AUDIO_IN_FREQ               16000U // 16K
+#define AUDIO_IN_FREQ               8000U // 16K
 #define AUDIO_IN_FRAME_SIZE         2      // unit in byte
 #define AUDIO_IN_RESOL_BITS         16     // unit in bit
 #define AUDIO_IN_CHNLS              1      // Mono:1
@@ -229,14 +229,53 @@ void usbdInit()
     NVIC_EnableIRQ(USB_IRQn);
 }
 
+//void usbdTest()
+//{
+//    if (usbd_is_configured()) {
+//        if (mic_state == MIC_IDLE) {
+//            
+//            uint8_t status = 0;
+//            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
+//            
+//            GPIO_DIR_SET_HI(GPIO16);
+//            mic_state = MIC_BUSY;
+//            status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
+
+//            if (status != USBD_OK) {
+//                if (mic_state != MIC_OFF) {
+//                    mic_state = MIC_IDLE;
+//                }
+//                USB_LOG_RAW("err:%d, tmp:%02X\r\n", status, mic_tmp);
+//            } else {
+//                USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
+//            }
+//            GPIO_DIR_SET_LO(GPIO16);
+//            
+//            mic_tmp++;
+//        }
+//    }
+//}
+
+#include "micphone.h"
+bool mic_flag = false;
+
 void usbdTest()
 {
-    if (usbd_is_configured()) {
-        if (mic_state == MIC_IDLE) {
-            uint8_t status = 0;
-            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
+    uint8_t *ptr = micDataGet();
 
-            GPIO_DAT_SET(GPIO16);
+    if (ptr != NULL)
+    {
+        mic_flag = true;
+        memcpy(mic_buffer, ptr, AUDIO_IN_EP_MPS);  // PCM_SAMPLE_NB = 8;
+    }
+    
+    if (usbd_is_configured()) {
+        if ((mic_state == MIC_IDLE) && mic_flag) {
+            
+            uint8_t status = 0;
+//            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
+            
+            GPIO_DIR_SET_HI(GPIO16);
             mic_state = MIC_BUSY;
             status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
 
@@ -248,9 +287,11 @@ void usbdTest()
             } else {
                 USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
             }
-            GPIO_DAT_CLR(GPIO16);
+            GPIO_DIR_SET_LO(GPIO16);
             
             mic_tmp++;
+            
+            mic_flag = false;
         }
     }
 }
