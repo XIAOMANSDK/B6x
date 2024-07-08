@@ -310,3 +310,117 @@ int adpcm_decoder(char* indata, short* outdata, int len, struct adpcm_state* sta
  
     return count;
 }
+
+int adpcm_decoder2(char* indata, short* outdata, int len, struct adpcm_state* state)
+{
+    unsigned int delta; /* Current adpcm output value */
+    int step;         /* Stepsize */
+    int valpred;  /* Predicted value */
+    int vpdiff;         /* Current change to valpred */
+    int index;   /* Current step change index */
+    unsigned int inputbuffer = 0;/* place to keep next 4-bit value */
+    int count = 0;
+ 
+    valpred = state->valprev;
+    index = (int)state->index;
+    step = stepsizeTable[index];
+ 
+    /* Loop unrolling by Phil Frisbie */
+    /* This assumes there are ALWAYS an even number of samples */
+    while (len-- > 0) {
+ 
+        /* Step 1 - get the delta value */
+        inputbuffer = (unsigned int)*indata++;
+        delta = (inputbuffer >> 4) & 0xf;// &0xf 防止溢出
+      
+        /* Step 2 - Find new index value (for later) */
+  
+        index += indexTable[delta];
+        if (index < 0) index = 0;
+        else if (index > 88) index = 88;
+     
+ 
+ 
+        /* Phil Frisbie combined steps 3, 4, and 5 */
+        /* Step 3 - Separate sign and magnitude */
+        /* Step 4 - Compute difference and new predicted value */
+        /* Step 5 - clamp output value */
+        /*
+        ** Computes 'vpdiff = (delta+0.5)*step/4', but see comment
+        ** in adpcm_coder.
+        */
+        vpdiff = step >> 3;
+        if ((delta & 4) != 0) vpdiff += step;
+        if ((delta & 2) != 0) vpdiff += step >> 1;
+        if ((delta & 1) != 0) vpdiff += step >> 2;
+ 
+        if ((delta & 8) != 0)
+        {
+            valpred -= vpdiff;
+            if (valpred < -32768)
+                valpred = -32768;
+        }
+        else
+        {
+            valpred += vpdiff;
+            if (valpred > 32767)
+                valpred = 32767;
+        }
+ 
+        /* Step 6 - Update step value */
+        step = stepsizeTable[index];
+ 
+        /* Step 7 - Output value */
+        *outdata++ = (short)(valpred + state->valprev) / 2;
+        *outdata++ = (short)valpred;
+        state->valprev = (short)valpred;
+ 
+        /* Step 1 - get the delta value */
+        delta = inputbuffer & 0xf;
+ 
+        /* Step 2 - Find new index value (for later) */
+        index += indexTable[delta];
+        if (index < 0) index = 0;
+        else if (index > 88) index = 88;
+ 
+        /* Phil Frisbie combined steps 3, 4, and 5 */
+        /* Step 3 - Separate sign and magnitude */
+        /* Step 4 - Compute difference and new predicted value */
+        /* Step 5 - clamp output value */
+        /*
+        ** Computes 'vpdiff = (delta+0.5)*step/4', but see comment
+        ** in adpcm_coder.
+        */
+        vpdiff = step >> 3;
+        if ((delta & 4) != 0) vpdiff += step;
+        if ((delta & 2) != 0) vpdiff += step >> 1;
+        if ((delta & 1) != 0) vpdiff += step >> 2;
+ 
+        if ((delta & 8) != 0)
+        {
+            valpred -= vpdiff;
+            if (valpred < -32768)
+                valpred = -32768;
+        }
+        else
+        {
+            valpred += vpdiff;
+            if (valpred > 32767)
+                valpred = 32767;
+        }
+ 
+        /* Step 6 - Update step value */
+        step = stepsizeTable[index];
+ 
+        /* Step 7 - Output value */
+        *outdata++ = (short)(valpred + state->valprev) / 2;
+        *outdata++ = (short)valpred;
+        state->valprev = (short)valpred;
+        count += 2;
+    }
+ 
+    //state->valprev = (short)valpred;
+    state->index = (char)index;
+ 
+    return count;
+}

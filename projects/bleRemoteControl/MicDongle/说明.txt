@@ -1,0 +1,5 @@
+云雾AI鼠标语音Demo-主机工程:
+需使用USB连接上位机软件,进行调试.
+
+上位机调试软件:
+\tools\YunWu\yunwu-setup3.5.0.exe

@@ -32,7 +32,7 @@ extern uint8_t           scan_cnt;
 extern struct gap_bdaddr scan_addr_list[];
 
 uint8_t BLE_ADDR_DEFAULT[GAP_BD_ADDR_LEN] = BLE_ADDR;
-struct connected_result connected_list[BLE_NB_SLAVE + BLE_NB_MASTER];
+//struct connected_result connected_list[BLE_NB_SLAVE + BLE_NB_MASTER];
 
 bool scan_time_out  = false;
 bool disconnect_all = false;
@@ -347,6 +347,7 @@ tmr_tk_t printScanMac(uint8_t id)
         debugMAC((uint8_t *)&scan_addr_list[idx++].addr.addr);
     }
     DEBUG("[AT]Scan end\r\n");
+    app_scan_action(ACTV_STOP);
 
     return 0;
 }
@@ -517,7 +518,10 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
 
                 if (con_num_bit & 0x01)
                 {
-                    debugMAC(connected_list[con_num].paddr.addr.addr);
+                    struct gap_bdaddr* peer_bdaddr = gapc_get_bdaddr(con_num, GAPC_SMP_INFO_PEER);
+//                    memcpy(&connected_list[con_num].paddr, peer_bdaddr, sizeof(struct gap_bdaddr));
+//                    debugMAC(connected_list[con_num].paddr.addr.addr);
+                    debugMAC(peer_bdaddr->addr.addr);
                 }
 
                 con_num++;
@@ -527,7 +531,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
 
         case CMD_CON_MAC_S:
         {
-            app_init_action(ACTV_STOP); // 20211101
+//            app_init_action(ACTV_STOP); // 20211101
             str2mac(&buff[11]);
 
             struct gap_bdaddr peer;

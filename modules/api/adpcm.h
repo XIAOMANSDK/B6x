@@ -19,7 +19,8 @@ struct adpcm_state {
 //len 是采样点的个数，不是字节大小
 int adpcm_coder(short* indata, char* outdata, int len, struct adpcm_state* state);
 int adpcm_decoder(char* indata, short* outdata, int len, struct adpcm_state* state);
- 
+int adpcm_decoder2(char* indata, short* outdata, int len, struct adpcm_state* state);
+
 #ifdef __cplusplus
 }  /* extern "C" */
 #endif

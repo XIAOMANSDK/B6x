@@ -216,7 +216,5 @@ void irInit(void)
     //  ATMR IO PA7~PA13
     PwmInit();
     irDataInit();
-    
-
 }
 
