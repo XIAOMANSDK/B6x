@@ -33,14 +33,14 @@ $Bank_B_File_Name = $Bank_A_File_Name+$Bank_B
 # 拼成带路径的原始文件
 # (eg:\projects\bleOTA\mdk\output\bleOTA.lnp)
 # (eg:\projects\bleOTA\mdk\output\bleOTA.axf)
-# (eg:\projects\bleOTA\mdk\output\bleOTA_0x4000.hex)
-# (eg:\projects\bleOTA\mdk\output\bleOTA_0x4000.bin)
-# (eg:\projects\bleOTA\mdk\output\bleOTA_0x4000.asm)
+# (eg:\projects\bleOTA\mdk\output\bleOTA_0x04000.hex)
+# (eg:\projects\bleOTA\mdk\output\bleOTA_0x04000.bin)
+# (eg:\projects\bleOTA\mdk\output\bleOTA_0x04000.asm)
 $Org_lnp = $Bank_A_name+$Ext_lnp
 $Org_axf = $Bank_A_name+$Ext_axf
-$Org_hex = $Bank_A_name+'_0x4000'+$Ext_hex
-$Org_bin = $Bank_A_name+'_0x4000'+$Ext_bin
-$Org_asm = $Bank_A_name+'_0x4000'+$Ext_asm
+$Org_hex = $Bank_A_name+'_0x04000'+$Ext_hex
+$Org_bin = $Bank_A_name+'_0x04000'+$Ext_bin
+$Org_asm = $Bank_A_name+'_0x04000'+$Ext_asm
 
 # 拼成带路径的目标文件
 # (eg:\projects\bleOTA\mdk\output\bleOTA_0x20000.lnp)
@@ -115,7 +115,7 @@ function Get-CRC32 {
     Write-Output $crc32String
 }
 
-$Bank_A = "File : " + $Bank_A_File_Name +  '_0x4000' + $Ext_bin
+$Bank_A = "File : " + $Bank_A_File_Name +  '_0x04000' + $Ext_bin
 $Bank_B = "File : " + $Bank_B_File_Name + $Ext_bin
 
 $CRC32 = Get-CRC32 $Org_bin
