@@ -32,12 +32,12 @@ void btmr_delay(uint16_t tpsc, uint16_t tcnt)
     BTMR->ARR = tcnt - 1;
     BTMR->CNT = 0;
     BTMR->EGR = 1;
-    
+
     // enable CEN, wait Time-Reach
     BTMR->CR1.CEN = 1;
     while(!BTMR->RIF && BTMR->CR1.CEN);
     BTMR->ICR = 1;
-    
+
     // clear Mode
     BTMR->CR1.Word = 0;
 }
@@ -47,7 +47,7 @@ void ctmr_init(uint16_t psc, uint16_t arr)
 {
     RCC_APBCLK_EN(APB_CTMR_BIT);
     RCC_APBRST_REQ(APB_CTMR_BIT);
-    
+
     CTMR->CR1.Word = 0; //.CEN = 0;
     CTMR->PSC = psc;
     CTMR->ARR = arr;
@@ -66,7 +66,7 @@ void ctmr_ctrl(uint16_t mode, uint16_t intr)
     CTMR->IER.Word = intr;
     // event generation
     CTMR->EGR.Word = intr | 0x01/*.UG*/;
-    
+
     // conf control (counter start from 0)
     CTMR->CNT = 0;
     CTMR->CR1.Word = mode;
@@ -76,7 +76,7 @@ void atmr_init(uint16_t psc, uint16_t arr)
 {
     RCC_APBCLK_EN(APB_ATMR_BIT);
     RCC_APBRST_REQ(APB_ATMR_BIT);
-    
+
     ATMR->CR1.Word = 0; // .CEN = 0;
     ATMR->PSC = psc;
     ATMR->ARR = arr;
@@ -95,7 +95,7 @@ void atmr_ctrl(uint16_t mode, uint16_t intr)
     ATMR->IER.Word = intr;
     // event generation
     ATMR->EGR.Word = intr | 0x01/*.UG*/;
-    
+
     // conf control (counter start from 0)
     ATMR->CNT = 0;
     ATMR->CR1.Word = mode;

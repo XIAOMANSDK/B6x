@@ -108,7 +108,7 @@ enum dis_att_idx
 {
     // Service Declaration, *MUST* Start at 0
     DIS_IDX_SVC,
-    
+
     // Manufacturer Name String Char.
     DIS_IDX_MANUF_NAME_CHAR,
     DIS_IDX_MANUF_NAME_VAL,
@@ -182,9 +182,9 @@ const att_decl_t dis_atts[] =
 };
 
 /// Service Description
-const struct svc_decl dis_svc_db = 
+const struct svc_decl dis_svc_db =
 {
-    .uuid   = ATT_SVC_DEVICE_INFO, 
+    .uuid   = ATT_SVC_DEVICE_INFO,
     .info   = SVC_UUID(16),
     .atts   = dis_atts,
     .nb_att = DIS_IDX_NB - 1,
@@ -230,7 +230,7 @@ static void diss_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
     uint8_t val_idx = diss_get_val_idx(handle);
 
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,att:%d)", conidx, opcode, handle, val_idx);
-    
+
     if (opcode == ATTS_READ_REQ)
     {
         // Check Characteristic Code
@@ -238,7 +238,7 @@ static void diss_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
         {
             uint16_t length;
             const uint8_t *value = diss_value_get(val_idx, &length);
-            
+
             if (value != NULL)
             {
                 // Send value to peer device.
@@ -276,7 +276,7 @@ uint8_t diss_svc_init(void)
     diss_env.start_hdl = DIS_START_HDL;
     diss_env.features  = DIS_FEATURES;
 
-    // Compute Attributes supported 
+    // Compute Attributes supported
     for (uint8_t i = 0; i < DIS_CHAR_MAX; i++)
     {
         if (((diss_env.features >> i) & 1) == 1)
@@ -287,8 +287,8 @@ uint8_t diss_svc_init(void)
 
     // Create Service in database
     status = attmdb_svc_create(&diss_env.start_hdl, (uint8_t *)&cfg_att, &dis_svc_db, diss_svc_func);
-    
-    DEBUG("svc_init(sta:0x%X,shdl:%d,feat:0x%X,cfg:0x%X)", 
+
+    DEBUG("svc_init(sta:0x%X,shdl:%d,feat:0x%X,cfg:0x%X)",
             status, diss_env.start_hdl, diss_env.features, cfg_att);
 
     return status;

@@ -491,7 +491,7 @@ enum att_uuid16 {
     /// Battery Level
     ATT_CHAR_BATTERY_LEVEL                     = ATT_UUID16(0x2A19),
     /// Battery Power Status
-    ATT_CHAR_BATTERY_POWER_STATE               = ATT_UUID16(0x2A1A),    
+    ATT_CHAR_BATTERY_POWER_STATE               = ATT_UUID16(0x2A1A),
     /// Battery Level State
     ATT_CHAR_BATTERY_LEVEL_STATE               = ATT_UUID16(0x2A1B),
     /// Temperature Measurement
@@ -688,7 +688,7 @@ enum att_uuid16 {
     ATT_CHAR_HEIGHT                            = ATT_UUID16(0x2A8E),
     /// Hip Circumference
     ATT_CHAR_HIP_CIRCUMFERENCE                 = ATT_UUID16(0x2A8F),
-    /// Last Name 
+    /// Last Name
     ATT_CHAR_LAST_NAME                         = ATT_UUID16(0x2A90),
     /// Maximum Recommended Heart Rate
     ATT_CHAR_MAXIMUM_RECOMMENDED_HEART_RATE    = ATT_UUID16(0x2A91),
@@ -708,7 +708,7 @@ enum att_uuid16 {
     ATT_CHAR_WEIGHT                            = ATT_UUID16(0x2A98),
     /// Database Change Increment
     ATT_CHAR_DATABASE_CHANGE_INCREMENT         = ATT_UUID16(0x2A99),
-    /// User Index 
+    /// User Index
     ATT_CHAR_USER_INDEX                        = ATT_UUID16(0x2A9A),
     /// Body Composition Feature
     ATT_CHAR_BODY_COMPOSITION_FEATURE          = ATT_UUID16(0x2A9B),
@@ -1004,7 +1004,7 @@ enum att_info_mask
 
     /// Properties
     ATT_PROP_ALL_MASK      = 0xFF00,
-    ATT_PROP_ALL_LSB       = 8,    
+    ATT_PROP_ALL_LSB       = 8,
     /// Broadcast descriptor present
     ATT_PROP_BC_BIT        = 0x0100,
     ATT_PROP_BC_POS        = 8,

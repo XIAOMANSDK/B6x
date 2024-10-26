@@ -154,9 +154,9 @@ enum task_type
     // Link Layer Controller Task
     TASK_LLC         = 0x01,
 
-    // HCI Test & Debug Task 
+    // HCI Test & Debug Task
     TASK_HCI         = 0x02,
-    
+
     /******** App Layer Tasks  ********/
     // Application Main Task
     TASK_APP         = 0x03,
@@ -164,23 +164,23 @@ enum task_type
     /******** Host Layer Tasks ********/
     // L2CAP Controller Task
     // - handles L2CAP attribute and security block.
-    TASK_L2CC        = 0x04,    
+    TASK_L2CC        = 0x04,
 
     // Generic Attribute Profile Task
-    // - includes services and characteristic discovery, configuration exchanges 
+    // - includes services and characteristic discovery, configuration exchanges
     // - and attribute value access operations(reading, writing, notification and indication).
     TASK_GATT        = 0x05,
-    
+
     // Generic Access Profile Manager Task
-    // - manage all non connected stuff, configuring device mode(discoverable, connectable, etc.) 
+    // - manage all non connected stuff, configuring device mode(discoverable, connectable, etc.)
     // - and perform required actions(scanning, connection, etc.)
     // - and manage GAP Controller state according to corresponding BLE connection states.
-    TASK_GAPM        = 0x06, 
-    
+    TASK_GAPM        = 0x06,
+
     // Generic Access Profile Controller Task
     // - perform GAP action related to a BLE connection(pairing, update parameters, disconnect, etc.)
     // - GAP controller is multi-instantiated, one task instance per BLE connection.
-    TASK_GAPC        = 0x07,    
+    TASK_GAPC        = 0x07,
 
     // Maximum number of tasks
     TASK_MAX,
@@ -202,7 +202,7 @@ enum type_id
     TID_GATT         = 5,    // Generic Attribute Profile
     TID_GAPM         = 6,    // Generic Access Profile Manager
     TID_GAPC         = 7,    // Generic Access Profile Controller
-    
+
     /******** App Layer Identifiers  ********/
     TID_APP          = 9,    // Application Task
     TID_MESH         = 10,   // Mesh Service

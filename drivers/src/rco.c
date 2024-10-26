@@ -35,24 +35,24 @@
  *
  * @param[in] ref_clk   reference clock for calibration @see enum rc32k_ref_clk
  * @param[in] cal_ctrl  config control for calibration @see enum rc32k_cal_ctrl
- * 
+ *
  ****************************************************************************************
  */
 void rc32k_conf(uint8_t ref_clk, uint8_t cal_ctrl)
 {
     uint16_t target = 0;               // bit[15:0]
     uint8_t cycle = (cal_ctrl & 0x1F); // bit[20:16]
-    
+
     #if (ROM_UNUSED)
     // clock enable (keep enabled in rom)
     // RCC->APBCLK_EN_RUN.AON_CLKEN_RUN     = 1;
     // RCC->APBCLK_EN_RUN.APBMISC_CLKEN_RUN = 1;
     RCC_APBCLK_EN(APB_APBMISC_BIT | APB_AON_BIT);
     #endif
-    
+
     RCC->CLK_EN_ST.RCCALIB_CLKEN  = 1;
     RCC->CLK_EN_ST.RCCALIB_CLKSEL = ref_clk;
-        
+
     if (ref_clk == RCLK_HSE/*0*/)
     {
         target = HSE_CALIB_MULTI * (cycle + 1);
@@ -62,7 +62,7 @@ void rc32k_conf(uint8_t ref_clk, uint8_t cal_ctrl)
         uint16_t multi = ((RCC->CFG.DPLL_CLK_SW == 0) || (ref_clk == RCLK_DPLL128) ? DPLL_CAKLIB_MULTI : DPLL48M_CAKLIB_MULTI);
         target =  multi* ref_clk * (cycle + 1);
     }
-    
+
     // bit[15:0]--rccalib_target, bit[20:16]--cycle, bit21--SCAL_EN, bit22--DLY
     APBMISC->RCCALIB_CTRL.Word = target | ((uint32_t)cal_ctrl << APBMISC_RCCALIB_CYCLES_LSB) | (1UL << APBMISC_RCCALIB_DLY_POS);
 }
@@ -77,8 +77,8 @@ void rc32k_conf(uint8_t ref_clk, uint8_t cal_ctrl)
 uint16_t rc32k_calib(void)
 {
     uint16_t trim_val = 0;
-    
-    // use rc calib result control rc32k 
+
+    // use rc calib result control rc32k
     AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL = 1;
 
     // rc calib start
@@ -96,9 +96,9 @@ uint16_t rc32k_calib(void)
 
     AON->BKHOLD_CTRL.Word = (AON->BKHOLD_CTRL.Word & ~(0x3FFF << 0)) | (((uint32_t)trim_val & 0x3FFF) << 0);
 
-    // use AON's trim val control rc32k 
+    // use AON's trim val control rc32k
     AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL = 0;
-    
+
     return trim_val;
 }
 
@@ -122,7 +122,7 @@ void rc32k_trim_set(uint16_t value)
     //AON->BKHOLD_CTRL.RC32K_LSB_TRIM_CFG = (value >> 4) & 0x3FF; // bit[13:4]
     AON->BKHOLD_CTRL.Word = (AON->BKHOLD_CTRL.Word & ~(0x3FFF << 0)) | (((uint32_t)value & 0x3FFF) << 0);
 
-    // use AON's trim val control rc32k 
+    // use AON's trim val control rc32k
     AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL = 0;
 }
 
@@ -137,12 +137,12 @@ void rc32k_trim_set(uint16_t value)
 uint16_t rc32k_trim_get(void)
 {
     uint16_t value;
-    
+
     #if (ROM_UNUSED)
     // RCC->APBCLK_EN_RUN.AON_CLKEN_RUN = 1;
     RCC_APBCLK_EN(APB_AON_BIT);
     #endif
-    
+
     if (AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL == 0)
         value = (AON->BKHOLD_CTRL.Word >> 0) & 0x3FFF; // 0=AON_RC32K_MSB_TRIM_CFG_LSB
     else
@@ -181,12 +181,12 @@ void rc16m_trim_set(uint8_t value)
 uint8_t rc16m_trim_get(void)
 {
     uint8_t value;
-    
+
     #if (ROM_UNUSED)
     // RCC->APBCLK_EN_RUN.APBMISC_CLKEN_RUN = 1;
     RCC_APBCLK_EN(APB_APBMISC_BIT);
     #endif
-    
+
     value = APBMISC->RC16M_FREQ_TRIM;
 
     return value;
@@ -207,29 +207,29 @@ uint8_t rc16m_calib(void)
     uint8_t trim_val = 0x20; // bit[5:0]
     int win_cnt = 0;
     int win_set = APBMISC->RC16M_CNT_CTRL.RC16M_WIN_SET;
-    
+
     RCC->CLK_EN_ST.RC16M_CNT_CLKEN = 1;
-    
+
     for (uint8_t step = 0x20; step > 0; step >>= 1)
     {
         RCC->APBRST_CTRL.RC16M_CNT_RSTREQ = 1;
-        RCC->APBRST_CTRL.RC16M_CNT_RSTREQ = 0;       
-        
+        RCC->APBRST_CTRL.RC16M_CNT_RSTREQ = 0;
+
         APBMISC->RC16M_FREQ_TRIM = trim_val;
         APBMISC->RC16M_CNT_CTRL.RC16M_CNT_START = 1;
-        
+
         while (!APBMISC->RC16M_CNT_CTRL.RC16M_CNT_DONE);
         win_cnt = APBMISC->RC16M_CNT_CTRL.RC16M_WIN_CNT;
-        
+
         //if ((win_cnt > (win_set - 100)) && (win_cnt < (win_set + 100)))
         if (co_abs(win_cnt - win_set) <= 100)
             break;
-        
+
         trim_val = trim_val + (step >> 1) - ((win_cnt > win_set) ? step : 0);
     }
-    
+
     //RCC->CLK_EN_ST.RC16M_CNT_CLKEN = 0;
-    
+
     return trim_val;
 }
 #endif

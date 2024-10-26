@@ -34,7 +34,7 @@ enum mem_type
     MEM_ENV,
     /// Heap for messages allocated
     MEM_MSG,
-    
+
     MEM_TYPE_MAX
 };
 
@@ -283,4 +283,3 @@ void ke_timer_clear(msg_id_t timer_id, task_id_t task);
 bool ke_timer_active(msg_id_t timer_id, task_id_t task);
 
 #endif // KE_API_H_
-

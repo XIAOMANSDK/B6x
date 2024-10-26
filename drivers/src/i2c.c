@@ -13,6 +13,7 @@
 #include "iopad.h"
 #include "reg_i2c.h"
 #include "reg_gpio.h"
+#include "core_cmInstr.h"
 
 /*
  * DEFINES
@@ -64,12 +65,25 @@ void i2c_init(uint8_t io_scl, uint8_t io_sda, uint8_t sclk)
     RCC_APBCLK_EN(APB_I2C_BIT);
     //RCC_APBRST_REQ(APB_I2C_BIT);
     I2C->SRST = 0x07;
-    
+
     uint32_t io_ctrl = IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN;
-    
+
     iom_ctrl(io_sda, IOM_SEL_GPIO | IOM_PULLDOWN | IOM_INPUT);
-    
-    // if Extern Pull-Up, disable Internal Pull-Up 
+
+    /**********************************/
+    // 2024.10.23 --- wq.
+    uint16_t delay_cnt = 750;
+    // Delay for io cfg stable. 64M about 180us.
+    while (delay_cnt--)
+    {
+        __NOP();__NOP();
+        __NOP();__NOP();
+        __NOP();__NOP();
+        __NOP();__NOP();
+    }
+    /**********************************/
+
+    // if Extern Pull-Up, disable Internal Pull-Up
     if ((GPIO->PIN >> io_sda) & 0x01)
     {
         io_ctrl = IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_INPUT | IOM_OPENDRAIN;

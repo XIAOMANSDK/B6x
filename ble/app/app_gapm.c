@@ -39,7 +39,7 @@ APP_MSG_HANDLER(gapm_cmp_evt)
     else if (param->operation == GAPM_SET_DEV_CONFIG)
     {
         DEBUG("Dev Config(sta:0x%02X)", param->status);
-        
+
         // Init profiles or activities after config
         app_conf_fsm(BLE_CONFIGURED);
     }
@@ -47,7 +47,7 @@ APP_MSG_HANDLER(gapm_cmp_evt)
     else if (param->operation >= GAPM_CREATE_ADV_ACTIVITY)
     {
         DEBUG("Actv Evt(op:0x%02X,sta:0x%02X)", param->operation, param->status);
-        
+
         app_actv_cmp_evt(param->operation, param->status);
     }
     #endif //(APP_ACTV_EN)
@@ -61,14 +61,14 @@ APP_MSG_HANDLER(gapm_cmp_evt)
 APP_MSG_HANDLER(gapm_activity_created_ind)
 {
     DEBUG("Actv Created(id:%d,typ:%d)", param->actv_idx, param->actv_type);
-    
+
     app_actv_created_ind(param->actv_type, param->actv_idx);
 }
 
 APP_MSG_HANDLER(gapm_activity_stopped_ind)
 {
     DEBUG("Actv Stopped(id:%d,typ:%d,rea:0x%02X)", param->actv_idx, param->actv_type, param->reason);
-    
+
     app_actv_stopped_ind(param->actv_type, param->actv_idx, param->reason);
 }
 
@@ -80,7 +80,7 @@ APP_MSG_HANDLER(gapm_ext_adv_report_ind)
     debugHex((uint8_t *)(&param->trans_addr), sizeof(struct gap_bdaddr));
     debugHex(param->data, param->length);
     DEBUG("\r\n");
-    
+
     app_actv_report_ind(param);
 }
 #endif //(BLE_EN_SCAN)
@@ -115,19 +115,19 @@ APP_SUBTASK_HANDLER(gapm_msg)
         {
             APP_MSG_FUNCTION(gapm_activity_created_ind);
         } break;
-        
+
         case GAPM_ACTIVITY_STOPPED_IND:
         {
             APP_MSG_FUNCTION(gapm_activity_stopped_ind);
         } break;
-        
+
         #if (BLE_EN_SCAN)
         case GAPM_EXT_ADV_REPORT_IND:
         {
             APP_MSG_FUNCTION(gapm_ext_adv_report_ind);
         } break;
         #endif //(BLE_EN_SCAN)
-        
+
         #if (DBG_GAPM)
         case GAPM_SCAN_REQUEST_IND:
         {

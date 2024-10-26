@@ -36,7 +36,7 @@
 
 /// Size of HID BOOT keyboard/mouse report
 #define HID_BOOT_REPORT_MAX_LEN     (8)
-#define HID_BOOT_KB_RPT_SIZE        (8) // 1B(ctrlKeys) + 1B(resv0) + 6B(KeyCode) 
+#define HID_BOOT_KB_RPT_SIZE        (8) // 1B(ctrlKeys) + 1B(resv0) + 6B(KeyCode)
 #define HID_BOOT_MOUSE_RPT_SIZE     (4) // 1B(button) + 1B(X) + 1B(Y) + 1B(Wheel)
 /// Size of HID keyboard Output report
 #define HID_KB_OUT_RPT_SIZE         (1) // 1B(leds)

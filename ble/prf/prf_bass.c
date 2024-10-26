@@ -81,12 +81,12 @@ typedef struct bass_env_tag
 {
     // Service Start Handle
     uint16_t start_hdl;
-    
+
     // Current Battery Level(0~100), unit in '%'
     uint8_t  bat_lvl;
     // Client Config Bits of Battery Level - each 1Bit(NTF only), so max_peer=8.
     uint8_t  lvl_ntfs;
-    
+
     #if (BAS_PWR_STA)
     // Current Power State, @see struct bat_pwr_sta_def
     uint8_t  pwr_sta;
@@ -110,19 +110,19 @@ enum bas_att_idx
 {
     // Service Declaration, *MUST* Start at 0
     BAS_IDX_SVC,
-    
+
     // Battery Level Char.
     BAS_IDX_BAT_LVL_CHAR,
     BAS_IDX_BAT_LVL_VAL,
     BAS_IDX_BAT_LVL_NTF_CFG,
-    
+
     #if (BAS_PWR_STA)
     // Battery Power State Char.
     BAS_IDX_PWR_STA_CHAR,
     BAS_IDX_PWR_STA_VAL,
     BAS_IDX_PWR_STA_NTF_CFG,
     #endif //(BAS_PWR_STA)
-    
+
     // Max Index, *NOTE* Minus 1(Svc Decl) is .nb_att
     BAS_IDX_NB,
 };
@@ -134,7 +134,7 @@ const att_decl_t bas_atts[] =
     ATT_ELMT_DECL_CHAR( BAS_IDX_BAT_LVL_CHAR ),
     ATT_ELMT( BAS_IDX_BAT_LVL_VAL,  ATT_CHAR_BATTERY_LEVEL,       PROP_NTF | PROP_RD, 0),
     ATT_ELMT_DESC_CLI_CHAR_CFG( BAS_IDX_BAT_LVL_NTF_CFG ),
-    
+
     #if (BAS_PWR_STA)
     // Battery Power State Char. Declaration and Value and CCC Descriptor
     ATT_ELMT_DECL_CHAR( BAS_IDX_PWR_STA_CHAR ),
@@ -144,9 +144,9 @@ const att_decl_t bas_atts[] =
 };
 
 /// Service Description
-const struct svc_decl bas_svc_db = 
+const struct svc_decl bas_svc_db =
 {
-    .uuid   = ATT_SVC_BATTERY_SERVICE, 
+    .uuid   = ATT_SVC_BATTERY_SERVICE,
     .info   = SVC_UUID(16),
     .atts   = bas_atts,
     .nb_att = BAS_IDX_NB - 1,
@@ -168,7 +168,7 @@ const struct svc_decl bas_svc_db =
 static uint16_t bass_get_att_handle(uint8_t att_idx)
 {
     ASSERT_ERR(att_idx < BAS_IDX_NB);
-    
+
     return (att_idx + bass_env.start_hdl);
 }
 
@@ -184,7 +184,7 @@ static uint8_t bass_get_att_idx(uint16_t handle)
 static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const void *param)
 {
     uint8_t att_idx = bass_get_att_idx(handle);
-    
+
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,att:%d)", conidx, opcode, handle, att_idx);
 
     switch (opcode)
@@ -197,12 +197,12 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                 gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint8_t), &(bass_env.bat_lvl));
                 break;
             }
-            
+
             if (att_idx == BAS_IDX_BAT_LVL_NTF_CFG)
             {
                 // retrieve notification config
                 uint16_t cli_cfg = BAS_LVL_NTF_GET(conidx);
-                
+
                 DEBUG("  read_cfm(lvl_ntf:%d)", cli_cfg);
                 gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&cli_cfg);
                 break;
@@ -215,12 +215,12 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                 gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint8_t), &(bass_env.pwr_sta));
                 break;
             }
-            
+
             if (att_idx == BAS_IDX_PWR_STA_NTF_CFG)
             {
                 // retrieve notification config
                 uint16_t cli_cfg = BAS_PWR_NTF_GET(conidx);
-                
+
                 DEBUG("  read_cfm(pwr_ntf:%d)", cli_cfg);
                 gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&cli_cfg);
                 break;
@@ -230,11 +230,11 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             // Send error response
             gatt_read_cfm(conidx, PRF_ERR_APP_ERROR, handle, 0, NULL);
         } break;
-        
+
         case ATTS_WRITE_REQ:
         {
             const struct atts_write_ind *ind = param;
-            
+
             DEBUG("  write_req(hdl:0x%x,att:%d,wr:0x%x,len:%d)", handle, att_idx, ind->wrcode, ind->length);
 
             #if (BAS_PWR_STA)
@@ -246,7 +246,7 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                 if ((!ind->more) && (ind->length == sizeof(uint16_t)))
                 {
                     uint16_t cli_cfg = read16p(ind->value);
-                    
+
                     // update configuration if value for stop or NTF start
                     if (cli_cfg <= PRF_CLI_START_NTF)
                     {
@@ -270,7 +270,7 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                         {
                             DEBUG("  set lvl_ntf(cid:%d,cfg:%d)", conidx, cli_cfg);
                             BAS_LVL_NTF_SET(conidx, cli_cfg);
- 
+
                             // Send Battery Level Notify
                             if (cli_cfg == PRF_CLI_START_NTF)
                             {
@@ -285,7 +285,7 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             // Send write confirm with error!
             gatt_write_cfm(conidx, PRF_ERR_APP_ERROR, handle);
         } break;
-        
+
         case ATTS_INFO_REQ:
         {
             uint16_t length = ATT_MAX_LEN_GET(att_idx, bas_atts);
@@ -294,16 +294,16 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             DEBUG("  info_cfm(hdl:0x%x,att:%d,len:%d)", handle, att_idx, length);
             gatt_info_cfm(conidx, LE_SUCCESS, handle, length);
         } break;
-        
+
         case ATTS_CMP_EVT:
         {
             const struct atts_cmp_evt *evt = param;
-            
+
             DEBUG("  cmp_evt(op:0x%x,sta:0x%x)", evt->operation, evt->status);
             // add 'if' to avoid warning #117-D: "evt" never referenced
             if (evt->operation == GATT_NOTIFY)
             {
-                // Update operation result 
+                // Update operation result
             }
         } break;
 
@@ -311,7 +311,7 @@ static void bass_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
         {
             // nothing to do
         } break;
-    }        
+    }
 }
 
 /**
@@ -340,7 +340,7 @@ uint8_t bass_svc_init(void)
     bass_env.pwr_sta   = PWR_STA_DFT;
     bass_env.pwr_ntfs  = PRF_CLI_START_NTF;
     #endif //(BAS_PWR_STA)
-    
+
     // Create Service in database
     status = attmdb_svc_create(&bass_env.start_hdl, NULL, &bas_svc_db, bass_svc_func);
     DEBUG("svc_init(sta:0x%X,shdl:%d)", status, bass_env.start_hdl);
@@ -362,7 +362,7 @@ static uint8_t bass_bat_lvl_send(uint8_t conidx, uint8_t bat_lvl)
 {
     uint8_t status = PRF_ERR_REQ_DISALLOWED;
 
-    if ((bat_lvl <= BAT_LVL_MAX) 
+    if ((bat_lvl <= BAT_LVL_MAX)
         && (BAS_LVL_NTF_GET(conidx) == PRF_CLI_START_NTF))
     {
         status = LE_SUCCESS;
@@ -384,7 +384,7 @@ void bass_bat_lvl_update(uint8_t bat_lvl)
     if (bass_env.bat_lvl != bat_lvl)
     {
         bass_env.bat_lvl = bat_lvl;
-        
+
         // todo update operation, loop on all connection
         for (uint8_t idx = 0; idx < BLE_CONNECTION_MAX; idx++)
         {
@@ -448,7 +448,7 @@ void bass_pwr_sta_update(uint8_t pwr_sta)
     if (bass_env.pwr_sta != pwr_sta)
     {
         bass_env.pwr_sta = pwr_sta;
-        
+
         // todo update operation, loop on all connection
         for (uint8_t idx = 0; idx < BLE_CONNECTION_MAX; idx++)
         {
@@ -474,7 +474,7 @@ void bass_set_pwr_ntf(uint8_t conidx, uint8_t ntf_cfg)
         // update configuration
         BAS_PWR_NTF_SET(conidx, ntf_cfg);
     }
-}  
+}
 #endif //(BAS_PWR_STA)
 
 

@@ -356,7 +356,9 @@ void app_adv_event(uint8_t gapm_op, uint8_t status)
  ****************************************************************************************
  */
 
+#ifndef SCAN_NUM_MAX
 #define SCAN_NUM_MAX         (5)
+#endif
 
 uint8_t scan_cnt = 0;
 struct gap_bdaddr scan_addr_list[SCAN_NUM_MAX];

@@ -24,13 +24,13 @@
  * FUNCTION DEFINITIONS
  ****************************************************************************************
  */
- 
+
 /**
  ****************************************************************************************
  * @brief Config rtc module
  *
  * @param[in] en  True to enable, False to disable
- * 
+ *
  ****************************************************************************************
  */
 void rtc_conf(bool en)
@@ -41,10 +41,10 @@ void rtc_conf(bool en)
     // RCC->APBCLK_EN_RUN.APBMISC_CLKEN_RUN = 1;
     RCC_APBCLK_EN(APB_APBMISC_BIT | APB_AON_BIT);
     #endif
-    
+
     // rtc interrupt disable and status clear
     APBMISC->RTCINT_CTRL.Word = 0x02; // .RTC_INT_EN = 0, .RTC_INT_CLR = 1
-    
+
     // rtc enable or disable
     AON->BLE_RTC_CTL.RTC_EN = en;
 }
@@ -59,17 +59,17 @@ void rtc_conf(bool en)
 rtc_time_t rtc_time_get(void)
 {
     rtc_time_t time;
-    
+
     time.sec = APBMISC->RTC_SEC_SHD;
     time.ms  = APBMISC->RTC_MS_SHD;
-    
+
     if (time.sec != APBMISC->RTC_SEC_SHD)
     {
         // just past to next second
         time.sec = APBMISC->RTC_SEC_SHD;
         time.ms  = APBMISC->RTC_MS_SHD;
     }
-    
+
     return time;
 }
 
@@ -79,14 +79,14 @@ rtc_time_t rtc_time_get(void)
  *
  * @param[in] sec  second time
  * @param[in] ms   millisecond time (range: 0~999ms)
- * 
+ *
  ****************************************************************************************
  */
 void rtc_time_set(uint32_t sec, uint32_t ms)
 {
     APBMISC->RTC_SEC = sec;
     APBMISC->RTC_MS  = ms;
-    
+
     // wait rtc current time reg write finish
     while(APBMISC->RTCINT_CTRL.RTC_SET_BUSY);
 }
@@ -96,7 +96,7 @@ void rtc_time_set(uint32_t sec, uint32_t ms)
  * @brief Set alarm time
  *
  * @param[in] ms_time  time(unit in ms) to alarm
- * 
+ *
  ****************************************************************************************
  */
 void rtc_alarm_set(uint32_t ms_time)
@@ -104,25 +104,25 @@ void rtc_alarm_set(uint32_t ms_time)
     // Disable Interrupt, clear last
     APBMISC->RTCINT_CTRL.RTC_INT_EN = 0;
     APBMISC->RTCINT_CTRL.RTC_INT_CLR = 1;
-    
+
     if (ms_time)
     {
         rtc_time_t time;
-        
+
         // Wait rtc alarm time reg write finish
         while(APBMISC->RTCINT_CTRL.RTC_SET_BUSY);
-        
+
         // time = rtc_time_get();
         time.sec = APBMISC->RTC_SEC_SHD;
         time.ms  = APBMISC->RTC_MS_SHD;
-        
+
         if (time.sec != APBMISC->RTC_SEC_SHD)
         {
             // just past to next second
             time.sec = APBMISC->RTC_SEC_SHD;
             time.ms  = APBMISC->RTC_MS_SHD;
         }
-        
+
         // Add time, then set alarm
         ms_time += time.ms;
         APBMISC->RTC_ALARM_SEC = time.sec + (ms_time / 1000);
@@ -143,7 +143,7 @@ void rtc_alarm_set(uint32_t ms_time)
 rtc_time_t rtc_alarm_get(void)
 {
     rtc_time_t time;
-    
+
     time.sec = APBMISC->RTC_ALARM_SEC;
     time.ms  = APBMISC->RTC_ALARM_MS;
     return time;
@@ -159,12 +159,12 @@ rtc_time_t rtc_alarm_get(void)
 bool rtc_is_alarm(void)
 {
     bool ret = APBMISC->RTCINT_CTRL.RTC_INT_ST;
-    
+
     if (ret)
     {
         APBMISC->RTCINT_CTRL.RTC_INT_CLR = 1;
     }
-    
+
     return ret;
 }
 
@@ -173,7 +173,7 @@ bool rtc_is_alarm(void)
  * @brief Set rtc interrupt mode
  *
  * @param[in] en  True to interrupt enable, False to disable
- * 
+ *
  ****************************************************************************************
  */
 void rtc_irq_set(bool en)
@@ -187,7 +187,7 @@ void rtc_irq_set(bool en)
  * @brief Set rtc wakeup mode
  *
  * @param[in] en  True to enable wakeup, False to disable
- * 
+ *
  ****************************************************************************************
  */
 void rtc_wkup_set(bool en)

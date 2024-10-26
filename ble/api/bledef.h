@@ -3,7 +3,7 @@
  *
  * @file bledef.h
  *
- * @brief Interface functions of ble stack 
+ * @brief Interface functions of ble stack
  *
  ****************************************************************************************
  */
@@ -162,7 +162,7 @@ uint32_t ble_time_get(void);
  ****************************************************************************************
  * @brief Get max sleep time when BLE is idle state.
  *
- * @return  LP Cycles of sleep time(unit in 31.25us), 0 means prevent sleep 
+ * @return  LP Cycles of sleep time(unit in 31.25us), 0 means prevent sleep
  ****************************************************************************************
  */
 uint32_t ble_slpdur_get(void);
@@ -184,7 +184,7 @@ uint32_t ble_lib_vers(void);
  ****************************************************************************************
  * @brief Get memory size of Exchange with BLE HW.
  *
- * @return  size in bytes, aligned 4 
+ * @return  size in bytes, aligned 4
  ****************************************************************************************
  */
 uint32_t ble_exch_size(void);

@@ -1467,7 +1467,7 @@ struct gapm_ext_adv_report_ind
     int8_t rssi;
     /// Primary PHY on which advertising report has been received
     uint8_t phy_prim;
-    
+
     #if (BLE_EXT_ADV)
     /// Secondary PHY on which advertising report has been received
     uint8_t phy_second;

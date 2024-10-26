@@ -45,7 +45,7 @@ enum actv_op
 /// States of Activity
 enum actv_state
 {
-    // Activity disable 
+    // Activity disable
     ACTV_STATE_OFF         = 0,
     // Activity creating
     ACTV_STATE_CREATE,

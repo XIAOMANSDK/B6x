@@ -88,7 +88,7 @@ enum scp_att_index
 {
     // Service Declaration, *MUST* Start at 0
     SCP_IDX_SVC,
-    
+
     // Scan Interval Window Char.
     SCP_IDX_SCAN_INTV_WD_CHAR,
     SCP_IDX_SCAN_INTV_WD_VAL,
@@ -117,9 +117,9 @@ const att_decl_t scp_atts[] =
     ATT_ELMT_DESC_CLI_CHAR_CFG( SCP_IDX_SCAN_REFRESH_NTF_CFG ),
 };
 
-const struct svc_decl scp_svc_db = 
+const struct svc_decl scp_svc_db =
 {
-    .uuid   = ATT_SVC_SCAN_PARAMETERS, 
+    .uuid   = ATT_SVC_SCAN_PARAMETERS,
     .info   = SVC_UUID(16),
     .atts   = scp_atts,
     .nb_att = SCP_IDX_NB - 1,
@@ -176,7 +176,7 @@ static void scps_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
         case ATTS_WRITE_REQ:
         {
             const struct atts_write_ind *ind = param;
-            
+
             DEBUG("  write_req(hdl:0x%x,att:%d,wr:0x%x,len:%d)", handle, att_idx, ind->wrcode, ind->length);
 
             // Scan Interval Window Value
@@ -192,7 +192,7 @@ static void scps_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                 {
                     // Send write conform first!
                     gatt_write_cfm(conidx, LE_SUCCESS, handle);
-                    
+
                     scps_cb_scan_param(conidx, scan_intv, scan_window);
                     break;
                 }
@@ -226,7 +226,7 @@ static void scps_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
         {
             uint8_t  status = LE_SUCCESS;
             uint16_t length = 0;
-            
+
             if (att_idx == SCP_IDX_SCAN_REFRESH_NTF_CFG)
             {
                 length = sizeof(uint16_t); // CCC attribute
@@ -284,7 +284,7 @@ uint8_t scps_svc_init(void)
     scps_env.features  = SCP_FEATURES;
     scps_env.ntf_bits  = 0;
 
-    // Compute Attributes supported 
+    // Compute Attributes supported
     if (scps_env.features & SCP_SCAN_REFRESH_SUP)
     {
         cfg_att |= SCP_CFG_ATT_SCAN_REFRESH_MASK;
@@ -292,8 +292,8 @@ uint8_t scps_svc_init(void)
 
     // Create Service in database
     status = attmdb_svc_create(&scps_env.start_hdl, (uint8_t *)&cfg_att, &scp_svc_db, scps_svc_func);
-    
-    DEBUG("svc_init(sta:0x%X,shdl:%d,feat:0x%X,cfg:0x%X)", 
+
+    DEBUG("svc_init(sta:0x%X,shdl:%d,feat:0x%X,cfg:0x%X)",
             status, scps_env.start_hdl, scps_env.features, cfg_att);
 
     return status;
@@ -342,7 +342,7 @@ uint8_t scps_scan_refresh(uint8_t conidx)
             gatt_ntf_send(conidx, scps_get_att_handle(SCP_IDX_SCAN_REFRESH_VAL), sizeof(uint8_t), &req);
             status = LE_SUCCESS;
         }
-        else 
+        else
         {
             status = PRF_ERR_NTF_DISABLED;
         }

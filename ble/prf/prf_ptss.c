@@ -106,7 +106,7 @@ enum pts_att_idx
     // Attribute No.3: RD
     PTS_IDX_ATT3_CHAR,
     PTS_IDX_ATT3_VAL,
-    
+
     // Max Index, *NOTE* Minus 1(Svc Decl) is .nb_att
     PTS_IDX_NB,
 };
@@ -120,7 +120,7 @@ enum pts_att_idx
 #define PTS0_CHAR_ATT1             ATT_UUID16(0xFF01)
 #define PTS0_CHAR_ATT2             ATT_UUID16(0xFF02)
 #define PTS0_CHAR_ATT3             ATT_UUID16(0xFF03)
-    
+
 const att_decl_t pts0_atts[] =
 {
     // No.1 Characteristic Declaration and Value and CCC Descriptor
@@ -131,15 +131,15 @@ const att_decl_t pts0_atts[] =
     // No.2 Characteristic Declaration and Value
     ATT_ELMT_DECL_CHAR( PTS_IDX_ATT2_CHAR ),
     ATT_ELMT( PTS_IDX_ATT2_VAL,  PTS0_CHAR_ATT2,  PROP_WC|PROP_WR|PROP_WS,  PTS_DATA_MAX_LEN ),
-    
+
     // No.3 Characteristic Declaration and Value
     ATT_ELMT_DECL_CHAR( PTS_IDX_ATT3_CHAR ),
     ATT_ELMT( PTS_IDX_ATT3_VAL,  PTS0_CHAR_ATT3,  PROP_RD,                  0 ),
 };
 
-const struct svc_decl pts0_svc_db = 
+const struct svc_decl pts0_svc_db =
 {
-    .uuid   = PTS0_SVC_UUID, 
+    .uuid   = PTS0_SVC_UUID,
     .info   = SVC_UUID(16),
     .atts   = pts0_atts,
     .nb_att = PTS_IDX_NB - 1,
@@ -154,7 +154,7 @@ const struct svc_decl pts0_svc_db =
 #define PTS1_CHAR_ATT1             ATT_UUID16(0xFF21)
 #define PTS1_CHAR_ATT2             ATT_UUID16(0xFF22)
 #define PTS1_CHAR_ATT3             ATT_UUID16(0xFF23)
-    
+
 const att_decl_t pts1_atts[] =
 {
     // No.1 Characteristic Declaration and Value and User Descriptor
@@ -165,15 +165,15 @@ const att_decl_t pts1_atts[] =
     // No.2 Characteristic Declaration and Value
     ATT_ELMT_DECL_CHAR( PTS_IDX_ATT2_CHAR ),
     ATT_ELMT( PTS_IDX_ATT2_VAL,  PTS1_CHAR_ATT2,                  PROP_WC|PROP_WR|PROP_RD,  PTS_DATA_MAX_LEN ),
-    
+
     // No.3 Characteristic Declaration and Value
     ATT_ELMT_DECL_CHAR( PTS_IDX_ATT3_CHAR ),
     ATT_ELMT( PTS_IDX_ATT3_VAL,  PTS1_CHAR_ATT3,                  PROP_WC|PROP_WR|PROP_RD,  PTS_DATA_MAX_LEN ),
 };
 
-const struct svc_decl pts1_svc_db = 
+const struct svc_decl pts1_svc_db =
 {
-    .uuid   = PTS1_SVC_UUID, 
+    .uuid   = PTS1_SVC_UUID,
     .info   = SVC_UUID(16),
     .atts   = pts1_atts,
     .nb_att = PTS_IDX_NB - 1,
@@ -202,15 +202,15 @@ const att_decl_t pts2_atts[] =
     // No.2 Characteristic Declaration and Value
     ATT_ELMT_DECL_CHAR( PTS_IDX_ATT2_CHAR ),
     ATT_ELMT128( PTS_IDX_ATT2_VAL, PTS2_CHAR_ATT2,                  PROP_WC|PROP_WR|PROP_RD,  PTS_DATA_MAX_LEN ),
-    
+
     // No.3 Characteristic Declaration and Value
     ATT_ELMT_DECL_CHAR( PTS_IDX_ATT3_CHAR ),
     ATT_ELMT128( PTS_IDX_ATT3_VAL, PTS2_CHAR_ATT3,                  PROP_RD|PROP_WR,          PTS_DATA_MAX_LEN ),
 };
 
-const struct svc_decl pts_svc_db2 = 
+const struct svc_decl pts_svc_db2 =
 {
-    .uuid128 = PTS2_SVC_UUID, 
+    .uuid128 = PTS2_SVC_UUID,
     .info    = SVC_UUID(128),
     .atts    = pts2_atts,
     .nb_att  = PTS_IDX_NB - 1,
@@ -232,7 +232,7 @@ const struct svc_decl pts_svc_db2 =
 static uint16_t ptss_get_att_handle(uint8_t att_idx)
 {
     ASSERT_ERR(att_idx < PTS_ATT_NB); //svr_idx=0
-    
+
     return (att_idx + ptss_env.start_hdl);
 }
 
@@ -256,7 +256,7 @@ static uint8_t ptss_get_att_idx(uint8_t *svr_idx, uint16_t handle)
         att_idx = handle - (ptss_env.start_hdl + PTS_IDX_NB*2);
         *svr_idx = 2;
     }
-    
+
     return (att_idx);
 }
 
@@ -332,9 +332,9 @@ static void ptss_att_info_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
     {
         status = PRF_ERR_APP_ERROR;
     }
-    
+
     DEBUG("  info_cfm(svr:%d,hdl:0x%x,sta:0x%x,len:%d)", svr_idx, param->handle, status, length);
-    
+
     // Send info response
     gatt_info_cfm(conidx, status, handle, length);
 }
@@ -343,7 +343,7 @@ static void ptss_att_info_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
 static void ptss_att_write_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, uint16_t handle, const struct atts_write_ind *ind)
 {
     uint8_t status = LE_SUCCESS;
-    
+
     if (att_idx != ATT_INVALID_IDX)
     {
         if (svr_idx == 1) // PTS1 Error
@@ -375,7 +375,7 @@ static void ptss_att_write_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx,
             {
                 // received data to callback
                 ptss_cb_recv(conidx, ind->length, ind->value);
-                
+
                 // Save data to read-back
                 if (att_idx == PTS_IDX_ATT2_VAL)
                 {
@@ -410,9 +410,9 @@ static void ptss_att_write_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx,
             {
                 // update configuration if value for stop or notification enable
                 uint8_t cli_cfg = ind->value[0] & (PRF_CLI_START_NTF | PRF_CLI_START_IND);
-                
+
                 PTS_CLI_CFG_SET(conidx, cli_cfg);
-                
+
                 // client conf to callback
                 ptss_cb_ccc(conidx, cli_cfg);
             }
@@ -426,9 +426,9 @@ static void ptss_att_write_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx,
     {
         status = PRF_ERR_APP_ERROR;
     }
-    
+
     DEBUG("  --write_cfm(svr:%d,hdl:0x%x,sta:0x%x)", svr_idx, handle, status);
-        
+
     // Send write conform
     gatt_write_cfm(conidx, status, handle);
 }
@@ -440,7 +440,7 @@ static void ptss_att_read_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
     uint8_t status  = LE_SUCCESS;
 
     if (att_idx != ATT_INVALID_IDX)
-    {    
+    {
         if (svr_idx == 1) // PTS1 Error
         {
             // Read Error
@@ -479,7 +479,7 @@ static void ptss_att_read_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
             if (att_idx == PTS_IDX_ATT1_VAL)
             {
                 length = gatt_get_mtu(conidx);
-                
+
                 if (length < 512) length--;
             }
             else if (att_idx == PTS_IDX_ATT1_DESC)
@@ -510,7 +510,7 @@ static void ptss_att_read_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
                 //if (ptss_env.rdv_cb)
                 //    length = ptss_env.rdv_cb(conidx, NULL);
                 length = gatt_get_mtu(conidx);
-                
+
                 if (length < 512) length--;
             }
             else
@@ -523,7 +523,7 @@ static void ptss_att_read_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
     {
         status = PRF_ERR_APP_ERROR;
     }
-    
+
     DEBUG("  read_cfm(svr:%d,hdl:0x%x,sta:0x%x,len:%d)", svr_idx, param->handle, status, length);
 
     // Send read response
@@ -554,7 +554,7 @@ static void ptss_att_read_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
             if (att_idx == PTS_IDX_ATT1_DESC)
             {
                 uint16_t cli_cfg = PTS_CLI_CFG_GET(conidx);
-                
+
                 gatt_read_cfm(conidx, status, handle, length, (uint8_t *)&cli_cfg);
                 return;
             }
@@ -562,7 +562,7 @@ static void ptss_att_read_cfm(uint8_t conidx, uint8_t svr_idx, uint8_t att_idx, 
             {
                 ptss_cb_read(conidx, att_idx, handle);
                 return;
-            }     
+            }
         }
     }
 
@@ -574,7 +574,7 @@ static void ptss_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
 {
     uint8_t svr_idx, att_idx;
 
-    att_idx = ptss_get_att_idx(&svr_idx, handle); 
+    att_idx = ptss_get_att_idx(&svr_idx, handle);
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,svr:%d,att:%d)", conidx, opcode, handle, svr_idx, att_idx);
 
     switch (opcode)
@@ -600,7 +600,7 @@ static void ptss_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
         case ATTS_CMP_EVT:
         {
             const struct atts_cmp_evt *evt = param;
-            
+
             DEBUG("  cmp_evt(op:0x%x,sta:0x%x,seq:%d)", evt->operation, evt->status, evt->seq_num);
             // add 'if' to avoid warning #117-D: "evt" never referenced
             if (evt->operation == GATT_NOTIFY)
@@ -643,7 +643,7 @@ uint8_t ptss_svc_init(void)
     #if (PTSS_START_HDL)
     *start_hdl = PTSS_START_HDL; // at special handle
     #endif
-    
+
     // Create Service in database
     status = attmdb_svc_create(&ptss_env.start_hdl, NULL, &pts0_svc_db, ptss_svc_func);
 
@@ -655,20 +655,20 @@ uint8_t ptss_svc_init(void)
 
     next_hdl = ptss_env.start_hdl + PTS_IDX_NB;
     status = attmdb_svc_create(&next_hdl, NULL, &pts1_svc_db, ptss_svc_func);
-    
+
     DEBUG("svc_init1(sta:0x%X,shdl:%d)", status, next_hdl);
     if (status != LE_SUCCESS)
     {
         return status;
     }
-    
+
     next_hdl += PTS_IDX_NB;
     status = attmdb_svc_create(&next_hdl, NULL, &pts_svc_db2, ptss_svc_func);
     if (status != LE_SUCCESS)
     {
         return status;
     }
-    
+
     return status;
 }
 
@@ -710,15 +710,15 @@ uint8_t ptss_evt_send(uint8_t conidx, uint16_t handle, uint16_t len, const uint8
     if (len > 0)
     {
         uint8_t cli_cfg = PTS_CLI_CFG_GET(conidx);
-        
+
         if (cli_cfg != PRF_CLI_STOP_NTFIND)
         {
             uint8_t operation = (cli_cfg & PRF_CLI_START_NTF) ? GATT_NOTIFY : GATT_INDICATE;
-        
+
             if (handle == 0) ptss_get_att_handle(PTS_IDX_ATT1_VAL);
-            
+
             gatt_ntf_send(conidx, handle, len, data);
-            
+
             DEBUG("Send(hdl:0x%x,op:0x%x,len:%d)", handle, operation, len);
             status = LE_SUCCESS;
         }
@@ -727,7 +727,7 @@ uint8_t ptss_evt_send(uint8_t conidx, uint16_t handle, uint16_t len, const uint8
             status = PRF_ERR_NTF_DISABLED;
         }
     }
-    
+
     return status;
 }
 
@@ -761,7 +761,7 @@ __weak void ptss_cb_read(uint8_t conidx, uint8_t attidx, uint16_t handle)
 {
     uint16_t length = PTS_VERS_STR_LEN;
     const uint8_t *p_data = (const uint8_t *)PTS_VERS_STR;
-    
+
     DEBUG("  read_cfm(att:%d, len:%d)", attidx, length);
     gatt_read_cfm(conidx, LE_SUCCESS, handle, length, p_data);
 }

@@ -27,7 +27,7 @@
  * DEFINES
  ****************************************************************************************
  */
- 
+
 /// Macro for Instance of GATT TASK
 #define GATT(idx)                        TASK_ID(GATT, idx)
 
@@ -584,7 +584,7 @@ struct gatt_read_req_ind
 /*@TRACE*/
 struct gatt_read_cfm
 {
-    /// Response type 
+    /// Response type
     uint8_t operation;
     /// Status of read command execution by upper layers
     uint8_t status;
@@ -614,7 +614,7 @@ struct gatt_write_req_ind
 /*@TRACE*/
 struct gatt_write_cfm
 {
-    /// Response type 
+    /// Response type
     uint8_t operation;
     /// Status of write command execution by upper layers
     uint8_t status;
@@ -660,7 +660,7 @@ struct gatt_att_info_req_ind
 /*@TRACE*/
 struct gatt_att_info_cfm
 {
-    /// Response type 
+    /// Response type
     uint8_t operation;
     /// use to know if it's possible to modify the attribute
     /// can contains authorization or application error code.
@@ -839,7 +839,7 @@ struct gatt_con_info_ind
     uint16_t gatt_end_handle;
     /// Peer Service Change value handle
     uint16_t svc_chg_handle;
-        
+
     // GATT Service Side
     /// Client bond data information (@see enum gapc_cli_info)
     uint8_t  cli_info;

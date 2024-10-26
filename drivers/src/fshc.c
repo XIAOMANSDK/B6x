@@ -35,101 +35,111 @@ void puya_enter_dual_read(void)
 {
     if (FSHC->BYPASS_HPM == 0)
         return;
-    
-    bool cache_en = (CACHE->CCR.Word);
-    CACHE->CCR.Word = 0;
-    CACHE->CIR.INV_ALL = 1;
-    
+
+    uint32_t reg_val = (CACHE->CCR.Word);
+    CACHE->CCR.Word  = 0;
+    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);
+
     GLOBAL_INT_DISABLE();
-    
+
     fshc_xip_conf(FSH_CMD_DLRD_HMP, IBUS_DL_1DUMY, IBUS_DLRD_HPM);
     fshc_hpm_conf(true, 0x20, 0x10);
-    
+
     GLOBAL_INT_RESTORE();
-    
-    if (cache_en)
-    {
-        CACHE->CCR.Word = 1;
-    }
+
+    CACHE->CCR.Word = reg_val;
 }
 
-__SRAMFN(56)
+__SRAMFN(53)
 void puya_exit_dual_read(void)
 {
     if (FSHC->BYPASS_HPM == 1)
         return;
-    
-    bool cache_en = (CACHE->CCR.Word);
-    CACHE->CCR.Word = 0;
-    CACHE->CIR.INV_ALL = 1;
-    
+
+    uint32_t reg_val = (CACHE->CCR.Word);
+    CACHE->CCR.Word  = 0;
+    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);
+
     GLOBAL_INT_DISABLE();
     fshc_hpm_conf(false, 0x01, 0x10);
     fshc_xip_conf(FSH_CMD_RD, IBUS_SI_0DUMY, IBUS_SIRD_CFG);
     GLOBAL_INT_RESTORE();
-    
-    if (cache_en)
-    {
-        CACHE->CCR.Word = 1;
-    }
+
+    CACHE->CCR.Word = reg_val;
 }
 
-__SRAMFN(77)
+__SRAMFN(71)
 void boya_flash_quad_mode(void)
 {
+    GLOBAL_INT_DISABLE();
+
+    while (SYSCFG->ACC_CCR_BUSY);
+
     uint8_t sta_reg1 = fshc_rd_sta(FSH_CMD_RD_STA1, 1);
-    
+
     if ((sta_reg1 & 0x02) != 0x02)
     {
         uint8_t sys_clk = (rcc_sysclk_get() + 1) << 4;
-        
+
         sta_reg1 |= 0x02;
-        
+        uint32_t reg_val = (CACHE->CCR.Word);
+        CACHE->CCR.Word  = 0;
+        CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);
         // write en singal
         fshc_en_cmd(FSH_CMD_WR_EN);
 
         // send write sta cmd
         fshc_wr_sta(0x31/*FSH_CMD_WR_STA*/, 1, sta_reg1);
-        
+
+        CACHE->CCR.Word = reg_val;
+
         // Write Status Register Cycle Time, Max=12ms
         btmr_delay(sys_clk, 12000);
     }
+
+    GLOBAL_INT_RESTORE();
 }
 
-__SRAMFN(99)
+__SRAMFN(103)
 void flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
 {
     GLOBAL_INT_DISABLE();
-    
+
     while (SYSCFG->ACC_CCR_BUSY);
-    
+
     fshc_write(offset, data, wlen, FSH_CMD_WR);
-    
+
     GLOBAL_INT_RESTORE();
 }
 
-__SRAMFN(111)
+__SRAMFN(115)
 void flash_page_erase(uint32_t offset)
 {
     GLOBAL_INT_DISABLE();
-    
+
     while (SYSCFG->ACC_CCR_BUSY);
-    
+
+    uint32_t reg_val = (CACHE->CCR.Word);
+    CACHE->CCR.Word  = 0;
+    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);
+
     fshc_erase(offset, FSH_CMD_ER_PAGE);
-    
+
+    CACHE->CCR.Word = reg_val;
+
     GLOBAL_INT_RESTORE();
 }
 
-__SRAMFN(123)
+__SRAMFN(133)
 void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen)
 {
     flen_t wrcnt = 0;
     uint32_t wr_val = 0;
-    
+
     GLOBAL_INT_DISABLE();
-    
+
     while (SYSCFG->ACC_CCR_BUSY);
-    
+
 #if (0)
 /// fshc cmd mode
 #define FCM_GET_CMD(fcmd)      (((fcmd) & FCM_CMD_MSK) >> FCM_CMD_LSB)
@@ -137,7 +147,7 @@ void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen)
     uint8_t wr_cmd = FCM_GET_CMD(FSH_CMD_WR);
     uint8_t ln_mod = FCM_GET_MODE(FSH_CMD_WR);
     uint16_t wr_ctrl = SCTRL_WR_DAT(ln_mod);
-    
+
     fshc_en_cmd(FSH_CMD_WR_EN);
     fshc_wr_cfg(wr_cmd, offset, len, wr_ctrl, ACBIT_SI_0DUMY);
 #else
@@ -162,7 +172,7 @@ void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen)
             wrcnt += 4;
         }
     }
-    
+
     while (wrcnt < FLASH_PAGE_SIZE)
     {
         if (!FSHC->FIFO_STATUS.TXFIFO_FULL)
@@ -171,69 +181,69 @@ void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen)
             wrcnt += 4;
         }
     }
-    
+
     FSHC_WAIT_COMPLETE();
-    
+
     GLOBAL_INT_RESTORE();
 }
 
-__SRAMFN(180)
+__SRAMFN(190)
 void flash_byte_read(uint32_t offset, uint8_t *buff, uint32_t blen)
 {
     flen_t rdcnt = 0;
     uint32_t rd_val = 0, algned4_len = ((blen >> 2) << 2);
     uint32_t remain_len = (blen - algned4_len);
-    
+
     GLOBAL_INT_DISABLE();
-    
+
     // wait cache idle
     while (SYSCFG->ACC_CCR_BUSY);
-    
+
 #if (0)
 /// fshc cmd mode
 #define FCM_GET_CMD(fcmd)      (((fcmd) & FCM_CMD_MSK) >> FCM_CMD_LSB)
 #define FCM_GET_MODE(fcmd)     (((fcmd) & FCM_MODE_MSK) >> FCM_MODE_LSB)
     uint8_t rd_cmd = FCM_GET_CMD(FSH_CMD_RD);
     uint8_t ln_mod = FCM_GET_MODE(FSH_CMD_RD);
-    
+
     uint16_t rd_ctrl = SCTRL_RD_DAT(ln_mod);
     // OTP | (Dual or Quad) use 1DUMY
     uint16_t rd_acbit = (FSH_CMD_RD & (FCM_RWOTP_BIT | (2 << FCM_MODE_LSB))) ?  ACBIT_SI_1DUMY : ACBIT_SI_0DUMY;
-    
+
     fshc_rd_cfg(rd_cmd, offset, len, rd_ctrl, rd_acbit);
 #else
     fshc_rd_cfg(FSH_CMD_RD, offset, blen, 0x0394, 0x01D7);
 #endif
-    
+
     while (rdcnt < algned4_len)
     {
         if (!FSHC->FIFO_STATUS.RXFIFO_EMPTY)
         {
             rd_val = FSHC->SPDR_RD;
-            
+
             xmemcpy(buff + rdcnt, &rd_val, 4);
-            
+
             rdcnt += 4;
         }
     }
-    
+
     if ((remain_len) && (!FSHC->FIFO_STATUS.RXFIFO_EMPTY))
     {
         rd_val = FSHC->SPDR_RD;
-        
+
         xmemcpy(buff + rdcnt, &rd_val, remain_len);
-        
+
         rdcnt += remain_len;
     }
-    
+
     GLOBAL_INT_RESTORE();
 }
 
-__SRAMFN(232)
+__SRAMFN(242)
 void flash_read(uint32_t offset, uint32_t *buff, uint32_t wlen)
 {
     GLOBAL_INT_DISABLE();
-    
+
     while (SYSCFG->ACC_CCR_BUSY);
 
     fshc_read(offset, buff, wlen, FSH_CMD_RD);
@@ -263,12 +273,42 @@ __SRAMFN(262)
 void flash_multi_erase(uint8_t erase_mode, uint32_t idx, uint32_t cnt)
 {
     while (SYSCFG->ACC_CCR_BUSY);
-    
+
     for (uint16_t i = 0; i < cnt; i++)
     {
         fshc_erase((idx << PER_SIZE[erase_mode]), ERASE_CMD[erase_mode]);
-        
+
         ++idx;
     }
 }
 #endif
+
+uint32_t flash_size(void)
+{
+    /****************************************************/
+    // Byte0           | Byte1       | Byte2
+    // manufacturer ID | memory type | memory density
+    // 85              | 44          | 12
+    /****************************************************/
+    // memory density
+    // 10, 64KB
+    // 11, 128KB
+    // 12, 256KB
+    // 13, 512KB
+    uint8_t mid;
+
+    GLOBAL_INT_DISABLE();
+    while (SYSCFG->ACC_CCR_BUSY);
+    mid = (fshc_rd_sta(FSH_CMD_RD_ID, 3) >> 16) & 0xFF;
+    GLOBAL_INT_RESTORE();
+
+//    // flashID error.
+//    if ((mid < 0x10) || (mid == 0xFF))
+//    {
+//        return 0;
+//    }
+
+//    return (0x10000UL << (mid - 0x10));
+
+    return (mid > 0x20 ? 0 : (0x01UL << mid));
+}

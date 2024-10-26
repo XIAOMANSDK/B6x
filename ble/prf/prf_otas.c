@@ -68,7 +68,7 @@
 typedef struct otas_env_tag
 {
     // Service Start Handle
-    uint16_t  start_hdl;    
+    uint16_t  start_hdl;
     // Client Config of peer devices - each 2Bits(NTF & IND), so max_peer=8.
     uint16_t  ntf_bits;
     // Number of notify pkt
@@ -90,7 +90,7 @@ enum ota_att_idx
 {
     // Service Declaration, *MUST* Start at 0
     OTA_IDX_SVC,
-    
+
     // Serial TXD Char.
     OTA_IDX_TXD_CHAR,
     OTA_IDX_TXD_VAL,
@@ -125,7 +125,7 @@ const uint8_t ota_char_rxd_write[]  = OTA_ATT_UUID128(0xFF52);
 const uint8_t ota_char_val_read[]   = OTA_ATT_UUID128(0xFF53);
 
 /// Attributes Description
-const att_decl_t ota_atts[] = 
+const att_decl_t ota_atts[] =
 {
     // Serial Notify Char. Declaration and Value and Client Char. Configuration Descriptor
     ATT_ELMT_DECL_CHAR( OTA_IDX_TXD_CHAR ),
@@ -135,7 +135,7 @@ const att_decl_t ota_atts[] =
     // Serial Write Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( OTA_IDX_RXD_CHAR ),
     ATT_ELMT128( OTA_IDX_RXD_VAL,  ota_char_rxd_write,  PROP_WC | PROP_WR,   OTA_RXD_MAX_LEN ),
-    
+
     #if (OTA_READ_SUP)
     // Serial Read Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( OTA_IDX_READ_CHAR ),
@@ -144,9 +144,9 @@ const att_decl_t ota_atts[] =
 };
 
 /// Service Description
-const struct svc_decl ota_svc_db = 
+const struct svc_decl ota_svc_db =
 {
-    .uuid128 = ota_svc_uuid, 
+    .uuid128 = ota_svc_uuid,
     .info    = SVC_UUID(128),
     .atts    = ota_atts,
     .nb_att  = OTA_IDX_NB - 1,
@@ -164,7 +164,7 @@ const struct svc_decl ota_svc_db =
 #define OTA_CHAR_VAL_READ           ATT_UUID16(0xFF53)
 
 /// Attributes Description
-const att_decl_t ota_atts[] = 
+const att_decl_t ota_atts[] =
 {
     // Serial Notify Char. Declaration and Value and CCC Descriptor
     ATT_ELMT_DECL_CHAR( OTA_IDX_TXD_CHAR ),
@@ -174,7 +174,7 @@ const att_decl_t ota_atts[] =
     // Serial Write Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( OTA_IDX_RXD_CHAR ),
     ATT_ELMT( OTA_IDX_RXD_VAL,  OTA_CHAR_RXD_WRITE,  PROP_WC | PROP_WR,   OTA_RXD_MAX_LEN ),
-    
+
     #if (OTA_READ_SUP)
     // Serial Read Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( OTA_IDX_READ_CHAR ),
@@ -183,9 +183,9 @@ const att_decl_t ota_atts[] =
 };
 
 /// Service Description
-const struct svc_decl ota_svc_db = 
+const struct svc_decl ota_svc_db =
 {
-    .uuid   = OTA_SVC_UUID, 
+    .uuid   = OTA_SVC_UUID,
     .info   = SVC_UUID(16),
     .atts   = ota_atts,
     .nb_att = OTA_IDX_NB - 1,
@@ -235,7 +235,7 @@ static void otas_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             {
                 // retrieve notification config
                 uint16_t cli_cfg = OTA_NTF_CFG_GET(conidx);
-                
+
                 DEBUG("  read_cfm(txd_ntf:%d)", cli_cfg);
                 gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&cli_cfg);
                 break;
@@ -252,11 +252,11 @@ static void otas_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             // Send error response
             gatt_read_cfm(conidx, PRF_ERR_APP_ERROR, handle, 0, NULL);
         } break;
-        
+
         case ATTS_WRITE_REQ:
         {
             const struct atts_write_ind *ind = param;
-            
+
             DEBUG("  write_req(hdl:0x%x,att:%d,wr:0x%x,len:%d)", handle, att_idx, ind->wrcode, ind->length);
 
             if (att_idx == OTA_IDX_RXD_VAL)
@@ -268,7 +268,7 @@ static void otas_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                 otas_cb_rxd(conidx, ind->length, ind->value);
                 break;
             }
-            
+
             if (att_idx == OTA_IDX_TXD_NTF_CFG)
             {
                 if ((!ind->more) && (ind->length == sizeof(uint16_t)))
@@ -291,17 +291,17 @@ static void otas_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                         break;
                     }
                 }
-            } 
+            }
 
             // Send write conform with error!
             gatt_write_cfm(conidx, PRF_ERR_APP_ERROR, handle);
         } break;
-        
+
         case ATTS_INFO_REQ:
         {
             uint8_t  status = LE_SUCCESS;
             uint16_t length = 0;
-            
+
             if (att_idx == OTA_IDX_RXD_VAL)
             {
                 length = OTA_RXD_MAX_LEN;  // accepted length
@@ -314,16 +314,16 @@ static void otas_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             {
                 status = ATT_ERR_WRITE_NOT_PERMITTED;
             }
-            
+
             // Send length-info confirm for prepWR judging.
             DEBUG("  info_cfm(hdl:0x%x,att:%d,sta:0x%X,len:%d)", handle, att_idx, status, length);
             gatt_info_cfm(conidx, status, handle, length);
         } break;
-        
+
         case ATTS_CMP_EVT:
         {
             const struct atts_cmp_evt *evt = param;
-            
+
             otas_env.nb_pkt++; // release
 
             DEBUG("  cmp_evt(op:0x%x,sta:0x%x,nb:%d)", evt->operation, evt->status, otas_env.nb_pkt);
@@ -367,8 +367,8 @@ uint8_t otas_svc_init(void)
 
     // Create Service in database
     status = attmdb_svc_create(&otas_env.start_hdl, NULL, &ota_svc_db, otas_svc_func);
-    
-    DEBUG("svc_init(sta:0x%X,shdl:%d,nb_pkt:%d,ntf_bits:0x%X)", 
+
+    DEBUG("svc_init(sta:0x%X,shdl:%d,nb_pkt:%d,ntf_bits:0x%X)",
             status, otas_env.start_hdl, otas_env.nb_pkt, otas_env.ntf_bits);
 
     return status;
@@ -405,7 +405,7 @@ void otas_set_ccc(uint8_t conidx, uint8_t cli_cfg)
 uint8_t otas_txd_send(uint8_t conidx, uint16_t len, const uint8_t* data)
 {
     uint8_t status = PRF_ERR_REQ_DISALLOWED;
-    
+
     if ((len > 0) && (otas_env.nb_pkt > 0))
     {
         uint8_t ntf_cfg = OTA_NTF_CFG_GET(conidx);
@@ -423,7 +423,7 @@ uint8_t otas_txd_send(uint8_t conidx, uint16_t len, const uint8_t* data)
             status = PRF_ERR_NTF_DISABLED;
         }
     }
-    
+
     return status;
 }
 
@@ -439,7 +439,7 @@ uint8_t otas_txd_send(uint8_t conidx, uint16_t len, const uint8_t* data)
 __weak void otas_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     debugHex(data, len);
-    
+
     // Loopback to txd, just test.
     //otas_txd_send(conidx, len, data);
 }
@@ -460,7 +460,7 @@ __weak void otas_cb_rdv(uint8_t conidx, uint8_t attidx, uint16_t handle)
 {
     uint16_t length = OTA_VERS_STR_LEN;
     const uint8_t *p_data = (const uint8_t *)OTA_VERS_STR;
-    
+
     DEBUG("  read_cfm(att:%d, len:%d)", attidx, length);
     gatt_read_cfm(conidx, LE_SUCCESS, handle, length, p_data);
 }

@@ -28,7 +28,7 @@
  * DEFINES
  ****************************************************************************************
  */
- 
+
 
 /*
  * MESSAGE HANDLERS
@@ -85,7 +85,7 @@ APP_MSG_HANDLER(gatt_event_ind)
 APP_MSG_HANDLER(gatt_event_req_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
-    
+
     DEBUG("Evt_req_ind(typ:%d,hdl:0x%02x,len:%d)", param->type, param->handle, param->length);
     debugHex(param->value, param->length);
 
@@ -105,47 +105,47 @@ APP_SUBTASK_HANDLER(gatt_msg)
         {
             APP_MSG_FUNCTION(gatt_cmp_evt);
         } break;
-        
+
         case GATT_MTU_CHANGED_IND:
         {
             APP_MSG_FUNCTION(gatt_mtu_changed_ind);
         } break;
-        
+
         case GATT_DISC_SVC_IND:
         {
             APP_MSG_FUNCTION(gatt_disc_svc_ind);
         } break;
-        
+
         case GATT_DISC_SVC_INCL_IND:
         {
             APP_MSG_FUNCTION(gatt_disc_svc_incl_ind);
         } break;
-        
+
         case GATT_DISC_CHAR_IND:
         {
             APP_MSG_FUNCTION(gatt_disc_char_ind);
         } break;
-        
+
         case GATT_DISC_CHAR_DESC_IND:
         {
             APP_MSG_FUNCTION(gatt_disc_char_desc_ind);
         } break;
-        
+
         case GATT_READ_IND:
         {
             APP_MSG_FUNCTION(gatt_read_ind);
         } break;
-        
+
         case GATT_EVENT_IND:
         {
             APP_MSG_FUNCTION(gatt_event_ind);
         } break;
-        
+
         case GATT_EVENT_REQ_IND:
         {
             APP_MSG_FUNCTION(gatt_event_req_ind);
         } break;
-        
+
         default:
         {
             DEBUG("Unknow MsgId:0x%X", msgid);

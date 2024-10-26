@@ -191,4 +191,15 @@ void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen);
  ****************************************************************************************
  */
 void flash_byte_read(uint32_t offset, uint8_t *buff, uint32_t blen);
+
+/**
+ ****************************************************************************************
+ * @brief Get Flash Size.
+ *
+ * @return  size in bytes.
+ *
+ * @note   0 is invalid size.
+ ****************************************************************************************
+ */
+uint32_t flash_size(void);
 #endif //_FLASH_H_

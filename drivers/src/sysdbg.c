@@ -30,7 +30,7 @@
 void sysdbg_iomap(uint32_t pio)
 {
     pio &= SYS_DBG_PIO_MSK;
-    
+
     for (uint8_t i = 2; i < 20; i++)
     {
         if (pio & (1UL << i))
@@ -51,18 +51,18 @@ void sysdbg_anatst(uint8_t tsten, uint8_t atsel)
     {
         GPIO_DIR_CLR(1UL << PA_AT0);
         iom_ctrl(PA_AT0, IOM_ANALOG);
-        
+
         RF->ANAMISC_CTRL1.AT0_SEL = atsel & 0x0F;
     }
-    
+
     if (tsten & ATEN_AT1_BIT)
     {
         GPIO_DIR_CLR(1UL << PA_AT1);
         iom_ctrl(PA_AT1, IOM_ANALOG);
-        
+
         RF->ANAMISC_CTRL1.AT1_SEL = (atsel >> 4) & 0x0F;
     }
-    
+
     RF->ANAMISC_CTRL1.TSTEN_CBPF = (tsten & ATEN_CBPF_BIT) ? 1 : 0;
     RF->ANAMISC_CTRL1.TSTEN_RSSI = (tsten & ATEN_RSSI_BIT) ? 1 : 0;
 }
@@ -91,7 +91,7 @@ void sysdbg_select(uint8_t dbgsel, uint32_t diag)
     {
         return; // not support
     }
-    
+
     SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = dbgsel;
 }
 
@@ -130,7 +130,7 @@ void sysdbg_sel_rf(uint8_t txrx)
 {
     // 2'b01: tx debug port, 2'b10: rx debug port
     RF->DIG_CTRL.RF_DBG_SEL = (txrx & 0x03);
-    
+
     SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = SYS_DBG_RF;
 }
 
@@ -171,7 +171,7 @@ void sysdbg_sel_rf(uint8_t txrx)
 void sysdbg_sel_mdm(uint8_t mode)
 {
     MDM->REG0.DEBUG_MODE = mode;
-    
+
     SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = SYS_DBG_MDM;
 }
 
@@ -179,7 +179,7 @@ void sysdbg_sel_ble(uint32_t diag)
 {
     // BB DIAG1 0x83, 0x8300, 0x8383
     (*(volatile uint32_t *)0x50000050) = diag;
-    
+
     SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = SYS_DBG_BLE;
 }
 

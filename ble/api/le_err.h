@@ -228,7 +228,7 @@ enum smp_err
     SMP_ERR_REM_DHKEY_CHECK_FAILED             = 0x7B,
     /// Indicates that the confirm values in the numeric comparison protocol do not match.
     SMP_ERR_REM_NUMERIC_COMPARISON_FAILED      = 0x7C,
-    
+
     // SMP Errors triggered by local device
     /// The provided resolvable address has not been resolved.
     SMP_ERR_ADDR_RESOLV_FAIL                   = 0xD0,
@@ -413,6 +413,5 @@ enum ll_err
     /// Connection failed to be established
     LL_ERR_CONN_FAILED_TO_BE_EST               = 0xCE,
 };
-
 
 #endif // LE_ERR_H_

@@ -21,7 +21,7 @@
 
 #define DMA_CFG_EN_BIT             (1 << 0)      // bit0 master_enable
 #define DMA_CFG_HPROT(bits)        ((bits) << 5) // bit[7:5] chnl_prot_ctrl
-    
+
 #define DMA_CHNL_CTRL(chidx)       (DMA_CHNL_CTRL_Typedef *)(DMA->CTRLBASE_POINTER.Word + ((chidx) * sizeof(DMA_CHNL_CTRL_Typedef)))
 
 
@@ -42,10 +42,10 @@ void dma_init(void)
     // clk_en rst_req
     RCC_APBCLK_EN(APB_DMAC_BIT);
     RCC_APBRST_REQ(APB_DMAC_BIT);
-    
+
     // dma base addr
     DMA->CTRLBASE_POINTER.Word = (uint32_t)&dma_ctrl_base;
-    
+
     // dma enable
     DMA->CFG.Word = DMA_CFG_HPROT(7) | DMA_CFG_EN_BIT;
 }
@@ -65,7 +65,7 @@ void dma_chnl_init(uint8_t chidx, uint8_t chsel)
         DMA->USEBURST_SET = (1UL << chidx);
         // close the mask of request for channel
         DMA->REQMSK_CLR   = (1UL << chidx);
-        
+
         // config dma reuse function
         uint8_t arr = (chidx / 4);
         uint8_t lsh = (chidx % 4) * 8; // 6 of 8bit
@@ -76,7 +76,7 @@ void dma_chnl_init(uint8_t chidx, uint8_t chsel)
 void dma_chnl_deinit(uint8_t chidx)
 {
     uint32_t chbit = 1UL << (chidx % DMA_CH_MAX);
-    
+
     DMA->CHNL_EN_CLR = chbit;
     // dma disable signal translation
     DMA->USEBURST_SET = (1UL << chidx);
@@ -87,29 +87,29 @@ void dma_chnl_deinit(uint8_t chidx)
 void dma_chnl_conf(uint8_t chidx, uint32_t src_ep, uint32_t dst_ep, uint32_t trans)
 {
     DMA_CHNL_CTRL_Typedef *chnl_cur = DMA_CHNL_CTRL(chidx);
-    
+
     // Channel primary set, select function
     // done in dma_chnl_init(chidx, chsel);
-    
+
     // Channel control fill
     chnl_cur->SRC_DATA_END_PTR    = src_ep;
     chnl_cur->DST_DATA_END_PTR    = dst_ep;
     chnl_cur->TRANS_CFG_DATA.Word = trans;
     chnl_cur->TRANS_CFG_RESV.Word = trans;
-    
+
     DMA->CHNL_EN_SET = 1UL << (chidx % DMA_CH_MAX);
 }
 
 bool dma_chnl_reload(uint8_t chidx)
-{    
+{
     DMA_CHNL_CTRL_Typedef *chnl_cur;
-    
+
     chidx = chidx % DMA_CH_MAX; // Pri Channel
-    
+
     bool alter = (DMA->PRIALT_SET & (1UL << chidx)) ? true : false;
-    
+
     chnl_cur = DMA_CHNL_CTRL(chidx);
-    
+
     if (chnl_cur->TRANS_CFG_RESV.CYCLE_CTRL != CCM_PING_PONG)
     {
         chnl_cur->TRANS_CFG_DATA = chnl_cur->TRANS_CFG_RESV;
@@ -121,7 +121,7 @@ bool dma_chnl_reload(uint8_t chidx)
         {
             chnl_cur->TRANS_CFG_DATA = chnl_cur->TRANS_CFG_RESV;
         }
-        
+
         chnl_cur = DMA_CHNL_CTRL(chidx | DMA_CH_ALT);
         if (chnl_cur->TRANS_CFG_DATA.CYCLE_CTRL == CCM_STOP)
         {
@@ -147,7 +147,7 @@ bool dma_chnl_reload(uint8_t chidx)
 uint16_t dma_chnl_remain(uint8_t chidx)
 {
     DMA_CHNL_CTRL_Typedef *chnl_cur = DMA_CHNL_CTRL(chidx);
-    
+
     if (chnl_cur->TRANS_CFG_DATA.CYCLE_CTRL)
         return (chnl_cur->TRANS_CFG_DATA.N_MINUS_1 + 1);
     else
@@ -177,11 +177,11 @@ bool dma_chnl_remain_pingpong(uint8_t chidx, uint16_t *len)
 void dma_chnl_ctrl(uint8_t chidx, uint8_t ctrl)
 {
     uint32_t chbit = 1UL << (chidx % DMA_CH_MAX);
-    
+
     if (ctrl)
     {
         DMA->CHNL_EN_SET = chbit;
-        
+
         if (ctrl == CHNL_DONE)
         {
             while ((DMACHCFG->IFLAG0 & chbit) == 0);
@@ -197,7 +197,7 @@ void dma_chnl_ctrl(uint8_t chidx, uint8_t ctrl)
 bool dma_chnl_done(uint8_t chidx)
 {
     uint32_t chbit = 1UL << (chidx % DMA_CH_MAX);
-    
+
     if (DMACHCFG->IFLAG0 & chbit)
     {
         // clear done, *DMA->CHNL_EN auto be cleared*

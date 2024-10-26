@@ -24,7 +24,7 @@
     #define SCP_START_HDL           (0)
 #endif
 
-/// Scan Refresh Characteristic(Support or Not) 
+/// Scan Refresh Characteristic(Support or Not)
 #if !defined(SCP_FEATURES)
     #define SCP_FEATURES            (SCP_SCAN_REFRESH_SUP)
 #endif

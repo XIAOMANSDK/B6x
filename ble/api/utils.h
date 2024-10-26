@@ -31,7 +31,7 @@
 /// Assertions showing a critical info
 #define ASSERT_INFO(cond, param0, param1)
 
-/// Assertions showing a non-critical problem 
+/// Assertions showing a non-critical problem
 #define ASSERT_WARN(cond, param0, param1)
 
 /// DUMP data array present in the SW.

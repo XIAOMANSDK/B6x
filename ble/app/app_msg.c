@@ -54,7 +54,7 @@ __weak APP_SUBTASK_HANDLER(custom)
         DEBUG("Unknow MsgId:0x%X", msgid);
         debugHex((uint8_t *)param, length);
     }
-    
+
     return (MSG_STATUS_FREE);
 }
 
@@ -87,7 +87,7 @@ __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
             handler = app_gatt_msg_handler;
             break;
         #endif
-        
+
         #if (L2CC_LECB)
         case (TID_L2CC):
             handler = app_l2cc_msg_handler;

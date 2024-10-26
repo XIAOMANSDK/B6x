@@ -49,7 +49,7 @@ void gatt_exmtu(uint8_t conidx, uint16_t mtu);
 
 /**
  ****************************************************************************************
- * @brief Change service. 
+ * @brief Change service.
  *
  * @param[in] idx   connection index
  * @param[in] shdl  Start handle
@@ -61,7 +61,7 @@ void gatt_svc_chg(uint8_t conidx, uint16_t shdl, uint16_t ehdl);
 
 /**
  ****************************************************************************************
- * @brief Discovery command. 
+ * @brief Discovery command.
  *
  * @param[in] idx        connection index
  * @param[in] operation  Operation flags  @see GATT_OPERATION about discovery operation
@@ -76,13 +76,13 @@ void gatt_disc(uint8_t conidx, uint8_t operation, uint16_t shdl, uint16_t ehdl, 
 
 /**
  ****************************************************************************************
- * @brief Write command request. 
+ * @brief Write command request.
  *
  * @param[in] idx        Connection index
  * @param[in] operation  Operation flags  @see GATT_OPERATION about Operation flags for writing/modifying attributes
  * @param[in] handle     Handle to Write
  * @param[in] value      Pointer to the value data
- * @param[in] length     Value length 
+ * @param[in] length     Value length
  * @return state in GATT_WRITE_REQ_IND
  ****************************************************************************************
  */
@@ -90,13 +90,13 @@ void gatt_write(uint8_t conidx, uint8_t operation, uint16_t handle, uint8_t* val
 
 /**
  ****************************************************************************************
- * @brief Prepare write command request. 
+ * @brief Prepare write command request.
  *
  * @param[in] idx        Connection index
  * @param[in] handle     Handle to write
  * @param[in] value      Pointer to the value data
- * @param[in] length     Value length 
- * @param[in] offset     Write offset @see gatt_write_cmd 
+ * @param[in] length     Value length
+ * @param[in] offset     Write offset @see gatt_write_cmd
  * @return state in GATT_ATT_INFO_REQ_IND
  ****************************************************************************************
  */
@@ -104,7 +104,7 @@ void gatt_pre_write(uint8_t conidx, uint16_t handle, uint8_t* value, uint16_t le
 
 /**
  ****************************************************************************************
- * @brief Execute write characteristic request. 
+ * @brief Execute write characteristic request.
  *
  * @param[in] idx        Connection index
  * @param[in] execute    Cancel(0) / Execute(1) pending write operations
@@ -115,11 +115,11 @@ void gatt_exe_write(uint8_t conidx, bool execute);
 
 /**
  ****************************************************************************************
- * @brief Read command. 
+ * @brief Read command.
  *
  * @param[in] idx        Connection index
  * @param[in] handle     Handle to read
- * @param[in] length     Data length 
+ * @param[in] length     Data length
  * @return state in GATT_READ_IND
  ****************************************************************************************
  */
@@ -127,12 +127,12 @@ void gatt_read(uint8_t conidx, uint16_t handle, uint16_t length);
 
 /**
  ****************************************************************************************
- * @brief Read command. 
+ * @brief Read command.
  *
  * @param[in] idx        Connection index
  * @param[in] handle     Handle to read
- * @param[in] length     Data length 
- * @param[in] offset     Read offset @see gatt_read_simple 
+ * @param[in] length     Data length
+ * @param[in] offset     Read offset @see gatt_read_simple
  * @return state in GATT_READ_IND
  ****************************************************************************************
  */
@@ -140,7 +140,7 @@ void gatt_read_long(uint8_t conidx, uint16_t handle, uint16_t length, uint16_t o
 
 /**
  ****************************************************************************************
- * @brief Read Using UUID. 
+ * @brief Read Using UUID.
  *
  * @param[in] idx        Connection index
  * @param[in] ulen       UUID length
@@ -154,10 +154,10 @@ void gatt_read_by_uuid(uint8_t conidx, uint8_t ulen, uint8_t *uuid, uint16_t shd
 
 /**
  ****************************************************************************************
- * @brief Read Multiple Values. 
+ * @brief Read Multiple Values.
  *
  * @param[in] idx        Connection index
- * @param[in] nb         number of read @see gatt_read_cmd  
+ * @param[in] nb         number of read @see gatt_read_cmd
  * @param[in] handles    Pointer to the handles data @see gatt_read_multiple
  * @return state in GATT_READ_IND
  ****************************************************************************************
@@ -166,7 +166,7 @@ void gatt_read_by_multiple(uint8_t conidx, uint8_t nb, uint8_t* handles);
 
 /**
  ****************************************************************************************
- * @brief Write Confirm. 
+ * @brief Write Confirm.
  *
  * @param[in] idx        Connection index
  * @param[in] status     confirm status to peer. @see att_err
@@ -177,12 +177,12 @@ void gatt_write_cfm(uint8_t conidx, uint8_t status, uint16_t handle);
 
 /**
  ****************************************************************************************
- * @brief Read Confirm. 
+ * @brief Read Confirm.
  *
  * @param[in] idx        Connection index
  * @param[in] status     confirm status to peer. @see att_err
  * @param[in] handle     Handle to read confirm.
- * @param[in] length     Data length 
+ * @param[in] length     Data length
  * @param[in] data       Pointer the confirm data to peer.
  ****************************************************************************************
  */
@@ -190,7 +190,7 @@ void gatt_read_cfm(uint8_t conidx, uint8_t status, uint16_t handle, uint16_t len
 
 /**
  ****************************************************************************************
- * @brief Info Confirm. 
+ * @brief Info Confirm.
  *
  * @param[in] idx        Connection index
  * @param[in] status     confirm status to peer. @see att_err
@@ -206,7 +206,7 @@ void gatt_info_cfm(uint8_t conidx, uint8_t status, uint16_t handle, uint16_t len
  *
  * @param[in] conidx     Connection Index
  * @param[in] handle     Handle to NOTIFY.
- * @param[in] length     Data length 
+ * @param[in] length     Data length
  * @param[in] data       Pointer the data to peer.
  ****************************************************************************************
  */
@@ -218,7 +218,7 @@ void gatt_ntf_send(uint8_t conidx, uint16_t handle, uint16_t length, const uint8
  *
  * @param[in] conidx     Connection Index
  * @param[in] handle     Handle to INDICATE.
- * @param[in] length     Data length 
+ * @param[in] length     Data length
  * @param[in] data       Pointer the data to peer.
  ****************************************************************************************
  */
@@ -226,7 +226,7 @@ void gatt_ind_send(uint8_t conidx, uint16_t handle, uint16_t length, const uint8
 
 /**
  ****************************************************************************************
- * @brief Event Confirm. 
+ * @brief Event Confirm.
  *
  * @param[in] idx        Connection index
  * @param[in] handle     Handle to event confirm.

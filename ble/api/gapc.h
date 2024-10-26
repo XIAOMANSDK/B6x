@@ -27,7 +27,7 @@
  * DEFINES
  ****************************************************************************************
  */
- 
+
 /// Macro for Instance of GAPC TASK
 #define GAPC(idx)                        TASK_ID(GAPC, idx)
 
@@ -51,7 +51,7 @@ enum gapc_msg_id
     /* Link management command */
     /// Request disconnection of current link command.
     GAPC_DISCONNECT_CMD                = MSG_ID(GAPC, 0x04),
-    /// Set specific link data configuration(rename from _CFM). 
+    /// Set specific link data configuration(rename from _CFM).
     GAPC_CONNECTION_CFG                = MSG_ID(GAPC, 0x21),
 
     /* Peer device info */

@@ -154,7 +154,7 @@ enum ble_event
     // Configure Events
     BLE_RESET,
     BLE_CONFIGURED,
-    
+
     // Connection Events
     BLE_CONNECTED,
     BLE_DISCONNECTED,
@@ -199,7 +199,7 @@ extern const bd_addr_t ble_dev_addr;
 
 /// GAP device configuration
 extern const struct gapm_dev_config ble_dev_config;
-    
+
 
 /*
  * FUNCTION DECLARATIONS

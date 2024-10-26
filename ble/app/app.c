@@ -64,8 +64,14 @@
 #if !defined(BLE_DEV_CFG)
     #define BLE_DEV_CFG         (CFG_FLAG_NONE)
 #endif
-    
 
+#if !defined(BLE_SYNC_WORD)
+    // LE LL 2.1.2 Access Address
+    #define BLE_SYNC_WORD       (0x8E89BED6)
+#endif
+
+#define SYNC_WORD_L             ((BLE_SYNC_WORD >> 0)  & 0xFFFF)
+#define SYNC_WORD_H             ((BLE_SYNC_WORD >> 16) & 0xFFFF)
 
 /*
  * VARIABLES DEFINITIONS
@@ -373,10 +379,15 @@ __weak void app_conf_fsm(uint8_t evt)
         app_actv_create();
         #endif //(APP_ACTV_EN)
 
+        #if (BLE_SYNC_WORD != 0x8E89BED6)
+        ble_2G4_set(SYNC_WORD_L, SYNC_WORD_H);
+        #endif
+        
         #if (PRF_MESH)
         // Create Mesh Instance
         app_mesh_create();
         #endif //(PRF_MESH)
+
     }
 }
 

@@ -46,7 +46,15 @@ enum spim_ctrl_bfs
     SPIM_CR_MSB_FST_BIT        = (1 << 11),
 };
 
-#define SPIM_CR_DFLT             (SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)
+#if (SYS_CLK == 1)
+    #define SPIM_CR_DFLT         (SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x01))  // SPI 8MHz
+#elif (SYS_CLK == 2)
+    #define SPIM_CR_DFLT         (SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x02))  // SPI 6MHz
+#elif (SYS_CLK == 3)
+    #define SPIM_CR_DFLT         (SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x03))  // SPI 8MHz
+#else
+    #define SPIM_CR_DFLT         (SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)  // SPI 8MHz
+#endif //SYS_CLK
 
 enum spim_staclr_bfs
 {

@@ -122,7 +122,7 @@ enum hid_att_idx
     // Report Map
     HID_IDX_REPORT_MAP_CHAR,            //5
     HID_IDX_REPORT_MAP_VAL,
-    
+
     #if (HID_BOOT_SUP)
     // Protocol Mode(0-BOOT, 1-REPORT)
     HID_IDX_PROTO_MODE_CHAR,
@@ -170,7 +170,7 @@ enum hid_att_idx
     #if (HID_RPT_SYSTEM)
     // System IN Report
     HID_IDX_SYS_IN_RPT_CHAR,
-    HID_IDX_SYS_IN_RPT_VAL,  
+    HID_IDX_SYS_IN_RPT_VAL,
     HID_IDX_SYS_IN_RPT_REF,             //30
     HID_IDX_SYS_IN_RPT_NTF_CFG,
     #endif //(HID_RPT_SYSTEM)
@@ -210,7 +210,7 @@ const att_decl_t hid_atts[] =
     // HID Information Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( HID_IDX_HID_INFO_CHAR ),
     ATT_ELMT( HID_IDX_HID_INFO_VAL,         ATT_CHAR_HID_INFO,              PROP_RD,    HID_INFO_SIZE ),
-    
+
     // HID Control Point Char. Declaration
     ATT_ELMT_DECL_CHAR( HID_IDX_HID_CTRL_PT_CHAR ),
     ATT_ELMT( HID_IDX_HID_CTRL_PT_VAL,      ATT_CHAR_HID_CTRL_PT,           PROP_WC,    HID_CTRL_PT_SIZE ),
@@ -218,7 +218,7 @@ const att_decl_t hid_atts[] =
     // Report Map Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( HID_IDX_REPORT_MAP_CHAR ),
     ATT_ELMT( HID_IDX_REPORT_MAP_VAL,       ATT_CHAR_REPORT_MAP,            PROP_RD,    0 ),
-        
+
     #if (HID_BOOT_SUP)
     // Protocol Mode Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( HID_IDX_PROTO_MODE_CHAR ),
@@ -234,7 +234,7 @@ const att_decl_t hid_atts[] =
     ATT_ELMT_DECL_CHAR( HID_IDX_BOOT_KB_OUT_RPT_CHAR ),
     ATT_ELMT( HID_IDX_BOOT_KB_OUT_RPT_VAL,  ATT_CHAR_BOOT_KB_OUT_REPORT,    PROP_RD | PROP_WR | PROP_WC, HID_BOOT_REPORT_MAX_LEN ),
     #endif //(HID_BOOT_KB)
-    
+
     #if (HID_BOOT_MOUSE)
     // Boot Mouse Input Report Char. Declaration and Value and CCC Descriptor
     ATT_ELMT_DECL_CHAR( HID_IDX_BOOT_MOUSE_IN_RPT_CHAR ),
@@ -250,7 +250,7 @@ const att_decl_t hid_atts[] =
     ATT_ELMT( HID_IDX_KB_IN_RPT_VAL,        ATT_CHAR_REPORT,                PROP_RD | PROP_NTF, HID_REPORT_MAX_LEN ),
     ATT_ELMT_DESC_REPORT_REF( HID_IDX_KB_IN_RPT_REF ),
     ATT_ELMT_DESC_CLI_CHAR_CFG( HID_IDX_KB_IN_RPT_NTF_CFG ),
-    
+
     // Keyboard OUT Report Char. Declaration and Value, Report Ref. Descriptor
     ATT_ELMT_DECL_CHAR( HID_IDX_KB_OUT_RPT_CHAR ),
     // Report Characteristic Value
@@ -304,9 +304,9 @@ const att_decl_t hid_atts[] =
 };
 
 /// Service Description
-const struct svc_decl hid_svc_db = 
+const struct svc_decl hid_svc_db =
 {
-    .uuid   = ATT_SVC_HID, 
+    .uuid   = ATT_SVC_HID,
     .info   = SVC_UUID(16) | SVC_SEC(UNAUTH),
     .atts   = hid_atts,
     .nb_att = HID_IDX_NB - 1,
@@ -336,7 +336,7 @@ static uint8_t hids_get_att_idx(uint16_t handle)
 static uint16_t hids_get_rpt_handle(uint8_t rpt_idx)
 {
     uint8_t att_idx = 0;
-    
+
     switch (rpt_idx)
     {
         #if (HID_BOOT_SUP)
@@ -362,28 +362,28 @@ static uint16_t hids_get_rpt_handle(uint8_t rpt_idx)
             att_idx = HID_IDX_KB_IN_RPT_VAL;
         } break;
         #endif //(HID_RPT_KB)
-        
+
         #if (HID_RPT_MEDIA)
         case RPT_IDX_MEDIA:
         {
             att_idx = HID_IDX_MEDIA_IN_RPT_VAL;
         } break;
         #endif //(HID_RPT_MEDIA)
-        
+
         #if (HID_RPT_SYSTEM)
         case RPT_IDX_SYSTEM:
         {
             att_idx = HID_IDX_SYS_IN_RPT_VAL;
         } break;
         #endif //(HID_RPT_SYSTEM)
-        
+
         #if (HID_RPT_MOUSE)
         case RPT_IDX_MOUSE:
         {
             att_idx = HID_IDX_MOUSE_IN_RPT_VAL;
         } break;
         #endif //(HID_RPT_MOUSE)
-        
+
         #if (HID_RPT_PTP)
         case RPT_IDX_TP:
         {
@@ -405,7 +405,7 @@ static uint16_t hids_get_rpt_handle(uint8_t rpt_idx)
 static uint8_t hids_rpt_ntf_cfg(uint8_t conidx, uint8_t rpt_idx, const struct atts_write_ind *ind)
 {
     uint8_t status = PRF_ERR_APP_ERROR;
-    
+
     if ((!ind->more) && (ind->length == sizeof(uint16_t)))
     {
         uint16_t cli_cfg = read16p(ind->value);
@@ -419,7 +419,7 @@ static uint8_t hids_rpt_ntf_cfg(uint8_t conidx, uint8_t rpt_idx, const struct at
             status = LE_SUCCESS;
         }
     }
-    
+
     return status;
 }
 
@@ -437,7 +437,7 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
             DEBUG("    HID_CTRL_PT:%d", ind->value[0]);
             hids_env.conn[conidx].ctrl_pt = ind->value[0];
         } break;
-    
+
         #if (HID_BOOT_SUP)
         case HID_IDX_PROTO_MODE_VAL:
         {
@@ -446,7 +446,7 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
             DEBUG("    PROTO_MODE:%d", ind->value[0]);
             hids_env.conn[conidx].proto_mode = ind->value[0];
         } break;
-        
+
         #if (HID_BOOT_KB)
         case HID_IDX_BOOT_KB_IN_RPT_NTF_CFG:
         {
@@ -470,7 +470,7 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
         } break;
         #endif //(HID_BOOT_MOUSE)
         #endif //(HID_BOOT_SUP)
-        
+
         #if (HID_REPORT_SUP)
         #if (HID_RPT_KB)
         case HID_IDX_KB_IN_RPT_NTF_CFG:
@@ -514,7 +514,7 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
         {
             status = hids_rpt_ntf_cfg(conidx, RPT_IDX_TP, ind);
         } break;
-        
+
         case HID_IDX_MAXCNT_FEAT_RPT_VAL:
         case HID_IDX_PTPHQA_FEAT_RPT_VAL:
         {
@@ -528,7 +528,7 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
             status = PRF_ERR_APP_ERROR;
         } break;
     }
-    
+
     // Send write confirm, if no more data.
     if (!ind->more)
         gatt_write_cfm(conidx, status, handle);
@@ -538,28 +538,28 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
 static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
 {
     uint16_t length = 0;
-    
+
     switch (att_idx)
     {
         case HID_IDX_HID_INFO_VAL:
         {
             struct hid_info_tag hid_info;
-        
+
             hid_info.bcdHID       = HID_INFO_BCDHID;
             hid_info.bCountryCode = HID_INFO_BCODE;
             hid_info.flags        = HID_INFO_FLAGS;
             DEBUG("  Read HID_INFO(bcd:0x%04X)", hid_info.bcdHID);
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_INFO_SIZE, (uint8_t *)&hid_info);
         } break;
-        
+
         case HID_IDX_REPORT_MAP_VAL:
         {
             const uint8_t *report_map = hid_get_report_map(&length);
-            
+
             DEBUG("  Read REPORT_MAP(size:%d)", length);
             gatt_read_cfm(conidx, LE_SUCCESS, handle, length, report_map);
         } break;
-        
+
         #if (HID_BOOT_SUP)
         case HID_IDX_PROTO_MODE_VAL:
         {
@@ -576,7 +576,7 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_BOOT_KB_IN_RPT_NTF_CFG:
         {
             uint16_t ntf_cfg = HID_RPT_NTF_GET(conidx, RPT_IDX_BOOT_KB);
-            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg); 
+            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg);
         } break;
 
         case HID_IDX_BOOT_KB_OUT_RPT_VAL:
@@ -594,11 +594,11 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_BOOT_MOUSE_IN_RPT_NTF_CFG:
         {
             uint16_t ntf_cfg = HID_RPT_NTF_GET(conidx, RPT_IDX_BOOT_MOUSE);
-            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg); 
+            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg);
         } break;
         #endif //(HID_BOOT_MOUSE)
         #endif //(HID_BOOT_SUP)
-        
+
         #if (HID_REPORT_SUP)
         #if (HID_RPT_KB)
         case HID_IDX_KB_IN_RPT_VAL:
@@ -609,7 +609,7 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_KB_IN_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_KB;
             refer.report_type = HID_REPORT_INPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
@@ -618,7 +618,7 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_KB_IN_RPT_NTF_CFG:
         {
             uint16_t ntf_cfg = HID_RPT_NTF_GET(conidx, RPT_IDX_KB);
-            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg); 
+            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg);
         } break;
 
         case HID_IDX_KB_OUT_RPT_VAL:
@@ -629,7 +629,7 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_KB_OUT_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_KB;
             refer.report_type = HID_REPORT_OUTPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
@@ -645,7 +645,7 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_MEDIA_IN_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_MEDIA;
             refer.report_type = HID_REPORT_INPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
@@ -654,20 +654,20 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_MEDIA_IN_RPT_NTF_CFG:
         {
             uint16_t ntf_cfg = HID_RPT_NTF_GET(conidx, RPT_IDX_MEDIA);
-            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg); 
+            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg);
         } break;
         #endif //(HID_RPT_MEDIA)
-        
+
         #if (HID_RPT_SYSTEM)
         case HID_IDX_SYS_IN_RPT_VAL:
         {
             gatt_read_cfm(conidx, LE_SUCCESS, handle, RPT_LEN_SYSTEM, NULL); // zero array
         } break;
-        
+
         case HID_IDX_SYS_IN_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_SYSTEM;
             refer.report_type = HID_REPORT_INPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
@@ -676,20 +676,20 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_SYS_IN_RPT_NTF_CFG:
         {
             uint16_t ntf_cfg = HID_RPT_NTF_GET(conidx, RPT_IDX_SYSTEM);
-            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg); 
+            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg);
         } break;
         #endif //(HID_RPT_SYSTEM)
-        
+
         #if (HID_RPT_MOUSE)
         case HID_IDX_MOUSE_IN_RPT_VAL:
         {
             gatt_read_cfm(conidx, LE_SUCCESS, handle, RPT_LEN_MOUSE, NULL); // zero array
         } break;
-        
+
         case HID_IDX_MOUSE_IN_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_MOUSE;
             refer.report_type = HID_REPORT_INPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
@@ -698,20 +698,20 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_MOUSE_IN_RPT_NTF_CFG:
         {
             uint16_t ntf_cfg = HID_RPT_NTF_GET(conidx, RPT_IDX_MOUSE);
-            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg); 
+            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg);
         } break;
         #endif //(HID_RPT_MOUSE)
-        
+
         #if (HID_RPT_PTP)
         case HID_IDX_TP_IN_RPT_VAL:
         {
             gatt_read_cfm(conidx, LE_SUCCESS, handle, RPT_LEN_TP, NULL); // zero array
         } break;
-        
+
         case HID_IDX_TP_IN_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_TP;
             refer.report_type = HID_REPORT_INPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
@@ -720,41 +720,41 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_TP_IN_RPT_NTF_CFG:
         {
             uint16_t ntf_cfg = HID_RPT_NTF_GET(conidx, RPT_IDX_TP);
-            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg); 
+            gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&ntf_cfg);
         } break;
-        
+
         case HID_IDX_MAXCNT_FEAT_RPT_VAL:
         {
             uint8_t finger = PTP_MAX_FINGER_CNT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint8_t), &finger);
         } break;
-        
+
         case HID_IDX_MAXCNT_FEAT_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_MAXCNT;
             refer.report_type = HID_REPORT_FEATURE;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
         } break;
-        
+
         case HID_IDX_PTPHQA_FEAT_RPT_VAL:
         {
             const uint8_t *ptp_hqa = hid_get_ptphqa_blob(&length);
             gatt_read_cfm(conidx, LE_SUCCESS, handle, length, ptp_hqa);
         } break;
-        
+
         case HID_IDX_PTPHQA_FEAT_RPT_REF:
         {
             struct hid_report_ref refer;
-            
+
             refer.report_id   = RPT_ID_PTPHQA;
             refer.report_type = HID_REPORT_FEATURE;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
         } break;
         #endif //(HID_RPT_PTP)
         #endif //(HID_REPORT_SUP)
-        
+
         default:
         {
             // error response
@@ -767,7 +767,7 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
 static void hids_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const void *param)
 {
     uint8_t att_idx = hids_get_att_idx(handle);
-    
+
     ASSERT_ERR(coindx < HID_CONN_MAX);
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,att:%d)", conidx, opcode, handle, att_idx);
 
@@ -777,7 +777,7 @@ static void hids_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
         {
             hids_att_read_cfm(conidx, att_idx, handle);
         } break;
-        
+
         case ATTS_WRITE_REQ:
         {
             const struct atts_write_ind *ind = param;
@@ -785,16 +785,16 @@ static void hids_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             DEBUG("  write_req(hdl:0x%x,att:%d,wr:0x%x,len:%d)", handle, att_idx, ind->wrcode, ind->length);
             hids_att_write_cfm(conidx, att_idx, handle, ind);
         } break;
-        
+
         case ATTS_INFO_REQ:
         {
             uint16_t length = ATT_MAX_LEN_GET(att_idx, hid_atts);
-            
+
             // Send length-info confirm for prepWR judging.
             DEBUG("  info_cfm(hdl:0x%x,att:%d,len:%d)", handle, att_idx, length);
             gatt_info_cfm(conidx, LE_SUCCESS, handle, length);
         } break;
-        
+
         case ATTS_CMP_EVT:
         {
             const struct atts_cmp_evt *evt = param;
@@ -838,7 +838,7 @@ uint8_t hids_prf_init(void)
     // Init Environment
     hids_env.start_hdl  = HID_START_HDL;
     hids_env.nb_pkt     = HID_NB_PKT_MAX;
-    
+
     for (uint8_t conidx = 0; conidx < HID_CONN_MAX; conidx++)
     {
         hids_env.conn[conidx].rpt_ntfs   = RPT_NTF_ALL;
@@ -898,13 +898,13 @@ void hids_set_ccc(uint8_t conidx, uint8_t rpt_ntf)
 uint8_t hids_report_send(uint8_t conidx, uint8_t rep_idx, uint16_t rep_len, const uint8_t* rep_val)
 {
     uint8_t status = PRF_ERR_REQ_DISALLOWED;
-    
+
     if ((rep_len > 0) && (hids_env.nb_pkt > 0))
     {
         if (HID_RPT_NTF_GET(conidx, rep_idx) == PRF_CLI_START_NTF)
         {
             uint16_t handle = hids_get_rpt_handle(rep_idx);
-            
+
             if (handle != ATT_INVALID_HDL)
             {
                 hids_env.nb_pkt--; // allocate
@@ -919,7 +919,7 @@ uint8_t hids_report_send(uint8_t conidx, uint8_t rep_idx, uint16_t rep_len, cons
             status = PRF_ERR_NTF_DISABLED;
         }
     }
-    
+
     return status;
 }
 

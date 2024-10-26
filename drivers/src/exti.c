@@ -16,7 +16,7 @@ void exti_init(uint16_t debounce)
 {
     RCC_APBCLK_EN(APB_EXTI_BIT);
     RCC_APBRST_REQ(APB_EXTI_BIT);
-    
+
     EXTI->DBC.Word = debounce;
 }
 

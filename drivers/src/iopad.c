@@ -98,11 +98,11 @@ void csc_output(uint8_t pad, uint8_t fsel)
 void iocsc_uart(uint8_t port, uint8_t pad_tx, uint8_t pad_rx)
 {
     uint8_t fsel_add = port * 2; //(port == 1) ? 2 : 0;
-    
+
     // csc output and input
     csc_output(pad_tx, CSC_UART1_TXD + fsel_add);
     csc_input(pad_rx,  CSC_UART1_RXD + fsel_add);
-    
+
     // iomode control
     iom_ctrl(pad_tx, IOM_SEL_CSC | IOM_PULLUP | IOM_DRV_LVL1);
     iom_ctrl(pad_rx, IOM_SEL_CSC | IOM_PULLUP | IOM_INPUT);
@@ -121,11 +121,11 @@ void iocsc_uart(uint8_t port, uint8_t pad_tx, uint8_t pad_rx)
 void iocsc_uart_hwfc(uint8_t port, uint8_t pad_rts, uint8_t pad_cts)
 {
     uint8_t fsel_add = port; //(port == 1) ? 1 : 0;
-    
+
     // csc output and input
     csc_output(pad_rts, CSC_UART1_RTS + fsel_add);
     csc_input(pad_cts,  CSC_UART1_CTS + fsel_add);
-    
+
     // iomode control
     iom_ctrl(pad_rts, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP);
     iom_ctrl(pad_cts, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);
@@ -147,7 +147,7 @@ void iocsc_i2c(uint8_t pad_scl, uint8_t pad_sda)
     csc_input(pad_scl,  CSC_I2C_SCL);
     csc_output(pad_sda, CSC_I2C_SDA);
     csc_input(pad_sda,  CSC_I2C_SDA);
-    
+
     // iomode control
     iom_ctrl(pad_scl, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN);
     iom_ctrl(pad_sda, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN);
@@ -169,7 +169,7 @@ void iocsc_spim(uint8_t pad_clk, uint8_t pad_miso, uint8_t pad_mosi)
     csc_output(pad_clk,  CSC_SPIM_CLK);
     csc_input(pad_miso,  CSC_SPIM_MISO);
     csc_output(pad_mosi, CSC_SPIM_MOSI);
-    
+
     // iomode control
     iom_ctrl(pad_clk,  IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP);
     iom_ctrl(pad_miso, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);
@@ -194,7 +194,7 @@ void iocsc_spis(uint8_t pad_cs, uint8_t pad_clk, uint8_t pad_miso, uint8_t pad_m
     csc_input(pad_clk,   CSC_SPIS_CLK);
     csc_output(pad_miso, CSC_SPIS_MISO);
     csc_input(pad_mosi,  CSC_SPIS_MOSI);
-    
+
     // iomode control
     iom_ctrl(pad_cs,   IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);
     iom_ctrl(pad_clk,  IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);
@@ -221,7 +221,7 @@ void iocsc_ctmr_chnl(uint8_t pad_ch1, uint8_t pad_ch2)
         // iomode control
         iom_ctrl(pad_ch1, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT);
     }
-    
+
     if (pad_ch2 < PA_MAX)
     {
         csc_output(pad_ch2, CSC_CTMR_CH2);
@@ -259,7 +259,7 @@ void iospc_clkout(uint8_t clk)
     {
         APBMISC->DPLL_CTRL.DPLL2_EN_CLK48M = 1;
     }
-    
+
     RCC->CFG.MCO_SW = clk;
     iom_ctrl(PA_CLKOUT, IOM_SEL_SPECL | IOM_DRV_LVL1);
 }

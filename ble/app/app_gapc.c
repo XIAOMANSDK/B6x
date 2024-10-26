@@ -49,12 +49,12 @@ APP_MSG_HANDLER(gapc_connection_req_ind)
     #if (DBG_GAPC)
     uint8_t conidx = TASK_IDX(src_id);
     #endif
-    
+
     DEBUG("gapc_connection_req_ind(cid:%d,chdl:%d,conn[intv:%d,late:%d,to:%d],acc:%d,caddr:%d)", conidx, param->conhdl,
           param->con_interval, param->con_latency, param->sup_to, param->clk_accuracy, param->peer_addr_type);
     debugHex(param->peer_addr.addr, GAP_BD_ADDR_LEN);
 
-    // Indicate Connect_Req_Pkt be send, need wait to sync (try 6 times of conn_event). 
+    // Indicate Connect_Req_Pkt be send, need wait to sync (try 6 times of conn_event).
     // If synced, goto gapc_connection_ind. Otherwise, goto gapc_disconnect_ind(reason=0x3E)
     //app_conn_fsm(BLE_CONNECTING, conidx, param);
 }
@@ -91,16 +91,16 @@ APP_MSG_HANDLER(gapc_param_update_req_ind)
 
 APP_MSG_HANDLER(gapc_param_updated_ind)
 {
-    DEBUG("param_updated_ind(cid:%d,intv:%d,late:%d,timo:%d)", TASK_IDX(src_id), 
+    DEBUG("param_updated_ind(cid:%d,intv:%d,late:%d,timo:%d)", TASK_IDX(src_id),
           param->con_interval, param->con_latency, param->sup_to);
-    
+
     // Current param, may update to slaves
-    
+
 }
 
 APP_MSG_HANDLER(gapc_le_pkt_size_ind)
 {
-    DEBUG("le_pkt_size_ind(cid:%d,txB:%d,txT:%d,rxB:%d,rxT:%d)", TASK_IDX(src_id), 
+    DEBUG("le_pkt_size_ind(cid:%d,txB:%d,txT:%d,rxB:%d,rxT:%d)", TASK_IDX(src_id),
           param->max_tx_octets, param->max_tx_time, param->max_rx_octets, param->max_rx_time);
 }
 
@@ -248,7 +248,7 @@ APP_MSG_HANDLER(gapc_bond_ind)
         {
             DEBUG("Bond LTK_EXCH(size:%d)", param->data.ltk.key_size);
             debugHex(param->data.ltk.ltk.key, sizeof(struct gapc_ltk));
-            
+
             // Store peer LTK
             // if ((gapc_auth_get(conidx) & GAP_AUTH_SEC_CON) || (gapc_get_role(conidx) == ROLE_MASTER))
             // {
@@ -264,7 +264,7 @@ APP_MSG_HANDLER(gapc_bond_ind)
 APP_MSG_HANDLER(gapc_encrypt_req_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
-    
+
     DEBUG("encrypt_req_ind(ediv:0x%X,rand)", param->ediv);
     debugHex(param->rand_nb.nb, GAP_RAND_NB_LEN);
 
@@ -289,7 +289,7 @@ APP_MSG_HANDLER(gapc_encrypt_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
     DEBUG("encryp_ind(auth:%d)", param->auth);
-    
+
     // encryption/ re-encryption succeeded
     app_conn_fsm(BLE_ENCRYPTED, conidx, param);
 }

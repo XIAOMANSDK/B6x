@@ -15,7 +15,7 @@
  * INCLUDE FILES
  ****************************************************************************************
  */
- 
+
 #include <stdint.h>
 #include "gapc.h"
 
@@ -144,7 +144,7 @@ uint8_t gapc_get_role(uint8_t conidx);
 /**
  ****************************************************************************************
  * @brief Set resolvable address used for connection establishment as local address.
- * 
+ *
  * @brief conidx    Connection index
  * @brief p_addr    Pointer to the resolvable address used by either advertising activity or
  * resolvable activity.

@@ -34,28 +34,28 @@ enum l2cc_msg_id
 
     /* ************* LE Credit Based Connection ************* */
     /// LE credit based connection request
-    L2CC_LECB_CONNECT_CMD              = MSG_ID(L2CC, 0x05),                                                             
-    /// LE credit based connection request indication                                  
-    L2CC_LECB_CONNECT_REQ_IND          = MSG_ID(L2CC, 0x06),                                                         
-    /// LE credit based connection request confirmation                                
-    L2CC_LECB_CONNECT_CFM              = MSG_ID(L2CC, 0x07),                                                             
-    /// LE credit based connection indication                                          
-    L2CC_LECB_CONNECT_IND              = MSG_ID(L2CC, 0x08),                                                             
-    /// LE credit based disconnect request                                             
-    L2CC_LECB_DISCONNECT_CMD           = MSG_ID(L2CC, 0x09),                                                          
-    /// LE credit based disconnect indication                                          
-    L2CC_LECB_DISCONNECT_IND           = MSG_ID(L2CC, 0x0A),                                                          
-    /// LE credit based credit addition                                                
-    L2CC_LECB_ADD_CMD                  = MSG_ID(L2CC, 0x0B),                                                                 
-    /// LE credit based credit addition indication                                     
-    L2CC_LECB_ADD_IND                  = MSG_ID(L2CC, 0x0C),                                                                 
-                                                                                       
-    /// Send data over LE Credit Based Connection                                   
-    L2CC_LECB_SDU_SEND_CMD             = MSG_ID(L2CC, 0x0D),                                                            
-    /// Received data from LE Credit Based connection. 
-    L2CC_LECB_SDU_RECV_IND             = MSG_ID(L2CC, 0x0E),                                                            
+    L2CC_LECB_CONNECT_CMD              = MSG_ID(L2CC, 0x05),
+    /// LE credit based connection request indication
+    L2CC_LECB_CONNECT_REQ_IND          = MSG_ID(L2CC, 0x06),
+    /// LE credit based connection request confirmation
+    L2CC_LECB_CONNECT_CFM              = MSG_ID(L2CC, 0x07),
+    /// LE credit based connection indication
+    L2CC_LECB_CONNECT_IND              = MSG_ID(L2CC, 0x08),
+    /// LE credit based disconnect request
+    L2CC_LECB_DISCONNECT_CMD           = MSG_ID(L2CC, 0x09),
+    /// LE credit based disconnect indication
+    L2CC_LECB_DISCONNECT_IND           = MSG_ID(L2CC, 0x0A),
+    /// LE credit based credit addition
+    L2CC_LECB_ADD_CMD                  = MSG_ID(L2CC, 0x0B),
+    /// LE credit based credit addition indication
+    L2CC_LECB_ADD_IND                  = MSG_ID(L2CC, 0x0C),
+
+    /// Send data over LE Credit Based Connection
+    L2CC_LECB_SDU_SEND_CMD             = MSG_ID(L2CC, 0x0D),
+    /// Received data from LE Credit Based connection.
+    L2CC_LECB_SDU_RECV_IND             = MSG_ID(L2CC, 0x0E),
     /// Indication to the task that sends the unknown message
-    L2CC_UNKNOWN_MSG_IND               = MSG_ID(L2CC, 0x0F),                                                              //!< L2CC_UNKNOWN_MSG_IND
+    L2CC_UNKNOWN_MSG_IND               = MSG_ID(L2CC, 0x0F),
 };
 
 /// request operation type - application interface

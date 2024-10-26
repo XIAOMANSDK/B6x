@@ -254,5 +254,4 @@ __INLINE__ list_hdr_t *list_next(const list_hdr_t *const list_hdr)
     return(list_hdr->next);
 }
 
-
 #endif // _LIST_H_
