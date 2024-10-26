@@ -65,8 +65,8 @@ enum spim_staclr_bfs
     SPIM_STATUS_CLR_ALL        = 0x07,
 };
 
-#define SPIM_CS_H(pad)           GPIO_DAT_SET(1UL << (pad))
-#define SPIM_CS_L(pad)           GPIO_DAT_CLR(1UL << (pad))
+#define SPIM_CS_H(pad)           {SPIM->CTRL.SPIM_TX_EN = 0; GPIO_DAT_SET(1UL << (pad));}
+#define SPIM_CS_L(pad)           {SPIM->CTRL.SPIM_TX_EN = 1; GPIO_DAT_CLR(1UL << (pad));}
 
 #define SPIM_CS_INIT(pad)               \
     dowl(                               \
