@@ -19,7 +19,7 @@
  ****************************************************************************************
  */
 
-#define BUFF_SIZE              16 
+#define BUFF_SIZE              5 
 
 uint8_t tx_buff[BUFF_SIZE];
 uint8_t rx_buff[BUFF_SIZE];
@@ -41,9 +41,9 @@ static void spimProc(void)
     // spim test
     debug("Read FlashID(cmd:0x9F, rxlen:3)\r\n");
     tx_buff[0] = 0x9F;
+    SPIM_CS_L(SPI_CS_PAD);    
     DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1+3, CCM_BASIC);
     DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1+3, CCM_BASIC);
-    SPIM_CS_L(SPI_CS_PAD);
     //spim_transimit(tx_buff, 1 + 3); 
     spim_begin(1+3); spim_wait();
     SPIM_CS_H(SPI_CS_PAD);
@@ -51,9 +51,9 @@ static void spimProc(void)
 
     debug("Flash Status(cmd:0x05, rxlen:1)\r\n");
     tx_buff[0] = 0x05;
+    SPIM_CS_L(SPI_CS_PAD);    
     DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1+1, CCM_BASIC);
     DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1+1, CCM_BASIC);
-    SPIM_CS_L(SPI_CS_PAD);
     //spim_transimit(tx_buff, 1 + 1);
     spim_begin(1+1); spim_wait();
     SPIM_CS_H(SPI_CS_PAD);
@@ -64,9 +64,9 @@ static void spimProc(void)
     tx_buff[1] = 0x00;
     tx_buff[2] = 0x00;
     tx_buff[3] = 0x00;
+    SPIM_CS_L(SPI_CS_PAD);    
     DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1+3+8, CCM_BASIC);
     DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1+3+8, CCM_BASIC);
-    SPIM_CS_L(SPI_CS_PAD);
     //spim_transimit(tx_buff, 1+3+8);
     spim_begin(1+3+8); spim_wait();
     SPIM_CS_H(SPI_CS_PAD);
@@ -90,10 +90,12 @@ void spimProc(void)
             tx_buff[i] = tx_data++;
         }
         
+        SPIM_CS_L(SPI_CS_PAD);
+        
         DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, BUFF_SIZE, CCM_BASIC);
         DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, BUFF_SIZE, CCM_BASIC);
-        SPIM_CS_L(SPI_CS_PAD);
         spim_begin(BUFF_SIZE); spim_wait();
+        
         SPIM_CS_H(SPI_CS_PAD);
         
         debug("TX: %02X ~ %02X, RX:\r\n", tx_buff[0], tx_buff[BUFF_SIZE-1]);
