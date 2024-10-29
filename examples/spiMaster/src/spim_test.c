@@ -19,7 +19,7 @@
  ****************************************************************************************
  */
 
-#define BUFF_SIZE              5 
+#define BUFF_SIZE              128 
 
 uint8_t tx_buff[BUFF_SIZE];
 uint8_t rx_buff[BUFF_SIZE];
@@ -41,40 +41,106 @@ static void spimProc(void)
     // spim test
     debug("Read FlashID(cmd:0x9F, rxlen:3)\r\n");
     tx_buff[0] = 0x9F;
-    SPIM_CS_L(SPI_CS_PAD);    
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
     DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1+3, CCM_BASIC);
     DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1+3, CCM_BASIC);
-    //spim_transimit(tx_buff, 1 + 3); 
+    SPIM_CS_L(SPI_CS_PAD);
     spim_begin(1+3); spim_wait();
     SPIM_CS_H(SPI_CS_PAD);
-    debugHex(rx_buff, BUFF_SIZE);
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
+    debugHex(rx_buff, 4);
 
     debug("Flash Status(cmd:0x05, rxlen:1)\r\n");
     tx_buff[0] = 0x05;
-    SPIM_CS_L(SPI_CS_PAD);    
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
     DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1+1, CCM_BASIC);
     DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1+1, CCM_BASIC);
-    //spim_transimit(tx_buff, 1 + 1);
+    SPIM_CS_L(SPI_CS_PAD);
     spim_begin(1+1); spim_wait();
     SPIM_CS_H(SPI_CS_PAD);
-    debugHex(rx_buff, BUFF_SIZE);
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
+    debugHex(rx_buff, 2);
+
+    debug("Flash ER(cmd:0x60, rxlen:1)\r\n");
+    tx_buff[0] = 0x60;
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
+    DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1, CCM_BASIC);
+    DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1, CCM_BASIC);
+    SPIM_CS_L(SPI_CS_PAD);
+    spim_begin(1); spim_wait();
+    SPIM_CS_H(SPI_CS_PAD);
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
+    debugHex(rx_buff, 1);
     
-    debug("Flash RD(cmd:0x03, adr:0x000000, datlen:8)\r\n");
+    debug("Flash WR EN(cmd:0x06, rxlen:1)\r\n");
+    tx_buff[0] = 0x06;
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
+    DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1, CCM_BASIC);
+    DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1, CCM_BASIC);
+    SPIM_CS_L(SPI_CS_PAD);
+    spim_begin(1); spim_wait();
+    SPIM_CS_H(SPI_CS_PAD);
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
+    debugHex(rx_buff, 1);
+    debug("Flash WR(cmd:0x02, adr:0x000000, datlen:8)\r\n");
+    tx_buff[0] = 0x02;
+    tx_buff[1] = 0x00;
+    tx_buff[2] = 0x00;
+    tx_buff[3] = 0x00;
+    uint8_t data_len = BUFF_SIZE - 4;
+    for (uint8_t idx = 0; idx < data_len; idx++)
+    {
+        tx_buff[4+idx] = idx+1;
+    }
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
+    DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 4+data_len, CCM_BASIC);
+    DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 4+data_len, CCM_BASIC);
+    SPIM_CS_L(SPI_CS_PAD);
+    spim_begin(4+data_len); spim_wait();
+    SPIM_CS_H(SPI_CS_PAD);
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
+    debugHex(rx_buff, 4+data_len);
+    memset(tx_buff, 0x00, BUFF_SIZE);
+    
+    debug("Flash RD(cmd:0x03, adr:0x000000, datlen:%d)\r\n", data_len);
     tx_buff[0] = 0x03;
     tx_buff[1] = 0x00;
     tx_buff[2] = 0x00;
     tx_buff[3] = 0x00;
-    SPIM_CS_L(SPI_CS_PAD);    
-    DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 1+3+8, CCM_BASIC);
-    DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 1+3+8, CCM_BASIC);
-    //spim_transimit(tx_buff, 1+3+8);
-    spim_begin(1+3+8); spim_wait();
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
+    DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 4+data_len, CCM_BASIC);
+    DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 4+data_len, CCM_BASIC);
+    SPIM_CS_L(SPI_CS_PAD);
+    spim_begin(4+data_len); spim_wait();
     SPIM_CS_H(SPI_CS_PAD);
+    dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
     debugHex(rx_buff, BUFF_SIZE);
     
     while (1)
     {
-        // empty
+        // rand test
+        data_len = (sadc_rand_num())%(BUFF_SIZE - 4);
+        debug("Flash RD(cmd:0x03, adr:0x000000, datlen:%d)\r\n", data_len);
+        tx_buff[0] = 0x03;
+        tx_buff[1] = 0x00;
+        tx_buff[2] = 0x00;
+        tx_buff[3] = 0x00;
+        dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
+        DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, 4+data_len, CCM_BASIC);
+        DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, 4+data_len, CCM_BASIC);
+        SPIM_CS_L(SPI_CS_PAD);
+        spim_begin(4+data_len); spim_wait();
+        SPIM_CS_H(SPI_CS_PAD);
+        dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
+        debugHex(rx_buff, 4+data_len);
+        
+        for (uint8_t idx = 0; idx < data_len; idx++)
+        {
+            if(rx_buff[4+idx] != idx + 1)
+                while(1);
+        }
+        
+        memset(rx_buff, 0, BUFF_SIZE);
     };
 }
 #else
@@ -90,14 +156,17 @@ void spimProc(void)
             tx_buff[i] = tx_data++;
         }
         
-        SPIM_CS_L(SPI_CS_PAD);
+
+        dma_chnl_ctrl(DMA_CHNL_TX, CHNL_EN); // ENABLE SPI DMA TX
         
         DMA_SPIM_TX_CONF(DMA_CHNL_TX, tx_buff, BUFF_SIZE, CCM_BASIC);
         DMA_SPIM_RX_CONF(DMA_CHNL_RX, rx_buff, BUFF_SIZE, CCM_BASIC);
+        SPIM_CS_L(SPI_CS_PAD);
         spim_begin(BUFF_SIZE); spim_wait();
-        
         SPIM_CS_H(SPI_CS_PAD);
         
+        dma_chnl_ctrl(DMA_CHNL_TX, CHNL_DIS); // DISABLE SPI DMA TX
+       
         debug("TX: %02X ~ %02X, RX:\r\n", tx_buff[0], tx_buff[BUFF_SIZE-1]);
         debugHex(rx_buff, BUFF_SIZE);
         

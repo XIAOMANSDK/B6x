@@ -29,6 +29,8 @@ static void sysInit(void)
 {
     // Todo config, if need
     SYS_CLK_ALTER();
+    
+    rcc_adc_en();
 }
 
 static void devInit(void)
