@@ -151,7 +151,7 @@ void trim_load(void)
                                     | (trim->VAL04.AONLDO_TRIM_RUN << AON_AONLDO_TRIM_RUN_LSB)
                                     | (AON->BKHOLD_CTRL.Word & 0xFFFFUL);
 
-        APBMISC->LDO_UD_CTRL.Word = (trim->VAL04.CORELDO_TRIM_DP << APBMISC_CORELDO_TRIM_STEP_LSB)
+        APBMISC->LDO_UD_CTRL.Word = (trim->VAL04.CORELDO_TRIM_DP << APBMISC_CORELDO_TRIM_DP_LSB)
                                     | (trim->VAL04.AONLDO_TRIM_OFF << APBMISC_AONLDO_TRIM_OFF_LSB)
                                     | (0x07 << APBMISC_AONLDO_UD_STEP_LSB) | (0x03 << APBMISC_CORELDO_TRIM_STEP_LSB);
         // coreldo
