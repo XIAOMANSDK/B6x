@@ -503,7 +503,7 @@
             <File>
               <FileName>usbd_audio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\usbd_audio.c</FilePath>
+              <FilePath>..\..\..\..\usb\class\audio\usbd_audio.c</FilePath>
             </File>
           </Files>
         </Group>
