@@ -42,6 +42,8 @@ typedef struct audio_entity_info {
  ****************************************************************************
  */
 
+void usbd_audio_init(void);
+            
 /// Audio Entity Retrieve
 const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId);
 

@@ -118,8 +118,8 @@ void sadcTest(void)
                 // Ping done pulse
                 GPIO_DAT_SET(GPIO_RX_PING);
 //                debug("PCM-Ping:\r\n"); 
-                uartTxSend((uint8_t *)&pcm_buff, SAMP_NUM*2);                
-                GPIO_DAT_CLR(GPIO_RX_PING);                
+                uartTxSend((uint8_t *)&pcm_buff, SAMP_NUM*2);  //如果听见"嘟~嘟~"底噪, TX距离PA03模拟输入太近,产生了干扰.
+                GPIO_DAT_CLR(GPIO_RX_PING);
             }
             else
             {

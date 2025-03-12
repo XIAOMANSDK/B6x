@@ -48,6 +48,8 @@ enum flash_cmd_code
 
     // Erase opcode
     FSH_CMD_ER_CHIP        = 0x60,
+    FSH_CMD_ER_BLOCK64     = 0xD8, 
+    FSH_CMD_ER_BLOCK32     = 0x52, 
     FSH_CMD_ER_SECTOR      = 0x20, 
     FSH_CMD_ER_PAGE        = 0x81,
 

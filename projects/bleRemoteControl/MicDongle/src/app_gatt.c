@@ -110,32 +110,16 @@ APP_MSG_HANDLER(gatt_event_ind)
     if (param->handle == GATT_KB_HDL)
     {
         debugHex(param->value, param->length);
-        //xmemcpy(pkt_kb[pkt_sidx], param->value, KB_LEN);
-        //pkt_sidx =  (pkt_sidx + 1) % NB_PKT_MAX;
-        
-        //usbd_kb_report();
-        uint8_t hid_data[7];
-        xmemset(hid_data, 0, 7);
 
-        hid_data[0] = 5/*report_id*/;
-        if (param->value[2] == HID_KEY_F5)
-        {
-            hid_data[1] = HID_KBD_USAGE_F18;
-        }
-        else
-        {
-            hid_data[1] = 0;
-        }
-        DEBUG("Hid(%X)",hid_data[1]);
-        usbd_kb_report(7, hid_data);
+        usbd_kb_report(param->length, param->value);
     }
     else if (param->handle == GATT_MIC_HDL)
     {
         if (param->length == MIC_LEN)
         {
-            GPIO_DAT_SET(GPIO18);
+            //GPIO_DAT_SET(GPIO18);
             usbd_mic_push(param->value);
-            GPIO_DAT_CLR(GPIO18);
+            //GPIO_DAT_CLR(GPIO18);
         }
     }
 #endif

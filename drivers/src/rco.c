@@ -13,15 +13,21 @@
 #include "reg_aon.h"
 #include "reg_apbmisc.h"
 
-
+#define TARGET_32000HZ 1
 /*
  * DEFINES
  ****************************************************************************************
  */
 
 #define HSE_CALIB_MULTI        500  // 16M/32K
+
+#if (TARGET_32000HZ)
 #define DPLL_CAKLIB_MULTI      2000 // 64M/32K
 #define DPLL48M_CAKLIB_MULTI   1500 // 48M/32K
+#else //31992Hz
+#define DPLL_CAKLIB_MULTI      20005 // 64M/31992 * 10
+#define DPLL48M_CAKLIB_MULTI   15003 // 48M/31993 * 10
+#endif
 
 
 /*
@@ -40,8 +46,8 @@
  */
 void rc32k_conf(uint8_t ref_clk, uint8_t cal_ctrl)
 {
-    uint16_t target = 0;               // bit[15:0]
-    uint8_t cycle = (cal_ctrl & 0x1F); // bit[20:16]
+    uint32_t target = 0;               // bit[19:0]
+    uint8_t cycle = (cal_ctrl & 0x1F); // bit[27:20]
 
     #if (ROM_UNUSED)
     // clock enable (keep enabled in rom)
@@ -60,11 +66,15 @@ void rc32k_conf(uint8_t ref_clk, uint8_t cal_ctrl)
     else //if ((ref_clk == RCLK_DPLL64/*1*/) || (ref_clk == RCLK_DPLL128/*2*/))
     {
         uint16_t multi = ((RCC->CFG.DPLL_CLK_SW == 0) || (ref_clk == RCLK_DPLL128) ? DPLL_CAKLIB_MULTI : DPLL48M_CAKLIB_MULTI);
+        #if (TARGET_32000HZ)
         target =  multi* ref_clk * (cycle + 1);
+        #else
+        target =  multi* ref_clk * (cycle + 1) / 10;
+        #endif
     }
 
-    // bit[15:0]--rccalib_target, bit[20:16]--cycle, bit21--SCAL_EN, bit22--DLY
-    APBMISC->RCCALIB_CTRL.Word = target | ((uint32_t)cal_ctrl << APBMISC_RCCALIB_CYCLES_LSB) | (1UL << APBMISC_RCCALIB_DLY_POS);
+    // bit[19:0]--rccalib_target, bit[27:20]--cycle, bit28--SCAL_EN, bit29--DLY
+    APBMISC->RCCALIB_CTRL.Word = (target & 0xFFFFFUL) | ((uint32_t)cal_ctrl << APBMISC_RCCALIB_CYCLES_LSB) | (1UL << APBMISC_RCCALIB_DLY_POS);
 }
 
 /**

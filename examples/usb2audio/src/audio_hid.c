@@ -465,7 +465,7 @@ __USBIRQ bool usbd_get_string_handler(uint16_t index, uint8_t **data, uint16_t *
 {
     bool found = false;
 
-    if (index == USB_DESC_TYPE_STRING) {
+    if (index == USB_STRING_SERIAL_INDEX) {
         *data = (uint8_t *)usb_string_iSerial;
         *len = usb_string_iSerial[0];
         found = true;

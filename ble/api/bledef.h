@@ -88,7 +88,17 @@ void rfmdm_init(void);
  ****************************************************************************************
  * @brief Set RF Tx PA Level.
  *
- * @param[in] pa_target PA Level(0x00 ~ 0x0F). Default(0x0F).
+ * @param[in] pa_target PA Level(0x00 ~ 0x0F). Default(0x0C).
+ *  PA Level -> MAX(dBm).Reference Table:
+ *      0x00 -> -42.7dBm
+ *      0x02 -> -32.6dBm
+ *      0x04 -> -21.6dBm
+ *      0x06 -> -12.1dBm
+ *      0x08 ->  -4.9dBm
+ *      0x0A ->  -0.4dBm
+ *      0x0C ->   2.1dBm Default(0x0C)
+ *      0x0E ->   4.1dBm
+ *      0x0F ->   5.2dBm
  ****************************************************************************************
  */
 void rf_pa_set(uint8_t pa_target);

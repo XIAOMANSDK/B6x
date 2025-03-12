@@ -62,6 +62,21 @@ uint16_t audio_db2vol(int volume_db)
  ****************************************************************************
  */
 
+struct usbd_audio_t {
+    uint16_t vol_res;
+    uint16_t vol_cur;
+    uint8_t  mute;
+};
+
+struct usbd_audio_t audio_mono;
+
+__WEAK void usbd_audio_init(void)
+{
+    audio_mono.vol_cur  = AUDIO_VOL_CUR;
+    audio_mono.vol_res  = AUDIO_VOL_RES;
+    audio_mono.mute = 0;
+}
+
 /// Entity number convert to instance
 __WEAK const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 {
@@ -71,23 +86,33 @@ __WEAK const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 /// Mute SET/GET
 __WEAK void usbd_audio_set_mute(uint8_t ep, uint8_t ch, bool mute)
 {
-    
+    audio_mono.mute = mute;
 }
 
 __WEAK bool usbd_audio_get_mute(uint8_t ep, uint8_t ch)
 {
-    return 0;
+    return audio_mono.mute;
 }
 
 /// Volume SET/GET
 __WEAK void usbd_audio_set_volume(uint8_t ep, uint8_t ch, uint16_t volume)
 {
-    
+    audio_mono.vol_cur = volume;
 }
 
 __WEAK uint16_t usbd_audio_get_volume(uint8_t ep, uint8_t ch)
 {
-    return AUDIO_VOL_CUR;
+    return audio_mono.vol_cur; //AUDIO_VOL_CUR;
+}
+
+__WEAK void usbd_audio_set_res(uint8_t ep, uint8_t ch, uint16_t volume)
+{
+    audio_mono.vol_res = volume;
+}
+
+__WEAK uint16_t usbd_audio_get_res(uint8_t ep, uint8_t ch)
+{
+    return audio_mono.vol_res; //AUDIO_VOL_RES;
 }
 
 /// Sampling Freq SET/GET
@@ -191,36 +216,44 @@ static uint8_t audio_class_request_handler(struct usb_setup_packet *setup, uint8
 
                         case AUDIO_FU_CONTROL_VOLUME:
                         {
+                            uint16_t volume;
+
                             switch (setup->bRequest) {
                                 case AUDIO_REQUEST_SET_CUR:
                                 {
-                                    uint16_t volume = vol_read(*data); // 2B
-
-                                    USB_LOG_DBG("Set ep:0x%02x ch:%d volume:0x%04x\r\n", ep, chnl, volume);
+                                    volume = vol_read(*data); // 2B
                                     usbd_audio_set_volume(ep, chnl, volume);
+                                    USB_LOG_DBG("Set ep:0x%02x ch:%d volume:0x%04x\r\n", ep, chnl, volume);
                                 } break;
 
                                 case AUDIO_REQUEST_GET_CUR:
                                 {
-                                    uint16_t volume = usbd_audio_get_volume(ep, chnl);
-
+                                    volume = usbd_audio_get_volume(ep, chnl);
                                     vol_write(*data, volume);
                                     *len = 2;
                                 } break;
                                 case AUDIO_REQUEST_GET_MIN:
                                 {
-                                    vol_write(*data, AUDIO_VOL_MIN);
+                                    volume = AUDIO_VOL_MIN;
+                                    vol_write(*data, volume);
                                     *len = 2;
                                 } break;
                                 case AUDIO_REQUEST_GET_MAX:
                                 {
-                                    vol_write(*data, AUDIO_VOL_MAX);
+                                    volume = AUDIO_VOL_MAX;
+                                    vol_write(*data, volume);
                                     *len = 2;
                                 } break;
                                 case AUDIO_REQUEST_GET_RES:
                                 {
-                                    vol_write(*data, AUDIO_VOL_RES);
+                                    volume = usbd_audio_get_res(ep, chnl);
+                                    vol_write(*data, volume);
                                     *len = 2;
+                                } break;
+                                case AUDIO_REQUEST_SET_RES:
+                                {
+                                    volume = vol_read(*data); // 2B
+                                    usbd_audio_set_res(ep, chnl, volume);
                                 } break;
 
                                 default:
