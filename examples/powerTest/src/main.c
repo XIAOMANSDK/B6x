@@ -17,6 +17,11 @@
  ****************************************************************************************
  */
 
+__RETENTION uint32_t waupIOFalling; // SRAM2 powerOff不掉电, 存储下降沿唤醒的IO
+
+#define WKUP_IO_MASK    0x00038080  // PA07 串口RX, KEY PA15/PA16/PA17. 选择需要唤醒所有IO.
+#define WKUP_IO_FALLING 0x00018080  // PA07 串口RX, KEY PA15/PA16.      选择下降沿唤醒的IO.
+
 void sysInit(void)
 {    
     iwdt_disable();
@@ -28,16 +33,44 @@ static void devInit(void)
 {    
     uint16_t rsn = rstrsn();
     
-    dbgInit();
-    debug("Start(rsn:0x%X)...\r\n", rsn);
+    uint32_t waupIONow;
     
     if (rsn & RSN_IO_WKUP_BIT)
     {
-        debug("WAKE UP by [IO]\r\n");
+        for (uint8_t idx = 0; idx < 20; idx++)
+        {
+            if (BIT(idx) & WKUP_IO_MASK)
+                iom_ctrl(idx, IOM_SEL_GPIO | IOM_INPUT);
+        }
+        
+        waupIONow = GPIO_PIN_GET() & WKUP_IO_MASK;
+    }
+    
+    dbgInit();
+    debug("Start(rsn:0x%X)...\r\n", rsn);
+
+    if (rsn & RSN_IO_WKUP_BIT)
+    {
+        debug("waupIONow1 [0x%06X]\r\n", waupIONow);
+        
+        waupIONow ^= waupIOFalling;
+        
+        debug("waupIONow2 [0x%06X]\r\n", waupIONow);
+        
+        if (waupIONow)
+        {
+            for (uint8_t idx = 0; idx < 20; idx++)
+            {
+                if (BIT(idx) & waupIONow)
+                    debug("WAKE UP by IO PA[%02d]\r\n", idx);  //开发板KEY0/1/2, 可以准确判断.
+            }        
+        }
+        else
+        {
+            debug("WAKE UP by IO PA[unknow]\r\n");  //串口 Rx上电平变换快,无法准确判断.
+        }
     }
 }
-
-#define WKUP_IO_MASK 0x80  // PA07 串口RX
 
 int main(void)
 {
@@ -53,14 +86,11 @@ int main(void)
             case 0x66:
             {
                 debug("POWER OFF\r\n");
-                wakeup_io_sw(WKUP_IO_MASK, WKUP_IO_MASK);           // 配置IO下降沿唤醒
-                core_pwroff(WKUP_IO_EN_BIT | WKUP_IO_LATCH_N_BIT);  // IO唤醒使能 + IO电平保持使能. 1uA
-            } break;
-            
-            case 0x88:
-            {
-                debug("POWER OFF\r\n");
-                wakeup_io_sw(WKUP_IO_MASK, 0);                      // 配置IO上升沿唤醒
+                waupIOFalling = WKUP_IO_FALLING;
+                debug("waupIOALL [0x%06X]\r\n", WKUP_IO_MASK);
+                debug("waupIOFalling [0x%06X]\r\n", waupIOFalling);
+                
+                wakeup_io_sw(WKUP_IO_MASK, WKUP_IO_FALLING);           // 配置IO唤醒方式
                 core_pwroff(WKUP_IO_EN_BIT | WKUP_IO_LATCH_N_BIT);  // IO唤醒使能 + IO电平保持使能. 1uA
             } break;
             

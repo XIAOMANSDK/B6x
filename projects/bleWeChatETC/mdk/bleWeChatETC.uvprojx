@@ -466,11 +466,6 @@
               <FilePath>..\..\..\ble\app\app_gapm.c</FilePath>
             </File>
             <File>
-              <FileName>app_gapc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\ble\app\app_gapc.c</FilePath>
-            </File>
-            <File>
               <FileName>app_gatt.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\ble\app\app_gatt.c</FilePath>
@@ -479,6 +474,11 @@
               <FileName>app_actv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\custom\app_actv.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gapc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\custom\app_gapc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -501,9 +501,9 @@
           <GroupName>ble\lib</GroupName>
           <Files>
             <File>
-              <FileName>ble6.lib</FileName>
+              <FileName>ble6_lite.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\ble\lib\ble6.lib</FilePath>
+              <FilePath>..\..\..\ble\lib\ble6_lite.lib</FilePath>
             </File>
           </Files>
         </Group>

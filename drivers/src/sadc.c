@@ -37,7 +37,11 @@
 #define SADC_CTRL_MSK      (SADC_CR_CALIB_BIT | SADC_CR_CONV_MODE_BIT | SADC_CR_DMAEN_BIT \
                             | SADC_CR_SAMP_MODE_MSK | SADC_CR_DBGEN_BIT)
 
-
+#define RF_RSV_ADC_TEMP_BIT   (0x01UL)
+#define RF_RSV_ADC_1P2V_BIT   (0x02UL)
+#define RF_RSV_ADC_RSSI_BIT   (0x04UL)
+#define RF_RSV_ADC_VDD_IF_BIT (0x08UL)
+#define RF_RSV_ADC_MSK        (0x0FUL)
 /*
  * FUNCTION DEFINITIONS
  ****************************************************************************************
@@ -257,7 +261,7 @@ uint32_t sadc_rand_num(void)
     {
         sadc_bak[0]  = SADC->SADC_ANA_CTRL.Word;
         sadc_bak[1]  = SADC->CTRL.Word;
-        sadc_bak[2]  = SADC->SADC_ANA_CTRL.Word;
+        sadc_bak[2]  = SADC->MIC_CTRL.Word;
         sadc_bak[3]  = SADC->AUTO_SW_CTRL.Word;
         sadc_bak[4]  = SADC->CH_CTRL.Word;
     }
@@ -267,9 +271,10 @@ uint32_t sadc_rand_num(void)
     // bit0:rf_temp
     RF->RF_RSV               = 0x0000B801;
 
+    // SADC_EN_BIT setup about 4us.
     SADC->SADC_ANA_CTRL.Word = 0x0011B6D9;
     SADC->CTRL.Word          = 0x09FB0010;
-    SADC->CH_CTRL.Word       = 0x0F;
+    SADC->CH_CTRL.Word       = SADC_CH_RFRSV;
 
     for (uint8_t cnt = 0; cnt < 32; cnt++)
     {
@@ -294,7 +299,7 @@ uint32_t sadc_rand_num(void)
 
     if (sadc_bak[0] & SADC_EN_BIT)
     {
-        SADC->SADC_ANA_CTRL.Word = sadc_bak[2];
+        SADC->MIC_CTRL.Word      = sadc_bak[2];
         SADC->AUTO_SW_CTRL.Word  = sadc_bak[3];
         SADC->CH_CTRL.Word       = sadc_bak[4];
         SADC->SADC_ANA_CTRL.Word = sadc_bak[0];
@@ -304,4 +309,79 @@ uint32_t sadc_rand_num(void)
     }
 
     return random_num;
+}
+
+#ifdef SADC_ANA_VREF_1V2
+#undef SADC_ANA_VREF_1V2
+#endif
+#define SADC_ANA_VREF_1V2     (SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)  \
+                               | SADC_IBSEL_VCM(3) | SADC_IBSEL_CMP(3) | SADC_VREF_TRIM_1V2 | SADC_EN_BIT | SADC_INBUF_BYPSS_BIT)
+
+#define SADC_CR_TEMP                (SADC_CR_HPF(11) | SADC_CR_CLKPH_POSEDGE | SADC_CR_SAMP_SOFT | SADC_CR_CONV_SINGLE)
+#define SADC_CLK_DIV_TEMP(_sys_clk) (((_sys_clk + 1) * 160) - 1) // div_100K
+uint16_t sadc_temperature(uint16_t times)
+{
+    if (times == 0)
+        return 0;
+    
+    uint32_t sadc_bak[5] = {0};
+    uint32_t rf_rsv_bak;
+    uint32_t sadc_val = 0;;
+    uint8_t sys_clk = rcc_sysclk_get();
+
+    if ((SADC->SADC_ANA_CTRL.Word & SADC_EN_BIT) && (SADC->CH_CTRL.SADC_CH_SET0 != SADC_CH_RFRSV))
+    {
+        sadc_bak[0]  = SADC->SADC_ANA_CTRL.Word;
+        sadc_bak[1]  = SADC->CTRL.Word;
+        sadc_bak[2]  = SADC->MIC_CTRL.Word;
+        sadc_bak[3]  = SADC->AUTO_SW_CTRL.Word;
+        sadc_bak[4]  = SADC->CH_CTRL.Word;
+    }
+    
+    // RF_RSV<0> ÎÂ¶È
+    rf_rsv_bak = RF->RF_RSV;
+    if ((RF->RF_RSV & RF_RSV_ADC_TEMP_BIT) != RF_RSV_ADC_TEMP_BIT)
+    {
+        RF->RF_RSV &= ~RF_RSV_ADC_MSK;
+        RF->RF_RSV |= RF_RSV_ADC_TEMP_BIT;
+    }
+    
+    sadc_init(SADC_ANA_VREF_1V2);
+    SADC->CH_CTRL.Word      = SADC_CH_RFRSV;
+    SADC->AUTO_SW_CTRL.Word = 0;
+    SADC->CTRL.Word = SADC_CR_TEMP | (SADC_CLK_DIV_TEMP(sys_clk) << SADC_CR_CLK_DIV_LSB);
+    
+    SADC->STCTRL.SADC_AUX_FLG_CLR = 1;
+    
+    for (uint8_t cnt = 0; cnt < times; cnt++)
+    {
+        // start conversion
+        SADC->CTRL.SADC_SOC           = 1;
+        
+        // wait conversion done is 1
+        while (! (SADC->STCTRL.SADC_AUX_FLG));
+        
+        // clear flag
+        SADC->STCTRL.SADC_AUX_FLG_CLR = 1;
+        
+        sadc_val += ((SADC->AUX_ST.Word) & 0x03FF);
+    }
+    
+    // average
+    sadc_val /= times;
+    
+    RF->RF_RSV = rf_rsv_bak;
+    
+    if (sadc_bak[0] & SADC_EN_BIT)
+    {
+        SADC->MIC_CTRL.Word      = sadc_bak[2];
+        SADC->AUTO_SW_CTRL.Word  = sadc_bak[3];
+        SADC->CH_CTRL.Word       = sadc_bak[4];
+        SADC->SADC_ANA_CTRL.Word = sadc_bak[0];
+        SADC->CTRL.Word          = sadc_bak[1];
+        
+        sadc_calib();
+    }
+    
+    return (uint16_t)sadc_val;
 }

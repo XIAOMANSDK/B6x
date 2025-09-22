@@ -1,27 +1,11 @@
 #ifndef _BTMR_H_
 #define _BTMR_H_
 
+#include <stdint.h>
 
-#include "reg_btmr.h"
-
-
-#define TIME_OUT_FLAG (BTMR->RIF)
-#define CLR_UI_FLAG() do { BTMR->ICR = 1; } while (0)
-
-// timeout = arr * 10us
-void timeOutMsInit(uint16_t arr);
-
-
-//void btmrConfig(void);
-
-//void bootDelayUs(uint32_t us);
-
-//void bootDelayMs(uint32_t ms);
-//void btmr_delay(uint16_t tpsc, uint16_t tcnt);
+#if (ROM_UNUSED)
+void btmr_delay(uint16_t tpsc, uint16_t tcnt);
+#endif
 void tick_delay(uint16_t tpsc, uint16_t tcnt);
-#include "rom.h"
-#define btmrConfig()
-#define bootDelayMs(time)  btmr_delay(16000, time)
-
 
 #endif

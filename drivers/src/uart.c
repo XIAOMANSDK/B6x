@@ -148,6 +148,6 @@ void uart_send(uint8_t port, uint16_t len, const uint8_t *data)
         uart->TBR = *data++;
     }
 
-    while (!(uart->SR.TBEM)); // wait tx finish
-    while (uart->SR.BUSY);    // wait idle state
+//    while (!(uart->SR.TBEM)); // wait tx finish
+//    while (uart->SR.BUSY);    // wait idle state
 }

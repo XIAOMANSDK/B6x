@@ -173,7 +173,7 @@ void ble_data_send(void) // ble ·Ö°ü·¢ËÍ
 {
     if (bleSendLen)
     {
-        uint16_t send_mtu = gatt_get_mtu(0) - 3;
+        uint16_t send_mtu = 23 - 3; //gatt_get_mtu(0)
         uint16_t sendLen = send_mtu > bleSendLen ? bleSendLen: send_mtu;
         
         if (sess_txd_send1(bleSendHandle, sendLen, &bleSendBuff[bleSendCnt]) == LE_SUCCESS)

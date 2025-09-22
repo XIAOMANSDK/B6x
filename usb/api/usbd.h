@@ -129,6 +129,11 @@ typedef struct usbd_config_tag {
               .class_tab=classes, .class_cnt=ARRAY_SIZE(classes), \
               .ep_tab=endpoints,  .ep_cnt=ARRAY_SIZE(endpoints) }
 
+#define USBD_CONFIG_N(_conf_val, _intf_cnt, classes)              \
+            { .conf_val=_conf_val, .intf_cnt=_intf_cnt,           \
+              .class_tab=classes, .class_cnt=ARRAY_SIZE(classes), \
+              .ep_tab=NULL,       .ep_cnt=0 }
+
 
 /*
  * FUNCTION DECLARATION
@@ -203,6 +208,16 @@ uint8_t usbd_ep_write(uint8_t ep, uint16_t data_len, const uint8_t *data, uint16
 uint16_t usbd_ep_read(uint8_t ep, uint16_t max_len, uint8_t *buff);
 
 /**
+ * @brief Set/Clear stall condition for the selected endpoint
+ *
+ * @param[in] ep        Endpoint address corresponding to the one
+ *                      listed in the device configuration table
+ * @param[in] evt       USBD_EVENT_SET_ENDPOINT_HALT as set
+ *                      USBD_EVENT_CLR_ENDPOINT_HALT as clear
+ */
+void usbd_ep_stall(uint8_t ep, uint8_t evt);
+
+/**
  * @brief USB interrupt handler.
  * @return N/A.
  */
@@ -222,5 +237,8 @@ __USBIRQ uint8_t usbd_vendor_handler(struct usb_setup_packet *setup, uint8_t **d
 
 /** Handler for User's String descriptors, eg. iSerial Number */
 __USBIRQ bool usbd_get_string_handler(uint16_t index, uint8_t **data, uint16_t *len);
+
+/** Pointer for EP0 Big-Buffer(excced MPS), eg. DFU Block */
+__USBIRQ uint8_t* usbd_ep0_big_buffer(uint16_t len);
 
 #endif // _USBD_H_

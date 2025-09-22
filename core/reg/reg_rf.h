@@ -240,7 +240,7 @@ typedef union //0x00c
     struct
     {
         uint32_t RSSI_VAL:                           8; // bit[7:0]
-        uint32_t AGC_LNA_GAIN:                       4; // bit[11:9]
+        uint32_t AGC_LNA_GAIN:                       4; // bit[11:8]
         uint32_t AGC_BPF_GAIN_ADJ:                   2; // bit[13:12]
         uint32_t AGC_MIXL_GAIN_CTL:                  1; // bit14
         uint32_t AGC_MIXH_GAIN_CTL:                  1; // bit15

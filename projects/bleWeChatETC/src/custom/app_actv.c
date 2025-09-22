@@ -131,7 +131,7 @@ struct actv_env_tag actv_env;
  * --------------------------------------------------------------------------------------
  * x09                             - Length
  * xFF                             - Vendor specific advertising type
- * xC5\x09\x48\x59\x2D\x42\x4C\x45 - CompId(0x09C5) + Serial(HY-BLE)
+ * xC5\x09\x48\x59\x2D\x42\x4C\x45 - CompId(0x09C5) + Serial(xx-BLE)
  * x09                             - Length
  * x09                             - Complete Name type
  * Ble5.2                        - Device Name

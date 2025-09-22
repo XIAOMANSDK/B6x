@@ -76,7 +76,6 @@
 #define HID_COUNTRY_SWISSFR                 0x27 /* Swiss/French */
 #define HID_COUNTRY_SWISSGR                 0x28 /* Swiss/German */
 #define HID_COUNTRY_SWITZERLAND             0x29 /* Switzerland */
-#define HID_COUNTRY_TAIWAN                  0x30 /* Taiwan */
 #define HID_COUNTRY_TURKISHQ                0x31 /* Turkish-Q */
 #define HID_COUNTRY_UK                      0x32 /* UK */
 #define HID_COUNTRY_US                      0x33 /* US */

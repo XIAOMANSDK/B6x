@@ -83,12 +83,20 @@
 #define __SRAMFN            __attribute__((section("ram_func")))
 #endif
 
+#ifndef __SRAMFN_LN
+#define __SRAMFN_LN(name)   __attribute__((section("ram_func."#name)))
+#endif
+
 #ifndef __ATTR_SRAM
 #define __ATTR_SRAM         __attribute__((section("ram_func")))
 #endif
 
 #ifndef __DATA_ALIGNED
 #define __DATA_ALIGNED(n)   __attribute__((aligned (n)))
+#endif
+
+#ifndef __ZI_ALIGNED
+#define __ZI_ALIGNED(n)     __attribute__((aligned(n), zero_init))
 #endif
 
 #ifndef __RETENTION

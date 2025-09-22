@@ -44,19 +44,19 @@ typedef union   // 0x004 TIM_CR2
 {
     struct
     {
-        uint32_t CCPC:       1; // bit0      --- Capture/Compare Preload Control
+        uint32_t CCPC:       1; // bit0      --- Capture/Compare Preload Control (Only ATMR)
         uint32_t RES0:       1; // bit1      --- Reserved
-        uint32_t CCUS:       1; // bit2      --- Capture/Compare Control Update Select
+        uint32_t CCUS:       1; // bit2      --- Capture/Compare Control Update Select (Only ATMR)
         uint32_t CCDS:       1; // bit3      --- Capture/Compare DMA Select
         uint32_t MMS:        3; // bit[6:4]  --- Master Mode Select
         uint32_t TI1S:       1; // bit7      --- TI1 Select
-        uint32_t OIS1:       1; // bit8      --- Output Idle State1(OC1 Output)
-        uint32_t OIS1N:      1; // bit9      --- Output Idle State1(OC1N Output)
-        uint32_t OIS2:       1; // bit10     --- Output Idle State2(OC2 Output)
-        uint32_t OIS2N:      1; // bit11     --- Output Idle State2(OC2N Output)
-        uint32_t OIS3:       1; // bit12     --- Output Idle State3(OC3 Output)
-        uint32_t OIS3N:      1; // bit13     --- Output Idle State3(OC3N Output)
-        uint32_t OIS4:       1; // bit14     --- Output Idle State4(OC4 Output)
+        uint32_t OIS1:       1; // bit8      --- Output Idle State1(OC1 Output)  (Only ATMR)
+        uint32_t OIS1N:      1; // bit9      --- Output Idle State1(OC1N Output) (Only ATMR)
+        uint32_t OIS2:       1; // bit10     --- Output Idle State2(OC2 Output)  (Only ATMR)
+        uint32_t OIS2N:      1; // bit11     --- Output Idle State2(OC2N Output) (Only ATMR)
+        uint32_t OIS3:       1; // bit12     --- Output Idle State3(OC3 Output)  (Only ATMR)
+        uint32_t OIS3N:      1; // bit13     --- Output Idle State3(OC3N Output) (Only ATMR)
+        uint32_t OIS4:       1; // bit14     --- Output Idle State4(OC4 Output)  (Only ATMR)
         uint32_t RES1:      17; // bit[31:15]--- Reserved
     };
     uint32_t Word;
@@ -84,7 +84,7 @@ typedef union   // 0x008 TIM_SMCR
     struct
     {
         uint32_t SMS:        3; // bit[2:0]  --- Slave Mode Select
-                                // 000: Slave mode disabled - if CEN = ?1? then the prescaler is clocked directly by the internal clock.
+                                // 000: Slave mode disabled - if CEN = 1 then the prescaler is clocked directly by the internal clock.
                                 // 001: Reserved
                                 // 010: Reserved
                                 // 011: Reserved
@@ -128,9 +128,9 @@ typedef union   // 0x00C/0x010/0x014/0x018/0x01C/0x020 TIM_IER/IDR/IVS/RIF/IFM/I
         uint32_t CC2I:       1; // bit2      --- Capture/Compare 2 Interrupt
         uint32_t CC3I:       1; // bit3      --- Capture/Compare 3 Interrupt
         uint32_t CC4I:       1; // bit4      --- Capture/Compare 4 Interrupt
-        uint32_t COMI:       1; // bit5      --- COM Interrupt
+        uint32_t COMI:       1; // bit5      --- COM Interrupt (Only ATMR)
         uint32_t TI:         1; // bit6      --- Trigger Interrupt
-        uint32_t BI:         1; // bit7      --- Break Interrupt
+        uint32_t BI:         1; // bit7      --- Break Interrupt (Only ATMR)
         uint32_t RES0:       1; // bit8      --- Reserved
         uint32_t CC1OI:      1; // bit9      --- Capture/Compare 1 Overcapture Interrupt
         uint32_t CC2OI:      1; // bit10     --- Capture/Compare 2 Overcapture Interrupt
@@ -166,9 +166,9 @@ typedef union   // 0x024 TIM_EGR
         uint32_t CC2G:       1; // bit2     --- Capture/Compare 2 Generation
         uint32_t CC3G:       1; // bit3     --- Capture/Compare 3 Generation
         uint32_t CC4G:       1; // bit4     --- Capture/Compare 4 Generation
-        uint32_t COMG:       1; // bit5     --- Capture/Compare Control Update Generation
+        uint32_t COMG:       1; // bit5     --- Capture/Compare Control Update Generation (Only ATMR)
         uint32_t TG:         1; // bit6     --- Trigger Generation
-        uint32_t BG:         1; // bit7     --- Break Generation
+        uint32_t BG:         1; // bit7     --- Break Generation (Only ATMR)
         uint32_t RES:       24; // bit[31:8]--- Reserved
     };
     uint32_t Word;
@@ -315,16 +315,16 @@ typedef union   // 0x030 TIM_CCER
     {
         uint32_t CC1E:       1; //bit0      --- Capture/Compare 1 Output Enable
         uint32_t CC1P:       1; //bit1      --- Capture/Compare 1 Output Polarity
-        uint32_t CC1NE:      1; //bit2      --- Capture/Compare 1 Complementary Output Enable
-        uint32_t CC1NP:      1; //bit3      --- Capture/Compare 1 Complementary Output Polarity
+        uint32_t CC1NE:      1; //bit2      --- Capture/Compare 1 Complementary Output Enable (Only ATMR)
+        uint32_t CC1NP:      1; //bit3      --- Capture/Compare 1 Complementary Output Polarity (Only ATMR)
         uint32_t CC2E:       1; //bit4      --- Capture/Compare 2 Output Enable
         uint32_t CC2P:       1; //bit5      --- Capture/Compare 2 Output Polarity
-        uint32_t CC2NE:      1; //bit6      --- Capture/Compare 2 Complementary Output Enable
-        uint32_t CC2NP:      1; //bit7      --- Capture/Compare 2 Complementary Output Polarity
+        uint32_t CC2NE:      1; //bit6      --- Capture/Compare 2 Complementary Output Enable (Only ATMR)
+        uint32_t CC2NP:      1; //bit7      --- Capture/Compare 2 Complementary Output Polarity (Only ATMR)
         uint32_t CC3E:       1; //bit8      --- Capture/Compare 3 Output Enable
         uint32_t CC3P:       1; //bit9      --- Capture/Compare 3 Output Polarity
-        uint32_t CC3NE:      1; //bit10     --- Capture/Compare 3 Complementary Output Enable
-        uint32_t CC3NP:      1; //bit11     --- Capture/Compare 3 Complementary Output Polarity
+        uint32_t CC3NE:      1; //bit10     --- Capture/Compare 3 Complementary Output Enable (Only ATMR)
+        uint32_t CC3NP:      1; //bit11     --- Capture/Compare 3 Complementary Output Polarity (Only ATMR)
         uint32_t CC4E:       1; //bit12     --- Capture/Compare 4 Output Enable
         uint32_t CC4P:       1; //bit13     --- Capture/Compare 4 Output Polarity
         uint32_t RES:       18; //bit[31:14]--- Reserved
@@ -390,7 +390,7 @@ typedef union   // 0x058 TIM_DMAEN
         uint32_t CC2DE:      1; // bit2     --- Capture/Compare 2 DMA Request Enable
         uint32_t CC3DE:      1; // bit3     --- Capture/Compare 3 DMA Request Enable
         uint32_t CC4DE:      1; // bit4     --- Capture/Compare 4 DMA Request Enable
-        uint32_t COMDE:      1; // bit5     --- COM DMA Request Enable
+        uint32_t COMDE:      1; // bit5     --- COM DMA Request Enable (Only ATMR)
         uint32_t TDE:        1; // bit6     --- Trigger DMA Request Enable
         uint32_t RES:       25; // bit[31:7]--- Reserved
     };
@@ -431,7 +431,7 @@ typedef struct
     __IO uint32_t            CNT  ; // 0x034 --- Timer Counter
     __IO uint32_t            PSC  ; // 0x038 --- Prescaler
     __IO uint32_t            ARR  ; // 0x03C --- Auto-reload register
-    __IO uint32_t            RCR  ; // 0x040 --- Repetition counter register
+    __IO uint32_t            RCR  ; // 0x040 --- Repetition counter register (Only ATMR)
     union {
         __IO uint32_t        CCR[4];
       struct {
@@ -441,7 +441,7 @@ typedef struct
         __IO uint32_t        CCR4 ; // 0x050 --- Capture/compare register 4
       };
     };
-    __IO TIMER_BDTR_Typedef  BDTR ; // 0x054 --- Break and dead-time register
+    __IO TIMER_BDTR_Typedef  BDTR ; // 0x054 --- Break and dead-time register (Only ATMR)
     __IO TIMER_DMAEN_Typedef DMAEN; // 0x058 --- DMA trigger event enable
 } TIMER_TypeDef;
 

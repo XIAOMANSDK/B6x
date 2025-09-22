@@ -211,10 +211,13 @@ void uart_proc(struct pt_pkt *pkt, uint8_t status)
             
             if (SADC->SADC_ANA_CTRL.SADC_EN)
             {
+                uint32_t vdd24    = get_trim_vdd12_voltage()*2;
+                
                 uint32_t value;
                 uint8_t adc_data[2];
-                value = (3300UL*sadc_read(SADC_CH_AIN0, 0))/0x3FF;
-               
+                // 分压电路电压值.  电池电压需根据分压电阻计算得出.
+                value = (vdd24*sadc_read(SADC_CH_AIN0, 0))/0x3FF; //((R1/(R1+R2))*VBAT = value)
+                
                 adc_data[0] = value/1000;
                 adc_data[1] = value%1000/10;            
                 pt_rsp_cmd_res(pkt->code, PT_OK, PLEN_RSP_VERTION, adc_data);            
@@ -236,8 +239,8 @@ void uart_proc(struct pt_pkt *pkt, uint8_t status)
                 // ADC
                 iom_ctrl(PA_POWER_ADC, IOM_ANALOG);           
                 // sadc init
-                sadc_init(SADC_ANA_VREF_VDD);
-
+                sadc_init(SADC_ANA_VREF_2V4);// 参考源选择2.4V. 最大测量值2.4V(0x3FF).
+                
                 sadc_conf(SADC_CR_DFLT);
             }
             else  // 关闭电压检测

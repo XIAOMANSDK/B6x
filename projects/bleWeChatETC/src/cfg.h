@@ -13,6 +13,7 @@
 
 /// System Clock(0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)
 #define SYS_CLK                (0)
+#define BLE_LITELIB            (1)
 
 /// Debug Mode(0=Disable, 1=via UART, 2=via RTT)
 #define DBG_MODE               (0)

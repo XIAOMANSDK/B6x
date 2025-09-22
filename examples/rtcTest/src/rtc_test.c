@@ -26,7 +26,7 @@
 
 #define RC32K_CAL_NB        8
 
-#define TMR_PSC             (48 - 1) // 1us sysclk=(n)MHz
+#define TMR_PSC             (16 - 1) // 1us sysclk=(n)MHz
 #define TMR_ARR             0xFFFF
 
 
@@ -60,7 +60,7 @@ void RTC_IRQHandler(void)
     GPIO_DAT_CLR(GPIO_RTC);
 }
 
-void ADMR1_IRQHandler(void)
+void ATMR_IRQHandler(void)
 {
     GPIO_DAT_SET(GPIO_TMR);
     

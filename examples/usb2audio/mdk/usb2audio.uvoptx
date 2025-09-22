@@ -22,7 +22,7 @@
   </DaveTm>
 
   <Target>
-    <TargetName>usb2uart</TargetName>
+    <TargetName>usb2audio</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

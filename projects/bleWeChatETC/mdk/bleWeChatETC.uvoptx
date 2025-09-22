@@ -455,8 +455,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\ble\app\app_gapc.c</PathWithFileName>
-      <FilenameWithoutPath>app_gapc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\ble\app\app_gatt.c</PathWithFileName>
+      <FilenameWithoutPath>app_gatt.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -467,8 +467,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\ble\app\app_gatt.c</PathWithFileName>
-      <FilenameWithoutPath>app_gatt.c</FilenameWithoutPath>
+      <PathWithFileName>..\src\custom\app_actv.c</PathWithFileName>
+      <FilenameWithoutPath>app_actv.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -479,8 +479,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\src\custom\app_actv.c</PathWithFileName>
-      <FilenameWithoutPath>app_actv.c</FilenameWithoutPath>
+      <PathWithFileName>..\src\custom\app_gapc.c</PathWithFileName>
+      <FilenameWithoutPath>app_gapc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -531,8 +531,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\ble\lib\ble6.lib</PathWithFileName>
-      <FilenameWithoutPath>ble6.lib</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\ble\lib\ble6_lite.lib</PathWithFileName>
+      <FilenameWithoutPath>ble6_lite.lib</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

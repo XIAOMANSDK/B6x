@@ -1,0 +1,8 @@
+<proc.c,128>fcc_start
+
+<proc.c,145>fcc_tx_carr
+
+<proc.c,157>fcc_rx_carr
+
+<proc.c,211>GET_XOSC_TR:0x15
+

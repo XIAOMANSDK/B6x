@@ -112,6 +112,9 @@ enum sadc_ana_ctrl
 #define SADC_ANA_VREF_1V2     (SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)  \
                                | SADC_IBSEL_VCM(3) | SADC_IBSEL_CMP(3) | SADC_VREF_TRIM_1V2 | SADC_EN_BIT)
 
+#define SADC_ANA_VREF_1V8     (SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)  \
+                               | SADC_IBSEL_VCM(3) | SADC_IBSEL_CMP(3) | SADC_VREF_TRIM_1V8 | SADC_EN_BIT)
+
 #define SADC_ANA_VREF_2V4     (SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)  \
                                | SADC_IBSEL_VCM(3) | SADC_IBSEL_CMP(3) | SADC_VREF_TRIM_2V4 | SADC_EN_BIT)
 
@@ -305,4 +308,17 @@ void sadc_atmr(uint8_t sw_auto, uint32_t ch_ctrl);
  ****************************************************************************************
  */
 uint32_t sadc_rand_num(void);
+
+/**
+ ****************************************************************************************
+ * @brief SADC RF Temperature.
+ *
+ * @param[in] times  Number of times sadc read.
+ *
+ * @return Multiple(times) averages.
+ *
+ * @note Called after rfmdm_init().
+ ****************************************************************************************
+ */
+uint16_t sadc_temperature(uint16_t times);
 #endif // _SADC_H_

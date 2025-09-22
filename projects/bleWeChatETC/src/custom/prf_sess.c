@@ -218,7 +218,7 @@ att_decl_t ses_atts[SES_ATT_IDX_MAX] =
 uint16_t ses_atts_perm[SESS_ENV_MAX*4] = 
 {
     (PROP_IND),
-    (PROP_WC),
+    (PROP_WC | PROP_WR),  // IOS APP –Ë“™"PROP_WR" Ù–‘.-20250514 WHL
     (PROP_RD),  // 3
 
     (PROP_RD),

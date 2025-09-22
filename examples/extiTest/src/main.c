@@ -74,6 +74,8 @@ static void extiTest(void)
     exti_set(EXTI_DBE, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1));
     exti_set(EXTI_IER, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1));
     
+    exti_set(EXTI_ICR, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1)); // interrupt clear, before NVIC_EnableIRQ(EXTI_IRQn);
+    
     // IRQ enable
     NVIC_EnableIRQ(EXTI_IRQn);
     __enable_irq();
