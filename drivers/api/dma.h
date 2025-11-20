@@ -259,7 +259,7 @@ extern volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
 #define TRANS_UNIT(size)     (((size) << DMA_TRANS_SRCSIZE_LSB) | ((size) << DMA_TRANS_DSTSIZE_LSB))
 /// transfers address increment: 0-byte, 1-halfword, 2-word, 3-no increment(address remains)
 #define TRANS_SRCINC(inc)    ((inc) << DMA_TRANS_SRCINC_LSB)
-#define TRANS_DSTINC(inc)    ((inc) << DMA_TRANS_DSTINC_LSB)
+#define TRANS_DSTINC(inc)    ((uint32_t)(inc) << DMA_TRANS_DSTINC_LSB)
 
 /// transfers to read Peripheral(as SRC)
 #define TRANS_PER_RD(ccm, len, size, inc) \

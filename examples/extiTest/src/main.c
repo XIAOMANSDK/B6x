@@ -3,7 +3,20 @@
  *
  * @file main.c
  *
- * @brief Main Entry of the application.
+ * @brief 应用程序主入口 - 外部中断示例
+ *
+ * @details
+ * 本示例演示外部中断的基本使用方法：
+ * - 配置两个GPIO引脚为外部中断输入
+ * - 分别设置下降沿和上升沿触发
+ * - 使用数字消抖功能
+ * - 在中断服务函数中处理中断事件
+ *
+ * 工作原理：
+ * 1. 初始化：配置GPIO引脚方向和EXTI参数
+ * 2. 中断触发：当检测到配置的边沿事件时产生中断
+ * 3. 中断处理：识别中断源、清除标志、更新状态
+ * 4. 主循环：轮询检查并输出中断信息
  *
  ****************************************************************************************
  */
@@ -18,9 +31,9 @@
  ****************************************************************************************
  */
 
-#define PA_RET_SEE          (15)
-#define PA_EXTI0            (16)
-#define PA_EXTI1            (17)
+#define PA_RET_SEE          (15)  ///< 状态指示引脚 - 用于观察中断处理时间
+#define PA_EXTI0            (16)  ///< 外部中断0引脚 - 配置为下降沿触发
+#define PA_EXTI1            (17)  ///< 外部中断1引脚 - 配置为上升沿触发
 
 
 /*
@@ -28,87 +41,190 @@
  ****************************************************************************************
  */
 
-volatile uint8_t gExtiIrqFlag = 0;
+volatile uint8_t gExtiIrqFlag = 0;  ///< 外部中断标志位 - 位0:EXTI0, 位1:EXTI1
 
+/**
+ ****************************************************************************************
+ * @brief 外部中断服务函数
+ *
+ * @details
+ * 处理外部中断事件：
+ * - 读取中断标志状态寄存器(RIF)确定中断源
+ * - 清除中断标志位(ICR)
+ * - 设置对应的中断状态标志
+ * - 通过状态指示引脚显示中断处理过程
+ *
+ * 寄存器操作说明：
+ * - EXTI->RIF.Word: 读取中断标志状态，确定哪个引脚产生中断
+ * - EXTI->ICR.Word: 清除中断标志，避免重复触发
+ * - EXTI_SRC(n): 生成对应引脚的中断位掩码
+ ****************************************************************************************
+ */
 void EXTI_IRQHandler(void)
 {
-    uint32_t irq_sta = EXTI->RIF.Word;
+    uint32_t irq_sta = EXTI->RIF.Word;  ///< 读取中断标志状态寄存器(RIF) - GPIO19~GPIO0: EXTI<n>中断标志状态位
     
-    gExtiIrqFlag = 0;    
+    gExtiIrqFlag = 0;    ///< 清除全局中断标志
     
+    // 状态指示 - 开始处理中断
     //GPIO_DAT_SET(1 << PA_RET_SEE);
-    gpio_put_hi(PA_RET_SEE);
+    gpio_put_hi(PA_RET_SEE);  ///< 设置状态指示引脚为高电平
     
+    /**
+     * @brief 处理PA_EXTI0引脚中断（下降沿触发）
+     * 
+     * 检测RIF寄存器中PA_EXTI0对应的位是否置位
+     * 清除中断标志并设置对应的状态位
+     */
     if (irq_sta & EXTI_SRC(PA_EXTI0))
     {
-        //EXTI->IDR.Word = EXTI_SRC(PA_EXTI0));
-        EXTI->ICR.Word = EXTI_SRC(PA_EXTI0);
-        gExtiIrqFlag |= 0x01;
-        //EXTI->IER.Word = EXTI_SRC(PA_EXTI0);
+        //EXTI->IDR.Word = EXTI_SRC(PA_EXTI0));  ///< 外部中断关闭寄存器(IDR) - 禁用中断（注释状态）
+        EXTI->ICR.Word = EXTI_SRC(PA_EXTI0);    ///< 清除PA_EXTI0中断标志
+        gExtiIrqFlag |= 0x01;                   ///< 设置EXTI0中断标志位
+        //EXTI->IER.Word = EXTI_SRC(PA_EXTI0);   ///< 外部中断使能寄存器(IER) - 重新使能中断（注释状态）
     }
     
+    /**
+     * @brief 处理PA_EXTI1引脚中断（上升沿触发）
+     * 
+     * 检测RIF寄存器中PA_EXTI1对应的位是否置位
+     * 清除中断标志并设置对应的状态位
+     */
     if (irq_sta & EXTI_SRC(PA_EXTI1))
     {
-        //EXTI->IDR.Word = EXTI_SRC(PA_EXTI1);
-        EXTI->ICR.Word = EXTI_SRC(PA_EXTI1);
-        gExtiIrqFlag |= 0x02;
-        //EXTI->IER.Word = EXTI_SRC(PA_EXTI1);
+        //EXTI->IDR.Word = EXTI_SRC(PA_EXTI1);   ///< 外部中断关闭寄存器(IDR) - 禁用中断（注释状态）
+        EXTI->ICR.Word = EXTI_SRC(PA_EXTI1);    ///< 清除PA_EXTI1中断标志
+        gExtiIrqFlag |= 0x02;                   ///< 设置EXTI1中断标志位
+        //EXTI->IER.Word = EXTI_SRC(PA_EXTI1);   ///< 外部中断使能寄存器(IER) - 重新使能中断（注释状态）
     }
     
+    // 状态指示 - 中断处理完成
     //GPIO_DAT_CLR(1 << PA_RET_SEE);
-    gpio_put_lo(PA_RET_SEE);
+    gpio_put_lo(PA_RET_SEE);  ///< 清除状态指示引脚
 }
 
+/**
+ ****************************************************************************************
+ * @brief 外部中断测试函数
+ *
+ * @details
+ * 配置外部中断的完整流程：
+ * 1. GPIO引脚配置：设置输入输出方向和上下拉
+ * 2. EXTI控制器配置：触发边沿、消抖参数、中断使能
+ * 3. NVIC中断配置：使能EXTI中断和全局中断
+ * 4. 主循环：监控中断标志并输出信息
+ ****************************************************************************************
+ */
 static void extiTest(void)
 {
-    // IO config
-    gpio_dir_output(PA_RET_SEE, OE_LOW);
+    // GPIO引脚配置
+    gpio_dir_output(PA_RET_SEE, OE_LOW);  ///< 配置状态指示引脚为输出模式，初始低电平
     
-    gpio_dir_input(PA_EXTI0, IE_UP);
-    gpio_dir_input(PA_EXTI1, IE_DOWN);
+    /**
+     * @brief 配置外部中断输入引脚
+     * 
+     * PA_EXTI0: 输入模式，上拉 - 默认高电平，下降沿触发
+     * PA_EXTI1: 输入模式，下拉 - 默认低电平，上升沿触发
+     */
+    gpio_dir_input(PA_EXTI0, IE_UP);    ///< 配置PA_EXTI0为上拉输入
+    gpio_dir_input(PA_EXTI1, IE_DOWN);  ///< 配置PA_EXTI1为下拉输入
     
-    // EXTI config
-    exti_init(EXTI_DBC(15, 4));
-    exti_set(EXTI_FTS, EXTI_SRC(PA_EXTI0)); // falling
-    exti_set(EXTI_RTS, EXTI_SRC(PA_EXTI1)); // rising
-    exti_set(EXTI_DBE, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1));
-    exti_set(EXTI_IER, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1));
+    // EXTI控制器配置
+    /**
+     * @brief 初始化外部中断消抖参数
+     * 
+     * EXTI_DBC(15, 4): 消抖时钟分频和采样次数
+     * - 第一个参数: 时钟分频值
+     * - 第二个参数: 连续采样次数
+     */
+    exti_init(EXTI_DBC(15, 4));  ///< 初始化外部中断，配置消抖参数
+    
+    /**
+     * @brief 配置外部中断触发条件
+     * 
+     * EXTI_FTS: 下降沿触发选择寄存器 - 配置PA_EXTI0为下降沿触发
+     * EXTI_RTS: 上升沿触发选择寄存器 - 配置PA_EXTI1为上升沿触发
+     */
+    exti_set(EXTI_FTS, EXTI_SRC(PA_EXTI0));  ///< 设置PA_EXTI0为下降沿触发
+    exti_set(EXTI_RTS, EXTI_SRC(PA_EXTI1));  ///< 设置PA_EXTI1为上升沿触发
+    
+    /**
+     * @brief 配置外部中断消抖和使能
+     * 
+     * EXTI_DBE: 数字消抖使能寄存器 - 对两个引脚启用消抖功能
+     * EXTI_IER: 中断使能寄存器 - 使能两个引脚的中断
+     */
+    exti_set(EXTI_DBE, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1));  ///< 使能PA_EXTI0和PA_EXTI1的消抖功能
+    exti_set(EXTI_IER, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1));  ///< 使能PA_EXTI0和PA_EXTI1的中断
     
     exti_set(EXTI_ICR, EXTI_SRC(PA_EXTI0) | EXTI_SRC(PA_EXTI1)); // interrupt clear, before NVIC_EnableIRQ(EXTI_IRQn);
+    NVIC_EnableIRQ(EXTI_IRQn);  ///< 使能EXTI中断向量
+    __enable_irq();             ///< 使能全局中断
     
-    // IRQ enable
-    NVIC_EnableIRQ(EXTI_IRQn);
-    __enable_irq();
-    
+    /**
+     * @brief 主循环 - 监控中断状态
+     * 
+     * 持续检查全局中断标志，当有中断发生时输出调试信息
+     */
     while (1)
     {
-        if (gExtiIrqFlag)
+        if (gExtiIrqFlag)  ///< 检查是否有外部中断发生
         {
-            debug("Trig: %X\r\n", gExtiIrqFlag);
-            gExtiIrqFlag = 0;
+            debug("Trig: %X\r\n", gExtiIrqFlag);  ///< 输出触发的中断引脚信息
+            gExtiIrqFlag = 0;  ///< 清除中断标志
         }
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief 系统初始化函数
+ *
+ * @details
+ * 配置系统基础设置，如时钟等
+ ****************************************************************************************
+ */
 static void sysInit(void)
 {
-    // Todo config, if need
-    
+    // 如需配置，在此添加系统初始化代码
 }
 
+/**
+ ****************************************************************************************
+ * @brief 设备初始化函数
+ *
+ * @details
+ * 初始化外设模块：
+ * - 禁用看门狗
+ * - 初始化调试接口
+ * - 输出测试开始信息
+ ****************************************************************************************
+ */
 static void devInit(void)
 {
-    iwdt_disable();
+    iwdt_disable();  ///< 禁用独立看门狗
     
-    dbgInit();
-    debug("EXTI Test...\r\n"); 
+    dbgInit();                    ///< 初始化调试接口
+    debug("EXTI Test...\r\n");    ///< 输出测试开始信息
 }
 
+/**
+ ****************************************************************************************
+ * @brief 主函数
+ *
+ * @return int 程序退出状态
+ *
+ * @details
+ * 程序执行主流程：
+ * 系统初始化 → 设备初始化 → 外部中断测试
+ ****************************************************************************************
+ */
 int main(void)
 {
-    sysInit();
-    devInit();
+    sysInit();    ///< 系统初始化
+    devInit();    ///< 设备初始化
     
-    extiTest();
-    while (1);
+    extiTest();   ///< 执行外部中断测试
+    
+    while (1);    ///< 主循环保持程序运行
 }

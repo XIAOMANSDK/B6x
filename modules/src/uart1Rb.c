@@ -5,6 +5,7 @@
  *
  * @brief Demo of UART1 Interrupt-Mode/DMA-Mode with RingBuffer. *User should override it*
  *
+ * @note When the stop bit time is about 1.5 times the set time, CTMR needs to be used instead of RTO.
  ****************************************************************************************
  */
 
@@ -41,10 +42,12 @@
 #define UART1_FIFO_RXTL     8
 
 #ifndef CFG_UART_DMA
-#define CFG_UART_DMA        0
+#define CFG_UART_DMA        1
 #endif
 
 #if (CFG_UART_DMA)
+#define CFG_UART_CTMR       0  //When the stop time is about 1.5 times the set value, CTMR needs to be used
+
 #include "dma.h"
 #define UART1_DMA_CHAN      DMA_CH7
 #define RBUF_SIZE           (0x300)
@@ -64,11 +67,84 @@ volatile bool pong;
 
 /// RingBuffer for UART1
 static rbuf_t uart1RbRx;
-
 /*
  * FUNCTION DEFINITIONS
  ****************************************************************************************
  */
+#if (CFG_UART_CTMR)
+#include "drvs.h"
+#include "regs.h"
+
+void uartTm_Init(void)
+{
+    RCC_APBCLK_EN(APB_CTMR_BIT);
+    RCC_APBRST_REQ(APB_CTMR_BIT);
+
+    CTMR->CR1.Word = 0; //.CEN = 0;
+    
+    csc_input(PA_UART1_RX, CSC_CTMR_CH1);
+    
+    // do not need filter
+    CTMR->CCMR1.INPUT.IC1F = 0;
+    // sel input capture src
+    CTMR->CCMR1.INPUT.CC1S = 1;
+    // only detect posedge
+    CTMR->CCER.CC1P = 0;
+    CTMR->CCER.CC1NP = 0;
+    
+    CTMR->CR1.URS = 1;
+    CTMR->ARR = 50;           // Number of timeout bits
+    CTMR->PSC = UART1->BRR;   // Baud rate value UART1->BRR
+    
+    CTMR->SMCR.SMS = 0x04; // reset mode
+    CTMR->SMCR.TS = 0x05; // sel ti1 as input src
+    
+    CTMR->CCR1 = 0;
+    CTMR->IER.Word = 1;
+    CTMR->ICR.Word = 1;
+    
+    NVIC_EnableIRQ(CTMR_IRQn);
+}
+
+void CTMR_IRQHandler(void)
+{
+    GPIO_DIR_SET_HI(BIT(PA_CTMR_IRQH));
+    GPIO_DIR_SET_LO(BIT(PA_CTMR_IRQH));
+    
+    // Disable UI Interrupt
+    CTMR->IDR.Word = TMR_IR_UI_BIT; 
+    
+    CTMR->CR1.CEN = 0; // Turn off CTMR enable
+    
+    if (CTMR->RIF.Word & TMR_IR_UI_BIT)
+    {
+        // Clear Interrupt Flag
+        CTMR->ICR.Word = TMR_IR_UI_BIT; 
+        
+        uint16_t remain_len;
+        bool alter = dma_chnl_remain_pingpong(UART1_DMA_CHAN, &remain_len);
+
+        // update head to middle
+        if (pong == alter)
+        {
+            if (alter)
+            {
+                uart1RbRx.head = RBUF_HALF_SIZE + (RBUF_HALF_SIZE - remain_len);
+            }
+            else
+            {
+                uart1RbRx.head = 0 + (RBUF_HALF_SIZE - remain_len);
+            }
+        }
+        
+        UART1->ICR.EOB = 1; // Clear EOB Interrupt Flag
+        UART1->IER.EOB = 1; // Enable RXRD Interrupt
+    }
+    
+    // Enable UI Interrupt
+    CTMR->IER.Word = TMR_IR_UI_BIT;
+}
+#endif
 
 void uart1Rb_Init(void)
 {
@@ -80,7 +156,14 @@ void uart1Rb_Init(void)
     uart_conf(UART1_PORT, UART1_CONF_BAUD, UART1_CONF_LCRS);
     
     #if (CFG_UART_DMA)
-    uart_fctl(UART1_PORT, (FCR_FIFOEN_BIT | FCR_RXTL_1BYTE), 40, UART_IR_RTO_BIT);
+        #if (CFG_UART_CTMR)
+        // Using EOB interrupt, the RXRD flag will be automatically cleared by DMA
+        uart_fctl(UART1_PORT, (FCR_FIFOEN_BIT | FCR_RXTL_1BYTE), 0, /*UART_IR_RXRD_BIT | UART_IR_RXS_BIT |*/ UART_IR_EOB_BIT);
+        uartTm_Init();
+        #else
+        uart_fctl(UART1_PORT, (FCR_FIFOEN_BIT | FCR_RXTL_1BYTE), 40, UART_IR_RTO_BIT);
+        #endif
+
     uart_mctl(UART1_PORT, 1);
     
     pong = false;
@@ -123,26 +206,37 @@ void UART1_IRQHandler(void)
     uint32_t state = UART1->IFM.Word; // UART1->RIF.Word;
     
     #if (CFG_UART_DMA)
-    if (state & UART_IR_RTO_BIT)
-    {
-        // clear rto
-        UART1->ICR.Word = UART_IR_RTO_BIT;
-        uint16_t remain_len;
-        bool alter = dma_chnl_remain_pingpong(UART1_DMA_CHAN, &remain_len);
-
-        // update head to middle
-        if (pong == alter)
+        #if (CFG_UART_CTMR)
+        if (state & 0x400) //(EOB_BIT)
         {
-            if (alter)
-            {
-                uart1RbRx.head = RBUF_HALF_SIZE + (RBUF_HALF_SIZE - remain_len);
-            }
-            else
-            {
-                uart1RbRx.head = 0 + (RBUF_HALF_SIZE - remain_len);
-            }
+            UART1->IDR.EOB = 1; // Disable EOB Interrupt
+            
+            CTMR->CR1.CEN = 1; // Enable CTMR timeout count
+            
+            UART1->ICR.EOB = 1; // Clear EOB Interrupt Flag
         }
-    }
+        #else
+        if (state & UART_IR_RTO_BIT)
+        {
+            // clear rto
+            UART1->ICR.Word = UART_IR_RTO_BIT;
+            uint16_t remain_len;
+            bool alter = dma_chnl_remain_pingpong(UART1_DMA_CHAN, &remain_len);
+
+            // update head to middle
+            if (pong == alter)
+            {
+                if (alter)
+                {
+                    uart1RbRx.head = RBUF_HALF_SIZE + (RBUF_HALF_SIZE - remain_len);
+                }
+                else
+                {
+                    uart1RbRx.head = 0 + (RBUF_HALF_SIZE - remain_len);
+                }
+            }
+        }    
+        #endif
     #else
     if (state & 0x01) //(BIT_RXRD)
     {

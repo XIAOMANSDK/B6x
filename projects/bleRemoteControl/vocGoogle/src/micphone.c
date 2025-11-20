@@ -21,6 +21,21 @@
 
 #define DMA_PCM_CHAN   DMA_CH0
 
+#ifndef ADPCM_BLOCK_SIZE
+#define ADPCM_BLOCK_SIZE        (128)
+#endif
+
+#define SAMPLE_DATA_SIZE        (ADPCM_BLOCK_SIZE - 4)
+#define READ_UNIT_SIZE          (SAMPLE_DATA_SIZE * 4 + 2)
+
+struct ADPCMBlock
+{
+    short sample0;
+    char index;
+    char RESERVED;
+    char sampledata[SAMPLE_DATA_SIZE];
+};
+
 #if (XIAOMI)
 #define PCM_SAMPLE_NB   (216)     // 256: 32ms  8000Hz
 #else

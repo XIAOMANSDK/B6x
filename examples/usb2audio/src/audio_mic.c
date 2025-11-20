@@ -1,24 +1,51 @@
+/**
+ * @file usbd_audio.c
+ * @brief USB音频设备实现文件
+ * 
+ * 工作原理及过程说明：
+ * 
+ * 本代码实现了一个USB音频输入设备，支持8KHz采样率、16位分辨率、单声道的麦克风输入。
+ * 
+ * 工作流程：
+ * 1. 初始化阶段：
+ *    - 配置USB时钟和IO引脚
+ *    - 注册USB设备描述符和配置信息
+ *    - 使能USB中断
+ * 
+ * 2. 枚举阶段：
+ *    - 主机读取设备描述符，识别为音频设备
+ *    - 建立通信连接，配置音频接口和端点
+ * 
+ * 3. 数据传输阶段：
+ *    - 通过等时传输端点实时发送音频数据
+ *    - 使用状态机管理麦克风的开关和数据传输状态
+ *    - 当主机选择音频接口时启动数据传输
+ * 
+ * 4. 状态管理：
+ *    - MIC_OFF: 麦克风关闭状态
+ *    - MIC_IDLE: 麦克风就绪，等待数据传输
+ *    - MIC_BUSY: 数据传输中状态
+ */
 #include "usbd.h"
 #include "usbd_audio.h"
 #include "drvs.h"
 
 #if (DEMO_AUDIO_MIC)
 
-#define USBD_VID                    0x0D8C
-#define USBD_PID                    0x0312
-#define USBD_BCD                    0x0306
-#define USBD_MAX_POWER              100
-#define USBD_LANGID_STRING          0x0409 // English(US)
-
+#define USBD_VID                    0x0D8C    /**< 厂商ID */
+#define USBD_PID                    0x0312    /**< 产品ID */
+#define USBD_BCD                    0x0306    /**< 设备版本号 */
+#define USBD_MAX_POWER              100       /**< 最大功耗(mA) */
+#define USBD_LANGID_STRING          0x0409    /**< 语言ID: 英语(美国) */
 
 /* AUDIO Class Config */
-#define AUDIO_IN_EP                 0x81
-#define AUDIO_IN_EP_INTV            0x01   // unit in 1ms
+#define AUDIO_IN_EP                 0x81      /**< 音频输入端点地址 */
+#define AUDIO_IN_EP_INTV            0x01      /**< 端点间隔时间(单位:1ms) */
 
-#define AUDIO_IN_FREQ               8000U // 16K
-#define AUDIO_IN_FRAME_SIZE         2      // unit in byte
-#define AUDIO_IN_RESOL_BITS         16     // unit in bit
-#define AUDIO_IN_CHNLS              1      // Mono:1
+#define AUDIO_IN_FREQ               8000U     /**< 采样频率: 8KHz */
+#define AUDIO_IN_FRAME_SIZE         2         /**< 帧大小(字节): 16位=2字节 */
+#define AUDIO_IN_RESOL_BITS         16        /**< 分辨率(位): 16位 */
+#define AUDIO_IN_CHNLS              1         /**< 声道数: 单声道 */
 
 /// Packet Size = AudioFreq * DataSize (16bit: 2) * NumChannels(Mono: 1) / 1000ms
 #define AUDIO_IN_EP_MPS             ((uint32_t)((AUDIO_IN_FREQ * AUDIO_IN_FRAME_SIZE * AUDIO_IN_CHNLS) / 1000))
@@ -32,6 +59,7 @@
 #define AUDIO_INPUT_CHEN            0x0003
 #endif
 
+/** 音频实体ID定义 */
 enum audio_id {
     AUDIO_UNDEFINED_ID              = 0,
 
@@ -41,7 +69,7 @@ enum audio_id {
 };
 
 
-/*!< count of interface descriptor */
+/*!< 接口描述符数量 */
 enum intf_num {
     /* Audio class interface */
     AUDIO_AC_INTF_NUM               = 0,
@@ -168,6 +196,7 @@ static const usbd_config_t audio_configuration[] = {
  ****************************************************************************
  */
 
+/** 麦克风状态定义 */
 enum mic_state_tag {
     MIC_OFF,
     MIC_IDLE, // on
@@ -176,7 +205,11 @@ enum mic_state_tag {
 
 volatile uint8_t mic_state = MIC_OFF;
 
-/// Audio Entity Retrieve
+/**
+ * @brief 获取音频实体
+ * @param bEntityId 实体ID
+ * @return 音频实体指针
+ */
 const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 {
     const audio_entity_t *entity = NULL;
@@ -187,7 +220,11 @@ const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
     return entity;
 }
 
-/// Callback for SET_INTERFACE
+/**
+ * @brief 接口切换回调函数
+ * @param intf_num 接口号
+ * @param alt_setting 备用设置
+ */
 void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
 {
     if (intf_num == AUDIO_AS_INTF_NUM) {
@@ -201,7 +238,10 @@ void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
     }
 }
 
-/// Callback for Mic endpoint
+/**
+ * @brief 音频输入端点处理函数
+ * @param ep 端点地址
+ */
 void usbd_audio_ep_in_handler(uint8_t ep)
 {
     if (mic_state == MIC_BUSY) {
@@ -215,10 +255,13 @@ void usbd_audio_ep_in_handler(uint8_t ep)
  ****************************************************************************
  */
 
-static uint8_t mic_tmp = 0;
-static uint8_t mic_buffer[AUDIO_IN_EP_MPS];
+static uint8_t mic_tmp = 0;                     /**< 测试数据临时变量 */
+static uint8_t mic_buffer[AUDIO_IN_EP_MPS];     /**< 麦克风数据缓冲区 */
 
-void usbdInit()
+/**
+ * @brief USB设备初始化
+ */
+ void usbdInit()
 {
     // enable USB clk and iopad
     rcc_usb_en();
@@ -257,7 +300,16 @@ void usbdInit()
 //}
 
 #include "micphone.h"
-bool mic_flag = false;
+bool mic_flag = false;  /**< 麦克风数据就绪标志 */
+
+/**
+ * @brief USB设备测试函数
+ * 
+ * 主要功能：
+ * 1. 获取麦克风数据
+ * 2. 当设备已配置且麦克风就绪时发送数据
+ * 3. 管理数据传输状态
+ */
 
 void usbdTest()
 {

@@ -37,7 +37,7 @@ static void devInit(void)
     
     dbgInit();
 
-    debug("SADC Test...\r");
+    //debug("SADC Test...\r");
 }
 
 extern void sadcTest(void);

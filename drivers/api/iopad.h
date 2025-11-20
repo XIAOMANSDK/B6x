@@ -3,7 +3,7 @@
  *
  * @file iopad.h
  *
- * @brief Header file - IOPAD with CSC Driver
+ * @brief Header file - IOPAD with CSC Driver - IO引脚与交叉开关连接驱动
  *
  ****************************************************************************************
  */
@@ -181,35 +181,34 @@ enum clk_out
 #define CSC_EN(fsel)                  ((fsel) | CSC_FEN_BIT)
 
 /**
- ****************************************************************************************
- * @brief Base IO Mode Control
- *
- * @param[in] pad   Index of pad used @see enum pad_idx
- * @param[in] ctrl  value of mode @see enum iom_bfs
- *
- ****************************************************************************************
+ * @brief 基础IO模式控制
+ * @param[in] pad   IO引脚编号 @see enum pad_idx
+ * @param[in] ctrl  模式控制值 @see enum iom_bfs
+ * @note 配置指定IO引脚的电气特性和功能选择
  */
 #define iom_ctrl(pad, ctrl)           CSC->CSC_PIO[pad].Word = ctrl
 
 /**
- ****************************************************************************************
- * @brief Base CSC Input Connect
- *
- * @param[in] pad   Index of pad used @see enum pad_idx
- * @param[in] fsel  value of func @see enum csc_fsel -I
- *
- ****************************************************************************************
+ * @brief 基础CSC输入连接配置
+ * @param[in] pad   IO引脚编号 @see enum pad_idx
+ * @param[in] fsel  功能选择编号 @see enum csc_fsel
+ * @note 配置指定功能的外设输入连接到指定的IO引脚
+ * 
+ * 根据CSC寄存器说明：
+ * CSC_INPUT配置：CSC->CSC_INPUT[func].CSC_FSEL = pad
+ * 例如：配置PA01引脚为UART2的RXD输入功能，则(pad=1, func=3): CSC->CSC_INPUT[3].CSC_FSEL = 1
  */
 #define csc_input(pad, fsel)          CSC->CSC_INPUT[fsel].Word = CSC_EN(pad)
 
 /**
- ****************************************************************************************
- * @brief Base CSC Output Connect
- *
- * @param[in] pad   Index of pad used @see enum pad_idx
- * @param[in] fsel  value of func @see enum csc_fsel -O
- *
- ****************************************************************************************
+ * @brief 基础CSC输出连接配置
+ * @param[in] pad   IO引脚编号 @see enum pad_idx
+ * @param[in] fsel  功能选择编号 @see enum csc_fsel
+ * @note 配置指定IO引脚的输出功能为指定的外设功能
+ * 
+ * 根据CSC寄存器说明：
+ * CSC_OUTPUT配置：CSC->CSC_OUTPUT[pad].CSC_FSEL = func
+ * 例如：配置PA00引脚为UART2的TXD输出功能，则(pad=0, func=2): CSC->CSC_OUTPUT[0].CSC_FSEL = 2
  */
 #define csc_output(pad, fsel)         CSC->CSC_OUTPUT[pad].Word = CSC_EN(fsel)
 
@@ -220,120 +219,89 @@ enum clk_out
  */
 
 /**
- ****************************************************************************************
- * @brief Composite CSC for UART Txd and Rxd
- *
- * @param[in] port    uart port(0-UART1, 1-UART2)
- * @param[in] pad_tx  pad used for uart txd @see enum pad_idx
- * @param[in] pad_rx  pad used for uart rxd @see enum pad_idx
- *
- ****************************************************************************************
+ * @brief 复合CSC配置 - UART TXD和RXD功能
+ * @param[in] port   UART端口号(0-UART1, 1-UART2)
+ * @param[in] pad_tx 用于UART TXD的IO引脚 @see enum pad_idx
+ * @param[in] pad_rx 用于UART RXD的IO引脚 @see enum pad_idx
+ * @note 配置UART的发送和接收引脚，包括CSC连接和IO模式设置
  */
 void iocsc_uart(uint8_t port, uint8_t pad_tx, uint8_t pad_rx);
 
 /**
- ****************************************************************************************
- * @brief Composite CSC for UART HW Flow-Control
- *
- * @param[in] port     uart port(0-UART1, 1-UART2)
- * @param[in] pad_rts  pad used for uart rts @see enum pad_idx
- * @param[in] pad_cts  pad used for uart cts @see enum pad_idx
- *
- ****************************************************************************************
+ * @brief 复合CSC配置 - UART硬件流控制功能
+ * @param[in] port    UART端口号(0-UART1, 1-UART2)
+ * @param[in] pad_rts 用于UART RTS的IO引脚 @see enum pad_idx
+ * @param[in] pad_cts 用于UART CTS的IO引脚 @see enum pad_idx
+ * @note 配置UART的硬件流控制引脚(RTS/CTS)，包括CSC连接和IO模式设置
  */
 void iocsc_uart_hwfc(uint8_t port, uint8_t pad_rts, uint8_t pad_cts);
 
 /**
- ****************************************************************************************
- * @brief Composite CSC for I2C
- *
- * @param[in] pad_scl  pad used for I2C scl @see enum pad_idx
- * @param[in] pad_sda  pad used for I2C sda @see enum pad_idx
- *
- ****************************************************************************************
+ * @brief 复合CSC配置 - I2C功能
+ * @param[in] pad_scl 用于I2C SCL的IO引脚 @see enum pad_idx
+ * @param[in] pad_sda 用于I2C SDA的IO引脚 @see enum pad_idx
+ * @note 配置I2C的时钟和数据引脚，支持双向开漏通信
  */
 void iocsc_i2c(uint8_t pad_scl, uint8_t pad_sda);
 
 /**
- ****************************************************************************************
- * @brief Composite CSC for SPI Master Role
- *
- * @param[in] pad_clk   pad used for SPI clk @see enum pad_idx
- * @param[in] pad_miso  pad used for SPI miso @see enum pad_idx
- * @param[in] pad_mosi  pad used for SPI mosi @see enum pad_idx
- *
- ****************************************************************************************
+ * @brief 复合CSC配置 - SPI主设备功能
+ * @param[in] pad_clk  用于SPI CLK的IO引脚 @see enum pad_idx
+ * @param[in] pad_miso 用于SPI MISO的IO引脚 @see enum pad_idx
+ * @param[in] pad_mosi 用于SPI MOSI的IO引脚 @see enum pad_idx
+ * @note 配置SPI主设备的时钟、数据输入和数据输出引脚
  */
 void iocsc_spim(uint8_t pad_clk, uint8_t pad_miso, uint8_t pad_mosi);
 
 /**
- ****************************************************************************************
- * @brief Composite CSC for SPI Slave Role
- *
- * @param[in] pad_cs    pad used for SPI cs @see enum pad_idx
- * @param[in] pad_clk   pad used for SPI clk @see enum pad_idx
- * @param[in] pad_miso  pad used for SPI miso @see enum pad_idx
- * @param[in] pad_mosi  pad used for SPI mosi @see enum pad_idx
- *
- ****************************************************************************************
+ * @brief 复合CSC配置 - SPI从设备功能
+ * @param[in] pad_cs   用于SPI CS的IO引脚 @see enum pad_idx
+ * @param[in] pad_clk  用于SPI CLK的IO引脚 @see enum pad_idx
+ * @param[in] pad_miso 用于SPI MISO的IO引脚 @see enum pad_idx
+ * @param[in] pad_mosi 用于SPI MOSI的IO引脚 @see enum pad_idx
+ * @note 配置SPI从设备的片选、时钟、数据输入和数据输出引脚
  */
 void iocsc_spis(uint8_t pad_cs, uint8_t pad_clk, uint8_t pad_miso, uint8_t pad_mosi);
 
 /**
- ****************************************************************************************
- * @brief Composite CSC for CTMR PWM/PWC channel
- *
- * @param[in] pad_ch1  pad used for CTMR CH1 @see enum pad_idx
- * @param[in] pad_ch2  pad used for CTMR CH2 @see enum pad_idx
- *
- ****************************************************************************************
+ * @brief 复合CSC配置 - CTMR定时器通道功能
+ * @param[in] pad_ch1 用于CTMR CH1的IO引脚 @see enum pad_idx
+ * @param[in] pad_ch2 用于CTMR CH2的IO引脚 @see enum pad_idx
+ * @note 配置CTMR定时器的PWM/PWC通道引脚，支持输入捕获和输出比较
  */
 void iocsc_ctmr_chnl(uint8_t pad_ch1, uint8_t pad_ch2);
 
 /**
- ****************************************************************************************
- * @brief Analog observe via pad
- *
- * @param[in] pad   pad used for observe @see enum pad_idx
- * @param[in] fsel  Func of analog @see enum csc_fsel (17~24)
- *
- ****************************************************************************************
+ * @brief 配置模拟观察功能
+ * @param[in] pad   IO引脚编号
+ * @param[in] fsel  模拟功能选择 @see enum csc_fsel (17~24)
+ * @note 配置指定IO引脚为模拟观察输出功能
  */
 void iocsc_observe(uint8_t pad, uint8_t fsel); 
 
 /**
- ****************************************************************************************
- * @brief Special Clock output via PA05(Fixed)
- *
- * @param[in] clk  Type of Clock Out @see enum clk_out
- *
- ****************************************************************************************
+ * @brief 配置时钟输出功能（固定PA05引脚）
+ * @param[in] clk  选择的时钟类型 @see enum clk_out
+ * @note 配置PA05引脚为时钟输出功能，支持多种时钟源选择
  */
 void iospc_clkout(uint8_t clk);
 
 /**
- ****************************************************************************************
- * @brief Special USB DP/DM via PA06 PA07(Fixed, HiZ mode)
- *
- ****************************************************************************************
+ * @brief 配置USB DP/DM引脚（固定PA06 PA07，高阻模式）
+ * @note 配置USB数据引脚为高阻模式，用于USB通信
  */
 void iospc_usbpin(void);
 
 /**
- ****************************************************************************************
- * @brief Special SWCLK SWDIO via PA00 PA01(Fixed, default)
- *
- ****************************************************************************************
+ * @brief 配置SWD调试引脚（固定PA00 PA01，默认配置）
+ * @note 配置SWD调试接口的时钟和数据引脚
  */
 void iospc_swdpin(void);
 
 /**
- ****************************************************************************************
- * @brief Special nRESET via PA19(Fixed, default)
- *
- * @param[in] as_gpio  true as GPIO, false as nRESET
- *
- ****************************************************************************************
+ * @brief 配置复位引脚功能（固定PA19）
+ * @param[in] as_gpio  True-作为GPIO，False-作为nRESET
+ * @note 配置PA19引脚功能，可选择作为普通GPIO或系统复位引脚
  */
 void iospc_rstpin(bool as_gpio);
 

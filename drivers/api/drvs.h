@@ -51,6 +51,7 @@
 #include "timer.h"
 #include "trim.h"
 #include "uart.h"
+#include "adtimer.h"
 
 // Alter system clock(@see sys_clk_sel 0:16M 1:32M 2:48M 3:64M)
 #ifndef SYS_CLK

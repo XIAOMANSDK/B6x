@@ -50,19 +50,19 @@ usbd_dfu_t dfu_env;
 
 #define dfu_state_get()     dfu_env.state
 
-static __forceinline void dfu_state_set(uint8_t state)
+__INLINE__ void dfu_state_set(uint8_t state)
 {
     dfu_env.state  = state;
     dfu_env.status = DFU_STATUS_OK;
 }
 
-static __forceinline void dfu_state_err(uint8_t error)
+__INLINE__ void dfu_state_err(uint8_t error)
 {
     dfu_env.state  = DFU_STATE_ERROR;
     dfu_env.status = error;
 }
 
-static __forceinline void dfu_state_rst(void)
+__INLINE__ void dfu_state_rst(void)
 {
     dfu_env.state  = DFU_STATE_IDLE;
     dfu_env.status = DFU_STATUS_OK;
@@ -83,6 +83,11 @@ void usbd_dfu_init(void)
     dfu_env.dnCmd = DFU_CMD_UNKNOWN;
 
     dfu_state_rst();
+
+    #if (USBD_ADVANCE_API)
+    // set big buffer to receive data
+    usbd_register_buffer(DFU_XFER_SIZE, dfu_env.xfer_buf);
+    #endif
 }
 
 __USBIRQ uint8_t* usbd_ep0_big_buffer(uint16_t len)
@@ -133,7 +138,7 @@ void usbd_dfu_schedule(void)
                 uint32_t er_addr = (dfu_env.dnLen == 5U) ? dfu_env.dnAddr : 0U;
                 /*!< Erase, 0 means mass-erase */
                 status = dfu_itf_erase(er_addr);
-                USB_LOG_INFO("Erase start addr 0x%X \r\n", dfu_env.dnAddr);
+                USB_LOG_INFO("Erase start addr=0x%X, status=%d\r\n", dfu_env.dnAddr, status);
             } break;
 
             case DFU_CMD_WRITE:
@@ -142,7 +147,7 @@ void usbd_dfu_schedule(void)
                 uint32_t wr_addr = dfu_env.dnAddr + ((dfu_env.dnBlk - 2U) * DFU_XFER_SIZE);
                 /* Perform the write operation */
                 status = dfu_itf_write(wr_addr, dfu_env.xfer_buf, dfu_env.dnLen);
-                USB_LOG_INFO("Write start addr 0x%X length %d\r\n", wr_addr, dfu_env.dnLen);
+                USB_LOG_INFO("Write start addr=0x%X len=%d, status=%d\r\n", wr_addr, dfu_env.dnLen, status);
             } break;
 
             case DFU_CMD_SE_SETADDR:
@@ -192,15 +197,6 @@ static void dfu_detach_handler(struct usb_setup_packet *setup, uint8_t **data, u
     }
 }
 
-static uint16_t dfu_upload0_pack(uint8_t *data, uint16_t ulen)
-{
-    /* Store the values of all supported commands */
-    data[0] = DFU_CMD_SE_CMDS;
-    data[1] = DFU_CMD_SE_SETADDR;
-    data[2] = DFU_CMD_SE_ERASE;
-    return 3;
-}
-
 static void dfu_upload_handler(struct usb_setup_packet *setup, uint8_t **data, uint16_t *len)
 {
     /* the request length and block number */
@@ -212,31 +208,37 @@ static void dfu_upload_handler(struct usb_setup_packet *setup, uint8_t **data, u
     {
         if ((dfu_state_get() == DFU_STATE_IDLE) || (dfu_state_get() == DFU_STATE_UPLOAD_IDLE))
         {
+            uint32_t rd_addr = 0;
             if (upBlk == 0U)
             {
                 /* Here pack user/customize infos to DFU get */
-                *len = dfu_upload0_pack(*data, upLen);
-
-                /* Update the state machine */
-                dfu_state_set(DFU_STATE_IDLE);
+                if (upLen >= DFU_INFO_SIZE)
+                {
+                    upLen = DFU_INFO_SIZE;
+                    rd_addr = DFU_INFO_ADDR;
+                }
             }
             #if (DFU_ENB_UPLOAD)
             else if (upBlk > 1U)
             {
+                /* Return the physical address where data are stored */
+                rd_addr = dfu_env.dnAddr + ((upBlk - 2U) * DFU_XFER_SIZE);
+            }
+            #endif //(DFU_ENB_UPLOAD)
+
+            if (rd_addr)
+            {
+                dfu_itf_read(rd_addr, dfu_env.xfer_buf, upLen);
+
                 /* Send the xfer data over EP0 */
                 *data = dfu_env.xfer_buf;
                 *len = upLen;
-
-                /* Return the physical address where data are stored */
-                uint32_t rd_addr = dfu_env.dnAddr + ((upBlk - 2U) * DFU_XFER_SIZE);
-                dfu_itf_read(rd_addr, dfu_env.xfer_buf, upLen);
-
                 /* Update the state machine */
                 dfu_state_set(DFU_STATE_UPLOAD_IDLE);
             }
-            #endif //(DFU_ENB_UPLOAD)
             else /* unsupported block_num */
             {
+                *len = 0;
                 /* Call the error management function (command will be NAKed */
                 USB_LOG_ERR("Dfu_upload unsupported block_num\r\n");
                 dfu_state_err(DFU_STATUS_ERR_STALLEDPKT);
@@ -245,6 +247,7 @@ static void dfu_upload_handler(struct usb_setup_packet *setup, uint8_t **data, u
         /* Unsupported state */
         else
         {
+            *len = 0;
             /* Call the error management function (command will be NAKed */
             USB_LOG_ERR("Dfu_request_upload unsupported state\r\n");
         }
@@ -270,7 +273,12 @@ static void dfu_dnload_handler(struct usb_setup_packet *setup, uint8_t **data, u
             /* Decode the Special Command -> 1cmd + [4addr] */
             if (dfu_env.dnBlk == 0U)
             {
-                if (dfu_env.dnLen == 5U)
+                if (dfu_env.dnLen == DFU_INFO_SIZE)
+                {
+                    dfu_env.dnCmd  = DFU_CMD_WRITE;
+                    dfu_env.dnAddr = DFU_INFO_ADDR;
+                }
+                else if (dfu_env.dnLen == 5U)
                 {
                     dfu_env.dnCmd  = (*data)[0]; // DFU_CMD_SE_SETADDR DFU_CMD_SE_ERASE
                     dfu_env.dnAddr = ((uint32_t)(*data)[1] << 0) | ((uint32_t)(*data)[2] << 8) 
@@ -308,7 +316,6 @@ static void dfu_dnload_handler(struct usb_setup_packet *setup, uint8_t **data, u
     {
         /* Call the error management function (command will be NAKed */
         USB_LOG_ERR("Dfu_request_dnload unsupported state %d\r\n", dfu_state_get());
-        
     }
 }
 

@@ -40,7 +40,7 @@
 #endif
 
 // mdk(__CC_ARM) & iar(__ICCARM__)
-#if defined ( __CC_ARM ) || defined ( __ICCARM__ )
+#if defined ( __ARMCC_VERSION ) || defined ( __ICCARM__ )
 int fputc(int ch, FILE *f) {
     // Remap printf(...) to UART
     uart_putc(DBG_UART_PORT, ch);

@@ -3,7 +3,7 @@
  *
  * @file main.c
  *
- * @brief Main Entry of the application.
+ * @brief 应用程序主入口
  *
  ****************************************************************************************
  */
@@ -25,29 +25,44 @@
  ****************************************************************************************
  */
 
+/**
+ * @brief 系统初始化函数
+ * 
+ * 配置系统时钟和外设时钟
+ */
 static void sysInit(void)
 {
-    // Todo config, if need
-    SYS_CLK_ALTER();
+    // 如需配置，请在此处添加
+    SYS_CLK_ALTER();    ///< 系统时钟调整
     
-    rcc_adc_en();
+    rcc_adc_en();       ///< 使能ADC时钟
 }
 
+/**
+ * @brief 设备初始化函数
+ * 
+ * 禁用看门狗，初始化调试接口
+ */
 static void devInit(void)
 {
-    iwdt_disable();
+    iwdt_disable();     ///< 禁用独立看门狗
     
-    // Init debug
+    // 初始化调试接口
     dbgInit();
 }
 
-extern void spimTest(void);
+extern void spimTest(void); ///< 声明SPI Master测试函数
 
+/**
+ * @brief 主函数
+ * 
+ * 程序入口，依次执行系统初始化、设备初始化和SPI测试
+ */
 int main(void)
 {
-    sysInit();
+    sysInit();      ///< 系统初始化
     
-    devInit();
+    devInit();      ///< 设备初始化
 
-    spimTest();
+    spimTest();     ///< 执行SPI Master测试
 }

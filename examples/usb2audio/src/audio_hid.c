@@ -1,15 +1,31 @@
-#include "usbd.h"
+/**
+ * @file audio_hid.c
+ * @brief USB复合设备实现文件（音频+HID）
+ * 
+ * 本文件实现了一个USB复合设备，包含音频输入设备和HID设备功能。
+ * 音频部分：支持8KHz采样率、16位分辨率、单声道的麦克风输入
+ * HID部分：支持标准键盘鼠标功能和自定义原始数据传输
+ * 
+ * 工作原理：
+ * 1. 初始化阶段：配置USB时钟、描述符、端点和中断
+ * 2. 枚举阶段：主机读取设备描述符，建立通信连接
+ * 3. 数据传输：
+ *    - 音频数据通过等时传输端点实时发送
+ *    - HID数据通过中断传输端点进行双向通信
+ * 4. 状态管理：通过状态机管理麦克风的开关和数据传输状态
+ */
+ #include "usbd.h"
 #include "usbd_hid.h"
 #include "usbd_audio.h"
 #include "drvs.h"
 
 #if (DEMO_AUDIO_HID)
 
-#define USBD_VID                    0x0D8C
-#define USBD_PID                    0x0312
-#define USBD_BCD                    0x0306
-#define USBD_MAX_POWER              100
-#define USBD_LANGID_STRING          0x0409 // English(US)
+#define USBD_VID                    0x0D8C    /**< 厂商ID */
+#define USBD_PID                    0x0312    /**< 产品ID */
+#define USBD_BCD                    0x0306    /**< 设备版本号 */
+#define USBD_MAX_POWER              100       /**< 最大功耗(mA) */
+#define USBD_LANGID_STRING          0x0409    /**< 语言ID：英文(美国) */
 
 
 /*
@@ -17,13 +33,13 @@
  ****************************************************************************
  */
 
-#define AUDIO_IN_EP                 0x83
-#define AUDIO_IN_EP_INTV            0x01   // unit in 1ms
+#define AUDIO_IN_EP                 0x83      /**< 音频输入端点地址 */
+#define AUDIO_IN_EP_INTV            0x01      /**< 音频端点轮询间隔(单位：ms) */
 
-#define AUDIO_IN_FREQ               8000U // 16K
-#define AUDIO_IN_FRAME_SIZE         2      // unit in byte
-#define AUDIO_IN_RESOL_BITS         16     // unit in bit
-#define AUDIO_IN_CHNLS              1      // Mono:1
+#define AUDIO_IN_FREQ               8000U     /**< 音频采样频率：8KHz */
+#define AUDIO_IN_FRAME_SIZE         2         /**< 音频帧大小(单位：字节) */
+#define AUDIO_IN_RESOL_BITS         16        /**< 音频分辨率：16位 */
+#define AUDIO_IN_CHNLS              1         /**< 音频通道数：单声道 */
 
 /// Packet Size = AudioFreq * DataSize (16bit: 2) * NumChannels(Mono: 1) / 1000ms
 #define AUDIO_IN_EP_MPS             ((uint32_t)((AUDIO_IN_FREQ * AUDIO_IN_FRAME_SIZE * AUDIO_IN_CHNLS) / 1000))
@@ -32,13 +48,16 @@
 #define AUDIO_INPUT_CTRL            0x43, 0x00
 #define AUDIO_INPUT_CHEN            0x0000
 
+/**
+ * @brief 音频实体ID枚举
+ */
 enum audio_id {
-    AUDIO_UNDEFINED_ID              = 0,
+    AUDIO_UNDEFINED_ID              = 0,      /**< 未定义ID */
 
-    AUDIO_IN_TERM_ID                = 4,
-    AUDIO_IN_FEAT_ID                = 5,
-    AUDIO_OUT_TERM_ID               = 6,
-    AUDIO_OUT_SELTR_ID              = 7,
+    AUDIO_IN_TERM_ID                = 4,      /**< 输入终端ID */
+    AUDIO_IN_FEAT_ID                = 5,      /**< 特征单元ID */
+    AUDIO_OUT_TERM_ID               = 6,      /**< 输出终端ID */
+    AUDIO_OUT_SELTR_ID              = 7,      /**< 选择器单元ID */
 };
 
 
@@ -47,21 +66,26 @@ enum audio_id {
  ****************************************************************************
  */
 
-/*!< standard interface config */
-#define HID_STD_IN_EP               0x82 // address
-#define HID_STD_IN_EP_MPS           16   // max packet size
-#define HID_STD_IN_EP_INTV          1    // polling time in ms
-#define HID_STD_REPORT_DESC_SIZE    sizeof(hid_std_report_desc)
+/*!< 标准HID接口配置 */
+#define HID_STD_IN_EP               0x82      /**< 标准HID输入端点地址 */
+#define HID_STD_IN_EP_MPS           16        /**< 标准HID最大包大小 */
+#define HID_STD_IN_EP_INTV          1         /**< 标准HID轮询间隔(ms) */
+#define HID_STD_REPORT_DESC_SIZE    sizeof(hid_std_report_desc) /**< 标准报告描述符大小 */
 
-/*!< custom-raw interface config */
-#define HID_RAW_IN_EP               0x84
-#define HID_RAW_IN_EP_MPS           64
-#define HID_RAW_IN_EP_INTV          1
-#define HID_RAW_OUT_EP              0x04
-#define HID_RAW_OUT_EP_MPS          64
-#define HID_RAW_OUT_EP_INTV         1 
-#define HID_RAW_REPORT_DESC_SIZE    sizeof(hid_raw_report_desc)
+/*!< 自定义原始HID接口配置 */
+#define HID_RAW_IN_EP               0x84      /**< 原始HID输入端点地址 */
+#define HID_RAW_IN_EP_MPS           64        /**< 原始HID输入最大包大小 */
+#define HID_RAW_IN_EP_INTV          1         /**< 原始HID输入轮询间隔(ms) */
+#define HID_RAW_OUT_EP              0x04      /**< 原始HID输出端点地址 */
+#define HID_RAW_OUT_EP_MPS          64        /**< 原始HID输出最大包大小 */
+#define HID_RAW_OUT_EP_INTV         1         /**< 原始HID输出轮询间隔(ms) */
+#define HID_RAW_REPORT_DESC_SIZE    sizeof(hid_raw_report_desc) /**< 原始报告描述符大小 */
 
+/**
+ * @brief 标准HID报告描述符
+ * 
+ * 包含鼠标、键盘、消费控制等标准HID设备功能
+ */
 static const uint8_t hid_std_report_desc[] = {
     0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
     0x09, 0x02,        // Usage (Mouse)
@@ -134,7 +158,11 @@ static const uint8_t hid_std_report_desc[] = {
 
     // 138 bytes
 };
-
+/**
+ * @brief 原始HID报告描述符
+ * 
+ * 支持64字节的输入和输出报告
+ */
 static const uint8_t hid_raw_report_desc[] = {
     0x06, 0x02, 0xFF,  // Usage Page (Vendor Defined 0xFF02)
     0x09, 0x02,        // Usage (0x02)
@@ -161,26 +189,28 @@ static const uint8_t hid_raw_report_desc[] = {
  * Device Descriptor
  ****************************************************************************
  */
-
+/**
+ * @brief 接口编号枚举
+ */
 /*!< count of interface descriptor */
 enum intf_num {
     /* Audio class interface */
-    AUDIO_AC_INTF_NUM               = 0,
-    AUDIO_AS_INTF_NUM,
+    AUDIO_AC_INTF_NUM               = 0,      /**< 音频控制接口编号 */
+    AUDIO_AS_INTF_NUM,                        /**< 音频流接口编号 */
 
     /* HID class interface */
-    HID_STD_INTF_NUM,
-    HID_RAW_INTF_NUM,
+    HID_STD_INTF_NUM,                         /**< 标准HID接口编号 */
+    HID_RAW_INTF_NUM,                         /**< 原始HID接口编号 */
 
     /* total interface count */
-    USB_CONFIG_INTF_CNT,
+    USB_CONFIG_INTF_CNT,                      /**< 配置描述符中接口总数 */
 
     /* start&end interface */
-    USB_AUDIO_INTF_START            = AUDIO_AC_INTF_NUM,
-    USB_AUDIO_INTF_END              = AUDIO_AS_INTF_NUM,
+    USB_AUDIO_INTF_START            = AUDIO_AC_INTF_NUM, /**< 音频接口起始编号 */
+    USB_AUDIO_INTF_END              = AUDIO_AS_INTF_NUM, /**< 音频接口结束编号 */
 
-    USB_HID_INTF_START              = HID_STD_INTF_NUM,
-    USB_HID_INTF_END                = HID_RAW_INTF_NUM,
+    USB_HID_INTF_START              = HID_STD_INTF_NUM,  /**< HID接口起始编号 */
+    USB_HID_INTF_END                = HID_RAW_INTF_NUM,  /**< HID接口结束编号 */
 };
 
 
@@ -302,6 +332,9 @@ const uint8_t usb_descriptor[] = {
     0x00
 };
 
+/**
+ * @brief 序列号字符串描述符
+ */
 const uint8_t usb_string_iSerial[] = {
     // String3 - iSerial
     0x22,                       /* bLength */
@@ -324,6 +357,9 @@ const uint8_t usb_string_iSerial[] = {
     WCHAR('1'),                 /* wcChar15 */
 };
 
+/**
+ * @brief 音频控制字符串描述符
+ */
 const uint8_t usb_string_iAudio[] = {
     // String - AUDIO_AC_STRING_INDEX
     0x10,                       /* bLength */
@@ -391,7 +427,9 @@ static const usbd_config_t usb_configuration[] = {
  * Handlers
  ****************************************************************************
  */
-
+/**
+ * @brief 麦克风状态枚举
+ */
 enum mic_state_tag {
     MIC_OFF,
     MIC_IDLE, // on
@@ -400,8 +438,12 @@ enum mic_state_tag {
 
 volatile uint8_t mic_state = MIC_OFF;
 
-/// Audio Entity Retrieve
-const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
+/**
+ * @brief 获取音频实体
+ * @param bEntityId 实体ID
+ * @return 音频实体指针
+ */
+ const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 {
     const audio_entity_t *entity = NULL;
 
@@ -412,6 +454,13 @@ const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 }
 
 /// Callback for SET_INTERFACE
+/**
+ * @brief 接口变更回调函数
+ * @param intf_num 接口编号
+ * @param alt_setting 备用设置
+ * 
+ * 当主机设置接口时调用，用于控制麦克风的开关状态
+ */
 void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
 {
     if (intf_num == AUDIO_AS_INTF_NUM) {
@@ -425,7 +474,12 @@ void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
     }
 }
 
-/// Callback for Mic endpoint
+/**
+ * @brief 音频输入端点处理函数
+ * @param ep 端点地址
+ * 
+ * 音频数据传输完成时的回调函数
+ */
 void usbd_audio_ep_in_handler(uint8_t ep)
 {
     if (mic_state == MIC_BUSY) {
@@ -434,7 +488,13 @@ void usbd_audio_ep_in_handler(uint8_t ep)
     //USB_LOG_RAW("ep_in:0x%x\r\n", ep);
 }
 
-void usbd_hid_raw_out_handler(uint8_t ep)
+/**
+ * @brief HID原始数据输出端点处理函数
+ * @param ep 端点地址
+ * 
+ * 处理从主机接收的原始HID数据
+ */
+ void usbd_hid_raw_out_handler(uint8_t ep)
 {
     uint8_t custom_data[HID_RAW_OUT_EP_MPS];
     
@@ -445,7 +505,14 @@ void usbd_hid_raw_out_handler(uint8_t ep)
     USB_LOG_RAW("HID Raw dlen=%d\r\n", dlen);
 }
 
-__USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
+/**
+ * @brief USB事件通知处理函数
+ * @param event 事件类型
+ * @param arg 事件参数
+ * 
+ * 处理USB总线事件，如复位、挂起、恢复等
+ */
+ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
     switch (event) {
         case USBD_EVENT_RESET:
@@ -461,6 +528,13 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
     }
 }
 
+/**
+ * @brief 字符串描述符获取处理函数
+ * @param index 字符串索引
+ * @param data 返回的字符串数据指针
+ * @param len 返回的字符串长度
+ * @return 是否找到对应的字符串
+ */
 __USBIRQ bool usbd_get_string_handler(uint16_t index, uint8_t **data, uint16_t *len)
 {
     bool found = false;
@@ -483,10 +557,15 @@ __USBIRQ bool usbd_get_string_handler(uint16_t index, uint8_t **data, uint16_t *
  ****************************************************************************
  */
 
-static uint8_t mic_tmp = 0;
-static uint8_t mic_buffer[AUDIO_IN_EP_MPS];
+static uint8_t mic_tmp = 0; /**< 测试用临时变量 */
+static uint8_t mic_buffer[AUDIO_IN_EP_MPS]; /**< 音频数据缓冲区 */
 
-void usbdInit()
+/**
+ * @brief USB设备初始化函数
+ * 
+ * 初始化USB时钟、描述符、端点和中断
+ */
+ void usbdInit()
 {
     // enable USB clk and iopad
     rcc_usb_en();
@@ -531,7 +610,12 @@ void usbdInit()
 #include "micphone.h"
 bool mic_flag = false;
 
-void usbdTest()
+/**
+ * @brief USB设备测试函数
+ * 
+ * 从麦克风获取数据并通过USB发送到主机
+ */
+ void usbdTest()
 {
     uint8_t *ptr = micDataGet();  // PCM_SAMPLE_NB = 8;
 

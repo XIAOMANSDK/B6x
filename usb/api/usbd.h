@@ -15,6 +15,14 @@
 #include "usb_def.h"
 #include "usb_log.h"
 
+#ifndef __INLINE__
+    #if defined( __CC_ARM )
+    #define __INLINE__      static __forceinline
+    #else
+    #define __INLINE__      static inline __attribute__((always_inline))
+    #endif
+#endif
+
 
 /*
  * DEFINES
@@ -65,10 +73,16 @@ enum usbd_status_type {
     USBD_ERR_TIMEOUT,
 };
 
-/* Callback function for the USB Endpoint status */
+/* Callback function for the USB Event notification */
+typedef void (*usbd_notify_cbk)(uint8_t event, void *arg);
+
+/* Callback function for descriptor retrieved */
+typedef bool (*usbd_descriptor_cbk)(uint16_t type_index, uint8_t **data, uint16_t *len);
+
+/* Handler function for the USB Endpoint status */
 typedef void (*usbd_endpoint_handler)(uint8_t ep);
 
-/* Callback function for specific setup requests */
+/* Handler function for specific setup requests */
 typedef uint8_t (*usbd_request_handler)(struct usb_setup_packet *setup,
                                     uint8_t **data, uint16_t *dlen);
 
@@ -152,22 +166,64 @@ void usbd_init(void);
  */
 void usbd_deinit(void);
 
+/**
+ * @brief Resume request send, call twice as High(true)-10ms(delay)-Low(false).
+ * @return N/A.
+ */
 bool usbd_resume(bool en);
+
 /**
  * @brief Register Device Description and Configuration.
  *
  * @param[in] desc  Pointer of description array
  * @param[in] conf  Pointer of configuration struct
  *
- * @return N/A.
+ * (USBD_LEGACY_API Deprecated, replaced by usbd_register_device)
  */
 void usbd_register(const uint8_t *desc, const usbd_config_t *conf);
+
+/**
+ * @brief Register Device Description and Configuration
+ *
+ * @param[in] desc  Callback for description request
+ * @param[in] conf  Pointer of configuration struct
+ */
+void usbd_register_device(usbd_descriptor_cbk desc, const usbd_config_t *conf);
+
+/**
+ * @brief Register Big-Buffer for EP0 received(excced MPS), eg. DFU Block 
+ *
+ * @param[in] size      Buffer size
+ * @param[in] buff      Buffer pointer, aligned 4
+ */
+void usbd_register_buffer(uint16_t size, uint8_t *buff);
+
+/**
+ * @brief Register Handler for Application to notify events
+ *
+ * @param[in] evt_msk   Event Mask for notified, bits of @see enum usbd_event_type 
+ * @param[in] ntf_hdl   Notify Handler
+ */
+void usbd_register_events(uint16_t evt_msk, usbd_notify_cbk ntf_hdl);
+
+/**
+ * @brief Register Handler for Vendor requestes.
+ *
+ * @param[in] vendor    Vendor Handler
+ */
+void usbd_register_vendor(usbd_request_handler vendor);
 
 /**
  * @brief Device be configured or not.
  * @return 0 on not, other on conf_num
  */
 uint8_t usbd_is_configured(void);
+
+/**
+ * @brief Check if the device is in suspend state
+ * @return true or false
+ */
+bool usbd_is_suspend(void);
 
 /**
  * @brief Write data to the specified endpoint with poll mode.
@@ -212,10 +268,9 @@ uint16_t usbd_ep_read(uint8_t ep, uint16_t max_len, uint8_t *buff);
  *
  * @param[in] ep        Endpoint address corresponding to the one
  *                      listed in the device configuration table
- * @param[in] evt       USBD_EVENT_SET_ENDPOINT_HALT as set
- *                      USBD_EVENT_CLR_ENDPOINT_HALT as clear
+ * @param[in] set       True as set, False as clear
  */
-void usbd_ep_stall(uint8_t ep, uint8_t evt);
+void usbd_ep_stall(uint8_t ep, bool set);
 
 /**
  * @brief USB interrupt handler.
@@ -225,7 +280,7 @@ __USBIRQ void USB_IRQHandler(void);
 
 
 /*
- * __WEAK USB Handler (user override)
+ * __WEAK USB Handler (user override, USBD_LEGACY_API Deprecated)
  ****************************************************************************
  */
 
@@ -240,5 +295,6 @@ __USBIRQ bool usbd_get_string_handler(uint16_t index, uint8_t **data, uint16_t *
 
 /** Pointer for EP0 Big-Buffer(excced MPS), eg. DFU Block */
 __USBIRQ uint8_t* usbd_ep0_big_buffer(uint16_t len);
+
 
 #endif // _USBD_H_

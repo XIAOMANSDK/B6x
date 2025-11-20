@@ -133,10 +133,10 @@ __WEAK bool usbd_msc_sector_write(uint8_t lun, uint32_t sector, const uint8_t *d
 static void usbd_msc_bot_abort(void)
 {
     if ((msc_env.cbw.bmFlags == 0) && (msc_env.cbw.dDataLength != 0)) {
-        usbd_ep_stall(msc_env.out_ep, USBD_EVENT_SET_ENDPOINT_HALT);
+        usbd_ep_stall(msc_env.out_ep, true);
     }
 
-    usbd_ep_stall(msc_env.in_ep, USBD_EVENT_SET_ENDPOINT_HALT);
+    usbd_ep_stall(msc_env.in_ep, true);
     //usbd_ep_start_read(msc_env.out_ep, (uint8_t *)&msc_env.cbw, USB_SIZEOF_MSC_CBW);
 }
 

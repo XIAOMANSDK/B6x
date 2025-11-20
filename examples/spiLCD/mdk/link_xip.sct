@@ -1,0 +1,26 @@
+LR_IROM1 0x18004000 0x3C000
+{
+    ER_IROM1 0x18004000 0x3C000
+    {
+        *.o (RESET, +First)
+        *(InRoot$$Sections)
+        startup*.o (+RO)
+        .ANY (+RO)
+    }
+    
+    RW_IRAM_VECT 0x20003000 EMPTY 152
+    {
+        ; sram vector
+    }
+    
+    RW_IRAM_USER +0
+    {
+        *.o(ram_func*)
+        .ANY (+RW +ZI)
+    }
+
+    RW_IRAM_STACK 0x2000A000-0xC00 UNINIT 0xC00
+    {
+        .ANY (STACK)
+    }
+}

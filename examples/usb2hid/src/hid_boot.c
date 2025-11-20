@@ -1,3 +1,26 @@
+/**
+ ****************************************************************************************
+ *
+ * @file hid_boot.c
+ *
+ * @brief USB HID Boot设备类型实现
+ *
+ * DEMO_HID_BOOT示例：
+
+ *设备初始化：使能USB时钟，初始化USB控制器，注册描述符和配置
+ *枚举过程：主机读取设备描述符、配置描述符等，完成设备枚举
+ *数据传输：通过中断端点定期发送键盘和鼠标报告数据
+ *电源管理：处理挂起和恢复事件，支持远程唤醒
+ *用户交互：通过按键扫描或定时循环生成测试数据
+ * USB HID设备基于USB协议的人类接口设备类规范，通过以下机制工作：
+
+ *描述符定义：通过设备描述符、配置描述符、接口描述符、端点描述符和报告描述符定义设备功能和特性
+ *中断传输：使用中断端点进行低延迟的数据传输，适合人机交互设备
+ *报告机制：通过预定义的报告格式在设备和主机间交换数据
+ *协议处理：USB核心处理标准USB请求，HID类处理特定于HID的请求
+ ****************************************************************************************
+ */
+
 #include "usbd.h"
 #include "usbd_hid.h"
 #include "keys.h"
@@ -11,8 +34,8 @@
 #define USBD_MAX_POWER            100     // unit in mA
 #define USBD_LANGID_STRING        0x0409  // English(US)
 
-#define ENB_KEYBD                 0
-#define ENB_MOUSE                 1
+#define ENB_KEYBD                 0         ///< 使能键盘接口
+#define ENB_MOUSE                 1         ///< 使能鼠标接口
 
 #if ((ENB_KEYBD > 1) || (ENB_MOUSE > 1) || (ENB_KEYBD+ENB_MOUSE == 0))
 #error "The Count of HID Interface be 1 or 2."
@@ -33,11 +56,11 @@
 
 #if (ENB_KEYBD)
 /*!< keyboard interface config */
-#define KEYBD_INTF_NUM            0
-#define KEYBD_IN_EP               0x81
-#define KEYBD_IN_EP_SIZE          8
+#define KEYBD_INTF_NUM            0     ///< 键盘输入端点地址
+#define KEYBD_IN_EP               0x81  ///< 键盘输入端点地址
+#define KEYBD_IN_EP_SIZE          8     ///< 键盘端点最大包长度
 //INTERVAL:1, 2, 4, 8, 16, ... 2**n
-#define KEYBD_IN_EP_INTERVAL      8
+#define KEYBD_IN_EP_INTERVAL      8     ///< 键盘端点轮询间隔
 #define KEYBD_REPORT_DESC_SIZE    sizeof(hid_keybd_report_desc)
 
 /*!< keyboard report descriptor */
@@ -79,12 +102,12 @@ static const uint8_t hid_keybd_report_desc[] = {
 
 #if (ENB_MOUSE)
 /*!< mouse interface config */
-#define MOUSE_INTF_NUM            (0 + ENB_KEYBD)
-#define MOUSE_IN_EP               (0x81 + ENB_KEYBD)
-#define MOUSE_IN_EP_SIZE          4
+#define MOUSE_INTF_NUM            (0 + ENB_KEYBD) ///< 鼠标接口编号
+#define MOUSE_IN_EP               (0x81 + ENB_KEYBD) ///< 鼠标输入端点地址
+#define MOUSE_IN_EP_SIZE          4       ///< 鼠标端点最大包长度
 //INTERVAL:1, 2, 4, 8, 16, ... 2**n
-#define MOUSE_IN_EP_INTERVAL      1
-#define MOUSE_REPORT_DESC_SIZE    sizeof(hid_mouse_report_desc)
+#define MOUSE_IN_EP_INTERVAL      1       ///< 鼠标端点轮询间隔
+#define MOUSE_REPORT_DESC_SIZE    sizeof(hid_mouse_report_desc) ///< 鼠标报告描述符大小
 
 /*!< mouse report descriptor */
 static const uint8_t hid_mouse_report_desc[] = {
@@ -296,7 +319,11 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
  * Test Functions
  ****************************************************************************
  */
-
+/**
+ * @brief 发送键盘报告
+ * @param code 键值代码
+ * @return 发送结果
+ */
 uint8_t hid_keybd_send_report(uint8_t code)
 {
     uint8_t ret = 0;
@@ -312,7 +339,11 @@ uint8_t hid_keybd_send_report(uint8_t code)
     
     return ret;
 }
-
+/**
+ * @brief 发送鼠标报告
+ * @param x X轴移动量
+ * @return 发送结果
+ */
 uint8_t hid_mouse_send_report(int8_t x)
 {
     uint8_t ret = 0;
@@ -329,6 +360,9 @@ uint8_t hid_mouse_send_report(int8_t x)
 }
 
 #if (USE_KEYS)
+/**
+ * @brief USB唤醒处理
+ */
 void usbd_wakeup(void)
 {
     if (suspend && usbd_resume(1))
@@ -337,7 +371,10 @@ void usbd_wakeup(void)
         usbd_resume(0);
     }
 }
-
+/**
+ * @brief HID LED状态处理
+ * @param leds LED状态位
+ */
 void usbd_hid_leds(uint8_t leds)
 {
     if (leds & 0x02/*CAPS_LOCK*/)
@@ -345,7 +382,9 @@ void usbd_hid_leds(uint8_t leds)
     else
         GPIO_DAT_SET(LED2);
 }
-
+/**
+ * @brief USB HID测试函数(按键版本)
+ */
 void usbdTest(void)
 {
     // keys_scan to send report
@@ -390,6 +429,10 @@ void usbdTest(void)
 /// circle data
 int8_t x_offset[] = {-1,-2,-4,-5,-6,-7,-8,-9,-8,-8,-9,-8,-7,-6,-5,-4,-2,-1, 1, 2, 4, 5, 6, 7, 8, 9, 8,8,9,8,7,6,5,4,2,1};
 int8_t y_offset[] = { 8, 9, 8, 7, 6, 5, 4, 2, 1,-1,-2,-4,-5,-6,-7,-8,-9,-8,-8,-9,-8,-7,-6,-5,-4,-2,-1,1,2,4,5,6,7,8,9,8};
+
+/**
+ * @brief USB HID测试函数(循环测试版本)
+ */
 void usbdTest(void)
 {
     // circle polling to send report
@@ -429,7 +472,9 @@ void usbdTest(void)
 }
 
 #endif
-
+/**
+ * @brief USB HID初始化函数
+ */
 void usbdInit(void)
 {
     suspend = false;

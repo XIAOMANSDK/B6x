@@ -21,6 +21,13 @@ extern "C" {
 #define DFU_APP_ADDR                0x18004000
 #endif
 
+#ifndef DFU_INFO_ADDR
+#define DFU_INFO_ADDR               0x18000000
+#endif
+#ifndef DFU_INFO_SIZE
+#define DFU_INFO_SIZE               0x100 // Info Page
+#endif
+
 #ifndef DFU_XFER_SIZE
 #define DFU_XFER_SIZE               1024
 #endif

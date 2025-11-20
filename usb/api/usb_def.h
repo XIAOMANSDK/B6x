@@ -118,8 +118,8 @@
     #define __ALIGN_END     __attribute__((aligned(4)))
 #endif
 
-#define __USBIRQ           __attribute__((section("usb_irq")))
-#define __USBDESC          __attribute__((section("usb_desc"))) __USED __ALIGNED(1)
+#define __USBIRQ            __attribute__((section("usb_irq")))
+#define __USBDESC           __attribute__((section("usb_desc"))) __USED __ALIGNED(1)
 
 // The unused argument @p x.
 #ifndef ARG_UNUSED
@@ -381,7 +381,7 @@
 
 /* usb string index define */
 #define USB_STRING_LANGID_INDEX          0x00
-#define USB_STRING_MFC_INDEX             0x01
+#define USB_STRING_MANUFACT_INDEX        0x01
 #define USB_STRING_PRODUCT_INDEX         0x02
 #define USB_STRING_SERIAL_INDEX          0x03
 #define USB_STRING_CONFIG_INDEX          0x04
@@ -846,7 +846,7 @@ struct usb_device_capability_descriptor {
     WBVAL(idVendor),                     /* idVendor */            \
     WBVAL(idProduct),                    /* idProduct */           \
     WBVAL(bcdDevice),                    /* bcdDevice */           \
-    USB_STRING_MFC_INDEX,                /* iManufacturer */       \
+    USB_STRING_MANUFACT_INDEX,           /* iManufacturer */       \
     USB_STRING_PRODUCT_INDEX,            /* iProduct */            \
     USB_STRING_SERIAL_INDEX,             /* iSerial  */            \
     bNumConfigurations                   /* bNumConfigurations */  
@@ -863,7 +863,7 @@ struct usb_device_capability_descriptor {
     WBVAL(idVendor),                     /* idVendor */            \
     WBVAL(idProduct),                    /* idProduct */           \
     WBVAL(bcdDevice),                    /* bcdDevice */           \
-    USB_STRING_MFC_INDEX,                /* iManufacturer */       \
+    USB_STRING_MANUFACT_INDEX,           /* iManufacturer */       \
     USB_STRING_PRODUCT_INDEX,            /* iProduct */            \
     0/*USB_STRING_SERIAL_INDEX*/,        /* iSerial (0 = None) */  \
     bNumConfigurations                   /* bNumConfigurations */  
