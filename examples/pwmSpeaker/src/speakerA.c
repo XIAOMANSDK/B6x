@@ -67,7 +67,7 @@
 // 64KHz PCM数据 PWM配置 (最高采样率)
 #define SPEAKER_PWM_TMR_PSC (1 - 1)    // 系统不分频 64MHz/1= 64MHz
 #define SPEAKER_PWM_TMR_ARR (1000 - 1) // 重载值 64MHz/1000 = 64KHz(音频数据/重载值=占空比)
-#define SPEAKER_PWM_TMR_REP (1- 1)     // 周期计数 1 64KHz/1 = 64KHz(采样率)
+#define SPEAKER_PWM_TMR_REP (8- 1)     // 周期计数 1 64KHz/8 = 8KHz(采样率)
 /*
  * FUNCTIONS
  ****************************************************************************************

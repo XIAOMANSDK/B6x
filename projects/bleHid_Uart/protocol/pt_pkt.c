@@ -4,7 +4,7 @@
 
 #if (DBG_PKT)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -98,11 +98,11 @@ uint8_t pkt_bcc8(uint8_t *buff, uint16_t len)
 {
     uint16_t i;
     uint8_t bcc = buff[0];
-    
+
     for (i = 1; i < len; i++)
     {
         bcc ^= buff[i];
     }
-    
+
     return bcc;
 }

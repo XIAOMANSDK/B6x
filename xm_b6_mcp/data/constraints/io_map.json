@@ -1,0 +1,646 @@
+{
+  "constraint_type": "pin_mux",
+  "version": "1.0",
+  "last_updated": "2026-03-17T18:05:45.732311",
+  "total_pins": 20,
+  "pins": [
+    {
+      "pin_name": "PADA0",
+      "functions": [
+        {
+          "name": "PA00",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "SWCLK",
+          "peripheral": "DEBUG",
+          "direction": "BIDIR",
+          "is_default": true
+        }
+      ],
+      "default_function": "SWCLK",
+      "peripherals": [
+        "GPIO",
+        "DEBUG",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA1",
+      "functions": [
+        {
+          "name": "PA01",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "SWDIO",
+          "peripheral": "DEBUG",
+          "direction": "BIDIR",
+          "is_default": true
+        },
+        {
+          "name": "CTMR_ETR(I)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": true
+        }
+      ],
+      "default_function": "CTMR_ETR(I)",
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "DEBUG",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA2",
+      "functions": [
+        {
+          "name": "PA02",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH1(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA3",
+      "functions": [
+        {
+          "name": "PA03",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH2(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA4",
+      "functions": [
+        {
+          "name": "PA04",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "DPLL_LOCKED(O)",
+          "peripheral": "UNKNOWN",
+          "direction": "TX",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH3(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA5",
+      "functions": [
+        {
+          "name": "PA05",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CLK_OUT(O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH4(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA6",
+      "functions": [
+        {
+          "name": "PA06",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_BK(I)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA7",
+      "functions": [
+        {
+          "name": "PA07",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_CH1P(I/O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA8",
+      "functions": [
+        {
+          "name": "PA08",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_CH2P(I/O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA9",
+      "functions": [
+        {
+          "name": "PA09",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "USB_DOP(O)",
+          "peripheral": "USB",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_CH3P(I/O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "USB",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA10",
+      "functions": [
+        {
+          "name": "PA10",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "USB_DOM(O)",
+          "peripheral": "USB",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_CH4P(I/O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "USB",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA11",
+      "functions": [
+        {
+          "name": "PA11",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "USB_NDOE(O)",
+          "peripheral": "USB",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_CH1N(O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "USB",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA12",
+      "functions": [
+        {
+          "name": "PA12",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_CH2N(O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA13",
+      "functions": [
+        {
+          "name": "PA13",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_CH3N(O)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA14",
+      "functions": [
+        {
+          "name": "PA14",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "ATMR_ETR_IN(I)",
+          "peripheral": "UNKNOWN",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "UNKNOWN",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA15",
+      "functions": [
+        {
+          "name": "PA15",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH1(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA16",
+      "functions": [
+        {
+          "name": "PA16",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH2(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA17",
+      "functions": [
+        {
+          "name": "PA17",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH3(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA18",
+      "functions": [
+        {
+          "name": "PA18",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CTMR_CH4(I/O)",
+          "peripheral": "CTMR",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "CTMR",
+        "GPIO",
+        "CSC"
+      ],
+      "constraints": []
+    },
+    {
+      "pin_name": "PADA19",
+      "functions": [
+        {
+          "name": "PA19",
+          "peripheral": "GPIO",
+          "direction": "BIDIR",
+          "is_default": false
+        },
+        {
+          "name": "CSC",
+          "peripheral": "CSC",
+          "direction": "BIDIR",
+          "is_default": false
+        }
+      ],
+      "default_function": null,
+      "peripherals": [
+        "GPIO",
+        "CSC"
+      ],
+      "constraints": []
+    }
+  ],
+  "domain": "domain1",
+  "data_source": "excel_parsing",
+  "source_file": "./doc\\SW_Spec\\B6x_IO_MAP.xlsx"
+}

@@ -53,12 +53,8 @@ typedef enum IRQn
 #define __NVIC_PRIO_BITS        2       /*!< cm0ikmcu Supports 2 Bits for the Priority Levels     */
 #define __Vendor_SysTickConfig  0       /*!< Set to 1 if different SysTick Config is used         */
 
-#if (1)
 #define __VTOR_PRESENT 1
 #include "core_cm0plus.h"               /* Cortex-M0 plus processor and core peripherals               */
-#else
-#include "core_cm0.h"                   /* Cortex-M0 processor and core peripherals               */
-#endif
 
 #if   defined ( __CC_ARM )
 #pragma anon_unions
@@ -118,7 +114,7 @@ do {                                          \
 /** @brief Restore interrupts from the previous global disable.
  * @sa GLOBAL_INT_DISABLE
  */
-//if (__l_irq_rest == 0) __enable_irq();    
+//if (__l_irq_rest == 0) __enable_irq();
 #define GLOBAL_INT_RESTORE()                  \
     __set_PRIMASK(__l_irq_rest);              \
 } while(0)

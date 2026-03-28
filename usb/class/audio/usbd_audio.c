@@ -32,7 +32,7 @@
 
 int audio_vol2db(uint16_t volume)
 {
-    int volume_db;
+    int volume_db = 0;
 
     if (volume < 0x8000) {
         volume_db = volume / 256;
@@ -80,49 +80,57 @@ __WEAK void usbd_audio_init(void)
 /// Entity number convert to instance
 __WEAK const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 {
+    (void)bEntityId;
     return NULL;
 }
 
 /// Mute SET/GET
 __WEAK void usbd_audio_set_mute(uint8_t ep, uint8_t ch, bool mute)
 {
+    (void)ep;(void)ch;
     audio_mono.mute = mute;
 }
 
 __WEAK bool usbd_audio_get_mute(uint8_t ep, uint8_t ch)
 {
+    (void)ep;(void)ch;
     return audio_mono.mute;
 }
 
 /// Volume SET/GET
 __WEAK void usbd_audio_set_volume(uint8_t ep, uint8_t ch, uint16_t volume)
 {
+    (void)ep;(void)ch;
     audio_mono.vol_cur = volume;
 }
 
 __WEAK uint16_t usbd_audio_get_volume(uint8_t ep, uint8_t ch)
 {
+    (void)ep;(void)ch;
     return audio_mono.vol_cur; //AUDIO_VOL_CUR;
 }
 
 __WEAK void usbd_audio_set_res(uint8_t ep, uint8_t ch, uint16_t volume)
 {
+    (void)ep;(void)ch;
     audio_mono.vol_res = volume;
 }
 
 __WEAK uint16_t usbd_audio_get_res(uint8_t ep, uint8_t ch)
 {
+    (void)ep;(void)ch;
     return audio_mono.vol_res; //AUDIO_VOL_RES;
 }
 
 /// Sampling Freq SET/GET
 __WEAK void usbd_audio_set_sampling_freq(uint8_t ep, uint32_t sampling_freq)
 {
-    
+    (void)ep;(void)sampling_freq;
 }
 
 __WEAK uint32_t usbd_audio_get_sampling_freq(uint8_t ep)
 {
+    (void)ep;
     return 0;
 }
 
@@ -130,7 +138,7 @@ __WEAK uint32_t usbd_audio_get_sampling_freq(uint8_t ep)
 /// Callback for SET_INTERFACE
 __WEAK void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
 {
-
+    (void)intf_num;(void)alt_setting;
 }
 #endif
 
@@ -382,7 +390,7 @@ static __inline void freq_write(uint8_t *data, uint32_t freq)
 static __inline uint32_t freq_read(uint8_t *data)
 {
     // 4B in v2.0
-    return ((uint32_t)data[0] << 0 ) | ((uint32_t)data[1] << 8 ) 
+    return ((uint32_t)data[0] << 0 ) | ((uint32_t)data[1] << 8 )
          | ((uint32_t)data[2] << 16) | ((uint32_t)data[3] << 24);
 }
 
@@ -540,7 +548,7 @@ static uint8_t audio_class_request_handler(struct usb_setup_packet *setup, uint8
                     status = USBD_FAIL;
                 } break;
             }
-            
+
             if (status != USBD_OK) {
                 USB_LOG_WRN("Unhandled Audio Class bRequest 0x%02x in cs 0x%02x\r\n", setup->bRequest, ctrlsel);
             }
@@ -548,7 +556,7 @@ static uint8_t audio_class_request_handler(struct usb_setup_packet *setup, uint8
             USB_LOG_ERR("no Audio entity_id:%02x\r\n", entity_id);
             status = USBD_FAIL;
         }
-    
+
         return status;
     }
 
@@ -579,7 +587,7 @@ uint8_t usbd_audio_class_handler(struct usb_setup_packet *setup, uint8_t **data,
     }
 
     // Audio Class Request
-    USB_LOG_DBG("AUDIO Class(bTyp:%X,bReq:%X,wVal:%X,wIdx:%X)\r\n", 
+    USB_LOG_DBG("AUDIO Class(bTyp:%X,bReq:%X,wVal:%X,wIdx:%X)\r\n",
                     setup->bmRequestType, setup->bRequest, setup->wValue, setup->wIndex);
 
     return audio_class_request_handler(setup, data, len);

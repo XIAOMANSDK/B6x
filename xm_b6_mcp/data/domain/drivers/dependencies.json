@@ -1,0 +1,1759 @@
+[
+  {
+    "api_name": "btmr_delay",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "此函数使用基本定时器的单次模式实现精确延时"
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "tick_delay",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "core_ldoset",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "core_ldoget",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "core_sleep",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "wakeup_io_sw",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "pad_pu Corresponding bit 1:Falling edge wake-up, 0: Rising edge wake-up."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "core_pwroff",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "PA19 Restore PULL-UP and Input Enable."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "core_release_io_latch",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "core_unique_id",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "size must be less than or equal to 16.",
+      "IC Must have Flash."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "dma_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [
+      "DMA_TRANS_CFG_Typedef"
+    ],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_reload",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_remain",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_remain_pingpong",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_ctrl",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "dma_chnl_done",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "exti_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [
+      "EXTI_DBC"
+    ],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "exti_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "exti_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [
+      "EXTI_SRC"
+    ],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "exti_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "puya_enter_dual_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "puya_exit_dual_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "boya_flash_quad_mode",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "flash_write",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "offset Must be 0x100 Aligned.",
+      "data address Must be 4-byte Aligned.",
+      "if hpm, must exit_hpm."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "flash_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "buff address Must be 4-byte Aligned.",
+      "if hpm, must exit_hpm."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "flash_page_erase",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "offset Must be 0x100 Aligned.",
+      "if hpm, must exit_hpm."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "flash_byte_write",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "offset Must be 0x100 Aligned.",
+      "if hpm, must exit_hpm."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "flash_byte_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "if hpm, must exit_hpm."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "flash_size",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "0 is invalid size."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "fshc_en_cmd",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_wr_sta",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_rd_sta",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_wr_cfg",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_wr_fifo",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_rd_cfg",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_rd_fifo",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_xip_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_hpm_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_erase",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_write",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_cache_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "fshc_suspend_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "bits",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "i2c_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "sclk = CLK/(2^clk_samp * (clk_scl+1) *10). Macro SCLK_100K/SCLK_200K/SCLK_400K"
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "i2c_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "i2c_start",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "i2c_stop",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "i2c_send",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "i2c_recv",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "i2c_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "i2c_write",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "eeprom_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "eeprom_write",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iocsc_uart",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "配置UART的硬件流控制引脚(RTS/CTS)，包括CSC连接和IO模式设置"
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "iocsc_uart_hwfc",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "配置I2C的时钟和数据引脚，支持双向开漏通信"
+    ],
+    "see_also": [
+      "CSC",
+      "SPI"
+    ],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "iocsc_i2c",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iocsc_spim",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "配置CTMR定时器的PWM/PWC通道引脚，支持输入捕获和输出比较"
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "iocsc_spis",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "配置指定IO引脚为模拟观察输出功能",
+      "配置PA05引脚为时钟输出功能，支持多种时钟源选择",
+      "配置USB数据引脚为高阻模式，用于USB通信"
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "iocsc_ctmr_chnl",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "配置PA19引脚功能，可选择作为普通GPIO或系统复位引脚"
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "iocsc_observe",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iospc_clkout",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iospc_usbpin",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iospc_swdpin",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iospc_rstpin",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iwdt_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iwdt_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iwdt_feed",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "iwdt_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "pwm_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "pwm_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "pwm_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": true,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "pwm_start",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "pwm_stop",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "This API will stop all PWM channels."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "pwm_chnl_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "pwm_duty_upd",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_bus_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_bus_enb",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [
+      "OR"
+    ],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_bus_dis",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [
+      "OR"
+    ],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_bus_rst",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [
+      "OR"
+    ],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_adc_en",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_ble_en",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_usb_en",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_sysclk_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_sysclk_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_sysclk_freq",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_fshclk_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_fshclk_mhz",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rcc_fshclk_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rc32k_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rc32k_calib",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rc32k_trim_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rc32k_trim_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rc16m_trim_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rc16m_trim_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rc16m_calib",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_time_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_time_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "alm_sec",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "alm_ms",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_alarm_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_alarm_get",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_is_alarm",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_irq_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": true,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "rtc_wkup_set",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_read",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_dma",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_pcm",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_atmr",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_rand_num",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sadc_temperature",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "Called after rfmdm_init()."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "spim_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "User Control CS IO. Macro SPIM_CS_H & SPIM_CS_L"
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "spim_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spim_begin",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spim_wait",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spim_duplex",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spim_transimit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spim_receive",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spim_halfdx",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spis_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spis_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spis_getc",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "spis_putc",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sysdbg_iomap",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sysdbg_select",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "sysdbg_anatst",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "ctmr_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "ctmr_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "ctmr_ctrl",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": true,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "atmr_init",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "atmr_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "atmr_ctrl",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": true,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "trim_load",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "get_trim_rc16m_freq",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "0 is invalid freq."
+    ],
+    "see_also": [],
+    "dependency_source": "doxygen"
+  },
+  {
+    "api_name": "get_trim_vdd12_voltage",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_init",
+    "pre_requisites": [
+      "RCC_EnablePeriphClock"
+    ],
+    "requires_peripheral_clock": true,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_deinit",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_hwfc",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_conf",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [
+      "LCR_BITS",
+      "BRR_DIV",
+      "BRR_BAUD"
+    ],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_fctl",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": true,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_mctl",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_putc",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_getc",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_wait",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_send",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [],
+    "see_also": [],
+    "dependency_source": "inferred"
+  },
+  {
+    "api_name": "uart_update_baud",
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "requires_interrupt_config": false,
+    "requires_dma_config": false,
+    "notes": [
+      "This function will reset uart and restore uart params."
+    ],
+    "see_also": [
+      "BRR_DIV",
+      "BRR_BAUD"
+    ],
+    "dependency_source": "doxygen"
+  }
+]

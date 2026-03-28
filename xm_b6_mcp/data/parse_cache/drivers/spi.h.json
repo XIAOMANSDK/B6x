@@ -1,0 +1,535 @@
+{
+  "file_path": "./drivers\\api\\spi.h",
+  "functions": [
+    {
+      "name": "spim_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init SPI Master Module. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] io_clk   io used for SPI clk @see enum pad_idx.\n@param[in] io_miso  io used for SPI miso @see enum pad_idx.\n@param[in] io_mosi  io used for SPI mosi @see enum pad_idx.\n@note User Control CS IO. Macro SPIM_CS_H & SPIM_CS_L\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 123,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spim_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config SPI Master. ",
+      "detailed_description": "***************************************************************************************\n@param[in] ctrl   Bits field of value @see enum spim_ctrl_bfs.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 132,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spim_begin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Master Begin. ",
+      "detailed_description": "***************************************************************************************\n@param[in] data_len   The number of byte transimit/receive from SPI.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 141,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spim_wait",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Master Wait Idle. *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 148,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spim_duplex",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "tx_data",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "rx_buff",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Master Duplex. ",
+      "detailed_description": "***************************************************************************************\n@param[in] tx_data   SPI transimit data pointer.\n@param[in] rx_buff   SPI receive buff pointer.\n@param[in] data_len  The number of byte receive from SPI.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 159,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spim_transimit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "tx_data",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Master transimit data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] tx_data   SPI transimit data pointer.\n@param[in] data_len  The number of byte transimit to SPI.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 169,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spim_receive",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "rx_buff",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Master receive data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] rx_buff   SPI receive buff pointer.\n@param[in] data_len  The number of byte receive from SPI.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 179,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spim_halfdx",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "cmd",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "rsp",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Master Half-Duplex. ",
+      "detailed_description": "***************************************************************************************\n@param[in] cmd   SPI transimit data pointer.\n@param[in] clen  The number of byte transimit to SPI.\n@param[in] rsp   SPI receive buff pointer.\n@param[in] rlen  The number of byte receive from SPI.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 191,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spis_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init SPI Slave Module. ",
+      "detailed_description": "***************************************************************************************\n@param[in] io_cs    io used for SPI cs @see enum pad_idx.\n@param[in] io_clk   io used for SPI clk @see enum pad_idx.\n@param[in] io_miso  io used for SPI miso @see enum pad_idx.\n@param[in] io_mosi  io used for SPI mosi @see enum pad_idx.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 205,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spis_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config SPI Slave. ",
+      "detailed_description": "***************************************************************************************\n@param[in] ctrl   Bits field of value @see enum spis_ctrl_bfs.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 214,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spis_getc",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "ch",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Slave get the received data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] ch  received data.\n@return true   received data success. false   received data failed.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 225,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "spis_putc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SPI Slave Transmits one byte data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] ch    the data transmited\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 235,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "SPIM_CR_DFLT",
+      "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x01))  // SPI 8MHz",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 50
+    },
+    {
+      "name": "SPIM_CR_DFLT",
+      "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x02))  // SPI 6MHz",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 52
+    },
+    {
+      "name": "SPIM_CR_DFLT",
+      "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x03))  // SPI 8MHz",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 54
+    },
+    {
+      "name": "SPIM_CR_DFLT",
+      "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)  // SPI 8MHz",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 56
+    },
+    {
+      "name": "SPIS_CR_DFLT",
+      "value": "(SPIS_CR_RX_EN_BIT | SPIS_CR_RUN_EN_BIT)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 93
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SPIM_CR_CLK_RATE_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_CLK_RATE_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_CLK_PHASE_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_CLK_POLAR_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_TX_DMA_BIT",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_RX_DMA_BIT",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_INT_EN_BIT",
+          "value": 256,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_TX_EN_BIT",
+          "value": 512,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_RX_EN_BIT",
+          "value": 1024,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_CR_MSB_FST_BIT",
+          "value": 2048,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 25
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SPIM_TXDAT_CLR_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_RXDAT_CLR_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_INTFLG_CLR_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SPIM_STATUS_CLR_ALL",
+          "value": 7,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 59
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SPIS_CR_LSB_FST_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_CLK_POLAR_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_CLK_PHASE_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_RX_EN_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_RXINT_EN_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_TX_DMA_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_RX_DMA_BIT",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_RUN_EN_BIT",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_OT_WIN_LSB",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_OT_WIN_MSK",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_OT_EN_BIT",
+          "value": 65536,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_CR_OTINT_EN_BIT",
+          "value": 131072,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 69
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SPIS_RXOVER_CLR_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_TXDAT_CLR_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_RXDAT_CLR_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_RXINT_CLR_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_OTINT_CLR_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "SPIS_INFO_CLR_ALL",
+          "value": 31,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\spi.h",
+      "line_number": 95
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

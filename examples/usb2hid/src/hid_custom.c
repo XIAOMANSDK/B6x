@@ -238,6 +238,7 @@ void usbd_hid_kbd_out_handler(uint8_t ep)
 
 void usbd_hid_raw_out_handler(uint8_t ep)
 {
+    (void)ep;
     uint8_t custom_data[RAW_OUT_EP_SIZE];
     
     /*!< read the data from host send */
@@ -248,6 +249,7 @@ void usbd_hid_raw_out_handler(uint8_t ep)
 
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
+    (void)arg;
     switch (event) {
         case USBD_EVENT_RESET:
             usbd_hid_reset();

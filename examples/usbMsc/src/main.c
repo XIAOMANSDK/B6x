@@ -10,15 +10,16 @@
 
 #include "b6x.h"
 #include "drvs.h"
-#include "dbg.h"
 
 #include "usbd.h"
 #include "usbd_msc.h"
+#include "dbg.h"
 
 #if (DBG_MSC)
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
+#undef debugHex
 #define debugHex(dat, len)
 #endif
 
@@ -57,7 +58,7 @@ const uint8_t msc_descriptor[] = {
     USB_DEVICE_DESCRIPTOR_INIT(USB_1_1, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, DEV_BCD, 0x01),
 
     /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_MSC_CONFIG_SIZE, USB_CONFIG_INTF_CNT, 
+    USB_CONFIG_DESCRIPTOR_INIT(USB_MSC_CONFIG_SIZE, USB_CONFIG_INTF_CNT,
             0x01, USB_CONFIG_BUS_POWERED, USBD_MAX_POWER),
 
     MSC_DESCRIPTOR_INIT(MSC_INTF_NUM, MSC_OUT_EP, MSC_IN_EP, MSC_MAX_MPS, 0x00),//0x02),
@@ -132,6 +133,7 @@ static const usbd_config_t msc_configuration[] = {
 
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
+    (void)arg;
     DEBUG("evt:%d", event);
     switch (event) {
         case USBD_EVENT_RESET:
@@ -193,12 +195,12 @@ static void sysInit(void)
 static void devInit(void)
 {
     uint16_t rsn = rstrsn();
-    
+    (void)rsn;
     iwdt_disable();
-    
+
     dbgInit();
     debug("Start(rsn:0x%X)...\r\n", rsn);
-    
+
     usbdInit();
 }
 

@@ -1,0 +1,268 @@
+{
+  "file_path": "./ble\\api\\gapm_api.h",
+  "functions": [
+    {
+      "name": "gapm_reset",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Reset link layer and the host ",
+      "detailed_description": "FUNCTION DECLARATIONS\n***************************************************************************************\n/\n***************************************************************************************\n@return Message GAPM_CMP_EVT(operation GAPM_RESET)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 36,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_set_dev",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "cfg",
+          "type": "struct gapm_dev_config",
+          "description": ""
+        },
+        {
+          "name": "bdaddr",
+          "type": "bd_addr_t",
+          "description": ""
+        },
+        {
+          "name": "irk",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Initial device configuration ",
+      "detailed_description": "***************************************************************************************\n@param[in] cfg Configure\n@return Message GAPM_CMP_EVT(operation GAPM_SET_DEV_CONFIG)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 47,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_gen_rand",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Generate a 8-byte random number ",
+      "detailed_description": "***************************************************************************************\n@return Message GAPM_CMP_EVT(operation GAPM_GEN_RAND_NB)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 56,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_set_irk",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "irk",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Modify current IRK ",
+      "detailed_description": "***************************************************************************************\n@return Message GAPM_CMP_EVT(operation GAPM_SET_IRK)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 65,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_create_activity",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Create activity. ",
+      "detailed_description": "***************************************************************************************\n@param[in] actv_type  Activity type(@see gapm_actv_type)\n@param[in] addr_type  Own addr type(@see gapm_own_addr)\n@return Message GAPM_CMP_EVT(operation GAPM_CREATE_XXX_ACTIVITY) and GAPM_ACTIVITY_CREATED_IND\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 77,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_start_activity",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "param",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Start activity. ",
+      "detailed_description": "***************************************************************************************\n@param[in] actv_idx   Activity index\n@param[in] addr_type  Own addr type(@see gapm_own_addr)\n@return Message GAPM_CMP_EVT(operation GAPM_START_ACTIVITY)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 89,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_stop_activity",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Stop activity. ",
+      "detailed_description": "***************************************************************************************\n@param[in] actv_idx  Activity index\n@return Message GAPM_CMP_EVT(operation GAPM_STOP_ACTIVITY) and GAPM_ACTIVITY_STOPPED_IND\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 100,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_delete_activity",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Delete activity. ",
+      "detailed_description": "***************************************************************************************\n@param[in] actv_idx Activity index\n@return Message GAPM_CMP_EVT(operation GAPM_DELETE_ACTIVITY)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 111,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_create_advertising",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "adv_param",
+          "type": "struct gapm_adv_create_param",
+          "description": ""
+        }
+      ],
+      "brief_description": "Create advertising activity. ",
+      "detailed_description": "***************************************************************************************\n@param[in] addr_type  Own addr type(@see gapm_own_addr)\n@param[in] adv_param  Advertising parameters\n@return Message GAPM_CMP_EVT(operation GAPM_CREATE_ADV_ACTIVITY) and GAPM_ACTIVITY_CREATED_IND\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 123,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_start_advertising",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Start advertising activity. ",
+      "detailed_description": "***************************************************************************************\n@param[in] adv_idx   Activity index\n@param[in] duration  Advertising duration, 0 for always on\n@return Message GAPM_CMP_EVT(operation GAPM_START_ACTIVITY)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 135,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gapm_set_adv_data",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Fill advertising data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] adv_idx  Activity index\n@param[in] op_typ   Data operation(GAPM_SET_ADV_DATA or GAPM_SET_SCAN_RSP_DATA)\n@return Message GAPM_CMP_EVT(operation GAPM_SET_ADV_DATA or GAPM_SET_SCAN_RSP_DATA)\n***************************************************************************************\n/",
+      "file_path": "./ble\\api\\gapm_api.h",
+      "line_number": 153,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": []
+}

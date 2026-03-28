@@ -215,6 +215,7 @@ __STATIC void mm_gens_dtt_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_gens_dtt_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_GEN_DTT_GET)
@@ -244,6 +245,7 @@ __STATIC uint8_t mm_gens_dtt_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcod
  */
 __STATIC uint8_t mm_gens_dtt_cb_set(mm_mdl_env_t *p_env, uint16_t state_id, uint32_t state)
 {
+    (void)state_id;
     // Returned status
     uint8_t status = MESH_ERR_NO_ERROR;
     // Generic Default Transition Time state value

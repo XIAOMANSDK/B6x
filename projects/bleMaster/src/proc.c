@@ -18,7 +18,7 @@
 
 #if (DBG_PROC)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -35,14 +35,14 @@ enum uart_cmd
     CMD_DISCONNECT       = 0xA0,
     CMD_CONNECT          = 0xA1,
     CMD_SCAN             = 0xA2,
-    
+
     CMD_GATT_EXMTU       = 0xB0,
     CMD_GATT_DISC,
     CMD_GATT_READ,
     CMD_GATT_WRITE,
-    
+
     CMD_SESS             = 0xBB,
-    
+
     CMD_GAPC_LENGTH      = 0xC0,
     CMD_GAPC_PEER_BDADDR,
     CMD_GAPC_UPDATE_CONN,
@@ -64,7 +64,7 @@ static void uart_proc(void)
     static uint8_t null_cnt = 0;
     uint16_t len;
     bool finish = true;
-    
+
     len = uart1Rb_Read(&buff[buff_len], CMD_MAX_LEN - buff_len);
     if (len > 0)
     {
@@ -86,7 +86,7 @@ static void uart_proc(void)
             return; // wait again
         }
     }
-    
+
     switch (buff[0])
     {
         case CMD_DISCONNECT:
@@ -113,11 +113,11 @@ static void uart_proc(void)
                 }
             }
         } break;
-        
+
         case CMD_CONNECT:
         {
 //            app_init_action(ACTV_STOP);  //20211101
-            
+
             if (buff_len == 1)
             {
                 DEBUG("CONN Dflt");
@@ -143,7 +143,7 @@ static void uart_proc(void)
                 DEBUG("CONN Peer:");
                 debugHex((uint8_t *)&peer, sizeof(peer));
                 app_start_initiating(&peer);
-                
+
                 finish = true;
             }
             else
@@ -151,19 +151,19 @@ static void uart_proc(void)
                 finish = false;
             }
         } break;
-        
+
         case CMD_SCAN:
         {
             DEBUG("Scan");
             app_scan_action(ACTV_START);
-        } break; 
-        
+        } break;
+
         case CMD_GATT_DISC:
         {
             if ((buff_len >= 6) && (buff[1] < 6))
             {
                 uint8_t disc_op = buff[1] + GATT_DISC_ALL_SVC;
-                
+
                 if ((disc_op == GATT_DISC_BY_UUID_SVC) || (disc_op == GATT_DISC_BY_UUID_CHAR))
                 {
                     if (buff_len >= 7)
@@ -190,7 +190,7 @@ static void uart_proc(void)
                 }
             }
         } break;
-        
+
         case CMD_GATT_READ:
         {
             if (buff_len >= 5)
@@ -245,7 +245,7 @@ static void uart_proc(void)
                 }
             }
         } break;
-        
+
         case CMD_GATT_WRITE:
         {
             if (buff_len >= 5)
@@ -274,15 +274,15 @@ static void uart_proc(void)
             }
         } break;
         #endif
-        
+
         case CMD_GATT_EXMTU:
-        {           
+        {
             uint16_t mtu = (buff_len == 3) ? read16p(&buff[1]) : BLE_MTU;
-            
-            DEBUG("GATT ExMTU:%d(23~512,blen:%d)", mtu, buff_len);           
+
+            DEBUG("GATT ExMTU:%d(23~512,blen:%d)", mtu, buff_len);
             gatt_exmtu(app_env.curidx, mtu);
         } break;
-        
+
         case CMD_GAPC_LENGTH:
         {
             uint8_t conidx = app_env.curidx;
@@ -293,12 +293,14 @@ static void uart_proc(void)
             }
             gapc_update_dle(conidx, LE_MAX_OCTETS, LE_MAX_TIME);
         } break;
-        
+
         case CMD_GAPC_PEER_BDADDR:
         {
             uint8_t sta = app_state_get();
+
             uint8_t conidx = app_env.curidx;
             DEBUG("get bdaddr(cid:%d, sta:%d)", conidx, sta);
+
 
             if (sta >= APP_CONNECTED)
             {
@@ -306,6 +308,7 @@ static void uart_proc(void)
                 {
                     conidx = buff[1];
                 }
+                #if (DBG_PROC)
                 struct gap_bdaddr* peer_bdaddr = gapc_get_bdaddr(conidx, GAPC_SMP_INFO_PEER);
                 DEBUG("Peer BDaddr:");
                 debugHex((uint8_t *)peer_bdaddr, sizeof(struct gap_bdaddr));
@@ -313,24 +316,27 @@ static void uart_proc(void)
                 peer_bdaddr = gapc_get_bdaddr(conidx, GAPC_SMP_INFO_LOCAL);
                 DEBUG("Local BDaddr:");
                 debugHex((uint8_t *)peer_bdaddr, sizeof(struct gap_bdaddr));
+                #else
+                (void)conidx;
+                #endif
             }
             else
             {
                 DEBUG("No connected. Get BDaddr not allowed.");
             }
         } break;
-        
+
         case CMD_GAPC_UPDATE_CONN:
         {
             uint8_t conidx = app_env.curidx;
-            struct gapc_conn_param long_latency = 
+            struct gapc_conn_param long_latency =
             {
                 .intv_min = 8,
                 .intv_max = 8,
                 .latency  = 247,
                 .time_out = 1500,
             };
-            
+
             if (buff_len >= 5)
             {
                 conidx = buff[1];
@@ -338,11 +344,11 @@ static void uart_proc(void)
                 long_latency.intv_max = buff[2];
                 long_latency.latency  = read16p(buff+3);
             }
-            
+
             DEBUG("update param(cid:%d, intv:%d, latency:%d)", conidx, long_latency.intv_min, long_latency.latency);
             gapc_update_param(conidx, &long_latency);
         } break;
-        
+
         default:
         {
 

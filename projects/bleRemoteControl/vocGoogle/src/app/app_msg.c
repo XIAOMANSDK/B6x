@@ -15,7 +15,7 @@
 
 #if (DBG_APP)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -51,7 +51,7 @@ void app_conn_param_update(bool key_change)
         else
         {
             g_no_action_cnt = 0;
-            
+
             if (ke_timer_active(APP_TIMER_NO_KEY_PRESS, TASK_APP))
             {
                 DEBUG("clear timer");
@@ -61,14 +61,14 @@ void app_conn_param_update(bool key_change)
             ble_latency_applied(false);
         }
     }
-    
+
 }
 /**
  ****************************************************************************************
- * @brief SubTask Handler of Custom or Unknow Message. (__weak func)
+ * @brief SubTask Handler of Custom or Unknow Message. (__WEAK func)
  ****************************************************************************************
  */
-__weak APP_SUBTASK_HANDLER(custom)
+__WEAK APP_SUBTASK_HANDLER(custom)
 {
     switch (msgid)
     {
@@ -88,13 +88,13 @@ __weak APP_SUBTASK_HANDLER(custom)
             }
         } break;
         #endif
-        
+
         case APP_TIMER_NO_KEY_PRESS:
         {
             ble_latency_applied(true);
             ke_timer_clear(APP_TIMER_NO_KEY_PRESS, TASK_APP);
         } break;
-        
+
         case APP_TIMER_KEY_SCAN:
         {
             if (app_state_get() < APP_READY)
@@ -110,7 +110,7 @@ __weak APP_SUBTASK_HANDLER(custom)
                 }
             }
         } break;
-        
+
         default:
         {
             uint16_t length = ke_param2msg(param)->param_len;
@@ -118,7 +118,7 @@ __weak APP_SUBTASK_HANDLER(custom)
             debugHex((uint8_t *)param, length);
         } break;
     }
-    
+
     return (MSG_STATUS_FREE);
 }
 
@@ -151,7 +151,7 @@ __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
             handler = app_gatt_msg_handler;
             break;
         #endif
-        
+
         #if (L2CC_LECB)
         case (TID_L2CC):
             handler = app_l2cc_msg_handler;

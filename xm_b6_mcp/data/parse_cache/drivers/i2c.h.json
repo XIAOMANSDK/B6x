@@ -1,0 +1,602 @@
+{
+  "file_path": "./drivers\\api\\i2c.h",
+  "functions": [
+    {
+      "name": "i2c_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init I2C Module. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] io_scl  io used for I2C scl @see enum pad_idx.\n@param[in] io_sda  io used for I2C sda @see enum pad_idx.\n@param[in] sclk    i2c clk. Bits field of I2C Clock @see enumi2c_clk_bfs.\n@note sclk = CLK/(2^clk_samp * (clk_scl+1) *10). Macro SCLK_100K/SCLK_200K/SCLK_400K\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 146,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "i2c_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit I2C. Disable I2C Module. *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 153,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "i2c_start",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Send Start. ",
+      "detailed_description": "***************************************************************************************\n@param[in] slv_addr  device Address.\n@return I2C status @see enum i2c_status_def.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 164,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "i2c_stop",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Send Stop. *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 171,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "i2c_send",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Send data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] len    data length.\n@param[in] data   data pointer.\n@return send data cnt.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 183,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "i2c_recv",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Receive data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return receive data cnt.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 195,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "i2c_read",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Read data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] addr_r device Address.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return read data cnt.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 208,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "i2c_write",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Write data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] addr_w device Address.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return write data cnt.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 221,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "eeprom_read",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Read eeprom data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] eep    eeprom device Address.\n@param[in] addr   Where eeprom addr to read.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return read data cnt.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 235,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "eeprom_write",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "I2C Write eeprom data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] eep    eeprom device Address.\n@param[in] addr   Where eeprom addr to write.\n@param[in] len    data length.\n@param[in] data   data pointer.\n@return write data cnt.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 249,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "SCLK_100K",
+      "value": "(0x27)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 81
+    },
+    {
+      "name": "SCLK_200K",
+      "value": "(0x23)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 82
+    },
+    {
+      "name": "SCLK_400K",
+      "value": "(0x21)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 83
+    },
+    {
+      "name": "SCLK_100K",
+      "value": "(0x2B)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 85
+    },
+    {
+      "name": "SCLK_200K",
+      "value": "(0x25)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 86
+    },
+    {
+      "name": "SCLK_400K",
+      "value": "(0x22)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 87
+    },
+    {
+      "name": "SCLK_100K",
+      "value": "(0x2F)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 89
+    },
+    {
+      "name": "SCLK_200K",
+      "value": "(0x27)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 90
+    },
+    {
+      "name": "SCLK_400K",
+      "value": "(0x23)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 91
+    },
+    {
+      "name": "SCLK_100K",
+      "value": "(0x23)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 93
+    },
+    {
+      "name": "SCLK_200K",
+      "value": "(0x21)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 94
+    },
+    {
+      "name": "SCLK_400K",
+      "value": "(0x11)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 95
+    },
+    {
+      "name": "I2C_RD_OP",
+      "value": "(0x01)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 99
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "I2C_MS_BUS_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_START_OK",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_RESTART_OK",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_ADDR_W_ACK",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_ADDR_W_NAK",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_SEND_DAT_ACK",
+          "value": 40,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_SEND_DAT_NAK",
+          "value": 48,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_TRANS_FAIL",
+          "value": 56,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_ADDR_R_ACK",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_ADDR_R_NAK",
+          "value": 72,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_READ_DAT_ACK",
+          "value": 80,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_READ_DAT_NAK",
+          "value": 88,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_RECV_ADDR_W",
+          "value": 96,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_ARL_RECV_ADDR_W",
+          "value": 104,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_RECV_GCA_ACK",
+          "value": 112,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_ARL_RECV_GCA_ACK",
+          "value": 120,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_RECV_DAT_ACK",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_RECV_DAT_NAK",
+          "value": 136,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_GCA_RECV_DAT_ACK",
+          "value": 144,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_GCA_RECV_DAT_NAK",
+          "value": 152,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_RECV_STOP_OR_RESTART",
+          "value": 160,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_RECV_ADDR_R_ACK",
+          "value": 168,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_ARL_RECV_ADDR_R_ACK",
+          "value": 176,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_SEND_DAT_ACK",
+          "value": 184,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_SEND_DAT_NAK",
+          "value": 192,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_SEND_LAST_DAT_ACK",
+          "value": 200,
+          "brief": ""
+        },
+        {
+          "name": "I2C_SS_SEND_LAST_DAT_NAK",
+          "value": 208,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_SEND_SECOND_ADDR_ACK",
+          "value": 224,
+          "brief": ""
+        },
+        {
+          "name": "I2C_MS_SEND_SECOND_ADDR_NAK",
+          "value": 232,
+          "brief": ""
+        },
+        {
+          "name": "I2C_IFLG_IDLE",
+          "value": 248,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 24
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "I2C_CR_AAK_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CR_IFLG_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CR_STOP_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CR_START_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CR_I2C_EN_BIT",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CR_INT_EN_BIT",
+          "value": 128,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 59
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "I2C_CLK_M_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CLK_M_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CLK_N_LSB",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "I2C_CLK_N_MSK",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\i2c.h",
+      "line_number": 70
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

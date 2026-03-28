@@ -1,0 +1,66 @@
+[
+  {
+    "name": "mm_gen",
+    "model_id": 0,
+    "type": "GEN_MODEL",
+    "header_file": "model\\api\\mm_gen.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_gen.h @brief Header file for Mesh Generic Model Definitions *************************************************************************************** *************************************************************************************** @defgroup MM_DEFINES Mesh Model Definitions @ingroup MESH_MDL @brief  Mesh Model Defines @{ ***************************************************************************************"
+  },
+  {
+    "name": "mm_genc",
+    "model_id": 0,
+    "type": "GEN_MODEL",
+    "header_file": "model\\api\\mm_genc.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_genc.h @brief Header file for Mesh Model Generic Client Module *************************************************************************************** *************************************************************************************** @defgroup MM_GENC Mesh Model Generic Client Module @ingroup MESH_MDL @brief Mesh Model Generic Client Module @{ ***************************************************************************************"
+  },
+  {
+    "name": "mm_gens",
+    "model_id": 0,
+    "type": "GEN_MODEL",
+    "header_file": "model\\api\\mm_gens.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_gens.h @brief Header file for Mesh Model Generic Server Module *************************************************************************************** *************************************************************************************** @defgroup MM_GENS Mesh Model Generic Server Module @ingroup MESH_MDL @brief Mesh Model Generic Server Module @{ ***************************************************************************************"
+  },
+  {
+    "name": "mm_light",
+    "model_id": 0,
+    "type": "LIGHT_MODEL",
+    "header_file": "model\\api\\mm_light.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_light.h @brief Header file for Mesh Light Model Definitions *************************************************************************************** *************************************************************************************** @defgroup MM_DEFINES Mesh Model Definitions @ingroup MESH_MDL @brief  Mesh Model Defines @{ ***************************************************************************************"
+  },
+  {
+    "name": "mm_lightc",
+    "model_id": 0,
+    "type": "LIGHT_MODEL",
+    "header_file": "model\\api\\mm_lightc.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_lightc.h @brief Header file for Mesh Model Lighting Client Module *************************************************************************************** *************************************************************************************** @defgroup MM_LIGHTC Mesh Model Lighting Client Module @ingroup MESH_MDL @brief Mesh Model Lighting Client Module @{ ***************************************************************************************"
+  },
+  {
+    "name": "mm_lights",
+    "model_id": 0,
+    "type": "LIGHT_MODEL",
+    "header_file": "model\\api\\mm_lights.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_lights.h @brief Header file for Mesh Model Lighting Server Module *************************************************************************************** *************************************************************************************** @defgroup MM_LIGHTS Mesh Model Lighting Server Module @ingroup MESH_MDL @brief Mesh Model Lighting Server Module @{ ***************************************************************************************"
+  },
+  {
+    "name": "mm_sens",
+    "model_id": 0,
+    "type": "SENSOR_MODEL",
+    "header_file": "model\\api\\mm_sens.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_sens.h @brief Header file for Mesh Sensor Model Definitions *************************************************************************************** *************************************************************************************** @defgroup MM_DEFINES Mesh Model Definitions @ingroup MESH_MDL @brief  Mesh Model Defines @{ ***************************************************************************************"
+  },
+  {
+    "name": "mm_tscn",
+    "model_id": 0,
+    "type": "TIME_SCENE_MODEL",
+    "header_file": "model\\api\\mm_tscn.h",
+    "states": [],
+    "description": "*************************************************************************************** @file mm_sens.h @brief Header file for Mesh Time and Scene Model Definitions *************************************************************************************** *************************************************************************************** @defgroup MM_DEFINES Mesh Model Definitions @ingroup MESH_MDL @brief  Mesh Model Defines @{ ***************************************************************************************"
+  }
+]

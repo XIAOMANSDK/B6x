@@ -30,10 +30,10 @@
 
 /*
  * The color for terminal (foreground)
- * 30 - BLACK     31 - RED      
- * 32 - GREEN     33 - YELLOW   
- * 34 - BLUE      35 - PURPLE   
- * 36 - CYAN      37 - WHITE    
+ * 30 - BLACK     31 - RED
+ * 32 - GREEN     33 - YELLOW
+ * 34 - BLUE      35 - PURPLE
+ * 36 - CYAN      37 - WHITE
  */
 #ifndef COLOR_TERMINAL
 #define COLOR_TERMINAL            (0)

@@ -37,14 +37,14 @@ __Vectors       DCD     __initial_sp           ; 0,  load top of stack
                 DCD     0                      ; 13, Reserved
                 DCD     PendSV_Handler         ; 14, PendSV Handler
                 DCD     SysTick_Handler        ; 15, SysTick Handler
-                                             
-                ; External interrupts    
+
+                ; External interrupts
                 DCD    EXTI_IRQHandler         ; 0,  EXTI
                 DCD    IWDT_IRQHandler         ; 1,  IWDT
                 DCD    BLE_IRQHandler          ; 2,  BB
                 DCD    DMAC_IRQHandler         ; 3,  DMAChannel
                 DCD    BB_LP_IRQHandler        ; 4,  BB_LowPower
-                DCD    BTMR_IRQHandler         ; 5,  BTMR 
+                DCD    BTMR_IRQHandler         ; 5,  BTMR
                 DCD    CTMR_IRQHandler         ; 6,  CTMR
                 DCD    ATMR_IRQHandler         ; 7,  ATMR
                 DCD    RTC_IRQHandler          ; 8,  RTC
@@ -61,14 +61,14 @@ __Vectors       DCD     __initial_sp           ; 0,  load top of stack
                 DCD    FSHC_IRQHandler         ; 19, FSHC
                 DCD    MDM_IRQHandler          ; 20, MODEM
                 DCD    RF_IRQHandler           ; 21, RF
-                    
+
 __Vectors_End
 
 __Vectors_Size  EQU  __Vectors_End - __Vectors
 
 ;-------------------------------------------------------------------------------
-                 AREA    |.INT|, CODE, READONLY 
-                
+                 AREA    |.INT|, CODE, READONLY
+
 ;Reset Handler------------------------------------------------------------------
 Reset_Handler   PROC
                 EXPORT  Reset_Handler            [WEAK]

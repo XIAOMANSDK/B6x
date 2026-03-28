@@ -156,6 +156,7 @@ __STATIC void mm_lightc_ln_handler_status_range(mesh_buf_t *p_buf, uint16_t src)
 __STATIC void mm_lightc_ln_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                  mm_route_env_t *p_route_env)
 {
+    (void)p_env;
     // Call the appropriate handler for the received message
     switch (p_route_env->opcode)
     {
@@ -200,6 +201,7 @@ __STATIC void mm_lightc_ln_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_lightc_ln_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_LIGHT_LN_STATUS)
@@ -323,6 +325,7 @@ __STATIC uint8_t mm_lightc_ln_cb_trans(mm_mdl_env_t *p_env, m_lid_t app_key_lid,
                                              uint32_t trans_time_ms, uint16_t delay_ms,
                                              uint16_t trans_info)
 {
+    (void)state_2;
     // Transition type
     uint8_t trans_type = GETF(trans_info, MM_TRANS_INFO_TYPE);
     // Status
@@ -482,7 +485,7 @@ __STATIC uint8_t mm_lightc_ln_cb_set(mm_mdl_env_t *p_env, m_lid_t app_key_lid, u
  ****************************************************************************************
  */
 
-__STATIC mm_cli_cb_t mm_lightc_ln_cb = 
+__STATIC mm_cli_cb_t mm_lightc_ln_cb =
 {
     .cb_get = mm_lightc_ln_cb_get,
     .cb_set = mm_lightc_ln_cb_set,
@@ -497,7 +500,7 @@ uint8_t mm_lightc_ln_register(void)
     if (mdl_lid != MESH_INVALID_LID) //if (status == MESH_ERR_NO_ERROR)
     {
         // Inform the Model State Manager about registered model
-        mm_lightc_ln_env_t *p_env_ln = (mm_lightc_ln_env_t *)mm_state_register(0, MM_ID_LIGHTC_LN, mdl_lid, 
+        mm_lightc_ln_env_t *p_env_ln = (mm_lightc_ln_env_t *)mm_state_register(0, MM_ID_LIGHTC_LN, mdl_lid,
                                         MM_ROLE_CLI, sizeof(mm_lightc_ln_env_t));
 
         if (p_env_ln)

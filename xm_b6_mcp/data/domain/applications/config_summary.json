@@ -1,0 +1,379 @@
+[
+  {
+    "sys_clk": "(1)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 1
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "ble-ANCS",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 1,
+    "project_name": "bleAdv_change",
+    "enabled_profiles": [
+      "diss"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": "(1)",
+      "masters": "(0)"
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "bleFCC",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": "(1)",
+      "masters": "(0)"
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "bleFCC_Store_Config",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 3,
+    "project_name": "bleHid",
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 3,
+    "project_name": "bleHid_Keybd",
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(0)",
+    "profiles_enabled": 3,
+    "project_name": "bleHid_Mouse",
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": "(1)",
+      "masters": "(0)"
+    },
+    "debug_mode": "(0)",
+    "profiles_enabled": 3,
+    "project_name": "bleHid_Uart",
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 2
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "bleMaster",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 3,
+      "masters": 3
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 1,
+    "project_name": "bleMasterSlave",
+    "enabled_profiles": [
+      "diss"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "bleMesh",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(0)",
+    "profiles_enabled": 2,
+    "project_name": "bleOTA",
+    "enabled_profiles": [
+      "diss",
+      "ota"
+    ]
+  },
+  {
+    "sys_clk": "(1)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 1
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "bleOTA_Dongle",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": "(0)"
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "blePowerBank",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 1,
+    "project_name": "bleUart",
+    "enabled_profiles": [
+      "diss"
+    ]
+  },
+  {
+    "sys_clk": "(2)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 1,
+    "project_name": "bleUart2USB",
+    "enabled_profiles": [
+      "diss"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 1
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "bleUartAT",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(3)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "bleUartAT-gsmDecodet",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": "(0)"
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 1,
+    "project_name": "bleUartCMD",
+    "enabled_profiles": [
+      "diss"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 1,
+    "project_name": "bleWeChat",
+    "enabled_profiles": [
+      "diss"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": "(0)"
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 1,
+    "project_name": "bleWeChatETC",
+    "enabled_profiles": [
+      "diss"
+    ]
+  },
+  {
+    "sys_clk": "2",
+    "ble_connections": {
+      "slaves": "(1)",
+      "masters": "(0)"
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "ec_demo",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(2)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 1
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 0,
+    "project_name": "FindMy_Dongle",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(2)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 2
+    },
+    "debug_mode": "(0)",
+    "profiles_enabled": 0,
+    "project_name": "QKIE-BT-2.4G-USB-Receive",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 2,
+    "project_name": "QKIE_Keybd",
+    "enabled_profiles": [
+      "diss",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 2,
+    "project_name": "QKIE_Keybd_2G4_OK",
+    "enabled_profiles": [
+      "diss",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(0)",
+    "profiles_enabled": 3,
+    "project_name": "QKIE_Mouse",
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(0)",
+    "ble_connections": {
+      "slaves": 1,
+      "masters": 0
+    },
+    "debug_mode": "(1)",
+    "profiles_enabled": 3,
+    "project_name": "QKIE_Mouse_SOP16",
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ]
+  },
+  {
+    "sys_clk": "(2)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 2
+    },
+    "debug_mode": "(0)",
+    "profiles_enabled": 0,
+    "project_name": "QKIE_USB_Receive_KB_Mouse",
+    "enabled_profiles": []
+  },
+  {
+    "sys_clk": "(2)",
+    "ble_connections": {
+      "slaves": 0,
+      "masters": 1
+    },
+    "debug_mode": "(0)",
+    "profiles_enabled": 0,
+    "project_name": "QKIE_USB_Receive_Mouse",
+    "enabled_profiles": []
+  }
+]

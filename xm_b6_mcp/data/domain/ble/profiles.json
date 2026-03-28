@@ -1,0 +1,828 @@
+[
+  {
+    "name": "Battery Service",
+    "uuid": "0x180F",
+    "uuid_hex": "0x180F",
+    "is_primary": true,
+    "is_standard": true,
+    "description": "Battery Service - Server Role Implementation.",
+    "source_file": "./ble\\prf\\prf_bass.c",
+    "profile_api_prefix": "bas",
+    "num_characteristics": 2,
+    "characteristics": [
+      {
+        "name": "Battery Level",
+        "uuid": "0x2A19",
+        "uuid_hex": "0x2A19",
+        "properties": [
+          "ntf",
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Battery Power State",
+        "uuid": "0x2A1A",
+        "uuid_hex": "0x2A1A",
+        "properties": [
+          "ntf",
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      }
+    ],
+    "descriptors": []
+  },
+  {
+    "name": "Device Information",
+    "uuid": "0x180A",
+    "uuid_hex": "0x180A",
+    "is_primary": true,
+    "is_standard": true,
+    "description": "Device Information Service(DIS) - Server Role Implementation.",
+    "source_file": "./ble\\prf\\prf_diss.c",
+    "profile_api_prefix": "dis",
+    "num_characteristics": 9,
+    "characteristics": [
+      {
+        "name": "Manufacturer Name",
+        "uuid": "0x2A29",
+        "uuid_hex": "0x2A29",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Model Number",
+        "uuid": "0x2A24",
+        "uuid_hex": "0x2A24",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Serial Number",
+        "uuid": "0x2A25",
+        "uuid_hex": "0x2A25",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Hardware Revision",
+        "uuid": "0x2A27",
+        "uuid_hex": "0x2A27",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Firmware Revision",
+        "uuid": "0x2A26",
+        "uuid_hex": "0x2A26",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Software Revision",
+        "uuid": "0x2A28",
+        "uuid_hex": "0x2A28",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Sys Id",
+        "uuid": "0x2A23",
+        "uuid_hex": "0x2A23",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Ieee Certif",
+        "uuid": "0x2A2A",
+        "uuid_hex": "0x2A2A",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Pnp Id",
+        "uuid": "0x2A50",
+        "uuid_hex": "0x2A50",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      }
+    ],
+    "descriptors": []
+  },
+  {
+    "name": "HID Service",
+    "uuid": "0x1812",
+    "uuid_hex": "0x1812",
+    "is_primary": true,
+    "is_standard": true,
+    "description": "HID Service Profile - Template Source.",
+    "source_file": "./ble\\prf\\prf_hids.c",
+    "profile_api_prefix": "hid",
+    "num_characteristics": 15,
+    "characteristics": [
+      {
+        "name": "HID Control Point",
+        "uuid": "0x2A4A",
+        "uuid_hex": "0x2A4A",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Hid Ctrl Pt",
+        "uuid": "0x2A4C",
+        "uuid_hex": "0x2A4C",
+        "properties": [
+          "wc"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": false,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Report Map",
+        "uuid": "0x2A4B",
+        "uuid_hex": "0x2A4B",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Protocol Mode",
+        "uuid": "0x2A4E",
+        "uuid_hex": "0x2A4E",
+        "properties": [
+          "rd",
+          "wc"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Boot Kb In Report",
+        "uuid": "0x2A22",
+        "uuid_hex": "0x2A22",
+        "properties": [
+          "rd",
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Boot Kb Out Report",
+        "uuid": "0x2A32",
+        "uuid_hex": "0x2A32",
+        "properties": [
+          "rd",
+          "wr",
+          "wc"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Boot Mouse In Report",
+        "uuid": "0x2A33",
+        "uuid_hex": "0x2A33",
+        "properties": [
+          "rd",
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "wr",
+          "wc"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "wr"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "HID Information",
+        "uuid": "0x2A4D",
+        "uuid_hex": "0x2A4D",
+        "properties": [
+          "rd",
+          "wr"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": true,
+        "capabilities": {
+          "read": true,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      }
+    ],
+    "descriptors": []
+  },
+  {
+    "name": "PTS0 Service",
+    "uuid": "0xFF00",
+    "uuid_hex": "0xFF00",
+    "is_primary": true,
+    "is_standard": false,
+    "description": "Profile Testing Service - Server Role Implementation.",
+    "source_file": "./ble\\prf\\prf_ptss.c",
+    "profile_api_prefix": "pts0",
+    "num_characteristics": 3,
+    "characteristics": [
+      {
+        "name": "Pts0 Char Att1",
+        "uuid": "0xFF01",
+        "uuid_hex": "0xFF01",
+        "properties": [
+          "ntf",
+          "ind"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": false,
+          "write": false,
+          "notify": true,
+          "indicate": true
+        }
+      },
+      {
+        "name": "Pts0 Char Att2",
+        "uuid": "0xFF02",
+        "uuid_hex": "0xFF02",
+        "properties": [
+          "wc",
+          "wr",
+          "ws"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": false,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Pts0 Char Att3",
+        "uuid": "0xFF03",
+        "uuid_hex": "0xFF03",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      }
+    ],
+    "descriptors": []
+  },
+  {
+    "name": "PTS1 Service",
+    "uuid": "0xFF20",
+    "uuid_hex": "0xFF20",
+    "is_primary": true,
+    "is_standard": false,
+    "description": "Profile Testing Service - Server Role Implementation.",
+    "source_file": "./ble\\prf\\prf_ptss.c",
+    "profile_api_prefix": "pts1",
+    "num_characteristics": 3,
+    "characteristics": [
+      {
+        "name": "Att Desc Char User Description",
+        "uuid": "custom:ATT_DESC_CHAR_USER_DESCRIPTION",
+        "uuid_hex": "custom:ATT_DESC_CHAR_USER_DESCRIPTION",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Pts1 Char Att2",
+        "uuid": "0xFF22",
+        "uuid_hex": "0xFF22",
+        "properties": [
+          "wc",
+          "wr",
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Pts1 Char Att3",
+        "uuid": "0xFF23",
+        "uuid_hex": "0xFF23",
+        "properties": [
+          "wc",
+          "wr",
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      }
+    ],
+    "descriptors": []
+  },
+  {
+    "name": "SCP Service",
+    "uuid": "0x1813",
+    "uuid_hex": "0x1813",
+    "is_primary": true,
+    "is_standard": false,
+    "description": "Scan Parameters Profile Server Role.",
+    "source_file": "./ble\\prf\\prf_scps.c",
+    "profile_api_prefix": "scp",
+    "num_characteristics": 2,
+    "characteristics": [
+      {
+        "name": "Scan Intv Wd",
+        "uuid": "0x2A4F",
+        "uuid_hex": "0x2A4F",
+        "properties": [
+          "wc"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": false,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Scan Refresh",
+        "uuid": "0x2A31",
+        "uuid_hex": "0x2A31",
+        "properties": [
+          "ntf"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": false,
+          "write": false,
+          "notify": true,
+          "indicate": false
+        }
+      }
+    ],
+    "descriptors": []
+  },
+  {
+    "name": "SES Service",
+    "uuid": "0xFF00",
+    "uuid_hex": "0xFF00",
+    "is_primary": true,
+    "is_standard": false,
+    "description": "",
+    "source_file": "./ble\\prf\\prf_sess.c",
+    "profile_api_prefix": "ses",
+    "num_characteristics": 3,
+    "characteristics": [
+      {
+        "name": "Ses Char Txd Notify",
+        "uuid": "custom:ses_char_txd_notify",
+        "uuid_hex": "custom:ses_char_txd_notify",
+        "properties": [
+          "ntf",
+          "ind"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": false,
+          "write": false,
+          "notify": true,
+          "indicate": true
+        }
+      },
+      {
+        "name": "Ses Char Rxd Write",
+        "uuid": "custom:ses_char_rxd_write",
+        "uuid_hex": "custom:ses_char_rxd_write",
+        "properties": [
+          "wc",
+          "wr"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": false,
+          "write": true,
+          "notify": false,
+          "indicate": false
+        }
+      },
+      {
+        "name": "Ses Char Val Read",
+        "uuid": "custom:ses_char_val_read",
+        "uuid_hex": "custom:ses_char_val_read",
+        "properties": [
+          "rd"
+        ],
+        "permissions": [],
+        "max_length": 256,
+        "variable_length": true,
+        "description": "",
+        "is_standard": false,
+        "capabilities": {
+          "read": true,
+          "write": false,
+          "notify": false,
+          "indicate": false
+        }
+      }
+    ],
+    "descriptors": []
+  }
+]

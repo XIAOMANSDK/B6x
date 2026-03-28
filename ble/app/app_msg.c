@@ -14,7 +14,7 @@
 
 #if (DBG_APP)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -35,11 +35,12 @@ extern APP_SUBTASK_HANDLER(mesh_msg);
 
 /**
  ****************************************************************************************
- * @brief SubTask Handler of Custom or Unknow Message. (__weak func)
+ * @brief SubTask Handler of Custom or Unknow Message. (__WEAK func)
  ****************************************************************************************
  */
-__weak APP_SUBTASK_HANDLER(custom)
+__WEAK APP_SUBTASK_HANDLER(custom)
 {
+    (void)msgid;(void)param;(void)dest_id;(void)src_id;
     #if (RC32K_CALIB_PERIOD)
     if (msgid == APP_TIMER_RC32K_CORR)
     {
@@ -50,9 +51,11 @@ __weak APP_SUBTASK_HANDLER(custom)
     else
     #endif //(RC32K_CALIB_PERIOD)
     {
+        #if (DBG_APP)
         uint16_t length = ke_param2msg(param)->param_len;
         DEBUG("Unknow MsgId:0x%X", msgid);
         debugHex((uint8_t *)param, length);
+        #endif
     }
 
     return (MSG_STATUS_FREE);
@@ -70,6 +73,7 @@ __weak APP_SUBTASK_HANDLER(custom)
  */
 __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
 {
+    (void)task_idx;
     msg_func_t handler = NULL;
 
     switch (MSG_TYPE(msgid))

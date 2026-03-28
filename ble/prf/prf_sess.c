@@ -21,7 +21,7 @@
 
 #if (DBG_SESS)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -429,16 +429,21 @@ uint8_t sess_txd_send(uint8_t conidx, uint16_t len, const uint8_t* data)
 
 /**
  ****************************************************************************************
- * @brief Callback on received data from peer device via WC or WQ (__weak func)
+ * @brief Callback on received data from peer device via WC or WQ (__WEAK func)
  *
  * @param[in] conidx   peer device connection index
  * @param[in] len      Length of data
  * @param[in] data     pointer of buffer
  ****************************************************************************************
  */
-__weak void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
+__WEAK void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
+    (void)conidx;
+    #if (DBG_SESS)
     debugHex(data, len);
+    #else
+    (void)len;(void)data;
+    #endif
 
     // Loopback to txd, just test.
     //sess_txd_send(conidx, len, data);
@@ -447,7 +452,7 @@ __weak void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 #if (SES_READ_SUP)
 /**
  ****************************************************************************************
- * @brief Callback to response 'READ' from peer device (__weak func)
+ * @brief Callback to response 'READ' from peer device (__WEAK func)
  *
  * @param[in] conidx  peer device connection index
  * @param[in] attidx  SESS attribute index, converted with 'handle'
@@ -456,7 +461,7 @@ __weak void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
  * @return Length of value been READ
  ****************************************************************************************
  */
-__weak void sess_cb_rdv(uint8_t conidx, uint8_t attidx, uint16_t handle)
+__WEAK void sess_cb_rdv(uint8_t conidx, uint8_t attidx, uint16_t handle)
 {
     uint16_t length = SES_VERS_STR_LEN;
     const uint8_t *p_data = (const uint8_t *)SES_VERS_STR;
@@ -469,13 +474,13 @@ __weak void sess_cb_rdv(uint8_t conidx, uint8_t attidx, uint16_t handle)
 #if (SES_CLI_CFG)
 /**
  ****************************************************************************************
- * @brief Callback on enabled client config from peer device via WQ (__weak func)
+ * @brief Callback on enabled client config from peer device via WQ (__WEAK func)
  *
  * @param[in] conidx   Connection index
  * @param[in] cli_cfg  Client configuration @see prf_cli_conf
  ****************************************************************************************
  */
-__weak void sess_cb_ccc(uint8_t conidx, uint8_t cli_cfg)
+__WEAK void sess_cb_ccc(uint8_t conidx, uint8_t cli_cfg)
 {
     // user override
 }

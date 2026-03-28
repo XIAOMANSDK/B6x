@@ -1,0 +1,760 @@
+dependencies:
+- api: dma_chnl_conf
+  call_sequence:
+  - 'DMA_CHNL_CTRL(chidx)'
+  pre_requisites:
+  - DMA_CHNL_CTRL
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: true
+  requires_interrupt: false
+  source_file: dma.c
+  source_line: 117
+
+- api: dma_chnl_ctrl
+  call_sequence:
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: dma.c
+  source_line: 242
+
+- api: dma_chnl_deinit
+  call_sequence:
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: dma.c
+  source_line: 97
+
+- api: dma_chnl_init
+  call_sequence:
+  - 'dma_init()  # Must be called first'
+  - 'if (chidx < DMA_CH_MAX) {'
+  - '  DMA->USEBURST_SET = (1UL << chidx)  # Disable DMA single transfer (use burst)'
+  - '  DMA->REQMSK_CLR = (1UL << chidx)  # Clear channel request mask, allow DMA requests'
+  - '  # Configure DMA channel multiplexing'
+  - '  arr = (chidx / 4)'
+  - '  lsh = (chidx % 4) * 8'
+  - '  DMACHCFG->CHSEL[arr] = (DMACHCFG->CHSEL[arr] & ~(0x3FUL << lsh)) | ((uint32_t)chsel << lsh)'
+  - '}'
+  notes:
+  - DMA controller must be initialized before configuring channels
+  - Channel index must be less than DMA_CH_MAX
+  pre_requisites:
+  - dma_init
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: true
+  requires_interrupt: false
+  see_also:
+  - dma_init
+  - dma_chnl_conf
+  parameters:
+  - name: chidx
+    type: uint8_t
+    description: "Channel index (0-7)"
+  - name: chsel
+    type: uint8_t
+    description: "Channel function selection"
+  source_file: dma.c
+  source_line: 75
+
+- api: dma_deinit
+  call_sequence:
+  - 'RCC_APBCLK_DIS(APB_DMAC_BIT)'
+  - 'RCC_APBRST_REQ(APB_DMAC_BIT)'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - dma_init
+  source_file: dma.c
+  source_line: 63
+
+- api: dma_init
+  call_sequence:
+  - '# Check if already initialized'
+  - 'if (DMA->CTRLBASE_POINTER.Word) { return; }'
+  - 'RCC_APBCLK_EN(APB_DMAC_BIT)  # Enable DMA APB clock'
+  - 'RCC_APBRST_REQ(APB_DMAC_BIT)  # Request DMA reset'
+  - 'DMA->CTRLBASE_POINTER.Word = (uint32_t)&dma_ctrl_base  # Set DMA control structure base address'
+  - 'DMA->CFG.Word = DMA_CFG_HPROT(7) | DMA_CFG_EN_BIT  # Enable DMA controller with channel protection'
+  notes:
+  - Check if already initialized before proceeding
+  - Must be called before dma_chnl_init
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - dma_deinit
+  - dma_chnl_init
+  source_file: dma.c
+  source_line: 40
+
+- api: exti_deinit
+  call_sequence:
+  - 'RCC_APBCLK_DIS(APB_EXTI_BIT)'
+  - 'RCC_APBRST_REQ(APB_EXTI_BIT)'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - exti_init
+  source_file: exti.c
+  source_line: 35
+
+- api: exti_init
+  call_sequence:
+  - 'RCC_APBCLK_EN(APB_EXTI_BIT)  # Enable external interrupt APB clock'
+  - 'RCC_APBRST_REQ(APB_EXTI_BIT)  # Request external interrupt reset'
+  - 'EXTI->DBC.Word = debounce  # Set debounce counter value for GPIO debouncing'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - exti_deinit
+  - exti_set
+  parameters:
+  - name: debounce
+    type: uint16_t
+    description: "Debounce time configuration value"
+  source_file: exti.c
+  source_line: 20
+
+- api: exti_set
+  call_sequence:
+  - '(*(volatile uint32_t*)(EXTI_BASE + typ * 4)) = loca  # Set EXTI register by type and offset'
+  notes:
+  - Register types: 0=IER (enable), 1=IDR (disable), 2=IVS (valid state), 3=RIF (flag), 4=IFM (mask)
+  pre_requisites:
+  - exti_init
+  requires_clock: false
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: true
+  see_also:
+  - exti_init
+  - exti_get
+  parameters:
+  - name: typ
+    type: uint8_t
+    description: "Register type (0-4: IER, IDR, IVS, RIF, IFM)"
+  - name: loca
+    type: uint32_t
+    description: "Configuration value (bitmap for GPIO19~GPIO0)"
+  source_file: exti.c
+  source_line: 56
+
+- api: i2c_deinit
+  call_sequence:
+  - 'RCC_APBCLK_DIS(APB_I2C_BIT)'
+  - 'RCC_APBRST_REQ(APB_I2C_BIT)'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - i2c_init
+  source_file: i2c.c
+  source_line: 114
+
+- api: i2c_init
+  call_sequence:
+  - 'RCC_APBCLK_EN(APB_I2C_BIT)'
+  - 'I2C->SRST = 0x07  # Software reset I2C'
+  - 'iom_ctrl(io_sda, IOM_SEL_GPIO | IOM_PULLDOWN | IOM_INPUT)'
+  - '# CRITICAL: Delay 180us for GPIO stabilization (750 iterations at 64MHz)'
+  - 'for (delay_cnt = 750; delay_cnt--; __NOP()) { }'
+  - '# Check for external pull-up'
+  - 'if ((GPIO->PIN >> io_sda) & 0x01) { io_ctrl = IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_INPUT | IOM_OPENDRAIN; }'
+  - 'csc_output(io_scl, CSC_I2C_SCL)'
+  - 'csc_input(io_scl, CSC_I2C_SCL)'
+  - 'csc_output(io_sda, CSC_I2C_SDA)'
+  - 'csc_input(io_sda, CSC_I2C_SDA)'
+  - 'iom_ctrl(io_scl, io_ctrl)'
+  - 'iom_ctrl(io_sda, io_ctrl)'
+  - 'I2C->CLK.Word = sclk  # Set I2C clock divider'
+  - 'I2C_ENABLE()  # Enable I2C peripheral'
+  notes:
+  - CRITICAL: 180us delay required after initial GPIO config
+  - Delay allows external pull-up detection
+  - If external pull-up detected, internal pull-up is disabled
+  pre_requisites:
+  - csc_input
+  - csc_output
+  - iom_ctrl
+  requires_clock: true
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - i2c_deinit
+  - i2c_start
+  - i2c_stop
+  parameters:
+  - name: io_scl
+    type: uint8_t
+    description: "SCL pin number"
+  - name: io_sda
+    type: uint8_t
+    description: "SDA pin number"
+  - name: sclk
+    type: uint8_t
+    description: "Clock configuration value"
+  source_file: i2c.c
+  source_line: 67
+
+- api: csc_input
+  call_sequence:
+  - 'CSC->PORT[io_num].SEL = func  # Configure CSC input function'
+  notes:
+  - Low-level CSC configuration function
+  - iom_ctrl should be called first with IOM_SEL_CSC
+  pre_requisites:
+  - iom_ctrl
+  requires_clock: false
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - iom_ctrl
+  - csc_output
+  parameters:
+  - name: io_num
+    type: uint8_t
+    description: "GPIO pin number"
+  - name: func
+    type: uint8_t
+    description: "CSC function selector (CSC_UART1_RXD, etc.)"
+  source_file: iopad.c
+  source_line: 1
+
+- api: csc_output
+  call_sequence:
+  - 'CSC->PORT[io_num].SEL = func  # Configure CSC output function'
+  notes:
+  - Low-level CSC configuration function
+  - iom_ctrl should be called first with IOM_SEL_CSC
+  pre_requisites:
+  - iom_ctrl
+  requires_clock: false
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - iom_ctrl
+  - csc_input
+  parameters:
+  - name: io_num
+    type: uint8_t
+    description: "GPIO pin number"
+  - name: func
+    type: uint8_t
+    description: "CSC function selector (CSC_UART1_TXD, etc.)"
+  source_file: iopad.c
+  source_line: 1
+
+- api: iom_ctrl
+  call_sequence:
+  - 'IOM->CTRL[io_num] = ctrl  # Configure IO mode control register'
+  notes:
+  - Low-level GPIO configuration function
+  - Should be called before csc_output/csc_input
+  requires_clock: false
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - csc_output
+  - csc_input
+  parameters:
+  - name: io_num
+    type: uint8_t
+    description: "GPIO pin number"
+  - name: ctrl
+    type: uint8_t
+    description: "IO control configuration (IOM_SEL_*, IOM_PULLUP, etc.)"
+  source_file: iopad.c
+  source_line: 1
+
+- api: iwdt_deinit
+  call_sequence:
+  - 'RCC_APBCLK_DIS(APB_IWDT_BIT)'
+  pre_requisites:
+  - RCC_APBCLK_DIS
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: iwdt.c
+  source_line: 75
+
+- api: iwdt_init
+  call_sequence:
+  - 'RCC_APBCLK_EN(APB_IWDT_BIT)'
+  pre_requisites:
+  - RCC_APBCLK_EN
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: iwdt.c
+  source_line: 36
+
+- api: pwm_conf
+  call_sequence:
+  - 'TIMx = TMR_USED(tmr)'
+  - 'TIMx->SMCR.Word = smcr  # Configure slave mode control'
+  - 'TIMx->IER.Word = intr  # Enable interrupts'
+  notes:
+  - Must be called after pwm_init
+  pre_requisites:
+  - pwm_init
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: true
+  see_also:
+  - pwm_init
+  parameters:
+  - name: tmr
+    type: uint8_t
+    description: "Timer number (0: CTMR, 1: ATMR)"
+  - name: smcr
+    type: uint16_t
+    description: "Slave mode control register configuration"
+  - name: intr
+    type: uint16_t
+    description: "Interrupt enable register configuration"
+  source_file: pwm.c
+  source_line: 75
+
+- api: pwm_deinit
+  call_sequence:
+  - 'tmr_bit = 1UL << (1 + tmr)'
+  - 'RCC_APBCLK_DIS(tmr_bit)'
+  - 'RCC_AHBRST_REQ(tmr_bit)'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - pwm_init
+  parameters:
+  - name: tmr
+    type: uint8_t
+    description: "Timer number (0: CTMR, 1: ATMR)"
+  source_file: pwm.c
+  source_line: 61
+
+- api: pwm_init
+  call_sequence:
+  - 'TIMx = TMR_USED(tmr)  # Get timer base address'
+  - 'tmr_bit = 1UL << (1 + tmr)  # Calculate timer clock bit'
+  - 'RCC_APBCLK_EN(tmr_bit)  # Enable timer clock'
+  - 'TIMx->CR1.CEN = 0  # Disable counter'
+  - 'TIMx->CNT = 0  # Clear counter'
+  - 'TIMx->PSC = psc  # Set prescaler value'
+  - 'TIMx->ARR = arr  # Set auto-reload value'
+  - 'TIMx->CR1.DIR = 0  # Set up-counting mode'
+  - 'TIMx->CR1.CMS = 0  # Set edge-aligned mode'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - pwm_deinit
+  - pwm_conf
+  parameters:
+  - name: tmr
+    type: uint8_t
+    description: "Timer number (0: CTMR, 1: ATMR)"
+  - name: psc
+    type: uint16_t
+    description: "Prescaler value"
+  - name: arr
+    type: uint16_t
+    description: "Auto-reload value (determines PWM frequency)"
+  source_file: pwm.c
+  source_line: 37
+
+- api: rtc_conf
+  call_sequence:
+  - 'RCC_APBCLK_EN(APB_APBMISC_BIT | APB_AON_BIT)'
+  pre_requisites:
+  - RCC_APBCLK_EN
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: rtc.c
+  source_line: 38
+
+- api: sadc_conf
+  call_sequence:
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: sadc.c
+  source_line: 125
+
+- api: sadc_deinit
+  call_sequence:
+  - 'RCC_AHBCLK_DIS(AHB_ADC_BIT)'
+  - 'RCC_AHBRST_REQ(AHB_ADC_BIT)'
+  pre_requisites:
+  - RCC_AHBCLK_DIS
+  - RCC_AHBRST_REQ
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: sadc.c
+  source_line: 110
+
+- api: sadc_init
+  call_sequence:
+  - 'RCC_AHBCLK_DIS(AHB_ADC_BIT)'
+  - 'RCC_AHBRST_REQ(AHB_ADC_BIT)'
+  - 'RCC_AHBCLK_EN(AHB_ADC_BIT)'
+  - 'sadc_calib()'
+  pre_requisites:
+  - RCC_AHBCLK_DIS
+  - RCC_AHBCLK_EN
+  - RCC_AHBRST_REQ
+  - sadc_calib
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: sadc.c
+  source_line: 92
+
+- api: spim_conf
+  call_sequence:
+  - 'SPIM->STATUS_CLR.Word = SPIM_STATUS_CLR_ALL  # Clear all status flags'
+  - 'SPIM->CTRL.Word = ctrl  # Configure SPI master control parameters'
+  notes:
+  - Must be called after spim_init
+  - Configures SPI clock phase, polarity, and other parameters
+  pre_requisites:
+  - spim_init
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - spim_init
+  parameters:
+  - name: ctrl
+    type: uint32_t
+    description: "Control register configuration value"
+  source_file: spi.c
+  source_line: 62
+
+- api: spim_init
+  call_sequence:
+  - 'RCC_AHBCLK_EN(AHB_SPIM_BIT)  # Enable SPI master clock'
+  - 'RCC_AHBRST_REQ(AHB_SPIM_BIT)  # Request SPI master reset'
+  - 'csc_output(io_clk, CSC_SPIM_CLK)'
+  - 'csc_input(io_miso, CSC_SPIM_MISO)'
+  - 'csc_output(io_mosi, CSC_SPIM_MOSI)'
+  - 'iom_ctrl(io_clk, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP)'
+  - 'iom_ctrl(io_miso, IOM_SEL_CSC | IOM_PULLUP | IOM_INPUT)'
+  - 'iom_ctrl(io_mosi, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP)'
+  pre_requisites:
+  - csc_input
+  - csc_output
+  - iom_ctrl
+  requires_clock: true
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - spim_conf
+  - spis_init
+  parameters:
+  - name: io_clk
+    type: uint8_t
+    description: "Clock pin number"
+  - name: io_miso
+    type: uint8_t
+    description: "MISO pin number"
+  - name: io_mosi
+    type: uint8_t
+    description: "MOSI pin number"
+  source_file: spi.c
+  source_line: 41
+
+- api: spis_conf
+  call_sequence:
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: spi.c
+  source_line: 256
+
+- api: spis_init
+  call_sequence:
+  - 'RCC_AHBCLK_EN(AHB_SPIS_BIT)'
+  - 'RCC_AHBRST_REQ(AHB_SPIS_BIT)'
+  - 'csc_input(io_cs,    CSC_SPIS_CSN)'
+  - 'csc_input(io_clk,   CSC_SPIS_CLK)'
+  - 'csc_output(io_miso, CSC_SPIS_MISO)'
+  - 'csc_input(io_mosi,  CSC_SPIS_MOSI)'
+  - 'iom_ctrl(io_cs,   IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT)'
+  - 'iom_ctrl(io_clk,  IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT)'
+  - 'iom_ctrl(io_miso, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP)'
+  - 'iom_ctrl(io_mosi, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT)'
+  pre_requisites:
+  - RCC_AHBCLK_EN
+  - RCC_AHBRST_REQ
+  - csc_input
+  - csc_output
+  - iom_ctrl
+  requires_clock: true
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  source_file: spi.c
+  source_line: 233
+
+- api: atmr_ctrl
+  call_sequence:
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: timer.c
+  source_line: 121
+
+- api: atmr_deinit
+  call_sequence:
+  - 'RCC_APBCLK_DIS(APB_ATMR_BIT)'
+  - 'RCC_APBRST_REQ(APB_ATMR_BIT)'
+  pre_requisites:
+  - RCC_APBCLK_DIS
+  - RCC_APBRST_REQ
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  source_file: timer.c
+  source_line: 110
+
+- api: atmr_init
+  call_sequence:
+  - 'RCC_APBCLK_EN(APB_ATMR_BIT)  # Enable advanced timer clock'
+  - 'RCC_APBRST_REQ(APB_ATMR_BIT)  # Request advanced timer reset'
+  - 'ATMR->CR1.Word = 0  # Disable counter'
+  - 'ATMR->PSC = psc  # Set prescaler value'
+  - 'ATMR->ARR = arr  # Set auto-reload value'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - atmr_deinit
+  - atmr_ctrl
+  - ctmr_init
+  parameters:
+  - name: psc
+    type: uint16_t
+    description: "Prescaler value"
+  - name: arr
+    type: uint16_t
+    description: "Auto-reload value"
+  source_file: timer.c
+  source_line: 97
+
+- api: ctmr_ctrl
+  call_sequence:
+  - 'CTMR->ICR.Word = intr  # Clear specified interrupt flags'
+  - 'CTMR->IER.Word = intr  # Enable specified interrupts'
+  - 'CTMR->EGR.Word = intr | 0x01  # Generate update event (UG=1) and specified events'
+  - 'CTMR->CNT = 0  # Clear counter'
+  - 'CTMR->CR1.Word = mode  # Configure control mode'
+  notes:
+  - Must be called after ctmr_init
+  - Enables interrupts and starts counter
+  pre_requisites:
+  - ctmr_init
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: true
+  see_also:
+  - ctmr_init
+  parameters:
+  - name: mode
+    type: uint16_t
+    description: "Control register 1 configuration mode"
+  - name: intr
+    type: uint16_t
+    description: "Interrupt configuration"
+  source_file: timer.c
+  source_line: 79
+
+- api: ctmr_deinit
+  call_sequence:
+  - 'RCC_APBCLK_DIS(APB_CTMR_BIT)'
+  - 'RCC_APBRST_REQ(APB_CTMR_BIT)'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - ctmr_init
+  source_file: timer.c
+  source_line: 68
+
+- api: ctmr_init
+  call_sequence:
+  - 'RCC_APBCLK_EN(APB_CTMR_BIT)  # Enable common timer clock'
+  - 'RCC_APBRST_REQ(APB_CTMR_BIT)  # Request common timer reset'
+  - 'CTMR->CR1.Word = 0  # Disable counter'
+  - 'CTMR->PSC = psc  # Set prescaler value'
+  - 'CTMR->ARR = arr  # Set auto-reload value'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - ctmr_deinit
+  - ctmr_ctrl
+  - atmr_init
+  parameters:
+  - name: psc
+    type: uint16_t
+    description: "Prescaler value"
+  - name: arr
+    type: uint16_t
+    description: "Auto-reload value"
+  source_file: timer.c
+  source_line: 55
+
+- api: uart_conf
+  call_sequence:
+  - 'UART->LCR.Word = 0  # Clear line control register'
+  - 'UART->LCR.BRWEN = 1  # Enable baud rate update'
+  - 'UART->BRR = cfg_BRR  # Set baud rate divisor'
+  - 'UART->LCR.BRWEN = 0  # Disable baud rate update'
+  - 'UART->FCR.Word |= 0x07  # Enable FIFO, reset RX FIFO, reset TX FIFO'
+  notes:
+  - Must be called after uart_init
+  - Updates baud rate and line control settings
+  pre_requisites:
+  - uart_init
+  requires_clock: false
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - uart_init
+  parameters:
+  - name: port
+    type: uint8_t
+    description: "UART port number"
+  - name: cfg_BRR
+    type: uint16_t
+    description: "Baud rate configuration value"
+  - name: cfg_LCR
+    type: uint16_t
+    description: "Line control register configuration"
+  source_file: uart.c
+  source_line: 100
+
+- api: uart_deinit
+  call_sequence:
+  - 'RCC_APBCLK_DIS(1 << (RCC_UART1_CLKEN_RUN_POS + port))'
+  - 'RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port))'
+  requires_clock: true
+  requires_gpio: false
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - uart_init
+  parameters:
+  - name: port
+    type: uint8_t
+    description: "UART port number"
+  source_file: uart.c
+  source_line: 66
+
+- api: uart_hwfc
+  call_sequence:
+  - 'csc_output(io_rts, CSC_UART1_RTS + port)'
+  - 'csc_input(io_cts, CSC_UART1_CTS + port)'
+  - 'iom_ctrl(io_rts, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP)'
+  - 'iom_ctrl(io_cts, IOM_SEL_CSC | IOM_PULLUP | IOM_INPUT)'
+  - 'UART->MCR.Word |= 0x0C  # Enable auto flow control (AFCEN) and RTS control'
+  notes:
+  - MCR: Enable auto flow control (AFCEN) and RTS control (RTSCTRL)
+  pre_requisites:
+  - csc_input
+  - csc_output
+  - iom_ctrl
+  requires_clock: false
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - uart_init
+  parameters:
+  - name: port
+    type: uint8_t
+    description: "UART port number"
+  - name: io_rts
+    type: uint8_t
+    description: "RTS pin number"
+  - name: io_cts
+    type: uint8_t
+    description: "CTS pin number"
+  source_file: uart.c
+  source_line: 79
+
+- api: uart_init
+  call_sequence:
+  - 'iom_ctrl(io_rx, IOM_SEL_CSC | IOM_PULLUP | IOM_INPUT)'
+  - 'iom_ctrl(io_tx, IOM_SEL_CSC | IOM_PULLUP | IOM_DRV_LVL1)'
+  - 'csc_output(io_tx, CSC_UART1_TXD + port * 2)'
+  - 'csc_input(io_rx, CSC_UART1_RXD + port * 2)'
+  - 'RCC_APBCLK_EN(1 << (RCC_UART1_CLKEN_RUN_POS + port))'
+  - 'RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port))'
+  - '# Delay for RX pin to go high (check in loop)'
+  notes:
+  - Wait for RX pin to go high after reset (check in loop)
+  - 220ns/cnt at 64MHz (test needs 906ns delay)
+  pre_requisites:
+  - csc_input
+  - csc_output
+  - iom_ctrl
+  requires_clock: true
+  requires_gpio: true
+  requires_dma: false
+  requires_interrupt: false
+  see_also:
+  - uart_deinit
+  - uart_hwfc
+  - uart_conf
+  parameters:
+  - name: port
+    type: uint8_t
+    description: "UART port number (0: UART1, 1: UART2)"
+  - name: io_tx
+    type: uint8_t
+    description: "TX pin number (e.g., PA09)"
+  - name: io_rx
+    type: uint8_t
+    description: "RX pin number (e.g., PA08)"
+  source_file: uart.c
+  source_line: 40

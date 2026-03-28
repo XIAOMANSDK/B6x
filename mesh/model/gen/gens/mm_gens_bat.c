@@ -82,6 +82,7 @@ __STATIC void mm_gens_bat_send_status(mm_gens_bat_env_t *p_env_bat, mesh_buf_t *
                                       uint8_t bat_lvl, uint32_t time_discharge, uint32_t time_charge,
                                       uint8_t flags)
 {
+    (void)p_env_bat;
     // Status
     //uint8_t status;
 
@@ -237,6 +238,7 @@ __STATIC void mm_gens_bat_cb_tmr_publi(void *p_tmr)
 __STATIC void mm_gens_bat_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                 mm_route_env_t *p_route_env)
 {
+    (void)p_buf;
     do
     {
         // Get environment for Generic Battery Server model
@@ -263,6 +265,7 @@ __STATIC void mm_gens_bat_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_gens_bat_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if (opcode == MM_MSG_GEN_BAT_GET)

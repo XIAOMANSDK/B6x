@@ -14,13 +14,14 @@
 #include "sftmr.h"
 #include "gpio.h"
 #include "leds.h"
+#include "cmsis_compiler.h"
 
 
 /*
  * DEFINES
  ****************************************************************************************
  */
- 
+
 #define LED(n)              (1 << (n)) // Bit of Led index
 #define ON(n)               (1 << (n)) // Bit of On state
 #define OFF(n)              (0 << (n)) // Bit of Off state
@@ -43,7 +44,7 @@ typedef struct {
 typedef struct
 {
     uint8_t           tmrid; // soft-timer ID
-    uint8_t           cidx;  // curr item index 
+    uint8_t           cidx;  // curr item index
     uint8_t           mcurr; // curr led mode
     uint8_t           mlast; // last repeat mode
 } led_env_t;
@@ -57,8 +58,8 @@ static led_env_t led_env;
  ****************************************************************************************
  */
 
-/// iopad of Leds, total number not excced 8. 
-const uint8_t PA_LEDS[] = 
+/// iopad of Leds, total number not excced 8.
+const uint8_t PA_LEDS[] =
 {
     PA08,  // led0
     PA09,  // led1
@@ -75,13 +76,13 @@ const uint8_t PA_LEDS[] =
 /// slow blink mode
 const led_item_t LED_SLOW_BL_ITEM[] = {
     {LED(0)|LED(1)|LED(2), ON(0)|OFF(1)|ON(2),  _MS(200)},
-    {LED(0)|LED(2),        OFF(0)|OFF(2),       _MS(2000)}    
+    {LED(0)|LED(2),        OFF(0)|OFF(2),       _MS(2000)}
 };
 
 /// fast blink mode
 const led_item_t LED_FAST_BL_ITEM[] = {
     {LED(0)|LED(1)|LED(2), ON(0)|OFF(1)|OFF(2), _MS(250)},
-    {LED(0)|LED(2),        OFF(0)|ON(2),        _MS(250)},    
+    {LED(0)|LED(2),        OFF(0)|ON(2),        _MS(250)},
 };
 
 /// busy blink mode, more fast
@@ -100,13 +101,13 @@ const led_item_t LED_HINT_BL_ITEM[] = {
     {LED(0),        ON(0),        _MS(100)},
     {LED(0),        OFF(0),       _MS(100)},
     {LED(0),        ON(0),        _MS(100)},
-    {LED(0),        OFF(0),       _MS(100)}  
+    {LED(0),        OFF(0),       _MS(100)}
 };
 
 /// modes table
 #define LED_MODE(rep, mode)    [mode]={mode##_ITEM, sizeof(mode##_ITEM)/sizeof(led_item_t), rep}
 
-const led_mode_t LED_MODE_TAB[] = 
+const led_mode_t LED_MODE_TAB[] =
 {
     LED_MODE(1, LED_SLOW_BL),
     LED_MODE(1, LED_FAST_BL),
@@ -122,7 +123,7 @@ const led_mode_t LED_MODE_TAB[] =
  */
 
 /// gpio as output enable
-static __forceinline void leds_io_init(void)
+__STATIC_FORCEINLINE void leds_io_init(void)
 {
     SET_LEDS_OFF(IO_LEDS);
     GPIO_DIR_SET(IO_LEDS);
@@ -134,11 +135,11 @@ static uint16_t leds_set_state(uint8_t patt, uint8_t idx)
     const led_item_t *item = &(LED_MODE_TAB[patt].items[idx]);
     uint8_t leds = item->leds;
     uint8_t stat = item->stat;
-    
+
     #if (LED_GROUP)
     uint32_t iomsk = 0;
     uint32_t iosta = 0;
-    
+
     for (uint8_t n = 0; n < NB_LEDS; n++)
     {
         if (leds & LED(n))
@@ -147,7 +148,7 @@ static uint16_t leds_set_state(uint8_t patt, uint8_t idx)
             iosta |= ((stat >> n) & 1UL) << PA_LEDS[n];
         }
     }
-    
+
     // set together
     SET_LEDS_ON(iosta);
     SET_LEDS_OFF(iomsk ^ iosta);
@@ -164,18 +165,19 @@ static uint16_t leds_set_state(uint8_t patt, uint8_t idx)
         }
     }
     #endif
-    
+
     return item->time;
 }
 
 static tmr_tk_t leds_timer_handler(tmr_id_t id)
 {
+    (void)id;
     // update mode index
     led_env.cidx++;
     if (led_env.cidx >= LED_MODE_TAB[led_env.mcurr].count)
     {
         led_env.cidx = 0;
-        
+
         if (!LED_MODE_TAB[led_env.mcurr].repeat)
         {
             if (led_env.mlast == LED_MODE_MAX)
@@ -183,7 +185,7 @@ static tmr_tk_t leds_timer_handler(tmr_id_t id)
                 led_env.tmrid = TMR_ID_NONE; // over to free
                 return 0;
             }
-            
+
             // recover last repeat-mode
             led_env.mcurr = led_env.mlast;
         }
@@ -196,7 +198,7 @@ static tmr_tk_t leds_timer_handler(tmr_id_t id)
         led_env.tmrid = TMR_ID_NONE; // over to free
         return 0;
     }
-    
+
     return time;
 }
 
@@ -204,24 +206,24 @@ void leds_play(uint8_t mode)
 {
     if ((mode >= LED_MODE_MAX) || (mode == led_env.mcurr))
         return;
-    
+
     // clear curr timer
     if (led_env.tmrid != TMR_ID_NONE)
     {
         sftmr_clear(led_env.tmrid);
         led_env.tmrid = TMR_ID_NONE;
     }
-    
+
     // record last repeat-mode
     if ((led_env.mcurr != LED_MODE_MAX) && (LED_MODE_TAB[led_env.mcurr].repeat))
     {
         led_env.mlast = led_env.mcurr;
     }
-    
+
     // update mode, start timer if need
     led_env.mcurr = mode;
     led_env.cidx  = 0;
-    
+
     tmr_tk_t time = leds_set_state(led_env.mcurr, led_env.cidx);
     if (time)
     {
@@ -233,7 +235,7 @@ void leds_init(void)
 {
     // init gpio
     leds_io_init();
-    
+
     // init led_env
     led_env.tmrid = TMR_ID_NONE;
     led_env.cidx  = 0;

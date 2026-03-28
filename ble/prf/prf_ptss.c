@@ -733,14 +733,14 @@ uint8_t ptss_evt_send(uint8_t conidx, uint16_t handle, uint16_t len, const uint8
 
 /**
  ****************************************************************************************
- * @brief Callback on received data from peer device via WC or WQ (__weak func)
+ * @brief Callback on received data from peer device via WC or WQ (__WEAK func)
  *
  * @param[in] conidx   peer device connection index
  * @param[in] len      Length of data
  * @param[in] data     pointer of buffer
  ****************************************************************************************
  */
-__weak void ptss_cb_recv(uint8_t conidx, uint16_t len, const uint8_t *data)
+__WEAK void ptss_cb_recv(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     DEBUG("Recv(cid:%d,len:%d)", conidx, len);
     debugHex(data, len);
@@ -748,7 +748,7 @@ __weak void ptss_cb_recv(uint8_t conidx, uint16_t len, const uint8_t *data)
 
 /**
  ****************************************************************************************
- * @brief Callback to response 'READ' from peer device (__weak func)
+ * @brief Callback to response 'READ' from peer device (__WEAK func)
  *
  * @param[in] conidx  peer device connection index
  * @param[in] attidx  SESS attribute index, converted with 'handle'
@@ -757,7 +757,7 @@ __weak void ptss_cb_recv(uint8_t conidx, uint16_t len, const uint8_t *data)
  * @return Length of value been READ
  ****************************************************************************************
  */
-__weak void ptss_cb_read(uint8_t conidx, uint8_t attidx, uint16_t handle)
+__WEAK void ptss_cb_read(uint8_t conidx, uint8_t attidx, uint16_t handle)
 {
     uint16_t length = PTS_VERS_STR_LEN;
     const uint8_t *p_data = (const uint8_t *)PTS_VERS_STR;
@@ -768,13 +768,13 @@ __weak void ptss_cb_read(uint8_t conidx, uint8_t attidx, uint16_t handle)
 
 /**
  ****************************************************************************************
- * @brief Callback on enabled client config from peer device via WQ (__weak func)
+ * @brief Callback on enabled client config from peer device via WQ (__WEAK func)
  *
  * @param[in] conidx   Connection index
  * @param[in] cli_cfg  Client configuration @see prf_cli_conf
  ****************************************************************************************
  */
-__weak void ptss_cb_ccc(uint8_t conidx, uint8_t cli_cfg)
+__WEAK void ptss_cb_ccc(uint8_t conidx, uint8_t cli_cfg)
 {
     DEBUG("Enable(cid:%d,cfg:%d)", conidx, cli_cfg);
 }

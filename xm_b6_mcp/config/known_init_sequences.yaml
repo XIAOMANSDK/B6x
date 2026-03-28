@@ -1,0 +1,455 @@
+# Known Initialization Sequences
+# ===============================
+#
+# Predefined standard initialization sequences for B6x SDK.
+# These patterns are used to guide LLMs in generating correct initialization code.
+#
+# Format:
+#   - id: unique identifier
+#     name: human-readable name
+#     category: system | peripheral | ble | profile | mesh
+#     description: what this sequence initializes
+#     sequence:
+#       - api: function_name
+#         purpose: what this API does
+#         required: true/false
+#     prerequisites: required configs/macros
+#     source_projects: projects that use this pattern
+
+# ============================================================================
+# System Initialization
+# ============================================================================
+
+system_basic:
+  id: "system_basic"
+  name: "Basic System Initialization"
+  category: "system"
+  description: "Essential system initialization for all B6x projects"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable independent watchdog during development"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE peripheral clock"
+      required: true
+    - api: "rcc_adc_en"
+      purpose: "Enable ADC peripheral clock"
+      required: false
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock divider"
+      required: true
+  prerequisites: []
+  source_projects: ["bleHid", "bleUart", "bleOTA"]
+
+system_full:
+  id: "system_full"
+  name: "Full System Initialization"
+  category: "system"
+  description: "Complete system initialization with all peripherals"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable watchdog"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE clock"
+      required: true
+    - api: "rcc_adc_en"
+      purpose: "Enable ADC clock"
+      required: true
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock"
+      required: true
+    - api: "gpio_init"
+      purpose: "Initialize GPIO"
+      required: true
+    - api: "nvic_init"
+      purpose: "Initialize NVIC"
+      required: false
+  prerequisites: []
+  source_projects: ["bleMaster", "bleMesh"]
+
+# ============================================================================
+# BLE Initialization
+# ============================================================================
+
+ble_basic:
+  id: "ble_basic"
+  name: "BLE Basic Initialization"
+  category: "ble"
+  description: "Basic BLE stack initialization"
+  sequence:
+    - api: "app_init"
+      purpose: "Initialize BLE application layer"
+      required: true
+    - api: "ble_schedule"
+      purpose: "Main loop BLE scheduler"
+      required: true
+  prerequisites: ["BLE_NB_SLAVE", "BLE_DEV_NAME"]
+  source_projects: ["bleHid", "bleUart", "bleOTA"]
+
+ble_hid_device:
+  id: "ble_hid_device"
+  name: "BLE HID Device Initialization"
+  category: "ble"
+  description: "Initialization sequence for BLE HID devices (keyboard, mouse)"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable watchdog"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE clock"
+      required: true
+    - api: "rcc_adc_en"
+      purpose: "Enable ADC clock for battery"
+      required: true
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock"
+      required: true
+    - api: "uart1Rb_Init"
+      purpose: "Initialize debug UART"
+      required: false
+    - api: "sftmr_init"
+      purpose: "Initialize soft timer"
+      required: false
+    - api: "leds_init"
+      purpose: "Initialize LED indicators"
+      required: false
+    - api: "batt_init"
+      purpose: "Initialize battery monitoring"
+      required: true
+    - api: "app_init"
+      purpose: "Initialize BLE application"
+      required: true
+  prerequisites:
+    - "PRF_HIDS=1"
+    - "PRF_BASS=1"
+    - "PRF_DISS=1"
+    - "BLE_NB_SLAVE >= 1"
+  source_projects: ["bleHid", "bleHid_Keybd", "bleHid_Mouse"]
+
+ble_peripheral:
+  id: "ble_peripheral"
+  name: "BLE Peripheral Initialization"
+  category: "ble"
+  description: "General BLE peripheral device initialization"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable watchdog"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE clock"
+      required: true
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock"
+      required: true
+    - api: "uart_init"
+      purpose: "Initialize UART for communication"
+      required: false
+    - api: "app_init"
+      purpose: "Initialize BLE application"
+      required: true
+  prerequisites:
+    - "BLE_NB_SLAVE >= 1"
+    - "BLE_NB_MASTER == 0"
+  source_projects: ["bleUart", "bleOTA"]
+
+ble_central:
+  id: "ble_central"
+  name: "BLE Central Initialization"
+  category: "ble"
+  description: "BLE central/master device initialization"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable watchdog"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE clock"
+      required: true
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock"
+      required: true
+    - api: "uart_init"
+      purpose: "Initialize UART"
+      required: false
+    - api: "app_init"
+      purpose: "Initialize BLE application"
+      required: true
+  prerequisites:
+    - "BLE_NB_MASTER >= 1"
+  source_projects: ["bleMaster", "bleMasterSlave"]
+
+# ============================================================================
+# GATT Profile Registration
+# ============================================================================
+
+gatt_basic_profiles:
+  id: "gatt_basic_profiles"
+  name: "Basic GATT Profile Registration"
+  category: "profile"
+  description: "Standard GATT profile registration sequence"
+  sequence:
+    - api: "gap_svc_init"
+      purpose: "Initialize GAP service"
+      required: true
+    - api: "gatt_svc_init"
+      purpose: "Initialize GATT service"
+      required: true
+    - api: "diss_svc_init"
+      purpose: "Initialize Device Information Service"
+      required: false
+    - api: "bass_svc_init"
+      purpose: "Initialize Battery Service"
+      required: false
+  prerequisites: ["PRF_DISS", "PRF_BASS"]
+  source_projects: ["bleHid", "bleUart"]
+
+gatt_hid_profiles:
+  id: "gatt_hid_profiles"
+  name: "HID GATT Profile Registration"
+  category: "profile"
+  description: "GATT profile registration for HID devices"
+  sequence:
+    - api: "gap_svc_init"
+      purpose: "Initialize GAP service"
+      required: true
+    - api: "gatt_svc_init"
+      purpose: "Initialize GATT service"
+      required: true
+    - api: "diss_svc_init"
+      purpose: "Initialize Device Information Service"
+      required: true
+    - api: "bass_svc_init"
+      purpose: "Initialize Battery Service"
+      required: true
+    - api: "hids_prf_init"
+      purpose: "Initialize HID Profile"
+      required: true
+    - api: "hids_report_cfg"
+      purpose: "Configure HID reports"
+      required: true
+  prerequisites:
+    - "PRF_HIDS=1"
+    - "PRF_BASS=1"
+    - "PRF_DISS=1"
+  source_projects: ["bleHid", "bleHid_Keybd", "bleHid_Mouse"]
+
+gatt_ota_profile:
+  id: "gatt_ota_profile"
+  name: "OTA GATT Profile Registration"
+  category: "profile"
+  description: "GATT profile registration for OTA upgrade"
+  sequence:
+    - api: "gap_svc_init"
+      purpose: "Initialize GAP service"
+      required: true
+    - api: "gatt_svc_init"
+      purpose: "Initialize GATT service"
+      required: true
+    - api: "diss_svc_init"
+      purpose: "Initialize Device Information Service"
+      required: true
+    - api: "otas_svc_init"
+      purpose: "Initialize OTA Service"
+      required: true
+  prerequisites:
+    - "PRF_OTA=1"
+    - "PRF_DISS=1"
+  source_projects: ["bleOTA", "bleOTA_Dongle"]
+
+# ============================================================================
+# Advertising Sequence
+# ============================================================================
+
+advertising_start:
+  id: "advertising_start"
+  name: "Start Advertising"
+  category: "advertising"
+  description: "BLE advertising start sequence"
+  sequence:
+    - api: "gapm_create_advertising"
+      purpose: "Create advertising activity"
+      required: true
+    - api: "gapm_set_adv_data"
+      purpose: "Set advertising data"
+      required: true
+    - api: "gapm_set_scan_rsp_data"
+      purpose: "Set scan response data"
+      required: false
+    - api: "gapm_start_advertising"
+      purpose: "Start advertising"
+      required: true
+  prerequisites:
+    - "BLE_DEV_NAME defined"
+    - "BLE_DEV_ICON defined"
+  source_projects: ["bleHid", "bleUart", "bleOTA"]
+
+advertising_fast:
+  id: "advertising_fast"
+  name: "Fast Advertising"
+  category: "advertising"
+  description: "Fast advertising mode for quick connection"
+  sequence:
+    - api: "gapm_create_advertising"
+      purpose: "Create advertising activity"
+      required: true
+    - api: "gapm_set_adv_param"
+      purpose: "Set fast advertising parameters (30ms interval)"
+      required: true
+    - api: "gapm_set_adv_data"
+      purpose: "Set advertising data"
+      required: true
+    - api: "gapm_start_advertising"
+      purpose: "Start advertising"
+      required: true
+  prerequisites: []
+  source_projects: ["bleHid"]
+
+# ============================================================================
+# Mesh Network Initialization
+# ============================================================================
+
+mesh_basic:
+  id: "mesh_basic"
+  name: "BLE Mesh Basic Initialization"
+  category: "mesh"
+  description: "Basic BLE Mesh network initialization"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable watchdog"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE clock"
+      required: true
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock"
+      required: true
+    - api: "mesh_stack_init"
+      purpose: "Initialize mesh stack"
+      required: true
+    - api: "mesh_node_init"
+      purpose: "Initialize mesh node"
+      required: true
+    - api: "mesh_model_init"
+      purpose: "Initialize mesh models"
+      required: true
+  prerequisites:
+    - "MESH_ENABLED=1"
+  source_projects: ["bleMesh"]
+
+mesh_provisioning:
+  id: "mesh_provisioning"
+  name: "Mesh Provisioning Sequence"
+  category: "mesh"
+  description: "BLE Mesh device provisioning sequence"
+  sequence:
+    - api: "mesh_prov_init"
+      purpose: "Initialize provisioning"
+      required: true
+    - api: "mesh_prov_start"
+      purpose: "Start provisioning mode"
+      required: true
+    - api: "mesh_prov_wait"
+      purpose: "Wait for provisioner"
+      required: true
+  prerequisites:
+    - "MESH_ENABLED=1"
+  source_projects: ["bleMesh"]
+
+# ============================================================================
+# Application-Specific Sequences
+# ============================================================================
+
+uart_ble_bridge:
+  id: "uart_ble_bridge"
+  name: "UART-BLE Bridge"
+  category: "application"
+  description: "UART to BLE bridge initialization"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable watchdog"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE clock"
+      required: true
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock"
+      required: true
+    - api: "uart_init"
+      purpose: "Initialize UART with flow control"
+      required: true
+    - api: "dma_init"
+      purpose: "Initialize DMA for UART"
+      required: true
+    - api: "app_init"
+      purpose: "Initialize BLE application"
+      required: true
+  prerequisites:
+    - "BLE_NB_SLAVE >= 1"
+  source_projects: ["bleUart", "bleUart2USB"]
+
+power_bank:
+  id: "power_bank"
+  name: "Power Bank Controller"
+  category: "application"
+  description: "Power bank BLE controller initialization"
+  sequence:
+    - api: "iwdt_disable"
+      purpose: "Disable watchdog"
+      required: false
+    - api: "rcc_ble_en"
+      purpose: "Enable BLE clock"
+      required: true
+    - api: "rcc_adc_en"
+      purpose: "Enable ADC for voltage monitoring"
+      required: true
+    - api: "rcc_fshclk_set"
+      purpose: "Configure flash clock"
+      required: true
+    - api: "gpio_init"
+      purpose: "Initialize GPIO for power control"
+      required: true
+    - api: "adc_init"
+      purpose: "Initialize ADC"
+      required: true
+    - api: "app_init"
+      purpose: "Initialize BLE application"
+      required: true
+  prerequisites: []
+  source_projects: ["blePowerBank"]
+
+# ============================================================================
+# Connection Handling
+# ============================================================================
+
+connection_establish:
+  id: "connection_establish"
+  name: "Connection Establishment"
+  category: "connection"
+  description: "Handle new BLE connection"
+  sequence:
+    - api: "gapc_connection_req_ind"
+      purpose: "Connection request indication handler"
+      required: true
+    - api: "gapc_connection_cfm"
+      purpose: "Confirm connection"
+      required: true
+    - api: "gapc_param_update_cmd"
+      purpose: "Request connection parameter update"
+      required: true
+  prerequisites: []
+  source_projects: ["bleHid", "bleUart"]
+
+connection_disconnect:
+  id: "connection_disconnect"
+  name: "Disconnection Handling"
+  category: "connection"
+  description: "Handle BLE disconnection"
+  sequence:
+    - api: "gapc_disconnect_ind"
+      purpose: "Disconnection indication handler"
+      required: true
+    - api: "gapm_start_advertising"
+      purpose: "Restart advertising"
+      required: true
+  prerequisites: []
+  source_projects: ["bleHid", "bleUart"]

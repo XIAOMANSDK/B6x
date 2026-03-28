@@ -3,13 +3,12 @@
 #include "usbd_audio.h"
 #include "drvs.h"
 #include "dbg.h"
-#include "micphone.h"
 
 #define DEMO_AUDIO_HID              (1)
 
 #if (DBG_GATT)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -242,11 +241,11 @@ enum intf_num {
 const uint8_t usb_descriptor[] = {
     /* Descriptor - Device (Size:18) */
     USB_DEVICE_DESCRIPTOR_INIT(USB_2_0, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, USBD_BCD, 0x01),
-    
+
     /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT, 
+    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT,
             0x01, USB_CONFIG_BUS_POWERED | USB_CONFIG_REMOTE_WAKEUP, USBD_MAX_POWER),
-    
+
     /* Descriptor - Audio Control */
     AUDIO_AC_HEADER_INIT(AUDIO_AC_INTF_NUM, AUDIO_AC_CTRL_SIZE, AUDIO_AC_STRING_INDEX, AUDIO_AS_INTF_NUM),
     AUDIO_AC_INPUT_TERMINAL_DESCRIPTOR_INIT(AUDIO_IN_TERM_ID, AUDIO_INTERM_MIC, AUDIO_IN_CHNLS, AUDIO_INPUT_CHEN),
@@ -255,13 +254,13 @@ const uint8_t usb_descriptor[] = {
     AUDIO_AC_FEATURE_UNIT_DESCRIPTOR_INIT(AUDIO_IN_FEAT_ID, AUDIO_IN_TERM_ID, 0x01, AUDIO_INPUT_CTRL),
 
     /* Descriptor - Audio Stream */
-    AUDIO_AS_DESCRIPTOR_INIT(AUDIO_AS_INTF_NUM, AUDIO_OUT_TERM_ID, AUDIO_IN_CHNLS, AUDIO_IN_FRAME_SIZE, AUDIO_IN_RESOL_BITS, 
+    AUDIO_AS_DESCRIPTOR_INIT(AUDIO_AS_INTF_NUM, AUDIO_OUT_TERM_ID, AUDIO_IN_CHNLS, AUDIO_IN_FRAME_SIZE, AUDIO_IN_RESOL_BITS,
                                 AUDIO_IN_EP, 0x05, AUDIO_IN_EP_MPS, AUDIO_IN_EP_INTV, AUDIO_SAMPLE_FREQ_3B(AUDIO_IN_FREQ)),
 
     /* Descriptor - Keyboard Interface (Size:18+7*1) */
     HID_INTERFACE_INIT1(HID_KBD_INTF_NUM, 1, HID_SUBCLASS_NONE, HID_PROTOCOL_KEYBOARD, 0, HID_KBD_REPORT_DESC_SIZE, HID_BCD_0201),
     HID_ENDPOINT_DESC(HID_KBD_IN_EP, HID_KBD_IN_EP_MPS, HID_KBD_IN_EP_INTV),
-    
+
     /* Descriptor - Mouse Interface (Size:18+7*1) */
     HID_INTERFACE_INIT1(HID_MOUSE_INTF_NUM, 1, HID_SUBCLASS_NONE, HID_PROTOCOL_MOUSE, 0, HID_MOUSE_REPORT_DESC_SIZE, HID_BCD_0201),
     HID_ENDPOINT_DESC(HID_MOUSE_IN_EP, HID_MOUSE_IN_EP_MPS, HID_MOUSE_IN_EP_INTV),
@@ -442,7 +441,7 @@ static void mic_pcm_decode(void)
 static uint8_t *micDataGet(void)
 {
     uint8_t *data;
-    
+
     if ((pkt_mic_eidx != pkt_mic_sidx) && (pkt_mic_dec))
     {
         data = (uint8_t *)&pcm_buff[pkt_mic_offset];
@@ -458,7 +457,7 @@ static uint8_t *micDataGet(void)
     {
         data = (uint8_t *)pcm_none;
     }
-    
+
     return data;
 }
 
@@ -473,7 +472,7 @@ static void micInit(void)
 
 static void micDeinit(void)
 {
-    
+
 }
 
 static void usbd_mic_send(void)
@@ -563,6 +562,7 @@ void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
 /// Callback for Mic endpoint
 void usbd_audio_ep_in_handler(uint8_t ep)
 {
+    (void)ep;
     if (mic_state == MIC_BUSY) {
         mic_state = MIC_IDLE;
         usbd_mic_send();
@@ -572,6 +572,7 @@ void usbd_audio_ep_in_handler(uint8_t ep)
 
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
+    (void)arg;
     switch (event) {
         case USBD_EVENT_RESET:
             usbd_hid_reset();
@@ -634,7 +635,7 @@ void usbd_kb_report(uint8_t len, const uint8_t *data)
     {
         buff[0] = RPT_ID_KBD_STD;
         memcpy(&buff[1], data, 8);
-        
+
         if (data[2] == HID_KEY_F5) // change VoiceKey
         {
             buff[3] = HID_KBD_USAGE_F24;
@@ -657,7 +658,7 @@ void usbd_kb_report(uint8_t len, const uint8_t *data)
 //        mic_flag = true;
 //        memcpy(mic_buffer, ptr, AUDIO_IN_EP_MPS);
 //    }
-//    
+//
 //    if (usbd_is_configured()) {
 //        if ((mic_state == MIC_IDLE) && mic_flag) {
 //            uint8_t status = 0;
@@ -676,9 +677,9 @@ void usbd_kb_report(uint8_t len, const uint8_t *data)
 //                USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
 //            }
 //            GPIO_DAT_CLR(GPIO16);
-//            
+//
 //            mic_tmp++;
-//            
+//
 //            mic_flag = false;
 //        }
 //    }

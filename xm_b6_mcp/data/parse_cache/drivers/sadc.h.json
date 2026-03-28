@@ -1,0 +1,796 @@
+{
+  "file_path": "./drivers\\api\\sadc.h",
+  "functions": [
+    {
+      "name": "sadc_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init SADC Module. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ana_ctrl   Bits field of value @see enum sadc_ana_ctrl.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 243,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit SADC Module.  *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 251,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config SADC Module. ",
+      "detailed_description": "***************************************************************************************\n@param[in] ctrl   Bits field of value @see enum sadc_ctrl_bfs.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 260,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_read",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SADC read data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chset  Bits field of value @see enum sadc_chnl_set.\n@param[in] times  Number of times sadc read.\n@return Multiple(times) averages.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 272,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_dma",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config SADC Support DMA. ",
+      "detailed_description": "***************************************************************************************\n@param[in] sw_auto  SADC auto chnl.\n@param[in] ch_ctrl  Bits field of value @see enum sadc_chnl_set.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 282,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_pcm",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config SADC Support PCM. ",
+      "detailed_description": "***************************************************************************************\n@param[in] mic_sel  Bits field of value @see enum sadc_mic_sel.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 291,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_atmr",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config SADC Support ATMR. ",
+      "detailed_description": "***************************************************************************************\n@param[in] sw_auto  SADC auto chnl.\n@param[in] ch_ctrl  Bits field of value @see enum sadc_chnl_set.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 301,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_rand_num",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Random Number Generated by SADC. ",
+      "detailed_description": "***************************************************************************************\n@return Random Number.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 310,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sadc_temperature",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "SADC RF Temperature. ",
+      "detailed_description": "***************************************************************************************\n@param[in] times  Number of times sadc read.\n@return Multiple(times) averages.\n@note Called after rfmdm_init().\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 323,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "SADC_ANA_DFLT",
+      "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 109
+    },
+    {
+      "name": "SADC_ANA_VREF_1V2",
+      "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 112
+    },
+    {
+      "name": "SADC_ANA_VREF_1V8",
+      "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 115
+    },
+    {
+      "name": "SADC_ANA_VREF_2V4",
+      "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 118
+    },
+    {
+      "name": "SADC_ANA_VREF_VDD",
+      "value": "(SADC_VREF_VDD | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 121
+    },
+    {
+      "name": "SADC_MIC_DFLT",
+      "value": "(SADC_PGA_VOL(0x1B) | SADC_PGA_BIAS(1) | SADC_MIC_TRIM(0x40)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 169
+    },
+    {
+      "name": "SADC_CLK_DIV",
+      "value": "(((SYS_CLK + 1) * 4) - 1) // div_4M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 227
+    },
+    {
+      "name": "SADC_CR_DFLT",
+      "value": "(SADC_CR_CLK(SADC_CLK_DIV) | SADC_CR_HPF(11) | SADC_CR_CLKPH_POSEDGE",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 228
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SADC_CH_VDD33",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_VBK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_VDD12",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_PGAOUT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_MICIN",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN0",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN1",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN2",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN3",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN4",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN5",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN6",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN7",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN8",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_AIN9",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CH_RFRSV",
+          "value": 15,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 22
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SADC_RF_TEMP",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_RF_BANDGAP",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_RF_RSSI",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SADC_RF_VDDIF",
+          "value": 8,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 47
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SADC_EN_POS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SADC_EN_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_TRIM_LSB",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_TRIM_1V2",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_TRIM_1V8",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_TRIM_2V4",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_TRIM_3V0",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_CMP_LSB",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_CMP_015UA",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_CMP_105UA",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_VCM_LSB",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_VCM_015UA",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_VCM_105UA",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_VREF_LSB",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_VREF_015UA",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_VREF_105UA",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_BUF_LSB",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_BUF_015UA",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "SADC_IBSEL_BUF_105UA",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_POS",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_VDD",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "SADC_VREF_VBG",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CALCAP_LSB",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CALCAP_PRECISION",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CALCAP_RANGE",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CALOS_POS",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CALOS_GND",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CALOS_VREF",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "SADC_INBUF_BYPSS_POS",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "SADC_INBUF_BYPSS_BIT",
+          "value": 21,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 55
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SADC_MIC_MODE_POS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_MODE_CAP",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_MODE_NO_CAP",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_PWD_POS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_PWD_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_TRIM_LSB",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_TRIM_MSK",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_VREF_POS",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_VREF_750MV",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "SADC_MIC_VREF_1V5",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_BIAS_LSB",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_BIAS_MSK",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_EN_POS",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_EN_BIT",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_VOL_LSB",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_VOL_MSK",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_VREF_POS",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_VREF_750MV",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "SADC_PGA_VREF_1V5",
+          "value": 20,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 124
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SADC_CR_SOC_POS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_SOC_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CALIB_POS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CALIB_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CONV_MODE_POS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CONV_MODE_BIT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CONV_SINGLE",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CONV_CONTINUE",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_DMAEN_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_DMAEN_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CLKPH_POS",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CLKPH_NEGEDGE",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CLKPH_POSEDGE",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_SAMP_MODE_LSB",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_SAMP_MODE_MSK",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_SAMP_SOFT",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_SAMP_RSSI",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_SAMP_PCM",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_SAMP_ADTMR",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_PCMEND_POS",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_PCMEND_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_RSSI_DLY_LSB",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_RSSI_DLY_MSK",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_DBGEN_POS",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_DBGEN_BIT",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_HPF_COEF_LSB",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_HPF_COEF_MSK",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CLK_DIV_LSB",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "SADC_CR_CLK_DIV_MSK",
+          "value": 21,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\sadc.h",
+      "line_number": 172
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

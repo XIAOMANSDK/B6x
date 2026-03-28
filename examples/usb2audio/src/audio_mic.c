@@ -244,6 +244,7 @@ void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
  */
 void usbd_audio_ep_in_handler(uint8_t ep)
 {
+    (void)ep;
     if (mic_state == MIC_BUSY) {
         mic_state = MIC_IDLE;
     }

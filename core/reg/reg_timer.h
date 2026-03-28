@@ -47,7 +47,7 @@ typedef union   // 0x004 TIM_CR2
         uint32_t CCPC:       1; // bit0      --- Capture/Compare Preload Control (Only ATMR)
         uint32_t RES0:       1; // bit1      --- Reserved
         uint32_t CCUS:       1; // bit2      --- Capture/Compare Control Update Select (Only ATMR)
-        uint32_t CCDS:       1; // bit3      --- Capture/Compare DMA Select
+        uint32_t CCDS:       1; // bit3      --- Capture/Compare DMA Select[0: tim_cnt == ccr trigger dma_req , 1: tim_cnt == arr trigger dma_req.]
         uint32_t MMS:        3; // bit[6:4]  --- Master Mode Select
         uint32_t TI1S:       1; // bit7      --- TI1 Select
         uint32_t OIS1:       1; // bit8      --- Output Idle State1(OC1 Output)  (Only ATMR)

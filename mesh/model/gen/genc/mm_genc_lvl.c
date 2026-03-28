@@ -95,6 +95,7 @@ __STATIC uint8_t mm_genc_lvl_get_length(uint8_t trans_type, bool set_long)
 __STATIC void mm_genc_lvl_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                 mm_route_env_t *p_route_env)
 {
+    (void)p_env;
     if (p_route_env->opcode == MM_MSG_GEN_LVL_STATUS)
     {
         // Get pointer to data
@@ -137,6 +138,7 @@ __STATIC void mm_genc_lvl_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_genc_lvl_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if (opcode == MM_MSG_GEN_LVL_STATUS)
@@ -164,6 +166,7 @@ __STATIC uint8_t mm_genc_lvl_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcod
 __STATIC uint8_t mm_genc_lvl_cb_get(mm_mdl_env_t *p_env, m_lid_t app_key_lid, uint16_t dst,
                                      uint16_t get_info)
 {
+    (void)get_info;
     uint8_t status = MESH_ERR_NO_ERROR;
     // Pointer to the buffer that will contain the message
     mesh_buf_t *p_buf_get = mm_route_buf_alloc(0);
@@ -212,6 +215,7 @@ __STATIC uint8_t mm_genc_lvl_cb_trans(mm_mdl_env_t *p_env, m_lid_t app_key_lid, 
                                             uint32_t trans_time_ms, uint16_t delay_ms,
                                             uint16_t trans_info)
 {
+    (void)app_key_lid;(void)state_2;
     uint8_t status = MESH_ERR_NO_ERROR;
     // Transition type
     uint8_t trans_type = GETF(trans_info, MM_TRANS_INFO_TYPE);
@@ -290,7 +294,7 @@ __STATIC uint8_t mm_genc_lvl_cb_trans(mm_mdl_env_t *p_env, m_lid_t app_key_lid, 
  ****************************************************************************************
  */
 
-__STATIC mm_cli_cb_t mm_genc_lvl_cb = 
+__STATIC mm_cli_cb_t mm_genc_lvl_cb =
 {
     .cb_get = mm_genc_lvl_cb_get,
     .cb_set = NULL,

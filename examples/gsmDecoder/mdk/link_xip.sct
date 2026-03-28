@@ -1,0 +1,39 @@
+#! armcc -E -I ..\src\
+#include "cfg.h"
+
+#define SCT_FLASH_BASE          (0x18004000)
+#define SCT_FLASH_END           (0x18020000)
+#define SCT_FLASH_LEN           (SCT_FLASH_END - SCT_FLASH_BASE)
+
+LR_IROM1 SCT_FLASH_BASE SCT_FLASH_LEN
+{
+    ER_IROM1 SCT_FLASH_BASE SCT_FLASH_LEN
+    {
+        *.o (RESET, +First)
+        *(InRoot$$Sections)
+        startup*.o (+RO)
+        .ANY (+RO)
+    }
+
+    RW_IRAM_VECT 0x20003000 EMPTY 152
+    {
+        ; sram vector
+    }
+
+    RW_IRAM_USER +0
+    {
+        *.o(ram_func*)
+        .ANY (+RW +ZI)
+    }
+
+    ; GSM decoder stack and heap configuration
+    ; Stack: 1536 bytes (0x600) - optimized for GSM decoding (~1500 bytes needed)
+    ; Heap:  0 bytes - disabled (GSM uses static allocation only)
+    ; Total: 1536 bytes (0x600)
+    RW_IRAM_STACK 0x2000a000-0x600 UNINIT 0x600
+    {
+        .ANY (HEAP)
+        .ANY (STACK)
+    }
+
+}

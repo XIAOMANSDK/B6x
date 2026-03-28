@@ -21,7 +21,7 @@
 
 #if (DBG_DISS)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -227,6 +227,7 @@ static uint8_t diss_get_val_idx(uint16_t handle)
 /// Handles reception of the read request from peer device
 static void diss_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const void *param)
 {
+    (void)param;
     uint8_t val_idx = diss_get_val_idx(handle);
 
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,att:%d)", conidx, opcode, handle, val_idx);
@@ -296,7 +297,7 @@ uint8_t diss_svc_init(void)
 
 /**
  ****************************************************************************************
- * @brief Get value for attribute read (__weak func)
+ * @brief Get value for attribute read (__WEAK func)
  *
  * @param[in] val_idx  Index of Value to set @see enum dis_values
  * @param[out] p_len   Value Length
@@ -304,7 +305,7 @@ uint8_t diss_svc_init(void)
  * @return Value data pointer
  ****************************************************************************************
  */
-__weak const uint8_t *diss_value_get(uint8_t val_idx, uint16_t *p_len)
+__WEAK const uint8_t *diss_value_get(uint8_t val_idx, uint16_t *p_len)
 {
     uint16_t length = 0;
     const uint8_t *p_data = NULL;

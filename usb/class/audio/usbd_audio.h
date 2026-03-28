@@ -16,7 +16,7 @@
 #define USBD_AUDIO_V2                   0x0200 // v2.0
 
 #if !defined(CONFIG_USBD_AUDIO_VERSION)
-#define CONFIG_USBD_AUDIO_VERSION       USBD_AUDIO_V1 
+#define CONFIG_USBD_AUDIO_VERSION       USBD_AUDIO_V1
 #endif
 
 #if !defined(AUDIO_SAMPLING_FREQ_CONTROL)
@@ -43,7 +43,7 @@ typedef struct audio_entity_info {
  */
 
 void usbd_audio_init(void);
-            
+
 /// Audio Entity Retrieve
 const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId);
 

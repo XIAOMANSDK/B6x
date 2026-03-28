@@ -1,0 +1,419 @@
+{
+  "file_path": "./drivers\\api\\flash.h",
+  "functions": [
+    {
+      "name": "puya_enter_dual_read",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Puya Flash Enter Dual Read Mode(2 X IO Read Mod). *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 113,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "puya_exit_dual_read",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Puya Flash Exti Dual Read Mode. *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 120,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "boya_flash_quad_mode",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Boya Flash Quad Enable bit set 1. *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 127,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "flash_write",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Write data to Flash. ",
+      "detailed_description": "***************************************************************************************\n@param[in] offset Where offset to write.\n@param[in] data   The pointer of data write to flash.\n@param[in] wlen   The number of word write to flash.\n@note  offset Must be 0x100 Aligned.\n@note  data address Must be 4-byte Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 142,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "flash_read",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read Flash data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] offset  Where offset to read.\n@param[in] buff    The pointer that store data read from flash.\n@param[in] wlen    The number of word read from flash.\n@note  buff address Must be 4-byte Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 156,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "flash_page_erase",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Erases the specified FLASH page. ",
+      "detailed_description": "***************************************************************************************\n@param[in] offset address of the page to erase.\n@note  offset Must be 0x100 Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 168,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "flash_byte_write",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Write data to Flash. ",
+      "detailed_description": "***************************************************************************************\n@param[in] offset Where offset to write.\n@param[in] data   The pointer of data write to flash.\n@param[in] blen   The number of byte write to flash.(Must be a multiple of 4)\n@note  offset Must be 0x100 Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 182,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "flash_byte_read",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read Flash data. ",
+      "detailed_description": "***************************************************************************************\n@param[in] offset  Where offset to read.\n@param[in] buff    The pointer that store data read from flash.\n@param[in] blen    The number of byte read from flash.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 195,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "flash_size",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get Flash Size. ",
+      "detailed_description": "***************************************************************************************\n@return  size in bytes.\n@note   0 is invalid size.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 206,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "FSH_VID_PUYA",
+          "value": 133,
+          "brief": ""
+        },
+        {
+          "name": "FSH_VID_WINBOND",
+          "value": 239,
+          "brief": ""
+        },
+        {
+          "name": "FSH_VID_GD",
+          "value": 200,
+          "brief": ""
+        },
+        {
+          "name": "FSH_VID_FUDAN",
+          "value": 161,
+          "brief": ""
+        },
+        {
+          "name": "FSH_VID_SPANSION",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "FSH_VID_ZBITSEMI",
+          "value": 94,
+          "brief": ""
+        },
+        {
+          "name": "FSH_VID_XMC",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "FSH_VID_BOYA",
+          "value": 104,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 21
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "FSH_CMD_RST_EN",
+          "value": 102,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_RESET",
+          "value": 153,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_RD_ID",
+          "value": 159,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_WR_STA_EN",
+          "value": 80,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_WR_STA",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_WR_STA1",
+          "value": 49,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_RD_STA0",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_RD_STA1",
+          "value": 53,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_ER_CHIP",
+          "value": 96,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_ER_BLOCK64",
+          "value": 216,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_ER_BLOCK32",
+          "value": 82,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_ER_SECTOR",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_ER_PAGE",
+          "value": 129,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_WR_EN",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_WR",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_DLWR",
+          "value": 162,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_QDWR",
+          "value": 50,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_RD",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_DLRD",
+          "value": 59,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_QDRD",
+          "value": 107,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_DLRD_HMP",
+          "value": 187,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_QDRD_HMP",
+          "value": 235,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_EXIT_HMP",
+          "value": 255,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_WR_OTP",
+          "value": 66,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_ER_OTP",
+          "value": 68,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_RD_OTP",
+          "value": 72,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_SUSPEND",
+          "value": 117,
+          "brief": ""
+        },
+        {
+          "name": "FSH_CMD_RESUME",
+          "value": 122,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\flash.h",
+      "line_number": 33
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

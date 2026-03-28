@@ -1,0 +1,66 @@
+{
+  "file_path": "./drivers\\api\\trim.h",
+  "functions": [
+    {
+      "name": "trim_load",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Load FT Trim.  *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\trim.h",
+      "line_number": 12,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "get_trim_rc16m_freq",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get RC16M Freq. ",
+      "detailed_description": "***************************************************************************************\n@return rc16m freq(unit:Hz).\n@note   0 is invalid freq.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\trim.h",
+      "line_number": 22,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "get_trim_vdd12_voltage",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get VDD12 Voltage. ",
+      "detailed_description": "***************************************************************************************\n@return vdd12 voltage(unit:mv).\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\trim.h",
+      "line_number": 31,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": []
+}

@@ -1,0 +1,1315 @@
+{
+  "btmr_delay": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "tick_delay": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "core_ldoset": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "core_ldoget": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "core_sleep": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "c2_core_sleep"
+    ]
+  },
+  "wakeup_io_sw": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "core_pwroff": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_STOP",
+      "ble_retain",
+      "BIT",
+      "BIT",
+      "pwroff_clk_sw"
+    ]
+  },
+  "core_release_io_latch": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "core_unique_id": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_rd_cfg",
+      "fshc_rd_fifo",
+      "xmemcpy",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "dma_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN",
+      "RCC_APBRST_REQ",
+      "DMA_CFG_HPROT"
+    ]
+  },
+  "dma_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "dma_chnl_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "dma_chnl_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "dma_chnl_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "DMA_CHNL_CTRL"
+    ]
+  },
+  "dma_chnl_reload": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "DMA_CHNL_CTRL",
+      "DMA_CHNL_CTRL",
+      "DMA_CHNL_CTRL"
+    ]
+  },
+  "dma_chnl_remain": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "DMA_CHNL_CTRL"
+    ]
+  },
+  "dma_chnl_remain_pingpong": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "DMA_CHNL_CTRL",
+      "DMA_CHNL_CTRL"
+    ]
+  },
+  "dma_chnl_ctrl": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "dma_chnl_done": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "exti_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "exti_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "exti_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "exti_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "puya_enter_dual_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_xip_conf",
+      "fshc_hpm_conf",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "puya_exit_dual_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_hpm_conf",
+      "fshc_xip_conf",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "boya_flash_quad_mode": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_rd_sta",
+      "fshc_en_cmd",
+      "fshc_wr_sta",
+      "rcc_sysclk_get",
+      "btmr_delay",
+      "FSHC_WAIT_COMPLETE",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "flash_write": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_write",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "flash_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_read",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "flash_page_erase": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_erase",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "flash_byte_write": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_en_cmd",
+      "fshc_wr_cfg",
+      "xmemcpy",
+      "xmemcpy",
+      "FSHC_WAIT_COMPLETE",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "flash_byte_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "FCM_GET_CMD",
+      "FCM_GET_MODE",
+      "SCTRL_RD_DAT",
+      "fshc_rd_cfg",
+      "fshc_rd_cfg",
+      "xmemcpy",
+      "xmemcpy",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "flash_size": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GLOBAL_INT_DISABLE",
+      "fshc_rd_sta",
+      "GLOBAL_INT_RESTORE"
+    ]
+  },
+  "fshc_en_cmd": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_wr_sta": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_rd_sta": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_wr_cfg": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_wr_fifo": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_rd_cfg": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_rd_fifo": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_xip_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_hpm_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_erase": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_write": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_cache_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "fshc_suspend_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "bits": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "i2c_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN",
+      "iom_ctrl",
+      "__NOP",
+      "__NOP",
+      "__NOP",
+      "__NOP",
+      "__NOP",
+      "__NOP",
+      "__NOP",
+      "__NOP",
+      "csc_output",
+      "csc_input",
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "iom_ctrl",
+      "I2C_ENABLE"
+    ]
+  },
+  "i2c_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "i2c_start": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "I2C_START",
+      "I2C_STAT_GET",
+      "I2C_STAT_GET",
+      "I2C_PUTC",
+      "I2C_STAT_GET"
+    ]
+  },
+  "i2c_stop": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "I2C_STOP"
+    ]
+  },
+  "i2c_send": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "I2C_PUTC",
+      "I2C_STAT_GET",
+      "I2C_STAT_GET"
+    ]
+  },
+  "i2c_recv": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "I2C_SET_ACK",
+      "I2C_SET_NAK",
+      "I2C_GETC",
+      "I2C_STAT_GET",
+      "I2C_STAT_GET"
+    ]
+  },
+  "i2c_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "i2c_start",
+      "i2c_recv",
+      "i2c_stop"
+    ]
+  },
+  "i2c_write": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "i2c_start",
+      "i2c_send",
+      "i2c_stop"
+    ]
+  },
+  "eeprom_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "i2c_start",
+      "I2C_PUTC",
+      "I2C_STAT_GET",
+      "I2C_PUTC",
+      "I2C_STAT_GET",
+      "i2c_start",
+      "I2C_SET_ACK",
+      "I2C_SET_NAK",
+      "I2C_GETC",
+      "I2C_STAT_GET",
+      "I2C_STAT_GET",
+      "i2c_send",
+      "i2c_start",
+      "i2c_recv",
+      "i2c_stop"
+    ]
+  },
+  "eeprom_write": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "i2c_start",
+      "I2C_PUTC",
+      "I2C_STAT_GET",
+      "I2C_PUTC",
+      "I2C_STAT_GET",
+      "I2C_PUTC",
+      "I2C_STAT_GET",
+      "I2C_STAT_GET",
+      "i2c_send",
+      "i2c_send",
+      "i2c_stop"
+    ]
+  },
+  "iocsc_uart": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "iocsc_uart_hwfc": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "iocsc_i2c": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "csc_output",
+      "csc_input",
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "iocsc_spim": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "csc_output",
+      "csc_input",
+      "csc_output",
+      "iom_ctrl",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "iocsc_spis": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "csc_input",
+      "csc_input",
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "iom_ctrl",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "iocsc_ctmr_chnl": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "csc_output",
+      "csc_input",
+      "iom_ctrl"
+    ]
+  },
+  "iocsc_observe": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "csc_output",
+      "iom_ctrl"
+    ]
+  },
+  "iospc_clkout": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "iom_ctrl"
+    ]
+  },
+  "iospc_usbpin": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "iospc_swdpin": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "iospc_rstpin": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "iwdt_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "iwdt_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS"
+    ]
+  },
+  "iwdt_feed": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "iwdt_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "pwm_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "TMR_USED",
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "pwm_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS",
+      "RCC_AHBRST_REQ"
+    ]
+  },
+  "pwm_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "TMR_USED"
+    ]
+  },
+  "pwm_start": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "TMR_USED"
+    ]
+  },
+  "pwm_stop": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "TMR_USED"
+    ]
+  },
+  "pwm_chnl_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "TMR_USED"
+    ]
+  },
+  "pwm_duty_upd": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "TMR_USED"
+    ]
+  },
+  "rcc_bus_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rcc_bus_enb": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rcc_bus_dis": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rcc_bus_rst": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rcc_adc_en": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rcc_ble_en": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "rcc_usb_en": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_AHBCLK_EN",
+      "RCC_AHBRST_REQ",
+      "GPIO_DIR_CLR",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "rcc_sysclk_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rcc_sysclk_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "DPLL_IS_48M"
+    ]
+  },
+  "rcc_sysclk_freq": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "DPLL_IS_48M"
+    ]
+  },
+  "rcc_fshclk_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rcc_fshclk_mhz": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "DPLL_IS_48M"
+    ]
+  },
+  "rcc_fshclk_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rc32k_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "rc32k_calib": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rc32k_trim_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "rc32k_trim_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "rc16m_trim_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "rc16m_trim_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "rc16m_calib": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "co_abs"
+    ]
+  },
+  "rtc_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN"
+    ]
+  },
+  "rtc_time_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rtc_time_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "alm_sec": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "alm_ms": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rtc_alarm_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rtc_alarm_get": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rtc_is_alarm": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rtc_irq_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "rtc_wkup_set": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "sadc_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_AHBCLK_DIS",
+      "RCC_AHBRST_REQ",
+      "RCC_AHBCLK_EN",
+      "sadc_calib"
+    ]
+  },
+  "sadc_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_AHBCLK_DIS",
+      "RCC_AHBRST_REQ"
+    ]
+  },
+  "sadc_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "sadc_read": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SADC_AFLG_CLR",
+      "SADC_AFLG_WAIT",
+      "SADC_AFLG_CLR",
+      "SADC_AFLG_CLR"
+    ]
+  },
+  "sadc_dma": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "sadc_pcm": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GPIO_DIR_CLR",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "sadc_atmr": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "sadc_rand_num": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SADC_AFLG_WAIT",
+      "sadc_calib"
+    ]
+  },
+  "sadc_temperature": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "rcc_sysclk_get",
+      "sadc_init",
+      "SADC_CLK_DIV_TEMP",
+      "sadc_calib"
+    ]
+  },
+  "spim_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_AHBCLK_EN",
+      "RCC_AHBRST_REQ",
+      "csc_output",
+      "csc_input",
+      "csc_output",
+      "iom_ctrl",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "spim_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "spim_begin": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SPIM_BGN"
+    ]
+  },
+  "spim_wait": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SPIM_WAIT"
+    ]
+  },
+  "spim_duplex": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SPIM_BGN",
+      "SPIM_WAIT"
+    ]
+  },
+  "spim_transimit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SPIM_BGN",
+      "SPIM_WAIT"
+    ]
+  },
+  "spim_receive": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SPIM_BGN",
+      "SPIM_WAIT"
+    ]
+  },
+  "spim_halfdx": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "SPIM_BGN",
+      "SPIM_WAIT"
+    ]
+  },
+  "spis_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_AHBCLK_EN",
+      "RCC_AHBRST_REQ",
+      "csc_input",
+      "csc_input",
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "iom_ctrl",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "spis_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "spis_getc": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "spis_putc": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "sysdbg_iomap": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "sysdbg_select": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "sysdbg_anatst": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "GPIO_DIR_CLR",
+      "iom_ctrl",
+      "GPIO_DIR_CLR",
+      "iom_ctrl"
+    ]
+  },
+  "ctmr_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "ctmr_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "ctmr_ctrl": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "atmr_init": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_EN",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "atmr_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "atmr_ctrl": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": []
+  },
+  "trim_load": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "iwdt_conf",
+      "RD_32",
+      "RD_32",
+      "RCC_APBCLK_EN",
+      "iwdt_conf"
+    ]
+  },
+  "get_trim_rc16m_freq": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RD_32"
+    ]
+  },
+  "get_trim_vdd12_voltage": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RD_32"
+    ]
+  },
+  "uart_init": {
+    "pre_requisites": [
+      "RCC_EnablePeriphClock"
+    ],
+    "requires_peripheral_clock": true,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "iom_ctrl",
+      "iom_ctrl",
+      "csc_output",
+      "csc_input",
+      "RCC_APBCLK_EN",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "uart_deinit": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "RCC_APBCLK_DIS",
+      "RCC_APBRST_REQ"
+    ]
+  },
+  "uart_hwfc": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR",
+      "csc_output",
+      "csc_input",
+      "iom_ctrl",
+      "iom_ctrl"
+    ]
+  },
+  "uart_conf": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR"
+    ]
+  },
+  "uart_fctl": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR"
+    ]
+  },
+  "uart_mctl": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR"
+    ]
+  },
+  "uart_putc": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR"
+    ]
+  },
+  "uart_getc": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR"
+    ]
+  },
+  "uart_wait": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR"
+    ]
+  },
+  "uart_send": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR"
+    ]
+  },
+  "uart_update_baud": {
+    "pre_requisites": [],
+    "requires_peripheral_clock": false,
+    "requires_gpio_config": false,
+    "calls_in_implementation": [
+      "UART_PTR",
+      "iom_ctrl",
+      "RCC_APBCLK_DIS",
+      "RCC_APBRST_REQ",
+      "RCC_APBCLK_EN",
+      "iom_ctrl"
+    ]
+  }
+}

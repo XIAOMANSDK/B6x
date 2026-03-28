@@ -222,7 +222,7 @@ uint16_t crc16_dnp(uint8_t *data, ulen_t length);
 * Refin:   True
 * Refout:  True
 * Xorout:  0x000000
-* Alias:   CRC-24/OPENPGP 
+* Alias:   CRC-24/OPENPGP
 *****************************************************************************/
 uint32_t crc24(uint8_t *data, ulen_t length);
 

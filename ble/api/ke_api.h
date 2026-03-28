@@ -98,7 +98,7 @@ void ke_state_set(task_id_t task, state_t state);
  * @return The pointer to the message
  ****************************************************************************************
  */
-__INLINE__ struct msg_elem * ke_param2msg(const void *param_ptr)
+__STATIC_FORCEINLINE struct msg_elem * ke_param2msg(const void *param_ptr)
 {
     return (struct msg_elem*) (((uint8_t*)param_ptr) - offsetof(struct msg_elem, param));
 }
@@ -112,7 +112,7 @@ __INLINE__ struct msg_elem * ke_param2msg(const void *param_ptr)
  * @return The pointer to the param member
  ****************************************************************************************
  */
-__INLINE__ void * ke_msg2param(struct msg_elem const *msg)
+__STATIC_FORCEINLINE void * ke_msg2param(struct msg_elem const *msg)
 {
     return (void*) (((uint8_t*) msg) + offsetof(struct msg_elem, param));
 }

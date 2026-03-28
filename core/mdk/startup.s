@@ -75,7 +75,7 @@ Reset_Handler   PROC
                 IMPORT  __main
                 IMPORT  core_vector
                 IMPORT  trim_load
-                    
+
                 ;#ifndef CACHE_USE_SRAM
                 IF      :LNOT::DEF:CACHE_USE_SRAM
                 ;cache cfg

@@ -12,7 +12,7 @@
 #include "string.h"
 #include "b6x.h"
 #include "sftmr.h"
-
+#include "cmsis_compiler.h"
 
 /*
  * DEFINITIONS
@@ -59,7 +59,7 @@ typedef struct sftmr_env_tag
     volatile tmr_tk_t ticks;
     // timer field of each instance
     uint16_t field;
-    
+
     // timer tables of func and time
     tmr_cb_t func[SFTMR_NUM];
     tmr_tk_t time[SFTMR_NUM];
@@ -77,13 +77,13 @@ static struct sftmr_env_tag sftmr_env;
 /// Interrupt Mode Timer (SysTick, )
 #if ((SFTMR_SRC == TMS_CTMR) || (SFTMR_SRC == TMS_SysTick))
 
-static __forceinline void _timer_irq(void)
+__STATIC_FORCEINLINE void _timer_irq(void)
 {
     ++sftmr_env.ticks;
     sftmr_env.field |= TMR_SRC_IFLG_BIT;
 }
 
-static __forceinline bool _timer_arise(void)
+__STATIC_FORCEINLINE bool _timer_arise(void)
 {
     if (sftmr_env.field & TMR_SRC_IFLG_BIT)
     {
@@ -98,14 +98,14 @@ static __forceinline bool _timer_arise(void)
 
 /// CTMR prescaler and Auto-reload value
 #if !defined(TMS_CTMR_PSC)
-    #define TMS_CTMR_PSC        (159) // 159=(16MHz/100000 - 1), 10us
+    #define TMS_CTMR_PSC        (((SYS_CLK + 1) * 160) - 1) // 159=(16MHz/100000 - 1), 10us
 #endif
 #if !defined(TMS_CTMR_ARR)
-    #define TMS_CTMR_ARR        (999) // 999=(1000 - 1), 1000x10us=10ms
+    #define TMS_CTMR_ARR        (1000 - 1) // 999=(1000 - 1), 1000x10us=10ms
 #endif
 
 //  configure as auto-reload and update interrupt
-static __forceinline void _timer_init(void)
+__STATIC_FORCEINLINE void _timer_init(void)
 {
     ctmr_init(TMS_CTMR_PSC, TMS_CTMR_ARR);
     ctmr_ctrl(TMR_PERIOD_MODE, TMR_IR_UI_BIT);
@@ -116,16 +116,16 @@ static __forceinline void _timer_init(void)
 void CTMR_IRQHandler(void)
 {
     // Disable UI Interrupt
-   CTMR->IDR.Word = TMR_IR_UI_BIT; 
-    
+   CTMR->IDR.Word = TMR_IR_UI_BIT;
+
     if (CTMR->RIF.Word & TMR_IR_UI_BIT)
     {
         // Clear Interrupt Flag
-        CTMR->ICR.Word = TMR_IR_UI_BIT; 
+        CTMR->ICR.Word = TMR_IR_UI_BIT;
 
         _timer_irq();
     }
-    
+
     // Enable UI Interrupt
     CTMR->IER.Word = TMR_IR_UI_BIT;
 }
@@ -133,11 +133,11 @@ void CTMR_IRQHandler(void)
 #elif (SFTMR_SRC == TMS_SysTick)
 
 #if !defined(TMS_SysTick_ARR)
-    #define TMS_SysTick_ARR     (16 * 10000) // 10ms(16MHz CLK)
+    #define TMS_SysTick_ARR     (16 * (SYS_CLK + 1) * 10000) // 10ms
 #endif
 
 // SysTick configure
-static __forceinline void _timer_init(void)
+__STATIC_FORCEINLINE void _timer_init(void)
 {
     SysTick_Config(TMS_SysTick_ARR);
 }
@@ -154,13 +154,13 @@ void SysTick_Handler(void)
 #if (SFTMR_SRC == TMS_BLE)
 #include "bledef.h"
 
-static __forceinline uint16_t _timer_tick(void)
+__STATIC_FORCEINLINE uint16_t _timer_tick(void)
 {
     // 10ms = 312.5us * 32
     return (uint16_t)((ble_time_get() + 16) >> 5);
 }
 
-static __forceinline void _timer_init(void)
+__STATIC_FORCEINLINE void _timer_init(void)
 {
     // Must Call ble_init() before here!
 
@@ -171,14 +171,14 @@ static __forceinline void _timer_init(void)
 #elif (SFTMR_SRC == TMS_RTC)
 #include "rtc.h"
 
-static __forceinline uint16_t _timer_tick(void)
+__STATIC_FORCEINLINE uint16_t _timer_tick(void)
 {
     rtc_time_t time = rtc_time_get();
 
     return (uint16_t)((time.sec * 1000 + time.ms) / TMR_UINT);
 }
 
-static __forceinline void _timer_init(void)
+__STATIC_FORCEINLINE void _timer_init(void)
 {
     // Enable RTC first
     rtc_conf(true);
@@ -188,7 +188,7 @@ static __forceinline void _timer_init(void)
 }
 #endif
 
-static __forceinline bool _timer_arise(void)
+__STATIC_FORCEINLINE bool _timer_arise(void)
 {
     uint16_t ticks = _timer_tick();
 
@@ -214,7 +214,7 @@ void sftmr_init(void)
     // clear env
     sftmr_env.ticks = 0;
     sftmr_env.field = 0;
-    
+
     // init timer
     _timer_init();
 }
@@ -228,7 +228,7 @@ void sftmr_schedule(void)
     if (sftmr_env.field)
     {
         tmr_tk_t now = sftmr_env.ticks;
-        
+
         for (tmr_id_t idx = 0; idx < SFTMR_NUM; idx++)
         {
             if (sftmr_env.field & (1 << idx))
@@ -237,7 +237,7 @@ void sftmr_schedule(void)
                 if ((sftmr_env.func[idx] != NULL) && (TMR_TICK_OUT(now, sftmr_env.time[idx])))
                 {
                     tmr_tk_t delay = (sftmr_env.func[idx])(idx + 1);
-                    
+
                     if (delay > 0)
                     {
                         // continue mode, reload
@@ -256,7 +256,7 @@ void sftmr_schedule(void)
 }
 
 /// Find free/unused timer
-static __forceinline tmr_id_t find_free_tmr(void)
+__STATIC_FORCEINLINE tmr_id_t find_free_tmr(void)
 {
     for (tmr_id_t idx = 0; idx < SFTMR_NUM; idx++)
     {
@@ -273,13 +273,13 @@ static __forceinline tmr_id_t find_free_tmr(void)
 tmr_id_t sftmr_start(tmr_tk_t delay, tmr_cb_t func)
 {
     tmr_id_t tmr_id = find_free_tmr();
-    
+
     if (func && tmr_id)
     {
         tmr_id_t idx = tmr_id - 1;
 
         TMR_TK_RANGE(delay);
-        
+
         // set delay time, enable timer
         sftmr_env.func[idx] = func;
         sftmr_env.time[idx] = TMR_TICK_ADD(sftmr_env.ticks, delay);
@@ -295,7 +295,7 @@ void sftmr_clear(tmr_id_t tmr_id)
     if (TMR_ID_VALID(tmr_id))
     {
         tmr_id_t idx = tmr_id - 1;
-        
+
         sftmr_env.field    &= ~(1 << idx);
         sftmr_env.func[idx] = NULL;
     }
@@ -310,8 +310,8 @@ tmr_tk_t sftmr_tick(void)
 /// Blocking to wait 'delay' ticks arrived
 void sftmr_wait(tmr_tk_t delay)
 {
-    tmr_tk_t time = TMR_TICK_ADD(sftmr_env.ticks, delay);    
-    
+    tmr_tk_t time = TMR_TICK_ADD(sftmr_env.ticks, delay);
+
     // Wait time arrived, should keep schedule
     while (!TMR_TICK_OUT(sftmr_env.ticks, time))
     {

@@ -15,7 +15,7 @@
 
 #if (DBG_GAPM)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -29,6 +29,7 @@
 
 APP_MSG_HANDLER(gapm_cmp_evt)
 {
+    (void)msgid;(void)dest_id;(void)src_id;
     if (param->operation == GAPM_RESET)
     {
         DEBUG("Reset(sta:0x%02X)", param->status);
@@ -60,6 +61,7 @@ APP_MSG_HANDLER(gapm_cmp_evt)
 #if (APP_ACTV_EN)
 APP_MSG_HANDLER(gapm_activity_created_ind)
 {
+    (void)msgid;(void)dest_id;(void)src_id;
     DEBUG("Actv Created(id:%d,typ:%d)", param->actv_idx, param->actv_type);
 
     app_actv_created_ind(param->actv_type, param->actv_idx);
@@ -67,6 +69,7 @@ APP_MSG_HANDLER(gapm_activity_created_ind)
 
 APP_MSG_HANDLER(gapm_activity_stopped_ind)
 {
+    (void)msgid;(void)dest_id;(void)src_id;
     DEBUG("Actv Stopped(id:%d,typ:%d,rea:0x%02X)", param->actv_idx, param->actv_type, param->reason);
 
     app_actv_stopped_ind(param->actv_type, param->actv_idx, param->reason);
@@ -75,6 +78,7 @@ APP_MSG_HANDLER(gapm_activity_stopped_ind)
 #if (BLE_EN_SCAN)
 APP_MSG_HANDLER(gapm_ext_adv_report_ind)
 {
+    (void)msgid;(void)dest_id;(void)src_id;
     DEBUG("Scanned(id:%d,info:0x%02x,Addr{T:%d},Data{L:%d})", param->actv_idx, param->info,
         param->trans_addr.addr_type, param->length);
     debugHex((uint8_t *)(&param->trans_addr), sizeof(struct gap_bdaddr));
@@ -89,6 +93,7 @@ APP_MSG_HANDLER(gapm_ext_adv_report_ind)
 #if (DBG_GAPM)
 APP_MSG_HANDLER(gapm_scan_request_ind)
 {
+    (void)msgid;(void)dest_id;(void)src_id;
     DEBUG("Scan request(id:%d,Addr{T:%d})", param->actv_idx, param->trans_addr.addr_type);
     debugHex((uint8_t *)(&param->trans_addr), sizeof(struct gap_bdaddr));
 }

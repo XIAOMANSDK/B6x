@@ -26,7 +26,7 @@ __Vectors       DCD     __initial_sp           ; 0,  load top of stack
                 DCD     NMI_Handler            ; 2,  NMI Handler
                 DCD     HardFault_Handler      ; 3,  Hard Fault Handler
                 DCD     0x18004000             ; LDR_RUN_ADDR
-                DCD     0x18020000             ; LDR_INFO_ADDR
+                DCD     0x18001F00             ; LDR_INFO_ADDR
 
 __Vectors_End
 

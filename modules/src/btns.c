@@ -13,6 +13,7 @@
 #include "sftmr.h"
 #include "gpio.h"
 #include "btns.h"
+#include "cmsis_compiler.h"
 
 
 /*
@@ -21,7 +22,7 @@
  */
 
 /// iopad of Btns, total number NB_BTNS not excced 8.
-const uint8_t PA_BTNS[] = 
+const uint8_t PA_BTNS[] =
 {
     PA14,  // btn0
     PA15,  // btn1
@@ -69,7 +70,7 @@ typedef struct btn_env_tag {
     uint8_t    level;   // gpio val
     uint8_t    keys;    // real keys
     uint8_t    trig;    // trigger
-    btn_sta_t  state[NB_BTNS]; 
+    btn_sta_t  state[NB_BTNS];
 } btn_env_t;
 
 /// global variables
@@ -81,10 +82,10 @@ static btn_env_t btn_env;
  ****************************************************************************************
  */
 
-static __forceinline void btns_io_init(void)
+__STATIC_FORCEINLINE void btns_io_init(void)
 {
     GPIO_DIR_CLR(IO_BTNS); // OE=0
-    
+
     // enable input mode
     for (uint8_t n = 0; n < NB_BTNS; n++)
     {
@@ -92,7 +93,7 @@ static __forceinline void btns_io_init(void)
     }
 }
 
-static __forceinline uint8_t btns_get_level(void)
+__STATIC_FORCEINLINE uint8_t btns_get_level(void)
 {
     uint8_t level = 0;
     uint32_t iostat = GPIO_PIN_GET() & IO_BTNS;
@@ -104,14 +105,14 @@ static __forceinline uint8_t btns_get_level(void)
             level |= BTN(n);
         }
     }
-    
+
     return level;
 }
 
 static void btns_scan(void)
 {
     uint8_t level, keys;
-    
+
     // debounce
     level = btns_get_level(); // gpio value
     keys  = (level & btn_env.level) | ((level ^ btn_env.level) & btn_env.keys); // real value
@@ -120,7 +121,7 @@ static void btns_scan(void)
     btn_env.trig  = keys ^ btn_env.keys;
     btn_env.keys  = keys;
     btn_env.level = level;
-        
+
     for (uint8_t n = 0; n < NB_BTNS; n++)
     {
         if (btn_env.keys & BTN(n)) // key press
@@ -130,7 +131,7 @@ static void btns_scan(void)
                 #if (TRIG_BTN)
                 btn_env.func(n, BTN_PRESS);
                 #endif
-                
+
                 #if (DCLK_BTN)
                 if (btn_env.state[n].event == BTN_CLICK)
                 {
@@ -173,7 +174,7 @@ static void btns_scan(void)
                 #if (TRIG_BTN)
                 btn_env.func(n, BTN_RELEASE);
                 #endif
-                
+
                 #if (DCLK_BTN)
                 if (btn_env.state[n].event == BTN_DCLICK)
                 {
@@ -197,9 +198,10 @@ static void btns_scan(void)
 
 static tmr_tk_t btns_timer_handler(tmr_id_t id)
 {
+    (void)id;
     // peroid scan
     btns_scan();
-    
+
     return SCAN_INTV;
 }
 
@@ -209,11 +211,11 @@ void btns_conf(btn_func_t hdl)
     if (btn_env.tmrid != TMR_ID_NONE)
     {
         sftmr_clear(btn_env.tmrid);
-        
+
         memset(&btn_env, 0, sizeof(btn_env_t));
         //btn_env.tmrid = TMR_ID_NONE;
     }
-    
+
     if (hdl)
     {
         // update handler, start timer

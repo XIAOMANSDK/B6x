@@ -38,7 +38,6 @@ static void sysInit(void)
     rcc_adc_en();
 
     rcc_fshclk_set(FSH_CLK_DPSC42);
-    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x22;
 }
 
 static void devInit(void)
@@ -50,8 +49,7 @@ static void devInit(void)
 
     // Init BLE App
     app_init(rsn);
-
-    rf_pa_set(0x0C);
+    
     #if (LED_PLAY)
     sftmr_init();
     leds_init();

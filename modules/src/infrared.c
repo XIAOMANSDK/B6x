@@ -3,7 +3,7 @@
 
 #if (DBG_IR)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -38,7 +38,7 @@
 #define IR_TX_PWM_TMR_ARR      (210 - 1)  // 38KHz 重载值
 #define IR_TX_PWM_TMR_00P      0          // 38KHz 占空比0%
 #define IR_TX_PWM_TMR_50P      106        // 38KHz 占空比50%
-#define IR_TX_PWM_TMR_REP      20         // 38KHz 周期计数26.256us*21 = 560us 
+#define IR_TX_PWM_TMR_REP      20         // 38KHz 周期计数26.256us*21 = 560us
 
 #define IR_TX_HDL_LEN          16
 #define IR_TX_HDH_LEN          8
@@ -50,7 +50,7 @@
 #define IR_TX_REP_LEN         (IR_TX_HDL_LEN + IR_TX_HDH_LEN)
 
 /* 红外编码,对应的比较值结构体 */
-typedef struct 
+typedef struct
 {
     uint8_t HDL[IR_TX_HDL_LEN];   // 引导码L 9ms=560us*16
     uint8_t HDH[IR_TX_HDH_LEN];   // 引导码H 4.5ms=560us*8
@@ -74,12 +74,12 @@ static void PwmInit(void)
 
     iom_ctrl(IR_TX_PAD, IOM_SEL_TIMER);
     pwm_init(PWM_ATMR, IR_TX_PWM_TMR_PSC, IR_TX_PWM_TMR_ARR);
-    
+
     pwm_chnl_cfg_t chnl_conf;
     chnl_conf.duty = 0;
-    
+
     #if (IR_TX_IDLE_LEVEL)
-        chnl_conf.ccer = PWM_CCER_SIPL | PWM_CCxDE_BIT; // DMA_EN    
+        chnl_conf.ccer = PWM_CCER_SIPL | PWM_CCxDE_BIT; // DMA_EN
     #else
         chnl_conf.ccer = PWM_CCER_SIPH | PWM_CCxDE_BIT; // DMA_EN
     #endif
@@ -89,7 +89,7 @@ static void PwmInit(void)
 
     pwm_start(PWM_ATMR);
     ATMR->DMAEN.UDE = 1;
-    
+
     IR_DMA_ATMR_CHx_INIT(IR_TX_PWM_DMA_CHNL);
 
     ATMR->CR1.URS = 1;
@@ -100,12 +100,12 @@ static void PwmInit(void)
 void irDataInit(void)
 {
     uint8_t addrIdx = 0;
-    
+
     DEBUG("SIZI:%d : %d : %d", sizeof(IR_TX.ADR), sizeof(IR_TX), __builtin_popcount(IR_TX_ADR));
 
     memset(IR_TX.HDL, IR_TX_PWM_TMR_50P, IR_TX_HDL_LEN);
     memset(IR_TX.HDH, IR_TX_PWM_TMR_00P, IR_TX_HDH_LEN);
-    
+
     IR_TX.END[0] = IR_TX_PWM_TMR_50P;
     IR_TX.END[1] = IR_TX_PWM_TMR_00P;
 
@@ -126,7 +126,7 @@ void irDataInit(void)
             IR_TX.ADR[addrIdx++] = IR_TX_PWM_TMR_00P;
         }
     }
-    
+
 //    // 地址反码
 //    for(uint8_t idx = 0; idx < 8; idx++)
 //    {
@@ -151,7 +151,7 @@ void irDataInit(void)
 void irCmdSet(uint8_t cmd)
 {
     uint8_t cmdIdx = 0;
-    
+
     for(uint8_t idx = 0; idx < 8; idx++)
     {
         if (cmd & (1 << idx))
@@ -169,7 +169,7 @@ void irCmdSet(uint8_t cmd)
             IR_TX.CMD[cmdIdx++] = IR_TX_PWM_TMR_00P;
         }
     }
-    
+
     // CMD反码
     for(uint8_t idx = 0; idx < 8; idx++)
     {
@@ -217,4 +217,3 @@ void irInit(void)
     PwmInit();
     irDataInit();
 }
-

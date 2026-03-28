@@ -54,6 +54,7 @@ typedef struct mm_genc_poo_env
 __STATIC void mm_genc_poo_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                 mm_route_env_t *p_route_env)
 {
+    (void)p_env;
     if (p_route_env->opcode == MM_MSG_GEN_ONPUP_STATUS)
     {
         // Get pointer to data
@@ -79,6 +80,7 @@ __STATIC void mm_genc_poo_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_genc_poo_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if (opcode == MM_MSG_GEN_ONPUP_STATUS)
@@ -106,6 +108,7 @@ __STATIC uint8_t mm_genc_poo_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcod
 __STATIC uint8_t mm_genc_poo_cb_get(mm_mdl_env_t *p_env, m_lid_t app_key_lid, uint16_t dst, \
                                      uint16_t get_info)
 {
+    (void)get_info;
     uint8_t status = MESH_ERR_NO_ERROR;
     // Pointer to the buffer that will contain the message
     mesh_buf_t *p_buf_get = mm_route_buf_alloc(0);
@@ -151,6 +154,7 @@ __STATIC uint8_t mm_genc_poo_cb_set(mm_mdl_env_t *p_env, m_lid_t app_key_lid, ui
                                      uint32_t state_1, uint32_t state_2,
                                      uint16_t set_info)
 {
+    (void)state_2;
     uint8_t status = MESH_ERR_NO_ERROR;
     // Pointer to the buffer that will contain the message
     mesh_buf_t *p_buf_set = mm_route_buf_alloc(MM_GEN_POO_SET_LEN);
@@ -191,7 +195,7 @@ __STATIC uint8_t mm_genc_poo_cb_set(mm_mdl_env_t *p_env, m_lid_t app_key_lid, ui
  ****************************************************************************************
  */
 
-__STATIC mm_cli_cb_t mm_genc_poo_cb = 
+__STATIC mm_cli_cb_t mm_genc_poo_cb =
 {
     .cb_get = mm_genc_poo_cb_get,
     .cb_set = mm_genc_poo_cb_set,

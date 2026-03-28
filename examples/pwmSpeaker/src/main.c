@@ -22,9 +22,10 @@ extern void speakerPlay(void);
 static void sysInit(void)
 {
     // Todo config, if need
-//    boya_flash_quad_mode();
-    
     SYS_CLK_ALTER();
+    rcc_fshclk_set(FSH_CLK_DPSC64);
+    boya_flash_quad_mode();
+    boya_enter_hpm();
 }
 
 static void devInit(void)

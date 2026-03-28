@@ -1,0 +1,301 @@
+{
+  "file_path": "./drivers\\src\\iopad.c",
+  "functions": [
+    {
+      "name": "iom_ctrl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    IOM_CTRL(pad, ctrl);  // CSC_PIO[pad]：配置IO引脚模式控制寄存器\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 42,
+      "is_static": false
+    },
+    {
+      "name": "csc_input",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    CSC_INPUT(pad, fsel);  // CSC_INPUT[fsel]：配置功能fsel的输入连接到pad引脚\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 57,
+      "is_static": false
+    },
+    {
+      "name": "csc_output",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    CSC_OUTPUT(pad, fsel);  // CSC_OUTPUT[pad]：配置pad引脚的输出功能为fsel\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 72,
+      "is_static": false
+    },
+    {
+      "name": "iocsc_uart",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint8_t fsel_add = port * 2; // 计算功能编号偏移量：UART1=0, UART2=2\n\n    // CSC输出和输入配置\n    csc_output(pad_tx, CSC_UART1_TXD + fsel_add);  // 配置TXD输出功能\n    csc_input(pad_rx,  CSC_UART1_RXD + fsel_add);  // 配置RXD输入功能\n\n    // IO模式控制：TXD配置为CSC功能、上拉、驱动等级1；RXD配置为CSC功能、上拉、输入模式\n    iom_ctrl(pad_tx, IOM_SEL_CSC | IOM_PULLUP | IOM_DRV_LVL1);\n    iom_ctrl(pad_rx, IOM_SEL_CSC | IOM_PULLUP | IOM_INPUT);\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 85,
+      "is_static": false
+    },
+    {
+      "name": "iocsc_uart_hwfc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint8_t fsel_add = port; // 计算功能编号偏移量：UART1=0, UART2=1\n\n    // CSC输出和输入配置\n    csc_output(pad_rts, CSC_UART1_RTS + fsel_add);  // 配置RTS输出功能\n    csc_input(pad_cts,  CSC_UART1_CTS + fsel_add);  // 配置CTS输入功能\n\n    // IO模式控制：RTS配置为CSC功能、驱动等级1、上拉；CTS配置为CSC功能、上拉、输入模式\n    iom_ctrl(pad_rts, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP);\n    iom_ctrl(pad_cts, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 105,
+      "is_static": false
+    },
+    {
+      "name": "iocsc_i2c",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // CSC输出和输入配置：I2C引脚需要同时配置输入和输出功能\n    csc_output(pad_scl, CSC_I2C_SCL);  // 配置SCL输出功能\n    csc_input(pad_scl,  CSC_I2C_SCL);  // 配置SCL输入功能\n    csc_output(pad_sda, CSC_I2C_SDA);  // 配置SDA输出功能\n    csc_input(pad_sda,  CSC_I2C_SDA);  // 配置SDA输入功能\n\n    // IO模式控制：配置为CSC功能、驱动等级1、上拉、输入模式、开漏输出\n    iom_ctrl(pad_scl, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN);\n    iom_ctrl(pad_sda, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN);\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 124,
+      "is_static": false
+    },
+    {
+      "name": "iocsc_spim",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // CSC连接配置\n    csc_output(pad_clk,  CSC_SPIM_CLK);   // 配置CLK输出功能\n    csc_input(pad_miso,  CSC_SPIM_MISO);  // 配置MISO输入功能\n    csc_output(pad_mosi, CSC_SPIM_MOSI);  // 配置MOSI输出功能\n\n    // IO模式控制：CLK和MOSI配置为输出，MISO配置为输入\n    iom_ctrl(pad_clk,  IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP);\n    iom_ctrl(pad_miso, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);\n    iom_ctrl(pad_mosi, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP);\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 144,
+      "is_static": false
+    },
+    {
+      "name": "iocsc_spis",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // CSC连接配置\n    csc_input(pad_cs,    CSC_SPIS_CSN);   // 配置CS输入功能\n    csc_input(pad_clk,   CSC_SPIS_CLK);   // 配置CLK输入功能\n    csc_output(pad_miso, CSC_SPIS_MISO);  // 配置MISO输出功能\n    csc_input(pad_mosi,  CSC_SPIS_MOSI);  // 配置MOSI输入功能\n\n    // IO模式控制：CS、CLK、MOSI配置为输入，MISO配置为输出\n    iom_ctrl(pad_cs,   IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);\n    iom_ctrl(pad_clk,  IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);\n    iom_ctrl(pad_miso, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP);\n    iom_ctrl(pad_mosi, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 165,
+      "is_static": false
+    },
+    {
+      "name": "iocsc_ctmr_chnl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    if (pad_ch1 < PA_MAX)\n    {\n        // CSC输出和输入配置：CTMR通道需要同时配置输入和输出功能\n        csc_output(pad_ch1, CSC_CTMR_CH1);  // 配置CH1输出功能\n        csc_input(pad_ch1,  CSC_CTMR_CH1);  // 配置CH1输入功能\n        // IO模式控制：配置为CSC功能、驱动等级1、上拉、输入模式\n        iom_ctrl(pad_ch1, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT);\n    }\n\n    if (pad_ch2 < PA_MAX)\n    {\n        csc_output(pad_ch2, CSC_CTMR_CH2);  // 配置CH2输出功能\n        csc_input(pad_ch2,  CSC_CTMR_CH2);  // 配置CH2输入功能\n        iom_ctrl(pad_ch2, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT);\n    }\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 186,
+      "is_static": false
+    },
+    {
+      "name": "iocsc_observe",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    csc_output(pad, fsel);  // 配置模拟观察输出功能\n    iom_ctrl(pad, IOM_SEL_CSC | IOM_DRV_LVL1);  // 配置为CSC功能、驱动等级1\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 211,
+      "is_static": false
+    },
+    {
+      "name": "iospc_clkout",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 如果DPLL2启用，配置DPLL2输出48MHz时钟\n    if (APBMISC->DPLL_CTRL.DPLL2_EN)\n    {\n        APBMISC->DPLL_CTRL.DPLL2_EN_CLK48M = 1;  // DPLL_CTRL：启用DPLL2的48MHz时钟输出\n    }\n\n    // 配置时钟输出选择\n    RCC->CFG.MCO_SW = clk;  // CFG：选择主时钟输出源\n    // 配置PA05为特殊功能模式、驱动等级1\n    iom_ctrl(PA_CLKOUT, IOM_SEL_SPECL | IOM_DRV_LVL1);\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 222,
+      "is_static": false
+    },
+    {
+      "name": "iospc_usbpin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 清除USB引脚的方向寄存器，配置为输入\n    GPIO->DIR_CLR = (1UL << PA_USB_DP) | (1UL << PA_USB_DM);  // DIR_CLR：配置为输入方向\n\n    // 配置USB引脚为高阻模式\n    iom_ctrl(PA_USB_DP, IOM_HIZ);  // 配置USB DP引脚为高阻\n    iom_ctrl(PA_USB_DM, IOM_HIZ);  // 配置USB DM引脚为高阻\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 240,
+      "is_static": false
+    },
+    {
+      "name": "iospc_swdpin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 配置SWCLK为特殊功能、输入模式、下拉\n    iom_ctrl(PA_SWCLK, IOM_SEL_SPECL | IOM_INPUT | IOM_PULLDOWN);\n    // 配置SWDIO为特殊功能、输入模式、上拉\n    iom_ctrl(PA_SWDIO, IOM_SEL_SPECL | IOM_INPUT | IOM_PULLUP);\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 254,
+      "is_static": false
+    },
+    {
+      "name": "iospc_rstpin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    AON->BKHOLD_CTRL.PIOA19_FUNC_SEL = as_gpio;  // BKHOLD_CTRL：配置PIOA19功能选择\n}",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 267,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "CSC_FEN_BIT",
+      "value": "(1UL << 7)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\src\\iopad.c",
+      "line_number": 26
+    }
+  ],
+  "parse_errors": []
+}

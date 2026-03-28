@@ -23,7 +23,7 @@ usbd_hid_t *find_hid_by_intf(uint8_t intf_num)
             return &usbd_hids[i];
         }
     }
-    
+
     return NULL;
 }
 
@@ -35,7 +35,7 @@ usbd_hid_t *find_hid_by_ep(uint8_t ep_addr)
             return &usbd_hids[i];
         }
     }
-    
+
     return NULL;
 }
 
@@ -79,20 +79,20 @@ __WEAK void usbd_hid_leds(uint8_t state)
 uint8_t usbd_hid_send_report(uint8_t ep, uint8_t len, const uint8_t *data)
 {
     uint8_t status = USBD_FAIL;
-    
+
     if (usbd_is_configured()) {
         usbd_hid_t *curr_hid = find_hid_by_ep(ep);
-        
+
         if (curr_hid && (curr_hid->hid_state == HID_STATE_IDLE)) {
             curr_hid->hid_state = HID_STATE_BUSY; // Update before isr occure
-            
+
             status = usbd_ep_write(ep, len, data, NULL);
             if (status != USBD_OK) {
                 curr_hid->hid_state = HID_STATE_IDLE; // fail to recover
             }
         }
     }
-    
+
     return status;
 }
 
@@ -119,14 +119,14 @@ uint8_t usbd_hid_class_handler(struct usb_setup_packet *setup, uint8_t **data, u
 {
     uint8_t intf_num;
     usbd_hid_t *curr_hid;
-    
+
     if ((setup->bmRequestType & USB_REQUEST_RECIP_MASK) != USB_REQUEST_RECIP_INTERFACE) {
         return USBD_FAIL;
     }
-    
+
     intf_num = (uint8_t)setup->wIndex;
     curr_hid = find_hid_by_intf(intf_num);
-    
+
     if (!curr_hid) {
         return USBD_FAIL;
     }
@@ -142,14 +142,14 @@ uint8_t usbd_hid_class_handler(struct usb_setup_packet *setup, uint8_t **data, u
                     *len = curr_hid->hid_intf->desc_size;
                     *data = (uint8_t *)curr_hid->hid_intf->report_desc;
                 }
-                return USBD_OK; 
+                return USBD_OK;
             }
         }
-        
+
         return USBD_FAIL;
     }
-    
-    // Class Request - HID Get/Set   
+
+    // Class Request - HID Get/Set
     switch (setup->bRequest) {
         case HID_REQUEST_GET_REPORT:
         {
@@ -158,7 +158,7 @@ uint8_t usbd_hid_class_handler(struct usb_setup_packet *setup, uint8_t **data, u
             *data = (uint8_t *)&curr_hid->report;
             *len = 1;
         } break;
-        
+
         case HID_REQUEST_GET_IDLE:
         {
             USB_LOG_DBG("HID Get_Idle(report_id:%d)\r\n", LO_BYTE(setup->wValue));
@@ -166,7 +166,7 @@ uint8_t usbd_hid_class_handler(struct usb_setup_packet *setup, uint8_t **data, u
             *data = (uint8_t *)&curr_hid->idle_state;
             *len = 1;
         } break;
-        
+
         case HID_REQUEST_GET_PROTOCOL:
         {
             USB_LOG_DBG("HID Get_Protocol\r\n");
@@ -174,25 +174,25 @@ uint8_t usbd_hid_class_handler(struct usb_setup_packet *setup, uint8_t **data, u
             *data = (uint8_t *)&curr_hid->protocol;
             *len = 1;
         } break;
-        
+
         case HID_REQUEST_SET_REPORT:
         {
-            USB_LOG_DBG("HID Set_Report(report_id:%d,report_type:%d,report_len:%d,report_data:%02X)\r\n", 
+            USB_LOG_DBG("HID Set_Report(report_id:%d,report_type:%d,report_len:%d,report_data:%02X)\r\n",
                             LO_BYTE(setup->wValue), HI_BYTE(setup->wValue), *len, (*data)[0]);
-            
+
             if (*len == 1) {
                 curr_hid->report = (*data)[0];
                 usbd_hid_leds((*data)[0]);
             }
         } break;
-        
+
         case HID_REQUEST_SET_IDLE:
         {
             USB_LOG_DBG("HID Set_Idle(report_id:%d,duration:%d)\r\n", LO_BYTE(setup->wValue), HI_BYTE(setup->wIndex));
 
             curr_hid->idle_state = HI_BYTE(setup->wIndex);
         } break;
-        
+
         case HID_REQUEST_SET_PROTOCOL:
         {
             USB_LOG_DBG("HID Set_Protocol(%d)\r\n", LO_BYTE(setup->wValue)); /*protocol*/

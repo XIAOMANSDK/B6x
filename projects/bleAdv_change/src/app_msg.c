@@ -15,7 +15,7 @@
 
 #if (DBG_APP)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -42,15 +42,16 @@ extern APP_SUBTASK_HANDLER(mesh_msg);
 
 /**
  ****************************************************************************************
- * @brief SubTask Handler of Custom or Unknow Message. (__weak func)
+ * @brief SubTask Handler of Custom or Unknow Message. (__WEAK func)
  ****************************************************************************************
  */
-__weak APP_SUBTASK_HANDLER(custom)
+__WEAK APP_SUBTASK_HANDLER(custom)
 {
+    (void)param;(void)dest_id;(void)src_id;
     if (msgid == APP_ADV_CHNG)
     {
-        DEBUG("ADV Change:%X", g_rand_num);
-        
+        DEBUG("ADV Change:%" PRIX32, g_rand_num);
+
         if (app_state_get() < APP_CONNECTED)
         {
             app_adv_action(ACTV_RELOAD);
@@ -60,11 +61,13 @@ __weak APP_SUBTASK_HANDLER(custom)
     }
     else
     {
+        #if (DBG_APP)
         uint16_t length = ke_param2msg(param)->param_len;
         DEBUG("Unknow MsgId:0x%X", msgid);
         debugHex((uint8_t *)param, length);
+        #endif
     }
-    
+
     return (MSG_STATUS_FREE);
 }
 
@@ -80,6 +83,7 @@ __weak APP_SUBTASK_HANDLER(custom)
  */
 __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
 {
+    (void)task_idx;
     msg_func_t handler = NULL;
 
     switch (MSG_TYPE(msgid))
@@ -97,7 +101,7 @@ __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
             handler = app_gatt_msg_handler;
             break;
         #endif
-        
+
         #if (L2CC_LECB)
         case (TID_L2CC):
             handler = app_l2cc_msg_handler;
@@ -121,7 +125,7 @@ __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
 
 /**
  ****************************************************************************************
- * @brief Finite state machine for Device Configure, maybe User Override! (__weak func)
+ * @brief Finite state machine for Device Configure, maybe User Override! (__WEAK func)
  *
  * @param[in] evt   configure event @see enum ble_event
  ****************************************************************************************
@@ -131,7 +135,7 @@ void app_conf_fsm(uint8_t evt)
     if (evt == BLE_RESET)
     {
         memset(&app_env, 0, sizeof(app_env));
-        
+
         // Set device config
         gapm_set_dev(&ble_dev_config, &ble_dev_addr, NULL);
     }
@@ -144,14 +148,14 @@ void app_conf_fsm(uint8_t evt)
 
         // Create Activities
         app_actv_create();
-        
+
         ke_timer_set(APP_ADV_CHNG, TASK_APP, ADV_CHNG_PERIOD);
     }
 }
 
 /**
  ****************************************************************************************
- * @brief API to Get Device Name, maybe User Override! (__weak func)
+ * @brief API to Get Device Name, maybe User Override! (__WEAK func)
  *
  * @param[in]  size   Length of name Buffer
  * @param[out] name   Pointer of name buffer
@@ -161,6 +165,7 @@ void app_conf_fsm(uint8_t evt)
  */
 uint8_t app_name_get(uint8_t size, uint8_t *name)
 {
+    (void)size;
     uint8_t len = sizeof(BLE_DEV_NAME) - 1;
 
     // eg. prefix(BLE_DEV_NAME) + suffix(Addr[0])

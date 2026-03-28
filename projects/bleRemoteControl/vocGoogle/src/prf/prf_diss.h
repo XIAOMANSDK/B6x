@@ -107,7 +107,7 @@ uint8_t diss_svc_init(void);
 
 /**
  ****************************************************************************************
- * @brief Get value for attribute read (__weak func)
+ * @brief Get value for attribute read (__WEAK func)
  *
  * @param[in] val_idx  Index of Value to set @see enum dis_values
  * @param[out] p_len   Value Length

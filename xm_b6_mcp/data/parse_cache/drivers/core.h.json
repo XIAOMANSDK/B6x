@@ -1,0 +1,584 @@
+{
+  "file_path": "./drivers\\api\\core.h",
+  "functions": [
+    {
+      "name": "core_ldoset",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Set ldo register value. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ctrl   PMU_ANA_CTRL[23:0] & ANAMISC_CTRL[29:24].\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 198,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "core_ldoget",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get ldo register value. ",
+      "detailed_description": "***************************************************************************************\n@return value. PMU_ANA_CTRL[23:0] & ANAMISC_CTRL[29:24].\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 207,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "core_sleep",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Core Sleep Mode. ",
+      "detailed_description": "***************************************************************************************\n@param[in] cfg_wkup  Bits field of value @see enum wkup_ctrl_bfs.\n@return wake-up status @see wkup_st_bfs.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 218,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "wakeup_io_sw",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Set IO wake-up sleep or power off. ",
+      "detailed_description": "***************************************************************************************\n@param[in] wkup_en  IO that supports wake-up(one bit one io).\n@param[in] pad_pu   IO that pull-up(one bit one io).\n@note pad_pu Corresponding bit 1:Falling edge wake-up, 0: Rising edge wake-up.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 230,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "core_pwroff",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Core Power Off Mode. ",
+      "detailed_description": "***************************************************************************************\n@param[in] cfg_wkup  Bits field of value @see enum wkup_ctrl_bfs.\n@note PA19 Restore PULL-UP and Input Enable.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 241,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "core_release_io_latch",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Release IO Latch. *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 248,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "core_unique_id",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "unique_id",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get IC 128bits Unique ID. ",
+      "detailed_description": "***************************************************************************************\n@param[in]  size        Length of Unique ID Buffer.\n@param[out] unique_id   Pointer of Unique ID buffer.\n@note size must be less than or equal to 16.\n@note IC Must have Flash.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 261,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "CFG_PMU_DFLT_CNTL",
+      "value": "(CFG_PMU_CLK_STB(0x3F))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 58
+    },
+    {
+      "name": "CFG_WKUP_PWROFF_MSK",
+      "value": "(0x1B)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 92
+    },
+    {
+      "name": "CFG_WKUP_DEEPSL_MSK",
+      "value": "(0x1B)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 93
+    },
+    {
+      "name": "CFG_WKUP_ST_MSK",
+      "value": "(0x030F)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 123
+    },
+    {
+      "name": "CFG_WKUP_ST_CLR_MSK",
+      "value": "(0xC00000)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 124
+    },
+    {
+      "name": "CFG_WKUP_BLE_EN",
+      "value": "(1 << WKUP_BLE_SEL_LSB)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 127
+    },
+    {
+      "name": "CFG_WKUP_RTC_EN",
+      "value": "(WKUP_RTC_EN_BIT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 129
+    },
+    {
+      "name": "CFG_WKUP_IO_EN",
+      "value": "(WKUP_IO_EN_BIT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 131
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "RSN_POR12_BK_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "RSN_LVD33_OUT_RST_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "RSN_BOD12_OUT_RST_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "RSN_PIN_RSTN_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "RSN_POR12_CORE_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "RSN_IWDTRST_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "RSN_CHIPRST_BIT",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "RSN_SYSRST_BIT",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "RSN_IO_WKUP_BIT",
+          "value": 256,
+          "brief": ""
+        },
+        {
+          "name": "RSN_BLE_WKUP_BIT",
+          "value": 512,
+          "brief": ""
+        },
+        {
+          "name": "RSN_RTC_WKUP_BIT",
+          "value": 1024,
+          "brief": ""
+        },
+        {
+          "name": "RSN_INT_WKUP_BIT",
+          "value": 2048,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 24
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "WKUP_BLE_SEL_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_BLE_SEL_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_BLE_LATCH_N_POS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_BLE_LATCH_N_BIT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_IO_EN_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_IO_EN_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_RTC_EN_POS",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_RTC_EN_BIT",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_IO_LATCH_N_POS",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_IO_LATCH_N_BIT",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_RETENTION_MEM_PD_POS",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_RETENTION_MEM_PD_BIT",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_RC32K_PD_POS",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_RC32K_PD_BIT",
+          "value": 8,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 61
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "WKUP_ST_IO_POS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_IO_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_BLE_POS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_BLE_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_RTC_POS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_RTC_BIT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_AON_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_AON_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_BOD12_POS",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_BOD12_BIT",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_LVD33_POS",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "WKUP_ST_LVD33_BIT",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 96
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "LDO_BOD_TRIM_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_TRIM_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_EN_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_EN_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_RSTEN_POS",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_RSTEN_BIT",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "LDO_IBSEL_LSB",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "LDO_IBSEL_MSK",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_EN_POS",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_EN_BIT",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_SEL_LSB",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_SEL_MSK",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_RSTEN_POS",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_RSTEN_BIT",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "LDO_ANA_RESV_LSB",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "LDO_ANA_RESV_MSK",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "LDO_TESTA_XO_POS",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "LDO_TESTA_XO_BIT",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_TESTEN_POS",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_TESTEN_BIT",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_INTEN_POS",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_INTEN_BIT",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_INTEN_POS",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_INTEN_BIT",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "LDO_VBK_TESTEN_POS",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "LDO_VBK_TESTEN_BIT",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "LDO_BOD_ENB_MSK",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "LDO_LVD_ENB_MSK",
+          "value": 32,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\core.h",
+      "line_number": 134
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

@@ -20,10 +20,6 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#ifndef __INLINE__
-#define __INLINE__ __forceinline static
-#endif
-
 #ifndef ASSERT_ERR
 /// Assertions showing a critical error
 #define ASSERT_ERR(cond)

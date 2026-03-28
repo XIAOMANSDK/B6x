@@ -33,7 +33,7 @@
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
           <SFDFile>D:\SDK\bxx_DragonC1\Test\20240311_SDK_Release_v1.4\sdk6\core\B6x.SFR</SFDFile>
-          <bCustSvd>1</bCustSvd>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>

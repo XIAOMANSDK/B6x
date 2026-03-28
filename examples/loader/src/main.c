@@ -31,7 +31,7 @@ LDR_RUN_ADDR(Align 0x100):
   |  APP (Code and Data)                                  |
   |                                                       |
   |_______________________________________________________|
- 
+
 LDR_INFO_ADDR(Align 0x100):
   _________________________________________________________
   |                                                       |
@@ -76,11 +76,12 @@ typedef struct
 
 static bool app_is_ok(uint32_t run_addr)
 {
+    (void)run_addr;
     // Judge app is right at LDR_RUN_ADDR if need.
     #if (0)
     uint32_t stack_top = RD_32(run_addr + 0);
     uint32_t reset_hdl = RD_32(run_addr + 4);
-    
+
     if (((reset_hdl >> 24) != 0x18) || (stack_top < 0x20003000) || (stack_top > 0x2000B000))
         return false;
     #endif
@@ -97,9 +98,9 @@ static void ota_copy(uint32_t run_addr, uint32_t cpy_addr, uint32_t cpy_len)
 
     // Copy Flash page by page
     //for (uint32_t pg_idx = 0; pg_idx < nb_pages; pg_idx++)
-    while (nb_pages--) 
+    while (nb_pages--)
     {
-        // Read out 
+        // Read out
         uint32_t offset = rd_page * PAGE_SIZE;
         fshc_read(offset,  tmp_data, PAGE_SIZE_WLEN, FSH_CMD_RD);
 
@@ -123,22 +124,22 @@ int __main(void)
     // for easy to external modify.  @see link_ld.sct and startup_ld.s
     uint32_t ldr_run_addr  = RD_32(0x20003610);
     uint32_t ldr_info_addr = RD_32(0x20003614);
-    
+
     // AONLDO VOL > CORELDO VOL
     //AON->BKHOLD_CTRL.CORELDO_TRIM_RUN = 0x1B;
     //AON->BKHOLD_CTRL.AONLDO_TRIM_RUN  = 0x01;
-    
+
 //    if ((AON->BKHOLD_CTRL.Word & 0x01FF0000U) == 0)
     {
-        // 10ms iwdt rst. 
+        // 10ms iwdt rst.
         // fixbug--Low temperature poweron run fly. 2024.06.27 --- 6vp.
-//        iwdt_conf(160); 
+//        iwdt_conf(160);
 //        AON->BKHOLD_CTRL.Word = 0x01B12008;
 //        // Re-enable WatchDog
 //        iwdt_conf(0x20000);
     }
-    ///Program Size: Code=176 RO-data=24 RW-data=0 ZI-data=1536  
-    ///Program Size: Code=188 RO-data=24 RW-data=0 ZI-data=1536  
+    ///Program Size: Code=176 RO-data=24 RW-data=0 ZI-data=1536
+    ///Program Size: Code=188 RO-data=24 RW-data=0 ZI-data=1536
     // Close interrupt, already
     //__disable_irq();
 
@@ -175,6 +176,6 @@ int __main(void)
         sysJumpTo(ldr_run_addr);
     }
 
-    // Never 
+    // Never
     while (1);
 }

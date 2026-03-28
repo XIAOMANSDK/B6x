@@ -696,7 +696,7 @@ struct usb_hid_mouse_send_report
     uint8_t buttons; /* See HID_MOUSE_INPUT_REPORT_* definitions */
     uint8_t xdisp;   /* X displacement */
     uint8_t ydisp;   /* y displacement */
-    
+
     /* Device specific additional bytes may follow */
     #ifdef CONFIG_INPUT_MOUSE_WHEEL
     uint8_t wdisp;   /* Wheel displacement */

@@ -21,7 +21,7 @@
 
 #if (DBG_HIDS)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat,len)
@@ -856,13 +856,14 @@ uint8_t hids_prf_init(void)
 
 /**
  ****************************************************************************************
- * @brief Show LED Lock of Keyboard Output, User Implement! (__weak func)
+ * @brief Show LED Lock of Keyboard Output, User Implement! (__WEAK func)
  *
  * @param[in] leds  Bits of Led_Lock(b0:num,b1:caps,b2:scroll)
  ****************************************************************************************
  */
-__weak void hids_led_lock(uint8_t leds)
+__WEAK void hids_led_lock(uint8_t leds)
 {
+    (void)leds;
     // todo LED play...
 }
 

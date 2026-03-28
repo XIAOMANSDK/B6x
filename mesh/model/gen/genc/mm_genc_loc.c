@@ -54,6 +54,7 @@ typedef struct mm_genc_loc_env
 __STATIC void mm_genc_loc_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                 mm_route_env_t *p_route_env)
 {
+    (void)p_env;
     // Get pointer to data
     uint8_t *p_data = MESH_BUF_DATA(p_buf);
 
@@ -101,6 +102,7 @@ __STATIC void mm_genc_loc_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_genc_loc_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_GEN_LOCG_STATUS)
@@ -165,7 +167,7 @@ __STATIC uint8_t mm_genc_loc_cb_get(mm_mdl_env_t *p_env, m_lid_t app_key_lid, ui
  ****************************************************************************************
  */
 
-__STATIC mm_cli_cb_t mm_genc_loc_cb = 
+__STATIC mm_cli_cb_t mm_genc_loc_cb =
 {
     .cb_get = mm_genc_loc_cb_get,
     .cb_set = NULL,

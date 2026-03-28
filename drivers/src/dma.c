@@ -12,6 +12,7 @@
 #include "rcc.h"
 #include "reg_dma.h"
 #include "reg_dmachcfg.h"
+#include "compiler.h"
 
 /*
  * DEFINES
@@ -25,7 +26,15 @@
 
 /// DMA控制结构体在内存中的分配，大小取决于DMA通道数量
 /// 包含：1通道-0x20, 2通道-0x40, 3~4通道-0x80, 5~8通道-0x100, 9~16通道-0x200, 17~32通道-0x400
-__attribute__((section("DMA_ALIGN"), aligned(0x100), zero_init))
+//__attribute__((section("DMA_ALIGN"), aligned(0x100), zero_init))
+//volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
+#if (COMPILER_AC5 || COMPILER_IAR)
+    #define DMA_ALIGN_ATTR __attribute__((section("DMA_ALIGN"), aligned(0x100), zero_init))
+#elif (COMPILER_GCC)
+    #define DMA_ALIGN_ATTR __attribute__((section(".bss.dma_align"), aligned(0x100), used))
+#endif
+
+DMA_ALIGN_ATTR
 volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
 
 /*
@@ -39,6 +48,12 @@ volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
  */
 void dma_init(void)
 {
+    // 已经初始化过无需再次初始化.
+    if (DMA->CTRLBASE_POINTER.Word)
+    {
+        return;
+    }
+
     // 启用DMA时钟和复位请求
     RCC_APBCLK_EN(APB_DMAC_BIT);   // 启用DMA APB时钟
     RCC_APBRST_REQ(APB_DMAC_BIT);  // 请求DMA复位
@@ -95,9 +110,9 @@ void dma_chnl_deinit(uint8_t chidx)
     // 禁用DMA通道
     DMA->CHNL_EN_CLR = chbit;
     // 禁用DMA信号传输（使用突发传输）
-    DMA->USEBURST_SET = (1UL << chidx);
+    DMA->USEBURST_SET = chbit;
     // 清除通道请求掩码
-    DMA->REQMSK_CLR   = (1UL << chidx);
+    DMA->REQMSK_CLR   = chbit;
 }
 
 /**

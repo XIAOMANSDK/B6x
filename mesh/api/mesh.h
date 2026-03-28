@@ -30,6 +30,7 @@
 #include "mesh_msg.h"
 #include "mesh_def.h"
 #include "mm_def.h"
+#include "cmsis_compiler.h"
 
 
 /*
@@ -285,13 +286,13 @@ uint8_t mesh_buf_release(mesh_buf_t *p_buf);
 void mesh_buf_copy(mesh_buf_t *dst, mesh_buf_t *src, uint16_t length, bool copy_env);
 
 /// Copy data of a buffer to another buffer.
-__INLINE__ void mesh_buf_copy_data(mesh_buf_t *dst, mesh_buf_t *src, uint16_t length)
+__STATIC_FORCEINLINE void mesh_buf_copy_data(mesh_buf_t *dst, mesh_buf_t *src, uint16_t length)
 {
     mesh_buf_copy(dst, src, length, false);
 }
 
 /// Copy env[] of a buffer to another buffer
-__INLINE__ void mesh_buf_copy_env(mesh_buf_t *dst, mesh_buf_t *src)
+__STATIC_FORCEINLINE void mesh_buf_copy_env(mesh_buf_t *dst, mesh_buf_t *src)
 {
     mesh_buf_copy(dst, src, 0, true);
 }
@@ -401,7 +402,7 @@ void ms_fndh_fault_rsp(bool accept, uint16_t comp_id, uint8_t test_id, uint8_t l
  ****************************************************************************************
  * @brief Control if Proxy service should start / stop advertising it's capabilities
  *
- * @param[in] enable        True to enable advertising for 60s, 
+ * @param[in] enable        True to enable advertising for 60s,
  *                          False to stop (@see enum mesh_proxy_adv_ctl)
  *
  * @return Execution status code

@@ -700,6 +700,7 @@ __STATIC void mm_gens_lvl_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_gens_lvl_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_GEN_LVL_GET)
@@ -734,6 +735,7 @@ __STATIC uint8_t mm_gens_lvl_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcod
  */
 __STATIC uint8_t mm_gens_lvl_cb_set(mm_mdl_env_t *p_env, uint16_t state_id, uint32_t state)
 {
+    (void)state_id;
     // Returned status
     uint8_t status = MESH_ERR_NO_ERROR;
 
@@ -793,6 +795,7 @@ __STATIC void mm_gens_lvl_cb_grp_event(m_lid_t mdl_lid, uint8_t event, uint8_t i
             p_env_lvl->level = p_env_lvl->tgt_level;
         } // no break;
 
+        /*fallthrough*/
         case (MM_GRP_EVENT_TRANS_STARTED):
         {
             // Inform application about the update
@@ -938,7 +941,7 @@ m_lid_t mm_gens_lvl_register(uint8_t elmt_idx, bool main)
             if (main)
             {
                 // Create group
-               m_lid_t grp_lid = mm_bind_add_group(0, elmt_idx, mdl_lid,
+               /*m_lid_t grp_lid = */mm_bind_add_group(0, elmt_idx, mdl_lid,
                                      mm_gens_lvl_cb_grp_event, NULL);
             }
 

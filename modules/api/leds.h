@@ -27,9 +27,9 @@ enum led_mode
     LED_BUSY_BL,  // busy blink, more fast
     LED_CONT_ON,  // continued ON
     LED_HINT_BL,  // twice blink as hint
-    
+
     // add more...
-    
+
     LED_MODE_MAX
 };
 

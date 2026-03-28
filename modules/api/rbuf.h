@@ -13,7 +13,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-
+#include "cmsis_compiler.h"
 
 /*
  * DEFINES
@@ -73,7 +73,7 @@ typedef struct ringbuffer
  * @return None.
  ****************************************************************************************
  */
-static inline void rbuf_init(rbuf_t *rb)
+__STATIC_INLINE void rbuf_init(rbuf_t *rb)
 {
     rb->head = rb->tail = 0;
 }
@@ -86,8 +86,9 @@ static inline void rbuf_init(rbuf_t *rb)
  * @return The size of the BUFF.
  ****************************************************************************************
  */
-static inline rblen_t rbuf_size(rbuf_t *rb)
+__STATIC_INLINE rblen_t rbuf_size(rbuf_t *rb)
 {
+    (void)rb;
     return RBUF_SIZE; // Direct return
 }
 
@@ -99,11 +100,11 @@ static inline rblen_t rbuf_size(rbuf_t *rb)
  * @return The number of used bytes.
  ****************************************************************************************
  */
-static inline rblen_t rbuf_len(rbuf_t *rb)
+__STATIC_INLINE rblen_t rbuf_len(rbuf_t *rb)
 {
     rblen_t head = rb->head;
     rblen_t tail = rb->tail;
-    
+
     return RBUF_LEN(head, tail);
 }
 
@@ -115,11 +116,11 @@ static inline rblen_t rbuf_len(rbuf_t *rb)
  * @return The number of bytes available.
  ****************************************************************************************
  */
-static inline rblen_t rbuf_avail(rbuf_t *rb)
+__STATIC_INLINE rblen_t rbuf_avail(rbuf_t *rb)
 {
     rblen_t head = rb->head;
     rblen_t tail = rb->tail;
-    
+
     return RBUF_AVAIL(head, tail);
 }
 
@@ -131,7 +132,7 @@ static inline rblen_t rbuf_avail(rbuf_t *rb)
  * @return Yes or No.
  ****************************************************************************************
  */
-static inline bool rbuf_is_empty(rbuf_t *rb)
+__STATIC_INLINE bool rbuf_is_empty(rbuf_t *rb)
 {
     return (rb->head == rb->tail);
 }
@@ -144,11 +145,11 @@ static inline bool rbuf_is_empty(rbuf_t *rb)
  * @return Yes or No.
  ****************************************************************************************
  */
-static inline bool rbuf_is_full(rbuf_t *rb)
+__STATIC_INLINE bool rbuf_is_full(rbuf_t *rb)
 {
     rblen_t head = rb->head;
     rblen_t tail = rb->tail;
-    
+
     return (RBUF_AVAIL(head, tail) == 0);
 }
 
@@ -162,10 +163,10 @@ static inline bool rbuf_is_full(rbuf_t *rb)
  * @return None.
  ****************************************************************************************
  */
-static inline void rbuf_putc(rbuf_t *rb, uint8_t ch)
+__STATIC_INLINE void rbuf_putc(rbuf_t *rb, uint8_t ch)
 {
     rblen_t head = rb->head;
-    
+
     rb->data[head] = ch;
     rb->head = RBUF_INC(head, 1);
 }
@@ -181,17 +182,17 @@ static inline void rbuf_putc(rbuf_t *rb, uint8_t ch)
  * @return None.
  ****************************************************************************************
  */
-static inline void rbuf_puts(rbuf_t *rb, const uint8_t *in, rblen_t len)
+__STATIC_INLINE void rbuf_puts(rbuf_t *rb, const uint8_t *in, rblen_t len)
 {
     rblen_t head = rb->head;
-    
+
     // copy byte to byte
     for (rblen_t i = 0; i < len; i++)
     {
         rb->data[head] = in[i];
         head = RBUF_INC(head, 1);
     }
-    
+
     rb->head = head;
 }
 
@@ -205,18 +206,18 @@ static inline void rbuf_puts(rbuf_t *rb, const uint8_t *in, rblen_t len)
  * @return Byte copied or not.
  ****************************************************************************************
  */
-static inline bool rbuf_getc(rbuf_t *rb, uint8_t *ch)
+__STATIC_INLINE bool rbuf_getc(rbuf_t *rb, uint8_t *ch)
 {
     rblen_t head = rb->head;
     rblen_t tail = rb->tail;
-    
+
     if (head != tail)
     {
         *ch = rb->data[tail];
         rb->tail = RBUF_INC(tail, 1);
         return 1;
     }
-    
+
     return 0; // empty
 }
 
@@ -231,18 +232,18 @@ static inline bool rbuf_getc(rbuf_t *rb, uint8_t *ch)
  * @return The number of copied bytes.
  ****************************************************************************************
  */
-static inline rblen_t rbuf_gets(rbuf_t *rb, uint8_t *out, rblen_t max)
+__STATIC_INLINE rblen_t rbuf_gets(rbuf_t *rb, uint8_t *out, rblen_t max)
 {
     volatile rblen_t head = rb->head;
     volatile rblen_t tail = rb->tail;
     volatile rblen_t dlen = RBUF_LEN(head, tail);
-    
-    if (dlen > max) 
+
+    if (dlen > max)
     {
         dlen = max;
     }
-    
-    if (dlen > 0) 
+
+    if (dlen > 0)
     {
         // copy byte to byte
         for (rblen_t i = 0; i < dlen; i++)
@@ -250,24 +251,24 @@ static inline rblen_t rbuf_gets(rbuf_t *rb, uint8_t *out, rblen_t max)
             out[i] = rb->data[tail];
             tail = RBUF_INC(tail, 1);
         }
-        
+
         rb->tail = tail;
     }
-    
+
     return dlen;
 }
 
 /**
  ****************************************************************************************
  * @brief linear read setup, peek pointer and max linear size.
- * 
+ *
  * @param[in]  rb   The ringbuff to be used.
  * @param[out] ptr  pointer to store linear read-start
- * 
+ *
  * @return max linear size in byte.
  ****************************************************************************************
  */
-static inline rblen_t rbuf_peek(rbuf_t *rb, const uint8_t **ptr)
+__STATIC_INLINE rblen_t rbuf_peek(rbuf_t *rb, const uint8_t **ptr)
 {
     rblen_t head = rb->head;
     rblen_t tail = rb->tail;
@@ -283,14 +284,14 @@ static inline rblen_t rbuf_peek(rbuf_t *rb, const uint8_t **ptr)
 /**
  ****************************************************************************************
  * @brief Drop data from the BUFF, be used with rbuf_peek()
- * 
+ *
  * @param[in] rb   The ringbuff to be used.
  * @param[in] len  size in byte
- * 
+ *
  * @return None.
  ****************************************************************************************
  */
-static inline void rbuf_drop(rbuf_t *rb, rblen_t len)
+__STATIC_INLINE void rbuf_drop(rbuf_t *rb, rblen_t len)
 {
     rb->tail = RBUF_INC(rb->tail, len);
 }

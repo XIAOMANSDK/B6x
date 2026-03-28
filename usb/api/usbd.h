@@ -10,18 +10,11 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "cmsis_compiler.h"
 #include "string.h"
 
 #include "usb_def.h"
 #include "usb_log.h"
-
-#ifndef __INLINE__
-    #if defined( __CC_ARM )
-    #define __INLINE__      static __forceinline
-    #else
-    #define __INLINE__      static inline __attribute__((always_inline))
-    #endif
-#endif
 
 
 /*
@@ -191,7 +184,7 @@ void usbd_register(const uint8_t *desc, const usbd_config_t *conf);
 void usbd_register_device(usbd_descriptor_cbk desc, const usbd_config_t *conf);
 
 /**
- * @brief Register Big-Buffer for EP0 received(excced MPS), eg. DFU Block 
+ * @brief Register Big-Buffer for EP0 received(excced MPS), eg. DFU Block
  *
  * @param[in] size      Buffer size
  * @param[in] buff      Buffer pointer, aligned 4
@@ -201,7 +194,7 @@ void usbd_register_buffer(uint16_t size, uint8_t *buff);
 /**
  * @brief Register Handler for Application to notify events
  *
- * @param[in] evt_msk   Event Mask for notified, bits of @see enum usbd_event_type 
+ * @param[in] evt_msk   Event Mask for notified, bits of @see enum usbd_event_type
  * @param[in] ntf_hdl   Notify Handler
  */
 void usbd_register_events(uint16_t evt_msk, usbd_notify_cbk ntf_hdl);

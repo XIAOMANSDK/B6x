@@ -52,7 +52,7 @@
 
 /**
  * @brief SADC校准函数
- * 
+ *
  * @details
  * - 配置麦克风控制寄存器
  * - 设置校准模式
@@ -81,9 +81,9 @@ static void sadc_calib(void)
 
 /**
  * @brief 初始化SADC模块
- * 
+ *
  * @param[in] ana_ctrl 模拟控制寄存器配置值
- * 
+ *
  * @details
  * - 重置ADC时钟
  * - 配置模拟控制寄存器
@@ -102,7 +102,7 @@ void sadc_init(uint32_t ana_ctrl)
 
 /**
  * @brief 反初始化SADC模块
- * 
+ *
  * @details
  * - 禁用ADC时钟
  * - 请求ADC复位
@@ -115,9 +115,9 @@ void sadc_deinit(void)
 
 /**
  * @brief 配置SADC控制寄存器
- * 
+ *
  * @param[in] ctrl 控制寄存器配置值
- * 
+ *
  * @details
  * - 清除辅助标志位
  * - 配置控制寄存器
@@ -130,12 +130,12 @@ void sadc_conf(uint32_t ctrl)
 
 /**
  * @brief 读取SADC转换数据
- * 
+ *
  * @param[in] chset 通道选择
  * @param[in] times 采样次数(0表示单次采样，>0表示多次采样取平均)
- * 
+ *
  * @return uint16_t ADC转换结果
- * 
+ *
  * @details
  * - 配置麦克风控制
  * - 设置转换模式(单次或连续)
@@ -185,7 +185,7 @@ uint16_t sadc_read(uint8_t chset, uint16_t times)
 
 /**
  * @brief 停止SADC转换
- * 
+ *
  * @details
  * - 停止连续转换模式
  * - 启动单次转换以停止连续模式
@@ -201,10 +201,10 @@ void sadc_stop(void)
 
 /**
  * @brief 配置SADC DMA传输
- * 
+ *
  * @param[in] sw_auto 自动切换控制(0x10表示停止DMA，其他值配置自动切换)
  * @param[in] ch_ctrl 通道控制配置
- * 
+ *
  * @details
  * - 配置DMA连续转换模式
  * - 设置自动通道切换
@@ -237,9 +237,9 @@ void sadc_dma(uint8_t sw_auto, uint32_t ch_ctrl)
 
 /**
  * @brief 配置SADC进行RSSI测量
- * 
+ *
  * @param[in] rf_rsv RF保留寄存器配置
- * 
+ *
  * @details
  * - 配置RSSI采样模式
  * - 设置RF通道
@@ -263,9 +263,9 @@ void sadc_rssi(uint8_t rf_rsv)
 
 /**
  * @brief 配置SADC进行PCM音频采集
- * 
+ *
  * @param[in] mic_sel 麦克风控制配置(0表示停止PCM，非0表示启动PCM)
- * 
+ *
  * @details
  * - 配置麦克风输入IO
  * - 设置PGA和直流偏移
@@ -304,10 +304,10 @@ void sadc_pcm(uint32_t mic_sel)
 
 /**
  * @brief 配置高级定时器触发SADC转换
- * 
+ *
  * @param[in] sw_auto 自动切换控制
  * @param[in] ch_ctrl 通道控制配置
- * 
+ *
  * @details
  * - 配置高级定时器主模式选择为更新事件
  * - 设置定时器触发采样模式
@@ -334,9 +334,9 @@ void sadc_atmr(uint8_t sw_auto, uint32_t ch_ctrl)
 
 /**
  * @brief 生成随机数
- * 
+ *
  * @return uint32_t 生成的32位随机数
- * 
+ *
  * @details
  * - 保存当前SADC配置
  * - 配置RF和SADC用于随机数生成
@@ -413,11 +413,11 @@ uint32_t sadc_rand_num(void)
 
 /**
  * @brief 测量温度
- * 
+ *
  * @param[in] times 采样次数
- * 
+ *
  * @return uint16_t 温度测量结果
- * 
+ *
  * @details
  * - 保存当前配置
  * - 配置RF温度测量
@@ -429,7 +429,7 @@ uint16_t sadc_temperature(uint16_t times)
 {
     if (times == 0)
         return 0;
-    
+
     uint32_t sadc_bak[5] = {0};
     uint32_t rf_rsv_bak;
     uint32_t sadc_val = 0;;
@@ -443,7 +443,7 @@ uint16_t sadc_temperature(uint16_t times)
         sadc_bak[3]  = SADC->AUTO_SW_CTRL.Word; /* 保存自动切换控制寄存器 */
         sadc_bak[4]  = SADC->CH_CTRL.Word;     /* 保存通道控制寄存器 */
     }
-    
+
     // RF_RSV<0> 温度
     rf_rsv_bak = RF->RF_RSV;                   /* 保存RF保留寄存器 */
     if ((RF->RF_RSV & RF_RSV_ADC_TEMP_BIT) != RF_RSV_ADC_TEMP_BIT)
@@ -451,33 +451,33 @@ uint16_t sadc_temperature(uint16_t times)
         RF->RF_RSV &= ~RF_RSV_ADC_MSK;         /* 清除RF ADC掩码 */
         RF->RF_RSV |= RF_RSV_ADC_TEMP_BIT;     /* 设置温度测量位 */
     }
-    
+
     sadc_init(SADC_ANA_VREF_1V2);              /* 初始化SADC使用1.2V参考电压 */
     SADC->CH_CTRL.Word      = SADC_CH_RFRSV;   /* 设置RF保留通道 */
     SADC->AUTO_SW_CTRL.Word = 0;               /* 禁用自动通道切换 */
     SADC->CTRL.Word = SADC_CR_TEMP | (SADC_CLK_DIV_TEMP(sys_clk) << SADC_CR_CLK_DIV_LSB); /* 配置温度测量控制 */
-    
+
     SADC->STCTRL.SADC_AUX_FLG_CLR = 1;         /* 清除辅助标志位 */
-    
+
     for (uint8_t cnt = 0; cnt < times; cnt++)
     {
         // start conversion
         SADC->CTRL.SADC_SOC           = 1;     /* 启动温度转换 */
-        
+
         // wait conversion done is 1
         while (! (SADC->STCTRL.SADC_AUX_FLG)); /* 等待转换完成 */
-        
+
         // clear flag
         SADC->STCTRL.SADC_AUX_FLG_CLR = 1;     /* 清除辅助标志位 */
-        
+
         sadc_val += ((SADC->AUX_ST.Word) & 0x03FF); /* 累加转换结果 */
     }
-    
+
     // average
     sadc_val /= times;                         /* 计算平均值 */
-    
+
     RF->RF_RSV = rf_rsv_bak;                   /* 恢复RF保留寄存器 */
-    
+
     if (sadc_bak[0] & SADC_EN_BIT)
     {
         SADC->MIC_CTRL.Word      = sadc_bak[2]; /* 恢复麦克风控制寄存器 */
@@ -485,9 +485,9 @@ uint16_t sadc_temperature(uint16_t times)
         SADC->CH_CTRL.Word       = sadc_bak[4]; /* 恢复通道控制寄存器 */
         SADC->SADC_ANA_CTRL.Word = sadc_bak[0]; /* 恢复模拟控制寄存器 */
         SADC->CTRL.Word          = sadc_bak[1]; /* 恢复控制寄存器 */
-        
+
         sadc_calib();                          /* 重新校准ADC */
     }
-    
+
     return (uint16_t)sadc_val;
 }

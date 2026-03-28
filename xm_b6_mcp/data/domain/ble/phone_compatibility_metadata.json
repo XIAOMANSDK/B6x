@@ -1,0 +1,14 @@
+{
+  "constraint_type": "phone_compatibility_issues",
+  "domain": "domain3",
+  "version": "1.0",
+  "last_updated": "2026-03-17T18:05:45.842385",
+  "total_issues": 147,
+  "total_brands": 11,
+  "issues_by_severity": {
+    "critical": 0,
+    "high": 0,
+    "medium": 147,
+    "low": 0
+  }
+}

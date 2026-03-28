@@ -12,6 +12,8 @@
 #define _CORE_H_
 
 #include <stdint.h>
+#include <stdbool.h>
+#include "reg_aon.h"
 
 /*
  * DEFINES
@@ -22,15 +24,23 @@
 enum rst_src_bfs
 {
     // Reset Reason
+    /* Power On Reset */
     RSN_POR12_BK_BIT             = (1 << 0),
+    /* Low Voltage Detection Reset.(VDD33 < LVDvth) */
     RSN_LVD33_OUT_RST_BIT        = (1 << 1),
+    /* Brown Out Detection Reset. (VDD12 < BODvth */
     RSN_BOD12_OUT_RST_BIT        = (1 << 2),
+    /* ResetPin Reset */
     RSN_PIN_RSTN_BIT             = (1 << 3),
+    /* PowerOff Wakeup */
     RSN_POR12_CORE_BIT           = (1 << 4),
+    /* Independent Watchdog Timer Reset */
     RSN_IWDTRST_BIT              = (1 << 5),
+
     RSN_CHIPRST_BIT              = (1 << 6),
+    /* NVIC_SystemReset() Reset */
     RSN_SYSRST_BIT               = (1 << 7),
-    
+
     // Wakeup Source from poweroff state
     RSN_IO_WKUP_BIT              = (1 << 8),
     RSN_BLE_WKUP_BIT             = (1 << 9),
@@ -38,8 +48,9 @@ enum rst_src_bfs
     RSN_INT_WKUP_BIT             = (1 << 11),
 };
 
-/// Exit poweroff via BLE Wakeup 
-#define RSN_IS_BLE_WKUP(rsn)       (((rsn) & (RSN_BLE_WKUP_BIT | RSN_POR12_CORE_BIT)) == (RSN_BLE_WKUP_BIT | RSN_POR12_CORE_BIT))
+/// Exit poweroff via BLE Wakeup
+//#define RSN_IS_BLE_WKUP(rsn)       (((rsn) & (RSN_BLE_WKUP_BIT | RSN_POR12_CORE_BIT)) == (RSN_BLE_WKUP_BIT | RSN_POR12_CORE_BIT))
+#define RSN_IS_BLE_WKUP(rsn)       (((rsn) & RSN_POR12_CORE_BIT) && (AON->PMU_WKUP_CTRL.Word & CFG_WKUP_BLE_EN))
 
 /// clock stable time for exit from deepsleep
 #define CFG_PMU_CLK_STB(time)      ((time) << APBMISC_CLK_STB_TIME_LSB)
@@ -52,11 +63,11 @@ enum wkup_ctrl_bfs
     // BLE SEL - bit[1:0] (deepsleep or poweroff)
     WKUP_BLE_SEL_LSB             = 0,
     WKUP_BLE_SEL_MSK             = (0x03 << WKUP_BLE_SEL_LSB),
-    
+
     // BLE LATCH_N - bit2 (only poweroff)
     WKUP_BLE_LATCH_N_POS         = 2,
     WKUP_BLE_LATCH_N_BIT         = (1 << WKUP_BLE_LATCH_N_POS),
-    
+
     // Wakeup IO EN - bit3 (deepsleep or poweroff)
     WKUP_IO_EN_POS               = 3,
     WKUP_IO_EN_BIT               = (1 << WKUP_IO_EN_POS),
@@ -68,6 +79,14 @@ enum wkup_ctrl_bfs
     // IO LATCH_N - bit5 (only poweroff)
     WKUP_IO_LATCH_N_POS          = 5,
     WKUP_IO_LATCH_N_BIT          = (1 << WKUP_IO_LATCH_N_POS),
+
+    // retention memory power down (only poweroff)
+    WKUP_RETENTION_MEM_PD_POS    = 6,
+    WKUP_RETENTION_MEM_PD_BIT    = (1 << WKUP_RETENTION_MEM_PD_POS),
+
+    // rc32k power down (only poweroff)
+    WKUP_RC32K_PD_POS            = 7,
+    WKUP_RC32K_PD_BIT            = (1 << WKUP_RC32K_PD_POS),
 };
 
 #define CFG_WKUP_PWROFF_MSK        (0x1B)
@@ -79,23 +98,23 @@ enum wkup_st_bfs
     // IO_WKUP_ST - bit0 (deepsleep or poweroff)
     WKUP_ST_IO_POS               = 0,
     WKUP_ST_IO_BIT               = (1 << WKUP_ST_IO_POS),
-    
+
     // BLE_WKUP_ST - bit1 (deepsleep or poweroff)
     WKUP_ST_BLE_POS              = 1,
     WKUP_ST_BLE_BIT              = (1 << WKUP_ST_BLE_POS),
-    
+
     // RTC_WKUP_ST - bit2 (deepsleep or poweroff)
     WKUP_ST_RTC_POS              = 2,
     WKUP_ST_RTC_BIT              = (1 << WKUP_ST_RTC_POS),
-    
+
     // AON_PMU_INT - bit3 (deepsleep or poweroff)
     WKUP_ST_AON_POS              = 3,
     WKUP_ST_AON_BIT              = (1 << WKUP_ST_AON_POS),
-    
+
     // BOD12_OUT12_ST - bit8 (deepsleep or poweroff)
     WKUP_ST_BOD12_POS            = 8,
     WKUP_ST_BOD12_BIT            = (1 << WKUP_ST_BOD12_POS),
-    
+
     // LVD33_OUT12_ST - bit9 (deepsleep or poweroff)
     WKUP_ST_LVD33_POS            = 9,
     WKUP_ST_LVD33_BIT            = (1 << WKUP_ST_LVD33_POS),
@@ -108,7 +127,7 @@ enum wkup_st_bfs
 #define CFG_WKUP_BLE_EN            (1 << WKUP_BLE_SEL_LSB)
 /// RTC as wakeup source
 #define CFG_WKUP_RTC_EN            (WKUP_RTC_EN_BIT)
-/// IO as wakeup source 
+/// IO as wakeup source
 #define CFG_WKUP_IO_EN             (WKUP_IO_EN_BIT)
 
 /// Bits field of LDO Control
@@ -121,11 +140,11 @@ enum ldo_ctrl_bfs
     LDO_BOD_EN_BIT               = (1 << LDO_BOD_EN_POS),
     LDO_BOD_RSTEN_POS            = 4,
     LDO_BOD_RSTEN_BIT            = (1 << LDO_BOD_RSTEN_POS),
-    
+
     // LDO12 ibsel - bit[9:5]
     LDO_IBSEL_LSB                = 5,
     LDO_IBSEL_MSK                = (0x1F << LDO_IBSEL_LSB),
-    
+
     // LVD ctrl - bit10, bit[13:11], bit14
     LDO_LVD_EN_POS               = 10,
     LDO_LVD_EN_BIT               = (1 << LDO_LVD_EN_POS),
@@ -133,11 +152,11 @@ enum ldo_ctrl_bfs
     LDO_LVD_SEL_MSK              = (0x07 << LDO_LVD_SEL_LSB),
     LDO_LVD_RSTEN_POS            = 14,
     LDO_LVD_RSTEN_BIT            = (1 << LDO_LVD_RSTEN_POS),
-    
+
     // ANA resv - bit[24:16]
     LDO_ANA_RESV_LSB             = 16,
     LDO_ANA_RESV_MSK             = (0x1FF << LDO_ANA_RESV_LSB),
-    
+
     // MISC ctrl - bit[29:25]
     LDO_TESTA_XO_POS             = 25,
     LDO_TESTA_XO_BIT             = (1 << LDO_TESTA_XO_POS),

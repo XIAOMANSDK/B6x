@@ -13,6 +13,7 @@
 #include "gatt.h"
 #include "sftmr.h"
 #include "regs.h"
+#include "cmsis_compiler.h"
 
 #if (DBG_ATCMD)
 #include "dbg.h"
@@ -27,7 +28,7 @@
 #define BLE_DEV_VERSION "1.0.1"
 
 #define SYS_CONFIG_ALIGNED4_WLEN ((sizeof(SYS_CONFIG) + 3) / 4)
-    
+
 extern uint8_t           scan_cnt;
 extern struct gap_bdaddr scan_addr_list[];
 
@@ -82,11 +83,11 @@ AT_CMD_FORMAT_T at_cmd_head_list[CMD_CODE_MAX] =
 void at_uart_baud_cfg(uint8_t port, uint32_t uart_baud)
 {
     UART_TypeDef* uart = ((UART_TypeDef *)(UART1_BASE + (port) * 0x1000));
-    
+
     uint16_t uart_baud_div = (uint16_t)((rcc_sysclk_freq() + ((uart_baud) >> 1)) / (uart_baud));
 
     // update BaudRate
-    uart->LCR.BRWEN  = 1; 
+    uart->LCR.BRWEN  = 1;
     uart->BRR        = uart_baud_div;
     uart->LCR.BRWEN  = 0;
 }
@@ -101,9 +102,9 @@ void atConfigFlashRead(void)
 {
     uint32_t config_data[SYS_CONFIG_ALIGNED4_WLEN];
     flash_read(SYS_CONFIG_OFFSET, config_data, SYS_CONFIG_ALIGNED4_WLEN);
-    
+
     g_cfg_change = 0;
-    
+
     for (uint8_t i = 0; i < SYS_CONFIG_ALIGNED4_WLEN; i++)
     {
         if (config_data[i] != 0xFFFFFFFF)
@@ -129,7 +130,7 @@ SYS_CONFIG sys_config =
     .name     = BLE_DEV_NAME,
 
     .adv_data_len = AT_DFT_ADV_DATA_LEN,
-    .adv_data = 
+    .adv_data =
     {
         0x02, 0x01, 0x06,
         0x03, 0x03, 0xF0, 0xFF,
@@ -139,8 +140,8 @@ SYS_CONFIG sys_config =
     .rssi         = AT_DFT_RSSI,
 };
 
-// flag: All_FACTORY_REST:  »´≤øª÷∏¥≥ˆ≥ß…Ë÷√
-// flag: PAIR_FACTORY_RESET: «Â≥˝≈‰∂‘–≈œ¢
+// flag: All_FACTORY_REST:  ÂÖ®ÈÉ®ÊÅ¢Â§çÂá∫ÂéÇËÆæÁΩÆ
+// flag: PAIR_FACTORY_RESET: Ê∏ÖÈô§ÈÖçÂØπ‰ø°ÊÅØ
 void atSetBleDefault(PARA_SET_FACTORY flag)
 {
 //    uint8_t uuid16_idx = 12;
@@ -154,7 +155,7 @@ void atSetBleDefault(PARA_SET_FACTORY flag)
             sys_config.adv_data[idx] = idx;
         }
 
-//        sys_config.rssi = 0;                      //  RSSI –≈∫≈÷µ
+//        sys_config.rssi = 0;                      //  RSSI ‰ø°Âè∑ÂÄº
 
 //        sys_config.adv_intv_time = 20;    //min
 
@@ -168,20 +169,20 @@ void atSetBleDefault(PARA_SET_FACTORY flag)
     }
 //    else if(flag == PAIR_FACTORY_RESET)
 //    {
-//        //sprintf((char*)sys_config.pass, "000000");      //√‹¬Î
+//        //sprintf((char*)sys_config.pass, "000000");      //ÂØÜÁ†Å
 ////        memset(sys_config.mac_addr, 0, sizeof(sys_config.mac_addr));
 ////        memcpy(sys_config.mac_addr, BLE_ADDR_DEFAULT, GAP_BD_ADDR_LEN);
 //        sys_config.ever_connect_peripheral_mac_addr_conut = 0;
 //        sys_config.ever_connect_peripheral_mac_addr_index = 0;
 //    }
 
-//    GAPBondMgr_SetParameter( GAPBOND_ERASE_ALLBONDS, 0, NULL ); //«Â≥˝∞Û∂®–≈œ¢
+//    GAPBondMgr_SetParameter( GAPBOND_ERASE_ALLBONDS, 0, NULL ); //Ê∏ÖÈô§ÁªëÂÆö‰ø°ÊÅØ
 
     atConfigFlashWrite(SYS_CONFIG_OFFSET, sizeof(SYS_CONFIG), (uint32_t *)&sys_config);
 }
 
 #if (0)
-// ◊÷∑˚¥Æ∂‘±»
+// Â≠óÁ¨¶‰∏≤ÂØπÊØî
 static uint8_t strCmp(const uint8_t *p1, char *p2, uint8_t len)
 {
     uint8_t i = 0;
@@ -197,18 +198,18 @@ static uint8_t strCmp(const uint8_t *p1, char *p2, uint8_t len)
 }
 #endif
 
-// ◊÷∑˚¥Æ◊™ ˝◊÷
+// Â≠óÁ¨¶‰∏≤ËΩ¨Êï∞Â≠ó
 uint32_t str2Num(const uint8_t *numStr, uint8_t iLength)
 {
     uint32_t rtnInt = 0;
-    
+
     #if (__MICROLIB)
     rtnInt = strtoul((const char *)numStr, NULL, 10);
     #else
     /*
-          Œ™¥˙¬ÎºÚµ•£¨‘⁄»∑∂® ‰»Îµƒ◊÷∑˚¥Æ∂º « ˝◊÷µƒ
-          «Èøˆœ¬£¨¥À¥¶Œ¥◊ˆºÏ≤È£¨∑Ò‘Ú“™ºÏ≤È
-          numStr[i] - '0' «∑Ò‘⁄[0, 9]’‚∏ˆ«¯º‰ƒ⁄
+          ‰∏∫‰ª£Á†ÅÁÆÄÂçïÔºåÂú®Á°ÆÂÆöËæìÂÖ•ÁöÑÂ≠óÁ¨¶‰∏≤ÈÉΩÊòØÊï∞Â≠óÁöÑ
+          ÊÉÖÂÜµ‰∏ãÔºåÊ≠§Â§ÑÊú™ÂÅöÊ£ÄÊü•ÔºåÂê¶ÂàôË¶ÅÊ£ÄÊü•
+          numStr[i] - '0'ÊòØÂê¶Âú®[0, 9]Ëøô‰∏™Âå∫Èó¥ÂÜÖ
     */
 
     for (uint8_t  i = 0; (i < iLength) && (numStr[i] != '\0'); i++)
@@ -220,9 +221,9 @@ uint32_t str2Num(const uint8_t *numStr, uint8_t iLength)
     return rtnInt;
 }
 
-__INLINE__ uint8_t co_hexstr2hex(uint8_t hex_str)
+__STATIC_FORCEINLINE uint8_t co_hexstr2hex(uint8_t hex_str)
 {
-    return (hex_str <= '9') ? (hex_str - '0') : 
+    return (hex_str <= '9') ? (hex_str - '0') :
            ((hex_str <= 'F') ? (hex_str - 'A' + 10) : (hex_str - 'a' + 10));
 }
 
@@ -234,11 +235,11 @@ void str2mac(const uint8_t *date)
     for (uint8_t i = 0; i < 17; i++)
     {
         buff[i] = co_hexstr2hex(buff[i]);
-        
+
         if ((i % 3) == 1)
         {
             sys_config.connect_mac_addr[j--] = (buff[i - 1] << 4) + buff[i];
-            i++; //Ã¯π˝:
+            i++; //Ë∑≥Ëøá:
         }
     }
 }
@@ -251,7 +252,7 @@ void hexstr2hex(uint8_t str_len, const uint8_t *hex_str, uint8_t *hex)
     {
         buff[i] = co_hexstr2hex(buff[i]);
 
-        // ¡Ω∏ˆ◊÷∑˚∆¥≥…“ª∏ˆhex
+        // ‰∏§‰∏™Â≠óÁ¨¶ÊãºÊàê‰∏Ä‰∏™hex
         if (i & 0x01)
         {
             hex[i / 2] = (buff[i - 1] << 4) | buff[i];
@@ -266,7 +267,7 @@ void str2uuid(uint8_t str_len, const uint8_t *date, uint8_t *uuid)
     {
         buff[i] = co_hexstr2hex(buff[i]);
 
-        // ¡Ω∏ˆ◊÷∑˚∆¥≥…“ª∏ˆhex
+        // ‰∏§‰∏™Â≠óÁ¨¶ÊãºÊàê‰∏Ä‰∏™hex
         if (i & 0x01)
         {
             uuid[(str_len - i) / 2] = (buff[i - 1] << 4) + buff[i];
@@ -293,7 +294,7 @@ void debugMAC(uint8_t *addr)
     }
 }
 
-// ¥Ú”°À˘”–¥Ê¥¢µƒ ˝æ›£¨∑Ω±„µ˜ ‘¥˙¬Î
+// ÊâìÂç∞ÊâÄÊúâÂ≠òÂÇ®ÁöÑÊï∞ÊçÆÔºåÊñπ‰æøË∞ÉËØï‰ª£Á†Å
 void printAllConfigData(void)
 {
     DEBUG("Name       = %s\r\n", sys_config.name);
@@ -315,13 +316,13 @@ void printAllConfigData(void)
     DEBUG("UUIDW      = 0x");
     debugHexB(sys_config.uuidw, sys_config.uuid_len);
 
-    DEBUG("Rssi       = %d\r\n", sys_config.rssi);
+    DEBUG("Rssi       = %d\r\n", (int)sys_config.rssi);
 
-    DEBUG("Adv_Intv   = %d\r\n", (sys_config.adv_intv_time * 5)/8);
+    DEBUG("Adv_Intv   = %d\r\n", (int)(sys_config.adv_intv_time * 5)/8);
 
-    DEBUG("Baudrate   = %d\r\n", sys_config.baudrate);
+    DEBUG("Baudrate   = %d\r\n", (int)sys_config.baudrate);
 
-    DEBUG("Connected  = %d\r\n\r\n", co_ones(app_env.conbits));
+    DEBUG("Connected  = %d\r\n\r\n", (int)co_ones(app_env.conbits));
 }
 
 void printATHelp(void)
@@ -341,6 +342,7 @@ void printATHelp(void)
 
 tmr_tk_t printScanMac(uint8_t id)
 {
+    (void)id;
     for (uint8_t idx = 0; idx < scan_cnt; idx++)
     {
         DEBUG("[%d]", idx);
@@ -401,36 +403,36 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
         {
             DEBUG("[AT]ERR[%d]\r\n", ERR_PROTOCOL);
         } break;
-        
+
         case CMD_ECHO:
         {
             DEBUG("[AT]OK\r\n");
         } break;
-        
+
         case CMD_ALL:
         {
             printAllConfigData();
         } break;
-        
+
         case CMD_MAC_R:
         {
             DEBUG("[AT]OK\r\n");
             DEBUG("[DA]+MAC=");
             debugMAC(sys_config.mac_addr);
         } break;
-        
+
         case CMD_VER_R:
         {
             DEBUG("[AT]OK\r\n");
             DEBUG("[DA]%s\r\n", BLE_DEV_VERSION);
         } break;
-        
+
         case CMD_NAME_R:
         {
             DEBUG("[AT]OK\r\n");
             DEBUG("[DA]+DEV_NAME=%s\r\n", sys_config.name);
         } break;
-        
+
         case CMD_NAME_S:
         {
             memset(sys_config.name, 0, sizeof(sys_config.name));
@@ -444,9 +446,9 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
         case CMD_BAUD_R:
         {
             DEBUG("[AT]OK\r\n");
-            DEBUG("[DA]+Baudrate=%d\r\n", sys_config.baudrate);
+            DEBUG("[DA]+Baudrate=%d\r\n", (int)sys_config.baudrate);
         } break;
-        
+
         case CMD_BAUD_S:
         {
             uint32_t baud = str2Num(&buff[8], buff_len - 10);
@@ -457,7 +459,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 {
                     sys_config.baudrate = baud;
                 }
-                DEBUG("[AT]OK %d\r\n", sys_config.baudrate);
+                DEBUG("[AT]OK %d\r\n", (int)sys_config.baudrate);
 
                 g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_RST);
             }
@@ -480,16 +482,16 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 DEBUG("[AT]ERR[%d]\r\n", ERR_OPERATION);
             }
         } break;
-        
+
         case CMD_SCAN_S:
-            // ø™ º…®√Ë
+            // ÂºÄÂßãÊâ´Êèè
             if (app_state_get() >= APP_IDLE)
             {
                 DEBUG("[AT]OK\r\n");
                 DEBUG("[AT]Scanning\r\n");
 
                 app_scan_action(ACTV_START);
-                
+
                 #if ((LED_PLAY) || (CFG_SFT_TMR))
                 sftmr_start(500, printScanMac);
                 #endif
@@ -509,7 +511,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 DEBUG("No Connected\r\n");
                 break;
             }
-            
+
             uint8_t con_num = 0;
 
             while (con_num_bit)
@@ -555,7 +557,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             DEBUG("[DA]+UUIDS=0x");
             debugHexB(sys_config.uuids, sys_config.uuid_len);
         } break;
-        
+
         case CMD_UUIDS_S:
         {
             uint8_t id_len = (buff_len - 11) / 2;
@@ -573,14 +575,14 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
             }
         } break;
-        
+
         case CMD_UUIDN_R:
         {
             DEBUG("[AT]OK\r\n");
             DEBUG("[DA]+UUIDN=0x");
             debugHexB(sys_config.uuidn, sys_config.uuid_len);
         } break;
-        
+
         case CMD_UUIDN_S:
         {
             uint8_t id_len = (buff_len - 11) / 2;
@@ -589,7 +591,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             {
                 str2uuid(2 * id_len, &buff[9], sys_config.uuidn);
                 DEBUG("[AT]OK\r\n");
-                
+
                 g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
             }
             else
@@ -597,14 +599,14 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
             }
         } break;
-        
+
         case CMD_UUIDW_R:
         {
             DEBUG("[AT]OK\r\n");
             DEBUG("[DA]+UUIDW=0x");
             debugHexB(sys_config.uuidw, sys_config.uuid_len);
         } break;
-        
+
         case CMD_UUIDW_S:
         {
             uint8_t id_len = (buff_len - 11) / 2;
@@ -613,7 +615,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             {
                 str2uuid(2 * id_len, &buff[9], sys_config.uuidw);
                 DEBUG("[AT]OK\r\n");
-                
+
                 g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
             }
             else
@@ -621,7 +623,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
             }
         } break;
-        
+
         case CMD_AINTVL_R:
         {
             // adv intv unit 0.625
@@ -629,7 +631,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             DEBUG("[AT]OK\r\n");
             DEBUG("[DA]+AINTVL=%d\r\n", adv_intv_val);
         } break;
-        
+
         case CMD_AINTVL_S:
         {
             uint16_t value = str2Num(&buff[10], buff_len - 12);
@@ -640,7 +642,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             {
                 sys_config.adv_intv_time = value;
                 DEBUG("[AT]OK\r\n");
-                
+
                 g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
             }
             else
@@ -648,13 +650,13 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
             }
         } break;
-        
+
         case CMD_AMDATA_R:
         {
             DEBUG("[DA]+AMDATA=");
             debugHex(sys_config.adv_data, sys_config.adv_data_len);
         } break;
-        
+
         case CMD_AMDATA_S:
         {
             uint8_t len = buff_len - 12;
@@ -669,12 +671,12 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 }
                 sys_config.adv_data_len = len/2;
                 hexstr2hex(len, (buff + 10), sys_config.adv_data);
-                
+
                 #else
                 memcpy(sys_config.adv_data, &buff[10], sys_config.adv_data_len);
                 #endif
                 DEBUG("[AT]OK\r\n");
-                
+
                 g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
             }
             else
@@ -682,17 +684,18 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
             }
         } break;
-        
+
         case CMD_RENEW_S:
         {
 //            atSetBleDefault(All_FACTORY_REST);
             flash_page_erase(SYS_CONFIG_OFFSET);
-        };// break; // no break, used CMD_RESET_S break
-        
+        }
+
+        /*fallthrough*/
         case CMD_RESET_S:
         {
             DEBUG("[AT]OK\r\n");
-            g_cfg_change = CFG_CHNG_RST;// ÷±Ω”÷ÿ∆Ùº¥ø…
+            g_cfg_change = CFG_CHNG_RST;// Áõ¥Êé•ÈáçÂêØÂç≥ÂèØ
         } break;
 
         case CMD_HELP:
@@ -703,26 +706,26 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             DEBUG("[AT]ERR[%d]\r\n", ERR_PROTOCOL);
             break;
     }
-    
+
 //    DEBUG("cfg:%X\r\n", g_cfg_change);
-    
+
     if (g_cfg_change & CFG_CHNG_BLE)
     {
-        gapm_reset(); 
+        gapm_reset();
     }
-    
+
     if (g_cfg_change & CFG_CHNG_SYS)
     {
         atConfigFlashWrite(SYS_CONFIG_OFFSET, SYS_CONFIG_ALIGNED4_WLEN, (uint32_t *)&sys_config);
     }
-    
+
     if (g_cfg_change & CFG_CHNG_RST)
     {
         #if ((LED_PLAY) || (CFG_SFT_TMR))
-        sftmr_wait(6); // …Ë÷√≤Œ ˝∫Û£¨  µ±—” ±,“‘±„…œ“ª¥Œ∑¢ÀÕµƒ ˝æ›’˝≥£∑¢ÀÕ≥ˆ»•
+        sftmr_wait(6); // ËÆæÁΩÆÂèÇÊï∞ÂêéÔºåÈÄÇÂΩìÂª∂Êó∂,‰ª•‰æø‰∏ä‰∏ÄÊ¨°ÂèëÈÄÅÁöÑÊï∞ÊçÆÊ≠£Â∏∏ÂèëÈÄÅÂá∫Âéª
         #endif
         NVIC_SystemReset();
     }
-    
+
     return (code_idx ? 1 : 0);
 }

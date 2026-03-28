@@ -1,0 +1,284 @@
+{
+  "file_path": "./usb\\src\\demo_hid_custom.c",
+  "functions": [
+    {
+      "name": "usbd_hid_kbd_out_handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint8_t led_state;\n    \n    /*!< read the led data from host send */\n    usbd_ep_read(ep, KBD_OUT_EP_SIZE, &led_state);\n    USB_LOG_RAW(\"led_state:%02X\\r\\n\", led_state);\n    \n    /*!< here you can write the LED processing from the host */\n    usbd_hid_leds(led_state);\n}",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 204,
+      "is_static": false
+    },
+    {
+      "name": "usbd_hid_raw_out_handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint8_t custom_data[RAW_OUT_EP_SIZE];\n    \n    /*!< read the data from host send */\n    usbd_ep_read(RAW_OUT_EP, RAW_OUT_EP_SIZE, custom_data);\n\n    /*!< you can use the data do some thing you like */\n}",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 216,
+      "is_static": false
+    },
+    {
+      "name": "usbd_notify_handler",
+      "return_type": "__USBIRQ",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "arg",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    switch (event) {\n        case USBD_EVENT_RESET:\n            usbd_hid_reset();\n            break;\n        case USBD_EVENT_RESUME:\n            break;\n        case USBD_EVENT_SUSPEND:\n            break;\n\n        default:\n            break;\n    }\n}",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 226,
+      "is_static": false
+    },
+    {
+      "name": "usbdInit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    usbd_init();\n    usbd_register(hid_descriptor, hid_configuration);\n    \n    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {\n        usbd_hid_init(idx, &hid_interface[idx]);\n    }\n}",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 248,
+      "is_static": false
+    },
+    {
+      "name": "usbdTest",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // circle polling to send report\n    static uint8_t keynum = 0;\n    \n    if (!usbd_is_configured())\n        return;\n    \n    /*!< keyboard test */\n    {\n        uint8_t sendbuffer1[KBD_IN_EP_SIZE] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; //A\n    \n        sendbuffer1[2] = HID_KEY_A + keynum;\n        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);\n        /*!< delay 10ms */\n        bootDelayMs(10);\n        /*!< send button up */\n        sendbuffer1[2] = 0;\n        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);\n    }\n    \n    /*!< delay 100ms the custom test */\n    {\n        bootDelayMs(100);\n        /*!< custom test */\n        uint8_t sendbuffer2[RAW_IN_EP_SIZE];\n        \n        memset(sendbuffer2, keynum, RAW_IN_EP_SIZE);\n        usbd_hid_send_report(RAW_IN_EP, RAW_IN_EP_SIZE, sendbuffer2);\n    }\n    \n    if (++keynum > 94) keynum = 0;\n}",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 258,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "USBD_BCD",
+      "value": "USB_2_0 // Version",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 7
+    },
+    {
+      "name": "USBD_VID",
+      "value": "0xFFFF  // Vendor ID",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 8
+    },
+    {
+      "name": "USBD_PID",
+      "value": "0xFFFF  // Product ID",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 9
+    },
+    {
+      "name": "USBD_MAX_POWER",
+      "value": "100     // unit in mA",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 10
+    },
+    {
+      "name": "USBD_LANGID_STRING",
+      "value": "0x0409  // English(US)",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 11
+    },
+    {
+      "name": "USB_HID_INTF_CNT",
+      "value": "2",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 20
+    },
+    {
+      "name": "USB_HID_INTF_END",
+      "value": "(USB_HID_INTF_CNT - 1)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 21
+    },
+    {
+      "name": "USB_HID_CONFIG_SIZE",
+      "value": "(9+(18+7+7)*USB_HID_INTF_CNT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 24
+    },
+    {
+      "name": "KBD_INTF_NUM",
+      "value": "0",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 27
+    },
+    {
+      "name": "KBD_IN_EP",
+      "value": "0x81",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 28
+    },
+    {
+      "name": "KBD_IN_EP_SIZE",
+      "value": "8",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 29
+    },
+    {
+      "name": "KBD_IN_EP_INTERVAL",
+      "value": "10",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 30
+    },
+    {
+      "name": "KBD_OUT_EP",
+      "value": "0x01",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 31
+    },
+    {
+      "name": "KBD_OUT_EP_SIZE",
+      "value": "1",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 32
+    },
+    {
+      "name": "KBD_OUT_EP_INTERVAL",
+      "value": "10",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 33
+    },
+    {
+      "name": "KBD_REPORT_DESC_SIZE",
+      "value": "sizeof(hid_kbd_report_desc)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 34
+    },
+    {
+      "name": "RAW_INTF_NUM",
+      "value": "1",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 37
+    },
+    {
+      "name": "RAW_IN_EP",
+      "value": "0x82",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 38
+    },
+    {
+      "name": "RAW_IN_EP_SIZE",
+      "value": "64",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 39
+    },
+    {
+      "name": "RAW_IN_EP_INTERVAL",
+      "value": "10",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 40
+    },
+    {
+      "name": "RAW_OUT_EP",
+      "value": "0x02",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 41
+    },
+    {
+      "name": "RAW_OUT_EP_SIZE",
+      "value": "64",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 42
+    },
+    {
+      "name": "RAW_OUT_EP_INTERVAL",
+      "value": "10",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 43
+    },
+    {
+      "name": "RAW_REPORT_DESC_SIZE",
+      "value": "sizeof(hid_raw_report_desc)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_hid_custom.c",
+      "line_number": 44
+    }
+  ],
+  "parse_errors": [
+    "Line 159, Col 5: '#if (USBD_BCD == USB_2_0)'",
+    "Line 161, Col 5: '#endif'",
+    "Line 226, Col 10: 'void'"
+  ]
+}

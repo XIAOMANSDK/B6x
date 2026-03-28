@@ -1,0 +1,531 @@
+{
+  "btmr_delay": [],
+  "tick_delay": [],
+  "core_ldoset": [],
+  "core_ldoget": [],
+  "core_sleep": [
+    "c2_core_sleep"
+  ],
+  "wakeup_io_sw": [],
+  "core_pwroff": [
+    "GLOBAL_INT_STOP",
+    "ble_retain",
+    "BIT",
+    "BIT",
+    "pwroff_clk_sw"
+  ],
+  "core_release_io_latch": [],
+  "core_unique_id": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_rd_cfg",
+    "fshc_rd_fifo",
+    "xmemcpy",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "dma_init": [
+    "RCC_APBCLK_EN",
+    "RCC_APBRST_REQ",
+    "DMA_CFG_HPROT"
+  ],
+  "dma_deinit": [
+    "RCC_APBCLK_DIS",
+    "RCC_APBRST_REQ"
+  ],
+  "dma_chnl_init": [],
+  "dma_chnl_deinit": [],
+  "dma_chnl_conf": [
+    "DMA_CHNL_CTRL"
+  ],
+  "dma_chnl_reload": [
+    "DMA_CHNL_CTRL",
+    "DMA_CHNL_CTRL",
+    "DMA_CHNL_CTRL"
+  ],
+  "dma_chnl_remain": [
+    "DMA_CHNL_CTRL"
+  ],
+  "dma_chnl_remain_pingpong": [
+    "DMA_CHNL_CTRL",
+    "DMA_CHNL_CTRL"
+  ],
+  "dma_chnl_ctrl": [],
+  "dma_chnl_done": [],
+  "exti_init": [
+    "RCC_APBCLK_EN",
+    "RCC_APBRST_REQ"
+  ],
+  "exti_deinit": [
+    "RCC_APBCLK_DIS",
+    "RCC_APBRST_REQ"
+  ],
+  "exti_set": [],
+  "exti_get": [],
+  "puya_enter_dual_read": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_xip_conf",
+    "fshc_hpm_conf",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "puya_exit_dual_read": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_hpm_conf",
+    "fshc_xip_conf",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "boya_flash_quad_mode": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_rd_sta",
+    "fshc_en_cmd",
+    "fshc_wr_sta",
+    "rcc_sysclk_get",
+    "btmr_delay",
+    "FSHC_WAIT_COMPLETE",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "flash_write": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_write",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "flash_read": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_read",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "flash_page_erase": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_erase",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "flash_byte_write": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_en_cmd",
+    "fshc_wr_cfg",
+    "xmemcpy",
+    "xmemcpy",
+    "FSHC_WAIT_COMPLETE",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "flash_byte_read": [
+    "GLOBAL_INT_DISABLE",
+    "FCM_GET_CMD",
+    "FCM_GET_MODE",
+    "SCTRL_RD_DAT",
+    "fshc_rd_cfg",
+    "fshc_rd_cfg",
+    "xmemcpy",
+    "xmemcpy",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "flash_size": [
+    "GLOBAL_INT_DISABLE",
+    "fshc_rd_sta",
+    "GLOBAL_INT_RESTORE"
+  ],
+  "i2c_init": [
+    "RCC_APBCLK_EN",
+    "iom_ctrl",
+    "__NOP",
+    "__NOP",
+    "__NOP",
+    "__NOP",
+    "__NOP",
+    "__NOP",
+    "__NOP",
+    "__NOP",
+    "csc_output",
+    "csc_input",
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "iom_ctrl",
+    "I2C_ENABLE"
+  ],
+  "i2c_deinit": [
+    "RCC_APBCLK_DIS",
+    "RCC_APBRST_REQ"
+  ],
+  "i2c_start": [
+    "I2C_START",
+    "I2C_STAT_GET",
+    "I2C_STAT_GET",
+    "I2C_PUTC",
+    "I2C_STAT_GET"
+  ],
+  "i2c_stop": [
+    "I2C_STOP"
+  ],
+  "i2c_send": [
+    "I2C_PUTC",
+    "I2C_STAT_GET",
+    "I2C_STAT_GET"
+  ],
+  "i2c_recv": [
+    "I2C_SET_ACK",
+    "I2C_SET_NAK",
+    "I2C_GETC",
+    "I2C_STAT_GET",
+    "I2C_STAT_GET"
+  ],
+  "i2c_read": [
+    "i2c_start",
+    "i2c_recv",
+    "i2c_stop"
+  ],
+  "i2c_write": [
+    "i2c_start",
+    "i2c_send",
+    "i2c_stop"
+  ],
+  "eeprom_read": [
+    "i2c_start",
+    "I2C_PUTC",
+    "I2C_STAT_GET",
+    "I2C_PUTC",
+    "I2C_STAT_GET",
+    "i2c_start",
+    "I2C_SET_ACK",
+    "I2C_SET_NAK",
+    "I2C_GETC",
+    "I2C_STAT_GET",
+    "I2C_STAT_GET",
+    "i2c_send",
+    "i2c_start",
+    "i2c_recv",
+    "i2c_stop"
+  ],
+  "eeprom_write": [
+    "i2c_start",
+    "I2C_PUTC",
+    "I2C_STAT_GET",
+    "I2C_PUTC",
+    "I2C_STAT_GET",
+    "I2C_PUTC",
+    "I2C_STAT_GET",
+    "I2C_STAT_GET",
+    "i2c_send",
+    "i2c_send",
+    "i2c_stop"
+  ],
+  "iocsc_uart": [
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "iocsc_uart_hwfc": [
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "iocsc_i2c": [
+    "csc_output",
+    "csc_input",
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "iocsc_spim": [
+    "csc_output",
+    "csc_input",
+    "csc_output",
+    "iom_ctrl",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "iocsc_spis": [
+    "csc_input",
+    "csc_input",
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "iom_ctrl",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "iocsc_ctmr_chnl": [
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "csc_output",
+    "csc_input",
+    "iom_ctrl"
+  ],
+  "iocsc_observe": [
+    "csc_output",
+    "iom_ctrl"
+  ],
+  "iospc_clkout": [
+    "iom_ctrl"
+  ],
+  "iospc_usbpin": [
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "iospc_swdpin": [
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "iospc_rstpin": [],
+  "iwdt_init": [
+    "RCC_APBCLK_EN"
+  ],
+  "iwdt_deinit": [
+    "RCC_APBCLK_DIS"
+  ],
+  "iwdt_feed": [],
+  "iwdt_conf": [],
+  "pwm_init": [
+    "TMR_USED",
+    "RCC_APBCLK_EN"
+  ],
+  "pwm_deinit": [
+    "RCC_APBCLK_DIS",
+    "RCC_AHBRST_REQ"
+  ],
+  "pwm_conf": [
+    "TMR_USED"
+  ],
+  "pwm_start": [
+    "TMR_USED"
+  ],
+  "pwm_stop": [
+    "TMR_USED"
+  ],
+  "pwm_chnl_set": [
+    "TMR_USED"
+  ],
+  "pwm_duty_upd": [
+    "TMR_USED"
+  ],
+  "rcc_bus_get": [],
+  "rcc_bus_enb": [],
+  "rcc_bus_dis": [],
+  "rcc_bus_rst": [],
+  "rcc_adc_en": [],
+  "rcc_ble_en": [
+    "RCC_APBCLK_EN"
+  ],
+  "rcc_usb_en": [
+    "RCC_AHBCLK_EN",
+    "RCC_AHBRST_REQ",
+    "GPIO_DIR_CLR",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "rcc_sysclk_set": [],
+  "rcc_sysclk_get": [
+    "DPLL_IS_48M"
+  ],
+  "rcc_sysclk_freq": [
+    "DPLL_IS_48M"
+  ],
+  "rcc_fshclk_get": [],
+  "rcc_fshclk_mhz": [
+    "DPLL_IS_48M"
+  ],
+  "rcc_fshclk_set": [],
+  "rc32k_conf": [
+    "RCC_APBCLK_EN"
+  ],
+  "rc32k_calib": [],
+  "rc32k_trim_set": [
+    "RCC_APBCLK_EN"
+  ],
+  "rc32k_trim_get": [
+    "RCC_APBCLK_EN"
+  ],
+  "rc16m_trim_set": [
+    "RCC_APBCLK_EN"
+  ],
+  "rc16m_trim_get": [
+    "RCC_APBCLK_EN"
+  ],
+  "rc16m_calib": [
+    "co_abs"
+  ],
+  "rtc_conf": [
+    "RCC_APBCLK_EN"
+  ],
+  "rtc_time_get": [],
+  "rtc_time_set": [],
+  "rtc_alarm_set": [],
+  "rtc_alarm_get": [],
+  "rtc_is_alarm": [],
+  "rtc_irq_set": [],
+  "rtc_wkup_set": [],
+  "sadc_init": [
+    "RCC_AHBCLK_DIS",
+    "RCC_AHBRST_REQ",
+    "RCC_AHBCLK_EN",
+    "sadc_calib"
+  ],
+  "sadc_deinit": [
+    "RCC_AHBCLK_DIS",
+    "RCC_AHBRST_REQ"
+  ],
+  "sadc_conf": [],
+  "sadc_read": [
+    "SADC_AFLG_CLR",
+    "SADC_AFLG_WAIT",
+    "SADC_AFLG_CLR",
+    "SADC_AFLG_CLR"
+  ],
+  "sadc_dma": [],
+  "sadc_pcm": [
+    "GPIO_DIR_CLR",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "sadc_atmr": [],
+  "sadc_rand_num": [
+    "SADC_AFLG_WAIT",
+    "sadc_calib"
+  ],
+  "sadc_temperature": [
+    "rcc_sysclk_get",
+    "sadc_init",
+    "SADC_CLK_DIV_TEMP",
+    "sadc_calib"
+  ],
+  "spim_init": [
+    "RCC_AHBCLK_EN",
+    "RCC_AHBRST_REQ",
+    "csc_output",
+    "csc_input",
+    "csc_output",
+    "iom_ctrl",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "spim_conf": [],
+  "spim_begin": [
+    "SPIM_BGN"
+  ],
+  "spim_wait": [
+    "SPIM_WAIT"
+  ],
+  "spim_duplex": [
+    "SPIM_BGN",
+    "SPIM_WAIT"
+  ],
+  "spim_transimit": [
+    "SPIM_BGN",
+    "SPIM_WAIT"
+  ],
+  "spim_receive": [
+    "SPIM_BGN",
+    "SPIM_WAIT"
+  ],
+  "spim_halfdx": [
+    "SPIM_BGN",
+    "SPIM_WAIT"
+  ],
+  "spis_init": [
+    "RCC_AHBCLK_EN",
+    "RCC_AHBRST_REQ",
+    "csc_input",
+    "csc_input",
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "iom_ctrl",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "spis_conf": [],
+  "spis_getc": [],
+  "spis_putc": [],
+  "sysdbg_iomap": [
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "sysdbg_select": [],
+  "sysdbg_anatst": [
+    "GPIO_DIR_CLR",
+    "iom_ctrl",
+    "GPIO_DIR_CLR",
+    "iom_ctrl"
+  ],
+  "ctmr_init": [
+    "RCC_APBCLK_EN",
+    "RCC_APBRST_REQ"
+  ],
+  "ctmr_deinit": [
+    "RCC_APBCLK_DIS",
+    "RCC_APBRST_REQ"
+  ],
+  "ctmr_ctrl": [],
+  "atmr_init": [
+    "RCC_APBCLK_EN",
+    "RCC_APBRST_REQ"
+  ],
+  "atmr_deinit": [
+    "RCC_APBCLK_DIS",
+    "RCC_APBRST_REQ"
+  ],
+  "atmr_ctrl": [],
+  "trim_load": [
+    "iwdt_conf",
+    "RD_32",
+    "RD_32",
+    "RCC_APBCLK_EN",
+    "iwdt_conf"
+  ],
+  "get_trim_rc16m_freq": [
+    "RD_32"
+  ],
+  "get_trim_vdd12_voltage": [
+    "RD_32"
+  ],
+  "uart_init": [
+    "iom_ctrl",
+    "iom_ctrl",
+    "csc_output",
+    "csc_input",
+    "RCC_APBCLK_EN",
+    "RCC_APBRST_REQ"
+  ],
+  "uart_deinit": [
+    "RCC_APBCLK_DIS",
+    "RCC_APBRST_REQ"
+  ],
+  "uart_hwfc": [
+    "UART_PTR",
+    "csc_output",
+    "csc_input",
+    "iom_ctrl",
+    "iom_ctrl"
+  ],
+  "uart_conf": [
+    "UART_PTR"
+  ],
+  "uart_fctl": [
+    "UART_PTR"
+  ],
+  "uart_mctl": [
+    "UART_PTR"
+  ],
+  "uart_putc": [
+    "UART_PTR"
+  ],
+  "uart_getc": [
+    "UART_PTR"
+  ],
+  "uart_wait": [
+    "UART_PTR"
+  ],
+  "uart_send": [
+    "UART_PTR"
+  ],
+  "uart_update_baud": [
+    "UART_PTR",
+    "iom_ctrl",
+    "RCC_APBCLK_DIS",
+    "RCC_APBRST_REQ",
+    "RCC_APBCLK_EN",
+    "iom_ctrl"
+  ]
+}

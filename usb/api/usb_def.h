@@ -164,7 +164,7 @@
 
 // Get or Set BigEndian value
 #define GET_BE16(field) \
-    (((uint16_t)(field)[0] << 8) | ((uint16_t)(field)[1]))
+    ((uint16_t)(((uint16_t)(field)[0] << 8) | ((uint16_t)(field)[1])))
 
 #define GET_BE32(field) \
     (((uint32_t)(field)[0] << 24) | ((uint32_t)(field)[1] << 16) | ((uint32_t)(field)[2] << 8) | ((uint32_t)(field)[3] << 0))
@@ -849,7 +849,7 @@ struct usb_device_capability_descriptor {
     USB_STRING_MANUFACT_INDEX,           /* iManufacturer */       \
     USB_STRING_PRODUCT_INDEX,            /* iProduct */            \
     USB_STRING_SERIAL_INDEX,             /* iSerial  */            \
-    bNumConfigurations                   /* bNumConfigurations */  
+    bNumConfigurations                   /* bNumConfigurations */
 
 // Device Init without 'iSerial'
 #define USB_DEVICE_DESCRIPTOR_INIT(bcdUSB, bDeviceClass, bDeviceSubClass, bDeviceProtocol, idVendor, idProduct, bcdDevice, bNumConfigurations) \
@@ -866,7 +866,7 @@ struct usb_device_capability_descriptor {
     USB_STRING_MANUFACT_INDEX,           /* iManufacturer */       \
     USB_STRING_PRODUCT_INDEX,            /* iProduct */            \
     0/*USB_STRING_SERIAL_INDEX*/,        /* iSerial (0 = None) */  \
-    bNumConfigurations                   /* bNumConfigurations */  
+    bNumConfigurations                   /* bNumConfigurations */
 
 /* Macro for USB Configuration Descriptor */
 #define USB_CONFIG_DESCRIPTOR_INIT(wTotalLength, bNumInterfaces, bConfigurationValue, bmAttributes, bMaxPower) \
@@ -877,7 +877,7 @@ struct usb_device_capability_descriptor {
     bConfigurationValue,                 /* bConfigurationValue */ \
     0x00,                                /* iConfiguration */      \
     bmAttributes,                        /* bmAttributes */        \
-    USB_CONFIG_POWER_MA(bMaxPower)       /* bMaxPower */           
+    USB_CONFIG_POWER_MA(bMaxPower)       /* bMaxPower */
 
 /* Macro for USB Interface Descriptor */
 #define USB_INTERFACE_DESCRIPTOR_INIT(bInterfaceNumber, bAlternateSetting, bNumEndpoints,                  \
@@ -890,7 +890,7 @@ struct usb_device_capability_descriptor {
     bInterfaceClass,                     /* bInterfaceClass */     \
     bInterfaceSubClass,                  /* bInterfaceSubClass */  \
     bInterfaceProtocol,                  /* bInterfaceProtocol */  \
-    iInterface                           /* iInterface */          
+    iInterface                           /* iInterface */
 
 /* Macro for USB Endpoint Descriptor */
 #define USB_EP_DESCRIPTOR_INIT(bEndpointAddress, bmAttributes, wMaxPacketSize, bInterval) \

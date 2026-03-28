@@ -7,7 +7,7 @@
  *
  ****************************************************************************************
  */
- 
+
 #include "dbg.h"
 
 #if (DBG_MODE == DBG_VIA_UART)
@@ -26,7 +26,7 @@
 #endif
 
 #if !defined(DBG_UART_PORT)
-    #define DBG_UART_PORT       (0) //UART1 
+    #define DBG_UART_PORT       (0) //UART1
 #endif
 #if !defined(DBG_UART_TXD)
     #define DBG_UART_TXD        (6) //PA06
@@ -48,8 +48,10 @@ int fputc(int ch, FILE *f) {
 }
 #else
 // gcc(__GNUC__)
+#include <sys/stat.h>
 int _write (int fd, char *ptr, int len)
 {
+    (void)fd;
     for( int i = 0; i < len; i++)
     {
         uart_putc(DBG_UART_PORT, ptr[i]);
@@ -57,13 +59,67 @@ int _write (int fd, char *ptr, int len)
 
     return len;
 }
+
+int _close(int fd)
+{
+    (void)fd;
+    return -1;
+}
+
+int _lseek(int fd, int ptr, int dir)
+{
+    (void)fd; (void)ptr; (void)dir;
+    return 0;
+}
+
+int _read(int fd, void *ptr, size_t len)
+{
+    (void)fd; (void)ptr; (void)len;
+    return 0;
+}
+
+int _fstat(int fd, struct stat *st)
+{
+    (void)fd;
+    st->st_mode = S_IFCHR;
+    return 0;
+}
+
+int _isatty(int fd)
+{
+    (void)fd;
+    return 1;
+}
+
+void *_sbrk(ptrdiff_t incr)
+{
+    (void)incr;
+    return (void *)-1;
+}
+
+void _exit(int status)
+{
+    (void)status;
+    while(1);
+}
+
+int _kill(int pid, int sig)
+{
+    (void)pid; (void)sig;
+    return -1;
+}
+
+int _getpid(void)
+{
+    return 1;
+}
 #endif
 
 void dbgInit(void)
 {
     uart_init(DBG_UART_PORT, DBG_UART_TXD, DBG_UART_RXD);
     uart_conf(DBG_UART_PORT, DBG_UART_BAUD, LCR_BITS_DFLT);
-    
+
     #if (DBG_UART_RXEN)
     uart_fctl(DBG_UART_PORT, FCR_FIFOEN_BIT | FCR_RXTL_8BYTE, 20, UART_IR_RXRD_BIT | UART_IR_RTO_BIT);
     #endif

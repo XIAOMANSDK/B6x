@@ -882,6 +882,7 @@ __STATIC void mm_lights_ln_cb_grp_event(m_lid_t mdl_lid, uint8_t event, uint8_t 
             }
         } // no break;
 
+        /*fallthrough*/
         case (MM_GRP_EVENT_TRANS_STARTED):
         {
             uint8_t trans_time = info;

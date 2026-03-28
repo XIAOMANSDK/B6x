@@ -71,7 +71,7 @@ uint8_t ptss_evt_send(uint8_t conidx, uint16_t handle, uint16_t len, const uint8
 
 /**
  ****************************************************************************************
- * @brief Callback on received data from peer device via WC or WQ (__weak func)
+ * @brief Callback on received data from peer device via WC or WQ (__WEAK func)
  *
  * @param[in] conidx   peer device connection index
  * @param[in] len      Length of data
@@ -82,7 +82,7 @@ void ptss_cb_recv(uint8_t conidx, uint16_t len, const uint8_t *data);
 
 /**
  ****************************************************************************************
- * @brief Callback to response 'READ' from peer device (__weak func)
+ * @brief Callback to response 'READ' from peer device (__WEAK func)
  *
  * @param[in] conidx  peer device connection index
  * @param[in] attidx  SESS attribute index, converted with 'handle'
@@ -95,7 +95,7 @@ void ptss_cb_read(uint8_t conidx, uint8_t attidx, uint16_t handle);
 
 /**
  ****************************************************************************************
- * @brief Callback on enabled client config from peer device via WQ (__weak func)
+ * @brief Callback on enabled client config from peer device via WQ (__WEAK func)
  *
  * @param[in] conidx   Connection index
  * @param[in] cli_cfg  Client configuration @see prf_cli_conf

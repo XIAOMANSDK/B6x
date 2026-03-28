@@ -192,29 +192,29 @@ static const uint8_t hid_raw_report_desc[] = {
 static const uint8_t hid_descriptor[] = {
     /* Descriptor - Device (Size:18) */
     USB_DEVICE_DESCRIPTOR_INIT(USBD_BCD, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, 0x0002, 0x01),
-    
+
     /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_HID_CONFIG_SIZE, USB_HID_INTF_CNT, 
+    USB_CONFIG_DESCRIPTOR_INIT(USB_HID_CONFIG_SIZE, USB_HID_INTF_CNT,
             0x01, USB_CONFIG_BUS_POWERED, USBD_MAX_POWER),
 
     /* Descriptor - Keyboard Interface (Size:18+7*2) */
     HID_INTERFACE_INIT(KBD_INTF_NUM, 2, HID_SUBCLASS_BOOTIF, HID_PROTOCOL_KEYBOARD, 0, KBD_REPORT_DESC_SIZE),
     HID_ENDPOINT_DESC(KBD_IN_EP, KBD_IN_EP_SIZE, KBD_IN_EP_INTERVAL),
     HID_ENDPOINT_DESC(KBD_OUT_EP, KBD_OUT_EP_SIZE, KBD_OUT_EP_INTERVAL),
-    
+
     /* Descriptor - Custom-Raw Interface (Size:18+7*2) */
     HID_INTERFACE_INIT(RAW_INTF_NUM, 2, HID_SUBCLASS_BOOTIF, HID_PROTOCOL_NONE, 0, RAW_REPORT_DESC_SIZE),
     HID_ENDPOINT_DESC(RAW_IN_EP, RAW_IN_EP_SIZE, RAW_IN_EP_INTERVAL),
     HID_ENDPOINT_DESC(RAW_OUT_EP, RAW_OUT_EP_SIZE, RAW_OUT_EP_INTERVAL),
- 
+
     /* Descriptor - String */
     // String0 - Language ID (Size:4)
     USB_LANGID_INIT(USBD_LANGID_STRING),
-    
+
     // String1 - iManufacturer
     0x02,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    
+
     // String2 - iProduct
     0x20,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
@@ -233,7 +233,7 @@ static const uint8_t hid_descriptor[] = {
     WCHAR('M'),
     WCHAR('i'),
     WCHAR('c'),
-    
+
     // String3 - iSerialNumber
     0x10,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
@@ -244,12 +244,12 @@ static const uint8_t hid_descriptor[] = {
     WCHAR('.'),
     WCHAR('0'),
     WCHAR('8'),
-    
+
     /* Descriptor - Device Qualifier (Size:10) */
     #if (USBD_BCD == USB_2_0)
     USB_QUALIFIER_INIT(0x01),
     #endif
-    
+
     /* Descriptor - EOF */
     0x00
 };
@@ -293,19 +293,20 @@ static const usbd_config_t hid_configuration[] = {
 void usbd_hid_kbd_out_handler(uint8_t ep)
 {
     uint8_t led_state;
-    
+
     /*!< read the led data from host send */
     usbd_ep_read(ep, KBD_OUT_EP_SIZE, &led_state);
     DEBUG("led_state:%02X\r\n", led_state);
-    
+
     /*!< here you can write the LED processing from the host */
     usbd_hid_leds(led_state);
 }
 
 void usbd_hid_raw_out_handler(uint8_t ep)
 {
+    (void)ep;
     uint8_t custom_data[RAW_OUT_EP_SIZE];
-    
+
     /*!< read the data from host send */
     usbd_ep_read(RAW_OUT_EP, RAW_OUT_EP_SIZE, custom_data);
 
@@ -316,6 +317,7 @@ bool suspend;
 
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
+    (void)arg;
     DEBUG("evt:%d", event);
     switch (event)
     {
@@ -363,13 +365,13 @@ void usbdInit(void)
 //    CSC->CSC_OUTPUT[7].Word = 0;
 //    CSC->CSC_INPUT[CSC_UART1_TXD].Word = 0;
 //    CSC->CSC_INPUT[CSC_UART1_RXD].Word = 0;
-    
+
     usbd_init();
     usbd_register(hid_descriptor, hid_configuration);
 
     NVIC_SetPriority(BLE_IRQn, 1);
     NVIC_EnableIRQ(USB_IRQn);
-    
+
     for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++)
     {
         usbd_hid_init(idx, &hid_interface[idx]);

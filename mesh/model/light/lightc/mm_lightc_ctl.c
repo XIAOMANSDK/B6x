@@ -192,6 +192,7 @@ __STATIC void mm_lightc_ctl_handler_status_temp_range(mesh_buf_t *p_buf, uint16_
 __STATIC void mm_lightc_ctl_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                   mm_route_env_t *p_route_env)
 {
+    (void)p_env;
     // Call the appropriate handler for the received message
     switch (p_route_env->opcode)
     {
@@ -234,6 +235,7 @@ __STATIC void mm_lightc_ctl_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_lightc_ctl_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_LIGHT_CTL_STATUS)
@@ -554,7 +556,7 @@ __STATIC uint8_t mm_lightc_ctl_cb_set(mm_mdl_env_t *p_env, m_lid_t app_key_lid, 
  ****************************************************************************************
  */
 
-__STATIC mm_cli_cb_t mm_lightc_ctl_cb = 
+__STATIC mm_cli_cb_t mm_lightc_ctl_cb =
 {
     .cb_get = mm_lightc_ctl_cb_get,
     .cb_set = mm_lightc_ctl_cb_set,

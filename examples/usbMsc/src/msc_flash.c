@@ -14,7 +14,7 @@
 
 #if (DBG_MSB_FLASH)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -67,7 +67,7 @@ static uint32_t rd_buff[SECTOR_SIZE/sizeof(uint32_t)];
  ****************************************************************************************
  */
 
-#if (MSC_FLASH_TYPE == INT_FLASH) 
+#if (MSC_FLASH_TYPE == INT_FLASH)
 /* internal Flash(2Mbits, 256KB), half part */
 #ifndef intFLASH_BASE
 #define intFLASH_BASE         (0x20000) // high-half
@@ -250,7 +250,7 @@ static void spi_flash_send(uint8_t *fcmd, uint32_t clen, uint8_t *data, uint32_t
 static void spi_flash_wren(void)
 {
     uint8_t fcmd = FSH_CMD_WR_EN;
-    
+
     spi_flash_send(&fcmd, 1, NULL, 0);
 }
 
@@ -290,7 +290,7 @@ static uint32_t msc_flash_size(void)
     // read FlashID
     uint8_t fshId[3];
     uint8_t fcmd = FSH_CMD_RD_ID;
-    
+
     spi_flash_recv(&fcmd, 1, fshId, 3);
 
     // calc FlashSize
@@ -364,6 +364,7 @@ static void msc_flash_erase(uint32_t offset)
 
 void usbd_msc_get_cap(uint8_t lun, uint32_t *block_num, uint32_t *block_size)
 {
+    (void)lun;
     msc_flash_init();
 
     *block_num  = msc_flash_size() / SECTOR_SIZE;
@@ -372,6 +373,7 @@ void usbd_msc_get_cap(uint8_t lun, uint32_t *block_num, uint32_t *block_size)
 
 bool usbd_msc_sector_read(uint8_t lun, uint32_t sector, uint8_t *buffer, uint32_t length)
 {
+    (void)lun;
     DEBUG("rd lun:%d, sector:%X, len:%d, p:%X", lun, sector, length, (uint32_t)buffer);
 
     // read buffer
@@ -382,6 +384,7 @@ bool usbd_msc_sector_read(uint8_t lun, uint32_t sector, uint8_t *buffer, uint32_
 
 bool usbd_msc_sector_write(uint8_t lun, uint32_t sector, const uint8_t *data, uint32_t length)
 {
+    (void)lun;
     uint32_t nb_page = PAGE_NB(length);
     DEBUG("wr lun:%X, %d, sector:%X, len:%d, nb:%d, p:%X", (uint32_t)rd_buff, sizeof(rd_buff), sector, length, nb_page, (uint32_t)data);
 

@@ -55,7 +55,7 @@ static void devInit(void)
     trace_init();
     #endif
     
-    debug("Start(rsn:0x%X)...\r\n", rsn);
+    debug("Start(rsn:0x%X, %X)...\r\n", rsn, BLE_HEAP_BASE);
     
 //    RCC->CHIP_RST_ST_CLR.Word
     #if (LED_PLAY)

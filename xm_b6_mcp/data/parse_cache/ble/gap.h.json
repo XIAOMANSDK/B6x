@@ -1,0 +1,1590 @@
+{
+  "file_path": "./ble\\api\\gap.h",
+  "functions": [],
+  "macros": [
+    {
+      "name": "GAP_MIN_LE_MTU",
+      "value": "(23)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 28
+    },
+    {
+      "name": "GAP_MIN_LE_MTU_SEC_CON",
+      "value": "(65)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 30
+    },
+    {
+      "name": "GAP_MAX_LE_MTU",
+      "value": "(512)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 32
+    },
+    {
+      "name": "GAP_BD_ADDR_LEN",
+      "value": "(6)",
+      "macro_type": "register",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 35
+    },
+    {
+      "name": "GAP_LE_CHNL_MAP_LEN",
+      "value": "(0x05)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 37
+    },
+    {
+      "name": "GAP_LE_FEATS_LEN",
+      "value": "(0x08)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 39
+    },
+    {
+      "name": "GAP_ADV_DATA_LEN",
+      "value": "(0x1F)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 41
+    },
+    {
+      "name": "GAP_SCAN_RSP_DATA_LEN",
+      "value": "(0x1F)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 42
+    },
+    {
+      "name": "GAP_RAND_NB_LEN",
+      "value": "(0x08)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 44
+    },
+    {
+      "name": "GAP_KEY_LEN",
+      "value": "(16)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 46
+    },
+    {
+      "name": "GAP_P256_KEY_LEN",
+      "value": "(0x20)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 48
+    },
+    {
+      "name": "GAP_LE_LIM_DISCOVERABLE_FLG",
+      "value": "0x01",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 53
+    },
+    {
+      "name": "GAP_LE_GEN_DISCOVERABLE_FLG",
+      "value": "0x02",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 55
+    },
+    {
+      "name": "GAP_BR_EDR_NOT_SUPPORTED",
+      "value": "0x04",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 57
+    },
+    {
+      "name": "GAP_SIMUL_BR_EDR_LE_CONTROLLER",
+      "value": "0x08",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 59
+    },
+    {
+      "name": "GAP_SIMUL_BR_EDR_LE_HOST",
+      "value": "0x10",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 61
+    },
+    {
+      "name": "GAP_INVALID_CONIDX",
+      "value": "0xFF",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 65
+    },
+    {
+      "name": "GAP_INVALID_CONHDL",
+      "value": "0xFFFF",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 68
+    },
+    {
+      "name": "GAP_CONN_INTERVAL_MIN",
+      "value": "6       //(7.5ms)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 71
+    },
+    {
+      "name": "GAP_CONN_INTERVAL_MAX",
+      "value": "3200    //(4 sec)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 73
+    },
+    {
+      "name": "GAP_CONN_LATENCY_MIN",
+      "value": "0       //(0x00)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 75
+    },
+    {
+      "name": "GAP_CONN_LATENCY_MAX",
+      "value": "499     //(0x1F3)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 77
+    },
+    {
+      "name": "GAP_CONN_SUP_TO_MIN",
+      "value": "10      //(100ms)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 79
+    },
+    {
+      "name": "GAP_CONN_SUP_TO_MAX",
+      "value": "3200    //(32 sec)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 81
+    },
+    {
+      "name": "GAP_ADDR_PRAND_LEN",
+      "value": "(3)",
+      "macro_type": "register",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 85
+    },
+    {
+      "name": "GAP_ADDR_HASH_LEN",
+      "value": "(3)",
+      "macro_type": "register",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 87
+    },
+    {
+      "name": "LE_MIN_OCTETS",
+      "value": "(27)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 92
+    },
+    {
+      "name": "LE_MIN_TIME",
+      "value": "(328)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 94
+    },
+    {
+      "name": "LE_MIN_TIME_CODED",
+      "value": "(2704)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 96
+    },
+    {
+      "name": "LE_MAX_OCTETS",
+      "value": "(124)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 98
+    },
+    {
+      "name": "LE_MAX_TIME",
+      "value": "(1104)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 100
+    },
+    {
+      "name": "LE_MAX_TIME_CODED",
+      "value": "(17040)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 102
+    },
+    {
+      "name": "GAP_TMR_CONN_PAUSE_CT",
+      "value": "0x0064",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 112
+    },
+    {
+      "name": "GAP_TMR_CONN_PAUSE_PH",
+      "value": "0x01F4",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 117
+    },
+    {
+      "name": "GAP_TMR_SCAN_FAST_PERIOD",
+      "value": "0x0C00",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 122
+    },
+    {
+      "name": "GAP_TMR_ADV_FAST_PERIOD",
+      "value": "0x0BB8",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 127
+    },
+    {
+      "name": "GAP_LIM_DISC_SCAN_INT",
+      "value": "0x0012",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 133
+    },
+    {
+      "name": "GAP_SCAN_FAST_INTV",
+      "value": "0x0030",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 138
+    },
+    {
+      "name": "GAP_SCAN_FAST_WIND",
+      "value": "0x0030",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 143
+    },
+    {
+      "name": "GAP_SCAN_SLOW_INTV1",
+      "value": "0x00CD",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 148
+    },
+    {
+      "name": "GAP_SCAN_SLOW_INTV2",
+      "value": "0x019A",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 153
+    },
+    {
+      "name": "GAP_SCAN_SLOW_WIND1",
+      "value": "0x0012",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 158
+    },
+    {
+      "name": "GAP_SCAN_SLOW_WIND2",
+      "value": "0x0024",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 163
+    },
+    {
+      "name": "GAP_ADV_FAST_INTV1",
+      "value": "0x0030",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 168
+    },
+    {
+      "name": "GAP_ADV_FAST_INTV2",
+      "value": "0x0064",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 173
+    },
+    {
+      "name": "GAP_ADV_SLOW_INTV",
+      "value": "0x00B0",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 178
+    },
+    {
+      "name": "GAP_INIT_CONN_MIN_INTV",
+      "value": "0x0018",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 183
+    },
+    {
+      "name": "GAP_INIT_CONN_MAX_INTV",
+      "value": "0x0028",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 184
+    },
+    {
+      "name": "GAP_INQ_SCAN_INTV",
+      "value": "0x0012",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 187
+    },
+    {
+      "name": "GAP_INQ_SCAN_WIND",
+      "value": "0x0012",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 188
+    },
+    {
+      "name": "GAP_CONN_SUPERV_TIMEOUT",
+      "value": "0x07D0",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 192
+    },
+    {
+      "name": "GAP_CONN_MIN_CE",
+      "value": "0x0000",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 196
+    },
+    {
+      "name": "GAP_CONN_MAX_CE",
+      "value": "0xFFFF",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 200
+    },
+    {
+      "name": "GAP_CONN_LATENCY",
+      "value": "0x0000",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 204
+    },
+    {
+      "name": "GAP_TMR_LIM_ADV_TIMEOUT",
+      "value": "0x4650",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 209
+    },
+    {
+      "name": "GAP_TMR_GEN_DISC_SCAN",
+      "value": "0x0400",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 214
+    },
+    {
+      "name": "GAP_TMR_LIM_DISC_SCAN",
+      "value": "0x0400",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 219
+    },
+    {
+      "name": "GAP_TMR_PRIV_ADDR_MIN",
+      "value": "(150)",
+      "macro_type": "register",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 225
+    },
+    {
+      "name": "GAP_TMR_PRIV_ADDR_MAX",
+      "value": "(0xA1B8)",
+      "macro_type": "register",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 228
+    },
+    {
+      "name": "GAP_TMR_CONN_PARAM_TIMEOUT",
+      "value": "0x0BB8",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 234
+    },
+    {
+      "name": "GAP_TMR_LECB_CONN_TIMEOUT",
+      "value": "0x0BB8",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 239
+    },
+    {
+      "name": "GAP_TMR_LECB_DISCONN_TIMEOUT",
+      "value": "0x0BB8",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 244
+    },
+    {
+      "name": "GAP_APPEARANCE_UNKNOWN",
+      "value": "0x0000 //!< Unknown",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 248
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_PHONE",
+      "value": "0x0040 //!< Generic Phone",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 249
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_COMPUTER",
+      "value": "0x0080 //!< Generic Computer",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 250
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_WATCH",
+      "value": "0x00C0 //!< Generic Watch",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 251
+    },
+    {
+      "name": "GAP_APPEARANCE_WATCH_SPORTS",
+      "value": "0x00C1 //!< Watch: Sports Watch",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 252
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_CLOCK",
+      "value": "0x0100 //!< Generic Clock",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 253
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_DISPLAY",
+      "value": "0x0140 //!< Generic Display",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 254
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_RC",
+      "value": "0x0180 //!< Generic Remote Control",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 255
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_EYE_GALSSES",
+      "value": "0x01C0 //!< Generic Eye-glasses",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 256
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_TAG",
+      "value": "0x0200 //!< Generic Tag",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 257
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_KEYRING",
+      "value": "0x0240 //!< Generic Keyring",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 258
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_MEDIA_PLAYER",
+      "value": "0x0280 //!< Generic Media Player",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 259
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_BARCODE_SCANNER",
+      "value": "0x02C0 //!< Generic Barcode Scanner",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 260
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_THERMOMETER",
+      "value": "0x0300 //!< Generic Thermometer",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 261
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_THERMO_EAR",
+      "value": "0x0301 //!< Thermometer: Ear",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 262
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_HR_SENSOR",
+      "value": "0x0340 //!< Generic Heart rate Sensor",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 263
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_HRS_BELT",
+      "value": "0x0341 //!< Heart Rate Sensor: Heart Rate Belt",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 264
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_BLOOD_PRESSURE",
+      "value": "0x0380 //!< Generic Blood Pressure",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 265
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_BP_ARM",
+      "value": "0x0381 //!< Blood Pressure: Arm",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 266
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_BP_WRIST",
+      "value": "0x0382 //!< Blood Pressure: Wrist",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 267
+    },
+    {
+      "name": "GAP_APPEARANCE_GENERIC_HID",
+      "value": "0x03C0 //!< Generic Human Interface Device (HID)",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 268
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_KEYBOARD",
+      "value": "0x03C1 //!< HID Keyboard",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 269
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_MOUSE",
+      "value": "0x03C2 //!< HID Mouse",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 270
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_JOYSTIC",
+      "value": "0x03C3 //!< HID Joystick",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 271
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_GAMEPAD",
+      "value": "0x03C4 //!< HID Gamepad",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 272
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_DIGITIZER_TYABLET",
+      "value": "0x03C5 //!< HID Digitizer Tablet",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 273
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_DIGITAL_CARDREADER",
+      "value": "0x03C6 //!< HID Card Reader",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 274
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_DIGITAL_PEN",
+      "value": "0x03C7 //!< HID Digital Pen",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 275
+    },
+    {
+      "name": "GAP_APPEARANCE_HID_BARCODE_SCANNER",
+      "value": "0x03C8 //!< HID Barcode Scanner",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 276
+    },
+    {
+      "name": "GAP_PPCP_CONN_INTV_MAX",
+      "value": "0x0064",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 279
+    },
+    {
+      "name": "GAP_PPCP_CONN_INTV_MIN",
+      "value": "0x00C8",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 280
+    },
+    {
+      "name": "GAP_PPCP_SLAVE_LATENCY",
+      "value": "0x0000",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 281
+    },
+    {
+      "name": "GAP_PPCP_STO_MULT",
+      "value": "0x07D0",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 282
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_AD_TYPE_FLAGS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_MORE_16_BIT_UUID",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_COMPLETE_LIST_16_BIT_UUID",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_MORE_32_BIT_UUID",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_COMPLETE_LIST_32_BIT_UUID",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_MORE_128_BIT_UUID",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_COMPLETE_LIST_128_BIT_UUID",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SHORTENED_NAME",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_COMPLETE_NAME",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_TRANSMIT_POWER",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_CLASS_OF_DEVICE",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SP_HASH_C",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SP_RANDOMIZER_R",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_TK_VALUE",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_OOB_FLAGS",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SLAVE_CONN_INT_RANGE",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_RQRD_16_BIT_SVC_UUID",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_RQRD_32_BIT_SVC_UUID",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_RQRD_128_BIT_SVC_UUID",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SERVICE_16_BIT_DATA",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SERVICE_32_BIT_DATA",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SERVICE_128_BIT_DATA",
+          "value": 33,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_PUB_TGT_ADDR",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_RAND_TGT_ADDR",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_APPEARANCE",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_ADV_INTV",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_LE_BT_ADDR",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_LE_ROLE",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SPAIR_HASH",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_SPAIR_RAND",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_3D_INFO",
+          "value": 61,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AD_TYPE_MANU_SPECIFIC_DATA",
+          "value": 255,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 291
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "ROLE_MASTER",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "ROLE_SLAVE",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 361
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "ADDR_PUBLIC",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "ADDR_RAND",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "ADDR_RPA_OR_PUBLIC",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "ADDR_RPA_OR_RAND",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "ADDR_MASK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "ADDR_RPA_MASK",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "ADDR_RAND_UNRESOLVED",
+          "value": 254,
+          "brief": ""
+        },
+        {
+          "name": "ADDR_NONE",
+          "value": 255,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 370
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_STATIC_ADDR",
+          "value": 192,
+          "brief": ""
+        },
+        {
+          "name": "GAP_NON_RSLV_ADDR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_RSLV_ADDR",
+          "value": 64,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 395
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_DISABLE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ENABLE",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 406
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_IDX_PRIM_SVC",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_CHAR_DEVNAME",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_DEVNAME",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_CHAR_ICON",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_ICON",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_CHAR_SLAVE_PREF_PARAM",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_SLAVE_PREF_PARAM",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_CHAR_CNT_ADDR_RESOL",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_CNT_ADDR_RESOL",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_CHAR_RSLV_PRIV_ADDR_ONLY",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_RSLV_PRIV_ADDR_ONLY",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IDX_NUMBER",
+          "value": 11,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 417
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_ROLE_NONE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ROLE_OBSERVER",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ROLE_BROADCASTER",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ROLE_CENTRAL",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ROLE_PERIPHERAL",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ROLE_ALL",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 435
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_IO_CAP_DISPLAY_ONLY",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IO_CAP_DISPLAY_YES_NO",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IO_CAP_KB_ONLY",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IO_CAP_NO_INPUT_NO_OUTPUT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IO_CAP_KB_DISPLAY",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_IO_CAP_LAST",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 457
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_TK_OOB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_TK_DISPLAY",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_TK_KEY_ENTRY",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 473
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_OOB_AUTH_DATA_NOT_PRESENT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_OOB_AUTH_DATA_PRESENT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_OOB_AUTH_DATA_LAST",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 484
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_AUTH_NONE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_BOND",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_MITM",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_SEC_CON",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_KEY_NOTIF",
+          "value": 16,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 494
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_LK_NO_AUTH",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_LK_UNAUTH",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_LK_AUTH",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_LK_SEC_CON",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 509
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_AUTH_REQ_NO_MITM_NO_BOND",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_REQ_NO_MITM_BOND",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_REQ_MITM_NO_BOND",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_REQ_MITM_BOND",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_REQ_SEC_CON_NO_BOND",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_REQ_SEC_CON_BOND",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_REQ_LAST",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAP_AUTH_REQ_MASK",
+          "value": 31,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 522
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_KDIST_NONE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_KDIST_ENCKEY",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_KDIST_IDKEY",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_KDIST_SIGNKEY",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_KDIST_LINKKEY",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAP_KDIST_LAST",
+          "value": 16,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 544
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_NO_SEC",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_SEC1_NOAUTH_PAIR_ENC",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_SEC1_AUTH_PAIR_ENC",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_SEC2_NOAUTH_DATA_SGN",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_SEC2_AUTH_DATA_SGN",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_SEC1_SEC_CON_PAIR_ENC",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 561
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_PHY_ANY",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PHY_LE_1MBPS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PHY_LE_2MBPS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PHY_LE_CODED",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 578
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_PHY_OPT_LE_CODED_ALL_RATES",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PHY_OPT_LE_CODED_500K_RATE",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PHY_OPT_LE_CODED_125K_RATE",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 591
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_TEST_PHY_1MBPS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_TEST_PHY_2MBPS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_TEST_PHY_CODED",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_TEST_PHY_125KBPS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_TEST_PHY_500KBPS",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 602
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_MODULATION_STANDARD",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_MODULATION_STABLE",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 617
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_PKT_PLD_PRBS9",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PKT_PLD_REPEATED_11110000",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PKT_PLD_REPEATED_10101010",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PKT_PLD_PRBS15",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PKT_PLD_REPEATED_11111111",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PKT_PLD_REPEATED_00000000",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PKT_PLD_REPEATED_00001111",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAP_PKT_PLD_REPEATED_01010101",
+          "value": 7,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gap.h",
+      "line_number": 626
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

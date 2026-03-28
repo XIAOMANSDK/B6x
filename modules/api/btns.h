@@ -29,7 +29,7 @@ enum btn_evt {
     BTN_DCLICK, // double click
     BTN_LONG,
     BTN_LLONG,  // long long press
-    
+
     BTN_EVT_MAX
 };
 

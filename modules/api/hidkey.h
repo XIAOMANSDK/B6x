@@ -12,7 +12,7 @@
 #define _HIDKEY_H_
 
 /// Ordinary keys
-enum generic_key 
+enum generic_key
 {
     KEY_A               = 0x04,
     KEY_B               = 0x05,
@@ -63,11 +63,11 @@ enum generic_key
     KEY_RBRACKET        = 0x30, // ]}
     KEY_BACKSLASH       = 0x31, // \|
     KEY_NUMBER          = 0x32,
-    KEY_SEMICOLON       = 0x33, // ;: 
+    KEY_SEMICOLON       = 0x33, // ;:
     KEY_QUOTE           = 0x34, // '"
-    KEY_ACCENT          = 0x35, // `~ 
-    KEY_COMMA           = 0x36, // ,< 
-    KEY_PERIOD          = 0x37, // .> 
+    KEY_ACCENT          = 0x35, // `~
+    KEY_COMMA           = 0x36, // ,<
+    KEY_PERIOD          = 0x37, // .>
     KEY_SLASH           = 0x38, // /?
     KEY_CAPS_LOCK       = 0x39,
 
@@ -100,10 +100,10 @@ enum generic_key
     KEY_UP              = 0x52,
 
     KEY_NUM_LOCK        = 0x53,
-    KEY_PAD_SLASH       = 0x54, // / 
-    KEY_PAD_ASTERIX     = 0x55, // * 
-    KEY_PAD_MINUS       = 0x56, // - 
-    KEY_PAD_PLUS        = 0x57, // + 
+    KEY_PAD_SLASH       = 0x54, // /
+    KEY_PAD_ASTERIX     = 0x55, // *
+    KEY_PAD_MINUS       = 0x56, // -
+    KEY_PAD_PLUS        = 0x57, // +
     KEY_PAD_ENTER       = 0x58,
     KEY_PAD_1           = 0x59,
     KEY_PAD_2           = 0x5A,
@@ -115,7 +115,7 @@ enum generic_key
     KEY_PAD_8           = 0x60,
     KEY_PAD_9           = 0x61,
     KEY_PAD_0           = 0x62,
-    KEY_PAD_DOT         = 0x63, // . 
+    KEY_PAD_DOT         = 0x63, // .
 
     KEY_K45             = 0x64,
     KEY_APP             = 0x65,
@@ -137,7 +137,7 @@ enum generic_key
     KEY_HELP            = 0x75,
     KEY_MENU            = 0x76,
     KEY_SELECT          = 0x77,
-    
+
     KEY_STOP            = 0x78,
     KEY_AGAIN           = 0x79,
     KEY_UNDO            = 0x7A,
@@ -148,7 +148,7 @@ enum generic_key
     KEY_MUTE            = 0x7F,
     KEY_VOL_UP          = 0x80,
     KEY_VOL_DN          = 0x81,
-    
+
     KEY_LOCKING_CAPS    = 0x82,
     KEY_LOCKING_NUM     = 0x83,
     KEY_LOCKING_SCROLL  = 0x84,
@@ -179,31 +179,31 @@ enum generic_key
     KEY_PRIOR           = 0x9D,
     KEY_RETURN          = 0x9E,
     KEY_SEPARATOR       = 0x9F,
-    
+
     KEY_OUT             = 0xA0,
     KEY_OPER            = 0xA1,
     KEY_CLEAR_AGAIN     = 0xA2,
     KEY_CRSEL           = 0xA3,
     KEY_EXSEL           = 0xA4,
-    
+
     // Reserved 0xA5-0xAF(165-175)
-    
+
     KEY_PAD_00                  = 0xB0,
     KEY_PAD_000                 = 0xB1,
     KEY_THOUSANDS_SEPERATOR     = 0xB2,
     KEY_DECIMAL_SEPERATOR       = 0xB3,
-    
+
     KEY_CURRENCY_UNIT           = 0xB4,
     KEY_CURRENCY_SUB_UNIT       = 0xB5,
     KEY_PAD_LEFT_PAREN          = 0xB6,
     KEY_PAD_RIGHT_PAREN         = 0xB7,
-    KEY_PAD_LEFT_CURLY_BRACE    = 0xB8,    
-    KEY_PAD_RIGHT_CURLY_BRACE   = 0xB9,    
+    KEY_PAD_LEFT_CURLY_BRACE    = 0xB8,
+    KEY_PAD_RIGHT_CURLY_BRACE   = 0xB9,
     KEY_PAD_TAB                 = 0xBA,
     KEY_PAD_BACKSPACE           = 0xBB,
     KEY_PAD_A                   = 0xBC,
     KEY_PAD_B                   = 0xBD,
-    
+
     KEY_PAD_C                   = 0xBE,
     KEY_PAD_D                   = 0xBF,
     KEY_PAD_E                   = 0xC0,
@@ -214,7 +214,7 @@ enum generic_key
     KEY_PAD_LESS_THAN           = 0xC5,
     KEY_PAD_GREATER_THAN        = 0xC6,
     KEY_PAD_AMPERSAND           = 0xC7,
-    
+
     KEY_PAD_DOUBLE_AMPERSAND    = 0xC8,
     KEY_PAD_VERTICAL_BAR        = 0xC9,
     KEY_PAD_DOUBLE_VERTICAL_BAR = 0xCA,
@@ -225,7 +225,7 @@ enum generic_key
     KEY_PAD_EXCLAMATION         = 0xCF,
     KEY_PAD_MEM_STORE           = 0xD0,
     KEY_PAD_MEM_RECALL          = 0xD1,
-    
+
     KEY_PAD_MEM_CLEAR           = 0xD2,
     KEY_PAD_MEM_ADD             = 0xD3,
     KEY_PAD_MEM_SUBTRACT        = 0xD4,
@@ -236,12 +236,12 @@ enum generic_key
     KEY_PAD_CLEAR_ENTRY         = 0xD9,
     KEY_PAD_BINARY              = 0xDA,
     KEY_PAD_OCTAL               = 0xDB,
-    
+
     KEY_PAD_DECIMAL             = 0xDC,
     KEY_PAD_HEX                 = 0xDD,
-    
+
     // Reserved 0xDE-0xDF(222-223)
-    
+
     KEY_LCTRL                   = 0xE0,
     KEY_LSHIFT                  = 0xE1,
     KEY_LALT                    = 0xE2,
@@ -262,20 +262,20 @@ enum multi_key
     MKEY_POWER          = 0x0030, // Lock screen
     MKEY_RESET          = 0x0031,
     MKEY_SLEEP          = 0x0032,
-    
+
     MKEY_MENU           = 0x0040,
     MKEY_MENU_PICK      = 0x0041,
     MKEY_MENU_UP        = 0x0042,
     MKEY_MENU_DN        = 0x0043,
     MKEY_MENU_LEFT      = 0x0044,
     MKEY_MENU_RIGHT     = 0x0045,
-    
+
     MKEY_LIGHT_UP       = 0x006F,
     MKEY_LIGHT_DN       = 0x0070,
-    
+
     MKEY_CHN_UP         = 0x009C,
     MKEY_CHN_DN         = 0x009D,
-    
+
     MKEY_PLAY           = 0x00B0,
     MKEY_PAUSE          = 0x00B1,
     MKEY_RECORD         = 0x00B2,
@@ -285,23 +285,23 @@ enum multi_key
     MKEY_PREV_TRK       = 0x00B6,
     MKEY_STOP           = 0x00B7,
     MKEY_EJECT          = 0x00B8,
-    
+
     MKEY_START_PAUSE    = 0x00CD,
     MKEY_START_SKIP     = 0x00CE,
-    
+
     MKEY_VOLUME         = 0x00E0,
     MKEY_BALANCE        = 0x00E1,
     MKEY_MUTE           = 0x00E2,
     MKEY_VOL_UP         = 0x00E9,
     MKEY_VOL_DN         = 0x00EA,
-    
+
     MKEY_MUSIC          = 0x0183,
     MKEY_EMAIL          = 0x018A,
     MKEY_CALCAULATOL    = 0x0192,
     MKEY_COMPUTER       = 0x0194,
-    
+
     MKEY_VIRKB          = 0x01AE, // Soft keyboard
-    
+
     MKEY_WWW_SEARCH     = 0x0221,
     MKEY_WWW_HOME       = 0x0223,
     MKEY_WWW_BACK       = 0x0224,
@@ -336,7 +336,7 @@ enum key_bit
     KEY_BIT_RSHIFT      = 0x20,
     KEY_BIT_RALT        = 0x40,
     KEY_BIT_RGUI        = 0x80,
-    
+
     // byte1: F0~F2(Fn Keys)
     KEY_BIT_FN          = 0x01,
     KEY_BIT_LED         = 0x02,

@@ -117,6 +117,61 @@ void uart_conf(uint8_t port, uint16_t cfg_BRR, uint16_t cfg_LCR)
 }
 
 /**
+ * @brief 更新UART端口的波特率配置
+ *
+ * 该函数用于安全地更新UART端口的波特率配置，执行过程中会：
+ * 1. 保存当前UART寄存器状态
+ * 2. 禁用UART接收
+ * 3. 配置GPIO保护
+ * 4. 重置UART硬件
+ * 5. 更新波特率分频值
+ * 6. 恢复原始寄存器状态
+ *
+ * @param port UART端口号 (0: UART1, 1: UART2)
+ * @param io_rx 接收引脚
+ * @param cfg_BRR 波特率配置值
+ *
+ * @note 函数执行期间会临时禁用UART接收并重置硬件
+ */
+void uart_update_baud(uint8_t port, uint8_t io_rx, uint16_t cfg_BRR)
+{
+    UART_TypeDef* uart = UART_PTR(port);
+
+    uint32_t io_cfg  = CSC->CSC_PIO[io_rx].Word;
+    uint32_t reg_fcr = uart->FCR.Word;
+    uint32_t reg_mcr = uart->MCR.Word;
+    uint32_t reg_lcr = uart->LCR.Word;
+    uint32_t reg_ier = uart->IVS.Word;
+
+    // 关闭接收
+    uart->LCR.RXEN = 0;
+
+    // 配置rx脚为io功能
+    iom_ctrl(io_rx, IOM_SEL_GPIO | IOM_PULLUP);
+
+    RCC_APBCLK_DIS(1 << (RCC_UART1_CLKEN_RUN_POS + port));  /* 禁用UART时钟 */
+    RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port));     /* 请求UART复位 */
+    RCC_APBCLK_EN(1 << (RCC_UART1_CLKEN_RUN_POS + port));   /* 使能UART时钟 */
+
+    // update BaudRate
+    uart->LCR.BRWEN  = 1;      /* LCR: 使能波特率更新 */
+    uart->BRR        = cfg_BRR; /* BRR: 设置波特率分频值 */
+    do
+    {
+        uart->LCR.BRWEN  = 0;      /* LCR: 禁用波特率更新 */
+    } while(uart->LCR.BRWEN);
+
+    uart->IER.Word = reg_ier;
+    // enable fifo mode, reset
+    uart->FCR.Word = reg_fcr | 0x07;
+    uart->LCR.Word = reg_lcr | LCR_RXEN_BIT;
+    uart->MCR.Word = reg_mcr;
+
+    // 恢复rx脚功能
+    iom_ctrl(io_rx, io_cfg);
+}
+
+/**
  * @brief 配置UART FIFO控制和中断
  * @param port UART端口号 (0: UART1, 1: UART2)
  * @param fifo_ctl FIFO控制配置

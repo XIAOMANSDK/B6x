@@ -1,0 +1,386 @@
+{
+  "file_path": "./ble\\api\\gatt.h",
+  "functions": [],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GATT_CMP_EVT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GATT_CLIENT_CMD",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GATT_EXC_MTU_CMD",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_CMD",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_CMD",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GATT_WRITE_CMD",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GATT_EXECUTE_WRITE_CMD",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GATT_MTU_CHANGED_IND",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_SVC_IND",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_SVC_INCL_IND",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_CHAR_IND",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_CHAR_DESC_IND",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_IND",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "GATT_EVENT_IND",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "GATT_EVENT_REQ_IND",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "GATT_EVENT_CFM",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "GATT_REG_TO_PEER_EVT_CMD",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SEND_EVT_CMD",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SERVER_CFM",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_CFM",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "GATT_WRITE_CFM",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ATT_INFO_CFM",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_REQ_IND",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "GATT_WRITE_REQ_IND",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ATT_INFO_REQ_IND",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_SVC_DISC_CMD",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_SVC_IND",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "GATT_TRANSACTION_TO_ERROR_IND",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "GATT_UNKNOWN_MSG_IND",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_DB_HASH_CMD",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DB_HASH_IND",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ROBUST_DB_CACHE_EN_CMD",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DB_CACHE_OUT_OF_SYNC_IND",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SVC_CHG_REQ_IND",
+          "value": 33,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SVC_CHG_CFM",
+          "value": 34,
+          "brief": ""
+        },
+        {
+          "name": "GATT_CON_INFO_IND",
+          "value": 35,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gatt.h",
+      "line_number": 36
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GATT_NO_OP",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GATT_MTU_EXCH",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_ALL_SVC",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_BY_UUID_SVC",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_INCLUDED_SVC",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_ALL_CHAR",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_BY_UUID_CHAR",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GATT_DISC_DESC_CHAR",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_LONG",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_BY_UUID",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_MULTIPLE",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "GATT_WRITE",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "GATT_WRITE_NO_RESPONSE",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "GATT_WRITE_SIGNED",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "GATT_EXEC_WRITE",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "GATT_REGISTER",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "GATT_UNREGISTER",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "GATT_NOTIFY",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "GATT_INDICATE",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SVC_CHANGED",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_DISC_SVC",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_DISC_SVC_ALL",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_DISC_CANCEL",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_DB_HASH",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ROBUST_DB_CACHE_EN",
+          "value": 33,
+          "brief": ""
+        },
+        {
+          "name": "GATT_READ_RSP",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "GATT_WRITE_RSP",
+          "value": 65,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ATT_INFO_RSP",
+          "value": 66,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gatt.h",
+      "line_number": 167
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GATT_SDP_NONE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_INC_SVC",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_ATT_CHAR",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_ATT_VAL",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GATT_SDP_ATT_DESC",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./ble\\api\\gatt.h",
+      "line_number": 256
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

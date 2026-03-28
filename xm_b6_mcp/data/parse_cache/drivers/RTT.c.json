@@ -1,0 +1,322 @@
+{
+  "file_path": "./drivers\\src\\RTT\\RTT.c",
+  "functions": [
+    {
+      "name": "_DoInit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    RTT_CB *p;\r\n    //\r\n    // Initialize control block\r\n    //\r\n    p = &_RTT;\r\n    p->MaxNumUpBuffers    = RTT_MAX_NUM_UP_BUFFERS;\r\n    p->MaxNumDownBuffers  = RTT_MAX_NUM_DOWN_BUFFERS;\r\n    //\r\n    // Initialize up buffer 0\r\n    //\r\n    p->aUp[0].sName         = \"Terminal\";\r\n    p->aUp[0].pBuffer       = _acUpBuffer;\r\n    p->aUp[0].SizeOfBuffer  = sizeof(_acUpBuffer);\r\n    p->aUp[0].RdOff         = 0u;\r\n    p->aUp[0].WrOff         = 0u;\r\n    p->aUp[0].Flags         = RTT_MODE_DEFAULT;\r\n    //\r\n    // Initialize down buffer 0\r\n    //\r\n    p->aDown[0].sName         = \"Terminal\";\r\n    p->aDown[0].pBuffer       = _acDownBuffer;\r\n    p->aDown[0].SizeOfBuffer  = sizeof(_acDownBuffer);\r\n    p->aDown[0].RdOff         = 0u;\r\n    p->aDown[0].WrOff         = 0u;\r\n    p->aDown[0].Flags         = RTT_MODE_DEFAULT;\r\n    //\r\n    // Finish initialization of the control block.\r\n    // Copy Id string in three steps to make sure \"SEGGER RTT\" is not found\r\n    // in initializer memory (usually flash) by J-Link\r\n    //\r\n    strcpy(&p->acID[7], \"RTT\");\r\n    strcpy(&p->acID[0], \"SEGGER\");\r\n    p->acID[6] = ' ';\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 271,
+      "is_static": true
+    },
+    {
+      "name": "_WriteBlocking",
+      "return_type": "unsigned",
+      "parameters": [
+        {
+          "name": "pRing",
+          "type": "RTT_BUFFER_UP",
+          "description": ""
+        },
+        {
+          "name": "pBuffer",
+          "type": "char",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    unsigned NumBytesToWrite;\r\n    unsigned NumBytesWritten;\r\n    unsigned RdOff;\r\n    unsigned WrOff;\r\n#if RTT_MEMCPY_USE_BYTELOOP\r\n    char    *pDst;\r\n#endif\r\n    //\r\n    // Write data to buffer and handle wrap-around if necessary\r\n    //\r\n    NumBytesWritten = 0u;\r\n    WrOff = pRing->WrOff;\r\n    do\r\n    {\r\n        RdOff = pRing->RdOff;                         // May be changed by host (debug probe) in the meantime\r\n        if (RdOff > WrOff)\r\n        {\r\n            NumBytesToWrite = RdOff - WrOff - 1u;\r\n        }\r\n        else\r\n        {\r\n            NumBytesToWrite = pRing->SizeOfBuffer - (WrOff - RdOff + 1u);\r\n        }\r\n        NumBytesToWrite = MIN(NumBytesToWrite, (pRing->SizeOfBuffer - WrOff));      // Number of bytes that can be written until buffer wrap-around\r\n        NumBytesToWrite = MIN(NumBytesToWrite, NumBytes);\r\n#if RTT_MEMCPY_USE_BYTELOOP\r\n        pDst = pRing->pBuffer + WrOff;\r\n        NumBytesWritten += NumBytesToWrite;\r\n        NumBytes        -= NumBytesToWrite;\r\n        WrOff           += NumBytesToWrite;\r\n        while (NumBytesToWrite--)\r\n        {\r\n            *pDst++ = *pBuffer++;\r\n        };\r\n#else\r\n        RTT_MEMCPY(pRing->pBuffer + WrOff, pBuffer, NumBytesToWrite);\r\n        NumBytesWritten += NumBytesToWrite;\r\n        pBuffer         += NumBytesToWrite;\r\n        NumBytes        -= NumBytesToWrite;\r\n        WrOff           += NumBytesToWrite;\r\n#endif\r\n        if (WrOff == pRing->SizeOfBuffer)\r\n        {\r\n            WrOff = 0u;\r\n        }\r\n        pRing->WrOff = WrOff;\r\n    }\r\n    while (NumBytes);\r\n    //\r\n    return NumBytesWritten;\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 327,
+      "is_static": true
+    },
+    {
+      "name": "_WriteNoCheck",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "pRing",
+          "type": "RTT_BUFFER_UP",
+          "description": ""
+        },
+        {
+          "name": "pData",
+          "type": "char",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    unsigned NumBytesAtOnce;\r\n    unsigned WrOff;\r\n    unsigned Rem;\r\n#if RTT_MEMCPY_USE_BYTELOOP\r\n    char    *pDst;\r\n#endif\r\n\r\n    WrOff = pRing->WrOff;\r\n    Rem = pRing->SizeOfBuffer - WrOff;\r\n    if (Rem > NumBytes)\r\n    {\r\n        //\r\n        // All data fits before wrap around\r\n        //\r\n#if RTT_MEMCPY_USE_BYTELOOP\r\n        pDst = pRing->pBuffer + WrOff;\r\n        WrOff += NumBytes;\r\n        while (NumBytes--)\r\n        {\r\n            *pDst++ = *pData++;\r\n        };\r\n        pRing->WrOff = WrOff;\r\n#else\r\n        RTT_MEMCPY(pRing->pBuffer + WrOff, pData, NumBytes);\r\n        pRing->WrOff = WrOff + NumBytes;\r\n#endif\r\n    }\r\n    else\r\n    {\r\n        //\r\n        // We reach the end of the buffer, so need to wrap around\r\n        //\r\n#if RTT_MEMCPY_USE_BYTELOOP\r\n        pDst = pRing->pBuffer + WrOff;\r\n        NumBytesAtOnce = Rem;\r\n        while (NumBytesAtOnce--)\r\n        {\r\n            *pDst++ = *pData++;\r\n        };\r\n        pDst = pRing->pBuffer;\r\n        NumBytesAtOnce = NumBytes - Rem;\r\n        while (NumBytesAtOnce--)\r\n        {\r\n            *pDst++ = *pData++;\r\n        };\r\n        pRing->WrOff = NumBytes - Rem;\r\n#else\r\n        NumBytesAtOnce = Rem;\r\n        RTT_MEMCPY(pRing->pBuffer + WrOff, pData, NumBytesAtOnce);\r\n        NumBytesAtOnce = NumBytes - Rem;\r\n        RTT_MEMCPY(pRing->pBuffer, pData + Rem, NumBytesAtOnce);\r\n        pRing->WrOff = NumBytesAtOnce;\r\n#endif\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 399,
+      "is_static": true
+    },
+    {
+      "name": "_GetAvailWriteSpace",
+      "return_type": "unsigned",
+      "parameters": [
+        {
+          "name": "pRing",
+          "type": "RTT_BUFFER_UP",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    unsigned RdOff;\r\n    unsigned WrOff;\r\n    unsigned r;\r\n    //\r\n    // Avoid warnings regarding volatile access order.  It's not a problem\r\n    // in this case, but dampen compiler enthusiasm.\r\n    //\r\n    RdOff = pRing->RdOff;\r\n    WrOff = pRing->WrOff;\r\n    if (RdOff <= WrOff)\r\n    {\r\n        r = pRing->SizeOfBuffer - 1u - WrOff + RdOff;\r\n    }\r\n    else\r\n    {\r\n        r = RdOff - WrOff - 1u;\r\n    }\r\n    return r;\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 492,
+      "is_static": true
+    },
+    {
+      "name": "RTT_WriteNoLock",
+      "return_type": "unsigned",
+      "parameters": [
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "pBuffer",
+          "type": "void",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    unsigned              Status;\r\n    unsigned              Avail;\r\n    const char           *pData;\r\n    RTT_BUFFER_UP *pRing;\r\n\r\n    pData = (const char *)pBuffer;\r\n    //\r\n    // Get \"to-host\" ring buffer.\r\n    //\r\n    pRing = &_RTT.aUp[BufferIndex];\r\n    //\r\n    // How we output depends upon the mode...\r\n    //\r\n    switch (pRing->Flags)\r\n    {\r\n        case RTT_MODE_NO_BLOCK_SKIP:\r\n            //\r\n            // If we are in skip mode and there is no space for the whole\r\n            // of this output, don't bother.\r\n            //\r\n            Avail = _GetAvailWriteSpace(pRing);\r\n            if (Avail < NumBytes)\r\n            {\r\n                Status = 0u;\r\n            }\r\n            else\r\n            {\r\n                Status = NumBytes;\r\n                _WriteNoCheck(pRing, pData, NumBytes);\r\n            }\r\n            break;\r\n        case RTT_MODE_NO_BLOCK_TRIM:\r\n            //\r\n            // If we are in trim mode, trim to what we can output without blocking.\r\n            //\r\n            Avail = _GetAvailWriteSpace(pRing);\r\n            Status = Avail < NumBytes ? Avail : NumBytes;\r\n            _WriteNoCheck(pRing, pData, Status);\r\n            break;\r\n        case RTT_MODE_BLOCK_IF_FIFO_FULL:\r\n            //\r\n            // If we are in blocking mode, output everything.\r\n            //\r\n            Status = _WriteBlocking(pRing, pData, NumBytes);\r\n            break;\r\n        default:\r\n            Status = 0u;\r\n            break;\r\n    }\r\n    //\r\n    // Finish up.\r\n    //\r\n    return Status;\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 845,
+      "is_static": true
+    },
+    {
+      "name": "RTT_Write",
+      "return_type": "unsigned",
+      "parameters": [
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "pBuffer",
+          "type": "void",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    unsigned Status;\r\n    //\r\n    INIT();\r\n    RTT_LOCK();\r\n    //\r\n    // Call the non-locking write function\r\n    //\r\n    Status = RTT_WriteNoLock(BufferIndex, pBuffer, NumBytes);\r\n    //\r\n    // Finish up.\r\n    //\r\n    RTT_UNLOCK();\r\n    //\r\n    return Status;\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 921,
+      "is_static": true
+    },
+    {
+      "name": "rtt_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    _DoInit();\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1577,
+      "is_static": false
+    },
+    {
+      "name": "_StoreChar",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "p",
+          "type": "RTT_PRINTF_DESC",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "char",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    unsigned Cnt;\r\n\r\n    Cnt = p->Cnt;\r\n    if ((Cnt + 1u) <= p->BufferSize)\r\n    {\r\n        *(p->pBuffer + Cnt) = c;\r\n        p->Cnt = Cnt + 1u;\r\n        p->ReturnValue++;\r\n    }\r\n    //\r\n    // Write part of string, when the buffer is full\r\n    //\r\n    if (p->Cnt == p->BufferSize)\r\n    {\r\n        if (RTT_Write(p->RTTBufferIndex, p->pBuffer, p->Cnt) != p->Cnt)\r\n        {\r\n            p->ReturnValue = -1;\r\n        }\r\n        else\r\n        {\r\n            p->Cnt = 0u;\r\n        }\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1789,
+      "is_static": true
+    },
+    {
+      "name": "_PrintUnsigned",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "pBufferDesc",
+          "type": "RTT_PRINTF_DESC",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    static const char _aV2C[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };\r\n    unsigned Div;\r\n    unsigned Digit;\r\n    unsigned Number;\r\n    unsigned Width;\r\n    char c;\r\n\r\n    Number = v;\r\n    Digit = 1u;\r\n    //\r\n    // Get actual field width\r\n    //\r\n    Width = 1u;\r\n    while (Number >= Base)\r\n    {\r\n        Number = (Number / Base);\r\n        Width++;\r\n    }\r\n    if (NumDigits > Width)\r\n    {\r\n        Width = NumDigits;\r\n    }\r\n    //\r\n    // Print leading chars if necessary\r\n    //\r\n    if ((FormatFlags & FORMAT_FLAG_LEFT_JUSTIFY) == 0u)\r\n    {\r\n        if (FieldWidth != 0u)\r\n        {\r\n            if (((FormatFlags & FORMAT_FLAG_PAD_ZERO) == FORMAT_FLAG_PAD_ZERO) && (NumDigits == 0u))\r\n            {\r\n                c = '0';\r\n            }\r\n            else\r\n            {\r\n                c = ' ';\r\n            }\r\n            while ((FieldWidth != 0u) && (Width < FieldWidth))\r\n            {\r\n                FieldWidth--;\r\n                _StoreChar(pBufferDesc, c);\r\n                if (pBufferDesc->ReturnValue < 0)\r\n                {\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n    }\r\n    if (pBufferDesc->ReturnValue >= 0)\r\n    {\r\n        //\r\n        // Compute Digit.\r\n        // Loop until Digit has the value of the highest digit required.\r\n        // Example: If the output is 345 (Base 10), loop 2 times until Digit is 100.\r\n        //\r\n        while (1)\r\n        {\r\n            if (NumDigits >\r\n                1u)         // User specified a min number of digits to print? => Make sure we loop at least that often, before checking anything else (> 1 check avoids problems with NumDigits being signed / unsigned)\r\n            {\r\n                NumDigits--;\r\n            }\r\n            else\r\n            {\r\n                Div = v / Digit;\r\n                if (Div < Base)          // Is our divider big enough to extract the highest digit from value? => Done\r\n                {\r\n                    break;\r\n                }\r\n            }\r\n            Digit *= Base;\r\n        }\r\n        //\r\n        // Output digits\r\n        //\r\n        do\r\n        {\r\n            Div = v / Digit;\r\n            v -= Div * Digit;\r\n            _StoreChar(pBufferDesc, _aV2C[Div]);\r\n            if (pBufferDesc->ReturnValue < 0)\r\n            {\r\n                break;\r\n            }\r\n            Digit /= Base;\r\n        }\r\n        while (Digit);\r\n        //\r\n        // Print trailing spaces if necessary\r\n        //\r\n        if ((FormatFlags & FORMAT_FLAG_LEFT_JUSTIFY) == FORMAT_FLAG_LEFT_JUSTIFY)\r\n        {\r\n            if (FieldWidth != 0u)\r\n            {\r\n                while ((FieldWidth != 0u) && (Width < FieldWidth))\r\n                {\r\n                    FieldWidth--;\r\n                    _StoreChar(pBufferDesc, ' ');\r\n                    if (pBufferDesc->ReturnValue < 0)\r\n                    {\r\n                        break;\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1820,
+      "is_static": true
+    },
+    {
+      "name": "_PrintInt",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "pBufferDesc",
+          "type": "RTT_PRINTF_DESC",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "int",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "unsigned",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    unsigned Width;\r\n    int Number;\r\n\r\n    Number = (v < 0) ? -v : v;\r\n\r\n    //\r\n    // Get actual field width\r\n    //\r\n    Width = 1u;\r\n    while (Number >= (int)Base)\r\n    {\r\n        Number = (Number / (int)Base);\r\n        Width++;\r\n    }\r\n    if (NumDigits > Width)\r\n    {\r\n        Width = NumDigits;\r\n    }\r\n    if ((FieldWidth > 0u) && ((v < 0) || ((FormatFlags & FORMAT_FLAG_PRINT_SIGN) == FORMAT_FLAG_PRINT_SIGN)))\r\n    {\r\n        FieldWidth--;\r\n    }\r\n\r\n    //\r\n    // Print leading spaces if necessary\r\n    //\r\n    if ((((FormatFlags & FORMAT_FLAG_PAD_ZERO) == 0u) || (NumDigits != 0u)) && ((FormatFlags & FORMAT_FLAG_LEFT_JUSTIFY) == 0u))\r\n    {\r\n        if (FieldWidth != 0u)\r\n        {\r\n            while ((FieldWidth != 0u) && (Width < FieldWidth))\r\n            {\r\n                FieldWidth--;\r\n                _StoreChar(pBufferDesc, ' ');\r\n                if (pBufferDesc->ReturnValue < 0)\r\n                {\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n    }\r\n    //\r\n    // Print sign if necessary\r\n    //\r\n    if (pBufferDesc->ReturnValue >= 0)\r\n    {\r\n        if (v < 0)\r\n        {\r\n            v = -v;\r\n            _StoreChar(pBufferDesc, '-');\r\n        }\r\n        else if ((FormatFlags & FORMAT_FLAG_PRINT_SIGN) == FORMAT_FLAG_PRINT_SIGN)\r\n        {\r\n            _StoreChar(pBufferDesc, '+');\r\n        }\r\n        else\r\n        {\r\n\r\n        }\r\n        if (pBufferDesc->ReturnValue >= 0)\r\n        {\r\n            //\r\n            // Print leading zeros if necessary\r\n            //\r\n            if (((FormatFlags & FORMAT_FLAG_PAD_ZERO) == FORMAT_FLAG_PAD_ZERO) && ((FormatFlags & FORMAT_FLAG_LEFT_JUSTIFY) == 0u) && (NumDigits == 0u))\r\n            {\r\n                if (FieldWidth != 0u)\r\n                {\r\n                    while ((FieldWidth != 0u) && (Width < FieldWidth))\r\n                    {\r\n                        FieldWidth--;\r\n                        _StoreChar(pBufferDesc, '0');\r\n                        if (pBufferDesc->ReturnValue < 0)\r\n                        {\r\n                            break;\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n            if (pBufferDesc->ReturnValue >= 0)\r\n            {\r\n                //\r\n                // Print number without sign\r\n                //\r\n                _PrintUnsigned(pBufferDesc, (unsigned)v, Base, NumDigits, FieldWidth, FormatFlags);\r\n            }\r\n        }\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1934,
+      "is_static": true
+    },
+    {
+      "name": "rtt_vprintf",
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "sFormat",
+          "type": "char",
+          "description": ""
+        },
+        {
+          "name": "pParamList",
+          "type": "va_list",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    char c;\r\n    RTT_PRINTF_DESC BufferDesc;\r\n    int v;\r\n    unsigned NumDigits;\r\n    unsigned FormatFlags;\r\n    unsigned FieldWidth;\r\n    unsigned BufferIndex = 0;\r\n    char acBuffer[RTT_PRINTF_BUFFER_SIZE];\r\n\r\n    BufferDesc.pBuffer        = acBuffer;\r\n    BufferDesc.BufferSize     = RTT_PRINTF_BUFFER_SIZE;\r\n    BufferDesc.Cnt            = 0u;\r\n    BufferDesc.RTTBufferIndex = BufferIndex;\r\n    BufferDesc.ReturnValue    = 0;\r\n\r\n    do\r\n    {\r\n        c = *sFormat;\r\n        sFormat++;\r\n        if (c == 0u)\r\n        {\r\n            break;\r\n        }\r\n        if (c == '%')\r\n        {\r\n            //\r\n            // Filter out flags\r\n            //\r\n            FormatFlags = 0u;\r\n            v = 1;\r\n            do\r\n            {\r\n                c = *sFormat;\r\n                switch (c)\r\n                {\r\n                    case '-': FormatFlags |= FORMAT_FLAG_LEFT_JUSTIFY; sFormat++; break;\r\n                    case '0': FormatFlags |= FORMAT_FLAG_PAD_ZERO;     sFormat++; break;\r\n                    case '+': FormatFlags |= FORMAT_FLAG_PRINT_SIGN;   sFormat++; break;\r\n                    case '#': FormatFlags |= FORMAT_FLAG_ALTERNATE;    sFormat++; break;\r\n                    default:  v = 0; break;\r\n                }\r\n            }\r\n            while (v);\r\n            //\r\n            // filter out field with\r\n            //\r\n            FieldWidth = 0u;\r\n            do\r\n            {\r\n                c = *sFormat;\r\n                if ((c < '0') || (c > '9'))\r\n                {\r\n                    break;\r\n                }\r\n                sFormat++;\r\n                FieldWidth = (FieldWidth * 10u) + ((unsigned)c - '0');\r\n            }\r\n            while (1);\r\n\r\n            //\r\n            // Filter out precision (number of digits to display)\r\n            //\r\n            NumDigits = 0u;\r\n            c = *sFormat;\r\n            if (c == '.')\r\n            {\r\n                sFormat++;\r\n                do\r\n                {\r\n                    c = *sFormat;\r\n                    if ((c < '0') || (c > '9'))\r\n                    {\r\n                        break;\r\n                    }\r\n                    sFormat++;\r\n                    NumDigits = NumDigits * 10u + ((unsigned)c - '0');\r\n                }\r\n                while (1);\r\n            }\r\n            //\r\n            // Filter out length modifier\r\n            //\r\n            c = *sFormat;\r\n            do\r\n            {\r\n                if ((c == 'l') || (c == 'h'))\r\n                {\r\n                    sFormat++;\r\n                    c = *sFormat;\r\n                }\r\n                else\r\n                {\r\n                    break;\r\n                }\r\n            }\r\n            while (1);\r\n            //\r\n            // Handle specifiers\r\n            //\r\n            switch (c)\r\n            {\r\n                case 'c':\r\n                {\r\n                    char c0;\r\n                    v = va_arg(*pParamList, int);\r\n                    c0 = (char)v;\r\n                    _StoreChar(&BufferDesc, c0);\r\n                    break;\r\n                }\r\n                case 'd':\r\n                    v = va_arg(*pParamList, int);\r\n                    _PrintInt(&BufferDesc, v, 10u, NumDigits, FieldWidth, FormatFlags);\r\n                    break;\r\n                case 'u':\r\n                    v = va_arg(*pParamList, int);\r\n                    _PrintUnsigned(&BufferDesc, (unsigned)v, 10u, NumDigits, FieldWidth, FormatFlags);\r\n                    break;\r\n                case 'x':\r\n                case 'X':\r\n                    v = va_arg(*pParamList, int);\r\n                    _PrintUnsigned(&BufferDesc, (unsigned)v, 16u, NumDigits, FieldWidth, FormatFlags);\r\n                    break;\r\n                case 's':\r\n                {\r\n                    const char *s = va_arg(*pParamList, const char *);\r\n                    do\r\n                    {\r\n                        c = *s;\r\n                        s++;\r\n                        if (c == '\\0')\r\n                        {\r\n                            break;\r\n                        }\r\n                        _StoreChar(&BufferDesc, c);\r\n                    }\r\n                    while (BufferDesc.ReturnValue >= 0);\r\n                }\r\n                break;\r\n                case 'p':\r\n                    v = va_arg(*pParamList, int);\r\n                    _PrintUnsigned(&BufferDesc, (unsigned)v, 16u, 8u, 8u, 0u);\r\n                    break;\r\n                case '%':\r\n                    _StoreChar(&BufferDesc, '%');\r\n                    break;\r\n                default:\r\n                    break;\r\n            }\r\n            sFormat++;\r\n        }\r\n        else\r\n        {\r\n            _StoreChar(&BufferDesc, c);\r\n        }\r\n    }\r\n    while (BufferDesc.ReturnValue >= 0);\r\n\r\n    if (BufferDesc.ReturnValue > 0)\r\n    {\r\n        //\r\n        // Write remaining data, if any\r\n        //\r\n        if (BufferDesc.Cnt != 0u)\r\n        {\r\n            RTT_Write(BufferIndex, acBuffer, BufferDesc.Cnt);\r\n        }\r\n        BufferDesc.ReturnValue += (int)BufferDesc.Cnt;\r\n    }\r\n    return BufferDesc.ReturnValue;\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 2049,
+      "is_static": true
+    },
+    {
+      "name": "rtt_printf",
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "sFormat",
+          "type": "char",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    int r;\r\n    va_list ParamList;\r\n\r\n    va_start(ParamList, sFormat);\r\n    r = rtt_vprintf(/*BufferIndex,*/ sFormat, &ParamList);\r\n    va_end(ParamList);\r\n    return r;\r\n}",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 2253,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "FORMAT_FLAG_LEFT_JUSTIFY",
+      "value": "(1u << 0)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1749
+    },
+    {
+      "name": "FORMAT_FLAG_PAD_ZERO",
+      "value": "(1u << 1)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1750
+    },
+    {
+      "name": "FORMAT_FLAG_PRINT_SIGN",
+      "value": "(1u << 2)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1751
+    },
+    {
+      "name": "FORMAT_FLAG_ALTERNATE",
+      "value": "(1u << 3)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\src\\RTT\\RTT.c",
+      "line_number": 1752
+    }
+  ],
+  "parse_errors": [
+    "Line 2175, Col 63: 'char *'"
+  ]
+}

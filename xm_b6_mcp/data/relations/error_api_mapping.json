@@ -1,0 +1,498 @@
+{
+  "GAP_ERR_INVALID_PARAM": [
+    {
+      "name": "gapc_connect_req",
+      "condition": "Invalid connection parameters (interval, latency, timeout out of range)",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_param_update_req",
+      "condition": "Invalid connection interval, latency, or supervision timeout",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gapm_start_advertising_req",
+      "condition": "Invalid advertising parameters (type, interval, channel map)",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gapm_set_dev_config_req",
+      "condition": "Invalid device configuration parameters",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gapm_set_phy_req",
+      "condition": "Invalid PHY configuration",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "GAP_ERR_TIMEOUT": [
+    {
+      "name": "gapc_connect_req",
+      "condition": "Connection attempt timed out (peer not responding or out of range)",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_param_update_req",
+      "condition": "Connection parameter update negotiation timed out",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_bond_req",
+      "condition": "Pairing process timed out waiting for user input",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_encrypt_req",
+      "condition": "Encryption setup timed out",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "GAP_ERR_DISCONNECTED": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Read operation interrupted by connection loss",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Write operation interrupted by connection loss",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_disc_svc_all_req",
+      "condition": "Service discovery interrupted by disconnection",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "GAP_ERR_NOT_FOUND": [
+    {
+      "name": "gapm_scan_req",
+      "condition": "Scan completed but no devices found matching filter criteria",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_disc_svc_all_req",
+      "condition": "Service discovery completed but no matching service found",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_disc_char_all_req",
+      "condition": "Characteristic discovery found no characteristics",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "GAP_ERR_REJECTED": [
+    {
+      "name": "gapc_connect_req",
+      "condition": "Connection rejected by peer device (not accepting connections)",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_param_update_req",
+      "condition": "Connection parameter update rejected by peer",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "GAP_ERR_ADV_DATA_INVALID": [
+    {
+      "name": "gapm_start_advertising_req",
+      "condition": "Advertising data exceeds 31 bytes or contains duplicate data",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gapm_set_adv_data_req",
+      "condition": "Invalid advertising data format or length",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "GAP_ERR_INSUFF_RESOURCES": [
+    {
+      "name": "gapc_connect_req",
+      "condition": "Maximum number of connections reached",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gapm_start_advertising_req",
+      "condition": "Insufficient memory to start advertising",
+      "probability": "low",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_INVALID_HANDLE": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Reading with handle that doesn't exist or not discovered yet",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing to handle that doesn't exist or not discovered yet",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_register_req",
+      "condition": "Registering to non-existent attribute handle",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_READ_NOT_PERMITTED": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Reading characteristic that doesn't have read permission",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_read_long_req",
+      "condition": "Long read on characteristic without read permission",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_WRITE_NOT_PERMITTED": [
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing to characteristic without write permission",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_long_req",
+      "condition": "Long write to characteristic without write permission",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_signed_write_req",
+      "condition": "Signed write to characteristic without write permission",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_INSUFF_AUTHEN": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Reading authenticated characteristic without authentication",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing authenticated characteristic without authentication",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_ATTRIBUTE_NOT_FOUND": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Reading handle returned from discovery but attribute removed",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing to handle that was removed",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_disc_svc_all_req",
+      "condition": "Service with specified UUID not found on peer device",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_disc_char_all_req",
+      "condition": "Characteristic with specified UUID not found",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_INSUFF_ENC_KEY_SIZE": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Reading encrypted characteristic with insufficient key size",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing encrypted characteristic with insufficient key size",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_INVALID_ATTRIBUTE_VAL_LEN": [
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing value exceeding characteristic max length",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_long_req",
+      "condition": "Long write exceeding allowed length",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "ATT_ERR_INSUFF_ENC": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Reading encrypted characteristic before encryption established",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing encrypted characteristic before encryption established",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "L2C_ERR_INSUFF_CREDIT": [
+    {
+      "name": "l2cc_send_req",
+      "condition": "Sending data without available credits (flow control)",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Write operation blocked due to no L2CAP credits",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "L2C_ERR_INVALID_MTU_EXCEED": [
+    {
+      "name": "l2cc_send_req",
+      "condition": "Sending PDU exceeding negotiated MTU size",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Write data exceeds MTU (should use long write)",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "GATT_ERR_INVALID_ATT_LEN": [
+    {
+      "name": "gattc_read_cfm",
+      "condition": "Read response length doesn't match expected",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_cfm",
+      "condition": "Write response has invalid length",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "SMP_ERR_LOC_PASSKEY_ENTRY_FAILED": [
+    {
+      "name": "gapc_bond_req",
+      "condition": "User failed to enter passkey (timeout or wrong input)",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "SMP_ERR_LOC_ENC_KEY_SIZE": [
+    {
+      "name": "gapc_bond_req",
+      "condition": "Negotiated encryption key size below minimum requirement",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_encrypt_req",
+      "condition": "Encryption key size insufficient",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "SMP_ERR_ENC_KEY_MISSING": [
+    {
+      "name": "gapc_encrypt_req",
+      "condition": "No LTK stored for peer device (need to re-pair)",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_bond_req",
+      "condition": "Bonding information lost or corrupted",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "SMP_ERR_ADDR_RESOLV_FAIL": [
+    {
+      "name": "gapm_addr_renew_req",
+      "condition": "RPA address resolution failed (peer IRK not in resolving list)",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "PRF_ERR_INEXISTENT_HDL": [
+    {
+      "name": "prf_read_req",
+      "condition": "Reading with handle that doesn't exist",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "prf_write_req",
+      "condition": "Writing to handle that doesn't exist",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "PRF_ERR_NOT_WRITABLE": [
+    {
+      "name": "prf_write_req",
+      "condition": "Writing to read-only characteristic",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "PRF_ERR_NOT_READABLE": [
+    {
+      "name": "prf_read_req",
+      "condition": "Reading write-only characteristic",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "PRF_ERR_NTF_DISABLED": [
+    {
+      "name": "prf_send_ntf_req",
+      "condition": "Sending notification when client hasn't enabled CCCD",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "PRF_ERR_IND_DISABLED": [
+    {
+      "name": "prf_send_ind_req",
+      "condition": "Sending indication when client hasn't enabled CCCD",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "PRF_CCCD_IMPR_CONFIGURED": [
+    {
+      "name": "prf_send_ntf_req",
+      "condition": "CCCD value is invalid or corrupted",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "prf_send_ind_req",
+      "condition": "CCCD configuration error",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "PRF_PROC_IN_PROGRESS": [
+    {
+      "name": "prf_read_req",
+      "condition": "Starting new operation while previous one not completed",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "prf_write_req",
+      "condition": "Concurrent write operations not allowed",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "LL_ERR_CON_TIMEOUT": [
+    {
+      "name": "gapc_connect_req",
+      "condition": "Connection supervision timeout (no response from peer)",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "LL_ERR_CON_LIMIT_EXCEED": [
+    {
+      "name": "gapc_connect_req",
+      "condition": "Maximum number of connections reached on controller",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "LL_ERR_AUTH_FAILURE": [
+    {
+      "name": "gapc_bond_req",
+      "condition": "Authentication failed during pairing process",
+      "probability": "high",
+      "source": "config_file"
+    },
+    {
+      "name": "gapc_encrypt_req",
+      "condition": "Encryption setup failed (wrong keys)",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "LL_ERR_TERMINATED_MIC_FAILURE": [
+    {
+      "name": "gapc_disconnect_req",
+      "condition": "Connection terminated due to MIC verification failure",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ],
+  "LL_ERR_CONN_FAILED_TO_BE_EST": [
+    {
+      "name": "gapc_connect_req",
+      "condition": "Connection failed to establish (interference or peer rejection)",
+      "probability": "high",
+      "source": "config_file"
+    }
+  ],
+  "LL_ERR_INSUFFICIENT_SECURITY": [
+    {
+      "name": "gattc_read_req",
+      "condition": "Reading characteristic requires higher security level",
+      "probability": "medium",
+      "source": "config_file"
+    },
+    {
+      "name": "gattc_write_req",
+      "condition": "Writing characteristic requires higher security level",
+      "probability": "medium",
+      "source": "config_file"
+    }
+  ]
+}

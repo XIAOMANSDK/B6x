@@ -22,10 +22,10 @@
 
 /**
  * @brief 初始化独立看门狗
- * 
+ *
  * @param[in] ctrl 控制寄存器值，用于配置IWDT的工作模式
  *                - 包含时钟选择(CLKSEL)、复位使能(RSTEN)、中断使能(INTEN)和外设使能(EN)位
- * 
+ *
  * @details
  * - 使能IWDT的APB时钟
  * - 解锁IWDT寄存器保护
@@ -47,12 +47,12 @@ void iwdt_init(uint8_t ctrl)
 
 /**
  * @brief 喂狗操作，重新加载看门狗计数器
- * 
+ *
  * @details
  * - 解锁IWDT寄存器保护
  * - 写入INTCLR寄存器以重新加载IWDT计数器
  * - 锁定IWDT寄存器保护
- * 
+ *
  * @note 默认8s不喂狗会产生复位，需定期调用此函数
  */
 void iwdt_feed(void)
@@ -64,7 +64,7 @@ void iwdt_feed(void)
 
 /**
  * @brief 反初始化独立看门狗
- * 
+ *
  * @details
  * - 解锁IWDT寄存器保护
  * - 清除中断标志
@@ -84,13 +84,13 @@ void iwdt_deinit(void)
 #if (ROM_UNUSED)
 /**
  * @brief 配置独立看门狗的重载值
- * 
+ *
  * @param[in] load 计数器重载值，范围0x00000001~0xFFFFFFFF
  *                 - 如果为0，IWDT不计数
  *                 - 默认值：0x20000
- * 
+ *
  * @return uint32_t 配置前的IWDT计数器当前值
- * 
+ *
  * @details
  * - 解锁IWDT寄存器保护
  * - 清除中断标志
@@ -122,4 +122,3 @@ uint32_t iwdt_conf(uint32_t load)
     return value;
 }
 #endif // (ROM_UNUSED)
-

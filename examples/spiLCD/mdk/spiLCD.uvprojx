@@ -48,7 +48,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\output\</OutputDirectory>
-          <OutputName>blank</OutputName>
+          <OutputName>spiLCD</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -405,25 +405,25 @@
               <FileType>1</FileType>
               <FilePath>..\src\lcd.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>disp</GroupName>
+          <Files>
             <File>
-              <FileName>coffee.c</FileName>
+              <FileName>eyes.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\coffee.c</FilePath>
+              <FilePath>..\src\eyes\eyes.c</FilePath>
             </File>
             <File>
-              <FileName>coffee_font.c</FileName>
+              <FileName>slide.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\coffee_font.c</FilePath>
+              <FilePath>..\src\slide\slide.c</FilePath>
             </File>
             <File>
-              <FileName>steam.c</FileName>
+              <FileName>robot.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\steam.c</FilePath>
-            </File>
-            <File>
-              <FileName>steam_font.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\steam_font.c</FilePath>
+              <FilePath>..\src\robot\robot.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -137,7 +137,7 @@ uint8_t hids_prf_init(void);
 
 /**
  ****************************************************************************************
- * @brief Show LED Lock of Keyboard Output, User Implement! (__weak func)
+ * @brief Show LED Lock of Keyboard Output, User Implement! (__WEAK func)
  *
  * @param[in] leds  Bits of Led_Lock(b0:num,b1:caps,b2:scroll)
  ****************************************************************************************

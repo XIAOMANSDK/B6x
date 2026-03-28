@@ -1853,6 +1853,7 @@ __STATIC void mm_lights_hsl_cb_grp_event(m_lid_t mdl_lid, uint8_t event, uint8_t
             p_env_hsl->ln = p_env_hsl->ln_tgt;
         } // no break;
 
+        /*fallthrough*/
         case (MM_GRP_EVENT_TRANS_STARTED):
         {
             uint8_t trans_time = info;
@@ -1956,6 +1957,7 @@ __STATIC void mm_lights_hsl_cb_grp_event_hue_sat(m_lid_t mdl_lid, uint8_t event,
             *p_state = *p_tgt_state;
         } // no break;
 
+        /*fallthrough*/
         case (MM_GRP_EVENT_TRANS_STARTED):
         {
             uint8_t trans_time = info;
@@ -2148,6 +2150,7 @@ __STATIC void mm_lights_hsl_cb_trans_req(m_lid_t main_mdl_lid, uint32_t req_mode
 void mm_lights_hsl_cb_trans_req_hue_sat(m_lid_t main_mdl_lid, uint32_t req_model_id, uint8_t trans_type,
                                         uint32_t state_delta)
 {
+    (void)req_model_id;
     // Pointer to environment for the main model
     mm_mdl_env_t *p_env = (mm_mdl_env_t *)mm_state_get_env(main_mdl_lid);
     // Pointer to the needed value in the main model environment
@@ -2265,7 +2268,7 @@ uint8_t mm_lights_hsl_register(uint8_t elmt_idx, bool main)
         // for Light CTL Saturation Server model and for Light Lightness Server model
         m_lid_t ln_lid, lvl1_lid, lvl2_lid;
         m_lid_t hsl_lid, hsls_lid, hslh_lid, hslsat_lid;
-        
+
 
         // Register Light Lightness Server model and associated models
         ln_lid = mm_lights_ln_register(elmt_idx, false);
@@ -2316,7 +2319,7 @@ uint8_t mm_lights_hsl_register(uint8_t elmt_idx, bool main)
         {
             break;
         }
-        
+
         // 5. Bound models together
         mm_lights_hsl_bind(hsl_lid, hsls_lid, hslh_lid, hslsat_lid);
         mdl_lid = hsl_lid;

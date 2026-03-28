@@ -16,7 +16,7 @@
 #define BLE_LITELIB            (1)
 
 /// Debug Mode(0=Disable, 1=via UART, 2=via RTT)
-#define DBG_MODE               (0)
+#define DBG_MODE               (1)
 #define SFTMR_NUM              (8)
 
 #define PA_UART1_RTS           (4) //PA04

@@ -1,0 +1,153 @@
+{
+  "file_path": "./usb\\src\\demo_msc.c",
+  "functions": [
+    {
+      "name": "msc_get_descriptor",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "len",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    bool found = true;\n    uint8_t type  = GET_DESC_TYPE(type_index);\n\n    switch (type) {\n        case USB_DESC_TYPE_DEVICE:\n        {\n            *data = (uint8_t *)msc_device_descriptor;\n            *len  = sizeof(msc_device_descriptor);\n        } break;\n\n        case USB_DESC_TYPE_CONFIGURATION:\n        {\n            *data = (uint8_t *)msc_config_descriptor;\n            *len  = sizeof(msc_config_descriptor);\n        } break;\n\n        case USB_DESC_TYPE_STRING:\n        {\n            uint8_t index = GET_DESC_INDEX(type_index);\n            if (index == USB_STRING_LANGID_INDEX) {\n                *data = (uint8_t *)msc_langid_string;\n                *len  = sizeof(msc_langid_string);\n            } else if (index == USB_STRING_MANUFACT_INDEX) {\n                *data = (uint8_t *)msc_manufact_string;\n                *len  = sizeof(msc_manufact_string);\n            } else if (index == USB_STRING_PRODUCT_INDEX){\n                *data = (uint8_t *)msc_product_string;\n                *len  = sizeof(msc_product_string);\n            } else {\n                found = false;\n            }\n        } break;\n        \n        default:\n        {\n            found = false;\n        } break;\n    }\n\n    return found;\n}",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 142,
+      "is_static": false
+    },
+    {
+      "name": "usbd_notify_handler",
+      "return_type": "__USBIRQ",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "arg",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    DEBUG(\"evt:%d\", event);\n    switch (event) {\n        case USBD_EVENT_RESET:\n            break;\n        case USBD_EVENT_CONNECTED:\n            break;\n        case USBD_EVENT_DISCONNECTED:\n            break;\n        case USBD_EVENT_RESUME:\n            break;\n        case USBD_EVENT_SUSPEND:\n            break;\n        case USBD_EVENT_CONFIGURED:\n            break;\n        case USBD_EVENT_SET_REMOTE_WAKEUP:\n            break;\n        case USBD_EVENT_CLR_REMOTE_WAKEUP:\n            break;\n\n        default:\n            break;\n    }\n}",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 214,
+      "is_static": false
+    },
+    {
+      "name": "usbdInit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    usbd_init();\n    #if (USBD_LEGACY_API)\n    usbd_register(msc_descriptor, msc_configuration);\n    #else\n    usbd_register_device(msc_get_descriptor, msc_configuration);\n    usbd_register_events(0xFFFF, usbd_notify_handler);\n    #endif\n    usbd_msc_init(MSC_OUT_EP, MSC_IN_EP);\n}",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 246,
+      "is_static": false
+    },
+    {
+      "name": "usbdTest",
+      "return_type": "void",
+      "parameters": [],
+      "function_body": "{\n    if (usbd_is_configured()) {\n\n    }\n}",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 258,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "USBD_VID",
+      "value": "0x13A9",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 15
+    },
+    {
+      "name": "USBD_PID",
+      "value": "0x10CC",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 16
+    },
+    {
+      "name": "DEV_BCD",
+      "value": "0x0110",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 17
+    },
+    {
+      "name": "USBD_MAX_POWER",
+      "value": "300",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 18
+    },
+    {
+      "name": "USBD_LANGID_STRING",
+      "value": "0x0409 // English(US)",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 19
+    },
+    {
+      "name": "MSC_MAX_MPS",
+      "value": "64",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 23
+    },
+    {
+      "name": "MSC_IN_EP",
+      "value": "0x81",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 25
+    },
+    {
+      "name": "MSC_OUT_EP",
+      "value": "0x01",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 26
+    },
+    {
+      "name": "USB_MSC_CONFIG_SIZE",
+      "value": "(9 + MSC_DESCRIPTOR_LEN)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_msc.c",
+      "line_number": 42
+    }
+  ],
+  "parse_errors": [
+    "Line 88, Col 5: '#if (USBD_BCD == USB_2_0)'",
+    "Line 90, Col 5: '#endif'",
+    "Line 214, Col 10: 'void'"
+  ]
+}

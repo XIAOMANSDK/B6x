@@ -19,10 +19,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdlib.h>
-
-#ifndef __INLINE__
-#define __INLINE__ __forceinline static
-#endif
+#include "cmsis_compiler.h"
 
 #ifndef ASSERT_ERR
 /// Assertions showing a critical error
@@ -148,7 +145,7 @@
  * @param[in] seed The seed number to use to generate the random sequence.
  ****************************************************************************************
  */
-__INLINE__ void rand_init(uint32_t seed)
+__STATIC_FORCEINLINE void rand_init(uint32_t seed)
 {
     srand(seed);
 }
@@ -159,7 +156,7 @@ __INLINE__ void rand_init(uint32_t seed)
  * @return Random byte value.
  ****************************************************************************************
  */
-__INLINE__ uint8_t rand_byte(void)
+__STATIC_FORCEINLINE uint8_t rand_byte(void)
 {
     return (uint8_t)(rand() & 0xFF);
 }
@@ -170,7 +167,7 @@ __INLINE__ uint8_t rand_byte(void)
  * @return Random half word value.
  ****************************************************************************************
  */
-__INLINE__ uint16_t rand_hword(void)
+__STATIC_FORCEINLINE uint16_t rand_hword(void)
 {
     return (uint16_t)(rand() & 0xFFFF);
 }
@@ -181,7 +178,7 @@ __INLINE__ uint16_t rand_hword(void)
  * @return Random word value.
  ****************************************************************************************
  */
-__INLINE__ uint32_t rand_word(void)
+__STATIC_FORCEINLINE uint32_t rand_word(void)
 {
     return (uint32_t)rand();
 }
@@ -194,7 +191,7 @@ __INLINE__ uint32_t rand_word(void)
  * @return The 32 bit value.
  ****************************************************************************************
  */
-__INLINE__ uint32_t read32(const void *ptr32)
+__STATIC_FORCEINLINE uint32_t read32(const void *ptr32)
 {
     return *((uint32_t*)ptr32);
 }
@@ -206,7 +203,7 @@ __INLINE__ uint32_t read32(const void *ptr32)
  * @return The 16 bits value.
  ****************************************************************************************
  */
-__INLINE__ uint16_t read16(const void *ptr16)
+__STATIC_FORCEINLINE uint16_t read16(const void *ptr16)
 {
     return *((uint16_t*)ptr16);
 }
@@ -218,7 +215,7 @@ __INLINE__ uint16_t read16(const void *ptr16)
  * @param[in] value The value to write.
  ****************************************************************************************
  */
-__INLINE__ void write32(const void *ptr32, uint32_t value)
+__STATIC_FORCEINLINE void write32(const void *ptr32, uint32_t value)
 {
     *(uint32_t*)ptr32 = value;
 }
@@ -230,7 +227,7 @@ __INLINE__ void write32(const void *ptr32, uint32_t value)
  * @param[in] value The value to write.
  ****************************************************************************************
  */
-__INLINE__ void write16(const void *ptr16, uint32_t value)
+__STATIC_FORCEINLINE void write16(const void *ptr16, uint32_t value)
 {
     *(uint16_t*)ptr16 = value;
 }
@@ -242,7 +239,7 @@ __INLINE__ void write16(const void *ptr16, uint32_t value)
  * @param[in] value The value to write.
  ****************************************************************************************
  */
-__INLINE__ void write8(const void *ptr8, uint32_t value)
+__STATIC_FORCEINLINE void write8(const void *ptr8, uint32_t value)
 {
     *(uint8_t*)ptr8 = value;
 }
@@ -254,7 +251,7 @@ __INLINE__ void write8(const void *ptr8, uint32_t value)
  * @return The 16 bits value.
  ****************************************************************************************
  */
-__INLINE__ uint16_t read16p(const void *ptr16)
+__STATIC_FORCEINLINE uint16_t read16p(const void *ptr16)
 {
     uint16_t value = ((uint8_t *)ptr16)[0] | ((uint8_t *)ptr16)[1] << 8;
     return value;
@@ -267,7 +264,7 @@ __INLINE__ uint16_t read16p(const void *ptr16)
  * @param[in] value The value to write.
  ****************************************************************************************
  */
-__INLINE__ void write16p(const void *ptr16, uint16_t value)
+__STATIC_FORCEINLINE void write16p(const void *ptr16, uint16_t value)
 {
     uint8_t *ptr=(uint8_t*)ptr16;
 
@@ -282,7 +279,7 @@ __INLINE__ void write16p(const void *ptr16, uint16_t value)
  * @return The 24 bits value.
  ****************************************************************************************
  */
-__INLINE__ uint32_t read24p(const void *ptr24)
+__STATIC_FORCEINLINE uint32_t read24p(const void *ptr24)
 {
     uint16_t addr_l, addr_h;
     addr_l = read16p(ptr24);
@@ -297,7 +294,7 @@ __INLINE__ uint32_t read24p(const void *ptr24)
  * @param[in] value The value to write.
  ****************************************************************************************
  */
-__INLINE__ void write24p(const void *ptr24, uint32_t value)
+__STATIC_FORCEINLINE void write24p(const void *ptr24, uint32_t value)
 {
     uint8_t *ptr=(uint8_t*)ptr24;
 
@@ -313,7 +310,7 @@ __INLINE__ void write24p(const void *ptr24, uint32_t value)
  * @return The 32 bits value.
  ****************************************************************************************
  */
-__INLINE__ uint32_t read32p(const void *ptr32)
+__STATIC_FORCEINLINE uint32_t read32p(const void *ptr32)
 {
     uint16_t addr_l, addr_h;
     addr_l = read16p(ptr32);
@@ -328,7 +325,7 @@ __INLINE__ uint32_t read32p(const void *ptr32)
  * @param[in] value The value to write.
  ****************************************************************************************
  */
-__INLINE__ void write32p(const void *ptr32, uint32_t value)
+__STATIC_FORCEINLINE void write32p(const void *ptr32, uint32_t value)
 {
     uint8_t *ptr=(uint8_t*)ptr32;
 
@@ -349,7 +346,7 @@ __INLINE__ void write32p(const void *ptr32, uint32_t value)
 #if !(USE_ARM_FUNC)
 uint32_t co_clz(uint32_t val);
 #else
-__INLINE__ uint32_t co_clz(uint32_t val)
+__STATIC_FORCEINLINE uint32_t co_clz(uint32_t val)
 {
     #if defined(__arm__)
     return __builtin_clz(val);
@@ -381,7 +378,7 @@ __INLINE__ uint32_t co_clz(uint32_t val)
 #if !(USE_ARM_FUNC)
 uint32_t co_ctz(uint32_t val);
 #else
-__INLINE__ uint32_t co_ctz(uint32_t val)
+__STATIC_FORCEINLINE uint32_t co_ctz(uint32_t val)
 {
     #if defined(__arm__)
     return __builtin_ctz(val);
@@ -413,7 +410,7 @@ __INLINE__ uint32_t co_ctz(uint32_t val)
 #if !(USE_ARM_FUNC)
 uint8_t co_ones(uint32_t val);
 #else
-__INLINE__ uint8_t co_ones(uint32_t val)
+__STATIC_FORCEINLINE uint8_t co_ones(uint32_t val)
 {
     #if defined(__arm__) || defined(__GNUC__)
     return __builtin_popcount(val);
@@ -443,7 +440,7 @@ uint8_t popcnt8(uint8_t byte);
  * @return The smallest value.
  ****************************************************************************************
  */
-__INLINE__ uint32_t co_min(uint32_t a, uint32_t b)
+__STATIC_FORCEINLINE uint32_t co_min(uint32_t a, uint32_t b)
 {
     return a < b ? a : b;
 }
@@ -454,7 +451,7 @@ __INLINE__ uint32_t co_min(uint32_t a, uint32_t b)
  * @return The smallest value.
  ****************************************************************************************
  */
-__INLINE__ int32_t co_min_s(int32_t a, int32_t b)
+__STATIC_FORCEINLINE int32_t co_min_s(int32_t a, int32_t b)
 {
     return a < b ? a : b;
 }
@@ -465,7 +462,7 @@ __INLINE__ int32_t co_min_s(int32_t a, int32_t b)
  * @return The greatest value.
  ****************************************************************************************
  */
-__INLINE__ uint32_t co_max(uint32_t a, uint32_t b)
+__STATIC_FORCEINLINE uint32_t co_max(uint32_t a, uint32_t b)
 {
     return a > b ? a : b;
 }
@@ -476,7 +473,7 @@ __INLINE__ uint32_t co_max(uint32_t a, uint32_t b)
  * @return The absolute value.
  ****************************************************************************************
  */
-__INLINE__ int co_abs(int val)
+__STATIC_FORCEINLINE int co_abs(int val)
 {
     return val < 0 ? val*(-1) : val;
 }
@@ -487,7 +484,7 @@ __INLINE__ int co_abs(int val)
  * @return  val%div
  ****************************************************************************************
  */
-__INLINE__ uint32_t co_mod(uint32_t val, uint32_t div)
+__STATIC_FORCEINLINE uint32_t co_mod(uint32_t val, uint32_t div)
 {
    //ASSERT_ERR(div);
    return ((val) % (div));
@@ -499,7 +496,7 @@ __INLINE__ uint32_t co_mod(uint32_t val, uint32_t div)
  * @return The hex char.
  ****************************************************************************************
  */
-__INLINE__ uint8_t co_hex(uint8_t b4)
+__STATIC_FORCEINLINE uint8_t co_hex(uint8_t b4)
 {
     return b4 < 10 ? b4 + '0' : b4 - 10 + 'A';
 }

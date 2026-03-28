@@ -20,6 +20,7 @@
 #include "string.h"
 #include "mesh.h"
 #include "mm_def.h"
+#include "cmsis_compiler.h"
 
 
 /*
@@ -31,12 +32,6 @@
 #ifndef __STATIC
     #define __STATIC                static
 #endif
-
-/// define the force inlining attribute for this compiler
-#ifndef __INLINE__
-    #define __INLINE__              __forceinline static
-#endif
-
 
 /*
  * ENUMERATIONS
@@ -111,7 +106,7 @@ typedef uint8_t (*mm_cli_trans_cb)(mm_mdl_env_t *p_env, m_lid_t app_key_lid, uin
  * @param[in] state_delta       State value or delta value
  ****************************************************************************************
  */
-typedef void (*mm_bind_trans_req_cb) (m_lid_t main_mdl_lid, uint32_t req_model_id, 
+typedef void (*mm_bind_trans_req_cb) (m_lid_t main_mdl_lid, uint32_t req_model_id,
                                     uint8_t trans_type, uint32_t state_delta);
 
 /**
@@ -456,7 +451,7 @@ uint8_t mm_bind_get_trans_info(m_lid_t grp_lid, uint8_t *p_trans_type, uint8_t *
  ****************************************************************************************
  * @brief
  *
- * @param[in] p_mdl_env     
+ * @param[in] p_mdl_env
  * @param[in] src           Source addr
  * @param[in] tid           TID value
  *
@@ -472,7 +467,7 @@ bool mm_replay_is_retx(mm_replay_env_t *p_mdl_env, uint16_t src, uint8_t tid);
  * @param[in] data_len   Requested data length
  ****************************************************************************************
  */
-__INLINE__ mesh_buf_t* mm_route_buf_alloc(uint16_t data_len)
+__STATIC_FORCEINLINE mesh_buf_t* mm_route_buf_alloc(uint16_t data_len)
 {
     // Allocate buffer and return the status
     return (mesh_buf_alloc(2, data_len, 0));
@@ -562,7 +557,7 @@ void mm_srv_locl_upd_ind_send(uint8_t elmt_idx, int16_t north, int16_t east, int
 
 /**
  ****************************************************************************************
- * @brief Send a MESH_MDL_REQ_IND message to upper application in order to retrieve 
+ * @brief Send a MESH_MDL_REQ_IND message to upper application in order to retrieve
  *        a state value not stored locally
  *
  * @param[in] req_code      Request indication code (@see mm_req_code)
@@ -586,7 +581,7 @@ void mm_srv_prop_get_send(uint8_t elmt_idx, uint8_t prop_type, uint16_t prop_id)
 
 /**
  ****************************************************************************************
- * @brief Send a MESH_MDL_REQ_IND message with MM_SRV_PROP_SET_REQ_IND to Inform application 
+ * @brief Send a MESH_MDL_REQ_IND message with MM_SRV_PROP_SET_REQ_IND to Inform application
  *        about received set request for a Generic User/Admin/Manufacturer Property.
  *        A confirmation is expected from the application.
  *
@@ -677,7 +672,7 @@ void mm_cli_prop_ind_send(uint16_t src, uint16_t prop_id, uint8_t user_access, u
 /**
  ****************************************************************************************
  * @brief Inform application about reception of list of Generic User/Admin/Manufacturer/Client
- *        Properties supported by an element. 
+ *        Properties supported by an element.
  *        Send a MESH_MDL_IND message with a MM_CLI_PROP_IND indication code.
  *
  * @param[in] src           Address of element for which list of properties has been received

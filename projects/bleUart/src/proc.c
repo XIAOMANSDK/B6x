@@ -18,7 +18,7 @@
 
 #if (DBG_PROC)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -47,6 +47,7 @@ bool speed_test = 0;
 /// Override - Callback on received data from peer device
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
+    (void)conidx;
     uart_send(UART1_PORT, len, data);
 }
 #endif //!(DBG_SESS)

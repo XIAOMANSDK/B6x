@@ -21,7 +21,7 @@
 
 #if (DBG_PROC)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -39,7 +39,7 @@ uint8_t adv_dir_flag = 0;  // ¶¨Ïò¹ã²¥
 static void sleep_proc(void)
 {
     uint32_t slpdur = ble_slpdur_get();
-      
+
     if (key_press)
     {
         #if (VOICE)
@@ -50,7 +50,7 @@ static void sleep_proc(void)
             return;
         }
         #endif
-        
+
         if (slpdur > 625)
         {
             slpdur = 625;
@@ -76,7 +76,7 @@ static void sleep_proc(void)
         {
             core_sleep(CFG_WKUP_BLE_EN);
         }
-        
+
         keys_proc();
     }
 }

@@ -10,6 +10,7 @@
 
 #include "usbd.h"
 #include "usbd_dfu.h"
+#include "cmsis_compiler.h"
 
 /* Operation Time, unit in ms */
 #ifndef DFU_WRITE_TIME
@@ -50,19 +51,19 @@ usbd_dfu_t dfu_env;
 
 #define dfu_state_get()     dfu_env.state
 
-__INLINE__ void dfu_state_set(uint8_t state)
+__STATIC_FORCEINLINE void dfu_state_set(uint8_t state)
 {
     dfu_env.state  = state;
     dfu_env.status = DFU_STATUS_OK;
 }
 
-__INLINE__ void dfu_state_err(uint8_t error)
+__STATIC_FORCEINLINE void dfu_state_err(uint8_t error)
 {
     dfu_env.state  = DFU_STATE_ERROR;
     dfu_env.status = error;
 }
 
-__INLINE__ void dfu_state_rst(void)
+__STATIC_FORCEINLINE void dfu_state_rst(void)
 {
     dfu_env.state  = DFU_STATE_IDLE;
     dfu_env.status = DFU_STATUS_OK;
@@ -107,6 +108,7 @@ __WEAK uint8_t dfu_itf_read(uint32_t addr, uint8_t *buff, uint32_t len)
 
 __WEAK uint8_t dfu_itf_write(uint32_t addr, const uint8_t *data, uint32_t len)
 {
+    (void)addr;(void)data;(void)len;
     USB_LOG_INFO("    WR(addr:0x%X,data:%p,len:%d)\r\n", addr, data, len);
 
     return DFU_STATUS_OK; //DFU_STATUS_ERR_WRITE
@@ -114,6 +116,7 @@ __WEAK uint8_t dfu_itf_write(uint32_t addr, const uint8_t *data, uint32_t len)
 
 __WEAK uint8_t dfu_itf_erase(uint32_t addr)
 {
+    (void)addr;
     USB_LOG_INFO("    ER(addr:%X)\r\n", addr);
 
     return DFU_STATUS_OK; //DFU_STATUS_ERR_ERASE
@@ -121,6 +124,7 @@ __WEAK uint8_t dfu_itf_erase(uint32_t addr)
 
 __WEAK void dfu_itf_leave(uint16_t timeout)
 {
+    (void)timeout;
     //NVIC_SystemReset();
 }
 
@@ -187,6 +191,7 @@ void usbd_dfu_schedule(void)
 
 static void dfu_detach_handler(struct usb_setup_packet *setup, uint8_t **data, uint16_t *len)
 {
+    (void)data;(void)len;
     if (dfu_state_get() != DFU_STATE_DNLOAD_BUSY)
     {
         /* Update the state machine */
@@ -261,6 +266,7 @@ static void dfu_upload_handler(struct usb_setup_packet *setup, uint8_t **data, u
 
 static void dfu_dnload_handler(struct usb_setup_packet *setup, uint8_t **data, uint16_t *len)
 {
+    (void)len;
     if ((dfu_state_get() == DFU_STATE_IDLE) || (dfu_state_get() == DFU_STATE_DNLOAD_IDLE))
     {
         /* Update the global length and block number */
@@ -281,7 +287,7 @@ static void dfu_dnload_handler(struct usb_setup_packet *setup, uint8_t **data, u
                 else if (dfu_env.dnLen == 5U)
                 {
                     dfu_env.dnCmd  = (*data)[0]; // DFU_CMD_SE_SETADDR DFU_CMD_SE_ERASE
-                    dfu_env.dnAddr = ((uint32_t)(*data)[1] << 0) | ((uint32_t)(*data)[2] << 8) 
+                    dfu_env.dnAddr = ((uint32_t)(*data)[1] << 0) | ((uint32_t)(*data)[2] << 8)
                                     | ((uint32_t)(*data)[3] << 16) | ((uint32_t)(*data)[4] << 24);
                 }
                 else if (dfu_env.dnLen == 1U)
@@ -332,6 +338,7 @@ static uint16_t dfu_status_pack(uint8_t *data, uint32_t timeout)
 
 static void dfu_getstatus_handler(struct usb_setup_packet *setup, uint8_t **data, uint16_t *len)
 {
+    (void)setup;(void)len;
     uint32_t timeout = 0;
 
     switch (dfu_state_get())

@@ -1,0 +1,702 @@
+{
+  "file_path": "./drivers\\api\\uart.h",
+  "functions": [
+    {
+      "name": "uart_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init uart port (enable clock, reset, IO func map). ",
+      "detailed_description": "SYS_CLK\nFUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n@param[in] io_tx  iopad of TXD @see enum pad_idx\n@param[in] io_rx  iopad of RXD @see enum pad_idx\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 183,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit uart port(disable clock). ",
+      "detailed_description": "***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 193,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_hwfc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config uart hardware flow control (IO func map, enable auto RTS). ",
+      "detailed_description": "***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n@param[in] io_rts  iopad of RTS @see enum pad_idx\n@param[in] io_cts  iopad of CTS @see enum pad_idx\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 205,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config uart params, baudrate and ctrl bits. ",
+      "detailed_description": "***************************************************************************************\n@param[in] port     index of port @see enum uart_port\n@param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()\n@param[in] cfg_LCR  line-control bits @see LCR_BITS()\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 217,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_fctl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config uart fifo level and receive timeout. ",
+      "detailed_description": "***************************************************************************************\n@param[in] port      index of port @see enum uart_port\n@param[in] fifo_ctl  fifo control @see enum uart_fcr_bfs\n@param[in] bits_rto  rx timeout (unit in bits)\n@param[in] intr_en   interrupt enable @see enum uart_intr_bfs\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 230,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_mctl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config uart mode control. ",
+      "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] dma   enable DMA or not\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 241,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_putc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Transmits one byte data through the UART port. ",
+      "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] ch    the data transmited\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 252,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_getc",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get the most recent received data by UART port. ",
+      "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@return received data\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 263,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_wait",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Wait uart transmit finish, in idle state. ",
+      "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 273,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_send",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Transmits bytes data through the UART port(Blocking Mode). ",
+      "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] len    data length\n@param[in] data   data pointer\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 285,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "uart_update_baud",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Update uart baudrate. ",
+      "detailed_description": "***************************************************************************************\n@param[in] port     index of port @see enum uart_port\n@param[in] io_rx    iopad of RXD @see enum pad_idx\n@param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()\n@note This function will reset uart and restore uart params.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 299,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "LCR_BITS_DFLT",
+      "value": "LCR_BITS(8, 1, none) // default: 8 DataBits, 1 StopBits, None Parity",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 152
+    },
+    {
+      "name": "BRR_115200",
+      "value": "BRR_DIV(115200, 32M) // default use SYS_FREQ_32M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 155
+    },
+    {
+      "name": "BRR_921600",
+      "value": "BRR_DIV(921600, 32M) // default use SYS_FREQ_32M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 156
+    },
+    {
+      "name": "BRR_115200",
+      "value": "BRR_DIV(115200, 48M) // default use SYS_FREQ_48M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 158
+    },
+    {
+      "name": "BRR_921600",
+      "value": "BRR_DIV(921600, 48M) // default use SYS_FREQ_48M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 159
+    },
+    {
+      "name": "BRR_115200",
+      "value": "BRR_DIV(115200, 64M) // default use SYS_FREQ_64M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 161
+    },
+    {
+      "name": "BRR_921600",
+      "value": "BRR_DIV(921600, 64M) // default use SYS_FREQ_64M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 162
+    },
+    {
+      "name": "BRR_115200",
+      "value": "BRR_DIV(115200, 16M) // default use SYS_FREQ_16M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 164
+    },
+    {
+      "name": "BRR_921600",
+      "value": "BRR_DIV(921600, 16M) // default use SYS_FREQ_16M",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 165
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "UART1_PORT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "UART2_PORT",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 25
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "LCR_DATA_BITS_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "LCD_DATA_BITS_8",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "LCD_DATA_BITS_7",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "LCD_DATA_BITS_6",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "LCD_DATA_BITS_5",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "LCR_STOP_BITS_LSB",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "LCR_STOP_BITS_1",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "LCR_STOP_BITS_2",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "LCR_PARITY_BITS_LSB",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "LCR_PARITY_none",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "LCR_PARITY_odd",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "LCR_PARITY_even",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "LCR_RXEN_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "LCR_RTOEN_BIT",
+          "value": 256,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 32
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "FCR_FIFOEN_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "FCR_RFRST_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "FCR_TFRST_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "FCR_RXTL_LSB",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "FCR_RXTL_1BYTE",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "FCR_RXTL_4BYTE",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "FCR_RXTL_8BYTE",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "FCR_RXTL_14BYTE",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "FCR_TXTL_LSB",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "FCR_TXTL_1BYTE",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "FCR_TXTL_4BYTE",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "FCR_TXTL_8BYTE",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "FCR_TXTL_14BBYTE",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 59
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "UART_SR_DR_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_OE_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_PE_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_FE_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_BF_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_TBEM_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_TEM_BIT",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_RFE_BIT",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_BUSY_BIT",
+          "value": 256,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_TFNF_BIT",
+          "value": 512,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_TFEM_BIT",
+          "value": 1024,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_RFNE_BIT",
+          "value": 2048,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_RFF_BIT",
+          "value": 4096,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_DCTS_BIT",
+          "value": 8192,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_CTS_BIT",
+          "value": 16384,
+          "brief": ""
+        },
+        {
+          "name": "UART_SR_ALL_MSK",
+          "value": 32767,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 84
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "UART_IR_RXRD_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_TXS_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_RXS_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_MDS_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_RTO_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_BUSY_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_ABE_BIT",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_ABTO_BIT",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_LINBK_BIT",
+          "value": 256,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_TC_BIT",
+          "value": 512,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_EOB_BIT",
+          "value": 1024,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_CM_BIT",
+          "value": 2048,
+          "brief": ""
+        },
+        {
+          "name": "UART_IR_ALL_MSK",
+          "value": 4095,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\uart.h",
+      "line_number": 106
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

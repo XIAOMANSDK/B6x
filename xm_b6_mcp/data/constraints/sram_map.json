@@ -1,0 +1,539 @@
+{
+  "constraint_type": "sram_allocation",
+  "domain": "domain1",
+  "version": "1.0",
+  "last_updated": "2026-03-17T18:05:45.692723",
+  "total_regions": 34,
+  "total_size_kb": 32,
+  "regions": [
+    {
+      "name": "User Space (SRAM1 + SRAM2)",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 28672,
+      "size_kb": 28,
+      "size_human": "0x7000",
+      "description": "Full SRAM1 and SRAM2 available for user",
+      "library_type": "all",
+      "allocation_mode": "mode1_no_ble",
+      "ble_connections": 0
+    },
+    {
+      "name": "Cache (SRAM3)",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 4096,
+      "size_kb": 4,
+      "size_human": "0x1000",
+      "description": "SRAM3 used as Cache",
+      "library_type": "all",
+      "allocation_mode": "mode1_no_ble",
+      "ble_connections": 0
+    },
+    {
+      "name": "Interrupt Vector Table",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 152,
+      "size_kb": 0,
+      "size_human": "0x98",
+      "description": "System interrupt vectors",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "User Space 1",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 7528,
+      "size_kb": 7,
+      "size_human": "0x1D68",
+      "description": "Application data area 1",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "BLE Protocol Heap",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 11264,
+      "size_kb": 11,
+      "size_human": "0x2C00",
+      "description": "Bluetooth protocol stack heap",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "System Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 1536,
+      "size_kb": 1,
+      "size_human": "0x600",
+      "description": "System stack area",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "BLE HW/SW Exchange",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 4056,
+      "size_kb": 3,
+      "size_human": "0x0FD8",
+      "description": "Bluetooth hardware/software exchange area",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "BLE Protocol Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 772,
+      "size_kb": 0,
+      "size_human": "0x304",
+      "description": "Bluetooth protocol stack code",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "User Space 2",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 3364,
+      "size_kb": 3,
+      "size_human": "0xD24",
+      "description": "Application data area 2",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "Cache",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 4096,
+      "size_kb": 4,
+      "size_human": "0x1000",
+      "description": "Cache (SRAM3)",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode2_ble_3conn",
+      "ble_connections": 3
+    },
+    {
+      "name": "Interrupt Vector Table",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 152,
+      "size_kb": 0,
+      "size_human": "0x98",
+      "description": "System interrupt vectors",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "User Space 1",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 12648,
+      "size_kb": 12,
+      "size_human": "0x3168",
+      "description": "Application data area 1",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "BLE Protocol Heap",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 6144,
+      "size_kb": 6,
+      "size_human": "0x1800",
+      "description": "Bluetooth protocol stack heap",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "System Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 1536,
+      "size_kb": 1,
+      "size_human": "0x600",
+      "description": "System stack area",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "BLE HW/SW Exchange",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 4056,
+      "size_kb": 3,
+      "size_human": "0x0FD8",
+      "description": "Bluetooth hardware/software exchange area",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "BLE Protocol Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 772,
+      "size_kb": 0,
+      "size_human": "0x304",
+      "description": "Bluetooth protocol stack code",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "User Space 2",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 3364,
+      "size_kb": 3,
+      "size_human": "0xD24",
+      "description": "Application data area 2",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "Cache",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 4096,
+      "size_kb": 4,
+      "size_human": "0x1000",
+      "description": "Cache (SRAM3)",
+      "library_type": "ble6.lib",
+      "allocation_mode": "mode3_ble_1conn",
+      "ble_connections": 1
+    },
+    {
+      "name": "Interrupt Vector Table",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 152,
+      "size_kb": 0,
+      "size_human": "0x98",
+      "description": "System interrupt vectors",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "User Space 1",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 18800,
+      "size_kb": 18,
+      "size_human": "0x4968",
+      "description": "Application data area 1",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "System Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 1536,
+      "size_kb": 1,
+      "size_human": "0x600",
+      "description": "System stack area",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "BLE HW/SW Exchange",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 2988,
+      "size_kb": 2,
+      "size_human": "0x0BAC",
+      "description": "Bluetooth hardware/software exchange area",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "BLE Protocol Heap",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 3072,
+      "size_kb": 3,
+      "size_human": "0xC00",
+      "description": "Bluetooth protocol stack heap",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "BLE Protocol Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 1544,
+      "size_kb": 1,
+      "size_human": "0x608",
+      "description": "Bluetooth protocol stack code",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "User Space 2",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 588,
+      "size_kb": 0,
+      "size_human": "0x24C",
+      "description": "Application data area 2",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "Cache",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 4096,
+      "size_kb": 4,
+      "size_human": "0x1000",
+      "description": "Cache (SRAM3)",
+      "library_type": "ble6_lite.lib",
+      "allocation_mode": "mode4_ble_lite",
+      "ble_connections": 1
+    },
+    {
+      "name": "Interrupt Vector Table",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 152,
+      "size_kb": 0,
+      "size_human": "0x98",
+      "description": "System interrupt vectors",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    },
+    {
+      "name": "User Space 1",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 7528,
+      "size_kb": 7,
+      "size_human": "0x1D68",
+      "description": "Application data area 1",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    },
+    {
+      "name": "BLE Protocol Heap",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 11264,
+      "size_kb": 11,
+      "size_human": "0x2C00",
+      "description": "Bluetooth protocol stack heap",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    },
+    {
+      "name": "System Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 1536,
+      "size_kb": 1,
+      "size_human": "0x600",
+      "description": "System stack area",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    },
+    {
+      "name": "BLE HW/SW Exchange",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 5520,
+      "size_kb": 5,
+      "size_human": "0x1590",
+      "description": "Bluetooth hardware/software exchange area",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    },
+    {
+      "name": "BLE Protocol Stack",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 948,
+      "size_kb": 0,
+      "size_human": "0x3B4",
+      "description": "Bluetooth protocol stack code",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    },
+    {
+      "name": "User Space 2",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 1724,
+      "size_kb": 1,
+      "size_human": "0x6BC",
+      "description": "Application data area 2",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    },
+    {
+      "name": "Cache",
+      "start_address": null,
+      "end_address": null,
+      "size_bytes": 4096,
+      "size_kb": 4,
+      "size_human": "0x1000",
+      "description": "Cache (SRAM3)",
+      "library_type": "ble6_8act_6con.lib",
+      "allocation_mode": "mode5_ble_6conn",
+      "ble_connections": 6
+    }
+  ],
+  "chip_variants": [
+    "b61",
+    "b62",
+    "b63",
+    "b66",
+    "b68"
+  ],
+  "sram_blocks": {
+    "sram1": {
+      "name": "SRAM1",
+      "start_address": "0x20003000",
+      "end_address": "0x20007FFF",
+      "size_kb": 20
+    },
+    "sram2": {
+      "name": "SRAM2",
+      "start_address": "0x20008000",
+      "end_address": "0x20009FFF",
+      "size_kb": 8
+    },
+    "sram3": {
+      "name": "SRAM3",
+      "start_address": "0x2000A000",
+      "end_address": "0x2000AFFF",
+      "size_kb": 4
+    }
+  },
+  "allocation_modes": {
+    "mode1_no_ble": {
+      "name": "Mode 1 - No BLE Stack",
+      "ble_library": null,
+      "ble_connections": 0,
+      "user_space_kb": 28
+    },
+    "mode2_ble_3conn": {
+      "name": "Mode 2 - BLE 3 Connections",
+      "ble_library": "ble6.lib",
+      "ble_connections": 3,
+      "user_space_kb": 10.64
+    },
+    "mode3_ble_1conn": {
+      "name": "Mode 3 - BLE 1 Connection",
+      "ble_library": "ble6.lib",
+      "ble_connections": 1,
+      "user_space_kb": 15.64
+    },
+    "mode4_ble_lite": {
+      "name": "Mode 4 - BLE Lite (Slave Only)",
+      "ble_library": "ble6_lite.lib",
+      "ble_connections": 1,
+      "user_space_kb": 18.93
+    },
+    "mode5_ble_6conn": {
+      "name": "Mode 5 - BLE 6 Connections",
+      "ble_library": "ble6_8act_6con.lib",
+      "ble_connections": 6,
+      "user_space_kb": 9.03
+    }
+  },
+  "mode_selection_guide": [
+    {
+      "mode": "mode1_no_ble",
+      "use_case": "Non-BLE applications",
+      "user_space_kb": 28,
+      "recommended_for": "Sensor applications, simple IO control"
+    },
+    {
+      "mode": "mode2_ble_3conn",
+      "use_case": "Multi-connection BLE (Master + Slave)",
+      "user_space_kb": 10.64,
+      "recommended_for": "BLE gateway, multi-device scenarios"
+    },
+    {
+      "mode": "mode3_ble_1conn",
+      "use_case": "Single connection BLE (Master OR Slave)",
+      "user_space_kb": 15.64,
+      "recommended_for": "Point-to-point BLE applications"
+    },
+    {
+      "mode": "mode4_ble_lite",
+      "use_case": "Slave-only BLE (minimal footprint)",
+      "user_space_kb": 18.93,
+      "recommended_for": "BLE peripherals, beacons, sensors"
+    },
+    {
+      "mode": "mode5_ble_6conn",
+      "use_case": "Multi-connection BLE (up to 6 connections)",
+      "user_space_kb": 9.03,
+      "recommended_for": "BLE hub, central device with many peripherals"
+    }
+  ],
+  "constraints": [
+    "SRAM3 is typically used as Cache; using it as SRAM affects Flash execution speed",
+    "BLE library selection determines the SRAM allocation mode",
+    "User space is split into two areas in BLE modes",
+    "Total SRAM is 32KB across all variants",
+    "Flash size varies by chip variant (128KB or 256KB)"
+  ],
+  "ble_library_mapping": {
+    "ble6.lib": {
+      "supported_modes": [
+        "mode2_ble_3conn",
+        "mode3_ble_1conn"
+      ],
+      "description": "Standard BLE library"
+    },
+    "ble6_lite.lib": {
+      "supported_modes": [
+        "mode4_ble_lite"
+      ],
+      "description": "Lightweight BLE library for slave-only applications"
+    },
+    "ble6_8act_6con.lib": {
+      "supported_modes": [
+        "mode5_ble_6conn"
+      ],
+      "description": "Extended BLE library for multiple connections"
+    }
+  },
+  "data_source": "yaml_config",
+  "source_file": "./xm_b6_mcp\\config\\sram_map.yaml"
+}

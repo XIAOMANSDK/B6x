@@ -1349,6 +1349,7 @@ __STATIC void mm_lights_ctl_cb_grp_event(m_lid_t mdl_lid, uint8_t event, uint8_t
             p_env_ctl->delta_uv = p_env_ctl->delta_uv_tgt;
         } // no break;
 
+        /*fallthrough*/
         case (MM_GRP_EVENT_TRANS_STARTED):
         {
             uint8_t trans_time = info;
@@ -1455,6 +1456,7 @@ __STATIC void mm_lights_ctl_cb_grp_event_temp(m_lid_t mdl_lid, uint8_t event, ui
             p_env_ctlt->temp = p_env_ctlt->temp_tgt;
         } // no break;
 
+        /*fallthrough*/
         case (MM_GRP_EVENT_TRANS_STARTED):
         {
             uint8_t trans_time = info;
@@ -1638,6 +1640,7 @@ __STATIC void mm_lights_ctl_cb_trans_req(m_lid_t main_mdl_lid, uint32_t req_mode
 __STATIC void mm_lights_ctl_cb_trans_req_temp(m_lid_t main_mdl_lid, uint32_t req_model_id, uint8_t trans_type,
                                      uint32_t state_delta)
 {
+    (void)req_model_id;
     // Get environment for Light CTL Temperature Server model
     mm_lights_ctlt_env_t *p_env_ctlt = (mm_lights_ctlt_env_t *)mm_state_get_env(main_mdl_lid);
     // Requested Generic Level state value
@@ -1858,7 +1861,7 @@ uint8_t mm_lights_ctl_register(uint8_t elmt_idx, bool main)
         {
             mdl_lid = ctl_lid;
             ctlt_lid = ctl_lid + 2;
-            
+
             // Create group and set Light CTL Server model as main model
             m_lid_t grp_lid = mm_bind_add_group(3, elmt_idx, ctl_lid,
                                  mm_lights_ctl_cb_grp_event, mm_lights_ctl_cb_trans_req);

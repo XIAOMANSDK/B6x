@@ -15,7 +15,7 @@
 
 #if (DBG_APP)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -44,11 +44,12 @@ void fee7_ind_cfg_timer_init(void)
 }
 /**
  ****************************************************************************************
- * @brief SubTask Handler of Custom or Unknow Message. (__weak func)
+ * @brief SubTask Handler of Custom or Unknow Message. (__WEAK func)
  ****************************************************************************************
  */
-__weak APP_SUBTASK_HANDLER(custom)
+__WEAK APP_SUBTASK_HANDLER(custom)
 {
+    (void)dest_id;(void)src_id;(void)param;
     switch (msgid)
     {
         #if (RC32K_CALIB_PERIOD)
@@ -59,21 +60,23 @@ __weak APP_SUBTASK_HANDLER(custom)
             ke_timer_set(APP_TIMER_RC32K_CORR, TASK_APP, RC32K_CALIB_PERIOD);
         } break;
         #endif
-        
+
         case PRF_FEE7_IND_CFG:
         {
             ble_req_auth();
             ke_timer_clear(PRF_FEE7_IND_CFG, TASK_APP);
         } break;
-        
+
         default:
         {
+            #if (DBG_APP)
             uint16_t length = ke_param2msg(param)->param_len;
             DEBUG("Unknow MsgId:0x%X", msgid);
             debugHex((uint8_t *)param, length);
+            #endif
         } break;
     }
-    
+
     return (MSG_STATUS_FREE);
 }
 
@@ -89,6 +92,7 @@ __weak APP_SUBTASK_HANDLER(custom)
  */
 __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
 {
+    (void)task_idx;
     msg_func_t handler = NULL;
 
     switch (MSG_TYPE(msgid))
@@ -106,7 +110,7 @@ __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
             handler = app_gatt_msg_handler;
             break;
         #endif
-        
+
         #if (L2CC_LECB)
         case (TID_L2CC):
             handler = app_l2cc_msg_handler;

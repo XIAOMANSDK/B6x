@@ -18,7 +18,7 @@
 #ifdef __SRAMFN
 #undef __SRAMFN
 #endif
-#define __SRAMFN(line) __attribute__((section("ram_func.fshc." #line)))  // 定义RAM函数段
+#define __SRAMFN(label) __attribute__((section("ram_func.fshc." #label)))  // 定义RAM函数段
 
 #define FLASH_PAGE_SIZE 256                    // Flash页大小256字节
 /// PUYA Flash等待完成相关定义
@@ -36,7 +36,7 @@
  * @brief 进入PUYA Flash双线读取模式
  * @note 此函数运行在RAM中，配置Flash控制器支持高性能双线读取模式
  */
-__SRAMFN(33)
+__SRAMFN(enter_dxip)
 void puya_enter_dual_read(void)
 {
     // 检查是否已处于高性能模式
@@ -46,7 +46,7 @@ void puya_enter_dual_read(void)
     // 保存缓存配置并禁用缓存
     uint32_t reg_val = (CACHE->CCR.Word);
     CACHE->CCR.Word  = 0;
-    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
+//    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
 
     // 禁用全局中断，确保Flash配置不被中断
     GLOBAL_INT_DISABLE();
@@ -66,7 +66,7 @@ void puya_enter_dual_read(void)
  * @brief 退出PUYA Flash双线读取模式
  * @note 此函数运行在RAM中，恢复Flash控制器到单线读取模式
  */
-__SRAMFN(53)
+__SRAMFN(exit_dxip)
 void puya_exit_dual_read(void)
 {
     // 检查是否处于高性能模式
@@ -76,7 +76,7 @@ void puya_exit_dual_read(void)
     // 保存缓存配置并禁用缓存
     uint32_t reg_val = (CACHE->CCR.Word);
     CACHE->CCR.Word  = 0;
-    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
+//    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
 
     // 禁用全局中断
     GLOBAL_INT_DISABLE();
@@ -96,7 +96,7 @@ void puya_exit_dual_read(void)
  * @brief 配置BOYA Flash四线模式
  * @note 此函数运行在RAM中，启用BOYA Flash的四线SPI模式以提高读取性能
  */
-__SRAMFN(71)
+__SRAMFN(quad_en)
 void boya_flash_quad_mode(void)
 {
     // 禁用全局中断
@@ -111,8 +111,6 @@ void boya_flash_quad_mode(void)
     // 检查是否已启用四线模式
     if ((sta_reg1 & 0x02) != 0x02)
     {
-        // 计算系统时钟相关的延时参数
-        uint8_t sys_clk = (rcc_sysclk_get() + 1) << 4;
 
         // 设置四线模式标志位
         sta_reg1 |= 0x02;
@@ -131,8 +129,15 @@ void boya_flash_quad_mode(void)
         // 恢复缓存配置
         CACHE->CCR.Word = reg_val;
 
-        // 等待状态寄存器写入完成（最大12ms）
-        btmr_delay(sys_clk, 12000);
+        #if (0)
+        // 计算系统时钟相关的延时参数
+        uint8_t sys_clk = (rcc_sysclk_get() + 1) << 4;
+        // 等待状态寄存器写入完成（最大20ms）
+        btmr_delay(sys_clk, 20000);
+        #else
+        // 等待Flash操作完成
+        FSHC_WAIT_COMPLETE();
+        #endif
     }
 
     // 恢复全局中断
@@ -146,7 +151,7 @@ void boya_flash_quad_mode(void)
  * @param wlen 写入数据长度（以字为单位）
  * @note 此函数运行在RAM中，执行Flash页写入操作
  */
-__SRAMFN(103)
+__SRAMFN(word_write)
 void flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
 {
     // 禁用全局中断
@@ -167,7 +172,7 @@ void flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
  * @param offset Flash偏移地址（页对齐）
  * @note 此函数运行在RAM中，执行Flash页擦除操作
  */
-__SRAMFN(115)
+__SRAMFN(page_erase)
 void flash_page_erase(uint32_t offset)
 {
     // 禁用全局中断
@@ -198,11 +203,12 @@ void flash_page_erase(uint32_t offset)
  * @param blen 写入数据长度（字节数）
  * @note 此函数运行在RAM中，执行字节级Flash写入操作
  */
-__SRAMFN(133)
+__SRAMFN(byte_write)
 void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen)
 {
     flen_t wrcnt = 0;
-    uint32_t wr_val = 0;
+    uint32_t wr_val = 0xFFFFFFFF;
+    uint32_t copy_len = 0;
 
     // 禁用全局中断
     GLOBAL_INT_DISABLE();
@@ -210,51 +216,42 @@ void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen)
     // 等待系统配置寄存器空闲
     while (SYSCFG->ACC_CCR_BUSY);
 
-#if (0)
-/// fshc cmd mode
-#define FCM_GET_CMD(fcmd)      (((fcmd) & FCM_CMD_MSK) >> FCM_CMD_LSB)
-#define FCM_GET_MODE(fcmd)     (((fcmd) & FCM_MODE_MSK) >> FCM_MODE_LSB)
-    uint8_t wr_cmd = FCM_GET_CMD(FSH_CMD_WR);
-    uint8_t ln_mod = FCM_GET_MODE(FSH_CMD_WR);
-    uint16_t wr_ctrl = SCTRL_WR_DAT(ln_mod);
-
-    fshc_en_cmd(FSH_CMD_WR_EN);
-    fshc_wr_cfg(wr_cmd, offset, len, wr_ctrl, ACBIT_SI_0DUMY);
-#else
     // 发送写使能命令
     fshc_en_cmd(FSH_CMD_WR_EN);
 
     // 配置Flash写入参数：命令、偏移地址、页大小、控制字、访问位
-    fshc_wr_cfg(FSH_CMD_WR, offset, FLASH_PAGE_SIZE, 0x0354, ACBIT_SI_0DUMY);
-#endif
+    fshc_wr_cfg(FSH_CMD_WR, offset, blen/*FLASH_PAGE_SIZE*/, 0x0354, ACBIT_SI_0DUMY);
 
     // 填充第一个字数据并启动发送
     while (FSHC->FIFO_STATUS.TXFIFO_FULL);  // 等待TX FIFO非满
-    xmemcpy((uint8_t *)&wr_val, data + wrcnt, 4);
+    copy_len = (blen - wrcnt >= 4) ? 4 : (blen - wrcnt);
+    xmemcpy((uint8_t *)&wr_val, data + wrcnt, copy_len);
     FSHC->SPDR_WR = wr_val;                // 写入数据到Flash数据寄存器
     FSHC->SEND_EN = 1;                     // 使能发送
-    wrcnt += 4;
+    wrcnt += copy_len;
 
     // 继续填充剩余数据
     while (wrcnt < blen)
     {
         if (!FSHC->FIFO_STATUS.TXFIFO_FULL)
         {
-            xmemcpy((uint8_t *)&wr_val, data + wrcnt, 4);
+            wr_val = 0xFFFFFFFF;
+            copy_len = (blen - wrcnt >= 4) ? 4 : (blen - wrcnt);
+            xmemcpy((uint8_t *)&wr_val, data + wrcnt, copy_len);
             FSHC->SPDR_WR = wr_val;
-            wrcnt += 4;
+            wrcnt += copy_len;
         }
     }
 
     // 填充页剩余部分为0xFFFFFFFF（Flash擦除状态）
-    while (wrcnt < FLASH_PAGE_SIZE)
-    {
-        if (!FSHC->FIFO_STATUS.TXFIFO_FULL)
-        {
-            FSHC->SPDR_WR = 0xFFFFFFFF;
-            wrcnt += 4;
-        }
-    }
+//    while (wrcnt < FLASH_PAGE_SIZE)
+//    {
+//        if (!FSHC->FIFO_STATUS.TXFIFO_FULL)
+//        {
+//            FSHC->SPDR_WR = 0xFFFFFFFF;
+//            wrcnt += 4;
+//        }
+//    }
 
     // 等待Flash操作完成
     FSHC_WAIT_COMPLETE();
@@ -270,7 +267,7 @@ void flash_byte_write(uint32_t offset, uint8_t *data, uint32_t blen)
  * @param blen 读取数据长度（字节数）
  * @note 此函数运行在RAM中，执行字节级Flash读取操作
  */
-__SRAMFN(190)
+__SRAMFN(byte_read)
 void flash_byte_read(uint32_t offset, uint8_t *buff, uint32_t blen)
 {
     flen_t rdcnt = 0;
@@ -333,7 +330,7 @@ void flash_byte_read(uint32_t offset, uint8_t *buff, uint32_t blen)
  * @param wlen 读取数据长度（以字为单位）
  * @note 此函数运行在RAM中，执行字级Flash读取操作
  */
-__SRAMFN(242)
+__SRAMFN(word_read)
 void flash_read(uint32_t offset, uint32_t *buff, uint32_t wlen)
 {
     // 禁用全局中断
@@ -402,14 +399,14 @@ uint32_t flash_size(void)
 
     // 禁用全局中断
     GLOBAL_INT_DISABLE();
-    
+
     // 等待系统配置寄存器空闲
     while (SYSCFG->ACC_CCR_BUSY);
-    
+
     // 读取Flash ID，获取存储密度信息
     // Byte0: manufacturer ID, Byte1: memory type, Byte2: memory density
     mid = (fshc_rd_sta(FSH_CMD_RD_ID, 3) >> 16) & 0xFF;
-    
+
     // 恢复全局中断
     GLOBAL_INT_RESTORE();
 

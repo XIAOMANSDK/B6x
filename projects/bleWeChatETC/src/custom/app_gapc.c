@@ -19,7 +19,7 @@
 
 #if (DBG_GAPC)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat,len)
@@ -39,16 +39,20 @@
 
 APP_MSG_HANDLER(gapc_cmp_evt)
 {
+    (void)msgid;(void)dest_id;(void)src_id;
     // operation @see enum gapc_operation
     // Command complete, may ignore
+    #if (DBG_GAPC)
     DEBUG("CMP_EVT(op:%d,sta:0x%x)", param->operation, param->status);
+    #else
+    (void)param;
+    #endif
 }
 
 APP_MSG_HANDLER(gapc_connection_req_ind)
 {
-    #if (DBG_GAPC)
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
-    #endif
 
     DEBUG("gapc_connection_req_ind(cid:%d,chdl:%d,conn[intv:%d,late:%d,to:%d],acc:%d,caddr:%d)", conidx, param->conhdl,
           param->con_interval, param->con_latency, param->sup_to, param->clk_accuracy, param->peer_addr_type);
@@ -56,11 +60,12 @@ APP_MSG_HANDLER(gapc_connection_req_ind)
 
     // Indicate Connect_Req_Pkt be send, need wait to sync (try 6 times of conn_event).
     // If synced, goto gapc_connection_ind. Otherwise, goto gapc_disconnect_ind(reason=0x3E)
-    //app_conn_fsm(BLE_CONNECTING, conidx, param);
+    app_conn_fsm(BLE_CONNECTING, conidx, param);
 }
 
 APP_MSG_HANDLER(gapc_connection_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
 
     DEBUG("gapc_connection_ind(cid:%d,chdl:%d,role:%d)", conidx, param->conhdl, param->role);
@@ -71,6 +76,7 @@ APP_MSG_HANDLER(gapc_connection_ind)
 
 APP_MSG_HANDLER(gapc_disconnect_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
 
     DEBUG("gapc_disconnect_ind(cid:%d,hdl:%d,reason:0x%X)", conidx, param->conhdl, param->reason);
@@ -80,6 +86,7 @@ APP_MSG_HANDLER(gapc_disconnect_ind)
 
 APP_MSG_HANDLER(gapc_param_update_req_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
 
     DEBUG("param_update(cid:%d,invM:%d,invI:%d,late:%d,timo:%d)", conidx,
@@ -87,15 +94,15 @@ APP_MSG_HANDLER(gapc_param_update_req_ind)
 
     // Connection param accept or reject
 //    gapc_param_update_rsp(conidx, true, 0x2, 0x4);
-    
-    if (param->intv_max > 24) // Á¬½Ó¼ä¸ô>30ms,Ö±½Ó¾Ü¾ø
+
+    if (param->intv_max > 24) // è¿žæŽ¥é—´éš”>30ms,ç›´æŽ¥æ‹’ç»
     {
         // Connection param accept or reject
         gapc_param_update_rsp(conidx, false, 0x2, 0x4);
-        
+
         #if (1)
-        // ÉêÇëÁ¬½Ó¼ä¸ôÎª20ms
-        struct gapc_conn_param req_param = 
+        // ç”³è¯·è¿žæŽ¥é—´éš”ä¸º20ms
+        struct gapc_conn_param req_param =
         {
             .intv_min = 16,
             .intv_max = 16,
@@ -113,17 +120,18 @@ APP_MSG_HANDLER(gapc_param_update_req_ind)
 
 APP_MSG_HANDLER(gapc_param_updated_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
-    
-    DEBUG("param_updated_ind(cid:%d,intv:%d,late:%d,timo:%d)", TASK_IDX(src_id),
+
+    DEBUG("param_updated_ind(cid:%d,intv:%d,late:%d,timo:%d)", conidx,
           param->con_interval, param->con_latency, param->sup_to);
 
     // Current param, may update to slaves
-    if (param->con_interval > 24) // Á¬½Ó¼ä¸ô>30ms,Ö±½Ó¾Ü¾ø
+    if (param->con_interval > 24) // è¿žæŽ¥é—´éš”>30ms,ç›´æŽ¥æ‹’ç»
     {
         #if (1)
-        // ÉêÇëÁ¬½Ó¼ä¸ôÎª20ms
-        struct gapc_conn_param req_param = 
+        // ç”³è¯·è¿žæŽ¥é—´éš”ä¸º20ms
+        struct gapc_conn_param req_param =
         {
             .intv_min = 16,
             .intv_max = 16,
@@ -137,13 +145,20 @@ APP_MSG_HANDLER(gapc_param_updated_ind)
 
 APP_MSG_HANDLER(gapc_le_pkt_size_ind)
 {
-    DEBUG("le_pkt_size_ind(cid:%d,txB:%d,txT:%d,rxB:%d,rxT:%d)", TASK_IDX(src_id),
+    (void)msgid;(void)dest_id;
+    #if (DBG_GAPC)
+    uint8_t conidx = TASK_IDX(src_id);
+    DEBUG("le_pkt_size_ind(cid:%d,txB:%d,txT:%d,rxB:%d,rxT:%d)", conidx,
           param->max_tx_octets, param->max_tx_time, param->max_rx_octets, param->max_rx_time);
+    #else
+    (void)param;(void)src_id;
+    #endif
 }
 
 #if (BLE_EN_SMP)
 APP_MSG_HANDLER(gapc_bond_req_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
 
     DEBUG("bond_req_ind(req:%d)", param->request);
@@ -204,7 +219,7 @@ APP_MSG_HANDLER(gapc_bond_req_ind)
                 memset(&tk.key, 0, GAP_KEY_LEN);
                 write32p(&tk.key, pin_code);
 
-                DEBUG("TK_DISPLAY:%06d", pin_code);
+                DEBUG("TK_DISPLAY:%06"PRIu32, pin_code);
                 gapc_smp_pairing_tk_exch(conidx, true, &tk);
             }
             else //if (param->data.tk_type == GAP_TK_KEY_ENTRY)
@@ -248,6 +263,7 @@ APP_MSG_HANDLER(gapc_bond_req_ind)
 
 APP_MSG_HANDLER(gapc_bond_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
     DEBUG("bond_ind(info:%d)", param->info);
 
@@ -300,6 +316,7 @@ APP_MSG_HANDLER(gapc_bond_ind)
 
 APP_MSG_HANDLER(gapc_encrypt_req_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
 
     DEBUG("encrypt_req_ind(ediv:0x%X,rand)", param->ediv);
@@ -324,6 +341,7 @@ APP_MSG_HANDLER(gapc_encrypt_req_ind)
 
 APP_MSG_HANDLER(gapc_encrypt_ind)
 {
+    (void)msgid;(void)dest_id;
     uint8_t conidx = TASK_IDX(src_id);
     DEBUG("encryp_ind(auth:%d)", param->auth);
 
@@ -333,8 +351,14 @@ APP_MSG_HANDLER(gapc_encrypt_ind)
 
 APP_MSG_HANDLER(gapc_security_ind)
 {
+    (void)msgid;(void)dest_id;(void)src_id;
+
+    #if (DBG_GAPC)
     // slave request security
     DEBUG("security_ind(auth:%d)", param->auth);
+    #else
+    (void)param;
+    #endif
 }
 #endif //(BLE_EN_SMP)
 
@@ -412,9 +436,11 @@ APP_SUBTASK_HANDLER(gapc_msg)
 
         default:
         {
+            #if (DBG_GAPC)
             uint16_t length = ke_param2msg(param)->param_len;
             DEBUG("Unknow MsgId:0x%X, %d", msgid, length);
             debugHex((uint8_t *)param, length);
+            #endif
         } break;
     }
 

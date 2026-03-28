@@ -1,0 +1,276 @@
+{
+  "file_path": "./ble\\api\\fcc.h",
+  "functions": [
+    {
+      "name": "fcc_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 17,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_stop",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 19,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_tx_mod",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "/ freq_idx:0 ~ 39(2402 ~ 2480)\n/ Tx",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 23,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_tx_mod_pa",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "/ pa_target:0x00~0x0F, default:0x0C",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 25,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_rx_mod",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "/ Rx",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 28,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_rx_mod_vco",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "/vco_adj:0x00~0x07,default:0x06",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 30,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_tx_carr",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "/ Txز(Ƶ)\nv",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 33,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_tx_carr_pa",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "/ pa_target:0x00~0x0F, default:0x0C\nv",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 35,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_rx_carr",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "/ Rxز(Ƶ)\nvoi",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 38,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fcc_rx_carr_vco",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "co_adj:0x00~0x07,default:0x06\nvoi",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 40,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rf_dac_tab0_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 42,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rf_dac_tab1_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 44,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rf_dac_tab2_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\fcc.h",
+      "line_number": 46,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": []
+}

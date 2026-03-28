@@ -904,6 +904,7 @@ __STATIC void mm_gens_prop_msg_process_next(mm_gens_prop_env_t *p_env_prop)
  */
 __STATIC uint8_t mm_gens_prop_user_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_GEN_UPROPS_GET)
@@ -934,6 +935,7 @@ __STATIC uint8_t mm_gens_prop_user_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t
  */
 __STATIC uint8_t mm_gens_prop_admin_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_GEN_APROPS_GET)
@@ -964,6 +966,7 @@ __STATIC uint8_t mm_gens_prop_admin_cb_opcode_check(mm_mdl_env_t *p_env, uint32_
  */
 __STATIC uint8_t mm_gens_prop_manuf_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_GEN_MPROPS_GET)
@@ -995,6 +998,7 @@ __STATIC uint8_t mm_gens_prop_manuf_cb_opcode_check(mm_mdl_env_t *p_env, uint32_
 __STATIC void mm_gens_prop_cli_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                      mm_route_env_t *p_route_env)
 {
+    (void)p_buf;
     // Get environment allocated for Generic Client Property Server model
     mm_gens_prop_cli_env_t *p_env_prop_cli = (mm_gens_prop_cli_env_t *)p_env;
 
@@ -1015,6 +1019,7 @@ __STATIC void mm_gens_prop_cli_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_gens_prop_cli_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if (opcode == MM_MSG_GEN_CPROPS_GET)

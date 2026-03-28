@@ -37,18 +37,18 @@ enum uart_lcr_bfs
     LCD_DATA_BITS_7        = (0x02 << LCR_DATA_BITS_LSB),
     LCD_DATA_BITS_6        = (0x01 << LCR_DATA_BITS_LSB),
     LCD_DATA_BITS_5        = (0x00 << LCR_DATA_BITS_LSB),
-    
+
     // stop bits select - bit[2]
     LCR_STOP_BITS_LSB      = 2,
     LCR_STOP_BITS_1        = (0x00 << LCR_STOP_BITS_LSB),
     LCR_STOP_BITS_2        = (0x01 << LCR_STOP_BITS_LSB),
-    
+
     // parity mode select - bit[4:3]
     LCR_PARITY_BITS_LSB    = 3,
     LCR_PARITY_none        = (0x00 << LCR_PARITY_BITS_LSB),
     LCR_PARITY_odd         = (0x01 << LCR_PARITY_BITS_LSB),
     LCR_PARITY_even        = (0x03 << LCR_PARITY_BITS_LSB),
-    
+
     // uart receive enable - bit5
     LCR_RXEN_BIT           = (1 << 5),
     // receive time out enable - bit8
@@ -64,7 +64,7 @@ enum uart_fcr_bfs
     FCR_RFRST_BIT          = (1 << 1),
     // tx fifo reset - bit2
     FCR_TFRST_BIT          = (1 << 2),
-    
+
     // rx fifo trigger level - bit[5:4]
     FCR_RXTL_LSB           = 4,
     FCR_RXTL_1BYTE         = (0 << FCR_RXTL_LSB),
@@ -98,7 +98,7 @@ enum uart_sr_bfs
     UART_SR_RFF_BIT        = (1 << 12), // receive fifo full
     UART_SR_DCTS_BIT       = (1 << 13), // delta clear to send
     UART_SR_CTS_BIT        = (1 << 14), // clear to send
-    
+
     UART_SR_ALL_MSK        = (0x7FFF),  // bit[14:0]
 };
 
@@ -117,7 +117,7 @@ enum uart_intr_bfs
     UART_IR_TC_BIT         = (1 << 9),  // transmission complete interrupt enable status
     UART_IR_EOB_BIT        = (1 << 10), // end of block interrupt enable status
     UART_IR_CM_BIT         = (1 << 11), // character match interrupt enable status
-    
+
     UART_IR_ALL_MSK        = (0x0FFF),  // bit[11:0]
 };
 
@@ -284,4 +284,17 @@ void uart_wait(uint8_t port);
  */
 void uart_send(uint8_t port, uint16_t len, const uint8_t *data);
 
+/**
+ ****************************************************************************************
+ * @brief Update uart baudrate.
+ *
+ * @param[in] port     index of port @see enum uart_port
+ * @param[in] io_rx    iopad of RXD @see enum pad_idx
+ * @param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()
+ *
+ * @note This function will reset uart and restore uart params.
+ *
+ ****************************************************************************************
+ */
+void uart_update_baud(uint8_t port, uint8_t io_rx, uint16_t cfg_BRR);
 #endif  //_UART_H_

@@ -1,0 +1,196 @@
+{
+  "file_path": "./drivers\\src\\dma.c",
+  "functions": [
+    {
+      "name": "dma_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 已经初始化过无需再次初始化.\r\n    if (DMA->CTRLBASE_POINTER.Word)\r\n    {\r\n        return;\r\n    }\r\n    \r\n    // 启用DMA时钟和复位请求\r\n    RCC_APBCLK_EN(APB_DMAC_BIT);   // 启用DMA APB时钟\r\n    RCC_APBRST_REQ(APB_DMAC_BIT);  // 请求DMA复位\r\n\r\n    // 设置DMA控制结构体基地址\r\n    DMA->CTRLBASE_POINTER.Word = (uint32_t)&dma_ctrl_base;\r\n\r\n    // 启用DMA控制器，配置通道保护控制\r\n    DMA->CFG.Word = DMA_CFG_HPROT(7) | DMA_CFG_EN_BIT;\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 40,
+      "is_static": false
+    },
+    {
+      "name": "dma_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    RCC_APBCLK_DIS(APB_DMAC_BIT);  // 禁用DMA APB时钟\r\n    RCC_APBRST_REQ(APB_DMAC_BIT);  // 请求DMA复位\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 63,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 通道主配置，选择功能\r\n    if (chidx < DMA_CH_MAX)\r\n    {\r\n        // 禁用DMA信号传输（使用突发传输）\r\n        DMA->USEBURST_SET = (1UL << chidx);\r\n        // 清除通道请求掩码，允许DMA请求\r\n        DMA->REQMSK_CLR   = (1UL << chidx);\r\n\r\n        // 配置DMA通道复用功能\r\n        uint8_t arr = (chidx / 4);               // 计算寄存器数组索引\r\n        uint8_t lsh = (chidx % 4) * 8;           // 计算位偏移（每个通道占8位中的6位）\r\n        DMACHCFG->CHSEL[arr] = (DMACHCFG->CHSEL[arr] & ~(0x3FUL << lsh)) | ((uint32_t)chsel << lsh);\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 75,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t chbit = 1UL << (chidx % DMA_CH_MAX);\r\n\r\n    // 禁用DMA通道\r\n    DMA->CHNL_EN_CLR = chbit;\r\n    // 禁用DMA信号传输（使用突发传输）\r\n    DMA->USEBURST_SET = (1UL << chidx);\r\n    // 清除通道请求掩码\r\n    DMA->REQMSK_CLR   = (1UL << chidx);\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 97,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    DMA_CHNL_CTRL_Typedef *chnl_cur = DMA_CHNL_CTRL(chidx);\r\n\r\n    // 通道主配置，选择功能\r\n    // 在dma_chnl_init(chidx, chsel)中完成\r\n\r\n    // 通道控制结构体填充\r\n    chnl_cur->SRC_DATA_END_PTR    = src_ep;      // 设置源数据结束指针\r\n    chnl_cur->DST_DATA_END_PTR    = dst_ep;      // 设置目标数据结束指针\r\n    chnl_cur->TRANS_CFG_DATA.Word = trans;       // 设置传输配置数据\r\n    chnl_cur->TRANS_CFG_RESV.Word = trans;       // 设置传输配置保留值\r\n\r\n    // 启用DMA通道\r\n    DMA->CHNL_EN_SET = 1UL << (chidx % DMA_CH_MAX);\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 117,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_reload",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    DMA_CHNL_CTRL_Typedef *chnl_cur;\r\n\r\n    chidx = chidx % DMA_CH_MAX; // 主通道索引\r\n\r\n    // 检查是否使用备用通道\r\n    bool alter = (DMA->PRIALT_SET & (1UL << chidx)) ? true : false;\r\n\r\n    chnl_cur = DMA_CHNL_CTRL(chidx);\r\n\r\n    // 根据循环控制模式决定重载策略\r\n    if (chnl_cur->TRANS_CFG_RESV.CYCLE_CTRL != CCM_PING_PONG)\r\n    {\r\n        // 非乒乓模式：直接重载配置\r\n        chnl_cur->TRANS_CFG_DATA = chnl_cur->TRANS_CFG_RESV;\r\n    }\r\n    else\r\n    {\r\n        #if (1)\r\n        // 乒乓模式：检查当前通道状态并重载\r\n        if (chnl_cur->TRANS_CFG_DATA.CYCLE_CTRL == CCM_STOP)\r\n        {\r\n            chnl_cur->TRANS_CFG_DATA = chnl_cur->TRANS_CFG_RESV;\r\n        }\r\n\r\n        chnl_cur = DMA_CHNL_CTRL(chidx | DMA_CH_ALT);\r\n        if (chnl_cur->TRANS_CFG_DATA.CYCLE_CTRL == CCM_STOP)\r\n        {\r\n            chnl_cur->TRANS_CFG_DATA = chnl_cur->TRANS_CFG_RESV;\r\n        }\r\n        #else\r\n        // 备用实现：根据PRIALT_SET位决定重载哪个通道\r\n        if (DMA->PRIALT_SET & (1UL << chidx))\r\n        {\r\n            chnl_cur->TRANS_CFG_DATA = chnl_cur->TRANS_CFG_RESV;\r\n        }\r\n        else\r\n        {\r\n            DMA_CHNL_CTRL_Typedef *chnl_alt = DMA_CHNL_CTRL(chidx | DMA_CH_ALT);\r\n            chnl_alt->TRANS_CFG_DATA = chnl_alt->TRANS_CFG_RESV;\r\n        }\r\n        #endif\r\n    }\r\n\r\n    // 启用DMA通道\r\n    DMA->CHNL_EN_SET = (1UL << chidx);\r\n    return alter;\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 140,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_remain",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    DMA_CHNL_CTRL_Typedef *chnl_cur = DMA_CHNL_CTRL(chidx);\r\n\r\n    // 检查循环控制是否启用，计算剩余传输数量\r\n    if (chnl_cur->TRANS_CFG_DATA.CYCLE_CTRL)\r\n        return (chnl_cur->TRANS_CFG_DATA.N_MINUS_1 + 1);\r\n    else\r\n        return 0;\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 196,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_remain_pingpong",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "len",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    bool pong = false;\r\n    DMA_CHNL_CTRL_Typedef *chnl_cur;\r\n\r\n    // 确定当前使用的通道（主通道或备用通道）\r\n    if (DMA->PRIALT_SET & (1UL << chidx))\r\n    {\r\n        pong = true;\r\n        chnl_cur = DMA_CHNL_CTRL(chidx | DMA_CH_ALT);\r\n    }\r\n    else\r\n    {\r\n        chnl_cur = DMA_CHNL_CTRL(chidx);\r\n    }\r\n\r\n    // 计算剩余传输数量\r\n    *len = (chnl_cur->TRANS_CFG_DATA.CYCLE_CTRL) ? (chnl_cur->TRANS_CFG_DATA.N_MINUS_1 + 1) : 0;\r\n\r\n    return pong;\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 214,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_ctrl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t chbit = 1UL << (chidx % DMA_CH_MAX);\r\n\r\n    if (ctrl)\r\n    {\r\n        // 启用DMA通道\r\n        DMA->CHNL_EN_SET = chbit;\r\n\r\n        if (ctrl == CHNL_DONE)\r\n        {\r\n            // 等待通道传输完成\r\n            while ((DMACHCFG->IFLAG0 & chbit) == 0);\r\n            // 清除完成中断标志\r\n            DMACHCFG->ICFR0 = chbit;\r\n        }\r\n    }\r\n    else\r\n    {\r\n        // 禁用DMA通道\r\n        DMA->CHNL_EN_CLR = chbit;\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 242,
+      "is_static": false
+    },
+    {
+      "name": "dma_chnl_done",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t chbit = 1UL << (chidx % DMA_CH_MAX);\r\n\r\n    // 检查通道完成中断标志\r\n    if (DMACHCFG->IFLAG0 & chbit)\r\n    {\r\n        // 清除完成中断标志，DMA->CHNL_EN会自动清除\r\n        DMACHCFG->ICFR0 = chbit;\r\n        return true;\r\n    }\r\n    else\r\n    {\r\n        return false;\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 272,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "DMA_CFG_EN_BIT",
+      "value": "(1 << 0) // bit0 master_enable",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\src\\dma.c",
+      "line_number": 21
+    }
+  ],
+  "parse_errors": []
+}

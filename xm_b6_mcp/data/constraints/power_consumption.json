@@ -1,0 +1,102 @@
+{
+  "constraint_type": "power_consumption",
+  "version": "1.0",
+  "last_updated": "2026-03-17T18:05:45.756947",
+  "total_modes": 5,
+  "modes": [
+    {
+      "mode": "SLEEP",
+      "peripherals": [
+        "BLE",
+        "BLE"
+      ],
+      "measurements": [
+        {
+          "peripheral": "BLE",
+          "current_ua": 70.0,
+          "voltage_mv": 3000,
+          "power_mw": 210.0,
+          "conditions": "note: 睡眠<40ms"
+        },
+        {
+          "peripheral": "BLE",
+          "current_ua": 2.01,
+          "voltage_mv": 3000,
+          "power_mw": 6.029999999999999,
+          "conditions": "interval: 1000ms; note: 未断开连接"
+        }
+      ]
+    },
+    {
+      "mode": "DEEP_SLEEP",
+      "peripherals": [
+        "BLE"
+      ],
+      "measurements": [
+        {
+          "peripheral": "BLE",
+          "current_ua": 2.0,
+          "voltage_mv": 3000,
+          "power_mw": 6.0,
+          "conditions": "note: 睡眠>40ms"
+        }
+      ]
+    },
+    {
+      "mode": "ACTIVE_ADVERTISING",
+      "peripherals": [
+        "BLE",
+        "BLE"
+      ],
+      "measurements": [
+        {
+          "peripheral": "BLE",
+          "current_ua": 69.0,
+          "voltage_mv": 3000,
+          "power_mw": 207.0,
+          "conditions": "duration: 3.75ms; note: 持续1.3秒"
+        },
+        {
+          "peripheral": "BLE",
+          "current_ua": 70.0,
+          "voltage_mv": 3000,
+          "power_mw": 210.0,
+          "conditions": "duration: 22.5ms; note: 持续30秒"
+        }
+      ]
+    },
+    {
+      "mode": "ACTIVE_TX",
+      "peripherals": [
+        "BLE"
+      ],
+      "measurements": [
+        {
+          "peripheral": "BLE",
+          "current_ua": 70.0,
+          "voltage_mv": 3000,
+          "power_mw": 210.0,
+          "conditions": "interval: 20ms; note: 按下按键时"
+        }
+      ]
+    },
+    {
+      "mode": "红外_红外发射/次,耗时95MS",
+      "peripherals": [
+        "BLE"
+      ],
+      "measurements": [
+        {
+          "peripheral": "BLE",
+          "current_ua": 2000.0,
+          "voltage_mv": 3000,
+          "power_mw": 6000.0,
+          "conditions": "note: 按下按键时"
+        }
+      ]
+    }
+  ],
+  "domain": "domain3",
+  "data_source": "excel_parsing",
+  "source_file": "./doc\\SW_Spec\\B6x_BLE-功耗参考.xlsx"
+}

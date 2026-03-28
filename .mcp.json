@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "b6x-mcp-server": {
+      "command": "python",
+      "args": [".\\xm_b6_mcp\\run.py"],
+      "env": {
+        "B6X_SDK_PATH": ".",
+        "B6X_LOG_LEVEL": "INFO"
+      }
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "@upstash/context7-mcp"
+      ],
+      "env": {}
+    },
+    "thinking": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "env": {}
+    },
+    "embedded-debugger": {
+      "command": ".\\xm_b6_mcp\\embedded-debugger\\embedded-debugger-mcp_B6x.exe",
+      "args": [],
+      "env": {
+        "RUST_LOG": "info"
+      }
+    }
+  }
+}

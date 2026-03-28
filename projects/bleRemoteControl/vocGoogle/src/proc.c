@@ -20,7 +20,7 @@
 
 #if (DBG_PROC)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -49,7 +49,7 @@ void ble_hid_voice_stop(uint8_t reason)
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     debugHex(data, len);
-    
+
     switch(data[0])
     {
         case 0x0A: //GET_CAPS
@@ -58,7 +58,7 @@ void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
             uint8_t temp[9] = {0x0B,0x01,0x00,0x01       ,0x03,0x00,0x78,0x00,0x00};
             sess_txd_send2(0, 9, temp);  // 按键松开,停止语音发送
         } break;
-        
+
         case 0x0D: //MIC_CLOSE
         {
             // data[1] = streamId

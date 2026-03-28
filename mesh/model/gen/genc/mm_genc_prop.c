@@ -54,6 +54,7 @@ typedef struct mm_genc_prop_env
 __STATIC void mm_genc_prop_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
                                  mm_route_env_t *p_route_env)
 {
+    (void)p_env;
     // Get pointer to data
     uint8_t *p_data = MESH_BUF_DATA(p_buf);
 
@@ -125,6 +126,7 @@ __STATIC void mm_genc_prop_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_genc_prop_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     uint8_t status;
 
     if ((opcode == MM_MSG_GEN_UPROPS_STATUS)

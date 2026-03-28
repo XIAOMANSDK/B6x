@@ -253,6 +253,7 @@ __STATIC uint8_t mm_gens_poo_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcod
 __STATIC uint8_t mm_gens_poo_cb_set(mm_mdl_env_t *p_env, uint16_t state_id,
                                      uint32_t state)
 {
+    (void)state_id;
     // Returned status
     uint8_t status = MESH_ERR_NO_ERROR;
     // Generic OnPowerUp state value
@@ -350,7 +351,7 @@ uint8_t mm_gens_poo_register(uint8_t elmt_idx, bool main)
 
         if (poo_lid != MESH_INVALID_LID)
         {
-        
+
         }
     }
 

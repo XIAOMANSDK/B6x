@@ -1,0 +1,449 @@
+# B6x SDK SRAM Map Configuration
+# This file defines SRAM memory layout and allocation modes for B6x chip variants
+# Source: B6x系列芯片Flash及SRAM说明.md
+
+# Chip variants Flash size configuration
+chip_variants:
+  # 128KB Flash variants
+  b61:
+    flash_size_kb: 128
+    description: "B61 chip with 128KB Flash"
+  b62:
+    flash_size_kb: 128
+    description: "B62 chip with 128KB Flash"
+
+  # 256KB Flash variants
+  b63:
+    flash_size_kb: 256
+    description: "B63 chip with 256KB Flash"
+  b66:
+    flash_size_kb: 256
+    description: "B66 chip with 256KB Flash"
+  b68:
+    flash_size_kb: 256
+    description: "B68 chip with 256KB Flash"
+
+# SRAM physical layout (same for all variants)
+sram_blocks:
+  sram1:
+    name: "SRAM1"
+    description: "Main SRAM block 1"
+    address_range:
+      start: "0x20003000"
+      end: "0x20007FFF"
+      start_decimal: 536879104
+      end_decimal: 536893439
+    size:
+      bytes: 20480       # 20KB
+      hex: "0x5000"
+      kb: 20
+      human: "20KB"
+
+  sram2:
+    name: "SRAM2"
+    description: "Main SRAM block 2"
+    address_range:
+      start: "0x20008000"
+      end: "0x20009FFF"
+      start_decimal: 536893440
+      end_decimal: 536901631
+    size:
+      bytes: 8192        # 8KB
+      hex: "0x2000"
+      kb: 8
+      human: "8KB"
+
+  sram3:
+    name: "SRAM3"
+    description: "SRAM block 3 - typically used as Cache"
+    address_range:
+      start: "0x2000A000"
+      end: "0x2000AFFF"
+      start_decimal: 536901632
+      end_decimal: 536905727
+    size:
+      bytes: 4096        # 4KB
+      hex: "0x1000"
+      kb: 4
+      human: "4KB"
+    notes:
+      - "Typically configured as Cache"
+      - "Can be configured as general purpose SRAM"
+      - "Using as SRAM will affect Flash code execution speed"
+
+# Total SRAM summary
+sram_summary:
+  total_size:
+    bytes: 32768         # 32KB total
+    hex: "0x8000"
+    kb: 32
+    human: "32KB"
+  blocks: ["sram1", "sram2", "sram3"]
+  note: "All chip variants have the same SRAM configuration"
+
+# SRAM allocation modes
+allocation_modes:
+  # Mode 1: No BLE stack
+  mode1_no_ble:
+    name: "Mode 1 - No BLE Stack"
+    description: "SRAM configuration without BLE protocol stack"
+    ble_library: null
+    ble_connections: 0
+    sram1_usage: "user_space"
+    sram2_usage: "user_space"
+    sram3_usage: "cache"
+    allocation:
+      - name: "User Space (SRAM1 + SRAM2)"
+        size:
+          hex: "0x7000"
+          bytes: 28672
+          kb: 28
+        description: "Full SRAM1 and SRAM2 available for user"
+      - name: "Cache (SRAM3)"
+        size:
+          hex: "0x1000"
+          bytes: 4096
+          kb: 4
+        description: "SRAM3 used as Cache"
+    user_space_total:
+      hex: "0x7000"
+      bytes: 28672
+      kb: 28
+
+  # Mode 2: BLE with 3 connections (Master + Slave)
+  mode2_ble_3conn:
+    name: "Mode 2 - BLE 3 Connections"
+    description: "BLE protocol stack with Master + Slave (3 connections total)"
+    ble_library: "ble6.lib"
+    ble_connections: 3
+    sram1_usage: "mixed"
+    sram2_usage: "mixed"
+    sram3_usage: "cache"
+    allocation:
+      - name: "Interrupt Vector Table"
+        size:
+          hex: "0x98"
+          bytes: 152
+        description: "System interrupt vectors"
+      - name: "User Space 1"
+        size:
+          hex: "0x1D68"
+          bytes: 7528
+        description: "Application data area 1"
+      - name: "BLE Protocol Heap"
+        size:
+          hex: "0x2C00"
+          bytes: 11264
+          kb: 11
+        description: "Bluetooth protocol stack heap"
+      - name: "System Stack"
+        size:
+          hex: "0x600"
+          bytes: 1536
+        description: "System stack area"
+      - name: "BLE HW/SW Exchange"
+        size:
+          hex: "0x0FD8"
+          bytes: 4056
+        description: "Bluetooth hardware/software exchange area"
+      - name: "BLE Protocol Stack"
+        size:
+          hex: "0x304"
+          bytes: 772
+        description: "Bluetooth protocol stack code"
+      - name: "User Space 2"
+        size:
+          hex: "0xD24"
+          bytes: 3364
+        description: "Application data area 2"
+      - name: "Cache"
+        size:
+          hex: "0x1000"
+          bytes: 4096
+          kb: 4
+        description: "Cache (SRAM3)"
+    user_space_total:
+      hex: "0x2A8C"       # 0x1D68 + 0xD24
+      bytes: 10892
+      kb: 10.64
+
+  # Mode 3: BLE with 1 connection (Master OR Slave)
+  mode3_ble_1conn:
+    name: "Mode 3 - BLE 1 Connection"
+    description: "BLE protocol stack with Master OR Slave (1 connection)"
+    ble_library: "ble6.lib"
+    ble_connections: 1
+    sram1_usage: "mixed"
+    sram2_usage: "mixed"
+    sram3_usage: "cache"
+    allocation:
+      - name: "Interrupt Vector Table"
+        size:
+          hex: "0x98"
+          bytes: 152
+        description: "System interrupt vectors"
+      - name: "User Space 1"
+        size:
+          hex: "0x3168"
+          bytes: 12648
+        description: "Application data area 1"
+      - name: "BLE Protocol Heap"
+        size:
+          hex: "0x1800"
+          bytes: 6144
+          kb: 6
+        description: "Bluetooth protocol stack heap"
+      - name: "System Stack"
+        size:
+          hex: "0x600"
+          bytes: 1536
+        description: "System stack area"
+      - name: "BLE HW/SW Exchange"
+        size:
+          hex: "0x0FD8"
+          bytes: 4056
+        description: "Bluetooth hardware/software exchange area"
+      - name: "BLE Protocol Stack"
+        size:
+          hex: "0x304"
+          bytes: 772
+        description: "Bluetooth protocol stack code"
+      - name: "User Space 2"
+        size:
+          hex: "0xD24"
+          bytes: 3364
+        description: "Application data area 2"
+      - name: "Cache"
+        size:
+          hex: "0x1000"
+          bytes: 4096
+          kb: 4
+        description: "Cache (SRAM3)"
+    user_space_total:
+      hex: "0x3E8C"       # 0x3168 + 0xD24
+      bytes: 16012
+      kb: 15.64
+
+  # Mode 4: BLE Lite (Slave only, 1 connection)
+  mode4_ble_lite:
+    name: "Mode 4 - BLE Lite (Slave Only)"
+    description: "BLE Lite protocol stack - Slave device with 1 connection"
+    ble_library: "ble6_lite.lib"
+    ble_connections: 1
+    connection_type: "slave_only"
+    sram1_usage: "mixed"
+    sram2_usage: "mixed"
+    sram3_usage: "cache"
+    allocation:
+      - name: "Interrupt Vector Table"
+        size:
+          hex: "0x98"
+          bytes: 152
+        description: "System interrupt vectors"
+      - name: "User Space 1"
+        size:
+          hex: "0x4968"
+          bytes: 18800
+          kb: 18.36
+        description: "Application data area 1"
+      - name: "System Stack"
+        size:
+          hex: "0x600"
+          bytes: 1536
+        description: "System stack area"
+      - name: "BLE HW/SW Exchange"
+        size:
+          hex: "0x0BAC"
+          bytes: 2988
+        description: "Bluetooth hardware/software exchange area"
+      - name: "BLE Protocol Heap"
+        size:
+          hex: "0xC00"
+          bytes: 3072
+          kb: 3
+        description: "Bluetooth protocol stack heap"
+      - name: "BLE Protocol Stack"
+        size:
+          hex: "0x608"
+          bytes: 1544
+        description: "Bluetooth protocol stack code"
+      - name: "User Space 2"
+        size:
+          hex: "0x24C"
+          bytes: 588
+        description: "Application data area 2"
+      - name: "Cache"
+        size:
+          hex: "0x1000"
+          bytes: 4096
+          kb: 4
+        description: "Cache (SRAM3)"
+    user_space_total:
+      hex: "0x4BB4"       # 0x4968 + 0x24C
+      bytes: 19380
+      kb: 18.93
+    advantages:
+      - "Maximum user space available"
+      - "Smallest BLE memory footprint"
+      - "Best for peripheral-only applications"
+
+  # Mode 5: BLE with 6 connections (Master + Slave)
+  mode5_ble_6conn:
+    name: "Mode 5 - BLE 6 Connections"
+    description: "BLE protocol stack with Master + Slave (6 connections total, 8 active)"
+    ble_library: "ble6_8act_6con.lib"
+    ble_connections: 6
+    active_devices: 8
+    sram1_usage: "mixed"
+    sram2_usage: "mixed"
+    sram3_usage: "cache"
+    allocation:
+      - name: "Interrupt Vector Table"
+        size:
+          hex: "0x98"
+          bytes: 152
+        description: "System interrupt vectors"
+      - name: "User Space 1"
+        size:
+          hex: "0x1D68"
+          bytes: 7528
+        description: "Application data area 1"
+      - name: "BLE Protocol Heap"
+        size:
+          hex: "0x2C00"
+          bytes: 11264
+          kb: 11
+        description: "Bluetooth protocol stack heap"
+      - name: "System Stack"
+        size:
+          hex: "0x600"
+          bytes: 1536
+        description: "System stack area"
+      - name: "BLE HW/SW Exchange"
+        size:
+          hex: "0x1590"
+          bytes: 5520
+        description: "Bluetooth hardware/software exchange area"
+      - name: "BLE Protocol Stack"
+        size:
+          hex: "0x3B4"
+          bytes: 948
+        description: "Bluetooth protocol stack code"
+      - name: "User Space 2"
+        size:
+          hex: "0x6BC"       # Note: original is 0x6BD, but this seems more aligned
+          bytes: 1724
+        description: "Application data area 2"
+      - name: "Cache"
+        size:
+          hex: "0x1000"
+          bytes: 4096
+          kb: 4
+        description: "Cache (SRAM3)"
+    user_space_total:
+      hex: "0x2424"       # 0x1D68 + 0x6BC
+      bytes: 9252
+      kb: 9.03
+
+# Quick reference table for mode selection
+mode_selection_guide:
+  - mode: "mode1_no_ble"
+    use_case: "Non-BLE applications"
+    user_space_kb: 28
+    recommended_for: "Sensor applications, simple IO control"
+  - mode: "mode2_ble_3conn"
+    use_case: "Multi-connection BLE (Master + Slave)"
+    user_space_kb: 10.64
+    recommended_for: "BLE gateway, multi-device scenarios"
+  - mode: "mode3_ble_1conn"
+    use_case: "Single connection BLE (Master OR Slave)"
+    user_space_kb: 15.64
+    recommended_for: "Point-to-point BLE applications"
+  - mode: "mode4_ble_lite"
+    use_case: "Slave-only BLE (minimal footprint)"
+    user_space_kb: 18.93
+    recommended_for: "BLE peripherals, beacons, sensors"
+  - mode: "mode5_ble_6conn"
+    use_case: "Multi-connection BLE (up to 6 connections)"
+    user_space_kb: 9.03
+    recommended_for: "BLE hub, central device with many peripherals"
+
+# Important notes and constraints
+constraints:
+  - "SRAM3 is typically used as Cache; using it as SRAM affects Flash execution speed"
+  - "BLE library selection determines the SRAM allocation mode"
+  - "User space is split into two areas in BLE modes"
+  - "Total SRAM is 32KB across all variants"
+  - "Flash size varies by chip variant (128KB or 256KB)"
+
+# BLE library to mode mapping
+ble_library_mapping:
+  "ble6.lib":
+    supported_modes: ["mode2_ble_3conn", "mode3_ble_1conn"]
+    description: "Standard BLE library"
+  "ble6_lite.lib":
+    supported_modes: ["mode4_ble_lite"]
+    description: "Lightweight BLE library for slave-only applications"
+  "ble6_8act_6con.lib":
+    supported_modes: ["mode5_ble_6conn"]
+    description: "Extended BLE library for multiple connections"
+
+# Stack depth estimation configuration
+# Used by validate_config() to estimate stack usage
+stack_estimation:
+  # ARM Cortex-M0+ stack frame size (in bytes)
+  # Includes: r4-r7, r8-r11 (if used), lr, and local variables
+  bytes_per_frame: 64
+
+  # Maximum safe call depth before stack overflow
+  # Formula: stack_size / bytes_per_frame = max_depth
+  # Default stack_size = 1536 bytes, so max_depth = 24
+  max_safe_call_depth: 24
+
+  # Warning threshold (percentage of stack used)
+  warning_threshold_percent: 80
+
+  # Error threshold (percentage of stack used)
+  error_threshold_percent: 90
+
+  # Interrupt stack overhead (additional frames for ISR)
+  # Each nested interrupt adds this many frames
+  interrupt_frame_overhead: 4
+
+  # BLE event handler stack usage estimate
+  ble_event_handler_frames: 6
+
+# Static memory validation thresholds
+validation_thresholds:
+  # Warning: static memory usage exceeds this percentage
+  warning_percent: 80
+
+  # Error: static memory usage exceeds this percentage (NEW - was warning)
+  # Changed from warning to error in v3.6 to prevent runtime crashes
+  error_percent: 90
+
+  # Critical: static memory usage equals or exceeds limit
+  critical_percent: 100
+
+# Safe margins for memory allocation
+safe_margins:
+  # Reserve this many bytes at end of user space for runtime safety
+  runtime_reserve_bytes: 256
+
+  # Minimum heap size for dynamic allocation
+  min_heap_bytes: 512
+
+  # Stack canary size (for stack overflow detection)
+  stack_canary_bytes: 16
+
+# Metadata
+metadata:
+  source: "B6x系列芯片Flash及SRAM说明.md"
+  source_path: "doc/SW_Spec/B6x系列芯片Flash及SRAM说明.md"
+  last_updated: "2026-03-17"
+  notes: "Converted from markdown documentation for SDK knowledge graph"
+  version: "1.1"
+  changes:
+    - "Added stack_estimation configuration for depth validation"
+    - "Added validation_thresholds for static memory checks"
+    - "Changed static memory overflow severity from WARNING to ERROR"

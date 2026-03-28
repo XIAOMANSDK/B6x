@@ -21,7 +21,7 @@
 
 #if (DBG_SESS)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -94,7 +94,7 @@ enum ses_att_idx
     // Serial RXD Char.
     SES_IDX_RXD_CHAR,
     SES_IDX_RXD_VAL, //5
-    
+
     // Serial TXD Char.
     SES_IDX_TXD_CHAR,
     SES_IDX_TXD_VAL,
@@ -116,7 +116,7 @@ enum ses_att_idx
 /// Serial Service UUID128
 const uint8_t ses_svc_uuid[]        = SES_ATT_UUID128(0x0001);
 /// Serial Write Command UUID128
-const uint8_t ses_char_rxd_write[]  = SES_ATT_UUID128(0x0002);                                    
+const uint8_t ses_char_rxd_write[]  = SES_ATT_UUID128(0x0002);
 /// Serial Notify UUID128
 const uint8_t ses_char_txd_notify[] = SES_ATT_UUID128(0x0003);
 /// Serial Notify UUID128
@@ -128,12 +128,12 @@ const att_decl_t ses_atts[] =
     // Serial Write Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( SES_IDX_RXD_CHAR ),
     ATT_ELMT128( SES_IDX_RXD_VAL,  ses_char_rxd_write,  PROP_NTF | PROP_RD | PROP_WC,   SES_RXD_MAX_LEN ),
-    
+
     // Serial Notify Char. Declaration and Value and Client Char. Configuration Descriptor
     ATT_ELMT_DECL_CHAR( SES_IDX_TXD_CHAR ),
     ATT_ELMT128( SES_IDX_TXD_VAL,  ses_char_txd_notify, PROP_NTF | PROP_RD, 0 ),
     ATT_ELMT_DESC_CLI_CHAR_CFG( SES_IDX_TXD_NTF_CFG ),
-    
+
     // Serial Notify Char. Declaration and Value and Client Char. Configuration Descriptor
     ATT_ELMT_DECL_CHAR( SES_IDX_TXD_CHAR2 ),
     ATT_ELMT128( SES_IDX_TXD_VAL2,  ses_char_txd_notify2, PROP_NTF | PROP_RD, 0 ),
@@ -399,14 +399,14 @@ uint8_t sess_txd_send2(uint8_t conidx, uint16_t len, const uint8_t* data)
 
 /**
  ****************************************************************************************
- * @brief Callback on received data from peer device via WC or WQ (__weak func)
+ * @brief Callback on received data from peer device via WC or WQ (__WEAK func)
  *
  * @param[in] conidx   peer device connection index
  * @param[in] len      Length of data
  * @param[in] data     pointer of buffer
  ****************************************************************************************
  */
-__weak void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
+__WEAK void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     debugHex(data, len);
 

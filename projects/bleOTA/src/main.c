@@ -9,14 +9,13 @@
  */
 
 #include "b6x.h"
-#include "drvs.h"
 #include "bledef.h"
+#include "drvs.h"
 #include "app.h"
 #include "sftmr.h"
 #include "leds.h"
 #include "uartRb.h"
 #include "dbg.h"
-
 
 /*
  * DEFINES
@@ -48,14 +47,14 @@ static void devInit(void)
     uart1Rb_Init(); //dbgInit();
     debug("Start(rsn:%X)...\r\n", rsn);
 
+    // Init BLE App
+    app_init(rsn);
+
     #if (LED_PLAY)
     sftmr_init();
     leds_init();
     leds_play(LED_FAST_BL);
     #endif //(LED_PLAY)
-
-    // Init BLE App
-    app_init(rsn);
 }
 
 int main(void)

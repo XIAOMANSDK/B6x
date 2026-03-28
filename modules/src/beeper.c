@@ -5,7 +5,7 @@
 
 #if (DBG_BEEPER)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -111,12 +111,12 @@ static void pwmInit(void)
 
     iom_ctrl(BEEPER_PAD, IOM_SEL_CSC);
     csc_output(BEEPER_PAD, CSC_CTMR_CH1);
-    
+
     pwm_init(PWM_CTMR, BEEPER_PWM_TMR_PSC, BEEPER_PWM_1_1Khz);
-    
+
     pwm_chnl_cfg_t chnl_conf;
     chnl_conf.duty = 0;
-    
+
     #if (BEEPER_IDLE_LEVEL)
         chnl_conf.ccer = PWM_CCER_SIPL; //
     #else
@@ -145,17 +145,17 @@ void pwmSetFrequency(uint8_t arr)
 tmr_tk_t beeperTmr(tmr_id_t tmid)
 {
     uint16_t idle_delay = BEEPER_PLAY_100MS;
-    
+
     DEBUG("PLAYIDX:[%d]", BEEPER.PLAYIDX);
-    
+
     switch(BEEPER.MUSICID)
     {
-        case MUSIC1: 
+        case MUSIC1:
         {
             if (BEEPER.PLAYIDX != BEEPER.IDLEIDX)
             {
                 idle_delay = BEEPER_M.MUSIC1[BEEPER.IDLEIDX].idle;
-                
+
                 BEEPER.IDLEIDX = BEEPER.PLAYIDX;
                 pwmIdle();
             }
@@ -164,13 +164,13 @@ tmr_tk_t beeperTmr(tmr_id_t tmid)
                 pwmSetFrequency(BEEPER_M.MUSIC1[BEEPER.PLAYIDX++].freq);
             }
         } break;
-        
-        case MUSIC2: 
+
+        case MUSIC2:
         {
             if (BEEPER.PLAYIDX != BEEPER.IDLEIDX)
             {
                 idle_delay = BEEPER_M.MUSIC2[BEEPER.IDLEIDX].idle;
-                
+
                 BEEPER.IDLEIDX = BEEPER.PLAYIDX;
                 pwmIdle();
             }
@@ -179,13 +179,13 @@ tmr_tk_t beeperTmr(tmr_id_t tmid)
                 pwmSetFrequency(BEEPER_M.MUSIC2[BEEPER.PLAYIDX++].freq);
             }
         } break;
-        
-        case MUSIC3: 
+
+        case MUSIC3:
         {
             if (BEEPER.PLAYIDX != BEEPER.IDLEIDX)
             {
                 idle_delay = BEEPER_M.MUSIC3[BEEPER.IDLEIDX].idle;
-                
+
                 BEEPER.IDLEIDX = BEEPER.PLAYIDX;
                 pwmIdle();
             }
@@ -195,13 +195,13 @@ tmr_tk_t beeperTmr(tmr_id_t tmid)
             }
 
         } break;
-        
-        case MUSIC4: 
+
+        case MUSIC4:
         {
             if (BEEPER.PLAYIDX != BEEPER.IDLEIDX)
             {
                 idle_delay = BEEPER_M.MUSIC4[BEEPER.IDLEIDX].idle;
-                
+
                 BEEPER.IDLEIDX = BEEPER.PLAYIDX;
                 pwmIdle();
             }
@@ -211,13 +211,13 @@ tmr_tk_t beeperTmr(tmr_id_t tmid)
             }
 
         } break;
-        
-        case MUSIC5: 
+
+        case MUSIC5:
         {
             if (BEEPER.PLAYIDX != BEEPER.IDLEIDX)
             {
                 idle_delay = BEEPER_M.MUSIC5[BEEPER.IDLEIDX].idle;
-                
+
                 BEEPER.IDLEIDX = BEEPER.PLAYIDX;
                 pwmIdle();
             }
@@ -226,17 +226,17 @@ tmr_tk_t beeperTmr(tmr_id_t tmid)
                 pwmSetFrequency(BEEPER_M.MUSIC5[BEEPER.PLAYIDX++].freq);
             }
         } break;
-        
+
         default :
         {
             idle_delay = BEEPER_STOP_0MS;  // ¹Ø±Õ
         }break;
     }
 
-    if (!idle_delay) 
+    if (!idle_delay)
     {
         if (BEEPER.REPEAT)
-        {       
+        {
             BEEPER.REPEAT--;
             BEEPER.PLAYIDX = 0x00;
             BEEPER.IDLEIDX = 0x00;
@@ -267,10 +267,10 @@ void beeperPlay(uint8_t musicId)
     BEEPER.PLAYIDX = 0x00;
     BEEPER.IDLEIDX = 0x00;
     BEEPER.REPEAT  = 0x00;
-    
+
     if (BEEPER.MUSICID == MUSIC5)
         BEEPER.REPEAT = BEEPER_REPEAT_6T;
-    
+
     #if (USE_APP_TIMER)
     ke_timer_set(appTimeId, TASK_APP, 20);
     #else
@@ -294,5 +294,3 @@ void beeperInit(void)
     pwmInit();
 //    sftmr_start(20, beeperTmr);
 }
-
-

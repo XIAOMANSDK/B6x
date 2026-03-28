@@ -1,0 +1,1514 @@
+# B6x SDK API-Register Mapping Configuration
+# This file maps driver APIs to their corresponding hardware registers
+# Generated from analysis of SDK drivers/api/*.h and drivers/src/*.c
+
+mappings:
+# ============================================================================
+# UART - Universal Asynchronous Receiver/Transmitter
+# ============================================================================
+
+- access_type: configure
+  api: uart_init
+  confidence: 1.0
+  fields:
+  - RXEN
+  note: Initialize UART port (enable clock, reset, IO func map)
+  registers:
+  - IOPAD_CTRL
+  - CSC_PIO
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+  - GPIO_PIN
+
+- access_type: write
+  api: uart_deinit
+  confidence: 1.0
+  fields: []
+  note: Deinitialize UART port (disable clock)
+  registers:
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+
+- access_type: configure
+  api: uart_hwfc
+  confidence: 1.0
+  fields:
+  - AFCEN
+  - RTSCTRL
+  note: Configure UART hardware flow control (IO func map, enable auto RTS)
+  registers:
+  - UART_MCR
+  - IOPAD_CTRL
+  - CSC_PIO
+
+- access_type: configure
+  api: uart_conf
+  confidence: 1.0
+  fields:
+  - DIV_MANTISSA
+  - DIV_FRACTION
+  - DATA_BITS
+  - STOP_BITS
+  - PARITY
+  - RXEN
+  - BRWEN
+  note: Configure UART params (baudrate and ctrl bits)
+  registers:
+  - UART_LCR
+  - UART_BRR
+  - UART_FCR
+
+- access_type: configure
+  api: uart_fctl
+  confidence: 1.0
+  fields:
+  - FIFOEN
+  - RFRST
+  - TFRST
+  - RXTL
+  - TXTL
+  - RTO
+  - RTOEN
+  note: Configure UART fifo level and receive timeout
+  registers:
+  - UART_FCR
+  - UART_RTOR
+  - UART_LCR
+  - UART_IDR
+  - UART_IER
+
+- access_type: configure
+  api: uart_mctl
+  confidence: 1.0
+  fields:
+  - DMAEN
+  - RTO_SEL
+  note: Configure UART mode control (DMA enable)
+  registers:
+  - UART_MCR
+  - UART_LCR
+
+- access_type: write
+  api: uart_putc
+  confidence: 1.0
+  fields:
+  - TBEM
+  note: Transmit one byte data through UART
+  registers:
+  - UART_SR
+  - UART_TBR
+
+- access_type: read
+  api: uart_getc
+  confidence: 1.0
+  fields:
+  - DR
+  note: Get the most recent received data
+  registers:
+  - UART_SR
+  - UART_RBR
+
+- access_type: read
+  api: uart_wait
+  confidence: 1.0
+  fields:
+  - TBEM
+  - BUSY
+  note: Wait UART transmit finish (idle state)
+  registers:
+  - UART_SR
+
+- access_type: write
+  api: uart_send
+  confidence: 1.0
+  fields:
+  - TBEM
+  note: Transmit bytes data (Blocking Mode)
+  registers:
+  - UART_SR
+  - UART_TBR
+
+- access_type: configure
+  api: uart_update_baud
+  confidence: 1.0
+  fields:
+  - DIV_MANTISSA
+  - DIV_FRACTION
+  - BRWEN
+  note: Update UART baudrate (reset and restore params)
+  registers:
+  - UART_LCR
+  - UART_BRR
+  - UART_FCR
+  - UART_MCR
+  - UART_IER
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+  - IOPAD_CTRL
+  - CSC_PIO
+
+# ============================================================================
+# GPIO - General Purpose Input/Output
+# ============================================================================
+
+- access_type: write
+  api: GPIO_DAT_SET
+  confidence: 1.0
+  fields: []
+  note: Set GPIO data output high
+  registers:
+  - GPIO_DAT_SET
+
+- access_type: write
+  api: GPIO_DAT_CLR
+  confidence: 1.0
+  fields: []
+  note: Clear GPIO data output low
+  registers:
+  - GPIO_DAT_CLR
+
+- access_type: write
+  api: GPIO_DAT_TOG
+  confidence: 1.0
+  fields: []
+  note: Toggle GPIO data output
+  registers:
+  - GPIO_DAT_TOG
+
+- access_type: configure
+  api: GPIO_DAT_MSK
+  confidence: 1.0
+  fields: []
+  note: Set GPIO data operation mask
+  registers:
+  - GPIO_DAT_MSK
+
+- access_type: read
+  api: GPIO_DAT_MSK_GET
+  confidence: 1.0
+  fields: []
+  note: Get GPIO data mask status
+  registers:
+  - GPIO_DAT_MSK
+
+- access_type: write
+  api: GPIO_DAT_CFG
+  confidence: 1.0
+  fields: []
+  note: Configure GPIO data output
+  registers:
+  - GPIO_DAT
+
+- access_type: read
+  api: GPIO_DAT_GET
+  confidence: 1.0
+  fields: []
+  note: Get GPIO data output status
+  registers:
+  - GPIO_DAT
+
+- access_type: write
+  api: GPIO_DIR_SET
+  confidence: 1.0
+  fields: []
+  note: Set GPIO direction as output enable
+  registers:
+  - GPIO_DIR_SET
+
+- access_type: write
+  api: GPIO_DIR_CLR
+  confidence: 1.0
+  fields: []
+  note: Clear GPIO direction (output disable)
+  registers:
+  - GPIO_DIR_CLR
+
+- access_type: write
+  api: GPIO_DIR_TOG
+  confidence: 1.0
+  fields: []
+  note: Toggle GPIO direction
+  registers:
+  - GPIO_DIR_TOG
+
+- access_type: configure
+  api: GPIO_DIR_MSK
+  confidence: 1.0
+  fields: []
+  note: Set GPIO direction operation mask
+  registers:
+  - GPIO_DIR_MSK
+
+- access_type: read
+  api: GPIO_DIR_MSK_GET
+  confidence: 1.0
+  fields: []
+  note: Get GPIO direction mask status
+  registers:
+  - GPIO_DIR_MSK
+
+- access_type: write
+  api: GPIO_DIR_CFG
+  confidence: 1.0
+  fields: []
+  note: Configure GPIO direction
+  registers:
+  - GPIO_DIR
+
+- access_type: read
+  api: GPIO_DIR_GET
+  confidence: 1.0
+  fields: []
+  note: Get GPIO direction status
+  registers:
+  - GPIO_DIR
+
+- access_type: read
+  api: GPIO_PIN_GET
+  confidence: 1.0
+  fields: []
+  note: Get GPIO input level status
+  registers:
+  - GPIO_PIN
+
+- access_type: write
+  api: gpio_set_hiz
+  confidence: 1.0
+  fields: []
+  note: Set GPIO to high impedance state
+  registers:
+  - GPIO_DIR_CLR
+  - IOPAD_CTRL
+
+- access_type: configure
+  api: gpio_dir_output
+  confidence: 1.0
+  fields: []
+  note: Configure GPIO as output mode
+  registers:
+  - GPIO_DAT_SET
+  - GPIO_DAT_CLR
+  - GPIO_DIR_SET
+
+- access_type: write
+  api: gpio_put
+  confidence: 1.0
+  fields: []
+  note: Set GPIO output level
+  registers:
+  - GPIO_DAT_SET
+  - GPIO_DAT_CLR
+
+- access_type: write
+  api: gpio_put_hi
+  confidence: 1.0
+  fields: []
+  note: Set GPIO output high
+  registers:
+  - GPIO_DAT_SET
+
+- access_type: write
+  api: gpio_put_lo
+  confidence: 1.0
+  fields: []
+  note: Set GPIO output low
+  registers:
+  - GPIO_DAT_CLR
+
+- access_type: configure
+  api: gpio_dir_input
+  confidence: 1.0
+  fields: []
+  note: Configure GPIO as input mode
+  registers:
+  - IOPAD_CTRL
+
+- access_type: read
+  api: gpio_get
+  confidence: 1.0
+  fields: []
+  note: Get GPIO input level
+  registers:
+  - GPIO_PIN
+
+- access_type: read
+  api: gpio_get_all
+  confidence: 1.0
+  fields: []
+  note: Get all GPIO input level status
+  registers:
+  - GPIO_PIN
+
+# ============================================================================
+# I2C - Inter-Integrated Circuit
+# ============================================================================
+
+- access_type: configure
+  api: i2c_init
+  confidence: 1.0
+  fields:
+  - CLK_M
+  - CLK_N
+  note: Initialize I2C module
+  registers:
+  - IOPAD_CTRL
+  - CSC_PIO
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+  - I2C_CLK
+
+- access_type: write
+  api: i2c_deinit
+  confidence: 1.0
+  fields:
+  - I2C_EN
+  note: Deinitialize I2C module
+  registers:
+  - I2C_CONCLR
+  - RCC_APBCLK_EN_RUN
+
+- access_type: write
+  api: i2c_start
+  confidence: 1.0
+  fields:
+  - START
+  - IFLG
+  note: I2C send start signal
+  registers:
+  - I2C_CONSET
+  - I2C_DATA
+  - I2C_SR
+
+- access_type: write
+  api: i2c_stop
+  confidence: 1.0
+  fields:
+  - STOP
+  - IFLG
+  note: I2C send stop signal
+  registers:
+  - I2C_CONSET
+
+- access_type: write
+  api: i2c_send
+  confidence: 1.0
+  fields:
+  - AAK
+  - IFLG
+  note: I2C send data
+  registers:
+  - I2C_CONSET
+  - I2C_CONCLR
+  - I2C_DATA
+  - I2C_SR
+
+- access_type: read
+  api: i2c_recv
+  confidence: 1.0
+  fields:
+  - AAK
+  - IFLG
+  note: I2C receive data
+  registers:
+  - I2C_CONSET
+  - I2C_CONCLR
+  - I2C_DATA
+  - I2C_SR
+
+- access_type: read
+  api: i2c_read
+  confidence: 1.0
+  fields: []
+  note: I2C read data from device
+  registers:
+  - I2C_CONSET
+  - I2C_CONCLR
+  - I2C_DATA
+  - I2C_SR
+
+- access_type: write
+  api: i2c_write
+  confidence: 1.0
+  fields: []
+  note: I2C write data to device
+  registers:
+  - I2C_CONSET
+  - I2C_CONCLR
+  - I2C_DATA
+  - I2C_SR
+
+# ============================================================================
+# SPI - Serial Peripheral Interface
+# ============================================================================
+
+- access_type: configure
+  api: spim_init
+  confidence: 1.0
+  fields: []
+  note: Initialize SPI master module
+  registers:
+  - IOPAD_CTRL
+  - CSC_PIO
+  - RCC_AHBCLK_EN_RUN
+  - RCC_AHBRST_CTRL
+
+- access_type: configure
+  api: spim_conf
+  confidence: 1.0
+  fields:
+  - CLK_RATE
+  - CLK_PHASE
+  - CLK_POLAR
+  - TX_DMA
+  - RX_DMA
+  - INT_EN
+  - TX_EN
+  - RX_EN
+  - MSB_FST
+  note: Configure SPI master control
+  registers:
+  - SPIM_CTRL
+
+- access_type: write
+  api: spim_begin
+  confidence: 1.0
+  fields: []
+  note: SPI master begin transaction
+  registers:
+  - SPIM_TX_DATA_LEN
+  - SPIM_CTRL
+
+- access_type: read
+  api: spim_wait
+  confidence: 1.0
+  fields:
+  - TXDAT
+  - RXDAT
+  - INTFLG
+  note: SPI master wait idle
+  registers:
+  - SPIM_STA
+
+- access_type: read
+  api: spim_duplex
+  confidence: 1.0
+  fields: []
+  note: SPI master duplex communication
+  registers:
+  - SPIM_TX_DATA
+  - SPIM_RX_DATA
+  - SPIM_STA
+
+- access_type: write
+  api: spim_transimit
+  confidence: 1.0
+  fields: []
+  note: SPI master transmit data
+  registers:
+  - SPIM_TX_DATA
+  - SPIM_STA
+
+- access_type: read
+  api: spim_receive
+  confidence: 1.0
+  fields: []
+  note: SPI master receive data
+  registers:
+  - SPIM_RX_DATA
+  - SPIM_STA
+
+- access_type: read
+  api: spim_halfdx
+  confidence: 1.0
+  fields: []
+  note: SPI master half-duplex communication
+  registers:
+  - SPIM_TX_DATA
+  - SPIM_RX_DATA
+  - SPIM_STA
+
+- access_type: configure
+  api: spis_init
+  confidence: 1.0
+  fields: []
+  note: Initialize SPI slave module
+  registers:
+  - IOPAD_CTRL
+  - CSC_PIO
+  - RCC_AHBCLK_EN_RUN
+  - RCC_AHBRST_CTRL
+
+- access_type: configure
+  api: spis_conf
+  confidence: 1.0
+  fields:
+  - LSB_FST
+  - CLK_POLAR
+  - CLK_PHASE
+  - RX_EN
+  - RXINT_EN
+  - TX_DMA
+  - RX_DMA
+  - RUN_EN
+  - OT_WIN
+  - OT_EN
+  - OTINT_EN
+  note: Configure SPI slave control
+  registers:
+  - SPIS_CTRL
+
+- access_type: read
+  api: spis_getc
+  confidence: 1.0
+  fields:
+  - RXOVER
+  - RXDAT
+  note: SPI slave get received data
+  registers:
+  - SPIS_INFO
+  - SPIS_RX_DAT
+
+- access_type: write
+  api: spis_putc
+  confidence: 1.0
+  fields: []
+  note: SPI slave transmit one byte
+  registers:
+  - SPIS_TX_DAT
+
+# ============================================================================
+# DMA - Direct Memory Access
+# ============================================================================
+
+- access_type: configure
+  api: dma_chnl_init
+  confidence: 1.0
+  fields:
+  - SRC_SEL
+  note: Initialize DMA channel with peripheral
+  registers:
+  - DMACHSEL
+  - DMA_CTRL_BASE
+
+- access_type: configure
+  api: dma_chnl_conf
+  confidence: 1.0
+  fields:
+  - CYCLE_CTRL
+  - NEXT_USEBURST
+  - N_MINUS_1
+  - R_POWER
+  - SRC_PROT_CTRL
+  - DST_PROT_CTRL
+  - SRC_SIZE
+  - SRC_INC
+  - DST_SIZE
+  - DST_INC
+  note: Configure DMA channel control data
+  registers:
+  - DMA_CTRL_BASE
+
+- access_type: configure
+  api: dma_chnl_ctrl
+  confidence: 1.0
+  fields:
+  - CHNL_EN
+  note: Control DMA channel (enable/disable/wait done)
+  registers:
+  - DMA_CTRL_BASE
+
+- access_type: read
+  api: dma_chnl_sts
+  confidence: 1.0
+  fields:
+  - CHNL_ST
+  note: Get DMA channel status
+  registers:
+  - DMA_CTRL_BASE
+
+# ============================================================================
+# TIMER - Timer (Common Timer & Advanced Timer)
+# ============================================================================
+
+- access_type: configure
+  api: ctmr_init
+  confidence: 1.0
+  fields: []
+  note: Initialize common timer
+  registers:
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+  - CTMR_PSC
+  - CTMR_ARR
+
+- access_type: write
+  api: ctmr_deinit
+  confidence: 1.0
+  fields:
+  - CEN
+  note: Deinitialize common timer
+  registers:
+  - CTMR_CR1
+  - RCC_APBCLK_EN_RUN
+
+- access_type: configure
+  api: ctmr_ctrl
+  confidence: 1.0
+  fields:
+  - CEN
+  - UDIS
+  - URS
+  - OPM
+  - DIR
+  - CMS
+  - ARPE
+  - CKD
+  note: Common timer control
+  registers:
+  - CTMR_CR1
+  - CTMR_DIER
+
+- access_type: configure
+  api: atmr_init
+  confidence: 1.0
+  fields: []
+  note: Initialize advanced timer
+  registers:
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+  - ATMR_PSC
+  - ATMR_ARR
+
+- access_type: write
+  api: atmr_deinit
+  confidence: 1.0
+  fields:
+  - CEN
+  note: Deinitialize advanced timer
+  registers:
+  - ATMR_CR1
+  - RCC_APBCLK_EN_RUN
+
+- access_type: configure
+  api: atmr_ctrl
+  confidence: 1.0
+  fields:
+  - CEN
+  - UDIS
+  - URS
+  - OPM
+  - DIR
+  - CMS
+  - ARPE
+  - CKD
+  note: Advanced timer control
+  registers:
+  - ATMR_CR1
+  - ATMR_DIER
+
+# ============================================================================
+# EXTI - External Interrupt
+# ============================================================================
+
+- access_type: configure
+  api: exti_init
+  confidence: 1.0
+  fields:
+  - DBC_PSC
+  - DBC_CNT
+  note: Initialize EXTI (enable clk, rst, config debounce)
+  registers:
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+  - EXTI_DBC
+
+- access_type: write
+  api: exti_deinit
+  confidence: 1.0
+  fields: []
+  note: Deinitialize EXTI module
+  registers:
+  - RCC_APBCLK_EN_RUN
+
+- access_type: configure
+  api: exti_set
+  confidence: 1.0
+  fields: []
+  note: Enable bits field of BUS register
+  registers:
+  - EXTI_IER
+  - EXTI_IDR
+  - EXTI_RTS
+  - EXTI_FTS
+  - EXTI_SWI
+  - EXTI_ADTE
+  - EXTI_DBE
+
+- access_type: read
+  api: exti_get
+  confidence: 1.0
+  fields: []
+  note: Get EXTI local src value
+  registers:
+  - EXTI_IVS
+  - EXTI_RIF
+  - EXTI_IFM
+
+# ============================================================================
+# RCC - Reset and Clock Control
+# ============================================================================
+
+- access_type: read
+  api: rcc_bus_get
+  confidence: 1.0
+  fields: []
+  note: Get BUS register value
+  registers:
+  - RCC_AHBCLK_EN_RUN
+  - RCC_APBCLK_EN_RUN
+  - RCC_AHBCLK_EN_SLEEP
+  - RCC_APBCLK_EN_SLEEP
+  - RCC_AHBCLK_EN_DEEPSL
+  - RCC_APBCLK_EN_DEEPSL
+  - RCC_AHBRST_CTRL
+  - RCC_APBRST_CTRL
+
+- access_type: configure
+  api: rcc_bus_enb
+  confidence: 1.0
+  fields: []
+  note: Enable bits field of BUS register
+  registers:
+  - RCC_AHBCLK_EN_RUN
+  - RCC_APBCLK_EN_RUN
+  - RCC_AHBCLK_EN_SLEEP
+  - RCC_APBCLK_EN_SLEEP
+  - RCC_AHBCLK_EN_DEEPSL
+  - RCC_APBCLK_EN_DEEPSL
+
+- access_type: configure
+  api: rcc_bus_dis
+  confidence: 1.0
+  fields: []
+  note: Disable bits field of BUS register
+  registers:
+  - RCC_AHBCLK_EN_RUN
+  - RCC_APBCLK_EN_RUN
+  - RCC_AHBCLK_EN_SLEEP
+  - RCC_APBCLK_EN_SLEEP
+  - RCC_AHBCLK_EN_DEEPSL
+  - RCC_APBCLK_EN_DEEPSL
+
+- access_type: write
+  api: rcc_bus_rst
+  confidence: 1.0
+  fields: []
+  note: Reset bits field of BUS register
+  registers:
+  - RCC_AHBRST_CTRL
+  - RCC_APBRST_CTRL
+
+- access_type: configure
+  api: rcc_adc_en
+  confidence: 1.0
+  fields: []
+  note: Enable ADC clock configure
+  registers:
+  - RCC_AHBCLK_EN_RUN
+  - RCC_CLK_EN_ST
+  - RCC_AHBCLK_DIV
+
+- access_type: configure
+  api: rcc_ble_en
+  confidence: 1.0
+  fields: []
+  note: Enable BLE clock configure
+  registers:
+  - RCC_BLE_CLKRST_CTRL
+  - AON_PMU_CTRL
+
+- access_type: configure
+  api: rcc_usb_en
+  confidence: 1.0
+  fields: []
+  note: Enable USB clock/pad configure
+  registers:
+  - RCC_AHBCLK_EN_RUN
+  - RCC_CLK_EN_ST
+  - RCC_AHBCLK_DIV
+  - SYSCFG_USB_CTRL
+
+- access_type: configure
+  api: rcc_sysclk_set
+  confidence: 1.0
+  fields:
+  - SYSCLK_SW
+  - DPLL_CLK_SW
+  - AHBCLK_DIV
+  note: Set system clock selection
+  registers:
+  - RCC_CFG
+
+- access_type: read
+  api: rcc_sysclk_get
+  confidence: 1.0
+  fields:
+  - SYSCLK_SW
+  - DPLL_CLK_SW
+  note: Get system clock selection
+  registers:
+  - RCC_CFG
+
+- access_type: read
+  api: rcc_sysclk_freq
+  confidence: 1.0
+  fields: []
+  note: Get clock frequency of core system (Hz)
+  registers:
+  - RCC_CFG
+  - RCC_AHBCLK_DIV
+
+- access_type: read
+  api: rcc_fshclk_get
+  confidence: 1.0
+  fields:
+  - FSHCCLK_SEL
+  note: Get flash controller clock selection
+  registers:
+  - RCC_CLK_EN_ST
+
+- access_type: read
+  api: rcc_fshclk_mhz
+  confidence: 1.0
+  fields: []
+  note: Get clock frequency of flash controller (MHz)
+  registers:
+  - RCC_CLK_EN_ST
+
+- access_type: configure
+  api: rcc_fshclk_set
+  confidence: 1.0
+  fields:
+  - FSHCCLK_SEL
+  note: Set flash controller clock selection
+  registers:
+  - RCC_CLK_EN_ST
+
+# ============================================================================
+# PWM - Pulse Width Modulation
+# ============================================================================
+
+- access_type: configure
+  api: pwm_init
+  confidence: 1.0
+  fields: []
+  note: Initialize timer for PWM capture/compare
+  registers:
+  - RCC_APBCLK_EN_RUN
+  - RCC_APBRST_CTRL
+  - CTMR_PSC
+  - CTMR_ARR
+  - ATMR_PSC
+  - ATMR_ARR
+
+- access_type: write
+  api: pwm_deinit
+  confidence: 1.0
+  fields:
+  - CEN
+  note: Deinitialize timer module
+  registers:
+  - CTMR_CR1
+  - ATMR_CR1
+  - RCC_APBCLK_EN_RUN
+
+- access_type: configure
+  api: pwm_conf
+  confidence: 1.0
+  fields: []
+  note: Configure timer for PWM capture
+  registers:
+  - CTMR_SMCR
+  - ATMR_SMCR
+  - CTMR_DIER
+  - ATMR_DIER
+
+- access_type: write
+  api: pwm_start
+  confidence: 1.0
+  fields:
+  - CEN
+  note: Start timer for PWM capture/compare
+  registers:
+  - CTMR_CR1
+  - ATMR_CR1
+
+- access_type: write
+  api: pwm_stop
+  confidence: 1.0
+  fields:
+  - CEN
+  note: Stop timer for PWM capture/compare
+  registers:
+  - CTMR_CR1
+  - ATMR_CR1
+
+- access_type: configure
+  api: pwm_chnl_set
+  confidence: 1.0
+  fields:
+  - CCxS
+  - OCxFE
+  - OCxPE
+  - OCxM
+  - OCxCE
+  - CCxE
+  - CCxP
+  - CCxNE
+  - CCxNP
+  - CCxDE
+  note: Configure special channel for PWM capture/compare
+  registers:
+  - CTMR_CCMR1
+  - CTMR_CCMR2
+  - ATMR_CCMR1
+  - ATMR_CCMR2
+  - CTMR_CCER
+  - ATMR_CCER
+  - CTMR_CCR1
+  - CTMR_CCR2
+  - CTMR_CCR3
+  - CTMR_CCR4
+  - ATMR_CCR1
+  - ATMR_CCR2
+  - ATMR_CCR3
+  - ATMR_CCR4
+
+- access_type: write
+  api: pwm_duty_upd
+  confidence: 1.0
+  fields: []
+  note: Update channel duty for PWM
+  registers:
+  - CTMR_CCR1
+  - CTMR_CCR2
+  - CTMR_CCR3
+  - CTMR_CCR4
+  - ATMR_CCR1
+  - ATMR_CCR2
+  - ATMR_CCR3
+  - ATMR_CCR4
+
+# ============================================================================
+# RTC - Real Time Clock
+# ============================================================================
+
+- access_type: configure
+  api: rtc_conf
+  confidence: 1.0
+  fields:
+  - RTC_EN
+  note: Configure RTC module
+  registers:
+  - APBMISC_RTCINT_CTRL
+
+- access_type: read
+  api: rtc_time_get
+  confidence: 1.0
+  fields: []
+  note: Get current RTC time
+  registers:
+  - APBMISC_RTC_TIME_SEC
+  - APBMISC_RTC_TIME_MS
+
+- access_type: write
+  api: rtc_time_set
+  confidence: 1.0
+  fields: []
+  note: Set/change current time
+  registers:
+  - APBMISC_RTC_TIME_SEC
+  - APBMISC_RTC_TIME_MS
+
+- access_type: write
+  api: rtc_alarm_renew
+  confidence: 1.0
+  fields: []
+  note: Renew alarm time for periodic calls
+  registers:
+  - APBMISC_RTCINT_CTRL
+  - APBMISC_RTC_ALARM_SEC
+  - APBMISC_RTC_ALARM_MS
+
+- access_type: write
+  api: rtc_alarm_set
+  confidence: 1.0
+  fields: []
+  note: Set alarm time
+  registers:
+  - APBMISC_RTC_ALARM_SEC
+  - APBMISC_RTC_ALARM_MS
+
+- access_type: read
+  api: rtc_alarm_get
+  confidence: 1.0
+  fields: []
+  note: Get configured alarm RTC time
+  registers:
+  - APBMISC_RTC_ALARM_SEC
+  - APBMISC_RTC_ALARM_MS
+
+- access_type: read
+  api: rtc_is_alarm
+  confidence: 1.0
+  fields:
+  - RTC_INT_FLAG
+  note: Judge alarm time reached or not
+  registers:
+  - APBMISC_RTCINT_CTRL
+
+- access_type: configure
+  api: rtc_irq_set
+  confidence: 1.0
+  fields:
+  - RTC_INT_EN
+  note: Set RTC interrupt mode
+  registers:
+  - APBMISC_RTCINT_CTRL
+
+- access_type: configure
+  api: rtc_wkup_set
+  confidence: 1.0
+  fields:
+  - RTC_WKUP_EN
+  note: Set RTC wakeup mode
+  registers:
+  - APBMISC_RTCINT_CTRL
+
+# ============================================================================
+# CORE - System Core Functions
+# ============================================================================
+
+- access_type: read
+  api: rstrsn
+  confidence: 1.0
+  fields: []
+  note: Get reset and wakeup reason
+  registers:
+  - RCC_CHIP_RST_ST_CLR
+  - AON_PMU_CTRL
+  - AON_PMU_WKUP_ST
+  - APBMISC_POWEROFF_LOG_CLR
+  - APBMISC_AON_PMU_CTRL
+
+- access_type: configure
+  api: core_init
+  confidence: 1.0
+  fields: []
+  note: Core initialization (clock, power, peripherals)
+  registers:
+  - RCC_APBCLK_EN_RUN
+  - RCC_AHBCLK_EN_RUN
+  - RCC_CFG
+  - RCC_BLE_CLKRST_CTRL
+  - AON_PMU_CTRL
+  - AON_PMU_WKUP_CTRL
+  - AON_BKHOLD_CTRL
+
+- access_type: configure
+  api: core_clk_stable
+  confidence: 1.0
+  fields:
+  - CLK_STB_TIME
+  note: Set clock stable time
+  registers:
+  - APBMISC_AON_PMU_CTRL
+
+- access_type: write
+  api: core_ldoset
+  confidence: 1.0
+  fields: []
+  note: Set LDO control
+  registers:
+  - AON_PMU_ANA_CTRL
+  - APBMISC_ANAMISC_CTRL
+
+- access_type: read
+  api: core_ldoget
+  confidence: 1.0
+  fields: []
+  note: Get LDO control status
+  registers:
+  - AON_PMU_ANA_CTRL
+  - APBMISC_ANAMISC_CTRL
+
+- access_type: write
+  api: core_dptw_set
+  confidence: 1.0
+  fields: []
+  note: Set BLE deepsleep wakeup time
+  registers:
+  - APBMISC_BLE_DP_TWCORE
+
+- access_type: read
+  api: core_sysclk_get
+  confidence: 1.0
+  fields:
+  - SYSCLK_SW
+  - DPLL_CLK_SW
+  - AHBCLK_DIV
+  note: Get current system clock frequency
+  registers:
+  - RCC_CFG
+
+- access_type: configure
+  api: wakeup_io_sw
+  confidence: 1.0
+  fields: []
+  note: Configure wakeup IO pins
+  registers:
+  - APBMISC_PIOA_WKUP_NEG
+  - APBMISC_PIOA_WKUP_POS
+  - AON_BKHOLD_CTRL
+  - CSC_PIO
+  - GPIO_DIR_CLR
+
+- access_type: configure
+  api: core_pwroff
+  confidence: 1.0
+  fields: []
+  note: Enter system power-off mode
+  registers:
+  - AON_PMU_CTRL
+  - AON_PMU_WKUP_CTRL
+  - AON_BACKUP0
+  - RF_DIG_CTRL
+  - AON_PMU_ANA_CTRL
+  - APBMISC_AON_PMU_CTRL
+  - APBMISC_POWEROFF_WORD_CMD
+  - APBMISC_POWEROFF_LOG_CLR
+
+- access_type: write
+  api: core_release_io_latch
+  confidence: 1.0
+  fields: []
+  note: Release IO latch
+  registers:
+  - AON_BACKUP0
+  - AON_PMU_WKUP_CTRL
+
+- access_type: write
+  api: core_vector
+  confidence: 1.0
+  fields: []
+  note: Set interrupt vector table address
+  registers:
+  - SCB_VTOR
+
+- access_type: read
+  api: core_unique_id
+  confidence: 1.0
+  fields: []
+  note: Read chip unique ID
+  registers:
+  - SYSCFG_ACC_CCR_BUSY
+  - FSHC_RD_CFG
+  - FSHC_RD_FIFO
+
+# ============================================================================
+# IWDT - Independent Watchdog Timer
+# ============================================================================
+
+- access_type: configure
+  api: iwdt_init
+  confidence: 1.0
+  fields:
+  - IWDT_EN
+  - IWDT_INTEN
+  - IWDT_RSTEN
+  - IWDT_CLKLSI
+  note: Initialize/configure IWDT
+  registers:
+  - IWDT_CTRL
+  - RCC_APBCLK_EN_RUN
+
+- access_type: write
+  api: iwdt_deinit
+  confidence: 1.0
+  fields:
+  - IWDT_EN
+  note: Deinitialize IWDT module
+  registers:
+  - IWDT_CTRL
+
+- access_type: write
+  api: iwdt_feed
+  confidence: 1.0
+  fields:
+  - CNT
+  note: Reload IWDT counter
+  registers:
+  - IWDT_LOAD
+
+- access_type: read
+  api: iwdt_conf
+  confidence: 1.0
+  fields:
+  - IWDT_EN
+  - CNT
+  note: Config IWDT (feed or disable), return timer value
+  registers:
+  - IWDT_LOAD
+  - IWDT_CTRL
+
+# ============================================================================
+# SADC - Successive Approximation ADC
+# ============================================================================
+
+- access_type: configure
+  api: sadc_init
+  confidence: 1.0
+  fields:
+  - SADC_EN
+  - VREF_TRIM
+  - IBSEL_CMP
+  - IBSEL_VCM
+  - IBSEL_VREF
+  - IBSEL_BUF
+  - VREF
+  - CALCAP
+  - CALOS
+  - INBUF_BYPSS
+  note: Initialize SADC module
+  registers:
+  - RCC_AHBCLK_EN_RUN
+  - RCC_AHBRST_CTRL
+  - SADC_SADC_ANA_CTRL
+
+- access_type: write
+  api: sadc_deinit
+  confidence: 1.0
+  fields:
+  - SADC_EN
+  note: Deinitialize SADC module
+  registers:
+  - SADC_SADC_ANA_CTRL
+  - RCC_AHBCLK_EN_RUN
+
+- access_type: configure
+  api: sadc_chnl_set
+  confidence: 1.0
+  fields:
+  - CHNL_SEL
+  note: Set ADC channel
+  registers:
+  - SADC_SADC_CHNL_SEL
+
+- access_type: configure
+  api: sadc_mic_set
+  confidence: 1.0
+  fields:
+  - MIC_MODE
+  - MIC_PWD
+  - MIC_TRIM
+  - MIC_VREF
+  - PGA_BIAS
+  - PGA_EN
+  - PGA_VOL
+  - PGA_VREF
+  note: Configure microphone input
+  registers:
+  - SADC_SADC_MIC_CTRL
+
+- access_type: write
+  api: sadc_start
+  confidence: 1.0
+  fields:
+  - SOC
+  - CALIB
+  - CONV_MODE
+  - DMAEN
+  - CLKPH
+  - SAMP_MODE
+  note: Start ADC conversion
+  registers:
+  - SADC_SADC_CTRL
+
+- access_type: read
+  api: sadc_data_get
+  confidence: 1.0
+  fields:
+  - DATA
+  note: Get ADC conversion data
+  registers:
+  - SADC_SADC_DATA
+
+- access_type: read
+  api: sadc_pcm_get
+  confidence: 1.0
+  fields:
+  - DATA
+  note: Get PCM data
+  registers:
+  - SADC_PCM_DAT
+
+# ============================================================================
+# FLASH - Flash Memory Controller
+# ============================================================================
+
+- access_type: read
+  api: flashReadId
+  confidence: 1.0
+  fields: []
+  note: Read flash ID (3 bytes)
+  registers:
+  - FSHC_RD_CFG
+  - FSHC_RD_FIFO
+
+- access_type: read
+  api: flashReadSta
+  confidence: 1.0
+  fields: []
+  note: Read flash status register
+  registers:
+  - FSHC_RD_CFG
+  - FSHC_RD_FIFO
+
+- access_type: configure
+  api: puya_enter_dual_read
+  confidence: 1.0
+  fields: []
+  note: Puya flash enter dual read mode
+  registers:
+  - FSHC_WR_CFG
+  - FSHC_CMD
+
+- access_type: configure
+  api: puya_exit_dual_read
+  confidence: 1.0
+  fields: []
+  note: Puya flash exit dual read mode
+  registers:
+  - FSHC_WR_CFG
+  - FSHC_CMD
+
+- access_type: configure
+  api: boya_flash_quad_mode
+  confidence: 1.0
+  fields: []
+  note: Boya flash quad enable bit set 1
+  registers:
+  - FSHC_WR_CFG
+  - FSHC_CMD
+
+- access_type: write
+  api: flash_write
+  confidence: 1.0
+  fields: []
+  note: Write data to flash (word aligned)
+  registers:
+  - FSHC_WR_CFG
+  - FSHC_WR_FIFO
+  - SYSCFG_ACC_CCR_BUSY
+
+- access_type: read
+  api: flash_read
+  confidence: 1.0
+  fields: []
+  note: Read flash data (word aligned)
+  registers:
+  - FSHC_RD_CFG
+  - FSHC_RD_FIFO
+  - SYSCFG_ACC_CCR_BUSY
+
+- access_type: write
+  api: flash_page_erase
+  confidence: 1.0
+  fields: []
+  note: Erase flash page (0x100 aligned)
+  registers:
+  - FSHC_WR_CFG
+  - FSHC_CMD
+  - SYSCFG_ACC_CCR_BUSY
+
+- access_type: write
+  api: flash_byte_write
+  confidence: 1.0
+  fields: []
+  note: Write data to flash (byte aligned)
+  registers:
+  - FSHC_WR_CFG
+  - FSHC_WR_FIFO
+  - SYSCFG_ACC_CCR_BUSY
+
+- access_type: read
+  api: flash_byte_read
+  confidence: 1.0
+  fields: []
+  note: Read flash data (byte aligned)
+  registers:
+  - FSHC_RD_CFG
+  - FSHC_RD_FIFO
+  - SYSCFG_ACC_CCR_BUSY
+
+# ============================================================================
+# BTMR - Basic Timer
+# ============================================================================
+
+- access_type: write
+  api: btmr_delay
+  confidence: 1.0
+  fields:
+  - MODE
+  - CEN
+  note: Basic timer delay (using single-shot mode)
+  registers:
+  - BTMR_CR1
+  - BTMR_PSC
+  - BTMR_ARR
+  - BTMR_CNT
+  - BTMR_EGR
+  - BTMR_RIF
+  - BTMR_ICR
+
+- access_type: write
+  api: tick_delay
+  confidence: 1.0
+  fields: []
+  note: SysTick timer delay
+  registers:
+  - SysTick_LOAD
+  - SysTick_VAL
+  - SysTick_CTRL
+
+# ============================================================================
+# Legacy Mappings (Preserved for backward compatibility)
+# ============================================================================
+
+- access_type: configure
+  api: B6x_UART_Init
+  confidence: 1.0
+  fields: []
+  note: Manual mapping for UART initialization
+  registers:
+  - UART_CR
+  - UART_BRR
+  - UART_LCR
+
+- access_type: write
+  api: B6x_UART_SetBaudRate
+  confidence: 1.0
+  fields:
+  - DIV_MANTISSA
+  - DIV_FRACTION
+  note: Baud rate configuration
+  registers:
+  - UART_BRR
+
+- access_type: write
+  api: RCC_EnablePeriphClock
+  confidence: 1.0
+  fields: []
+  note: Enable peripheral clock
+  registers:
+  - RCC_CLK_EN_ST

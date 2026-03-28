@@ -13,11 +13,15 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "compiler.h"
 #include "reg_dmachcfg.h"
 
+#if (COMPILER_IAR || COMPILER_AC5)
 // warning:  #61-D: integer operation result is out of range
-#pragma diag_suppress 61
-
+    #pragma diag_suppress 61
+#elif (COMPILER_GCC)
+    #pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#endif
 
 /*
  * DEFINES
@@ -37,7 +41,7 @@ enum dma_channel
     DMA_CH6,
     DMA_CH7,
     DMA_CH_MAX,
-    
+
     // Channel alternate(CHx + MAX)
     DMA_CH_ALT         = DMA_CH_MAX, // 0x08
     DMA_CH0_ALT,
@@ -78,7 +82,7 @@ enum dma_peripheral
     DMA_PID_BTMR_UP    = 22,
     DMA_PID_USB        = 23,
     DMA_PID_MDM_TX     = 24,
-    DMA_PID_MDM_RX     = 25,    
+    DMA_PID_MDM_RX     = 25,
     DMA_PID_MAX,
 };
 
@@ -87,27 +91,27 @@ enum dma_pointer
 {
     DMA_PTR_UART1_RX   = 0x40023000,  // ((uint32_t)&UART1->RBR),
     DMA_PTR_UART1_TX   = 0x40023004,  // ((uint32_t)&UART1->TBR),
-    DMA_PTR_UART2_RX   = 0x40024000,  // ((uint32_t)&UART2->RBR), 
+    DMA_PTR_UART2_RX   = 0x40024000,  // ((uint32_t)&UART2->RBR),
     DMA_PTR_UART2_TX   = 0x40024004,  // ((uint32_t)&UART2->TBR),
-    DMA_PTR_SADC_AUX   = 0x40007014,  // ((uint32_t)&SADC->AUX_ST), 
-    DMA_PTR_SADC_PCM   = 0x40007018,  // ((uint32_t)&SADC->PCM_DAT), 
-    DMA_PTR_SPIM_RX    = 0x40004000,  // ((uint32_t)&SPIM->RX_DATA), 
+    DMA_PTR_SADC_AUX   = 0x40007014,  // ((uint32_t)&SADC->AUX_ST),
+    DMA_PTR_SADC_PCM   = 0x40007018,  // ((uint32_t)&SADC->PCM_DAT),
+    DMA_PTR_SPIM_RX    = 0x40004000,  // ((uint32_t)&SPIM->RX_DATA),
     DMA_PTR_SPIM_TX    = 0x40004004,  // ((uint32_t)&SPIM->TX_DATA),
     DMA_PTR_SPIS_TX    = 0x4000500C,  // ((uint32_t)&SPIS->TX_DAT),
-    DMA_PTR_SPIS_RX    = 0x40005010,  // ((uint32_t)&SPIS->RX_DAT),  
+    DMA_PTR_SPIS_RX    = 0x40005010,  // ((uint32_t)&SPIS->RX_DAT),
     DMA_PTR_CTMR_CH1   = 0x40021044,  // ((uint32_t)&CTMR->CCR1),
-    DMA_PTR_CTMR_CH2   = 0x40021048,  // ((uint32_t)&CTMR->CCR2),   
+    DMA_PTR_CTMR_CH2   = 0x40021048,  // ((uint32_t)&CTMR->CCR2),
     DMA_PTR_CTMR_CH3   = 0x4002104C,  // ((uint32_t)&CTMR->CCR3),
-    DMA_PTR_CTMR_CH4   = 0x40021050,  // ((uint32_t)&CTMR->CCR4),   
-    DMA_PTR_CTMR_UP    = 0x4002103C,  // ((uint32_t)&CTMR->ARR),    
-    DMA_PTR_ATMR_CH1   = 0x40022044,  // ((uint32_t)&ATMR->CCR1), 
-    DMA_PTR_ATMR_CH2   = 0x40022048,  // ((uint32_t)&ATMR->CCR2),   
+    DMA_PTR_CTMR_CH4   = 0x40021050,  // ((uint32_t)&CTMR->CCR4),
+    DMA_PTR_CTMR_UP    = 0x4002103C,  // ((uint32_t)&CTMR->ARR),
+    DMA_PTR_ATMR_CH1   = 0x40022044,  // ((uint32_t)&ATMR->CCR1),
+    DMA_PTR_ATMR_CH2   = 0x40022048,  // ((uint32_t)&ATMR->CCR2),
     DMA_PTR_ATMR_CH3   = 0x4002204C,  // ((uint32_t)&ATMR->CCR3),
-    DMA_PTR_ATMR_CH4   = 0x40022050,  // ((uint32_t)&ATMR->CCR4),   
-    DMA_PTR_ATMR_UP    = 0x4002203C,  // ((uint32_t)&ATMR->ARR),    
+    DMA_PTR_ATMR_CH4   = 0x40022050,  // ((uint32_t)&ATMR->CCR4),
+    DMA_PTR_ATMR_UP    = 0x4002203C,  // ((uint32_t)&ATMR->ARR),
     DMA_PTR_BTMR_UP    = 0x4002003C,  // ((uint32_t)&BTMR->ARR),
     DMA_PTR_MDM_TX     = 0x40009030,  // ((uint32_t)&MDM->EXT_TX_DAT),
-    DMA_PTR_MDM_RX     = 0x40009034,  // ((uint32_t)&MDM->EXT_TX_DAT), 
+    DMA_PTR_MDM_RX     = 0x40009034,  // ((uint32_t)&MDM->EXT_TX_DAT),
 };
 
 /// DMA State Machine
@@ -171,21 +175,21 @@ enum dma_trans_bfs
     // DMA transfers can occur before rearbitrates - bit[17:14]
     DMA_TRANS_RPOWER_LSB   = 14,
     DMA_TRANS_RPOWER_MSK   = (0xF << DMA_TRANS_RPOWER_LSB),
-    
+
     // DMA HPROT[3:1] when reads source data - bit[20:18]
     DMA_TRANS_SRCPROT_LSB  = 18,
     DMA_TRANS_SRCPROT_MSK  = (0x07 << DMA_TRANS_SRCPROT_LSB),
     // DMA HPROT[3:1] when writes destination data - bit[23:21]
     DMA_TRANS_DSTPROT_LSB  = 21,
     DMA_TRANS_DSTPROT_MSK  = (0x07 << DMA_TRANS_DSTPROT_LSB),
-    
+
     // DMA source data size - bit[25:24]
     DMA_TRANS_SRCSIZE_LSB  = 24,
     DMA_TRANS_SRCSIZE_MSK  = (0x03 << DMA_TRANS_SRCSIZE_LSB),
     // DMA control source address increment - bit[27:26]
     DMA_TRANS_SRCINC_LSB   = 26,
     DMA_TRANS_SRCINC_MSK   = (0x03 << DMA_TRANS_SRCINC_LSB),
-    
+
     // DMA destination data size, must same with source - bit[29:28]
     DMA_TRANS_DSTSIZE_LSB  = 28,
     DMA_TRANS_DSTSIZE_MSK  = (0x03 << DMA_TRANS_DSTSIZE_LSB),
@@ -285,7 +289,7 @@ extern volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
             dma_chnl_conf(chidx, (uint32_t)&(buff)[(len)-1], DMA_PTR_CTMR_CH##x, TRANS_PER_WR(ccm, len, IN_WORD, IN_WORD))
 #define DMA_CTMR_IN_CHx_CONF(chidx, x, buff, len, ccm) \
             dma_chnl_conf(chidx, DMA_PTR_CTMR_CH##x, (uint32_t)&(buff)[(len)-1], TRANS_PER_RD(ccm, len, IN_WORD, IN_WORD))
-            
+
 // Advance Timer CHx
 #define DMA_ATMR_CHx_INIT(chidx, x)    dma_chnl_init(chidx, DMA_PID_ATMR_CH##x)
 #define DMA_ATMR_CHx_CONF(chidx, x, buff, len, ccm) \
@@ -320,7 +324,7 @@ extern volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
 #define DMA_MDM_TX_INIT(chidx)          dma_chnl_init(chidx, DMA_PID_MDM_TX)
 #define DMA_MDM_TX_CONF(chidx, buff, len, ccm)       \
             dma_chnl_conf(chidx, (uint32_t)&(buff)[(len)-1], DMA_PTR_MDM_TX, TRANS_PER_WR(ccm, len, IN_BYTE, IN_BYTE))
-            
+
 #define DMA_MDM_RX_INIT(chidx)          dma_chnl_init(chidx, DMA_PID_MDM_RX)
 #define DMA_MDM_RX_CONF(chidx, buff, len, ccm)       \
             dma_chnl_conf(chidx, DMA_PTR_MDM_RX, (uint32_t)&(buff)[(len)-1], TRANS_PER_RD(ccm, len, IN_BYTE, IN_BYTE))
@@ -345,11 +349,11 @@ extern volatile DMA_CHNL_CTRL_STRUCT_Typedef dma_ctrl_base;
  * FUNCTION DECLARATION
  ****************************************************************************************
  */
- 
+
 /**
  ****************************************************************************************
  * @brief Init DMA Module.
- * 
+ *
  ****************************************************************************************
  */
 void dma_init(void);

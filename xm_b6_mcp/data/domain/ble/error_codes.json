@@ -1,0 +1,1692 @@
+[
+  {
+    "name": "GAP_ERR_NO_ERROR",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "GAP",
+    "description": "No error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_INVALID_PARAM",
+    "value": 64,
+    "hex_value": "0x0040",
+    "category": "GAP",
+    "description": "Invalid parameters set",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_PROTOCOL_PROBLEM",
+    "value": 65,
+    "hex_value": "0x0041",
+    "category": "GAP",
+    "description": "Problem with protocol exchange, get unexpected response",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_NOT_SUPPORTED",
+    "value": 66,
+    "hex_value": "0x0042",
+    "category": "GAP",
+    "description": "Request not supported by software configuration",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_COMMAND_DISALLOWED",
+    "value": 67,
+    "hex_value": "0x0043",
+    "category": "GAP",
+    "description": "Request not allowed in current state.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_CANCELED",
+    "value": 68,
+    "hex_value": "0x0044",
+    "category": "GAP",
+    "description": "Requested operation canceled.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_TIMEOUT",
+    "value": 69,
+    "hex_value": "0x0045",
+    "category": "GAP",
+    "description": "Requested operation timeout.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_DISCONNECTED",
+    "value": 70,
+    "hex_value": "0x0046",
+    "category": "GAP",
+    "description": "Link connection lost during operation.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_NOT_FOUND",
+    "value": 71,
+    "hex_value": "0x0047",
+    "category": "GAP",
+    "description": "Search algorithm finished, but no result found",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_REJECTED",
+    "value": 72,
+    "hex_value": "0x0048",
+    "category": "GAP",
+    "description": "Request rejected by peer device",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_PRIVACY_CFG_PB",
+    "value": 73,
+    "hex_value": "0x0049",
+    "category": "GAP",
+    "description": "Problem with privacy configuration",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_ADV_DATA_INVALID",
+    "value": 74,
+    "hex_value": "0x004A",
+    "category": "GAP",
+    "description": "Duplicate or invalid advertising data",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_INSUFF_RESOURCES",
+    "value": 75,
+    "hex_value": "0x004B",
+    "category": "GAP",
+    "description": "Insufficient resources",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_UNEXPECTED",
+    "value": 76,
+    "hex_value": "0x004C",
+    "category": "GAP",
+    "description": "Unexpected Error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GAP_ERR_MISMATCH",
+    "value": 77,
+    "hex_value": "0x004D",
+    "category": "GAP",
+    "description": "Feature mismatch",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_NO_ERROR",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "ATT",
+    "description": "No error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INVALID_HANDLE",
+    "value": 1,
+    "hex_value": "0x0001",
+    "category": "ATT",
+    "description": "0x01: Handle is invalid",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_READ_NOT_PERMITTED",
+    "value": 2,
+    "hex_value": "0x0002",
+    "category": "ATT",
+    "description": "0x02: Read permission disabled",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_WRITE_NOT_PERMITTED",
+    "value": 3,
+    "hex_value": "0x0003",
+    "category": "ATT",
+    "description": "0x03: Write permission disabled",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INVALID_PDU",
+    "value": 4,
+    "hex_value": "0x0004",
+    "category": "ATT",
+    "description": "0x04: Incorrect PDU",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INSUFF_AUTHEN",
+    "value": 5,
+    "hex_value": "0x0005",
+    "category": "ATT",
+    "description": "0x05: Authentication privilege not enough",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_REQUEST_NOT_SUPPORTED",
+    "value": 6,
+    "hex_value": "0x0006",
+    "category": "ATT",
+    "description": "0x06: Request not supported or not understood",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INVALID_OFFSET",
+    "value": 7,
+    "hex_value": "0x0007",
+    "category": "ATT",
+    "description": "0x07: Incorrect offset value",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INSUFF_AUTHOR",
+    "value": 8,
+    "hex_value": "0x0008",
+    "category": "ATT",
+    "description": "0x08: Authorization privilege not enough",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_PREPARE_QUEUE_FULL",
+    "value": 9,
+    "hex_value": "0x0009",
+    "category": "ATT",
+    "description": "0x09: Capacity queue for reliable write reached",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_ATTRIBUTE_NOT_FOUND",
+    "value": 10,
+    "hex_value": "0x000A",
+    "category": "ATT",
+    "description": "0x0A: Attribute requested not existing",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_ATTRIBUTE_NOT_LONG",
+    "value": 11,
+    "hex_value": "0x000B",
+    "category": "ATT",
+    "description": "0x0B: Attribute requested not long",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INSUFF_ENC_KEY_SIZE",
+    "value": 12,
+    "hex_value": "0x000C",
+    "category": "ATT",
+    "description": "0x0C: Encryption size not sufficient",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INVALID_ATTRIBUTE_VAL_LEN",
+    "value": 13,
+    "hex_value": "0x000D",
+    "category": "ATT",
+    "description": "0x0D: Invalid length of the attribute value",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_UNLIKELY_ERR",
+    "value": 14,
+    "hex_value": "0x000E",
+    "category": "ATT",
+    "description": "0x0E: Operation not fit to condition",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INSUFF_ENC",
+    "value": 15,
+    "hex_value": "0x000F",
+    "category": "ATT",
+    "description": "0x0F: Attribute requires encryption before operation",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_UNSUPP_GRP_TYPE",
+    "value": 16,
+    "hex_value": "0x0010",
+    "category": "ATT",
+    "description": "0x10: Attribute grouping not supported",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_INSUFF_RESOURCE",
+    "value": 17,
+    "hex_value": "0x0011",
+    "category": "ATT",
+    "description": "0x11: Resources not sufficient to complete the request",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "ATT_ERR_APP_ERROR",
+    "value": 128,
+    "hex_value": "0x0080",
+    "category": "ATT",
+    "description": "0x80: Application error (also used in PRF Errors)",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_NO_ERROR",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "L2CAP",
+    "description": "No error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_CONNECTION_LOST",
+    "value": 48,
+    "hex_value": "0x0030",
+    "category": "L2CAP",
+    "description": "Message cannot be sent because connection lost. (disconnected)",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INVALID_MTU_EXCEED",
+    "value": 49,
+    "hex_value": "0x0031",
+    "category": "L2CAP",
+    "description": "Invalid PDU length exceed MTU",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INVALID_MPS_EXCEED",
+    "value": 50,
+    "hex_value": "0x0032",
+    "category": "L2CAP",
+    "description": "Invalid PDU length exceed MPS",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INVALID_CID",
+    "value": 51,
+    "hex_value": "0x0033",
+    "category": "L2CAP",
+    "description": "Invalid Channel ID",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INVALID_PDU",
+    "value": 52,
+    "hex_value": "0x0034",
+    "category": "L2CAP",
+    "description": "Invalid PDU",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_NO_RES_AVAIL",
+    "value": 53,
+    "hex_value": "0x0035",
+    "category": "L2CAP",
+    "description": "Connection refused - no resources available",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INSUFF_AUTHEN",
+    "value": 54,
+    "hex_value": "0x0036",
+    "category": "L2CAP",
+    "description": "Connection refused - insufficient authentication",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INSUFF_AUTHOR",
+    "value": 55,
+    "hex_value": "0x0037",
+    "category": "L2CAP",
+    "description": "Connection refused - insufficient authorization",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INSUFF_ENC_KEY_SIZE",
+    "value": 56,
+    "hex_value": "0x0038",
+    "category": "L2CAP",
+    "description": "Connection refused - insufficient encryption key size",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INSUFF_ENC",
+    "value": 57,
+    "hex_value": "0x0039",
+    "category": "L2CAP",
+    "description": "Connection Refused - insufficient encryption",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_LEPSM_NOT_SUPP",
+    "value": 58,
+    "hex_value": "0x003A",
+    "category": "L2CAP",
+    "description": "Connection refused - LE_PSM not supported",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_INSUFF_CREDIT",
+    "value": 59,
+    "hex_value": "0x003B",
+    "category": "L2CAP",
+    "description": "No more credit",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_NOT_UNDERSTOOD",
+    "value": 60,
+    "hex_value": "0x003C",
+    "category": "L2CAP",
+    "description": "Command not understood by peer device",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_CREDIT_ERROR",
+    "value": 61,
+    "hex_value": "0x003D",
+    "category": "L2CAP",
+    "description": "Credit error, invalid number of credit received",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_CID_ALREADY_ALLOC",
+    "value": 62,
+    "hex_value": "0x003E",
+    "category": "L2CAP",
+    "description": "Channel identifier already allocated",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "L2C_ERR_UNKNOWN_PDU",
+    "value": 63,
+    "hex_value": "0x003F",
+    "category": "L2CAP",
+    "description": "Unknown PDU",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_NO_ERROR",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "GATT",
+    "description": "No error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_INVALID_ATT_LEN",
+    "value": 80,
+    "hex_value": "0x0050",
+    "category": "GATT",
+    "description": "Problem with ATTC protocol response",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_INVALID_TYPE_IN_SVC_SEARCH",
+    "value": 81,
+    "hex_value": "0x0051",
+    "category": "GATT",
+    "description": "Error in service search",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_WRITE",
+    "value": 82,
+    "hex_value": "0x0052",
+    "category": "GATT",
+    "description": "Invalid write data",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_SIGNED_WRITE",
+    "value": 83,
+    "hex_value": "0x0053",
+    "category": "GATT",
+    "description": "Signed write error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_ATTRIBUTE_CLIENT_MISSING",
+    "value": 84,
+    "hex_value": "0x0054",
+    "category": "GATT",
+    "description": "No attribute client defined",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_ATTRIBUTE_SERVER_MISSING",
+    "value": 85,
+    "hex_value": "0x0055",
+    "category": "GATT",
+    "description": "No attribute server defined",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "GATT_ERR_INVALID_PERM",
+    "value": 86,
+    "hex_value": "0x0056",
+    "category": "GATT",
+    "description": "Permission set in service/attribute are invalid",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_NO_ERROR",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "SMP",
+    "description": "No error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_PASSKEY_ENTRY_FAILED",
+    "value": 97,
+    "hex_value": "0x0061",
+    "category": "SMP",
+    "description": "The user input of pass key failed, for example, the user canceled the operation.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_OOB_NOT_AVAILABLE",
+    "value": 98,
+    "hex_value": "0x0062",
+    "category": "SMP",
+    "description": "The OOB Data is not available.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_AUTH_REQ",
+    "value": 99,
+    "hex_value": "0x0063",
+    "category": "SMP",
+    "description": "due to IO capabilities of one or both devices.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_CONF_VAL_FAILED",
+    "value": 100,
+    "hex_value": "0x0064",
+    "category": "SMP",
+    "description": "The confirm value does not match the calculated confirm value.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_PAIRING_NOT_SUPP",
+    "value": 101,
+    "hex_value": "0x0065",
+    "category": "SMP",
+    "description": "Pairing is not supported by the device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_ENC_KEY_SIZE",
+    "value": 102,
+    "hex_value": "0x0066",
+    "category": "SMP",
+    "description": "this device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_CMD_NOT_SUPPORTED",
+    "value": 103,
+    "hex_value": "0x0067",
+    "category": "SMP",
+    "description": "The SMP command received is not supported on this device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_UNSPECIFIED_REASON",
+    "value": 104,
+    "hex_value": "0x0068",
+    "category": "SMP",
+    "description": "Pairing failed due to an unspecified reason.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_REPEATED_ATTEMPTS",
+    "value": 105,
+    "hex_value": "0x0069",
+    "category": "SMP",
+    "description": "since last pairing request or security request.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_INVALID_PARAM",
+    "value": 106,
+    "hex_value": "0x006A",
+    "category": "SMP",
+    "description": "The command length is invalid or a parameter is outside of the specified range.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_DHKEY_CHECK_FAILED",
+    "value": 107,
+    "hex_value": "0x006B",
+    "category": "SMP",
+    "description": "match the one calculated by the local device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_LOC_NUMERIC_COMPARISON_FAILED",
+    "value": 108,
+    "hex_value": "0x006C",
+    "category": "SMP",
+    "description": "Indicates that the confirm values in the numeric comparison protocol do not match.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_PASSKEY_ENTRY_FAILED",
+    "value": 113,
+    "hex_value": "0x0071",
+    "category": "SMP",
+    "description": "The user input of passkey failed, for example, the user canceled the operation.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_OOB_NOT_AVAILABLE",
+    "value": 114,
+    "hex_value": "0x0072",
+    "category": "SMP",
+    "description": "The OOB Data is not available.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_AUTH_REQ",
+    "value": 115,
+    "hex_value": "0x0073",
+    "category": "SMP",
+    "description": "met due to IO capabilities of one or both devices.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_CONF_VAL_FAILED",
+    "value": 116,
+    "hex_value": "0x0074",
+    "category": "SMP",
+    "description": "The confirm value does not match the calculated confirm value.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_PAIRING_NOT_SUPP",
+    "value": 117,
+    "hex_value": "0x0075",
+    "category": "SMP",
+    "description": "Pairing is not supported by the device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_ENC_KEY_SIZE",
+    "value": 118,
+    "hex_value": "0x0076",
+    "category": "SMP",
+    "description": "this device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_CMD_NOT_SUPPORTED",
+    "value": 119,
+    "hex_value": "0x0077",
+    "category": "SMP",
+    "description": "The SMP command received is not supported on this device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_UNSPECIFIED_REASON",
+    "value": 120,
+    "hex_value": "0x0078",
+    "category": "SMP",
+    "description": "Pairing failed due to an unspecified reason.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_REPEATED_ATTEMPTS",
+    "value": 121,
+    "hex_value": "0x0079",
+    "category": "SMP",
+    "description": "since last pairing request or security request.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_INVALID_PARAM",
+    "value": 122,
+    "hex_value": "0x007A",
+    "category": "SMP",
+    "description": "The command length is invalid or a parameter is outside of the specified range.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_DHKEY_CHECK_FAILED",
+    "value": 123,
+    "hex_value": "0x007B",
+    "category": "SMP",
+    "description": "match the one calculated by the local device.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_REM_NUMERIC_COMPARISON_FAILED",
+    "value": 124,
+    "hex_value": "0x007C",
+    "category": "SMP",
+    "description": "Indicates that the confirm values in the numeric comparison protocol do not match.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_ADDR_RESOLV_FAIL",
+    "value": 208,
+    "hex_value": "0x00D0",
+    "category": "SMP",
+    "description": "The provided resolvable address has not been resolved.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_SIGN_VERIF_FAIL",
+    "value": 209,
+    "hex_value": "0x00D1",
+    "category": "SMP",
+    "description": "The Signature Verification Failed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_ENC_KEY_MISSING",
+    "value": 210,
+    "hex_value": "0x00D2",
+    "category": "SMP",
+    "description": "needed to start an encryption session.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_ENC_NOT_SUPPORTED",
+    "value": 211,
+    "hex_value": "0x00D3",
+    "category": "SMP",
+    "description": "encryption feature.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "SMP_ERR_ENC_TIMEOUT",
+    "value": 212,
+    "hex_value": "0x00D4",
+    "category": "SMP",
+    "description": "A timeout has occurred during the start encryption session.",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_NO_ERROR",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "PRF",
+    "description": "No error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_APP_ERROR",
+    "value": 128,
+    "hex_value": "0x0080",
+    "category": "PRF",
+    "description": "Application Error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_INVALID_PARAM",
+    "value": 129,
+    "hex_value": "0x0081",
+    "category": "PRF",
+    "description": "Invalid parameter in request",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_INEXISTENT_HDL",
+    "value": 130,
+    "hex_value": "0x0082",
+    "category": "PRF",
+    "description": "Inexistent handle for sending a read/write characteristic request",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_STOP_DISC_CHAR_MISSING",
+    "value": 131,
+    "hex_value": "0x0083",
+    "category": "PRF",
+    "description": "Discovery stopped due to missing attribute according to specification",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_MULTIPLE_SVC",
+    "value": 132,
+    "hex_value": "0x0084",
+    "category": "PRF",
+    "description": "Too many SVC instances found -> protocol violation",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_STOP_DISC_WRONG_CHAR_PROP",
+    "value": 133,
+    "hex_value": "0x0085",
+    "category": "PRF",
+    "description": "Discovery stopped due to found attribute with incorrect properties",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_MULTIPLE_CHAR",
+    "value": 134,
+    "hex_value": "0x0086",
+    "category": "PRF",
+    "description": "Too many Char. instances found-> protocol violation",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_NOT_WRITABLE",
+    "value": 135,
+    "hex_value": "0x0087",
+    "category": "PRF",
+    "description": "Attribute write not allowed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_NOT_READABLE",
+    "value": 136,
+    "hex_value": "0x0088",
+    "category": "PRF",
+    "description": "Attribute read not allowed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_REQ_DISALLOWED",
+    "value": 137,
+    "hex_value": "0x0089",
+    "category": "PRF",
+    "description": "Request not allowed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_NTF_DISABLED",
+    "value": 138,
+    "hex_value": "0x008A",
+    "category": "PRF",
+    "description": "Notification Not Enabled",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_IND_DISABLED",
+    "value": 139,
+    "hex_value": "0x008B",
+    "category": "PRF",
+    "description": "Indication Not Enabled",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_FEATURE_NOT_SUPPORTED",
+    "value": 140,
+    "hex_value": "0x008C",
+    "category": "PRF",
+    "description": "Feature not supported by profile",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_UNEXPECTED_LEN",
+    "value": 141,
+    "hex_value": "0x008D",
+    "category": "PRF",
+    "description": "Read value has an unexpected length",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_DISCONNECTED",
+    "value": 142,
+    "hex_value": "0x008E",
+    "category": "PRF",
+    "description": "Disconnection occurs",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_ERR_PROC_TIMEOUT",
+    "value": 143,
+    "hex_value": "0x008F",
+    "category": "PRF",
+    "description": "Procedure Timeout",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_CCCD_IMPR_CONFIGURED",
+    "value": 253,
+    "hex_value": "0x00FD",
+    "category": "PRF",
+    "description": "Client characteristic configuration improperly configured",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_PROC_IN_PROGRESS",
+    "value": 254,
+    "hex_value": "0x00FE",
+    "category": "PRF",
+    "description": "Procedure already in progress",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "PRF_OUT_OF_RANGE",
+    "value": 255,
+    "hex_value": "0x00FF",
+    "category": "PRF",
+    "description": "Out of Range",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_NO_ERROR",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "LL",
+    "description": "No error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNKNOWN_HCI_COMMAND",
+    "value": 145,
+    "hex_value": "0x0091",
+    "category": "LL",
+    "description": "Unknown HCI Command",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNKNOWN_CONNECTION_ID",
+    "value": 146,
+    "hex_value": "0x0092",
+    "category": "LL",
+    "description": "Unknown Connection Identifier",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_HARDWARE_FAILURE",
+    "value": 147,
+    "hex_value": "0x0093",
+    "category": "LL",
+    "description": "Hardware Failure",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_PAGE_TIMEOUT",
+    "value": 148,
+    "hex_value": "0x0094",
+    "category": "LL",
+    "description": "BT Page Timeout",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_AUTH_FAILURE",
+    "value": 149,
+    "hex_value": "0x0095",
+    "category": "LL",
+    "description": "Authentication failure",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_PIN_MISSING",
+    "value": 150,
+    "hex_value": "0x0096",
+    "category": "LL",
+    "description": "Pin code missing",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_MEMORY_CAPA_EXCEED",
+    "value": 151,
+    "hex_value": "0x0097",
+    "category": "LL",
+    "description": "Memory capacity exceed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CON_TIMEOUT",
+    "value": 152,
+    "hex_value": "0x0098",
+    "category": "LL",
+    "description": "Connection Timeout",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CON_LIMIT_EXCEED",
+    "value": 153,
+    "hex_value": "0x0099",
+    "category": "LL",
+    "description": "Connection limit Exceed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_SYNC_CON_LIMIT_DEV_EXCEED",
+    "value": 154,
+    "hex_value": "0x009A",
+    "category": "LL",
+    "description": "Synchronous Connection limit exceed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_ACL_CON_EXISTS",
+    "value": 155,
+    "hex_value": "0x009B",
+    "category": "LL",
+    "description": "ACL Connection exits",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_COMMAND_DISALLOWED",
+    "value": 156,
+    "hex_value": "0x009C",
+    "category": "LL",
+    "description": "Command Disallowed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CONN_REJ_LIMITED_RESOURCES",
+    "value": 157,
+    "hex_value": "0x009D",
+    "category": "LL",
+    "description": "Connection rejected due to limited resources",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CONN_REJ_SECURITY_REASONS",
+    "value": 158,
+    "hex_value": "0x009E",
+    "category": "LL",
+    "description": "Connection rejected due to security reason",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CONN_REJ_UNACCEPTABLE_BDADDR",
+    "value": 159,
+    "hex_value": "0x009F",
+    "category": "LL",
+    "description": "Connection rejected due to unacceptable BD Addr",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CONN_ACCEPT_TIMEOUT_EXCEED",
+    "value": 160,
+    "hex_value": "0x00A0",
+    "category": "LL",
+    "description": "Connection rejected due to Accept connection timeout",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNSUPPORTED",
+    "value": 161,
+    "hex_value": "0x00A1",
+    "category": "LL",
+    "description": "Not Supported",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_INVALID_HCI_PARAM",
+    "value": 162,
+    "hex_value": "0x00A2",
+    "category": "LL",
+    "description": "invalid parameters",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_REMOTE_USER_TERM_CON",
+    "value": 163,
+    "hex_value": "0x00A3",
+    "category": "LL",
+    "description": "Remote user terminate connection",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_REMOTE_DEV_TERM_LOW_RESOURCES",
+    "value": 164,
+    "hex_value": "0x00A4",
+    "category": "LL",
+    "description": "Remote device terminate connection due to low resources",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_REMOTE_DEV_POWER_OFF",
+    "value": 165,
+    "hex_value": "0x00A5",
+    "category": "LL",
+    "description": "Remote device terminate connection due to power off",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CON_TERM_BY_LOCAL_HOST",
+    "value": 166,
+    "hex_value": "0x00A6",
+    "category": "LL",
+    "description": "Connection terminated by local host",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_REPEATED_ATTEMPTS",
+    "value": 167,
+    "hex_value": "0x00A7",
+    "category": "LL",
+    "description": "Repeated attempts",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_PAIRING_NOT_ALLOWED",
+    "value": 168,
+    "hex_value": "0x00A8",
+    "category": "LL",
+    "description": "Pairing not Allowed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNKNOWN_LMP_PDU",
+    "value": 169,
+    "hex_value": "0x00A9",
+    "category": "LL",
+    "description": "Unknown PDU Error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNSUPPORTED_REMOTE_FEATURE",
+    "value": 170,
+    "hex_value": "0x00AA",
+    "category": "LL",
+    "description": "Unsupported remote feature",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_SCO_OFFSET_REJECTED",
+    "value": 171,
+    "hex_value": "0x00AB",
+    "category": "LL",
+    "description": "Sco Offset rejected",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_SCO_INTERVAL_REJECTED",
+    "value": 172,
+    "hex_value": "0x00AC",
+    "category": "LL",
+    "description": "SCO Interval Rejected",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_SCO_AIR_MODE_REJECTED",
+    "value": 173,
+    "hex_value": "0x00AD",
+    "category": "LL",
+    "description": "SCO air mode Rejected",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_INVALID_LMP_PARAM",
+    "value": 174,
+    "hex_value": "0x00AE",
+    "category": "LL",
+    "description": "Invalid LMP parameters",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNSPECIFIED_ERROR",
+    "value": 175,
+    "hex_value": "0x00AF",
+    "category": "LL",
+    "description": "Unspecified error",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNSUPPORTED_LMP_PARAM_VALUE",
+    "value": 176,
+    "hex_value": "0x00B0",
+    "category": "LL",
+    "description": "Unsupported LMP Parameter value",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_ROLE_CHANGE_NOT_ALLOWED",
+    "value": 177,
+    "hex_value": "0x00B1",
+    "category": "LL",
+    "description": "Role Change Not allowed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_LMP_RSP_TIMEOUT",
+    "value": 178,
+    "hex_value": "0x00B2",
+    "category": "LL",
+    "description": "LMP Response timeout",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_LMP_COLLISION",
+    "value": 179,
+    "hex_value": "0x00B3",
+    "category": "LL",
+    "description": "LMP Collision",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_LMP_PDU_NOT_ALLOWED",
+    "value": 180,
+    "hex_value": "0x00B4",
+    "category": "LL",
+    "description": "LMP Pdu not allowed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_ENC_MODE_NOT_ACCEPT",
+    "value": 181,
+    "hex_value": "0x00B5",
+    "category": "LL",
+    "description": "Encryption mode not accepted",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_LINK_KEY_CANT_CHANGE",
+    "value": 182,
+    "hex_value": "0x00B6",
+    "category": "LL",
+    "description": "Link Key Cannot be changed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_QOS_NOT_SUPPORTED",
+    "value": 183,
+    "hex_value": "0x00B7",
+    "category": "LL",
+    "description": "Quality of Service not supported",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_INSTANT_PASSED",
+    "value": 184,
+    "hex_value": "0x00B8",
+    "category": "LL",
+    "description": "Error, instant passed",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_PAIRING_WITH_UNIT_KEY_NOT_SUP",
+    "value": 185,
+    "hex_value": "0x00B9",
+    "category": "LL",
+    "description": "Pairing with unit key not supported",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_DIFF_TRANSACTION_COLLISION",
+    "value": 186,
+    "hex_value": "0x00BA",
+    "category": "LL",
+    "description": "Transaction collision",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_QOS_UNACCEPTABLE_PARAM",
+    "value": 188,
+    "hex_value": "0x00BC",
+    "category": "LL",
+    "description": "Unacceptable parameters",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_QOS_REJECTED",
+    "value": 189,
+    "hex_value": "0x00BD",
+    "category": "LL",
+    "description": "Quality of Service rejected",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CHANNEL_CLASS_NOT_SUP",
+    "value": 190,
+    "hex_value": "0x00BE",
+    "category": "LL",
+    "description": "Channel class not supported",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_INSUFFICIENT_SECURITY",
+    "value": 191,
+    "hex_value": "0x00BF",
+    "category": "LL",
+    "description": "Insufficient security",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_PARAM_OUT_OF_MAND_RANGE",
+    "value": 192,
+    "hex_value": "0x00C0",
+    "category": "LL",
+    "description": "Parameters out of mandatory range",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_ROLE_SWITCH_PEND",
+    "value": 194,
+    "hex_value": "0x00C2",
+    "category": "LL",
+    "description": "Role switch pending",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_RESERVED_SLOT_VIOLATION",
+    "value": 196,
+    "hex_value": "0x00C4",
+    "category": "LL",
+    "description": "Reserved slot violation",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_ROLE_SWITCH_FAIL",
+    "value": 197,
+    "hex_value": "0x00C5",
+    "category": "LL",
+    "description": "Role Switch fail",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_EIR_TOO_LARGE",
+    "value": 198,
+    "hex_value": "0x00C6",
+    "category": "LL",
+    "description": "Error, EIR too large",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_SP_NOT_SUPPORTED_HOST",
+    "value": 199,
+    "hex_value": "0x00C7",
+    "category": "LL",
+    "description": "Simple pairing not supported by host",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_HOST_BUSY_PAIRING",
+    "value": 200,
+    "hex_value": "0x00C8",
+    "category": "LL",
+    "description": "Host pairing is busy",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CONTROLLER_BUSY",
+    "value": 202,
+    "hex_value": "0x00CA",
+    "category": "LL",
+    "description": "Controller is busy",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_UNACCEPTABLE_CONN_INT",
+    "value": 203,
+    "hex_value": "0x00CB",
+    "category": "LL",
+    "description": "Unacceptable connection initialization",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_DIRECT_ADV_TO",
+    "value": 204,
+    "hex_value": "0x00CC",
+    "category": "LL",
+    "description": "Direct Advertising Timeout",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_TERMINATED_MIC_FAILURE",
+    "value": 205,
+    "hex_value": "0x00CD",
+    "category": "LL",
+    "description": "Connection Terminated due to a MIC failure",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LL_ERR_CONN_FAILED_TO_BE_EST",
+    "value": 206,
+    "hex_value": "0x00CE",
+    "category": "LL",
+    "description": "Connection failed to be established",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  },
+  {
+    "name": "LE_SUCCESS",
+    "value": 0,
+    "hex_value": "0x0000",
+    "category": "COMMON",
+    "description": "Le Success",
+    "probable_causes": [],
+    "solutions": [],
+    "related_apis": []
+  }
+]

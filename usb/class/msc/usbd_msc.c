@@ -113,6 +113,7 @@ uint8_t usbd_msc_class_handler(struct usb_setup_packet *setup, uint8_t **data, u
 
 __WEAK void usbd_msc_get_cap(uint8_t lun, uint32_t *block_num, uint32_t *block_size)
 {
+    (void)lun;
     //Pretend having so many buffer,not has actually.
     *block_num = 32;
     *block_size = CONFIG_USBD_MSC_MAX_BUFSIZE;
@@ -120,12 +121,14 @@ __WEAK void usbd_msc_get_cap(uint8_t lun, uint32_t *block_num, uint32_t *block_s
 
 __WEAK bool usbd_msc_sector_read(uint8_t lun, uint32_t sector, uint8_t *buffer, uint32_t length)
 {
+    (void)lun;(void)sector;(void)buffer;(void)length;
     // todo: read data
     return false;
 }
 
 __WEAK bool usbd_msc_sector_write(uint8_t lun, uint32_t sector, const uint8_t *data, uint32_t length)
 {
+    (void)lun;(void)sector;(void)data;(void)length;
     // todo: save data
     return false;
 }
@@ -250,6 +253,7 @@ static bool SCSI_testUnitReady(uint8_t **data, uint32_t *len)
 
 static bool SCSI_startStopUnit(uint8_t **data, uint32_t *len)
 {
+    (void)data;
     if (msc_env.cbw.dDataLength != 0U) {
         SCSI_SetSenseData(SCSI_KCQIR_INVALIDCOMMAND);
         return false;
@@ -275,6 +279,7 @@ static bool SCSI_startStopUnit(uint8_t **data, uint32_t *len)
 
 static bool SCSI_preventAllowMediaRemoval(uint8_t **data, uint32_t *len)
 {
+    (void)data;
     if (msc_env.cbw.dDataLength != 0U) {
         SCSI_SetSenseData(SCSI_KCQIR_INVALIDCOMMAND);
         return false;
@@ -541,7 +546,7 @@ static bool SCSI_read(uint8_t cmd)
     msc_env.start_sector = GET_BE32(&msc_env.cbw.CB[2]);
 
     /* Number of Blocks to transfer */
-    msc_env.nsectors = (cmd == SCSI_CMD_READ10) ? GET_BE16(&msc_env.cbw.CB[7]) : GET_BE32(&msc_env.cbw.CB[6]);
+    msc_env.nsectors = (cmd == SCSI_CMD_READ10) ? (uint32_t)GET_BE16(&msc_env.cbw.CB[7]) : GET_BE32(&msc_env.cbw.CB[6]);
 
     USB_LOG_DBG("SCSI_read - lba:%d, nsr:%d, nbr:%d, lun:%d\r\n", msc_env.start_sector, msc_env.nsectors, msc_env.scsi_blk_nbr[msc_env.cbw.bLUN], msc_env.cbw.bLUN);
     if ((msc_env.start_sector + msc_env.nsectors) > msc_env.scsi_blk_nbr[msc_env.cbw.bLUN]) {
@@ -579,7 +584,7 @@ static bool SCSI_write(uint8_t cmd)
     }
 
     uint32_t data_len = msc_env.nsectors * msc_env.scsi_blk_size[msc_env.cbw.bLUN];
-    
+
     USB_LOG_DBG("SCSI_write - dlen:%d, cbw.dlen:%d\r\n", data_len, msc_env.cbw.dDataLength);
     if (msc_env.cbw.dDataLength != data_len) {
         return false;
@@ -766,6 +771,7 @@ void usbd_msc_bulk_out_handler(uint8_t ep)
 
 void usbd_msc_bulk_in_handler(uint8_t ep)
 {
+    (void)ep;
     if (msc_env.block_offset < msc_env.block_length)
     {
         uint16_t trans_len = MIN(msc_env.block_length-msc_env.block_offset, MSC_BULK_EP_MPS);

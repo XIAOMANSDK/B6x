@@ -1,0 +1,2364 @@
+[
+  {
+    "name": "<anonymous>",
+    "members": [
+      {
+        "name": "CYCLE_CTRL",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "NEXT_USEBURST",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "N_MINUS_1",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "R_POWER",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 12,
+        "offset_hex": "0x000C",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "SRC_PROT_CTRL",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 16,
+        "offset_hex": "0x0010",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "DST_PROT_CTRL",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 20,
+        "offset_hex": "0x0014",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "SRC_SIZE",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 24,
+        "offset_hex": "0x0018",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "SRC_INC",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 28,
+        "offset_hex": "0x001C",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "DST_SIZE",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 32,
+        "offset_hex": "0x0020",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "DST_INC",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 36,
+        "offset_hex": "0x0024",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 40,
+    "alignment": 4,
+    "file_path": "./drivers\\api\\dma.h",
+    "line_number": 204,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "<anonymous>",
+    "members": [
+      {
+        "name": "SRC_DATA_END_PTR",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "DST_DATA_END_PTR",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "TRANS_CFG_DATA",
+        "type": "DMA_TRANS_CFG_Typedef",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "TRANS_CFG_RESV",
+        "type": "DMA_TRANS_CFG_Typedef",
+        "bit_field": null,
+        "offset": 12,
+        "offset_hex": "0x000C",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 16,
+    "alignment": 4,
+    "file_path": "./drivers\\api\\dma.h",
+    "line_number": 221,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "<anonymous>",
+    "members": [
+      {
+        "name": "PRI_CHNL",
+        "type": "DMA_CHNL_CTRL_Typedef",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "ALT_CHNL",
+        "type": "DMA_CHNL_CTRL_Typedef",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./drivers\\api\\dma.h",
+    "line_number": 234,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "pwm_channel_cfg",
+    "members": [
+      {
+        "name": "ccmr",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "ccer",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "duty",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 4,
+    "alignment": 2,
+    "file_path": "./drivers\\api\\pwm.h",
+    "line_number": 121,
+    "description": "",
+    "category": "peripheral_config",
+    "underlying_type": ""
+  },
+  {
+    "name": "<anonymous>",
+    "members": [
+      {
+        "name": "msb_val",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "lsb_val",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "reserve",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 6,
+    "alignment": 2,
+    "file_path": "./drivers\\api\\rco.h",
+    "line_number": 44,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "<anonymous>",
+    "members": [
+      {
+        "name": "sec",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "ms",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./drivers\\api\\rtc.h",
+    "line_number": 25,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usbd_ep_tag",
+    "members": [
+      {
+        "name": "ep_addr",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "ep_type",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "ep_mps",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "ep_cb",
+        "type": "usbd_endpoint_handler",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usbd.h",
+    "line_number": 87,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usbd_class_tag",
+    "members": [
+      {
+        "name": "intf_start",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "intf_end",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "class_handler",
+        "type": "usbd_request_handler",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usbd.h",
+    "line_number": 107,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usbd_config_tag",
+    "members": [
+      {
+        "name": "conf_val",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "intf_cnt",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "class_cnt",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "ep_cnt",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "*class_tab",
+        "type": "usbd_class_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "*ep_tab",
+        "type": "usbd_ep_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 12,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usbd.h",
+    "line_number": 125,
+    "description": "",
+    "category": "peripheral_config",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_setup_packet",
+    "members": [
+      {
+        "name": "bmRequestType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bRequest",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wValue",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wIndex",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 524,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_desc_header",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 2,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 553,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_device_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bcdUSB",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDeviceClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDeviceSubClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 5,
+        "offset_hex": "0x0005",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDeviceProtocol",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bMaxPacketSize0",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 7,
+        "offset_hex": "0x0007",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "idVendor",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "idProduct",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 10,
+        "offset_hex": "0x000A",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bcdDevice",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 12,
+        "offset_hex": "0x000C",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "iManufacturer",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 14,
+        "offset_hex": "0x000E",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "iProduct",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 15,
+        "offset_hex": "0x000F",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "iSerialNumber",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 16,
+        "offset_hex": "0x0010",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bNumConfigurations",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 17,
+        "offset_hex": "0x0011",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 18,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 559,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_configuration_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wTotalLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bNumInterfaces",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bConfigurationValue",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 5,
+        "offset_hex": "0x0005",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "iConfiguration",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bmAttributes",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 7,
+        "offset_hex": "0x0007",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bMaxPower",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 10,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 579,
+    "description": "",
+    "category": "peripheral_config",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_interface_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bInterfaceNumber",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bAlternateSetting",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bNumEndpoints",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bInterfaceClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 5,
+        "offset_hex": "0x0005",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bInterfaceSubClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bInterfaceProtocol",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 7,
+        "offset_hex": "0x0007",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "iInterface",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 9,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 593,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_endpoint_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bEndpointAddress",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bmAttributes",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wMaxPacketSize",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bInterval",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 608,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_string_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bString",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 4,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 620,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_interface_association_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bFirstInterface",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bInterfaceCount",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bFunctionClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bFunctionSubClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 5,
+        "offset_hex": "0x0005",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bFunctionProtocol",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "iFunction",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 7,
+        "offset_hex": "0x0007",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 629,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_device_qualifier_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bcdUSB",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDeviceClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDeviceSubClass",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 5,
+        "offset_hex": "0x0005",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDeviceProtocol",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bMaxPacketSize",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 7,
+        "offset_hex": "0x0007",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bNumConfigurations",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bReserved",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 9,
+        "offset_hex": "0x0009",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 10,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 643,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv1_string_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bString",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 14,
+        "array_size": 14,
+        "description": ""
+      },
+      {
+        "name": "bMS_VendorCode",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 16,
+        "offset_hex": "0x0010",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bPad",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 17,
+        "offset_hex": "0x0011",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 18,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 670,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv1_compat_id_header_descriptor",
+    "members": [
+      {
+        "name": "dwLength",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bcdVersion",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wIndex",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bCount",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "reserved",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 9,
+        "offset_hex": "0x0009",
+        "size": 7,
+        "array_size": 7,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 16,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 679,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv1_comp_id_function_descriptor",
+    "members": [
+      {
+        "name": "bFirstInterfaceNumber",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "reserved1",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "compatibleID",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 8,
+        "array_size": 8,
+        "description": ""
+      },
+      {
+        "name": "subCompatibleID",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 10,
+        "offset_hex": "0x000A",
+        "size": 8,
+        "array_size": 8,
+        "description": ""
+      },
+      {
+        "name": "reserved2",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 18,
+        "offset_hex": "0x0012",
+        "size": 6,
+        "array_size": 6,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 24,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 688,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv1_descriptor",
+    "members": [
+      {
+        "name": "*string",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "string_len",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "vendor_code",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "*compat_id",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "compat_id_len",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "*comp_id_property",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "comp_id_property_len",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 10,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 702,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv2_header_descriptor",
+    "members": [
+      {
+        "name": "dwLength",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bcdVersion",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wIndex",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bCount",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 12,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 713,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv2_set_header_descriptor",
+    "members": [
+      {
+        "name": "wLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wDescriptorType",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "dwWindowsVersion",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wDescriptorSetTotalLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 12,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 721,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv2_comp_id_descriptor",
+    "members": [
+      {
+        "name": "wLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wDescriptorType",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "compatibleID",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 8,
+        "array_size": 8,
+        "description": ""
+      },
+      {
+        "name": "subCompatibleID",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 12,
+        "offset_hex": "0x000C",
+        "size": 8,
+        "array_size": 8,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 20,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 729,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv2_property_descriptor",
+    "members": [
+      {
+        "name": "wLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wDescriptorType",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "dwPropertyDataType",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wPropertyNameLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 8,
+        "offset_hex": "0x0008",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "*bPropertyName",
+        "type": "char",
+        "bit_field": null,
+        "offset": 10,
+        "offset_hex": "0x000A",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "dwPropertyDataLength",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 12,
+        "offset_hex": "0x000C",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "*bPropertyData",
+        "type": "char",
+        "bit_field": null,
+        "offset": 16,
+        "offset_hex": "0x0010",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 20,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 737,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv2_subset_function_descriptor",
+    "members": [
+      {
+        "name": "wLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wDescriptorType",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bFirstInterface",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bReserved",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 5,
+        "offset_hex": "0x0005",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wSubsetLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 748,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_msosv2_descriptor",
+    "members": [
+      {
+        "name": "*compat_id",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "compat_id_len",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "vendor_code",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 6,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 756,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_header_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wTotalLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bNumDeviceCaps",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 6,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 763,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_capability_platform_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDevCapabilityType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bReserved",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "PlatformCapabilityUUID",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 16,
+        "array_size": 16,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 20,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 771,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_capability_msosv2_descriptor",
+    "members": [
+      {
+        "name": "dwWindowsVersion",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "wMSOSDescriptorSetTotalLength",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bVendorCode",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 6,
+        "offset_hex": "0x0006",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bAltEnumCode",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 7,
+        "offset_hex": "0x0007",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 780,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_capability_webusb_descriptor",
+    "members": [
+      {
+        "name": "bcdVersion",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bVendorCode",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "iLandingPage",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 4,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 788,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_capability_extension_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDevCapabilityType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bmAttributes",
+        "type": "uint32_t",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 795,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_capability_platform_msosv2_descriptor",
+    "members": [
+      {
+        "name": "platform_msos",
+        "type": "struct usb_bos_capability_platform_descriptor",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "data_msosv2",
+        "type": "struct usb_bos_capability_msosv2_descriptor",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 803,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_capability_platform_webusb_descriptor",
+    "members": [
+      {
+        "name": "platform_webusb",
+        "type": "struct usb_bos_capability_platform_descriptor",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "data_webusb",
+        "type": "struct usb_bos_capability_webusb_descriptor",
+        "bit_field": null,
+        "offset": 4,
+        "offset_hex": "0x0004",
+        "size": 4,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 8,
+    "alignment": 4,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 809,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_webusb_url_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bScheme",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "URL",
+        "type": "char",
+        "bit_field": null,
+        "offset": 3,
+        "offset_hex": "0x0003",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 4,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 814,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_bos_descriptor",
+    "members": [
+      {
+        "name": "*string",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "string_len",
+        "type": "uint16_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 2,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 4,
+    "alignment": 2,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 821,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  },
+  {
+    "name": "usb_device_capability_descriptor",
+    "members": [
+      {
+        "name": "bLength",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 0,
+        "offset_hex": "0x0000",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDescriptorType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 1,
+        "offset_hex": "0x0001",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      },
+      {
+        "name": "bDevCapabilityType",
+        "type": "uint8_t",
+        "bit_field": null,
+        "offset": 2,
+        "offset_hex": "0x0002",
+        "size": 1,
+        "array_size": null,
+        "description": ""
+      }
+    ],
+    "is_union": false,
+    "is_anonymous": false,
+    "size_bytes": 3,
+    "alignment": 1,
+    "file_path": "./usb\\api\\usb_def.h",
+    "line_number": 827,
+    "description": "",
+    "category": "generic",
+    "underlying_type": ""
+  }
+]

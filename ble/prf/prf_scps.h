@@ -87,7 +87,7 @@ uint8_t scps_scan_refresh(uint8_t conidx);
 
 /**
  ****************************************************************************************
- * @brief Callback on received scan params from peer device via WC (__weak func)
+ * @brief Callback on received scan params from peer device via WC (__WEAK func)
  *
  * @param[in] conidx     Connection index
  * @param[in] scan_intv  Scan interval value

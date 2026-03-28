@@ -17,7 +17,7 @@
 #include "usbd_dfu.h"
 
 #if (DBG_DFU)
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -28,7 +28,7 @@
 #define USBD_MAX_POWER              100
 #define USBD_LANGID_STRING          1033
 
-#define DFU_FLAG                    BIT(15)
+#define DFU_FLAG                    BIT(7)
 #define FLASH_CODE_BASE             (0x18004000)
 #define IWDT_RST_TO                 (1)
 
@@ -56,7 +56,7 @@ const uint8_t dfu_descriptor[] = {
     USB_DEVICE_DESCRIPTOR_INIT(USB_1_1, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, 0x011a, 0x01),
 
     /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_DFU_CONFIG_SIZE, USB_CONFIG_INTF_CNT, 
+    USB_CONFIG_DESCRIPTOR_INIT(USB_DFU_CONFIG_SIZE, USB_CONFIG_INTF_CNT,
             0x01, USB_CONFIG_BUS_POWERED, USBD_MAX_POWER),
 
     DFU_DESCRIPTOR_INIT(0, DFU_PROTOCOL_DFUMODE, DFU_ATTR_CAPABLE, 0x04/*FLASH_DESC_iSTR*/),
@@ -197,6 +197,7 @@ static const usbd_config_t dfu_configuration[] = {
 
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
+    (void)arg;
     switch (event) {
         case USBD_EVENT_RESET:
             break;
@@ -231,21 +232,7 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 #endif
 
 /* Wait cache idle, thene disable-flush cache */
-//#undef FSHC_CACHE_DISABLE
-//#define FSHC_CACHE_DISABLE()                        \
-//do {                                                \
-//    GLOBAL_INT_DISABLE();                           \
-//    while (SYSCFG->ACC_CCR_BUSY);                   \
-//    uint32_t reg_val = (CACHE->CCR.Word);           \
-//    CACHE->CCR.Word  = 0;                           \
-//    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);
 
-///* Restore cache config */
-//#undef FSHC_CACHE_RESTORE
-//#define FSHC_CACHE_RESTORE()                        \
-//    CACHE->CCR.Word = reg_val;                      \
-//    GLOBAL_INT_RESTORE();                           \
-//} while(0)
 #define FSHC_CACHE_DISABLE()        GLOBAL_INT_DISABLE()
 #define FSHC_CACHE_RESTORE()        GLOBAL_INT_RESTORE()
 
@@ -303,7 +290,7 @@ uint8_t dfu_itf_erase(uint32_t addr)
 
 static void appJump(void)
 {
-    AON->BACKUP0 &= ~DFU_FLAG;
+    AON->BACKUP1 &= ~DFU_FLAG;
     sysJumpTo(FLASH_CODE_BASE);
 }
 
@@ -340,7 +327,7 @@ static void usbdInit(void)
     usbd_dfu_init();
 
     NVIC_EnableIRQ(USB_IRQn);
-    
+
     // Global Interrupt Enable
     GLOBAL_INT_START();
 }
@@ -349,13 +336,13 @@ static void sysInit(void)
 {
     uint32_t no_app_code = RD_32(0x18004000);
 
-    if ((AON->BACKUP0 & DFU_FLAG) || (no_app_code == 0xFFFFFFFFU))
+    if ((AON->BACKUP1 & DFU_FLAG) || (no_app_code == 0xFFFFFFFFU))
     {
         // record current, then switch syclk to 48M for USB
         //gSysClk = rcc_sysclk_get();
         rcc_sysclk_set(SYS_CLK_48M);
         iwdt_disable();
-        
+
         usbdInit();
     }
     else

@@ -5,7 +5,7 @@
  *
  * @brief Application entry point - Example
  *
- * < __weak func as demo, recommend to Override its in 'user porject'/src/myapp.c >
+ * < __WEAK func as demo, recommend to Override its in 'user porject'/src/myapp.c >
  ****************************************************************************************
  */
 
@@ -17,7 +17,7 @@
 
 #if (DBG_APP)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #endif
@@ -127,8 +127,9 @@ const struct gapm_dev_config ble_dev_config =
  * @return Length of device information, 0 means an error occurs.
  ****************************************************************************************
  */
-__weak uint16_t gap_svc_get_dev_info(uint8_t conidx, uint8_t req, uint16_t maxlen, uint8_t *info)
+__WEAK uint16_t gap_svc_get_dev_info(uint8_t conidx, uint8_t req, uint16_t maxlen, uint8_t *info)
 {
+    (void)conidx;(void)maxlen;
     if (req == GAPC_DEV_NAME)
     {
         return app_name_get(DEV_NAME_MAX_LEN, info);
@@ -150,17 +151,17 @@ __weak uint16_t gap_svc_get_dev_info(uint8_t conidx, uint8_t req, uint16_t maxle
         return sizeof(struct gapc_conn_param);
     }
     #endif
-    
+
     return 0;
 }
 
 /**
  ****************************************************************************************
- * @brief Create profiles, maybe User Override! (__weak func)
+ * @brief Create profiles, maybe User Override! (__WEAK func)
  *        Added in order and judged status in each profile-func.
  ****************************************************************************************
  */
-__weak void app_prf_create(void)
+__WEAK void app_prf_create(void)
 {
     // Generic Access Profile(0x1800)
     gap_svc_init(GAP_START_HDL, GAP_ATT_CFG);
@@ -175,12 +176,12 @@ __weak void app_prf_create(void)
 
 /**
  ****************************************************************************************
- * @brief API to Init Application, maybe User Override! (__weak func)
+ * @brief API to Init Application, maybe User Override! (__WEAK func)
  *
  * @param[in] rsn   reset reason @see enum rst_src_bfs
  ****************************************************************************************
  */
-__weak void app_init(uint16_t rsn)
+__WEAK void app_init(uint16_t rsn)
 {
     // Init BLE and App to startup or Resume BLE to continue if it wakeup from poweroff.
     #if (BLE_LITELIB)
@@ -192,8 +193,9 @@ __weak void app_init(uint16_t rsn)
     else
     #endif //(BLE_LITELIB)
     {
+        (void)rsn;
         heap_cfg_t heap;
-        
+
         // Config Heap, resized with special lib
         heap.base[MEM_ENV] = BLE_HEAP_BASE;
         heap.size[MEM_ENV] = BLE_HEAP_ENV_SIZE;
@@ -208,30 +210,30 @@ __weak void app_init(uint16_t rsn)
 
     // Init RF & Modem
     rfmdm_init();
-    
+
     NVIC_EnableIRQ(BLE_IRQn);
 }
 
 /**
  ****************************************************************************************
- * @brief API to Set State of Application, maybe User Override! (__weak func)
+ * @brief API to Set State of Application, maybe User Override! (__WEAK func)
  *
  * @param[in] state    new state
  ****************************************************************************************
  */
-__weak void app_state_set(uint8_t state)
+__WEAK void app_state_set(uint8_t state)
 {
     DEBUG("State(old:%d,new:%d)", app_state_get(), state);
 
     app_env.state = state;
-    
+
     // Indication, User add more...
 
 }
 
 /**
  ****************************************************************************************
- * @brief API to Get Device Name, maybe User Override! (__weak func)
+ * @brief API to Get Device Name, maybe User Override! (__WEAK func)
  *
  * @param[in]  size   Length of name Buffer
  * @param[out] name   Pointer of name buffer
@@ -239,7 +241,7 @@ __weak void app_state_set(uint8_t state)
  * @return Length of device name
  ****************************************************************************************
  */
-__weak uint8_t app_name_get(uint8_t size, uint8_t *name)
+__WEAK uint8_t app_name_get(uint8_t size, uint8_t *name)
 {
     uint8_t len = sizeof(BLE_DEV_NAME) - 1;
 
@@ -270,17 +272,17 @@ __weak uint8_t app_name_get(uint8_t size, uint8_t *name)
 
 /**
  ****************************************************************************************
- * @brief Finite state machine for Device Configure, maybe User Override! (__weak func)
+ * @brief Finite state machine for Device Configure, maybe User Override! (__WEAK func)
  *
  * @param[in] evt   configure event @see enum ble_event
  ****************************************************************************************
  */
-__weak void app_conf_fsm(uint8_t evt)
+__WEAK void app_conf_fsm(uint8_t evt)
 {
     if (evt == BLE_RESET)
     {
         memset(&app_env, 0, sizeof(app_env));
-        
+
         // Set device config
         gapm_set_dev(&ble_dev_config, &ble_dev_addr, NULL);
     }
@@ -292,24 +294,25 @@ __weak void app_conf_fsm(uint8_t evt)
 
         // Create Activities
         app_actv_create();
-        
+
         ble_2G4_set(SYNC_WORD_L, SYNC_WORD_H);
-        
+
         init_timer_start();
     }
 }
 
 /**
  ****************************************************************************************
- * @brief Finite state machine for connection event, maybe User Override! (__weak func)
+ * @brief Finite state machine for connection event, maybe User Override! (__WEAK func)
  *
  * @param[in] evt     connection event @see enum ble_event
  * @param[in] conidx  connection index
  * @param[in] param   param of connection event
  ****************************************************************************************
  */
-__weak void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
+__WEAK void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
 {
+    (void)param;
     switch (evt)
     {
         case BLE_CONNECTED:
@@ -319,30 +322,30 @@ __weak void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
             app_state_set(APP_CONNECTED);
 
             gapc_connect_rsp(conidx, BLE_AUTH);
-            
+
 //            app_scan_action(ACTV_STOP);
 //            init_timer_stop();
 //            memset((uint8_t *)scan_addr_list, 0x00, (sizeof(struct gap_bdaddr) * SCAN_NUM_MAX));
 //            scan_cnt = 0;
         } break;
-        
+
         case BLE_DISCONNECTED:
         {
             init_timer_start();
             app_scan_action(ACTV_START);
             app_state_set(APP_READY);
         } break;
-        
+
         case BLE_BONDED:
         {
             // todo, eg. save the generated slave's LTK to flash
         } break;
-        
+
         case BLE_ENCRYPTED:
         {
             // todo
         } break;
-        
+
         default:
             break;
     }
@@ -357,12 +360,12 @@ __weak void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
 
 /**
  ****************************************************************************************
- * @brief API to Get Pairing Feature, maybe User Override! (__weak func)
+ * @brief API to Get Pairing Feature, maybe User Override! (__WEAK func)
  *
  * @param[out] feat   Pointer of pairing buffer to fill
  ****************************************************************************************
  */
-__weak void app_pairing_get(struct gapc_pairing *feat)
+__WEAK void app_pairing_get(struct gapc_pairing *feat)
 {
     // IO capabilities (@see gap_io_cap)
     feat->iocap     = GAP_IO_CAP_NO_INPUT_NO_OUTPUT;
@@ -382,14 +385,15 @@ __weak void app_pairing_get(struct gapc_pairing *feat)
 
 /**
  ****************************************************************************************
- * @brief API to Generate LTK for bonding, maybe User Override! (__weak func)
+ * @brief API to Generate LTK for bonding, maybe User Override! (__WEAK func)
  *
  * @param[in]     conidx   connection index
  * @param[in|out] ltk      Pointer of ltk buffer
  ****************************************************************************************
  */
-__weak void app_ltk_gen(uint8_t conidx, struct gapc_ltk *ltk)
+__WEAK void app_ltk_gen(uint8_t conidx, struct gapc_ltk *ltk)
 {
+    (void)conidx;
     // generate key values, User need record it to save later
     // ltk->ediv = (uint16_t)rand_word();
     // ltk->key_size = GAP_KEY_LEN;
@@ -406,25 +410,28 @@ __weak void app_ltk_gen(uint8_t conidx, struct gapc_ltk *ltk)
     #if (BLE_DBG_LTK)
     // (here use debugLTK as testing)
     memcpy(ltk, &debugLTK, sizeof(struct gapc_ltk));
+    #else
+    (void)ltk;
     #endif
 }
 
 /**
  ****************************************************************************************
- * @brief API to Save LTK when bonded, maybe User Override! (__weak func)
+ * @brief API to Save LTK when bonded, maybe User Override! (__WEAK func)
  *
  * @param[in] conidx   connection index
  * @param[in] ltk      Pointer of LTK data
  ****************************************************************************************
  */
-__weak void app_ltk_save(uint8_t conidx, const struct gapc_ltk *ltk)
+__WEAK void app_ltk_save(uint8_t conidx, const struct gapc_ltk *ltk)
 {
     // todo, save slave's LTK to flash
+    (void)conidx;(void)ltk;
 }
 
 /**
  ****************************************************************************************
- * @brief API to Find LTK when re-encryption, maybe User Override! (__weak func)
+ * @brief API to Find LTK when re-encryption, maybe User Override! (__WEAK func)
  *
  * @param[in] ediv     EDIV value for matching
  * @param[in] rand_nb  Rand Nb values for matching
@@ -432,7 +439,7 @@ __weak void app_ltk_save(uint8_t conidx, const struct gapc_ltk *ltk)
  * @return NULL for not matched, else return Pointer of LTK found.
  ****************************************************************************************
  */
-__weak const uint8_t *app_ltk_find(uint16_t ediv, const uint8_t *rand_nb)
+__WEAK const uint8_t *app_ltk_find(uint16_t ediv, const uint8_t *rand_nb)
 {
     // Compare ediv and rand_nb (here use debugLTK as testing)
     #if (BLE_DBG_LTK)
@@ -441,6 +448,8 @@ __weak const uint8_t *app_ltk_find(uint16_t ediv, const uint8_t *rand_nb)
     {
         return debugLTK.ltk.key;
     }
+    #else
+    (void)ediv;(void)rand_nb;
     #endif
 
     // Not found

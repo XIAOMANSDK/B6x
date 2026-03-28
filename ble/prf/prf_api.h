@@ -197,9 +197,9 @@ uint8_t mesh_svc_init(uint16_t start_hdl, uint16_t svc_cfg);
 /// Serial Service Profile
 #include "prf_sess.h"
 
-#if (PRF_OTAS)
+#if (PRF_OTA)
 /// OTA Service Profile
-#include "prf_otas.h"
+#include "prf_ota.h"
 #endif
 
 #if (PRF_PTSS)

@@ -1,0 +1,225 @@
+# B6x SDK Flash Map Configuration
+# This file defines flash memory layout for B6x chip variants
+# Manually maintained - replaces B6x-Flash-Map.xlsx parsing
+
+# Flash variants available for B6x series
+variants:
+  # 128KB Flash variant (1Mb)
+  flash_128kb:
+    description: "Flash 128KB variant for B6x series"
+    total_size:
+      bits: 1048576        # 1Mb in bits
+      bytes: 131072        # 128KB in bytes
+      kb: 128
+      mb: 0.125
+      human: "128KB"
+
+    address_range:
+      start: "0x000000"
+      end: "0x01FFFF"
+      start_decimal: 0
+      end_decimal: 131071
+
+    geometry:
+      page_size: 256        # bytes
+      sector_size: 4096     # 4KB (16 pages)
+      pages_per_sector: 16
+      block_size_32kb: 32768
+      block_size_64kb: 65536
+      total_pages: 512
+      total_sectors: 32
+
+    regions:
+      data_region:
+        name: "DATA Region"
+        description: "Data storage region for boot info and user data"
+        size:
+          bytes: 16384
+          kb: 16
+          human: "16KB"
+        sectors:
+          start: 0
+          end: 3
+          count: 4
+        pages:
+          start: 0
+          end: 63
+          count: 64
+        special_pages:
+          - name: "LoadInfo"
+            page: 0
+            address: "0x000000"
+            description: "Boot configuration block (fixed at Flash Page 0)"
+            structure:
+              - field: "MagicCode"
+                offset: 0
+                size: 4
+                description: "Code execution mode indicator"
+                values:
+                  0xAA55A001: "SRAM execution mode"
+                  0xAA55A004: "Flash execution mode (XIP)"
+              - field: "CodeLength"
+                offset: 4
+                size: 4
+                description: "Burned code length in bytes"
+              - field: "CodeAddress"
+                offset: 8
+                size: 4
+                description: "Absolute flash address of burned code"
+              - field: "SramAddress"
+                offset: 12
+                size: 4
+                description: "Absolute SRAM address for code execution"
+          - name: "trimVal"
+            page: 15
+            description: "Trim values (read-only)"
+            access: "read_only"
+          - name: "UserArea"
+            page_start: 16
+            page_end: 63
+            description: "User-defined area"
+            size:
+              bytes: 12288    # 48 pages * 256 bytes
+              kb: 12
+            access: "read_write"
+
+      code_region:
+        name: "CODE Region"
+        description: "Application code storage region"
+        size:
+          bytes: 114688
+          kb: 112
+          human: "112KB"
+        sectors:
+          start: 4
+          end: 31
+          count: 28
+        features:
+          iap_support: true
+          xip_support: true
+        access: "read_write_erase"
+
+  # 256KB Flash variant (2Mb)
+  flash_256kb:
+    description: "Flash 256KB variant for B6x series"
+    total_size:
+      bits: 2097152        # 2Mb in bits
+      bytes: 262144        # 256KB in bytes
+      kb: 256
+      mb: 0.25
+      human: "256KB"
+
+    address_range:
+      start: "0x000000"
+      end: "0x03FFFF"
+      start_decimal: 0
+      end_decimal: 262143
+
+    geometry:
+      page_size: 256        # bytes
+      sector_size: 4096     # 4KB (16 pages)
+      pages_per_sector: 16
+      block_size_32kb: 32768
+      block_size_64kb: 65536
+      total_pages: 1024
+      total_sectors: 64
+
+    regions:
+      data_region:
+        name: "DATA Region"
+        description: "Data storage region for boot info and user data"
+        size:
+          bytes: 16384
+          kb: 16
+          human: "16KB"
+        sectors:
+          start: 0
+          end: 3
+          count: 4
+        pages:
+          start: 0
+          end: 63
+          count: 64
+        special_pages:
+          - name: "LoadInfo"
+            page: 0
+            address: "0x000000"
+            description: "Boot configuration block (fixed at Flash Page 0)"
+            structure:
+              - field: "MagicCode"
+                offset: 0
+                size: 4
+                description: "Code execution mode indicator"
+                values:
+                  0xAA55A001: "SRAM execution mode"
+                  0xAA55A004: "Flash execution mode (XIP)"
+              - field: "CodeLength"
+                offset: 4
+                size: 4
+                description: "Burned code length in bytes"
+              - field: "CodeAddress"
+                offset: 8
+                size: 4
+                description: "Absolute flash address of burned code"
+              - field: "SramAddress"
+                offset: 12
+                size: 4
+                description: "Absolute SRAM address for code execution"
+          - name: "trimVal"
+            page: 15
+            description: "Trim values (read-only)"
+            access: "read_only"
+          - name: "UserArea"
+            page_start: 16
+            page_end: 63
+            description: "User-defined area"
+            size:
+              bytes: 12288    # 48 pages * 256 bytes
+              kb: 12
+            access: "read_write"
+
+      code_region:
+        name: "CODE Region"
+        description: "Application code storage region"
+        size:
+          bytes: 114688
+          kb: 112
+          human: "112KB"
+        sectors:
+          start: 4
+          end: 31
+          count: 28
+        features:
+          iap_support: true
+          xip_support: true
+        access: "read_write_erase"
+
+# Magic code definitions for boot configuration
+magic_codes:
+  sram_run:
+    value: 0xAA55A001
+    description: "Code runs from SRAM (copied from Flash at boot)"
+  flash_run:
+    value: 0xAA55A004
+    description: "Code runs directly from Flash (XIP mode)"
+
+# Memory mapping base addresses (for linker scripts)
+memory_mapping:
+  flash_base: "0x08000000"
+  sram_base: "0x20000000"
+  data_flash_base: "0x18000000"
+
+# Common constraints
+constraints:
+  - "DATA Region must not be used for code execution"
+  - "LoadInfo page (Page 0) must be programmed before first boot"
+  - "MagicCode must be valid for bootloader to recognize firmware"
+  - "User area pages can be used for persistent storage"
+  - "trimVal page is factory-programmed and read-only"
+
+# Metadata
+metadata:
+  source: "manual_entry"
+  original_file: "B6x-Flash-Map.xlsx"
+  last_updated: "2026-03-02"
+  notes: "Converted from Excel parsing to manual YAML configuration due to parsing failures"

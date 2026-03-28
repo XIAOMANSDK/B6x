@@ -20,7 +20,7 @@
 
 #if (DBG_KEYS)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -50,18 +50,18 @@ const uint8_t Key_Map[KEY_ROW_NB][KEY_COL_NB] =
     {KEY_F6,    KEY_F16,   KEY_MUTE, KEY_ESC },
 };
 
-/// Key Buffer for ghost-detect and debounce 
+/// Key Buffer for ghost-detect and debounce
 #if (KEY_GHOST || KEY_DEBOUNCE)
 struct key_buf_tag
 {
     #if (KEY_GHOST)
     uint8_t rowCnt[KEY_ROW_NB];
     #endif
-    
+
     #if (KEY_GHOST || KEY_DEBOUNCE)
     uint8_t colSta[KEY_COL_NB];
     #endif
-    
+
     #if (KEY_DEBOUNCE)
     uint8_t shake[KEY_ROW_NB][KEY_COL_NB];
     #endif
@@ -70,7 +70,7 @@ struct key_buf_tag
 __RETENTION struct key_buf_tag key_buf;
 #endif
 
-/// Key Enveriment 
+/// Key Enveriment
 __RETENTION struct key_env_tag key_env;
 
 #if (CFG_SFT_TMR)
@@ -122,7 +122,7 @@ static uint8_t keys_info(const keys_t *keys)
 {
     if (keys->gcnt == 0)
         return KI_NOKEY;
-    
+
 //    DEBUG("keys_info:%d, %d", keys->mcnt, keys->gcnt);
 //    debugHex(keys->code, RPT_LEN_KB);
 
@@ -133,17 +133,17 @@ static uint8_t keys_info(const keys_t *keys)
         {
             return KI_HOTKEY_HOME;
         }
-        
+
         if (kcode == KEY_ESC)
         {
             return KI_HOTKEY_MUTE;
         }
-        
+
         if (kcode == KEY_F5)
         {
             return KI_HOTKEY_VOICE;
         }
-        
+
         if (kcode == KEY_LED)
         {
             return KI_HOTKEY_BACK;
@@ -165,7 +165,7 @@ static uint8_t keys_info(const keys_t *keys)
 static uint8_t keys_encode(const keys_t *keys, uint8_t *report)
 {
     uint8_t rep_idx = RPT_IDX_NONE;
-    
+
     memset(report, 0, RPT_LEN_KB);
 //    DEBUG("keys_info:%d, %d", keys->mcnt, keys->gcnt);
 //    debugHex(keys->code, RPT_LEN_KB);
@@ -181,43 +181,43 @@ static uint8_t keys_encode(const keys_t *keys, uint8_t *report)
 
             // copy Generic Keys
             memcpy(&report[2], &keys->code[2], keys->gcnt);
-            
+
             rep_idx = RPT_IDX_KB;
         } break;
-        
+
         case KI_HOTKEY_HOME:
         {
             // HOME
             rep_idx = RPT_IDX_MEDIA;
             report[1] = 1 << 6;
         } break;
-        
+
         case KI_HOTKEY_BACK:
         {
             // Back
             rep_idx = RPT_IDX_MEDIA;
             report[1] = 1 << 3;
         } break;
-        
+
         case KI_HOTKEY_MUTE:
         {
             // Mute
             rep_idx = RPT_IDX_MEDIA;
             report[1] = 1 << 0;
         } break;
-        
+
         case KI_HOTKEY_VOICE:
         {
             // Mute
             // copy Generic Keys
             memcpy(&report[2], &keys->code[2], keys->gcnt);
             rep_idx = RPT_IDX_KB;
-            
+
             #if (VOICE)
             micInit();
             #endif
         } break;
-        
+
         case KI_NOKEY:
         case KI_ERROR:
         case KI_HOTKEY_PAIR:
@@ -226,7 +226,7 @@ static uint8_t keys_encode(const keys_t *keys, uint8_t *report)
 //            rep_idx = RPT_IDX_NONE;
         } break;
     }
-    
+
     DEBUG("info:%d, rep_idx:%d", keys->info, rep_idx);
     debugHex(report, RPT_LEN_KB);
     return rep_idx;
@@ -250,7 +250,7 @@ static bool keys_send(uint8_t repidx, const uint8_t *report)
     {
         replen = RPT_LEN_KB;
     }
-    
+
     DEBUG("keys_send(%d,%d)", repidx, replen);
     return !hids_report_send(app_env.curidx, repidx, replen, report);
 }
@@ -264,7 +264,7 @@ void keys_init(void)
 {
     rows_init();
     cols_init();
-    
+
     #if (KEY_GHOST || KEY_DEBOUNCE)
     memset(&key_buf, 0, sizeof(struct key_buf_tag));
     #endif
@@ -273,7 +273,7 @@ void keys_init(void)
     key_env.rep_idx = RPT_IDX_NONE;
     // no first report
     key_env.repok = 1;
-    
+
     #if (CFG_SFT_TMR)
     proc_flag = 0;
     #endif
@@ -300,67 +300,67 @@ static uint8_t keys_scan(void)
     uint8_t r, c, colSta;
     uint8_t status = KS_SUCCESS;
     keys_t *keys = &key_env.curr;
-    
+
     // 0 - All Row GPIOs as HiZ
     rows_init();
-    
+
     // 1 - Init keys env, first backup
     key_env.last = *keys;
     memset(keys, 0, sizeof(keys_t));
-    
+
     // 2 - Scan row by row
     for (r = 0; r < KEY_ROW_NB; r++)
     {
         // Enable row Output(High)
-        GPIO_DIR_SET(1UL << Key_Row[r]); 
-        
+        GPIO_DIR_SET(1UL << Key_Row[r]);
+
         // Init keys buf
         #if (KEY_GHOST)
         key_buf.rowCnt[r] = 0;
         #endif
-        
+
         // Judge col by col
         for (c = 0; c < KEY_COL_NB; c++)
         {
             uint8_t press = 0;
             uint8_t kcode = Key_Map[r][c];
-            
+
             if (kcode == 0) continue; // empty code
-            
+
             #if (KEY_DEBOUNCE)
             // Shift right to update
             key_buf.shake[r][c] <<= 1;
-            
+
             if (gpio_get(Key_Col[c]))
             {
                 key_buf.shake[r][c] |= 1;
             }
-            
+
             // Judge real state
             press = ((key_buf.shake[r][c] & KEY_DEBOUNCE) == KEY_DEBOUNCE)
                     || (((key_buf.shake[r][c] & KEY_DEBOUNCE) != 0) && (key_buf.colSta[c] & (1 << r)));
             #else
             press = gpio_get(Key_Col[c]);
             #endif
-            
+
             if (press && Key_Map[r][c])
             {
 //                DEBUG("%X(r:%d,c:%d)", kcode, r, c);
-   
+
                 if (keys->gcnt >= 6)
                 {
                     DEBUG("exceed at(r:%d,c:%d)", r, c);
                     status = KS_ERR_EXCEED;
                     break;
                 }
-                
+
                 keys->code[2+keys->gcnt] = kcode; // Generic Keys
                 keys->gcnt++;
-                
+
                 #if (KEY_GHOST)
                 key_buf.rowCnt[r]++; // inc row keys
                 #endif
-                
+
             #if (KEY_GHOST || KEY_DEBOUNCE)
                 key_buf.colSta[c] |= (1 << r);  // press state
             }
@@ -370,10 +370,10 @@ static uint8_t keys_scan(void)
             #endif
             }
         }
-        
+
         // disable row Output
         GPIO_DIR_CLR(1UL << Key_Row[r]);
-        
+
         if (c < KEY_COL_NB) break; // Over error
     }
 
@@ -384,16 +384,16 @@ static uint8_t keys_scan(void)
     else
     {
         key_press = false;
-        
+
         #if (VOICE)
         if (SADC->CTRL.SADC_DMAC_EN)
         {
             SADC->CTRL.SADC_DMAC_EN = 0;  // voice stop
-            DEBUG("Voice:Send-%d OK-%d", voiceSendNB, voiceSendOK);        
-        }        
+            DEBUG("Voice:Send-%d OK-%d", voiceSendNB, voiceSendOK);
+        }
         #endif
     }
-    
+
     // 3 - Detect ghost key
     #if (KEY_GHOST)
     if ((keys->mcnt + keys->gcnt >= 4) && (status == KS_SUCCESS))
@@ -425,12 +425,12 @@ static uint8_t keys_scan(void)
         }
     }
     #endif
-    
+
     for (uint8_t r = 0; r < KEY_ROW_NB; r++)
     {
         iom_ctrl(Key_Row[r], IOM_PULLDOWN);
     }
-    
+
     // 4 - Judge key info
     keys->info = (status == KS_SUCCESS) ? keys_info(keys) : KI_ERROR;
 
@@ -456,19 +456,19 @@ bool key_change;
 static void keys_report(void)
 {
     uint8_t rep_idx, report[RPT_LEN_KB];
-    
+
     key_change = keys_changed();
 //    DEBUG("key_change:%d", key_change);
     app_conn_param_update(key_change);
-    
+
     // 0 - ignore same with last(send ok)
     if (key_env.repok && !key_change)
     {
         return;
     }
-    
+
     rep_idx = keys_encode(&key_env.curr, report);
-    
+
     if (rep_idx == key_env.rep_idx)
     {
         // 1 - report same, only send curr pressed keys
@@ -477,14 +477,14 @@ static void keys_report(void)
             key_env.repok = keys_send(rep_idx, report);
         }
     }
-    else 
+    else
     {
         // 2 - report diff, send curr or release last pressed keys
         if (key_env.rep_idx == RPT_IDX_NONE)
         {
             key_env.repok = keys_send(rep_idx, report);
         }
-        else 
+        else
         {
             if (key_env.curr.info != KI_ERROR)
             {
@@ -514,7 +514,7 @@ static void hotkey_local(uint8_t info)
         case KI_HOTKEY_PAIR:
         {
             g_no_action_cnt = 0;
-            
+
             DEBUG("PAIR MODE");
             deletePairInfo();
             if (app_state_get() >= APP_CONNECTED)
@@ -522,7 +522,7 @@ static void hotkey_local(uint8_t info)
                 gapc_disconnect(app_env.curidx);
             }
         } break;
-        
+
         default:
         {
         } break;

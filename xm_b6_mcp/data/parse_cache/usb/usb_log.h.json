@@ -1,0 +1,98 @@
+{
+  "file_path": "./usb\\api\\usb_log.h",
+  "functions": [
+    {
+      "name": "usb_assert",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "filename",
+          "type": "char",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "int",
+          "description": ""
+        }
+      ],
+      "brief_description": "assert the position of file and line /",
+      "detailed_description": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 100,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "USB_DBG_DISABLE",
+      "value": "0",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 17
+    },
+    {
+      "name": "USB_DBG_ERROR",
+      "value": "1",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 18
+    },
+    {
+      "name": "USB_DBG_WARNING",
+      "value": "2",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 19
+    },
+    {
+      "name": "USB_DBG_INFO",
+      "value": "3",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 20
+    },
+    {
+      "name": "USB_DBG_LOG",
+      "value": "4",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 21
+    },
+    {
+      "name": "USB_DBG_LEVEL",
+      "value": "USB_DBG_DISABLE //USB_DBG_ERROR",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 24
+    },
+    {
+      "name": "USB_PRINTF",
+      "value": "printf",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 28
+    },
+    {
+      "name": "COLOR_TERMINAL",
+      "value": "(0)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\api\\usb_log.h",
+      "line_number": 39
+    }
+  ],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": []
+}

@@ -15,7 +15,7 @@
 
 #if (DBG_APP)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -41,7 +41,7 @@ void app_init_start(void)
 {
     if (app_state_get() < APP_CONNECTED)
     {
-        struct gap_bdaddr invalid_mac = {{0}, 0};
+        struct gap_bdaddr invalid_mac = {{{0}}, 0};
         if (memcmp((uint8_t *)&invalid_mac, scan_addr_list, 7))
         {
             DEBUG("init timer-->");
@@ -63,7 +63,7 @@ static uint32_t app_init_timer(uint8_t id)
 #endif
 
 void init_timer_start(void)
-{   
+{
     #if (CFG_HW_TIMER)
     sfTmrStart(SCAN_INV, app_init_timer);
     #else
@@ -83,12 +83,13 @@ void init_timer_stop(void)
 
 /**
  ****************************************************************************************
- * @brief SubTask Handler of Custom or Unknow Message. (__weak func)
+ * @brief SubTask Handler of Custom or Unknow Message. (__WEAK func)
  ****************************************************************************************
  */
 //uint8_t mouse_data[4] = {0, 1, 0, 0};
-__weak APP_SUBTASK_HANDLER(custom)
+__WEAK APP_SUBTASK_HANDLER(custom)
 {
+    (void)msgid;(void)param;(void)dest_id;(void)src_id;
     #if !(CFG_HW_TIMER)
     if (msgid == APP_INIT_TIMER)
     {
@@ -96,14 +97,16 @@ __weak APP_SUBTASK_HANDLER(custom)
 
         app_init_start();
     }
-    else 
+    else
     #endif
     {
+        #if (DBG_APP)
         uint16_t length = ke_param2msg(param)->param_len;
         DEBUG("Unknow MsgId:0x%X\r\n", msgid);
         debugHex((uint8_t *)param, length);
+        #endif
     }
-    
+
     return (MSG_STATUS_FREE);
 }
 
@@ -119,6 +122,7 @@ __weak APP_SUBTASK_HANDLER(custom)
  */
 __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
 {
+    (void)task_idx;
     msg_func_t handler = NULL;
 
     switch (MSG_TYPE(msgid))

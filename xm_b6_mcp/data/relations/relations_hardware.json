@@ -1,0 +1,270 @@
+{
+  "domain": "hardware",
+  "outgoing_relations": [],
+  "incoming_relations": [
+    {
+      "subject_id": "drivers:api:USB_IRQHandler",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:USB_CTRL",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "USB"
+      }
+    },
+    {
+      "subject_id": "drivers:api:usb_assert",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:USB_CTRL",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "USB"
+      }
+    },
+    {
+      "subject_id": "drivers:api:rtc_conf",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:RTC_SEC",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "RTC"
+      }
+    },
+    {
+      "subject_id": "drivers:api:rtc_conf",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:RTC_MS",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "RTC"
+      }
+    },
+    {
+      "subject_id": "drivers:api:rtc_alarm_set",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:RTC_ALARM_SEC",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "RTC_ALARM"
+      }
+    },
+    {
+      "subject_id": "drivers:api:rtc_alarm_get",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:RTC_ALARM_SEC",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "RTC_ALARM"
+      }
+    },
+    {
+      "subject_id": "drivers:api:rtc_alarm_set",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:RTC_ALARM_MS",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "RTC_ALARM"
+      }
+    },
+    {
+      "subject_id": "drivers:api:rtc_alarm_get",
+      "predicate": "controls_register",
+      "object_id": "hardware:register:RTC_ALARM_MS",
+      "subject_domain": "drivers",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "peripheral": "RTC_ALARM"
+      }
+    },
+    {
+      "subject_id": "ble:api:ke_sleep",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:SLEEP",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "SLEEP",
+        "current_ua": 70.0,
+        "power_mw": 210.0,
+        "conditions": "note: 睡眠<40ms"
+      }
+    },
+    {
+      "subject_id": "ble:api:ke_timer_set",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:SLEEP",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "SLEEP",
+        "current_ua": 70.0,
+        "power_mw": 210.0,
+        "conditions": "note: 睡眠<40ms"
+      }
+    },
+    {
+      "subject_id": "ble:api:ke_sleep",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:DEEP_SLEEP",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "DEEP_SLEEP",
+        "current_ua": 2.0,
+        "power_mw": 6.0,
+        "conditions": "note: 睡眠>40ms"
+      }
+    },
+    {
+      "subject_id": "ble:api:ke_power_off",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:DEEP_SLEEP",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "DEEP_SLEEP",
+        "current_ua": 2.0,
+        "power_mw": 6.0,
+        "conditions": "note: 睡眠>40ms"
+      }
+    },
+    {
+      "subject_id": "ble:api:gapm_start_advertise",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:ACTIVE_ADVERTISING",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "ACTIVE_ADVERTISING",
+        "current_ua": 69.0,
+        "power_mw": 207.0,
+        "conditions": "duration: 3.75ms; note: 持续1.3秒"
+      }
+    },
+    {
+      "subject_id": "ble:api:gapm_update_advertise_data",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:ACTIVE_ADVERTISING",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "ACTIVE_ADVERTISING",
+        "current_ua": 69.0,
+        "power_mw": 207.0,
+        "conditions": "duration: 3.75ms; note: 持续1.3秒"
+      }
+    },
+    {
+      "subject_id": "ble:api:gapm_start_advertise",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:ACTIVE_ADVERTISING",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "ACTIVE_ADVERTISING",
+        "current_ua": 70.0,
+        "power_mw": 210.0,
+        "conditions": "duration: 22.5ms; note: 持续30秒"
+      }
+    },
+    {
+      "subject_id": "ble:api:gapm_update_advertise_data",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:ACTIVE_ADVERTISING",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "ACTIVE_ADVERTISING",
+        "current_ua": 70.0,
+        "power_mw": 210.0,
+        "conditions": "duration: 22.5ms; note: 持续30秒"
+      }
+    },
+    {
+      "subject_id": "ble:api:gapm_start_advertise",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:ACTIVE_TX",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "ACTIVE_TX",
+        "current_ua": 70.0,
+        "power_mw": 210.0,
+        "conditions": "interval: 20ms; note: 按下按键时"
+      }
+    },
+    {
+      "subject_id": "ble:api:ble_send_data",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:ACTIVE_TX",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "ACTIVE_TX",
+        "current_ua": 70.0,
+        "power_mw": 210.0,
+        "conditions": "interval: 20ms; note: 按下按键时"
+      }
+    },
+    {
+      "subject_id": "ble:api:ke_sleep",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:SLEEP",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "SLEEP",
+        "current_ua": 2.01,
+        "power_mw": 6.029999999999999,
+        "conditions": "interval: 1000ms; note: 未断开连接"
+      }
+    },
+    {
+      "subject_id": "ble:api:ke_timer_set",
+      "predicate": "consumes_power",
+      "object_id": "hardware:power:SLEEP",
+      "subject_domain": "ble",
+      "object_domain": "hardware",
+      "confidence": 1.0,
+      "metadata": {
+        "mode": "SLEEP",
+        "current_ua": 2.01,
+        "power_mw": 6.029999999999999,
+        "conditions": "interval: 1000ms; note: 未断开连接"
+      }
+    }
+  ],
+  "statistics": {
+    "total_outgoing": 0,
+    "total_incoming": 20,
+    "connected_domains": [
+      "drivers",
+      "ble"
+    ]
+  }
+}

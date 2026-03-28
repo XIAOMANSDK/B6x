@@ -82,7 +82,7 @@
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>1</RunUserProg2>
             <UserProg1Name>fromelf.exe  --bin -o "$L@L.bin" "#L"</UserProg1Name>
-            <UserProg2Name>powershell -executionpolicy Unrestricted -file .\link_high_bank.PS1</UserProg2Name>
+            <UserProg2Name>..\..\..\tools\BxOTA.cmd "$L"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
@@ -164,7 +164,7 @@
             <AdsANot>0</AdsANot>
             <AdsLLst>1</AdsLLst>
             <AdsLmap>1</AdsLmap>
-            <AdsLcgr>0</AdsLcgr>
+            <AdsLcgr>1</AdsLcgr>
             <AdsLsym>1</AdsLsym>
             <AdsLszi>1</AdsLszi>
             <AdsLtoi>1</AdsLtoi>
@@ -367,7 +367,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\src\link_xip_ble_0x04000.sct</ScatterFile>
+            <ScatterFile>..\..\..\core\mdk\link_xip_ble.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc>--diag_suppress=L6312,L6314,L6329</Misc>
@@ -410,11 +410,6 @@
               <FileType>1</FileType>
               <FilePath>..\src\proc.c</FilePath>
             </File>
-            <File>
-              <FileName>ota.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\ota.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -436,11 +431,6 @@
           <GroupName>modules</GroupName>
           <Files>
             <File>
-              <FileName>uart1Rb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\modules\src\uart1Rb.c</FilePath>
-            </File>
-            <File>
               <FileName>leds.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\modules\src\leds.c</FilePath>
@@ -449,6 +439,11 @@
               <FileName>sftmr.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\modules\src\sftmr.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1Rb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\modules\src\uart1Rb.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -463,7 +458,7 @@
             <File>
               <FileName>app_actv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\app_actv.c</FilePath>
+              <FilePath>..\..\..\ble\app\app_actv.c</FilePath>
             </File>
             <File>
               <FileName>app_msg.c</FileName>
@@ -479,6 +474,11 @@
               <FileName>app_gapc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\ble\app\app_gapc.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gatt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\ble\app\app_gatt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -496,9 +496,9 @@
               <FilePath>..\..\..\ble\prf\prf_sess.c</FilePath>
             </File>
             <File>
-              <FileName>prf_otas.c</FileName>
+              <FileName>prf_ota.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ble\prf\prf_otas.c</FilePath>
+              <FilePath>..\..\..\ble\prf\prf_ota.c</FilePath>
             </File>
           </Files>
         </Group>

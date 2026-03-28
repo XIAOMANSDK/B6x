@@ -1,0 +1,107 @@
+{
+  "file_path": "./drivers\\src\\sysdbg.c",
+  "functions": [
+    {
+      "name": "sysdbg_iomap",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    pio &= SYS_DBG_PIO_MSK;\r\n\r\n    for (uint8_t i = 2; i < 20; i++)\r\n    {\r\n        if (pio & (1UL << i))\r\n        {\r\n            iom_ctrl(i, IOM_SEL_DEBUG);//CSC->CSC_PIO[i].Word = IOM_SEL_DEBUG;\r\n        }\r\n        else if (CSC->CSC_PIO[i].Word == IOM_SEL_DEBUG)\r\n        {\r\n            iom_ctrl(i, IOM_SEL_GPIO); //CSC->CSC_PIO[i].Word = IOM_SEL_GPIO;\r\n        }\r\n    }\r\n}",
+      "file_path": "./drivers\\src\\sysdbg.c",
+      "line_number": 30,
+      "is_static": false
+    },
+    {
+      "name": "sysdbg_anatst",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // Note: pu, pd, oe, ie dsiable, gpio mode\r\n    if (tsten & ATEN_AT0_BIT)\r\n    {\r\n        GPIO_DIR_CLR(1UL << PA_AT0);\r\n        iom_ctrl(PA_AT0, IOM_ANALOG);\r\n\r\n        RF->ANAMISC_CTRL1.AT0_SEL = atsel & 0x0F;\r\n    }\r\n\r\n    if (tsten & ATEN_AT1_BIT)\r\n    {\r\n        GPIO_DIR_CLR(1UL << PA_AT1);\r\n        iom_ctrl(PA_AT1, IOM_ANALOG);\r\n\r\n        RF->ANAMISC_CTRL1.AT1_SEL = (atsel >> 4) & 0x0F;\r\n    }\r\n\r\n    RF->ANAMISC_CTRL1.TSTEN_CBPF = (tsten & ATEN_CBPF_BIT) ? 1 : 0;\r\n    RF->ANAMISC_CTRL1.TSTEN_RSSI = (tsten & ATEN_RSSI_BIT) ? 1 : 0;\r\n}",
+      "file_path": "./drivers\\src\\sysdbg.c",
+      "line_number": 47,
+      "is_static": false
+    },
+    {
+      "name": "sysdbg_select",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    if (dbgsel == SYS_DBG_RF)\r\n    {\r\n        // 2'b01: tx debug port, 2'b10: rx debug port, 2'b11: calib_cnt_debug\r\n        RF->DIG_CTRL.RF_DBG_SEL = (diag & 0x03);\r\n    }\r\n    else if (dbgsel == SYS_DBG_BLE)\r\n    {\r\n        // BB DIAG1 0x83, 0x8300, 0x8383\r\n        (*(volatile uint32_t *)0x50000050) = diag;\r\n    }\r\n    else if (dbgsel == SYS_DBG_MDM)\r\n    {\r\n        MDM->REG0.DEBUG_MODE = diag;\r\n    }\r\n    else if (dbgsel == SYS_DBG_USB)\r\n    {\r\n        SYSCFG->DBG_CTRL.USB_DBG_SEL = diag;\r\n    }\r\n    else\r\n    {\r\n        return; // not support\r\n    }\r\n\r\n    SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = dbgsel;\r\n}",
+      "file_path": "./drivers\\src\\sysdbg.c",
+      "line_number": 70,
+      "is_static": false
+    },
+    {
+      "name": "sysdbg_sel_rf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 2'b01: tx debug port, 2'b10: rx debug port\r\n    RF->DIG_CTRL.RF_DBG_SEL = (txrx & 0x03);\r\n\r\n    SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = SYS_DBG_RF;\r\n}",
+      "file_path": "./drivers\\src\\sysdbg.c",
+      "line_number": 129,
+      "is_static": false
+    },
+    {
+      "name": "sysdbg_sel_mdm",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    MDM->REG0.DEBUG_MODE = mode;\r\n\r\n    SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = SYS_DBG_MDM;\r\n}",
+      "file_path": "./drivers\\src\\sysdbg.c",
+      "line_number": 171,
+      "is_static": false
+    },
+    {
+      "name": "sysdbg_sel_ble",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // BB DIAG1 0x83, 0x8300, 0x8383\r\n    (*(volatile uint32_t *)0x50000050) = diag;\r\n\r\n    SYSCFG->DBG_CTRL.SYS_DEBUG_SEL = SYS_DBG_BLE;\r\n}",
+      "file_path": "./drivers\\src\\sysdbg.c",
+      "line_number": 178,
+      "is_static": false
+    }
+  ],
+  "macros": [],
+  "parse_errors": []
+}

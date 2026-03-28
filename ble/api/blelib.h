@@ -17,7 +17,12 @@
  */
 
 /// struct *_env_tag *_env
-#define __VAR_ENV               __attribute__((section("le_env_mem_area"), zero_init))
+
+#if (__CC_ARM)
+    #define __VAR_ENV               __attribute__((section("le_env_mem_area"), zero_init))
+#else
+    #define __VAR_ENV               __attribute__((section(".bss.le_env_mem_area")))
+#endif
 
 /// define the BLE Task handler attribute for this compiler
 #define __TASKFN                __attribute__((section("le_task_hdl_func")))

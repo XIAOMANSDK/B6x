@@ -95,7 +95,7 @@ uint32_t revbit32(uint32_t v)
 uint32_t revbit(uint8_t n, uint32_t v)
 {
     uint32_t t = 0;
-    
+
     for (uint32_t i = 0; i < n; i++)
     {
         t |= ((v >> i) & 0x01) << (n - 1 - i);

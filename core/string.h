@@ -20,7 +20,11 @@
 #ifndef __string_h
 #define __string_h
 
+#if defined( __CC_ARM )
 #define _ARMABI __declspec(__nothrow)
+#else
+#define _ARMABI __attribute__((nothrow))
+#endif
 
   #ifndef __STRING_DECLS
   #define __STRING_DECLS

@@ -1,0 +1,314 @@
+[
+  {
+    "irq_number": -13,
+    "name": "HardFault",
+    "handler_name": "Reset_Handler",
+    "description": "Cortex-M0+ HardFault exception",
+    "peripheral": "",
+    "is_exception": true,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -14,
+    "name": "NMI",
+    "handler_name": "NMI_Handler",
+    "description": "Cortex-M0+ NMI exception",
+    "peripheral": "",
+    "is_exception": true,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -5,
+    "name": "SVCall",
+    "handler_name": "SVCall_Handler",
+    "description": "Cortex-M0+ SVCall exception",
+    "peripheral": "",
+    "is_exception": true,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -2,
+    "name": "PendSV",
+    "handler_name": "PendSV_Handler",
+    "description": "Cortex-M0+ PendSV exception",
+    "peripheral": "",
+    "is_exception": true,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -1,
+    "name": "SysTick",
+    "handler_name": "SysTick_Handler",
+    "description": "Cortex-M0+ SysTick exception",
+    "peripheral": "",
+    "is_exception": true,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -9,
+    "name": "EXTI_IRQHandler",
+    "handler_name": "EXTI_IRQHandler",
+    "description": "EXTI",
+    "peripheral": "EXTI",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -8,
+    "name": "IWDT_IRQHandler",
+    "handler_name": "IWDT_IRQHandler",
+    "description": "IWDT",
+    "peripheral": "IWDT",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -7,
+    "name": "BLE_IRQHandler",
+    "handler_name": "BLE_IRQHandler",
+    "description": "BB",
+    "peripheral": "BLE",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -6,
+    "name": "DMAC_IRQHandler",
+    "handler_name": "DMAC_IRQHandler",
+    "description": "DMAChannel",
+    "peripheral": "DMAC",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -4,
+    "name": "BTMR_IRQHandler",
+    "handler_name": "BTMR_IRQHandler",
+    "description": "BTMR",
+    "peripheral": "BTMR",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": -3,
+    "name": "CTMR_IRQHandler",
+    "handler_name": "CTMR_IRQHandler",
+    "description": "CTMR",
+    "peripheral": "CTMR",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 0,
+    "name": "I2C_IRQHandler",
+    "handler_name": "I2C_IRQHandler",
+    "description": "I2C",
+    "peripheral": "I2C",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 1,
+    "name": "SPIM_IRQHandler",
+    "handler_name": "SPIM_IRQHandler",
+    "description": "SPI Master",
+    "peripheral": "SPIM",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 2,
+    "name": "SPIS_IRQHandler",
+    "handler_name": "SPIS_IRQHandler",
+    "description": "SPI Slave",
+    "peripheral": "SPIS",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 3,
+    "name": "UART1_IRQHandler",
+    "handler_name": "UART1_IRQHandler",
+    "description": "UART1",
+    "peripheral": "UART1",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 4,
+    "name": "UART2_IRQHandler",
+    "handler_name": "UART2_IRQHandler",
+    "description": "UART2",
+    "peripheral": "UART2",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 5,
+    "name": "AON_PMU_IRQHandler",
+    "handler_name": "AON_PMU_IRQHandler",
+    "description": "PMU",
+    "peripheral": "AON_PMU",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 6,
+    "name": "LVD33_IRQHandler",
+    "handler_name": "LVD33_IRQHandler",
+    "description": "LVD",
+    "peripheral": "LVD33",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 7,
+    "name": "BOD12_IRQHandler",
+    "handler_name": "BOD12_IRQHandler",
+    "description": "BOD",
+    "peripheral": "BOD12",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 8,
+    "name": "USB_IRQHandler",
+    "handler_name": "USB_IRQHandler",
+    "description": "USB",
+    "peripheral": "USB",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 9,
+    "name": "USB_SOF_IRQHandler",
+    "handler_name": "USB_SOF_IRQHandler",
+    "description": "USB_SOF",
+    "peripheral": "USB_SOF",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 10,
+    "name": "FSHC_IRQHandler",
+    "handler_name": "FSHC_IRQHandler",
+    "description": "FSHC",
+    "peripheral": "FSHC",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 11,
+    "name": "MDM_IRQHandler",
+    "handler_name": "MDM_IRQHandler",
+    "description": "MODEM",
+    "peripheral": "MDM",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  },
+  {
+    "irq_number": 12,
+    "name": "RF_IRQHandler",
+    "handler_name": "RF_IRQHandler",
+    "description": "RF",
+    "peripheral": "RF",
+    "is_exception": false,
+    "priority_range": [
+      0,
+      7
+    ],
+    "default_handler": true
+  }
+]

@@ -18,6 +18,10 @@
 /// Debug Mode: 0=Disable, 1=via UART, 2=RTT Viewer
 #define DBG_MODE            (1)
 
-#define SPI_MCU_MODE        (0)
+/// LCD Image display, limit by Flash Size 
+#define DISP_LOGO           (1)
+#define DISP_EYES           (1)
+#define DISP_SLIDE          (0)
+#define DISP_ROBOT          (0)
 
 #endif  //_APP_CFG_H_

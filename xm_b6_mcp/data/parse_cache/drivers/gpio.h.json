@@ -1,0 +1,175 @@
+{
+  "file_path": "./drivers\\api\\gpio.h",
+  "functions": [
+    {
+      "name": "bits",
+      "return_type": "uint32_t",
+      "parameters": [],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\gpio.h",
+      "line_number": 223,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "/\n    ",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "  GPIO",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "IO03  ",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "      ",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "      ",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "      ",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "      ",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "   = (",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": " (1UL ",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "L << P",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": " PA11)",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "2),  /",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": " /**< ",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "< GPIO",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "IO15引脚",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "引脚 */\n",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "/\n    ",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "  GPIO",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "*\n * @",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "      ",
+          "value": 11,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\gpio.h",
+      "line_number": 31
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "IE_AIR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "/\n    I",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "GPIO输入类型定义 ",
+      "file_path": "./drivers\\api\\gpio.h",
+      "line_number": 58
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "UP,   ",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "*******",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": " \"reg",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\gpio.h",
+      "line_number": 67
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

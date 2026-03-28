@@ -78,7 +78,7 @@ void EXTI_IRQHandler(void)
      */
     if (irq_sta & EXTI_SRC(PA_EXTI0))
     {
-        //EXTI->IDR.Word = EXTI_SRC(PA_EXTI0));  ///< 外部中断关闭寄存器(IDR) - 禁用中断（注释状态）
+        //EXTI->IDR.Word = EXTI_SRC(PA_EXTI0);  ///< 外部中断关闭寄存器(IDR) - 禁用中断（注释状态）
         EXTI->ICR.Word = EXTI_SRC(PA_EXTI0);    ///< 清除PA_EXTI0中断标志
         gExtiIrqFlag |= 0x01;                   ///< 设置EXTI0中断标志位
         //EXTI->IER.Word = EXTI_SRC(PA_EXTI0);   ///< 外部中断使能寄存器(IER) - 重新使能中断（注释状态）

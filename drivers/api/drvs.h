@@ -7,7 +7,7 @@
  *
  ****************************************************************************************
  */
- 
+
 #ifndef _DRVS_H_
 #define _DRVS_H_
 
@@ -28,7 +28,9 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <inttypes.h>
 #include "string.h"
+#include "compiler.h"
 
 #include "b6x.h"
 #include "rom.h"
@@ -71,12 +73,20 @@
 #define SYS_GET_CLOCK()     (16000000)
 #endif
 
+#ifndef RC32K_CAL_CYCLES
+#if (SYS_CLK == 2)
+#define RC32K_CAL_CYCLES     (9)
+#else
+#define RC32K_CAL_CYCLES     (7)
+#endif
+#endif
+
 // RC32K Init with Calibration
 //   rc32k_conf(RCLK_HSE, 0x1F);  // 14ms
 //   rc32k_conf(RCLK_DPLL, 7);    // 3.7ms
 //   rc32k_conf(RCLK_DPLL128, 3); // 1.8ms
 #if !defined(rc32k_init)
-#define rc32k_init()        dowl(rc32k_conf(RCLK_DPLL, 7); rc32k_calib();)
+#define rc32k_init()        dowl(rc32k_conf(RCLK_DPLL, RC32K_CAL_CYCLES); rc32k_calib();)
 #endif
 
 #ifndef __SRAMFN
@@ -96,11 +106,19 @@
 #endif
 
 #ifndef __ZI_ALIGNED
-#define __ZI_ALIGNED(n)     __attribute__((aligned(n), zero_init))
+    #if (COMPILER_AC5)
+        #define __ZI_ALIGNED(n)     __attribute__((aligned(n), zero_init))
+#else
+        #define __ZI_ALIGNED(n)     __attribute__((aligned(n)))
+    #endif
 #endif
 
 #ifndef __RETENTION
-#define __RETENTION         __attribute__((section("user_retention"), zero_init))
+    #if (COMPILER_AC5)
+        #define __RETENTION         __attribute__((section("user_retention"), zero_init))
+    #else
+        #define __RETENTION         __attribute__((section("user_retention")))
+    #endif
 #endif
 
 #endif // _DRVS_H_

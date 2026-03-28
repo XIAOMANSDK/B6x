@@ -17,5 +17,5 @@
 
 #define DBG_UART_BAUD       (BRR_921600)
 
-#define PA_ATMR_P           (8)           //PWM输出引脚
+#define PA_ATMR_P           (7)           //PWM输出引脚
 #endif  //_APP_CFG_H_

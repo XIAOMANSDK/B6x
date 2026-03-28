@@ -1,0 +1,124 @@
+{
+  "file_path": "./drivers\\api\\iwdt.h",
+  "functions": [
+    {
+      "name": "iwdt_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init Config IWDT. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ctrl  Bits field of value @see enum iwdt_ctrl_bfs.\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\iwdt.h",
+      "line_number": 46,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iwdt_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit IWDT Module.  *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\iwdt.h",
+      "line_number": 54,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iwdt_feed",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "reload IWDT. *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "./drivers\\api\\iwdt.h",
+      "line_number": 61,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iwdt_conf",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config IWDT, feed or disable ",
+      "detailed_description": "***************************************************************************************\n@param[in] load  LOAD to feed watchdog, 0 means disable\n@return Timer value\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\iwdt.h",
+      "line_number": 73,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "IWDT_CR_DFLT",
+      "value": "(IWDT_EN_BIT | IWDT_RSTEN_BIT | IWDT_CLKLSI_BIT)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\iwdt.h",
+      "line_number": 31
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "IWDT_EN_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "IWDT_INTEN_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "IWDT_RSTEN_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "IWDT_CLKLSI_BIT",
+          "value": 8,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\iwdt.h",
+      "line_number": 23
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

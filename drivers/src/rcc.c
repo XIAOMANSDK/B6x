@@ -46,10 +46,10 @@ enum sysclk_sw
 
 /**
  * @brief 获取总线控制寄存器值
- * 
+ *
  * @param[in] idx 总线控制寄存器索引
  * @return uint32_t 寄存器值
- * 
+ *
  * @details 根据索引计算寄存器地址并返回其当前值
  */
 uint32_t rcc_bus_get(uint8_t idx)
@@ -61,10 +61,10 @@ uint32_t rcc_bus_get(uint8_t idx)
 
 /**
  * @brief 使能总线时钟
- * 
+ *
  * @param[in] idx 总线控制寄存器索引
  * @param[in] bfs 总线使能位掩码
- * 
+ *
  * @details 设置指定总线控制寄存器中的使能位
  */
 void rcc_bus_enb(uint8_t idx, uint32_t bfs)
@@ -76,10 +76,10 @@ void rcc_bus_enb(uint8_t idx, uint32_t bfs)
 
 /**
  * @brief 禁用总线时钟
- * 
+ *
  * @param[in] idx 总线控制寄存器索引
  * @param[in] bfs 总线禁用位掩码
- * 
+ *
  * @details 清除指定总线控制寄存器中的使能位
  */
 void rcc_bus_dis(uint8_t idx, uint32_t bfs)
@@ -91,10 +91,10 @@ void rcc_bus_dis(uint8_t idx, uint32_t bfs)
 
 /**
  * @brief 复位总线
- * 
+ *
  * @param[in] idx 总线控制寄存器索引
  * @param[in] bfs 总线复位位掩码
- * 
+ *
  * @details 对指定总线执行复位操作(先置位再清除复位位)
  */
 void rcc_bus_rst(uint8_t idx, uint32_t bfs)
@@ -107,8 +107,8 @@ void rcc_bus_rst(uint8_t idx, uint32_t bfs)
 
 /**
  * @brief 使能ADC时钟
- * 
- * @details 
+ *
+ * @details
  * - 执行ADC模块的完整复位序列
  * - 先禁用ADC时钟，然后置位复位请求，最后释放复位并使能时钟
  */
@@ -123,7 +123,7 @@ void rcc_adc_en(void)
 
 /**
  * @brief 使能BLE时钟和复位控制
- * 
+ *
  * @details
  * - 使能modem和RF的APB时钟
  * - 使能BLE AHB时钟并执行复位
@@ -160,7 +160,7 @@ void rcc_ble_en(void)
 
 /**
  * @brief 使能USB时钟和配置
- * 
+ *
  * @details
  * - 使能USB AHB时钟并执行复位
  * - 配置USB数据线GPIO为高阻态
@@ -188,7 +188,7 @@ void rcc_usb_en(void)
  *
  * @param[in] sclk_sel 系统时钟选择 @see enum sys_clk_t
  *                     - SYS_CLK_16M: 16MHz HSE时钟
- *                     - SYS_CLK_HSI: 16MHz HSI时钟  
+ *                     - SYS_CLK_HSI: 16MHz HSI时钟
  *                     - SYS_CLK_LSI: 32kHz LSI时钟
  *                     - SYS_CLK_32M: 32MHz PLL时钟
  *                     - SYS_CLK_48M: 48MHz PLL时钟
@@ -200,7 +200,7 @@ void rcc_usb_en(void)
  * - 设置BLE时钟分频和AHB总线时钟分频
  * - 最后切换系统时钟源
  *
- * @note 
+ * @note
  * - 如果已经处于目标时钟源，则直接返回不重复配置
  * - BLE时钟必须保持16MHz，会根据系统时钟自动分频
  * - PLL时钟需要额外的DPLL配置和使能

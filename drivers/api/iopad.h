@@ -44,18 +44,18 @@ enum pad_idx
     PA18               = 18,
     PA19               = 19,
     PA_MAX,
-    
+
     // pad of special func
     PA_SWCLK           = PA00,
     PA_SWDIO           = PA01,
     PA_CLKOUT          = PA05,
     PA_RSTPIN          = PA19,
-    
+
     // pad of USB signal
     PA_USB_DP          = PA06,
     PA_USB_DM          = PA07,
     PA_SOF_SG          = PA15,
-    
+
     // pad of analog func
     PA_ADCIN0          = PA00,
     PA_ADCIN1          = PA01,
@@ -77,6 +77,26 @@ enum pad_idx
     PA_LDOTESTA        = PA17,
     PA_AT0             = PA18,
     PA_AT1             = PA19,
+
+    // IOM_SEL_TIMER
+    PA_CTMR_ETR        = PA01,
+    PA_CTMR_CH1        = PA02,
+    PA_CTMR_CH2        = PA03,
+    PA_CTMR_CH3        = PA04,
+    PA_CTMR_CH4        = PA05,
+    PA_ATMR_BK         = PA06,
+    PA_ATMR_CH1P       = PA07,
+    PA_ATMR_CH2P       = PA08,
+    PA_ATMR_CH3P       = PA09,
+    PA_ATMR_CH4P       = PA10,
+    PA_ATMR_CH1N       = PA11,
+    PA_ATMR_CH2N       = PA12,
+    PA_ATMR_CH3N       = PA13,
+    PA_ATMR_ETR        = PA14,
+    PA_CTMR_CH1_B      = PA15,
+    PA_CTMR_CH2_B      = PA16,
+    PA_CTMR_CH3_B      = PA17,
+    PA_CTMR_CH4_B      = PA18,
 };
 
 /// Bits Field of IO Mode @see CSC_IO_CTRL_TypeDef
@@ -84,7 +104,7 @@ enum iom_bfs
 {
     // set 0 to Hi-Z
     IOM_HIZ            = 0x00,
-    
+
     // bit[2:0]  -- IO Function Select
     IOM_SEL_GPIO       = (0 << 0),  // default function
     IOM_SEL_CSC        = (1 << 0),  // cross switch connect
@@ -94,11 +114,11 @@ enum iom_bfs
     IOM_SEL_RFTEST     = (5 << 0),
     IOM_SEL_ADC_DBG    = (6 << 0),
     IOM_SEL_USB        = (7 << 0),
-    
+
     // bit[5]  -- IO Drive Strength
     IOM_DRV_LVL0       = (0 << 5),  // default Driver Strength
     IOM_DRV_LVL1       = (1 << 5),  // Max Driver Strength
-    
+
     // bit[11:6] -- IO Enable Mode
     IOM_PULLDOWN       = (1 << 6),  // Pull Down Control
     IOM_PULLUP         = (1 << 7),  // IO Pull Up
@@ -120,7 +140,7 @@ enum csc_fsel
     CSC_I2C_SDA        = 5,  // I&O OpenDrain
     CSC_CTMR_CH1       = 6,  // I/O pwc/pwm
     CSC_CTMR_CH2       = 7,  // I/O pwc/pwm
-    
+
     // Output func
     CSC_UART1_RTS      = 8,  // O
     CSC_UART2_RTS      = 9,  // O
@@ -129,7 +149,7 @@ enum csc_fsel
     CSC_SPIM_CLK       = 12, // O
     CSC_SPIM_MOSI      = 13, // O
     CSC_SPIS_MISO      = 14, // O
-    
+
     // Input func
     CSC_UART1_CTS      = 8,  // I
     CSC_UART2_CTS      = 9,  // I
@@ -141,7 +161,7 @@ enum csc_fsel
     // Output global bist indicate
     CSC_GLB_BIST_DONE  = 15, // O
     CSC_GLB_BIST_FAIL  = 16, // O
-    
+
     // Output analog observe func
     CSC_OSCEN_FLAG     = 17, // O
     CSC_RFEN_FLAG      = 18, // O
@@ -193,7 +213,7 @@ enum clk_out
  * @param[in] pad   IO引脚编号 @see enum pad_idx
  * @param[in] fsel  功能选择编号 @see enum csc_fsel
  * @note 配置指定功能的外设输入连接到指定的IO引脚
- * 
+ *
  * 根据CSC寄存器说明：
  * CSC_INPUT配置：CSC->CSC_INPUT[func].CSC_FSEL = pad
  * 例如：配置PA01引脚为UART2的RXD输入功能，则(pad=1, func=3): CSC->CSC_INPUT[3].CSC_FSEL = 1
@@ -205,7 +225,7 @@ enum clk_out
  * @param[in] pad   IO引脚编号 @see enum pad_idx
  * @param[in] fsel  功能选择编号 @see enum csc_fsel
  * @note 配置指定IO引脚的输出功能为指定的外设功能
- * 
+ *
  * 根据CSC寄存器说明：
  * CSC_OUTPUT配置：CSC->CSC_OUTPUT[pad].CSC_FSEL = func
  * 例如：配置PA00引脚为UART2的TXD输出功能，则(pad=0, func=2): CSC->CSC_OUTPUT[0].CSC_FSEL = 2
@@ -277,7 +297,7 @@ void iocsc_ctmr_chnl(uint8_t pad_ch1, uint8_t pad_ch2);
  * @param[in] fsel  模拟功能选择 @see enum csc_fsel (17~24)
  * @note 配置指定IO引脚为模拟观察输出功能
  */
-void iocsc_observe(uint8_t pad, uint8_t fsel); 
+void iocsc_observe(uint8_t pad, uint8_t fsel);
 
 /**
  * @brief 配置时钟输出功能（固定PA05引脚）

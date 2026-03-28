@@ -2,7 +2,7 @@
 #define B6X_FCC_H_
 
 #include <stdint.h>
-typedef struct 
+typedef struct
 {
     uint8_t tx_power;
     uint8_t cap;
@@ -12,29 +12,29 @@ typedef struct
     uint8_t vco_adj;
     uint8_t bg_res_trim;//BG_RES_TRIM;
     uint8_t rev2;
-    
+
 }Fcc_Config_t,*Fcc_Config_p;
 void fcc_init(void);
 
 void fcc_stop(void);
 
 /// freq_idx:0 ~ 39(2402 ~ 2480)
-/// Txµ÷ÖÆÊı¾İ
+/// Txè°ƒåˆ¶æ•°æ®
 void fcc_tx_mod(uint8_t freq_idx);
 /// pa_target:0x00~0x0F, default:0x0C
 void fcc_tx_mod_pa(uint8_t freq_idx, uint8_t pa_target);
 
-/// Rxµ÷ÖÆÊı¾İ
+/// Rxè°ƒåˆ¶æ•°æ®
 void fcc_rx_mod(uint8_t freq_idx);
 ///vco_adj:0x00~0x07,default:0x06
 void fcc_rx_mod_vco(uint8_t freq_idx, uint8_t vco_adj);
 
-/// Txµ¥ÔØ²¨(¶¨Æµ)
+/// Txå•è½½æ³¢(å®šé¢‘)
 void fcc_tx_carr(uint8_t freq_idx);
 /// pa_target:0x00~0x0F, default:0x0C
 void fcc_tx_carr_pa(uint8_t freq_idx, uint8_t pa_target);
 
-/// Rxµ¥ÔØ²¨(¶¨Æµ)
+/// Rxå•è½½æ³¢(å®šé¢‘)
 void fcc_rx_carr(uint8_t freq_idx);
 ///vco_adj:0x00~0x07,default:0x06
 void fcc_rx_carr_vco(uint8_t freq_idx, uint8_t vco_adj);

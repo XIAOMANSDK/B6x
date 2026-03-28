@@ -20,6 +20,9 @@
 /// 获取定时器基地址宏，tmr: 定时器编号
 #define TMR_USED(tmr)         ((TIMER_TypeDef* )(CTMR_BASE + (tmr) * 0x1000))
 
+#ifndef BIT
+#define BIT(pos)              (1UL<<(pos))
+#endif
 /*
  * FUNCTION DEFINITIONS
  ****************************************************************************************
@@ -134,6 +137,7 @@ void pwm_chnl_set(uint8_t chnl, const pwm_chnl_cfg_t *conf)
     }
 }
 #else
+#define DMA_CCxDE_MASK (BIT(TIMER_CC1DE_POS) | BIT(TIMER_CC2DE_POS) | BIT(TIMER_CC3DE_POS) | BIT(TIMER_CC4DE_POS))
 void pwm_chnl_set(uint8_t chnl, const pwm_chnl_cfg_t *conf)
 {
     uint8_t used_nchnl = (chnl > PWM_ATMR_CH4P) ? 2 : 0;  /* 判断是否为互补通道 */
@@ -154,6 +158,7 @@ void pwm_chnl_set(uint8_t chnl, const pwm_chnl_cfg_t *conf)
         TIMx->CCMR[cidx/2] |= (conf->ccmr << ((cidx % 2) * 8)); /* CCMR: 设置通道模式 */
         // CCER enable
         TIMx->DMAEN.Word   |= (((conf->ccer & PWM_CCxDE_BIT) >> PWM_CCxDE_POS) << (cidx + 1)); /* DMAEN: 设置DMA请求使能 */
+        TIMx->CR2.CCDS      = !!(TIMx->DMAEN.Word & DMA_CCxDE_MASK); /* 0: dma的req启动条件是tim_cnt == ccr, 1: dma的req启动条件是tim_cnt == arr */
         TIMx->CCER.Word    |= ((conf->ccer & 0x03) << ((cidx * 4) + used_nchnl)); /* CCER: 使能通道输出 */
     }
 }

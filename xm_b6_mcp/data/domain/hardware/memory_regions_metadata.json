@@ -1,0 +1,7 @@
+{
+  "constraint_type": "memory_layout",
+  "domain": "domain1",
+  "version": "1.0",
+  "last_updated": "2026-03-17T18:05:45.664955",
+  "total_regions": 6
+}

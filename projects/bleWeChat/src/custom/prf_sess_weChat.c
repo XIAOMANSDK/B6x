@@ -23,7 +23,7 @@
 
 #if (DBG_SESS)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -95,8 +95,8 @@ enum ses_att_idx
 
     // Serial RXD Char.
     SES_IDX_RXD_CHAR,
-    SES_IDX_RXD_VAL, //5   
-    
+    SES_IDX_RXD_VAL, //5
+
     // Serial TXD Char.
     SES_IDX_TXD_CHAR,
     SES_IDX_TXD_VAL,
@@ -120,14 +120,14 @@ enum ses_att_idx
 /// Serial Service UUID128
 const uint8_t ses_svc_uuid[]        = SES_ATT_UUID128(0xFEE7);
 /// Serial Write Command UUID128
-const uint8_t ses_char_rxd_write[]  = SES_ATT_UUID128(0xFEC7);                                    
+const uint8_t ses_char_rxd_write[]  = SES_ATT_UUID128(0xFEC7);
 /// Serial Notify UUID128
 const uint8_t ses_char_txd_notify[] = SES_ATT_UUID128(0xFEC8);
 /// Serial Read Command UUID128
 const uint8_t ses_char_val_read[]   = SES_ATT_UUID128(0xFEC9);
 
 /// Attributes Description
-const att_decl_t ses_atts[] = 
+const att_decl_t ses_atts[] =
 {
     // Serial Notify Char. Declaration and Value and Client Char. Configuration Descriptor
     ATT_ELMT_DECL_CHAR( SES_IDX_TXD_CHAR ),
@@ -137,7 +137,7 @@ const att_decl_t ses_atts[] =
     // Serial Write Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( SES_IDX_RXD_CHAR ),
     ATT_ELMT128( SES_IDX_RXD_VAL,  ses_char_rxd_write,  PROP_WC | PROP_WR,   SES_RXD_MAX_LEN ),
-    
+
     #if (SES_READ_SUP)
     // Serial Read Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( SES_IDX_READ_CHAR ),
@@ -146,9 +146,9 @@ const att_decl_t ses_atts[] =
 };
 
 /// Service Description
-const struct svc_decl ses_svc_db = 
+const struct svc_decl ses_svc_db =
 {
-    .uuid128 = ses_svc_uuid, 
+    .uuid128 = ses_svc_uuid,
     .info    = SVC_UUID(128),
     .atts    = ses_atts,
     .nb_att  = SES_IDX_NB - 1,
@@ -166,17 +166,17 @@ const struct svc_decl ses_svc_db =
 #define SES_CHAR_VAL_READ           ATT_UUID16(0xFEC9)
 
 /// Attributes Description
-const att_decl_t ses_atts[] = 
+const att_decl_t ses_atts[] =
 {
     // Serial Write Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( SES_IDX_RXD_CHAR ),
     ATT_ELMT( SES_IDX_RXD_VAL,  SES_CHAR_RXD_WRITE,  PROP_WC | PROP_WR,   SES_RXD_MAX_LEN ),
-    
+
     // Serial Notify Char. Declaration and Value and CCC Descriptor
     ATT_ELMT_DECL_CHAR( SES_IDX_TXD_CHAR ),
     ATT_ELMT( SES_IDX_TXD_VAL,  SES_CHAR_TXD_NOTIFY, /*PROP_NTF | */PROP_IND, 0 ),
     ATT_ELMT_DESC_CLI_CHAR_CFG( SES_IDX_TXD_NTF_CFG ),
-    
+
     #if (SES_READ_SUP)
     // Serial Read Command Char. Declaration and Value
     ATT_ELMT_DECL_CHAR( SES_IDX_READ_CHAR ),
@@ -185,9 +185,9 @@ const att_decl_t ses_atts[] =
 };
 
 /// Service Description
-const struct svc_decl ses_svc_db = 
+const struct svc_decl ses_svc_db =
 {
-    .uuid   = SES_SVC_UUID, 
+    .uuid   = SES_SVC_UUID,
     .info   = SVC_UUID(16),
     .atts   = ses_atts,
     .nb_att = SES_IDX_NB - 1,
@@ -238,7 +238,7 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             {
                 // retrieve notification config
                 uint16_t cli_cfg = SES_NTF_CFG_GET(conidx);
-                
+
                 DEBUG("  read_cfm(txd_ntf:%d)", cli_cfg);
                 gatt_read_cfm(conidx, LE_SUCCESS, handle, sizeof(uint16_t), (uint8_t *)&cli_cfg);
                 break;
@@ -255,11 +255,11 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             // Send error response
             gatt_read_cfm(conidx, PRF_ERR_APP_ERROR, handle, 0, NULL);
         } break;
-        
+
         case ATTS_WRITE_REQ:
         {
             const struct atts_write_ind *ind = param;
-            
+
             DEBUG("  write_req(hdl:0x%x,att:%d,wr:0x%x,len:%d)", handle, att_idx, ind->wrcode, ind->length);
 
             if (att_idx == SES_IDX_RXD_VAL)
@@ -271,15 +271,15 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                 sess_cb_rxd(handle, ind->length, ind->value);
                 break;
             }
-            
+
             if (att_idx == SES_IDX_TXD_NTF_CFG)
             {
                 if ((!ind->more) && (ind->length == sizeof(uint16_t)))
                 {
                     uint16_t cli_cfg = read16p(ind->value);
-                    
+
                     DEBUG("  set txd_ntf(cid:%d,cfg:%d)", conidx, cli_cfg);
-                    
+
                     // update configuration if value for stop or NTF/IND start
                     if (cli_cfg <= 3 /*PRF_CLI_START_IND*/)
                     {
@@ -288,32 +288,32 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                         SES_NTF_CFG_SET(conidx, cli_cfg);
                         // Send write conform quickly!
                         gatt_write_cfm(conidx, LE_SUCCESS, handle);
-                        
+
                         #if (SES_CLI_CFG)
                         // Next to process cli_cfg changed
                         sess_cb_ccc(conidx, cli_cfg);
                         #endif //(SES_CLI_CFG)
-                        
+
                         if(cli_cfg)
                         {
                             //主动发送登录请求 ECI_REQ_AUTH  UUID:0xFEC8
                             ble_req_auth();
                         }
-                        
+
                         break;
                     }
                 }
-            } 
+            }
 
             // Send write conform with error!
             gatt_write_cfm(conidx, PRF_ERR_APP_ERROR, handle);
         } break;
-        
+
         case ATTS_INFO_REQ:
         {
             uint8_t  status = LE_SUCCESS;
             uint16_t length = 0;
-            
+
             if (att_idx == SES_IDX_RXD_VAL)
             {
                 length = SES_RXD_MAX_LEN;  // accepted length
@@ -326,16 +326,16 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
             {
                 status = ATT_ERR_WRITE_NOT_PERMITTED;
             }
-            
+
             // Send length-info confirm for prepWR judging.
             DEBUG("  info_cfm(hdl:0x%x,att:%d,sta:0x%X,len:%d)", handle, att_idx, status, length);
             gatt_info_cfm(conidx, status, handle, length);
         } break;
-        
+
         case ATTS_CMP_EVT:
         {
             const struct atts_cmp_evt *evt = param;
-            
+
             sess_env.nb_pkt++; // release
 
             DEBUG("  cmp_evt(op:0x%x,sta:0x%x,nb:%d)", evt->operation, evt->status, sess_env.nb_pkt);
@@ -381,8 +381,8 @@ uint8_t sess_svc_init(void)
 
     // Create Service in database
     status = attmdb_svc_create(&sess_env.start_hdl, NULL, &ses_svc_db, sess_svc_func);
-    
-    DEBUG("svc_init(sta:0x%X,shdl:%d,nb_pkt:%d,ntf_bits:0x%X)", 
+
+    DEBUG("svc_init(sta:0x%X,shdl:%d,nb_pkt:%d,ntf_bits:0x%X)",
             status, sess_env.start_hdl, sess_env.nb_pkt, sess_env.ntf_bits);
 
     return status;
@@ -419,7 +419,7 @@ void sess_set_ccc(uint8_t conidx, uint8_t cli_cfg)
 uint8_t sess_txd_send(uint8_t conidx, uint16_t len, const uint8_t* data)
 {
     uint8_t status = PRF_ERR_REQ_DISALLOWED;
-    
+
     if ((len > 0) && (sess_env.nb_pkt > 0))
     {
         uint8_t ntf_cfg = SES_NTF_CFG_GET(conidx);
@@ -437,14 +437,14 @@ uint8_t sess_txd_send(uint8_t conidx, uint16_t len, const uint8_t* data)
             status = PRF_ERR_NTF_DISABLED;
         }
     }
-    
+
     return status;
 }
 
 uint8_t sess_ind_send(uint8_t conidx, uint16_t len, const uint8_t* data)
 {
     uint8_t status = PRF_ERR_REQ_DISALLOWED;
-    
+
     if ((len > 0) && (sess_env.nb_pkt > 0))
     {
         uint8_t ntf_cfg = SES_NTF_CFG_GET(conidx);
@@ -462,23 +462,24 @@ uint8_t sess_ind_send(uint8_t conidx, uint16_t len, const uint8_t* data)
             status = PRF_ERR_NTF_DISABLED;
         }
     }
-    
+
     return status;
 }
 
 /**
  ****************************************************************************************
- * @brief Callback on received data from peer device via WC or WQ (__weak func)
+ * @brief Callback on received data from peer device via WC or WQ (__WEAK func)
  *
  * @param[in] conidx   peer device connection index
  * @param[in] len      Length of data
  * @param[in] data     pointer of buffer
  ****************************************************************************************
  */
-__weak void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
+__WEAK void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
+    (void)conidx;
 //    debugHex(data, len);
-    
+
     if (uart1_rxd.head + len <= RXD_BUFF_SIZE)
     {
         memcpy(&uart1_rxd.data[uart1_rxd.head], data, len);
@@ -494,14 +495,14 @@ __weak void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 //    pkt_t *pkt = (struct pt_pkt *)data;
 //    uint16_t length = pkt->head.nLength;
 
-    
+
 //    ble_parser_rsp(pkt, status);
 }
 
 #if (SES_READ_SUP)
 /**
  ****************************************************************************************
- * @brief Callback to response 'READ' from peer device (__weak func)
+ * @brief Callback to response 'READ' from peer device (__WEAK func)
  *
  * @param[in] conidx  peer device connection index
  * @param[in] attidx  SESS attribute index, converted with 'handle'
@@ -512,19 +513,19 @@ __weak void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
  */
 
 
-__weak void sess_cb_rdv(uint8_t conidx, uint8_t attidx, uint16_t handle)
+__WEAK void sess_cb_rdv(uint8_t conidx, uint8_t attidx, uint16_t handle)
 {
     uint16_t length = 12;//SES_VERS_STR_LEN;
 //    const uint8_t *p_data = (const uint8_t *)SES_VERS_STR;
-    
+
     uint8_t p_data[12] = {0x13, 0x00, 0x02, 0xC9, 0xFE, 0x06};
-    
+
     for(uint8_t idx = 0; idx < GAP_BD_ADDR_LEN; idx++)
     {
         //BIG MAC 6B
         p_data[6+idx] = ble_dev_addr.addr[GAP_BD_ADDR_LEN - 1 - idx];
-    }  
-    
+    }
+
     DEBUG("  read_cfm(att:%d, len:%d)", attidx, length);
     gatt_read_cfm(conidx, LE_SUCCESS, handle, length, p_data);
 }
@@ -533,13 +534,13 @@ __weak void sess_cb_rdv(uint8_t conidx, uint8_t attidx, uint16_t handle)
 #if (SES_CLI_CFG)
 /**
  ****************************************************************************************
- * @brief Callback on enabled client config from peer device via WQ (__weak func)
+ * @brief Callback on enabled client config from peer device via WQ (__WEAK func)
  *
  * @param[in] conidx   Connection index
  * @param[in] cli_cfg  Client configuration @see prf_cli_conf
  ****************************************************************************************
  */
-__weak void sess_cb_ccc(uint8_t conidx, uint8_t cli_cfg)
+__WEAK void sess_cb_ccc(uint8_t conidx, uint8_t cli_cfg)
 {
     // user override
 }

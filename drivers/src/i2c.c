@@ -13,21 +13,19 @@
 #include "iopad.h"
 #include "reg_i2c.h"
 #include "reg_gpio.h"
-#include "core_cmInstr.h"
+#include "cmsis_compiler.h"
 
 /*
  * DEFINES
  ****************************************************************************************
  */
 
-// 必须先清除SI标志再设置STA，然后必须手动清除STA
+// 设置STA会清除SI标志，STA会自动清零
 #define I2C_START()                                         \
     dowl(                                                   \
-        I2C->CONCLR.Word = I2C_CR_IFLG_BIT;                 /* CONCLR: 清除中断标志(IFLG) */ \
-        I2C->CONSET.Word = I2C_CR_START_BIT;                /* CONSET: 设置起始条件(STA) */ \
-        while ((I2C->CONSET.Word & I2C_CR_IFLG_BIT) == 0);  /* 等待中断标志置位 */ \
-        I2C->CONCLR.Word = I2C_CR_START_BIT;                /* CONCLR: 清除起始条件(STA) */ \
-    )
+            I2C->CONSET.Word = I2C_CR_START_BIT;                /* CONSET: 设置起始条件(STA) ,设置STA寄存器会清除中断标志(IFLG)*/ \
+            while ((I2C->CONSET.Word & I2C_CR_IFLG_BIT) == 0);  /* 等待中断标志置位 */\
+        )
 
 // 必须先设置STO再清除SI
 #define I2C_STOP()                                          \

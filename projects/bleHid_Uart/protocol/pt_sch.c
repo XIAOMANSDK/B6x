@@ -5,7 +5,7 @@
 
 #if (DBG_PKT)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -31,7 +31,7 @@ static void proto_read_payl(proto_t *pt)
     pt->rx_state = PT_STATE_PAYL;
     pt->rx_size  = pt->pkt[2];
     pt->rx_ptr   = pt->pkt + PKT_PAYL_POS;
-    
+
     DEBUG("sz:%X", pt->rx_size);
 }
 
@@ -39,7 +39,7 @@ static void proto_received(proto_t *pt)
 {
     uint8_t finish = 0x00;
     struct pt_pkt *pkt = (struct pt_pkt *)(pt->pkt);
-    
+
     switch (pt->rx_state)
     {
         case PT_STATE_SYNC:
@@ -67,12 +67,12 @@ static void proto_received(proto_t *pt)
                 proto_read_payl(pt); // more data
             }
         } break;
-        
+
         case PT_STATE_PAYL:
         {
             finish = 0x01;
         } break;
-        
+
         default:
             break;
     }
@@ -82,7 +82,7 @@ static void proto_received(proto_t *pt)
         uint8_t status = (pt->rx_pfmt >= PT_ERROR) ? pt->rx_pfmt : PT_OK;
 
         pt->parse(pkt, status);
-        
+
         DEBUG("fmt:%X, len:%X", pt->rx_pfmt, pkt->len);
         debugHex(pt->pkt, pkt->len + 3);
         proto_read_sync(pt);
@@ -98,7 +98,7 @@ static void proto_timeout(proto_t *pt)
     // calc timeout
     if ((tmr_tk_t)(sftmr_tick() - pt->rx_tick) > PT_TOUT_CNT)
     {
-        
+
         if (pt->rx_state == PT_STATE_PAYL)
         {
             struct pt_pkt *pkt = (struct pt_pkt *)(pt->pkt);
@@ -115,7 +115,7 @@ static void proto_timeout(proto_t *pt)
 void pt_sch_proc(proto_t *pt)
 {
     if (pt->rx_size > 0)
-    {        
+    {
         uint16_t len = pt->read(pt->rx_ptr, pt->rx_size);
 
         if (len > 0)

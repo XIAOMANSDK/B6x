@@ -28,16 +28,19 @@
 static void sysInit(void)
 {
     // Todo config, if need
-    
+
 }
 
 static void devInit(void)
 {
     uint16_t rsn = rstrsn();
-    
+
     iwdt_disable();
-    
+
     dbgInit();
+    #if !(DBG_MODE)
+    (void)rsn;
+    #endif
     debug("Start(rsn:0x%X)...\r\n", rsn);
 }
 
@@ -45,14 +48,14 @@ static void devInit(void)
 static void userProc(void)
 {
     // Todo user procedure
-    
+
 }
 
 int main(void)
 {
     sysInit();
     devInit();
-    
+
     while (1)
     {
         userProc();

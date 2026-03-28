@@ -35,7 +35,7 @@ extern void user_procedure(void);
 static void sysInit(void)
 {
     rcc_sysclk_set(SYS_CLK);
-    
+
     iwdt_disable();
 
     rcc_ble_en();
@@ -47,20 +47,20 @@ static void sysInit(void)
 static void devInit(void)
 {
     uint16_t rsn = rstrsn();
-    
+
     uart1Rb_Init();
-    debug("Start(rsn:%X, clk:%d)...\r\n", rsn, rcc_sysclk_freq());
-    
+    debug("Start(rsn:%" PRIX16 ", clk:%" PRIu32 ")...\r\n", rsn, rcc_sysclk_freq());
+
     atConfigFlashRead();
-    
+
     #if ((LED_PLAY) || (CFG_SFT_TMR))
     sftmr_init();
-    
+
     #if (LED_PLAY)
     leds_init();
     leds_play(LED_FAST_BL);
     #endif //(LED_PLAY)
-    
+
     #endif
 
     // Init BLE App
@@ -71,10 +71,10 @@ int main(void)
 {
     sysInit();
     devInit();
-    
+
     // Global Interrupt Enable
     GLOBAL_INT_START();
-    
+
     // main loop
     while (1)
     {

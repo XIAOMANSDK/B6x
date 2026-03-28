@@ -45,10 +45,10 @@
 
 /**
  * @brief 边沿触发模式配置
- * 
+ *
  * 根据POS_NEG_EDGE的值选择不同的捕获模式：
  * - 1: 仅上升沿触发
- * - 2: 仅下降沿触发  
+ * - 2: 仅下降沿触发
  * - 3: 双边沿触发（支持高电平和低电平宽度测量）
  */
 #if (POS_NEG_EDGE == 1)
@@ -67,7 +67,7 @@
 
 /**
  * @brief 定时器选择配置
- * 
+ *
  * 根据CTMR_USED选择使用通用定时器或高级定时器：
  * - CTMR_USED=1: 使用通用定时器(CTMR)
  * - CTMR_USED=0: 使用高级定时器(ATMR)
@@ -97,14 +97,14 @@
 
 /**
  * @brief 捕获测量结果结构体
- * 
+ *
  * 存储脉冲测量的各项参数：
  * - 高电平宽度、低电平宽度、周期、频率、占空比
  * - 最近一次捕获值和时间戳
  */
 typedef struct {
     uint32_t high_width;    ///< 高电平宽度（定时器计数）
-    uint32_t low_width;     ///< 低电平宽度（定时器计数）  
+    uint32_t low_width;     ///< 低电平宽度（定时器计数）
     uint32_t period;        ///< 信号周期（定时器计数）
     float frequency;        ///< 信号频率（Hz）
     float duty_cycle;       ///< 占空比（百分比）
@@ -140,23 +140,23 @@ volatile capture_result_t g_cap_result = {0};  ///< 全局捕获结果
 void CTMR_IRQHandler(void)
 {
     uint32_t iflg = CTMR->IFM.Word;  ///< 读取中断标志寄存器
-    
+
     if (iflg & TIMER_INT_CH1_BIT)  ///< 检查通道1捕获中断
     {
         GPIO_DAT_SET(1 << PA_RET_SEE1);  ///< 状态指示 - 开始处理中断
-        
+
         /**
          * @brief 读取当前捕获值并计算时间间隔
-         * 
+         *
          * CTMR->CCR1: 捕获/比较寄存器1，存储捕获事件发生时的计数器值
          * 通过连续两次捕获值的时间差计算脉冲参数
          */
         uint32_t current_capture = CTMR->CCR1 + 1;  ///< 读取当前捕获值（补偿+1）
         uint32_t time_diff = current_capture - g_cap_result.last_capture;  ///< 计算时间间隔
-        
+
         /**
          * @brief 根据边沿类型更新测量结果
-         * 
+         *
          * 通过检查输入引脚电平判断当前边沿类型：
          * - 高电平：刚发生上升沿，前一个间隔为低电平宽度
          * - 低电平：刚发生下降沿，前一个间隔为高电平宽度
@@ -168,13 +168,13 @@ void CTMR_IRQHandler(void)
         }
         else
         {
-            // 当前为低电平，刚发生下降沿  
+            // 当前为低电平，刚发生下降沿
             g_cap_result.high_width = time_diff;  ///< 前一个间隔为高电平宽度
         }
-        
+
         /**
          * @brief 计算周期和频率
-         * 
+         *
          * 周期 = 高电平宽度 + 低电平宽度
          * 频率 = 定时器频率 / 周期
          * 占空比 = 高电平宽度 / 周期 × 100%
@@ -186,20 +186,20 @@ void CTMR_IRQHandler(void)
             g_cap_result.frequency = 1000.0f / g_cap_result.period;  ///< 计算频率（Hz）
             g_cap_result.duty_cycle = (float)g_cap_result.high_width / g_cap_result.period * 100.0f;  ///< 计算占空比
         }
-        
+
         g_cap_result.last_capture = current_capture;  ///< 更新上一次捕获值
-        
-        debug("TIME:[%d ms] LEVEL:[%d] H:%d L:%d P:%d F:%.2fHz D:%.1f%%\r\n", 
-              current_capture, 
+
+        debug("TIME:[%" PRIu32 " ms] LEVEL:[%d] H:%" PRIu32 " L:%" PRIu32 " P:%" PRIu32 " F:%.2fHz D:%.1f%%\r\n",
+              current_capture,
               gpio_get(PA_PWC_CH1) ^ 0x01,
               g_cap_result.high_width,
-              g_cap_result.low_width, 
+              g_cap_result.low_width,
               g_cap_result.period,
               g_cap_result.frequency,
               g_cap_result.duty_cycle);  ///< 输出测量结果
-        
+
         CTMR->ICR.CC1I = 1;  ///< 清除通道1捕获中断标志
-        
+
         GPIO_DAT_CLR(1 << PA_RET_SEE1);  ///< 状态指示 - 中断处理完成
     }
 }
@@ -215,13 +215,13 @@ void CTMR_IRQHandler(void)
 void ATMR_IRQHandler(void)
 {
     uint32_t iflg = ATMR->IFM.Word;  ///< 读取中断标志寄存器
-    
+
     if (iflg & TIMER_INT_CH1_BIT)  ///< 检查通道1捕获中断
     {
         GPIO_DAT_SET(1 << PA_RET_SEE1);  ///< 状态指示 - 开始处理中断
-        
+
         ATMR->ICR.CC1I = 1;  ///< 清除通道1捕获中断标志
-        
+
         GPIO_DAT_CLR(1 << PA_RET_SEE1);  ///< 状态指示 - 中断处理完成
     }
 }
@@ -251,10 +251,10 @@ static void captureTest(void)
     GPIO_DAT_CLR((1 << PA_RET_SEE1) | (1 << PA_PWC_CH1));  ///< 清除状态指示和输入引脚
     GPIO_DIR_SET((1 << PA_RET_SEE1));                      ///< 配置状态指示引脚为输出
     GPIO_DIR_CLR((1 << PA_PWC_CH1));                       ///< 配置捕获输入引脚为输入
-    
+
     /**
      * @brief 配置捕获输入引脚
-     * 
+     *
      * 根据使用的定时器类型选择不同的引脚复用功能：
      * - 通用定时器：使用CSC（交叉开关）功能
      * - 高级定时器：使用TIMER专用功能
@@ -263,15 +263,15 @@ static void captureTest(void)
         // PA0~PA19范围，使用CSC功能
         iom_ctrl(PA_PWC_CH1, IOM_PULLDOWN | IOM_INPUT | IOM_SEL_CSC);  ///< 配置为上拉输入，CSC功能
         csc_input(PA_PWC_CH1, CSC_CTMR_CH1);  ///< 映射到通用定时器通道1输入
-    #else    
+    #else
         // 高级定时器使用专用TIMER功能
         iom_ctrl(PA_PWC_CH1, IOM_PULLDOWN | IOM_INPUT | IOM_SEL_TIMER);  ///< 配置为上拉输入，TIMER功能
     #endif
-    
+
     // 定时器初始化 - 1ms时基
     /**
      * @brief 初始化PWM定时器
-     * 
+     *
      * pwm_init(PWC_TMR, 15999, UINT16_MAX):
      * - 定时器时钟：16MHz
      * - 预分频值：15999 → 计数频率 = 16MHz / (15999+1) = 1kHz
@@ -279,30 +279,30 @@ static void captureTest(void)
      * - 实际时基：1ms
      */
     pwm_init(PWC_TMR, 15999, UINT16_MAX);  ///< 初始化定时器，1ms时基
-    
+
     // 捕获通道配置
     pwm_chnl_cfg_t chnl_cfg;  ///< 通道配置结构体
-    
+
     chnl_cfg.duty = 0;  ///< 占空比设置为0（输入模式时不使用）
-    
+
     /**
      * @brief 配置捕获/比较模式寄存器(CCMR1)
-     * 
+     *
      * PWC_CCMR_MODE(PWC_CC1S, 3, PWC_PSC0)参数：
      * - PWC_CC1S: 捕获/比较选择（输入模式选择）
      * - 3: IC1F输入滤波器设置（具体滤波参数）
      * - PWC_PSC0: 输入捕获预分频器（无分频）
-     * 
+     *
      * CCMR1寄存器位说明：
      * - CC1S[1:0]: 通道配置为输入模式
      * - IC1F[3:0]: 输入捕获滤波器
      * - IC1PSC[1:0]: 输入捕获预分频器
      */
     chnl_cfg.ccmr = PWC_CCMR_MODE(PWC_CC1S, 3, PWC_PSC0);  ///< 配置CCMR1寄存器
-    
+
     /**
      * @brief 配置捕获/比较使能寄存器(CCER)
-     * 
+     *
      * 双边沿触发模式(3)使用特殊配置，其他模式使用PA_TMR_EDGE
      * CCER寄存器位说明：
      * - CC1E: 捕获/比较1输出使能（输入模式下为使能捕获）
@@ -313,20 +313,20 @@ static void captureTest(void)
     #endif
 
     pwm_chnl_set(PWC_TMR_CH(1), &chnl_cfg);  ///< 应用通道配置
-    
+
     /**
      * @brief 配置从模式控制寄存器(SMCR)
-     * 
+     *
      * PWC_SMCR_TS_SMS: 从模式选择
      * - TS[2:0]: 触发选择（TI1FP1或TI1F_ED）
      * - SMS[2:0]: 从模式选择（复位模式）
-     * 
+     *
      * TIMER_INT_CH1_BIT | TIMER_INT_CH2_BIT: 使能通道1和2中断
      */
-    pwm_conf(PWC_TMR, PWC_SMCR_TS_SMS, TIMER_INT_CH1_BIT | TIMER_INT_CH2_BIT); 
-    
+    pwm_conf(PWC_TMR, PWC_SMCR_TS_SMS, TIMER_INT_CH1_BIT | TIMER_INT_CH2_BIT);
+
     pwm_start(PWC_TMR);  ///< 启动定时器
-    
+
     // 中断使能配置
     NVIC_EnableIRQ(PWC_IRQc);  ///< 使能定时器中断
     __enable_irq();            ///< 使能全局中断
@@ -359,7 +359,7 @@ static void sysInit(void)
 static void devInit(void)
 {
     iwdt_disable();  ///< 禁用独立看门狗
-    
+
     dbgInit();                    ///< 初始化调试接口
     debug("Capture Test...\r\n"); ///< 输出测试开始信息
 }
@@ -379,8 +379,8 @@ int main(void)
 {
     sysInit();    ///< 系统初始化
     devInit();    ///< 设备初始化
-    
+
     captureTest();  ///< 执行捕获功能测试
-    
+
     while (1);      ///< 主循环保持程序运行
 }

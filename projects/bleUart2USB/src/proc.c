@@ -19,7 +19,7 @@
 
 #if (DBG_PROC)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -53,6 +53,7 @@ static uint16_t buff_len = 0;
 /// Override - Callback on received data from peer device
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
+    (void)conidx;
     uart_send(UART1_PORT, len, data);
     usbd_cdc_ep_send(CDC0_IN_EP, len, data);
 }
@@ -85,12 +86,13 @@ void user_procedure(void)
             return; // wait again
         }
     }
-    
+
     switch (buff[0])
-    {    
+    {
         case CMD_USBD:
         {
             uint8_t state = usbd_cdc_ep_send(CDC0_IN_EP, buff_len, buff);
+            (void)state;
 
             DEBUG("USBD(sta:%x)", state);
             debugHex(buff, buff_len);
@@ -101,13 +103,14 @@ void user_procedure(void)
             if (app_state_get() > APP_READY)
             {
                 uint8_t state = sess_txd_send(app_env.curidx, buff_len, buff);
+                (void)state;
 
                 DEBUG("BLE_SESS(le_sta:%x, app_sta:%x)", state, app_state_get());
                 debugHex(buff, buff_len);
             }
-            
+
         } break;
-        
+
         default:
         {
         } break;

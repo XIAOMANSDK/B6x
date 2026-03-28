@@ -26,12 +26,12 @@ typedef struct {
     uint16_t acceleration;  // 加速步数
     bool     forward;       // 旋转方向:正转/反转
     bool     busy;          // 状态
-    
+
     // 速度控制参数 (以 steps/s)
     uint16_t current_per;   // 当前速度
     uint16_t target_per;    // 目标速度
     uint16_t accel_per;     // 加速度
-    
+
 } Stepper_t;
 
 // ====== 步序（8-step 半步） ======
@@ -57,19 +57,19 @@ static void apply_step_pins(uint8_t abcd)
 {
     uint32_t setPinBits = 0;
     uint32_t clrPinBits = 0;
-    
+
     if (abcd & 0x08) setPinBits = BIT(PA_MOTOR_A);
     else   clrPinBits = BIT(PA_MOTOR_A);
-    
+
     if (abcd & 0x04) setPinBits |= BIT(PA_MOTOR_B);
     else   clrPinBits |= BIT(PA_MOTOR_B);
-    
+
     if (abcd & 0x02) setPinBits |= BIT(PA_MOTOR_C);
     else   clrPinBits |= BIT(PA_MOTOR_C);
-    
+
     if (abcd & 0x01) setPinBits |= BIT(PA_MOTOR_D);
     else   clrPinBits |= BIT(PA_MOTOR_D);
-    
+
     GPIO_DAT_CLR(clrPinBits);
     GPIO_DAT_SET(setPinBits);
 }
@@ -79,7 +79,7 @@ void stepperInit(void)
     // Init GPIO
     GPIO_DAT_CLR(BIT(PA_MOTOR_A) | BIT(PA_MOTOR_B) | BIT(PA_MOTOR_C) | BIT(PA_MOTOR_D)); // Stop
     GPIO_DIR_SET(BIT(PA_MOTOR_A) | BIT(PA_MOTOR_B) | BIT(PA_MOTOR_C) | BIT(PA_MOTOR_D)); // Output enable
-    
+
     hstepper.remaining = 0;
     hstepper.busy = false;
 }
@@ -91,7 +91,7 @@ static uint16_t rpm_to_steps_per_s(uint8_t rpm)
     // 为避免浮点，用整数运算（乘法先）
     uint32_t tmp = (uint32_t)rpm * STEPS_PER_REV;
     tmp /= 60;
-    
+
     return tmp; // steps/s
 }
 
@@ -114,7 +114,7 @@ void stepperMove(int32_t steps, uint8_t rpm, uint32_t accel_sps2)
     // 设置目标与加速度
     hstepper.accel_per = accel_sps2;
     hstepper.target_per = rpm_to_steps_per_s(rpm);
-    
+
     if (steps == 0) return;
 
     if (hstepper.busy)
@@ -125,7 +125,7 @@ void stepperMove(int32_t steps, uint8_t rpm, uint32_t accel_sps2)
                 hstepper.remaining +=  steps;  //正转增加旋转步数
             else
             {
-                if (hstepper.remaining > (steps + hstepper.acceleration))
+                if (hstepper.remaining > (uint32_t)(steps + hstepper.acceleration))
                     hstepper.remaining -=  steps;  //正转减小旋转步数
                 else
                 {
@@ -137,7 +137,7 @@ void stepperMove(int32_t steps, uint8_t rpm, uint32_t accel_sps2)
         {
             if (hstepper.forward)
             {
-                if (hstepper.remaining > (-steps + hstepper.acceleration))
+                if (hstepper.remaining > (uint32_t)(-steps + hstepper.acceleration))
                     hstepper.remaining +=  steps;  //反转减小旋转步数
                 else
                 {
@@ -151,16 +151,16 @@ void stepperMove(int32_t steps, uint8_t rpm, uint32_t accel_sps2)
     else
     {
         // 设定方向：我们用 steps 的符号确定方向（step_index +1 或 -1）
-        hstepper.remaining = (steps > 0) ? steps : -steps;    
+        hstepper.remaining = (steps > 0) ? steps : -steps;
     }
-    
+
     if (hstepper.remaining > hstepper.target_per)
         hstepper.acceleration = ((hstepper.target_per - STEPS_PER_S_MIN)/(accel_sps2/100));
     else
         hstepper.acceleration = hstepper.remaining/2;
-    
+
     if (hstepper.busy) return;
-    
+
     // 记录方向 sign
     if (steps > 0) {
         // 正方向 (index++)
@@ -226,7 +226,7 @@ void Stepper_TIM_Callback(void) // 请在 HAL_TIM_PeriodElapsedCallback 内调用此函
     // dt ≈ 1 / current_speed (s per step) ; 但为避免浮点，这里用近似更新：
     uint16_t delta = hstepper.accel_per / 100;
     if (delta == 0) delta = 1;
-    
+
     if (hstepper.current_per < hstepper.target_per) {
         // 增速： current_speed += accel * dt  => 近似： current_speed += accel / current_speed
         // 为避免除0，保证 current_speed>=1
@@ -237,13 +237,13 @@ void Stepper_TIM_Callback(void) // 请在 HAL_TIM_PeriodElapsedCallback 内调用此函
         if ((hstepper.current_per > STEPS_PER_S_MIN) && (hstepper.current_per > delta)) hstepper.current_per -= delta;
         else hstepper.current_per = STEPS_PER_S_MIN;
     }
-    
+
     // 减速阶段
     if (hstepper.remaining == hstepper.acceleration) hstepper.target_per = STEPS_PER_S_MIN;
-    
+
     // 重新计算 timer interval
     ATMR->ARR = stepsps_to_interval_ticks(hstepper.current_per);
-    
+
     // 结束条件
     if (hstepper.remaining == 0) {
         // 停止 timer
@@ -258,14 +258,14 @@ void Stepper_TIM_Callback(void) // 请在 HAL_TIM_PeriodElapsedCallback 内调用此函
 void ATMR_IRQHandler(void)
 {
     uint32_t irq_stat = ATMR->RIF.Word;
-    
+
     // Each  tick Interrupt is 1ms
     if (irq_stat & 0x01/*TIMER_UI_BIT*/)
     {
         ATMR->IDR.UI = 1;  // Disable UI Interrupt
 
         Stepper_TIM_Callback();
-        
+
         ATMR->ICR.UI = 1; //Clear Interrupt Flag
         ATMR->IER.UI = 1; // Enable UI Interrupt
     }

@@ -156,7 +156,7 @@ enum ble_event
     // Configure Events
     BLE_RESET,
     BLE_CONFIGURED,
-    
+
     // Connection Events
     BLE_CONNECTED,
     BLE_DISCONNECTED,
@@ -201,7 +201,7 @@ extern const bd_addr_t ble_dev_addr;
 
 /// GAP device configuration
 extern const struct gapm_dev_config ble_dev_config;
-    
+
 
 /*
  * FUNCTION DECLARATIONS
@@ -210,7 +210,7 @@ extern const struct gapm_dev_config ble_dev_config;
 
 /**
  ****************************************************************************************
- * @brief API to Init Application, maybe User Override! (__weak func)
+ * @brief API to Init Application, maybe User Override! (__WEAK func)
  *
  * @param[in] rsn   reset reason @see enum rst_src_bfs
  ****************************************************************************************
@@ -219,7 +219,7 @@ void app_init(uint16_t rsn);
 
 /**
  ****************************************************************************************
- * @brief API to Create Profiles, maybe User Override! (__weak func)
+ * @brief API to Create Profiles, maybe User Override! (__WEAK func)
  *        Added in order and judged status in each profile-func.
  ****************************************************************************************
  */
@@ -227,7 +227,7 @@ void app_prf_create(void);
 
 /**
  ****************************************************************************************
- * @brief Finite state machine for Device Configure, maybe User Override! (__weak func)
+ * @brief Finite state machine for Device Configure, maybe User Override! (__WEAK func)
  *
  * @param[in] evt   configure event @see enum ble_event
  ****************************************************************************************
@@ -236,7 +236,7 @@ void app_conf_fsm(uint8_t evt);
 
 /**
  ****************************************************************************************
- * @brief Finite state machine for connection event, maybe User Override! (__weak func)
+ * @brief Finite state machine for connection event, maybe User Override! (__WEAK func)
  *
  * @param[in] evt     connection event @see enum ble_event
  * @param[in] conidx  connection index
@@ -247,7 +247,7 @@ void app_conn_fsm(uint8_t evt, uint8_t conidx, const void*param);
 
 /**
  ****************************************************************************************
- * @brief API to Set State of Application, maybe User Override! (__weak func)
+ * @brief API to Set State of Application, maybe User Override! (__WEAK func)
  *
  * @param[in] state    new state
  ****************************************************************************************
@@ -280,7 +280,7 @@ static __inline uint16_t app_icon_get(void)
 
 /**
  ****************************************************************************************
- * @brief API to Get Device Name, maybe User Override! (__weak func)
+ * @brief API to Get Device Name, maybe User Override! (__WEAK func)
  *
  * @param[in]     size   Length of name Buffer
  * @param[out] name   Pointer of name buffer
@@ -292,7 +292,7 @@ uint8_t app_name_get(uint8_t size, uint8_t *name);
 
 /**
  ****************************************************************************************
- * @brief API to Get Pairing Feature, maybe User Override! (__weak func)
+ * @brief API to Get Pairing Feature, maybe User Override! (__WEAK func)
  *
  * @param[out] feat   Pointer of pairing buffer to fill
  ****************************************************************************************
@@ -301,7 +301,7 @@ void app_pairing_get(struct gapc_pairing *feat);
 
 /**
  ****************************************************************************************
- * @brief API to Generate LTK for bonding, maybe User Override! (__weak func)
+ * @brief API to Generate LTK for bonding, maybe User Override! (__WEAK func)
  *
  * @param[in]  conidx   connection index
  * @param[out] ltk      Pointer of LTK buffer to fill
@@ -311,7 +311,7 @@ void app_ltk_gen(uint8_t conidx, struct gapc_ltk *ltk);
 
 /**
  ****************************************************************************************
- * @brief API to Save LTK when bonded, maybe User Override! (__weak func)
+ * @brief API to Save LTK when bonded, maybe User Override! (__WEAK func)
  *
  * @param[in] conidx   connection index
  * @param[in] ltk      Pointer of LTK data
@@ -321,7 +321,7 @@ void app_ltk_save(uint8_t conidx, const struct gapc_ltk *ltk);
 
 /**
  ****************************************************************************************
- * @brief API to Find LTK when re-encryption, maybe User Override! (__weak func)
+ * @brief API to Find LTK when re-encryption, maybe User Override! (__WEAK func)
  *
  * @param[in] ediv     EDIV value for matching
  * @param[in] rand_nb  Rand Nb values for matching

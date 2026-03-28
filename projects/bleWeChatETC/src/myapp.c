@@ -15,7 +15,7 @@
 
 #if (DBG_APP)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #endif
@@ -53,7 +53,7 @@ void app_state_set(uint8_t state)
     DEBUG("State(old:%d,new:%d)", app_state_get(), state);
 
     app_env.state = state;
-    
+
     // Indication, User add more...
     if (state == APP_IDLE)
     {
@@ -69,4 +69,3 @@ void app_state_set(uint8_t state)
     }
 }
 #endif //(LED_PLAY)
-

@@ -1,0 +1,434 @@
+{
+  "file_path": "./usb\\src\\demo_audio_multi.c",
+  "functions": [
+    {
+      "name": "",
+      "return_type": "audio_entity_t",
+      "parameters": [],
+      "function_body": "{\n    const audio_entity_t *entity = NULL;\n\n    for (int i = 0; i < ARRAY_SIZE(audio_entity_tab); i++) {\n        if (bEntityId == audio_entity_tab[i].bEntityId) {\n            entity = &audio_entity_tab[0];\n            break;\n        }\n    }\n    return entity;\n}",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 275,
+      "is_static": false
+    },
+    {
+      "name": "usbd_audio_onchange_handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    #if (ENB_MIC)\n    if (intf_num == AUDIO_AS_MIC_INTF_NUM) {\n        if (alt_setting == 1) {\n            mic_state = MIC_IDLE;\n            USB_LOG_RAW(\"Mic On\\r\\n\");\n        } else {\n            mic_state = MIC_OFF;\n            USB_LOG_RAW(\"Mic Off\\r\\n\");\n        }\n    }\n    #endif\n\n    #if (ENB_SPEAKER)\n    if (intf_num == AUDIO_AS_SPEAKER_INTF_NUM) {\n        if (alt_setting == 1) {\n            spk_state = SPK_ON;\n            USB_LOG_RAW(\"Speaker On\\r\\n\");\n        } else {\n            spk_state = SPK_OFF;\n            USB_LOG_RAW(\"Speaker Off\\r\\n\");\n        }\n    }\n    #endif\n}",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 289,
+      "is_static": false
+    },
+    {
+      "name": "usbd_audio_ep_in_handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    if (mic_state == MIC_BUSY) {\n        mic_state = MIC_IDLE;\n    }\n    //USB_LOG_RAW(\"ep_in:0x%x\\r\\n\", ep);\n}",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 318,
+      "is_static": false
+    },
+    {
+      "name": "micTest",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    if (mic_state == MIC_IDLE) {\n        uint8_t status = 0;\n        memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);\n\n        GPIO_DAT_SET(GPIO16);\n        mic_state = MIC_BUSY;\n        status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);\n\n        if (status != USBD_OK) {\n            if (mic_state != MIC_OFF) {\n                mic_state = MIC_IDLE;\n            }\n            USB_LOG_RAW(\"err:%d, tmp:%02X\\r\\n\", status, mic_tmp);\n        } else {\n            USB_LOG_RAW(\"curr tmp:%02X\\r\\n\", mic_tmp);\n        }\n        GPIO_DAT_CLR(GPIO16);\n        \n        mic_tmp++;\n    }\n}",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 329,
+      "is_static": true
+    },
+    {
+      "name": "usbd_audio_ep_out_handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    /*!< read the data from host send */\n    spk_len = usbd_ep_read(ep, AUDIO_OUT_EP_MPS, spk_buffer);\n\n    /*!< you can use the data do some thing you like */\n    USB_LOG_RAW(\"curr spk_len:%d\\r\\n\", spk_len);\n}",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 362,
+      "is_static": false
+    },
+    {
+      "name": "usbdInit",
+      "return_type": "void",
+      "parameters": [],
+      "function_body": "{\n    usbd_init();\n    usbd_register(audio_descriptor, audio_configuration);\n}",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 378,
+      "is_static": false
+    },
+    {
+      "name": "usbdTest",
+      "return_type": "void",
+      "parameters": [],
+      "function_body": "{\n    if (usbd_is_configured()) {\n        micTest();\n    }\n}",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 384,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "ENB_MIC",
+      "value": "(1)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 7
+    },
+    {
+      "name": "ENB_SPEAKER",
+      "value": "(1)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 8
+    },
+    {
+      "name": "USBD_VID",
+      "value": "0x0D8C",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 10
+    },
+    {
+      "name": "USBD_PID",
+      "value": "0x0312",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 11
+    },
+    {
+      "name": "DEV_BCD",
+      "value": "0x0306",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 12
+    },
+    {
+      "name": "USBD_MAX_POWER",
+      "value": "100",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 13
+    },
+    {
+      "name": "USBD_LANGID_STRING",
+      "value": "0x0409 // English(US)",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 14
+    },
+    {
+      "name": "AUDIO_CTRL_CNT",
+      "value": "(ENB_MIC + ENB_SPEAKER)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 18
+    },
+    {
+      "name": "AUDIO_IN_EP",
+      "value": "0x81",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 24
+    },
+    {
+      "name": "AUDIO_IN_EP_INTV",
+      "value": "0x01   // unit in 1ms",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 25
+    },
+    {
+      "name": "AUDIO_IN_FREQ",
+      "value": "16000U // 16K",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 27
+    },
+    {
+      "name": "AUDIO_IN_FRAME_SIZE",
+      "value": "2      // unit in byte",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 28
+    },
+    {
+      "name": "AUDIO_IN_RESOL_BITS",
+      "value": "16     // unit in bit",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 29
+    },
+    {
+      "name": "AUDIO_IN_CHNLS",
+      "value": "1      // Mono:1",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 30
+    },
+    {
+      "name": "AUDIO_IN_EP_MPS",
+      "value": "((uint32_t)((AUDIO_IN_FREQ * AUDIO_IN_FRAME_SIZE * AUDIO_IN_CHNLS) / 1000))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 33
+    },
+    {
+      "name": "AUDIO_INPUT_CTRL",
+      "value": "0x03, 0x03",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 37
+    },
+    {
+      "name": "AUDIO_INPUT_CHEN",
+      "value": "0x0000",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 38
+    },
+    {
+      "name": "AUDIO_INPUT_CTRL",
+      "value": "0x03, 0x03, 0x03",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 40
+    },
+    {
+      "name": "AUDIO_INPUT_CHEN",
+      "value": "0x0003",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 41
+    },
+    {
+      "name": "AUDIO_OUT_EP",
+      "value": "0x02",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 47
+    },
+    {
+      "name": "AUDIO_OUT_EP_INTV",
+      "value": "0x01   // unit in 1ms",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 48
+    },
+    {
+      "name": "AUDIO_OUT_FREQ",
+      "value": "16000U // 16K",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 50
+    },
+    {
+      "name": "AUDIO_OUT_FRAME_SIZE",
+      "value": "2      // unit in byte",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 51
+    },
+    {
+      "name": "AUDIO_OUT_RESOL_BITS",
+      "value": "16     // unit in bit",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 52
+    },
+    {
+      "name": "AUDIO_OUT_CHNLS",
+      "value": "1      // Mono:1",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 53
+    },
+    {
+      "name": "AUDIO_OUT_EP_MPS",
+      "value": "((uint32_t)((AUDIO_OUT_FREQ * AUDIO_OUT_FRAME_SIZE * AUDIO_OUT_CHNLS) / 1000))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 56
+    },
+    {
+      "name": "AUDIO_OUTPUT_CTRL",
+      "value": "0x03, 0x03",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 60
+    },
+    {
+      "name": "AUDIO_OUTPUT_CHEN",
+      "value": "0x0000",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 61
+    },
+    {
+      "name": "AUDIO_OUTPUT_CTRL",
+      "value": "0x03, 0x03, 0x03",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 63
+    },
+    {
+      "name": "AUDIO_OUTPUT_CHEN",
+      "value": "0x0003",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 64
+    },
+    {
+      "name": "AUDIO_AS_INTF_LIST",
+      "value": "USB_AUDIO_INTF_START+1",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 108
+    },
+    {
+      "name": "AUDIO_AS_INTF_LIST",
+      "value": "USB_AUDIO_INTF_START+1,USB_AUDIO_INTF_START+2",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 110
+    },
+    {
+      "name": "AUDIO_AC_MIC_SIZE",
+      "value": "( AUDIO_SIZEOF_AC_INPUT_TERMINAL_DESC +",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 116
+    },
+    {
+      "name": "AUDIO_AC_MIC_SIZE",
+      "value": "( 0 )",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 120
+    },
+    {
+      "name": "AUDIO_AC_SPEAKER_SIZE",
+      "value": "( AUDIO_SIZEOF_AC_INPUT_TERMINAL_DESC +",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 124
+    },
+    {
+      "name": "AUDIO_AC_SPEAKER_SIZE",
+      "value": "( 0 )",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 128
+    },
+    {
+      "name": "AUDIO_AC_CTRL_SIZE",
+      "value": "( AUDIO_SIZEOF_AC_HEADER_DESC(AUDIO_CTRL_CNT) + AUDIO_AC_MIC_SIZE + AUDIO_AC_SPEAKER_SIZE )",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 131
+    },
+    {
+      "name": "AUDIO_AC_DESC_SIZE",
+      "value": "( USB_INTERFACE_DESC_SIZE + AUDIO_AC_CTRL_SIZE )",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 133
+    },
+    {
+      "name": "AUDIO_AS_DESC_SIZE",
+      "value": "( AUDIO_AS_DESCRIPTOR_INIT_LEN(1) * AUDIO_CTRL_CNT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 136
+    },
+    {
+      "name": "USB_CONFIG_TOTAL_SIZE",
+      "value": "( USB_CONFIG_DESC_SIZE + AUDIO_AC_DESC_SIZE + AUDIO_AS_DESC_SIZE)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./usb\\src\\demo_audio_multi.c",
+      "line_number": 139
+    }
+  ],
+  "parse_errors": [
+    "Line 153, Col 5: '#if'",
+    "Line 157, Col 5: '#endif\n    #if'",
+    "Line 162, Col 5: '#endif\n    \n    /* Descriptor - Audio Stream */\n    #if'",
+    "Line 168, Col 5: '#endif\n\n    #if'",
+    "Line 173, Col 5: '#endif'",
+    "Line 208, Col 5: '#if (USBD_BCD == USB_2_0)'",
+    "Line 210, Col 5: '#endif'",
+    "Line 226, Col 5: '#if'",
+    "Line 228, Col 5: '#endif\n    #if'",
+    "Line 231, Col 5: '#endif'",
+    "Line 236, Col 5: '#if'",
+    "Line 238, Col 5: '#endif\n    #if'",
+    "Line 241, Col 5: '#endif'"
+  ]
+}

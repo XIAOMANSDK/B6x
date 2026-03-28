@@ -1,0 +1,1001 @@
+{
+  "file_path": "./drivers\\api\\fshc.h",
+  "functions": [
+    {
+      "name": "fshc_en_cmd",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Send control/enable command without value ",
+      "detailed_description": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_RST_EN FSH_CMD_RESET FSH_CMD_EXIT_HMP\nFSH_CMD_WR_EN FSH_CMD_WR_STA_EN)\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 273,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_wr_sta",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Write value to flash state register ",
+      "detailed_description": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_WR_STA)\n@param[in] len  Length of value, range 1~4 Bytes\n@param[in] val  State value, valid range 8/16/24/32bits by 'len'\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 285,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_rd_sta",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read value from flash state register ",
+      "detailed_description": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_RD_ID FSH_CMD_RD_STA0 FSH_CMD_RD_STA1)\n@param[in] len  Length of value, range 1~4 Bytes\n@return value  State value, valid range 8/16/24/32bits by 'len'\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 297,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_wr_cfg",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "flen_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Perpare write data to flash ",
+      "detailed_description": "***************************************************************************************\n@param[in] cmd     fshc access cmd (example read cmd: 0x03)\n@param[in] offset  access flash addr offset\n@param[in] len     access flash data len, unit is byte\n@param[in] sctrl   access flash mode config(example: spi mode, dual mode...)\n@param[in] acbit   dummy cycle\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 311,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_wr_fifo",
+      "return_type": "flen_t",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "flen_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 313,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_rd_cfg",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "flen_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Perpare read data from flash ",
+      "detailed_description": "***************************************************************************************\n@param[in] cmd     fshc access cmd (example read cmd: 0x03)\n@param[in] offset  access flash addr offset\n@param[in] len     access flash data len, unit is byte\n@param[in] sctrl   access flash mode config(example: spi mode, dual mode...)\n@param[in] acbit   dummy cycle\n***************************************************************************************\n/",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 327,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_rd_fifo",
+      "return_type": "flen_t",
+      "parameters": [
+        {
+          "name": "buff",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "flen_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 329,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_xip_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 331,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_hpm_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 333,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_erase",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 335,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_read",
+      "return_type": "flen_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "flen_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 337,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_write",
+      "return_type": "flen_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "flen_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 339,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_cache_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 341,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "fshc_suspend_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 342,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "FCM_MODE_DUAL",
+      "value": "(DUAL_MODE << FCM_MODE_LSB)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 79
+    },
+    {
+      "name": "FCM_MODE_QUAD",
+      "value": "(QUAD_MODE << FCM_MODE_LSB)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 80
+    },
+    {
+      "name": "FCM_TYPE_BLOCKING",
+      "value": "(0)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 83
+    },
+    {
+      "name": "FCM_TYPE_NOTWAIT",
+      "value": "(FCM_NOTWAIT_BIT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 84
+    },
+    {
+      "name": "FCM_TYPE_SUSPEND",
+      "value": "(FCM_SUSPEND_BIT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 85
+    },
+    {
+      "name": "FCM_TYPE_PKTSTART",
+      "value": "(FCM_PACKETS_BIT | FCM_NOTWAIT_BIT)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 86
+    },
+    {
+      "name": "FCM_TYPE_PKTNEXT",
+      "value": "(FCM_PACKETS_BIT | FCM_NEXTPKT_BIT)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 87
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "CACHE_RS1K",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS2K",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS4K",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS8K",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS16K",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS32K",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS64K",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS128K",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS256K",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "CACHE_RS512K",
+          "value": 18,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 26
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SPI_MODE",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "DUAL_MODE",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "QUAD_MODE",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 40
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "FCM_CMD_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "FCM_CMD_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "FCM_MODE_LSB",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "FCM_MODE_MSK",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "FCM_RWOTP_BIT",
+          "value": 1024,
+          "brief": ""
+        },
+        {
+          "name": "FCM_ERCHIP_BIT",
+          "value": 2048,
+          "brief": ""
+        },
+        {
+          "name": "FCM_NEXTPKT_BIT",
+          "value": 4096,
+          "brief": ""
+        },
+        {
+          "name": "FCM_PACKETS_BIT",
+          "value": 8192,
+          "brief": ""
+        },
+        {
+          "name": "FCM_NOTWAIT_BIT",
+          "value": 16384,
+          "brief": ""
+        },
+        {
+          "name": "FCM_SUSPEND_BIT",
+          "value": 32768,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 51
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "IDLE_ADR_ARG",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SDAT_ADR_ARG",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "RDAT_ADR_ARG",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 91
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SADR_CMD_ARG",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SDAT_CMD_ARG",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "RDAT_CMD_ARG",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "IDLE_CMD_ARG",
+          "value": 0,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 101
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SCTRL_DATA_BIT_MODE_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_DATA_BIT_MODE_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_ADDR_BIT_MODE_LSB",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_ADDR_BIT_MODE_MSK",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_CMD_BIT_MODE_LSB",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_CMD_BIT_MODE_MSK",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_ADDR_WITH_ARG_LSB",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_ADDR_WITH_ARG_MSK",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_CMD_WITH_ARG_LSB",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_CMD_WITH_ARG_MSK",
+          "value": 9,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 113
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SCTRL_EN_CMD",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_RD_STA",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_WR_STA",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_ER_CHIP",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_ER_PART",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_SIRD_DAT",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_SIWR_DAT",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_DLRD_DAT",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_DLWR_DAT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_QDRD_DAT",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SCTRL_QDWR_DAT",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 143
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "ACBIT_ADR_LEN_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "ACBIT_ADR_LEN_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "ACBIT_CMD_LEN_LSB",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "ACBIT_CMD_LEN_MSK",
+          "value": 7,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 164
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "ACBIT_SI_IDLE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "ACBIT_SI_0DUMY",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "ACBIT_SI_1DUMY",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "ACBIT_DL_1DUMY",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 177
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SBUS_SI_0DUMY",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "SBUS_SI_1DUMY",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "SBUS_DL_1DUMY",
+          "value": 15,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 190
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "CLEN_0DUMY",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "CLEN_1DUMY",
+          "value": 15,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 203
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "DLYSET_HPM_CLEN_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "DLYSET_CMD_LEN_LSB",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "DLYSET_0DUMY_CLEN_LSB",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "DLYSET_ADDR_BIT_MODE_LSB",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "DLYSET_CMD_BIT_MODE_LSB",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "DLYSET_DATA_BIT_MODE_LSB",
+          "value": 18,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 211
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "IBUS_SIRD_CFG",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "IBUS_DLRD_CFG",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "IBUS_QDRD_CFG",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "IBUS_DLRD_HPM",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "IBUS_QDRD_HPM",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 233
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "IBUS_SI_0DUMY",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "IBUS_SI_1DUMY",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "IBUS_DL_1DUMY",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "IBUS_QD_1DUMY",
+          "value": 11,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "./drivers\\api\\fshc.h",
+      "line_number": 248
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": [
+    "Line 132, Col 23: '(datmode, adrmode, cmdarg, adrarg)                               \\\n    ( ((datmode) << SCTRL_DATA_BIT_MODE_LSB) | ((adrmode) << SCTRL_ADDR_BIT_MODE_LSB)  \\\n    | (SPI_MODE << SCTRL_CMD_BIT_MODE_LSB)   /* command be mostly 1bit mode */         \\\n    | ('"
+  ]
+}

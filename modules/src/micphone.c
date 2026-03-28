@@ -5,14 +5,14 @@
 
 #if (DBG_MICPHONE)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
 #endif
 
 #ifndef ADPCM_SELECT
-#define ADPCM_SELECT         (0)  // 1:ADPCM DATA   0:PCM DATA 
+#define ADPCM_SELECT         (0)  // 1:ADPCM DATA   0:PCM DATA
 #endif
 
 #ifndef MICPHONE_DMA_CHNL
@@ -62,15 +62,15 @@ void micInit(void)
     GPIO_DIR_CLR(GPIO02 | GPIO03);
     iom_ctrl(MIC_IB_PAD, IOM_HIZ);
     iom_ctrl(MIC_IN_PAD, IOM_ANALOG);   // 5
-    
+
     // sadc init
     sadc_init(SADC_ANA_DFLT | SADC_INBUF_BYPSS_BIT);
-    
+
     dma_init();
-    
+
     // DMA Conf: direct Init
     SADC->CTRL.SADC_DMAC_EN = 0;
-    
+
     DMA_SADC_INIT(MICPHONE_DMA_CHNL);
     DMA_SADC_PCM_CONF(MICPHONE_DMA_CHNL, pcm_buff0, PCM_SAMPLE_NB, CCM_PING_PONG);
     DMA_SADC_PCM_CONF(MICPHONE_DMA_CHNL | DMA_CH_ALT, pcm_buff1, PCM_SAMPLE_NB, CCM_PING_PONG);
@@ -78,11 +78,11 @@ void micInit(void)
     sadc_pcm(SADC_MIC_DFLT & (~SADC_PGA_VOL_MSK | SADC_PGA_VOL(0)));
 
     voiceSendFt = 4;
-    
+
     #if (ADPCM_SELECT)
     state.index = 0;
     state.valprev = 0;
-    #endif    
+    #endif
 }
 
 void micDeinit(void)
@@ -103,7 +103,7 @@ uint8_t* micDataGet(void)
 {
     // primary or alternate transfer done
     if (dma_chnl_done(MICPHONE_DMA_CHNL))
-    {   
+    {
         if (voiceSendFt)
         {
             // ¹ýÂË
@@ -111,20 +111,20 @@ uint8_t* micDataGet(void)
             voiceSendFt--;
             return NULL;
         }
-        
+
         #if (ADPCM_SELECT)
         adpcm_buff.index = state.index;
         #endif
-        
+
 //        GPIO_DIR_SET_HI(GPIO17);
 //        GPIO_DIR_SET_LO(GPIO17);
-        
+
         if (dma_chnl_reload(MICPHONE_DMA_CHNL))  // 0x100
         {
             #if (ADPCM_SELECT)
             adpcm_buff.sample0 = pcm_buff1[0];
             state.valprev = pcm_buff1[0];
-            adpcm_coder((short*)&pcm_buff1[1], (char *)adpcm_buff.sampledata, (PCM_SAMPLE_NB - 1), &state); 
+            adpcm_coder((short*)&pcm_buff1[1], (char *)adpcm_buff.sampledata, (PCM_SAMPLE_NB - 1), &state);
             #else
             return (uint8_t *)&pcm_buff1;
             #endif
@@ -134,21 +134,19 @@ uint8_t* micDataGet(void)
             #if (ADPCM_SELECT)
             adpcm_buff.sample0 = pcm_buff0[0];
             state.valprev = pcm_buff0[0];
-            adpcm_coder((short*)&pcm_buff0[1], (char *)adpcm_buff.sampledata, (PCM_SAMPLE_NB - 1), &state);        
+            adpcm_coder((short*)&pcm_buff0[1], (char *)adpcm_buff.sampledata, (PCM_SAMPLE_NB - 1), &state);
             #else
             return (uint8_t *)&pcm_buff0;
             #endif
         }
-        
-//        uart_send(UART1_PORT, (uint8_t *)&adpcm_buff, ADPCM_BLOCK_SIZE);  
+
+//        uart_send(UART1_PORT, (uint8_t *)&adpcm_buff, ADPCM_BLOCK_SIZE);
 //        sess_txd_send(app_env.curidx, ADPCM_BLOCK_SIZE, (uint8_t *)&adpcm_buff);
 //        voice_send(ADPCM_BLOCK_SIZE, (uint8_t *)&adpcm_buff);
         #if (ADPCM_SELECT)
         return (uint8_t *)&adpcm_buff;
         #endif
     }
-    
+
     return NULL;
 }
-
-

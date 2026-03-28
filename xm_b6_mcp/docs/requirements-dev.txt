@@ -1,0 +1,20 @@
+# B6x MCP Server - Development Dependencies
+# Install: pip install -r requirements-dev.txt
+
+# Include core dependencies
+-r requirements.txt
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.21.0
+
+# Development Tools
+black>=23.0.0
+isort>=5.12.0
+mypy>=1.5.0
+
+# Optional Documentation Parsing
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+PyPDF2>=3.0.0

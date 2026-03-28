@@ -1,0 +1,412 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-17T18:07:16.335445",
+  "sdk_root": ".",
+  "file_hashes": {
+    "excel_constraints": {},
+    "documents": {},
+    "c_headers": {
+      "drivers\\api\\btmr.h": {
+        "path": "./drivers\\api\\btmr.h",
+        "md5": "29397bff12e4e22c5b225fc0d6e326af",
+        "size_bytes": 611,
+        "mtime": 1762480964.563254,
+        "last_built": "2026-03-17T18:07:05.585534",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\core.h": {
+        "path": "./drivers\\api\\core.h",
+        "md5": "e5ebe0032b65b57158ce34bac2fbf20f",
+        "size_bytes": 9495,
+        "mtime": 1769927647.0934067,
+        "last_built": "2026-03-17T18:07:05.587303",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\dma.h": {
+        "path": "./drivers\\api\\dma.h",
+        "md5": "52b66884be8d3bfc88159f86a8406b7c",
+        "size_bytes": 18180,
+        "mtime": 1772521744.9871244,
+        "last_built": "2026-03-17T18:07:05.588845",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\drvs.h": {
+        "path": "./drivers\\api\\drvs.h",
+        "md5": "0f9f46cbe96539c6a029873320984375",
+        "size_bytes": 3028,
+        "mtime": 1773622789.1426148,
+        "last_built": "2026-03-17T18:07:05.590317",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\exti.h": {
+        "path": "./drivers\\api\\exti.h",
+        "md5": "687ebf7df1f75a3855b58d18da950398",
+        "size_bytes": 2851,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-03-17T18:07:05.591787",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\flash.h": {
+        "path": "./drivers\\api\\flash.h",
+        "md5": "53a3b7d06f3d8437e926ec8243f6090b",
+        "size_bytes": 6513,
+        "mtime": 1773622739.1275141,
+        "last_built": "2026-03-17T18:07:05.593298",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\fshc.h": {
+        "path": "./drivers\\api\\fshc.h",
+        "md5": "fa9840d58fad9566d524f8563c0f4c7d",
+        "size_bytes": 12368,
+        "mtime": 1710583664.3850024,
+        "last_built": "2026-03-17T18:07:05.594781",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\gpio.h": {
+        "path": "./drivers\\api\\gpio.h",
+        "md5": "4136519548167a02cd51edeb18574237",
+        "size_bytes": 8908,
+        "mtime": 1762491413.6611896,
+        "last_built": "2026-03-17T18:07:05.596497",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\i2c.h": {
+        "path": "./drivers\\api\\i2c.h",
+        "md5": "886964c152977ee98d291ea451a69341",
+        "size_bytes": 9919,
+        "mtime": 1710583664.334894,
+        "last_built": "2026-03-17T18:07:05.598136",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\iopad.h": {
+        "path": "./drivers\\api\\iopad.h",
+        "md5": "8e6e15cdd34d2f4a70c2b859eba5bb97",
+        "size_bytes": 10830,
+        "mtime": 1762491373.581024,
+        "last_built": "2026-03-17T18:07:05.599729",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\iwdt.h": {
+        "path": "./drivers\\api\\iwdt.h",
+        "md5": "705ecf109afc1f857d8e7222da801098",
+        "size_bytes": 2201,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-03-17T18:07:05.601386",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\pwm.h": {
+        "path": "./drivers\\api\\pwm.h",
+        "md5": "1c2bd54ddb6c1769582c682f58e00767",
+        "size_bytes": 6857,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-03-17T18:07:05.603107",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\rcc.h": {
+        "path": "./drivers\\api\\rcc.h",
+        "md5": "fef996ed2b327b1f65a32eeeadc85bd4",
+        "size_bytes": 9021,
+        "mtime": 1710583664.3125587,
+        "last_built": "2026-03-17T18:07:05.604624",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\rco.h": {
+        "path": "./drivers\\api\\rco.h",
+        "md5": "2e129c690d675a13eddc9108b2afcad4",
+        "size_bytes": 3594,
+        "mtime": 1710583664.3695893,
+        "last_built": "2026-03-17T18:07:05.606096",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\rtc.h": {
+        "path": "./drivers\\api\\rtc.h",
+        "md5": "a687fdb1fe7bd1583ffdeb6ae5ba50f4",
+        "size_bytes": 4402,
+        "mtime": 1710583664.387234,
+        "last_built": "2026-03-17T18:07:05.607618",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\sadc.h": {
+        "path": "./drivers\\api\\sadc.h",
+        "md5": "00d5084a638fba713a5f661f4cc2aa75",
+        "size_bytes": 13265,
+        "mtime": 1762164598.0514245,
+        "last_built": "2026-03-17T18:07:05.609081",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\spi.h": {
+        "path": "./drivers\\api\\spi.h",
+        "md5": "79547db03501a614465fccb1cd2a3ffa",
+        "size_bytes": 9037,
+        "mtime": 1773622811.6789987,
+        "last_built": "2026-03-17T18:07:05.610661",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\svn_ver.h": {
+        "path": "./drivers\\api\\svn_ver.h",
+        "md5": "e58f9077072add8bf29970d6192b4945",
+        "size_bytes": 97,
+        "mtime": 1773622753.4912887,
+        "last_built": "2026-03-17T18:07:05.612242",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\sysdbg.h": {
+        "path": "./drivers\\api\\sysdbg.h",
+        "md5": "a11a1d9d5263d59e7a7370d857f5e710",
+        "size_bytes": 5669,
+        "mtime": 1710583664.2719207,
+        "last_built": "2026-03-17T18:07:05.613812",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\timer.h": {
+        "path": "./drivers\\api\\timer.h",
+        "md5": "16e9580375de9d668078d15666ca994d",
+        "size_bytes": 4575,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-03-17T18:07:05.615526",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\trim.h": {
+        "path": "./drivers\\api\\trim.h",
+        "md5": "a90cc3b3722508763568c05f8b14ebea",
+        "size_bytes": 952,
+        "mtime": 1713927494.329942,
+        "last_built": "2026-03-17T18:07:05.617240",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\uart.h": {
+        "path": "./drivers\\api\\uart.h",
+        "md5": "b7cfc7840effbba6c8cff7be7e4f8aa4",
+        "size_bytes": 11420,
+        "mtime": 1767774570.2323122,
+        "last_built": "2026-03-17T18:07:05.619264",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\att.h": {
+        "path": "./ble\\api\\att.h",
+        "md5": "12ca841982050d892bc3e0661fd2da33",
+        "size_bytes": 50582,
+        "mtime": 1730534610.5918386,
+        "last_built": "2026-03-17T18:07:16.302328",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\attm_api.h": {
+        "path": "./ble\\api\\attm_api.h",
+        "md5": "9d09ccf5cf7632bdbebe53cba2bc8157",
+        "size_bytes": 24056,
+        "mtime": 1730534610.5728903,
+        "last_built": "2026-03-17T18:07:16.305854",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\bledef.h": {
+        "path": "./ble\\api\\bledef.h",
+        "md5": "82ffb61d9ed73b0b709dd4bbca630a7b",
+        "size_bytes": 8106,
+        "mtime": 1773622538.6569092,
+        "last_built": "2026-03-17T18:07:16.308053",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\blelib.h": {
+        "path": "./ble\\api\\blelib.h",
+        "md5": "ce443f6993344c543b78170c97f7887e",
+        "size_bytes": 3449,
+        "mtime": 1773622538.6569092,
+        "last_built": "2026-03-17T18:07:16.309741",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\fcc.h": {
+        "path": "./ble\\api\\fcc.h",
+        "md5": "79aafaa44d0c5eed3f29fde2500caa99",
+        "size_bytes": 1198,
+        "mtime": 1772521762.7015095,
+        "last_built": "2026-03-17T18:07:16.311432",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gap.h": {
+        "path": "./ble\\api\\gap.h",
+        "md5": "27331917683d3700e5c42354c70677cd",
+        "size_bytes": 24872,
+        "mtime": 1730534610.5778763,
+        "last_built": "2026-03-17T18:07:16.313174",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapc.h": {
+        "path": "./ble\\api\\gapc.h",
+        "md5": "a1ae254211c03f0e1eb2e0c9ef5cbb0e",
+        "size_bytes": 32416,
+        "mtime": 1730534610.5808685,
+        "last_built": "2026-03-17T18:07:16.314928",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapc_api.h": {
+        "path": "./ble\\api\\gapc_api.h",
+        "md5": "48099181fc7ce578f26ef50587867324",
+        "size_bytes": 12988,
+        "mtime": 1730534610.576882,
+        "last_built": "2026-03-17T18:07:16.316632",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapm.h": {
+        "path": "./ble\\api\\gapm.h",
+        "md5": "78da947cea4d48ace6d2f9f282b71c7d",
+        "size_bytes": 62004,
+        "mtime": 1730534610.586852,
+        "last_built": "2026-03-17T18:07:16.319084",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapm_api.h": {
+        "path": "./ble\\api\\gapm_api.h",
+        "md5": "877ac2de3e04513dc1e0ba762ea501d4",
+        "size_bytes": 5459,
+        "mtime": 1722908854.718833,
+        "last_built": "2026-03-17T18:07:16.320880",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gatt.h": {
+        "path": "./ble\\api\\gatt.h",
+        "md5": "c790b0a1c3a7294402860540201835f7",
+        "size_bytes": 24486,
+        "mtime": 1730534610.5738878,
+        "last_built": "2026-03-17T18:07:16.323156",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gatt_api.h": {
+        "path": "./ble\\api\\gatt_api.h",
+        "md5": "eada378ae844f02042824e79f5af0ea4",
+        "size_bytes": 9066,
+        "mtime": 1730534610.589844,
+        "last_built": "2026-03-17T18:07:16.324943",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\ke_api.h": {
+        "path": "./ble\\api\\ke_api.h",
+        "md5": "a7d0737bab55ce68a03732790db1ae09",
+        "size_bytes": 10183,
+        "mtime": 1772521762.7118094,
+        "last_built": "2026-03-17T18:07:16.326828",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\l2cc.h": {
+        "path": "./ble\\api\\l2cc.h",
+        "md5": "8b5acbf2f8685b0a510732c54ac03fe6",
+        "size_bytes": 7415,
+        "mtime": 1730534610.5848575,
+        "last_built": "2026-03-17T18:07:16.328684",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\le_err.h": {
+        "path": "./ble\\api\\le_err.h",
+        "md5": "fc0d813349df5166a118b24af6c2d813",
+        "size_bytes": 18333,
+        "mtime": 1730534610.5798714,
+        "last_built": "2026-03-17T18:07:16.330427",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\list.h": {
+        "path": "./ble\\api\\list.h",
+        "md5": "a712e723f50717d780eb2ef2ba3e51c1",
+        "size_bytes": 9685,
+        "mtime": 1772521762.7015095,
+        "last_built": "2026-03-17T18:07:16.332055",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\task.h": {
+        "path": "./ble\\api\\task.h",
+        "md5": "21c6b1f127e45cd36e2f87bd2b777a71",
+        "size_bytes": 7105,
+        "mtime": 1730534610.5758815,
+        "last_built": "2026-03-17T18:07:16.333733",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\utils.h": {
+        "path": "./ble\\api\\utils.h",
+        "md5": "c0c611faa833f5413bd6b5cb136d02e0",
+        "size_bytes": 16928,
+        "mtime": 1772521762.7015095,
+        "last_built": "2026-03-17T18:07:16.335434",
+        "outputs": [
+          "whoosh_index"
+        ]
+      }
+    },
+    "c_sources": {}
+  }
+}

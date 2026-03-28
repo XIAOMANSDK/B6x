@@ -20,7 +20,7 @@
 
 #if (DBG_PROC)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -36,9 +36,9 @@
 enum uart_cmd
 {
     CMD_MOUSE_REP     = 0xD0,
-    
+
     CMD_CONN_INTERVAL = 0xE0,
-    
+
     CMD_BATT_LVL      = 0xF0,
     CMD_BATT_PWR_STA
 };
@@ -60,7 +60,7 @@ void uart_proc(void)
     static uint8_t null_cnt = 0;
     uint16_t len;
     bool finish = true;
-    
+
     len = uart1Rb_Read(&buff[buff_len], CMD_MAX_LEN - buff_len);
     if (len > 0)
     {
@@ -86,7 +86,7 @@ void uart_proc(void)
     if (app_state_get() == APP_CONNECTED)
     {
         switch (buff[0])
-        {    
+        {
             case CMD_MOUSE_REP:
             {
                 DEBUG("MOUSE");
@@ -94,23 +94,23 @@ void uart_proc(void)
                 mouse_report_send(app_env.curidx, mouse_data);
                 mouse_report_send(app_env.curidx, NULL);
             } break;
-            
+
             case CMD_BATT_LVL:
             {
                 DEBUG("Batt Lvl");
                 bass_bat_lvl_update(buff[1]);
             } break;
-            
+
             case CMD_BATT_PWR_STA:
             {
                 DEBUG("Batt Power State");
                 bass_pwr_sta_update(buff[1]);
             } break;
-            
+
             case CMD_CONN_INTERVAL:
             {
                 struct gapc_conn_param conn_pref =
-                { 
+                {
                     /// Connection interval minimum unit in 1.25ms
                     .intv_min = 6,
                     /// Connection interval maximum unit in 1.25ms
@@ -120,7 +120,7 @@ void uart_proc(void)
                     /// Connection supervision timeout multiplier unit in 10ms
                     .time_out = 300,
                 };
-                
+
                 conn_pref.intv_min = buff[1];
                 conn_pref.intv_max = buff[2];
                 conn_pref.latency  = buff[3];
@@ -128,7 +128,7 @@ void uart_proc(void)
                 DEBUG("intvn:%d, intvm:%d, lat:%d", conn_pref.intv_min, conn_pref.intv_max, conn_pref.latency);
                 gapc_update_param(app_env.curidx, &conn_pref);
             } break;
-            
+
             default:
             {
             } break;
@@ -152,7 +152,7 @@ static void sleep_proc(void)
     if (slpdur > 200)
     {
         // Core enter poweroff mode
-        if (ble_sleep(120, slpdur) == BLE_IN_SLEEP)
+        if (ble_sleep(130, slpdur) == BLE_IN_SLEEP)
         {
             core_pwroff(CFG_WKUP_BLE_EN | WKUP_IO_LATCH_N_BIT);
         }
@@ -186,7 +186,7 @@ void user_procedure(void)
     #if (CFG_SLEEP)
     sleep_proc();
     #endif
-    
+
     #if (UART_CMD)
     uart_proc();
     #endif //(UART_CMD)

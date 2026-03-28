@@ -40,10 +40,10 @@
 
 /**
  * @brief 配置RC32K校准参数
- * 
+ *
  * @param[in] ref_clk  参考时钟选择 @see enum rc32k_ref_clk
  * @param[in] cal_ctrl 校准控制配置 @see enum rc32k_cal_ctrl
- * 
+ *
  * @details
  * - 使能AON和APBMISC时钟
  * - 配置RCCALIB时钟源和使能
@@ -85,9 +85,9 @@ void rc32k_conf(uint8_t ref_clk, uint8_t cal_ctrl)
 
 /**
  * @brief 启动RC32K校准过程
- * 
+ *
  * @return uint16_t RC32K校准后的修调值
- * 
+ *
  * @details
  * - 选择使用校准结果控制RC32K
  * - 启动RCCALIB校准
@@ -125,9 +125,9 @@ uint16_t rc32k_calib(void)
 
 /**
  * @brief 直接设置RC32K修调值
- * 
+ *
  * @param[in] value   修调值(0~0x3FFF)
- * 
+ *
  * @details
  * - 使能AON时钟
  * - 配置修调值到AON寄存器
@@ -151,9 +151,9 @@ void rc32k_trim_set(uint16_t value)
 
 /**
  * @brief 获取当前RC32K使用的修调值
- * 
+ *
  * @return uint16_t 当前修调值(0~0x3FFF)
- * 
+ *
  * @details
  * - 使能AON时钟
  * - 根据修调值选择位确定当前使用的修调值源
@@ -178,9 +178,9 @@ uint16_t rc32k_trim_get(void)
 
 /**
  * @brief 直接设置RC16M修调值
- * 
+ *
  * @param[in] value   修调值(0~63)
- * 
+ *
  * @details
  * - 使能APBMISC时钟
  * - 配置RC16M频率修调寄存器
@@ -198,9 +198,9 @@ void rc16m_trim_set(uint8_t value)
 
 /**
  * @brief 获取当前RC16M使用的修调值
- * 
+ *
  * @return uint8_t 当前修调值(0~63)
- * 
+ *
  * @details
  * - 使能APBMISC时钟
  * - 读取RC16M频率修调寄存器
@@ -224,9 +224,9 @@ uint8_t rc16m_trim_get(void)
 
 /**
  * @brief 使用二分法启动RC16M校准
- * 
+ *
  * @return uint8_t RC16M校准后的修调值(0~63)
- * 
+ *
  * @details
  * - 使能RC16M计数时钟
  * - 使用二分法逐步逼近目标频率

@@ -3,13 +3,12 @@
 #include "usbd_audio.h"
 #include "drvs.h"
 #include "dbg.h"
-#include "micphone.h"
 
 #define DEMO_AUDIO_HID              (1)
 
 #if (DBG_GATT)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -83,7 +82,7 @@ enum audio_id {
 #define HID_RAW_IN_EP_INTV          1
 #define HID_RAW_OUT_EP              0x04
 #define HID_RAW_OUT_EP_MPS          64
-#define HID_RAW_OUT_EP_INTV         1 
+#define HID_RAW_OUT_EP_INTV         1
 #define HID_RAW_REPORT_DESC_SIZE    sizeof(hid_raw_report_desc)
 
 static const uint8_t hid_std_report_desc[] = {
@@ -236,11 +235,11 @@ enum intf_num {
 const uint8_t usb_descriptor[] = {
     /* Descriptor - Device (Size:18) */
     USB_DEVICE_DESCRIPTOR_INIT0(USB_1_1, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, USBD_BCD, 0x01),
-    
+
     /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT, 
+    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT,
             0x01, USB_CONFIG_BUS_POWERED | USB_CONFIG_REMOTE_WAKEUP, USBD_MAX_POWER),
-    
+
     /* Descriptor - Audio Control */
     AUDIO_AC_HEADER_INIT(AUDIO_AC_INTF_NUM, AUDIO_AC_CTRL_SIZE, AUDIO_AC_STRING_INDEX, AUDIO_AS_INTF_NUM),
     AUDIO_AC_INPUT_TERMINAL_DESCRIPTOR_INIT(AUDIO_IN_TERM_ID, AUDIO_INTERM_MIC, AUDIO_IN_CHNLS, AUDIO_INPUT_CHEN),
@@ -249,13 +248,13 @@ const uint8_t usb_descriptor[] = {
     AUDIO_AC_FEATURE_UNIT_DESCRIPTOR_INIT(AUDIO_IN_FEAT_ID, AUDIO_IN_TERM_ID, 0x01, AUDIO_INPUT_CTRL),
 
     /* Descriptor - Audio Stream */
-    AUDIO_AS_DESCRIPTOR_INIT(AUDIO_AS_INTF_NUM, AUDIO_OUT_TERM_ID, AUDIO_IN_CHNLS, AUDIO_IN_FRAME_SIZE, AUDIO_IN_RESOL_BITS, 
+    AUDIO_AS_DESCRIPTOR_INIT(AUDIO_AS_INTF_NUM, AUDIO_OUT_TERM_ID, AUDIO_IN_CHNLS, AUDIO_IN_FRAME_SIZE, AUDIO_IN_RESOL_BITS,
                                 AUDIO_IN_EP, 0x05, AUDIO_IN_EP_MPS, AUDIO_IN_EP_INTV, AUDIO_SAMPLE_FREQ_3B(AUDIO_IN_FREQ)),
 
     /* Descriptor - Keyboard Interface (Size:18+7*1) */
     HID_INTERFACE_INIT1(HID_STD_INTF_NUM, 1, HID_SUBCLASS_NONE, HID_PROTOCOL_BOOT, 0, HID_STD_REPORT_DESC_SIZE, HID_BCD_0201),
     HID_ENDPOINT_DESC(HID_STD_IN_EP, HID_STD_IN_EP_MPS, HID_STD_IN_EP_INTV),
-    
+
     /* Descriptor - Custom-Raw Interface (Size:18+7*2) */
     HID_INTERFACE_INIT1(HID_RAW_INTF_NUM, 2, HID_SUBCLASS_NONE, HID_PROTOCOL_NONE, 0, HID_RAW_REPORT_DESC_SIZE, HID_BCD_0201),
     HID_ENDPOINT_DESC(HID_RAW_IN_EP, HID_RAW_IN_EP_MPS, HID_RAW_IN_EP_INTV),
@@ -453,7 +452,7 @@ static void mic_pcm_decode(void)
 static uint8_t *micDataGet(void)
 {
     uint8_t *data;
-    
+
     if ((pkt_mic_eidx != pkt_mic_sidx) && (pkt_mic_dec))
     {
         data = (uint8_t *)&pcm_buff[pkt_mic_offset];
@@ -469,7 +468,7 @@ static uint8_t *micDataGet(void)
     {
         data = (uint8_t *)pcm_none;
     }
-    
+
     return data;
 }
 
@@ -484,7 +483,7 @@ static void micInit(void)
 
 static void micDeinit(void)
 {
-    
+
 }
 
 static void usbd_mic_send(void)
@@ -584,7 +583,7 @@ void usbd_audio_ep_in_handler(uint8_t ep)
 void usbd_hid_raw_out_handler(uint8_t ep)
 {
     uint8_t custom_data[HID_RAW_OUT_EP_MPS];
-    
+
     /*!< read the data from host send */
     uint16_t dlen = usbd_ep_read(HID_RAW_OUT_EP, HID_RAW_OUT_EP_MPS, custom_data);
 
@@ -656,7 +655,7 @@ void usbd_kb_report(uint8_t len, const uint8_t *data)
     {
         buff[0] = 5/*report_id*/;
         memcpy(&buff[1], data+2, 6);
-        
+
         if (data[2] == HID_KEY_F5)
         {
             buff[1] = HID_KBD_USAGE_F18; // YunWu VoiceKey
@@ -679,7 +678,7 @@ void usbd_kb_report(uint8_t len, const uint8_t *data)
 //        mic_flag = true;
 //        memcpy(mic_buffer, ptr, AUDIO_IN_EP_MPS);
 //    }
-//    
+//
 //    if (usbd_is_configured()) {
 //        if ((mic_state == MIC_IDLE) && mic_flag) {
 //            uint8_t status = 0;
@@ -698,9 +697,9 @@ void usbd_kb_report(uint8_t len, const uint8_t *data)
 //                USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
 //            }
 //            GPIO_DAT_CLR(GPIO16);
-//            
+//
 //            mic_tmp++;
-//            
+//
 //            mic_flag = false;
 //        }
 //    }

@@ -208,8 +208,8 @@ void usbd_cdc_updated(usbd_cdc_t *cdc, uint8_t type)
         dtr_enable = cdc->line_state;  ///< 更新DTR使能状态
     } else {
         /* 线路编码参数更新：波特率、数据位等 */
-        USB_LOG_RAW("CDC Update(ep:0x%02X,<Rate:%d,DataBits:%d,Parity:%d,StopBits:%d>)\r\n", cdc->ep_in, 
-                            cdc->line_coding.dwDTERate, cdc->line_coding.bDataBits,
+        USB_LOG_RAW("CDC Update(ep:0x%02X,<Rate:%d,DataBits:%d,Parity:%d,StopBits:%d>)\r\n", cdc->ep_in,
+                            (int)cdc->line_coding.dwDTERate, cdc->line_coding.bDataBits,
                             cdc->line_coding.bParityType, cdc->line_coding.bCharFormat);
     }
 }
@@ -250,6 +250,7 @@ void usbd_cdc_bulk_out_handler(uint8_t ep)
  */
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
+    (void)arg;
     switch (event) {
         case USBD_EVENT_RESET:
             /* USB复位事件：重置CDC状态 */

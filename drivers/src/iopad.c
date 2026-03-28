@@ -49,7 +49,7 @@ void iom_ctrl(uint8_t pad, uint16_t ctrl)
  * @param[in] pad   IO引脚编号 @see enum pad_idx
  * @param[in] fsel  功能选择编号 @see enum csc_fsel
  * @note 配置指定功能的外设输入连接到指定的IO引脚
- * 
+ *
  * 根据CSC寄存器说明：
  * CSC_INPUT配置：CSC->CSC_INPUT[func].CSC_FSEL = pad
  * 例如：配置PA01引脚为UART2的RXD输入功能，则(pad=1, func=3): CSC->CSC_INPUT[3].CSC_FSEL = 1
@@ -64,7 +64,7 @@ void csc_input(uint8_t pad, uint8_t fsel)
  * @param[in] pad   IO引脚编号 @see enum pad_idx
  * @param[in] fsel  功能选择编号 @see enum csc_fsel
  * @note 配置指定IO引脚的输出功能为指定的外设功能
- * 
+ *
  * 根据CSC寄存器说明：
  * CSC_OUTPUT配置：CSC->CSC_OUTPUT[pad].CSC_FSEL = func
  * 例如：配置PA00引脚为UART2的TXD输出功能，则(pad=0, func=2): CSC->CSC_OUTPUT[0].CSC_FSEL = 2

@@ -333,6 +333,7 @@ __STATIC void mm_gens_oo_cb_rx(mm_mdl_env_t *p_env, mesh_buf_t *p_buf,
  */
 __STATIC uint8_t mm_gens_oo_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode)
 {
+    (void)p_env;
     #if 0
     uint8_t status;
 
@@ -353,7 +354,7 @@ __STATIC uint8_t mm_gens_oo_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode
     {
         uint8_t opcode_2b = (uint8_t)(opcode >> 8);
 
-        if ((opcode_2b >= 0x01/*MM_MSG_GEN_OO_GET*/) 
+        if ((opcode_2b >= 0x01/*MM_MSG_GEN_OO_GET*/)
             && (opcode_2b <= 0x03/*MM_MSG_GEN_OO_SET_UNACK*/))
         {
             status = MESH_ERR_NO_ERROR;
@@ -376,6 +377,7 @@ __STATIC uint8_t mm_gens_oo_cb_opcode_check(mm_mdl_env_t *p_env, uint32_t opcode
  */
 __STATIC uint8_t mm_gens_oo_cb_set(mm_mdl_env_t *p_env, uint16_t state_id, uint32_t state)
 {
+    (void)state_id;
     // Returned status
     uint8_t status = MESH_ERR_NO_ERROR;
 
@@ -444,6 +446,7 @@ __STATIC void mm_gens_oo_cb_grp_event(m_lid_t mdl_lid, uint8_t event, uint8_t in
             p_env_oo->onoff = p_env_oo->tgt_onoff;
         } // no break;
 
+        /*fallthrough*/
         case (MM_GRP_EVENT_TRANS_STARTED):
         {
             // Inform application about the update
@@ -555,7 +558,7 @@ m_lid_t mm_gens_oo_register(uint8_t elmt_idx, bool main)
             if (main)
             {
                 // Create group
-                m_lid_t grp_lid = mm_bind_add_group(0, elmt_idx, mdl_lid,
+                /*m_lid_t grp_lid = */mm_bind_add_group(0, elmt_idx, mdl_lid,
                                      mm_gens_oo_cb_grp_event, NULL);
             }
 

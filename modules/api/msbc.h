@@ -63,7 +63,7 @@ void msbc_dstart(void);
 /**
  * Decode a mSBC frame to pcm - Standard (16bit, 16K)
  *
- * pkt             Input Frame data, size = MSBC_PKT_SIZE 
+ * pkt             Input Frame data, size = MSBC_PKT_SIZE
  * pcm             Output PCM buffer, size = MSBC_NB_PCM16K
  * pitchx          Number of samples between two consecutives
  *

@@ -5,7 +5,7 @@
 
 #if (DBG_PKT)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -27,9 +27,9 @@ void pt_rsp_cmd_sta(uint8_t cmd, uint8_t rsp_sta)
 {
     PKT_ALLOC(PLEN_RSP);
     pt_fill_rsp(pkt, cmd, PLEN_RSP);
-    
+
     PKT_PARAM(struct pt_rsp_status);
     param->status = rsp_sta;
-    
+
     pt_send_rsp(pkt);
 }

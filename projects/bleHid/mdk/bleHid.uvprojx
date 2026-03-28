@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>B6x</Device>
           <Vendor>Generic</Vendor>
-          <PackID>Generic.B6x.1.0.0</PackID>
+          <PackID>Generic.B6x.1.0.1</PackID>
           <Cpu>CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>

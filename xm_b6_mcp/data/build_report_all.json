@@ -1,0 +1,224 @@
+{
+  "build_date": "2026-03-17T18:07:50.869142",
+  "build_version": "1.2.0",
+  "build_type": "full_rebuild",
+  "steps": {
+    "cleanup": null,
+    "excel_constraints": true,
+    "document_index": true,
+    "api_index": {
+      "success": true,
+      "stats": {
+        "total_indexed": 716,
+        "by_peripheral": {
+          "TIMER": 8,
+          "OTHER": 102,
+          "DMA": 10,
+          "FLASH": 9,
+          "GPIO": 12,
+          "I2C": 10,
+          "RCC": 20,
+          "SPI": 12,
+          "UART": 11,
+          "BLE": 89
+        },
+        "by_type": {
+          "functions": 716,
+          "macros": 0,
+          "enums": 0
+        },
+        "incremental": false,
+        "files_processed": 40,
+        "files_cached": 0
+      }
+    },
+    "knowledge_graph": true,
+    "error_api_mapping": {
+      "success": true,
+      "stats": {
+        "errors_with_apis": 35,
+        "total_mappings": 71,
+        "sdk_analyzed": false,
+        "config_merged": true
+      }
+    }
+  },
+  "summary": {
+    "cleanup_success": null,
+    "excel_constraints_success": true,
+    "document_index_success": true,
+    "api_index_success": true,
+    "knowledge_graph_success": true,
+    "error_api_mapping_success": true,
+    "overall_success": true,
+    "constraint_files_generated": 6,
+    "constraint_files": [
+      "flash_map.json",
+      "io_map.json",
+      "memory_boundaries.json",
+      "phone_compatibility_issues.json",
+      "power_consumption.json",
+      "sram_map.json"
+    ],
+    "documents_parsed": 28,
+    "documents_indexed": 28,
+    "excel_constraints": 7,
+    "total_apis_indexed": 716,
+    "errors_with_apis": 35,
+    "total_api_mappings": 71
+  },
+  "document_index_details": {
+    "build_date": "2026-03-17T18:07:04.453842",
+    "build_version": "0.2.0",
+    "steps": {
+      "step1": {
+        "status": "success",
+        "total_documents": 28,
+        "parsed_by_type": {
+          "word": 13,
+          "pdf": 6,
+          "excel": 5,
+          "markdown": 4
+        },
+        "parsed_by_domain": {
+          "domain2": 3,
+          "domain4": 2,
+          "domain5": 8,
+          "domain1": 11,
+          "domain3": 4
+        },
+        "errors": [],
+        "incremental": false,
+        "files_processed": 28,
+        "files_cached": 0
+      },
+      "step2": {
+        "status": "success",
+        "domains": {
+          "domain1": {
+            "name": "Hardware & Registers",
+            "count": 11,
+            "documents": [
+              "B6x_DataSheet_v3.4.docx",
+              "典型Layout设计错误(必看).docx",
+              "开发板使用说明.docx",
+              "硬件设计指导.docx",
+              "B6x_BLE芯片使用指南_V1.0.0.docx",
+              "B6x_BLE芯片使用指南_V1.0.1.docx",
+              "musbfsfc_pg.pdf",
+              "musbfsfc_ps.pdf",
+              "Datasheet.pdf",
+              "B6_32D_20230729.pdf",
+              "B6x-Flash-Map.xlsx"
+            ]
+          },
+          "domain2": {
+            "name": "SOC Drivers",
+            "count": 3,
+            "documents": [
+              "B6x_api(部分)设计指导.docx",
+              "B6x_IO_MAP.xlsx",
+              "ClaudeCode安装配置以及使用说明.md"
+            ]
+          },
+          "domain3": {
+            "name": "BLE Stack",
+            "count": 4,
+            "documents": [
+              "B6x BLE兼容性列表.xlsx",
+              "B6x_BLE-Sram空间分配.xlsx",
+              "B6x_BLE-功耗参考.xlsx",
+              "B6x系列芯片Flash及SRAM说明.md"
+            ]
+          },
+          "domain4": {
+            "name": "Applications",
+            "count": 2,
+            "documents": [
+              "B6x常见应用解答.docx",
+              "JFlash配置说明.docx"
+            ]
+          },
+          "domain5": {
+            "name": "Production & Toolchain",
+            "count": 8,
+            "documents": [
+              "B6x无线认证指导.docx",
+              "bxISP_Programmer_User_Guide_V1.0_CN.docx",
+              "ISP Tool量产说明文档.docx",
+              "B6x无线认证指导.docx",
+              "bxISP_Programmer_User_Guide.pdf",
+              "B6X_RF_LabTest工具操作使用说明.pdf",
+              "GNU开发环境.md",
+              "vers.md"
+            ]
+          }
+        },
+        "total_classified": 28
+      },
+      "step3": {
+        "status": "success",
+        "index_dir": "./xm_b6_mcp\\data\\whoosh_index",
+        "total_documents": 28,
+        "indexed_count": 28,
+        "failed_count": 0
+      }
+    },
+    "summary": {
+      "excel_constraints": 7,
+      "documents_parsed": 28,
+      "documents_classified": 28,
+      "documents_indexed": 28,
+      "total_errors": 0
+    },
+    "paths": {
+      "sdk_root": ".",
+      "mcp_root": "./xm_b6_mcp",
+      "doc_dir": "./doc",
+      "index_dir": "./xm_b6_mcp\\data\\whoosh_index",
+      "constraints_dir": "./xm_b6_mcp\\data\\constraints"
+    }
+  },
+  "api_index_details": {
+    "total_indexed": 716,
+    "by_peripheral": {
+      "TIMER": 8,
+      "OTHER": 102,
+      "DMA": 10,
+      "FLASH": 9,
+      "GPIO": 12,
+      "I2C": 10,
+      "RCC": 20,
+      "SPI": 12,
+      "UART": 11,
+      "BLE": 89
+    },
+    "by_type": {
+      "functions": 716,
+      "macros": 0,
+      "enums": 0
+    },
+    "incremental": false,
+    "files_processed": 40,
+    "files_cached": 0
+  },
+  "error_api_mapping_details": {
+    "errors_with_apis": 35,
+    "total_mappings": 71,
+    "sdk_analyzed": false,
+    "config_merged": true
+  },
+  "incremental_mode": false,
+  "cache_stats": {
+    "version": "1.0",
+    "last_updated": "2026-03-17T18:07:16.335445",
+    "sdk_root": ".",
+    "total_files": 40,
+    "by_category": {
+      "excel_constraints": 0,
+      "documents": 0,
+      "c_headers": 40,
+      "c_sources": 0
+    }
+  }
+}

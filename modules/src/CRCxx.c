@@ -80,7 +80,7 @@ uint8_t crc5_itu(uint8_t *data, ulen_t length)
     uint8_t crc = 0; // Initial value
     while (length--)
     {
-        crc ^= *data++; 
+        crc ^= *data++;
         for (i = 0; i < 8; ++i)
         {
             if (crc & 1)
@@ -106,7 +106,7 @@ uint8_t crc5_usb(uint8_t *data, ulen_t length)
     uint8_t crc = 0x1F; // Initial value
     while (length--)
     {
-        crc ^= *data++; 
+        crc ^= *data++;
         for (i = 0; i < 8; ++i)
         {
             if (crc & 1)
@@ -239,7 +239,7 @@ uint8_t crc8_rohc(uint8_t *data, ulen_t length)
     uint8_t crc = 0xFF; // Initial value
     while (length--)
     {
-        crc ^= *data++; 
+        crc ^= *data++;
         for (i = 0; i < 8; ++i)
         {
             if (crc & 1)
@@ -321,7 +321,7 @@ uint16_t crc16_maxim(uint8_t *data, ulen_t length)
     uint16_t crc = 0; // Initial value
     while (length--)
     {
-        crc ^= *data++; 
+        crc ^= *data++;
         for (i = 0; i < 8; ++i)
         {
             if (crc & 1)
@@ -526,7 +526,7 @@ uint16_t crc16_dnp(uint8_t *data, ulen_t length)
 * Refin:   True
 * Refout:  True
 * Xorout:  0x000000
-* Alias:   CRC-24/OPENPGP 
+* Alias:   CRC-24/OPENPGP
 *****************************************************************************/
 uint32_t crc24(uint8_t *data, ulen_t length)
 {

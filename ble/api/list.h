@@ -18,11 +18,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-
-#ifndef __INLINE__
-#define __INLINE__ __forceinline static
-#endif
-
+#include "cmsis_compiler.h"
 
 /*
  * DEFINES
@@ -221,7 +217,7 @@ uint16_t list_size(list_t *list);
  * @return true if the list is empty, false else otherwise.
  ****************************************************************************************
  */
-__INLINE__ bool list_is_empty(const list_t *const list)
+__STATIC_FORCEINLINE bool list_is_empty(const list_t *const list)
 {
     return (list->first == NULL);
 }
@@ -235,7 +231,7 @@ __INLINE__ bool list_is_empty(const list_t *const list)
  * @return First element address. Returns NULL pointer if the list is empty.
  ****************************************************************************************
  */
-__INLINE__ list_hdr_t *list_pick(const list_t *const list)
+__STATIC_FORCEINLINE list_hdr_t *list_pick(const list_t *const list)
 {
     return(list->first);
 }
@@ -249,7 +245,7 @@ __INLINE__ list_hdr_t *list_pick(const list_t *const list)
  * @return The pointer to the next element.
  ****************************************************************************************
  */
-__INLINE__ list_hdr_t *list_next(const list_hdr_t *const list_hdr)
+__STATIC_FORCEINLINE list_hdr_t *list_next(const list_hdr_t *const list_hdr)
 {
     return(list_hdr->next);
 }

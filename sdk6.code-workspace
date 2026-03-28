@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "sdk6"
+		}
+	],
+	"settings": {
+		"cmake.configureOnOpen": false, // 建议关闭，避免打开时配置所有项目
+		"cmake.buildDirectory": "${workspaceRoot}/build"
+	}
+}

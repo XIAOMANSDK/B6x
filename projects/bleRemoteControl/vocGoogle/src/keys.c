@@ -21,7 +21,7 @@
 
 #if (DBG_KEYS)
 #include "dbg.h"
-#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #define debugHex(dat, len)
@@ -66,18 +66,18 @@ const uint16_t Key_Map[KEY_ROW_NB][KEY_COL_NB] =
 const double_key_t multi_key_table[] = {
     {{KEY_IDX_HOME, KEY_IDX_MENU}, "pair mode", keys_enter_pair_mode_cb},
 };
-/// Key Buffer for ghost-detect and debounce 
+/// Key Buffer for ghost-detect and debounce
 #if (KEY_GHOST || KEY_DEBOUNCE)
 struct key_buf_tag
 {
     #if (KEY_GHOST)
     uint8_t rowCnt[KEY_ROW_NB];
     #endif
-    
+
     #if (KEY_GHOST || KEY_DEBOUNCE)
     uint8_t colSta[KEY_COL_NB];
     #endif
-    
+
     #if (KEY_DEBOUNCE)
     uint8_t shake[KEY_ROW_NB][KEY_COL_NB];
     #endif
@@ -86,7 +86,7 @@ struct key_buf_tag
 __RETENTION struct key_buf_tag key_buf;
 #endif
 
-/// Key Enveriment 
+/// Key Enveriment
 __RETENTION struct key_env_tag key_env;
 
 #if (CFG_SFT_TMR)
@@ -133,17 +133,17 @@ static void cols_init(void)
 static uint32_t key_get_curr_time_ms(void)
 {
     rtc_time_t time;
-    
+
     time.sec = APBMISC->RTC_SEC_SHD;
     time.ms  = APBMISC->RTC_MS_SHD;
-    
+
     if (time.sec != APBMISC->RTC_SEC_SHD)
     {
         // just past to next second
         time.sec = APBMISC->RTC_SEC_SHD;
         time.ms  = APBMISC->RTC_MS_SHD;
     }
-    
+
     return (time.sec * 1000 + time.ms);
 }
 
@@ -153,7 +153,7 @@ static bool ble_key_changed(void)
 }
 
 #define ARRAY_SIZE(a)        (sizeof(a) / sizeof(a[0]))
-    
+
 static int ble_double_key_handler(uint16_t k1, uint16_t k2)
 {
     for (int i = 0; i < ARRAY_SIZE(multi_key_table); i++)
@@ -177,7 +177,7 @@ void keys_init(void)
 
     rows_init();
     cols_init();
-    
+
     #if (KEY_GHOST || KEY_DEBOUNCE)
     memset(&key_buf, 0, sizeof(struct key_buf_tag));
     #endif
@@ -218,7 +218,7 @@ static uint8_t keys_scan(void)
     {
         GPIO_DAT_SET(1UL << Key_Row[r]);
         // Enable row Output(High)
-        GPIO_DIR_SET(1UL << Key_Row[r]); 
+        GPIO_DIR_SET(1UL << Key_Row[r]);
 
         // Init keys buf
         #if (KEY_GHOST)
@@ -230,18 +230,18 @@ static uint8_t keys_scan(void)
         {
             uint8_t press = 0;
             uint16_t kcode = Key_Map[r][c];
-            
+
             if (kcode == 0) continue; // empty code
-            
+
             #if (KEY_DEBOUNCE)
             // Shift right to update
             key_buf.shake[r][c] <<= 1;
-            
+
             if (gpio_get(Key_Col[c]))
             {
                 key_buf.shake[r][c] |= 1;
             }
-            
+
             // Judge real state
             press = ((key_buf.shake[r][c] & KEY_DEBOUNCE) == KEY_DEBOUNCE)
                     || (((key_buf.shake[r][c] & KEY_DEBOUNCE) != 0) && (key_buf.colSta[c] & (1 << r)));
@@ -249,7 +249,7 @@ static uint8_t keys_scan(void)
             #else
             press = gpio_get(Key_Col[c]);
             #endif
-            
+
             if (press && Key_Map[r][c])
             {
                 // DEBUG("%X(r:%d,c:%d)", kcode, r, c);
@@ -328,7 +328,7 @@ static uint8_t keys_scan(void)
 
 /**
  * @brief 按键变化过滤 + 组合键判断处理
- * 
+ *
  * @return uint8_t keycode
  */
 static uint16_t ble_keys_scan(void)
@@ -346,7 +346,7 @@ static uint16_t ble_keys_scan(void)
     else
     {
         key_press = false;
-        
+
         #if (VOICE)
         if (SADC->CTRL.SADC_DMAC_EN)
         {
@@ -366,7 +366,7 @@ static uint16_t ble_keys_scan(void)
             key_env.multi_key_release_debounce = 0;
             return KEY_IDX_INVALID;
         }
-        // DEBUG("press=%d, cnt=%d, keycode: %02X %02X %02X\n", key_press, key_env.curr.gcnt, 
+        // DEBUG("press=%d, cnt=%d, keycode: %02X %02X %02X\n", key_press, key_env.curr.gcnt,
         //         key_env.curr.code[0], key_env.curr.code[1], key_env.curr.code[2]);
         // 更新时间戳
         key_env.curr_press_time = key_get_curr_time_ms();

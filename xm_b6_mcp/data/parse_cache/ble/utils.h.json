@@ -1,0 +1,109 @@
+{
+  "file_path": "./ble\\api\\utils.h",
+  "functions": [
+    {
+      "name": "value",
+      "return_type": "uint16_t",
+      "parameters": [],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\utils.h",
+      "line_number": 259,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "co_clz",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\utils.h",
+      "line_number": 350,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "co_ctz",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\utils.h",
+      "line_number": 382,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "co_ones",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "./ble\\api\\utils.h",
+      "line_number": 414,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "popcnt8",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Count '1' bits in a byte value, repalce NB_1BITS(byte)",
+      "detailed_description": "****************\n****************************************\n@return  Number of '1' bits in a byte\n***************************************************************************************\n/\nuint8_t popcnt8(uint8_t byte);\n**********",
+      "file_path": "./ble\\api\\utils.h",
+      "line_number": 438,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "__INLINE__",
+      "value": "__forceinline static",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "./ble\\api\\utils.h",
+      "line_number": 24
+    }
+  ],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": [
+    "Line 23, Col 16: 'E__\r\n#'"
+  ]
+}
