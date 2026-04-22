@@ -1,0 +1,4132 @@
+[
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "RSN_POR12_BK_BIT",
+        "value": 1
+      },
+      {
+        "name": "RSN_LVD33_OUT_RST_BIT",
+        "value": 2
+      },
+      {
+        "name": "RSN_BOD12_OUT_RST_BIT",
+        "value": 4
+      },
+      {
+        "name": "RSN_PIN_RSTN_BIT",
+        "value": 8
+      },
+      {
+        "name": "RSN_POR12_CORE_BIT",
+        "value": 16
+      },
+      {
+        "name": "RSN_IWDTRST_BIT",
+        "value": 32
+      },
+      {
+        "name": "RSN_CHIPRST_BIT",
+        "value": 64
+      },
+      {
+        "name": "RSN_SYSRST_BIT",
+        "value": 128
+      },
+      {
+        "name": "RSN_IO_WKUP_BIT",
+        "value": 256
+      },
+      {
+        "name": "RSN_BLE_WKUP_BIT",
+        "value": 512
+      },
+      {
+        "name": "RSN_RTC_WKUP_BIT",
+        "value": 1024
+      },
+      {
+        "name": "RSN_INT_WKUP_BIT",
+        "value": 2048
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "WKUP_BLE_SEL_LSB",
+        "value": 0
+      },
+      {
+        "name": "WKUP_BLE_SEL_MSK",
+        "value": 1
+      },
+      {
+        "name": "WKUP_BLE_LATCH_N_POS",
+        "value": 2
+      },
+      {
+        "name": "WKUP_BLE_LATCH_N_BIT",
+        "value": 3
+      },
+      {
+        "name": "WKUP_IO_EN_POS",
+        "value": 3
+      },
+      {
+        "name": "WKUP_IO_EN_BIT",
+        "value": 4
+      },
+      {
+        "name": "WKUP_RTC_EN_POS",
+        "value": 4
+      },
+      {
+        "name": "WKUP_RTC_EN_BIT",
+        "value": 5
+      },
+      {
+        "name": "WKUP_IO_LATCH_N_POS",
+        "value": 5
+      },
+      {
+        "name": "WKUP_IO_LATCH_N_BIT",
+        "value": 6
+      },
+      {
+        "name": "WKUP_RETENTION_MEM_PD_POS",
+        "value": 6
+      },
+      {
+        "name": "WKUP_RETENTION_MEM_PD_BIT",
+        "value": 7
+      },
+      {
+        "name": "WKUP_RC32K_PD_POS",
+        "value": 7
+      },
+      {
+        "name": "WKUP_RC32K_PD_BIT",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "WKUP_ST_IO_POS",
+        "value": 0
+      },
+      {
+        "name": "WKUP_ST_IO_BIT",
+        "value": 1
+      },
+      {
+        "name": "WKUP_ST_BLE_POS",
+        "value": 1
+      },
+      {
+        "name": "WKUP_ST_BLE_BIT",
+        "value": 2
+      },
+      {
+        "name": "WKUP_ST_RTC_POS",
+        "value": 2
+      },
+      {
+        "name": "WKUP_ST_RTC_BIT",
+        "value": 3
+      },
+      {
+        "name": "WKUP_ST_AON_POS",
+        "value": 3
+      },
+      {
+        "name": "WKUP_ST_AON_BIT",
+        "value": 4
+      },
+      {
+        "name": "WKUP_ST_BOD12_POS",
+        "value": 8
+      },
+      {
+        "name": "WKUP_ST_BOD12_BIT",
+        "value": 9
+      },
+      {
+        "name": "WKUP_ST_LVD33_POS",
+        "value": 9
+      },
+      {
+        "name": "WKUP_ST_LVD33_BIT",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "LDO_BOD_TRIM_LSB",
+        "value": 0
+      },
+      {
+        "name": "LDO_BOD_TRIM_MSK",
+        "value": 1
+      },
+      {
+        "name": "LDO_BOD_EN_POS",
+        "value": 3
+      },
+      {
+        "name": "LDO_BOD_EN_BIT",
+        "value": 4
+      },
+      {
+        "name": "LDO_BOD_RSTEN_POS",
+        "value": 4
+      },
+      {
+        "name": "LDO_BOD_RSTEN_BIT",
+        "value": 5
+      },
+      {
+        "name": "LDO_IBSEL_LSB",
+        "value": 5
+      },
+      {
+        "name": "LDO_IBSEL_MSK",
+        "value": 6
+      },
+      {
+        "name": "LDO_LVD_EN_POS",
+        "value": 10
+      },
+      {
+        "name": "LDO_LVD_EN_BIT",
+        "value": 11
+      },
+      {
+        "name": "LDO_LVD_SEL_LSB",
+        "value": 11
+      },
+      {
+        "name": "LDO_LVD_SEL_MSK",
+        "value": 12
+      },
+      {
+        "name": "LDO_LVD_RSTEN_POS",
+        "value": 14
+      },
+      {
+        "name": "LDO_LVD_RSTEN_BIT",
+        "value": 15
+      },
+      {
+        "name": "LDO_ANA_RESV_LSB",
+        "value": 16
+      },
+      {
+        "name": "LDO_ANA_RESV_MSK",
+        "value": 17
+      },
+      {
+        "name": "LDO_TESTA_XO_POS",
+        "value": 25
+      },
+      {
+        "name": "LDO_TESTA_XO_BIT",
+        "value": 26
+      },
+      {
+        "name": "LDO_BOD_TESTEN_POS",
+        "value": 26
+      },
+      {
+        "name": "LDO_BOD_TESTEN_BIT",
+        "value": 27
+      },
+      {
+        "name": "LDO_BOD_INTEN_POS",
+        "value": 27
+      },
+      {
+        "name": "LDO_BOD_INTEN_BIT",
+        "value": 28
+      },
+      {
+        "name": "LDO_LVD_INTEN_POS",
+        "value": 28
+      },
+      {
+        "name": "LDO_LVD_INTEN_BIT",
+        "value": 29
+      },
+      {
+        "name": "LDO_VBK_TESTEN_POS",
+        "value": 29
+      },
+      {
+        "name": "LDO_VBK_TESTEN_BIT",
+        "value": 30
+      },
+      {
+        "name": "LDO_BOD_ENB_MSK",
+        "value": 31
+      },
+      {
+        "name": "LDO_LVD_ENB_MSK",
+        "value": 32
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "DMA_CH0",
+        "value": 0
+      },
+      {
+        "name": "DMA_CH1",
+        "value": 1
+      },
+      {
+        "name": "DMA_CH2",
+        "value": 2
+      },
+      {
+        "name": "DMA_CH3",
+        "value": 3
+      },
+      {
+        "name": "DMA_CH4",
+        "value": 4
+      },
+      {
+        "name": "DMA_CH5",
+        "value": 5
+      },
+      {
+        "name": "DMA_CH6",
+        "value": 6
+      },
+      {
+        "name": "DMA_CH7",
+        "value": 7
+      },
+      {
+        "name": "DMA_CH_MAX",
+        "value": 8
+      },
+      {
+        "name": "DMA_CH_ALT",
+        "value": 9
+      },
+      {
+        "name": "DMA_CH0_ALT",
+        "value": 10
+      },
+      {
+        "name": "DMA_CH1_ALT",
+        "value": 11
+      },
+      {
+        "name": "DMA_CH2_ALT",
+        "value": 12
+      },
+      {
+        "name": "DMA_CH3_ALT",
+        "value": 13
+      },
+      {
+        "name": "DMA_CH4_ALT",
+        "value": 14
+      },
+      {
+        "name": "DMA_CH5_ALT",
+        "value": 15
+      },
+      {
+        "name": "DMA_CH6_ALT",
+        "value": 16
+      },
+      {
+        "name": "DMA_CH7_ALT",
+        "value": 17
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "DMA_PID_UART1_RX",
+        "value": 0
+      },
+      {
+        "name": "DMA_PID_UART1_TX",
+        "value": 1
+      },
+      {
+        "name": "DMA_PID_UART2_RX",
+        "value": 2
+      },
+      {
+        "name": "DMA_PID_UART2_TX",
+        "value": 3
+      },
+      {
+        "name": "DMA_PID_SADC",
+        "value": 4
+      },
+      {
+        "name": "DMA_PID_SPIM_TX",
+        "value": 5
+      },
+      {
+        "name": "DMA_PID_SPIM_RX",
+        "value": 6
+      },
+      {
+        "name": "DMA_PID_SPIS_TX",
+        "value": 7
+      },
+      {
+        "name": "DMA_PID_SPIS_RX",
+        "value": 8
+      },
+      {
+        "name": "DMA_PID_CTMR_CH1",
+        "value": 9
+      },
+      {
+        "name": "DMA_PID_CTMR_CH2",
+        "value": 10
+      },
+      {
+        "name": "DMA_PID_CTMR_CH3",
+        "value": 11
+      },
+      {
+        "name": "DMA_PID_CTMR_CH4",
+        "value": 12
+      },
+      {
+        "name": "DMA_PID_CTMR_TRIG",
+        "value": 13
+      },
+      {
+        "name": "DMA_PID_CTMR_UP",
+        "value": 14
+      },
+      {
+        "name": "DMA_PID_ATMR_CH1",
+        "value": 15
+      },
+      {
+        "name": "DMA_PID_ATMR_CH2",
+        "value": 16
+      },
+      {
+        "name": "DMA_PID_ATMR_CH3",
+        "value": 17
+      },
+      {
+        "name": "DMA_PID_ATMR_CH4",
+        "value": 18
+      },
+      {
+        "name": "DMA_PID_ATMR_TRIG",
+        "value": 19
+      },
+      {
+        "name": "DMA_PID_ATMR_UP",
+        "value": 20
+      },
+      {
+        "name": "DMA_PID_ATMR_COM",
+        "value": 21
+      },
+      {
+        "name": "DMA_PID_BTMR_UP",
+        "value": 22
+      },
+      {
+        "name": "DMA_PID_USB",
+        "value": 23
+      },
+      {
+        "name": "DMA_PID_MDM_TX",
+        "value": 24
+      },
+      {
+        "name": "DMA_PID_MDM_RX",
+        "value": 25
+      },
+      {
+        "name": "DMA_PID_MAX",
+        "value": 26
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "DMA_PTR_UART1_RX",
+        "value": 1073885184
+      },
+      {
+        "name": "DMA_PTR_UART1_TX",
+        "value": 1073885188
+      },
+      {
+        "name": "DMA_PTR_UART2_RX",
+        "value": 1073889280
+      },
+      {
+        "name": "DMA_PTR_UART2_TX",
+        "value": 1073889284
+      },
+      {
+        "name": "DMA_PTR_SADC_AUX",
+        "value": 1073770516
+      },
+      {
+        "name": "DMA_PTR_SADC_PCM",
+        "value": 1073770520
+      },
+      {
+        "name": "DMA_PTR_SPIM_RX",
+        "value": 1073758208
+      },
+      {
+        "name": "DMA_PTR_SPIM_TX",
+        "value": 1073758212
+      },
+      {
+        "name": "DMA_PTR_SPIS_TX",
+        "value": 1073762316
+      },
+      {
+        "name": "DMA_PTR_SPIS_RX",
+        "value": 1073762320
+      },
+      {
+        "name": "DMA_PTR_CTMR_CH1",
+        "value": 1073877060
+      },
+      {
+        "name": "DMA_PTR_CTMR_CH2",
+        "value": 1073877064
+      },
+      {
+        "name": "DMA_PTR_CTMR_CH3",
+        "value": 1073877068
+      },
+      {
+        "name": "DMA_PTR_CTMR_CH4",
+        "value": 1073877072
+      },
+      {
+        "name": "DMA_PTR_CTMR_UP",
+        "value": 1073877052
+      },
+      {
+        "name": "DMA_PTR_ATMR_CH1",
+        "value": 1073881156
+      },
+      {
+        "name": "DMA_PTR_ATMR_CH2",
+        "value": 1073881160
+      },
+      {
+        "name": "DMA_PTR_ATMR_CH3",
+        "value": 1073881164
+      },
+      {
+        "name": "DMA_PTR_ATMR_CH4",
+        "value": 1073881168
+      },
+      {
+        "name": "DMA_PTR_ATMR_UP",
+        "value": 1073881148
+      },
+      {
+        "name": "DMA_PTR_BTMR_UP",
+        "value": 1073872956
+      },
+      {
+        "name": "DMA_PTR_MDM_TX",
+        "value": 1073778736
+      },
+      {
+        "name": "DMA_PTR_MDM_RX",
+        "value": 1073778740
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "DMA_STA_IDLE",
+        "value": 0
+      },
+      {
+        "name": "DMA_STA_RD_CTRL",
+        "value": 1
+      },
+      {
+        "name": "DMA_STA_RD_SP",
+        "value": 2
+      },
+      {
+        "name": "DMA_STA_RD_DP",
+        "value": 3
+      },
+      {
+        "name": "DMA_STA_RD_SRC",
+        "value": 4
+      },
+      {
+        "name": "DMA_STA_WR_DST",
+        "value": 5
+      },
+      {
+        "name": "DMA_STA_WAIT_CLR",
+        "value": 6
+      },
+      {
+        "name": "DMA_STA_WR_CTRL",
+        "value": 7
+      },
+      {
+        "name": "DMA_STA_STALLED",
+        "value": 8
+      },
+      {
+        "name": "DMA_STA_DONE",
+        "value": 9
+      },
+      {
+        "name": "DMA_STA_PER_SGTX",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "CCM_STOP",
+        "value": 0
+      },
+      {
+        "name": "CCM_BASIC",
+        "value": 1
+      },
+      {
+        "name": "CCM_AUTO_REQ",
+        "value": 2
+      },
+      {
+        "name": "CCM_PING_PONG",
+        "value": 3
+      },
+      {
+        "name": "CCM_MEM_SG",
+        "value": 4
+      },
+      {
+        "name": "CCM_MEM_SG_ALT",
+        "value": 5
+      },
+      {
+        "name": "CCM_PER_SG",
+        "value": 6
+      },
+      {
+        "name": "CCM_PER_SG_ALT",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "IN_BYTE",
+        "value": 0
+      },
+      {
+        "name": "IN_HALF",
+        "value": 1
+      },
+      {
+        "name": "IN_WORD",
+        "value": 2
+      },
+      {
+        "name": "IN_NONE",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "CHNL_DIS",
+        "value": 0
+      },
+      {
+        "name": "CHNL_EN",
+        "value": 1
+      },
+      {
+        "name": "CHNL_DONE",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "DMA_TRANS_CCMODE_LSB",
+        "value": 0
+      },
+      {
+        "name": "DMA_TRANS_CCMODE_MSK",
+        "value": 1
+      },
+      {
+        "name": "DMA_TRANS_NEXTUB_POS",
+        "value": 3
+      },
+      {
+        "name": "DMA_TRANS_NEXTUB_BIT",
+        "value": 4
+      },
+      {
+        "name": "DMA_TRANS_CYCLES_LSB",
+        "value": 4
+      },
+      {
+        "name": "DMA_TRANS_CYCLES_MSK",
+        "value": 5
+      },
+      {
+        "name": "DMA_TRANS_RPOWER_LSB",
+        "value": 14
+      },
+      {
+        "name": "DMA_TRANS_RPOWER_MSK",
+        "value": 15
+      },
+      {
+        "name": "DMA_TRANS_SRCPROT_LSB",
+        "value": 18
+      },
+      {
+        "name": "DMA_TRANS_SRCPROT_MSK",
+        "value": 19
+      },
+      {
+        "name": "DMA_TRANS_DSTPROT_LSB",
+        "value": 21
+      },
+      {
+        "name": "DMA_TRANS_DSTPROT_MSK",
+        "value": 22
+      },
+      {
+        "name": "DMA_TRANS_SRCSIZE_LSB",
+        "value": 24
+      },
+      {
+        "name": "DMA_TRANS_SRCSIZE_MSK",
+        "value": 25
+      },
+      {
+        "name": "DMA_TRANS_SRCINC_LSB",
+        "value": 26
+      },
+      {
+        "name": "DMA_TRANS_SRCINC_MSK",
+        "value": 27
+      },
+      {
+        "name": "DMA_TRANS_DSTSIZE_LSB",
+        "value": 28
+      },
+      {
+        "name": "DMA_TRANS_DSTSIZE_MSK",
+        "value": 29
+      },
+      {
+        "name": "DMA_TRANS_DSTINC_LSB",
+        "value": 30
+      },
+      {
+        "name": "DMA_TRANS_DSTINC_MSK",
+        "value": 31
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "EXTI_IER",
+        "value": 0
+      },
+      {
+        "name": "EXTI_IDR",
+        "value": 1
+      },
+      {
+        "name": "EXTI_IVS",
+        "value": 2
+      },
+      {
+        "name": "EXTI_RIF",
+        "value": 3
+      },
+      {
+        "name": "EXTI_IFM",
+        "value": 4
+      },
+      {
+        "name": "EXTI_ICR",
+        "value": 5
+      },
+      {
+        "name": "EXTI_RTS",
+        "value": 6
+      },
+      {
+        "name": "EXTI_FTS",
+        "value": 7
+      },
+      {
+        "name": "EXTI_SWI",
+        "value": 8
+      },
+      {
+        "name": "EXTI_ADTE",
+        "value": 9
+      },
+      {
+        "name": "EXTI_DBE",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "FSH_VID_PUYA",
+        "value": 133
+      },
+      {
+        "name": "FSH_VID_WINBOND",
+        "value": 239
+      },
+      {
+        "name": "FSH_VID_GD",
+        "value": 200
+      },
+      {
+        "name": "FSH_VID_FUDAN",
+        "value": 161
+      },
+      {
+        "name": "FSH_VID_SPANSION",
+        "value": 1
+      },
+      {
+        "name": "FSH_VID_ZBITSEMI",
+        "value": 94
+      },
+      {
+        "name": "FSH_VID_XMC",
+        "value": 32
+      },
+      {
+        "name": "FSH_VID_BOYA",
+        "value": 104
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "FSH_CMD_RST_EN",
+        "value": 102
+      },
+      {
+        "name": "FSH_CMD_RESET",
+        "value": 153
+      },
+      {
+        "name": "FSH_CMD_RD_ID",
+        "value": 159
+      },
+      {
+        "name": "FSH_CMD_WR_STA_EN",
+        "value": 80
+      },
+      {
+        "name": "FSH_CMD_WR_STA",
+        "value": 1
+      },
+      {
+        "name": "FSH_CMD_WR_STA1",
+        "value": 49
+      },
+      {
+        "name": "FSH_CMD_RD_STA0",
+        "value": 5
+      },
+      {
+        "name": "FSH_CMD_RD_STA1",
+        "value": 53
+      },
+      {
+        "name": "FSH_CMD_ER_CHIP",
+        "value": 96
+      },
+      {
+        "name": "FSH_CMD_ER_BLOCK64",
+        "value": 216
+      },
+      {
+        "name": "FSH_CMD_ER_BLOCK32",
+        "value": 82
+      },
+      {
+        "name": "FSH_CMD_ER_SECTOR",
+        "value": 32
+      },
+      {
+        "name": "FSH_CMD_ER_PAGE",
+        "value": 129
+      },
+      {
+        "name": "FSH_CMD_WR_EN",
+        "value": 6
+      },
+      {
+        "name": "FSH_CMD_WR",
+        "value": 2
+      },
+      {
+        "name": "FSH_CMD_DLWR",
+        "value": 162
+      },
+      {
+        "name": "FSH_CMD_QDWR",
+        "value": 50
+      },
+      {
+        "name": "FSH_CMD_RD",
+        "value": 3
+      },
+      {
+        "name": "FSH_CMD_DLRD",
+        "value": 59
+      },
+      {
+        "name": "FSH_CMD_QDRD",
+        "value": 107
+      },
+      {
+        "name": "FSH_CMD_DLRD_HMP",
+        "value": 187
+      },
+      {
+        "name": "FSH_CMD_QDRD_HMP",
+        "value": 235
+      },
+      {
+        "name": "FSH_CMD_EXIT_HMP",
+        "value": 255
+      },
+      {
+        "name": "FSH_CMD_WR_OTP",
+        "value": 66
+      },
+      {
+        "name": "FSH_CMD_ER_OTP",
+        "value": 68
+      },
+      {
+        "name": "FSH_CMD_RD_OTP",
+        "value": 72
+      },
+      {
+        "name": "FSH_CMD_SUSPEND",
+        "value": 117
+      },
+      {
+        "name": "FSH_CMD_RESUME",
+        "value": 122
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "CACHE_RS1K",
+        "value": 9
+      },
+      {
+        "name": "CACHE_RS2K",
+        "value": 10
+      },
+      {
+        "name": "CACHE_RS4K",
+        "value": 11
+      },
+      {
+        "name": "CACHE_RS8K",
+        "value": 12
+      },
+      {
+        "name": "CACHE_RS16K",
+        "value": 13
+      },
+      {
+        "name": "CACHE_RS32K",
+        "value": 14
+      },
+      {
+        "name": "CACHE_RS64K",
+        "value": 15
+      },
+      {
+        "name": "CACHE_RS128K",
+        "value": 16
+      },
+      {
+        "name": "CACHE_RS256K",
+        "value": 17
+      },
+      {
+        "name": "CACHE_RS512K",
+        "value": 18
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SPI_MODE",
+        "value": 1
+      },
+      {
+        "name": "DUAL_MODE",
+        "value": 2
+      },
+      {
+        "name": "QUAD_MODE",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "FCM_CMD_LSB",
+        "value": 0
+      },
+      {
+        "name": "FCM_CMD_MSK",
+        "value": 1
+      },
+      {
+        "name": "FCM_MODE_LSB",
+        "value": 8
+      },
+      {
+        "name": "FCM_MODE_MSK",
+        "value": 9
+      },
+      {
+        "name": "FCM_RWOTP_BIT",
+        "value": 1024
+      },
+      {
+        "name": "FCM_ERCHIP_BIT",
+        "value": 2048
+      },
+      {
+        "name": "FCM_NEXTPKT_BIT",
+        "value": 4096
+      },
+      {
+        "name": "FCM_PACKETS_BIT",
+        "value": 8192
+      },
+      {
+        "name": "FCM_NOTWAIT_BIT",
+        "value": 16384
+      },
+      {
+        "name": "FCM_SUSPEND_BIT",
+        "value": 32768
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "IDLE_ADR_ARG",
+        "value": 0
+      },
+      {
+        "name": "SDAT_ADR_ARG",
+        "value": 1
+      },
+      {
+        "name": "RDAT_ADR_ARG",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SADR_CMD_ARG",
+        "value": 3
+      },
+      {
+        "name": "SDAT_CMD_ARG",
+        "value": 5
+      },
+      {
+        "name": "RDAT_CMD_ARG",
+        "value": 6
+      },
+      {
+        "name": "IDLE_CMD_ARG",
+        "value": 0
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SCTRL_DATA_BIT_MODE_LSB",
+        "value": 0
+      },
+      {
+        "name": "SCTRL_DATA_BIT_MODE_MSK",
+        "value": 1
+      },
+      {
+        "name": "SCTRL_ADDR_BIT_MODE_LSB",
+        "value": 2
+      },
+      {
+        "name": "SCTRL_ADDR_BIT_MODE_MSK",
+        "value": 3
+      },
+      {
+        "name": "SCTRL_CMD_BIT_MODE_LSB",
+        "value": 4
+      },
+      {
+        "name": "SCTRL_CMD_BIT_MODE_MSK",
+        "value": 5
+      },
+      {
+        "name": "SCTRL_ADDR_WITH_ARG_LSB",
+        "value": 6
+      },
+      {
+        "name": "SCTRL_ADDR_WITH_ARG_MSK",
+        "value": 7
+      },
+      {
+        "name": "SCTRL_CMD_WITH_ARG_LSB",
+        "value": 8
+      },
+      {
+        "name": "SCTRL_CMD_WITH_ARG_MSK",
+        "value": 9
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SCTRL_EN_CMD",
+        "value": 0
+      },
+      {
+        "name": "SCTRL_RD_STA",
+        "value": 1
+      },
+      {
+        "name": "SCTRL_WR_STA",
+        "value": 2
+      },
+      {
+        "name": "SCTRL_ER_CHIP",
+        "value": 3
+      },
+      {
+        "name": "SCTRL_ER_PART",
+        "value": 4
+      },
+      {
+        "name": "SCTRL_SIRD_DAT",
+        "value": 5
+      },
+      {
+        "name": "SCTRL_SIWR_DAT",
+        "value": 6
+      },
+      {
+        "name": "SCTRL_DLRD_DAT",
+        "value": 7
+      },
+      {
+        "name": "SCTRL_DLWR_DAT",
+        "value": 8
+      },
+      {
+        "name": "SCTRL_QDRD_DAT",
+        "value": 9
+      },
+      {
+        "name": "SCTRL_QDWR_DAT",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "ACBIT_ADR_LEN_LSB",
+        "value": 0
+      },
+      {
+        "name": "ACBIT_ADR_LEN_MSK",
+        "value": 1
+      },
+      {
+        "name": "ACBIT_CMD_LEN_LSB",
+        "value": 6
+      },
+      {
+        "name": "ACBIT_CMD_LEN_MSK",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "ACBIT_SI_IDLE",
+        "value": 0
+      },
+      {
+        "name": "ACBIT_SI_0DUMY",
+        "value": 1
+      },
+      {
+        "name": "ACBIT_SI_1DUMY",
+        "value": 2
+      },
+      {
+        "name": "ACBIT_DL_1DUMY",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SBUS_SI_0DUMY",
+        "value": 23
+      },
+      {
+        "name": "SBUS_SI_1DUMY",
+        "value": 31
+      },
+      {
+        "name": "SBUS_DL_1DUMY",
+        "value": 15
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "CLEN_0DUMY",
+        "value": 7
+      },
+      {
+        "name": "CLEN_1DUMY",
+        "value": 15
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "DLYSET_HPM_CLEN_LSB",
+        "value": 0
+      },
+      {
+        "name": "DLYSET_CMD_LEN_LSB",
+        "value": 6
+      },
+      {
+        "name": "DLYSET_0DUMY_CLEN_LSB",
+        "value": 10
+      },
+      {
+        "name": "DLYSET_ADDR_BIT_MODE_LSB",
+        "value": 14
+      },
+      {
+        "name": "DLYSET_CMD_BIT_MODE_LSB",
+        "value": 16
+      },
+      {
+        "name": "DLYSET_DATA_BIT_MODE_LSB",
+        "value": 18
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "IBUS_SIRD_CFG",
+        "value": 0
+      },
+      {
+        "name": "IBUS_DLRD_CFG",
+        "value": 1
+      },
+      {
+        "name": "IBUS_QDRD_CFG",
+        "value": 2
+      },
+      {
+        "name": "IBUS_DLRD_HPM",
+        "value": 3
+      },
+      {
+        "name": "IBUS_QDRD_HPM",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "IBUS_SI_0DUMY",
+        "value": 23
+      },
+      {
+        "name": "IBUS_SI_1DUMY",
+        "value": 31
+      },
+      {
+        "name": "IBUS_DL_1DUMY",
+        "value": 15
+      },
+      {
+        "name": "IBUS_QD_1DUMY",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "/\n    ",
+        "value": 0
+      },
+      {
+        "name": "  GPIO",
+        "value": 1
+      },
+      {
+        "name": "IO03  ",
+        "value": 2
+      },
+      {
+        "name": "      ",
+        "value": 3
+      },
+      {
+        "name": "      ",
+        "value": 4
+      },
+      {
+        "name": "      ",
+        "value": 5
+      },
+      {
+        "name": "      ",
+        "value": 6
+      },
+      {
+        "name": "   = (",
+        "value": 7
+      },
+      {
+        "name": " (1UL ",
+        "value": 8
+      },
+      {
+        "name": "L << P",
+        "value": 9
+      },
+      {
+        "name": " PA11)",
+        "value": 10
+      },
+      {
+        "name": "2),  /",
+        "value": 11
+      },
+      {
+        "name": " /**< ",
+        "value": 4
+      },
+      {
+        "name": "< GPIO",
+        "value": 5
+      },
+      {
+        "name": "IO15引脚",
+        "value": 6
+      },
+      {
+        "name": "引脚 */\n",
+        "value": 7
+      },
+      {
+        "name": "/\n    ",
+        "value": 8
+      },
+      {
+        "name": "  GPIO",
+        "value": 9
+      },
+      {
+        "name": "*\n * @",
+        "value": 10
+      },
+      {
+        "name": "      ",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "GPIO输入类型定义 ",
+    "values": [
+      {
+        "name": "IE_AIR",
+        "value": 0
+      },
+      {
+        "name": "/\n    I",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "UP,   ",
+        "value": 0
+      },
+      {
+        "name": "*******",
+        "value": 1
+      },
+      {
+        "name": " \"reg",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "I2C_MS_BUS_ERROR",
+        "value": 0
+      },
+      {
+        "name": "I2C_MS_START_OK",
+        "value": 8
+      },
+      {
+        "name": "I2C_MS_RESTART_OK",
+        "value": 16
+      },
+      {
+        "name": "I2C_MS_ADDR_W_ACK",
+        "value": 24
+      },
+      {
+        "name": "I2C_MS_ADDR_W_NAK",
+        "value": 32
+      },
+      {
+        "name": "I2C_MS_SEND_DAT_ACK",
+        "value": 40
+      },
+      {
+        "name": "I2C_MS_SEND_DAT_NAK",
+        "value": 48
+      },
+      {
+        "name": "I2C_MS_TRANS_FAIL",
+        "value": 56
+      },
+      {
+        "name": "I2C_MS_ADDR_R_ACK",
+        "value": 64
+      },
+      {
+        "name": "I2C_MS_ADDR_R_NAK",
+        "value": 72
+      },
+      {
+        "name": "I2C_MS_READ_DAT_ACK",
+        "value": 80
+      },
+      {
+        "name": "I2C_MS_READ_DAT_NAK",
+        "value": 88
+      },
+      {
+        "name": "I2C_SS_RECV_ADDR_W",
+        "value": 96
+      },
+      {
+        "name": "I2C_MS_ARL_RECV_ADDR_W",
+        "value": 104
+      },
+      {
+        "name": "I2C_SS_RECV_GCA_ACK",
+        "value": 112
+      },
+      {
+        "name": "I2C_MS_ARL_RECV_GCA_ACK",
+        "value": 120
+      },
+      {
+        "name": "I2C_SS_RECV_DAT_ACK",
+        "value": 128
+      },
+      {
+        "name": "I2C_SS_RECV_DAT_NAK",
+        "value": 136
+      },
+      {
+        "name": "I2C_SS_GCA_RECV_DAT_ACK",
+        "value": 144
+      },
+      {
+        "name": "I2C_SS_GCA_RECV_DAT_NAK",
+        "value": 152
+      },
+      {
+        "name": "I2C_SS_RECV_STOP_OR_RESTART",
+        "value": 160
+      },
+      {
+        "name": "I2C_SS_RECV_ADDR_R_ACK",
+        "value": 168
+      },
+      {
+        "name": "I2C_MS_ARL_RECV_ADDR_R_ACK",
+        "value": 176
+      },
+      {
+        "name": "I2C_SS_SEND_DAT_ACK",
+        "value": 184
+      },
+      {
+        "name": "I2C_SS_SEND_DAT_NAK",
+        "value": 192
+      },
+      {
+        "name": "I2C_SS_SEND_LAST_DAT_ACK",
+        "value": 200
+      },
+      {
+        "name": "I2C_SS_SEND_LAST_DAT_NAK",
+        "value": 208
+      },
+      {
+        "name": "I2C_MS_SEND_SECOND_ADDR_ACK",
+        "value": 224
+      },
+      {
+        "name": "I2C_MS_SEND_SECOND_ADDR_NAK",
+        "value": 232
+      },
+      {
+        "name": "I2C_IFLG_IDLE",
+        "value": 248
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "I2C_CR_AAK_BIT",
+        "value": 4
+      },
+      {
+        "name": "I2C_CR_IFLG_BIT",
+        "value": 8
+      },
+      {
+        "name": "I2C_CR_STOP_BIT",
+        "value": 16
+      },
+      {
+        "name": "I2C_CR_START_BIT",
+        "value": 32
+      },
+      {
+        "name": "I2C_CR_I2C_EN_BIT",
+        "value": 64
+      },
+      {
+        "name": "I2C_CR_INT_EN_BIT",
+        "value": 128
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "I2C_CLK_M_LSB",
+        "value": 0
+      },
+      {
+        "name": "I2C_CLK_M_MSK",
+        "value": 1
+      },
+      {
+        "name": "I2C_CLK_N_LSB",
+        "value": 4
+      },
+      {
+        "name": "I2C_CLK_N_MSK",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": ",\n  ",
+        "value": 0
+      },
+      {
+        "name": ",\n  ",
+        "value": 1
+      },
+      {
+        "name": ",\n  ",
+        "value": 2
+      },
+      {
+        "name": ",\n  ",
+        "value": 3
+      },
+      {
+        "name": ",\n  ",
+        "value": 4
+      },
+      {
+        "name": ",\n  ",
+        "value": 5
+      },
+      {
+        "name": ",\n  ",
+        "value": 6
+      },
+      {
+        "name": ",\n  ",
+        "value": 7
+      },
+      {
+        "name": ",\n  ",
+        "value": 8
+      },
+      {
+        "name": ",\n  ",
+        "value": 9
+      },
+      {
+        "name": "0,\n ",
+        "value": 10
+      },
+      {
+        "name": "1,\n ",
+        "value": 11
+      },
+      {
+        "name": "2,\n ",
+        "value": 12
+      },
+      {
+        "name": "3,\n ",
+        "value": 13
+      },
+      {
+        "name": "4,\n ",
+        "value": 14
+      },
+      {
+        "name": "5,\n ",
+        "value": 15
+      },
+      {
+        "name": "6,\n ",
+        "value": 16
+      },
+      {
+        "name": "7,\n ",
+        "value": 17
+      },
+      {
+        "name": "8,\n ",
+        "value": 18
+      },
+      {
+        "name": "9,\n ",
+        "value": 19
+      },
+      {
+        "name": " speci",
+        "value": 20
+      },
+      {
+        "name": "A00,\n   ",
+        "value": 21
+      },
+      {
+        "name": "A01,\n   ",
+        "value": 22
+      },
+      {
+        "name": "A05,\n    ",
+        "value": 23
+      },
+      {
+        "name": "A19,\n\n   ",
+        "value": 24
+      },
+      {
+        "name": "A06,\n    ",
+        "value": 25
+      },
+      {
+        "name": "A07,\n    ",
+        "value": 26
+      },
+      {
+        "name": "A15,\n\n   ",
+        "value": 27
+      },
+      {
+        "name": "A00,\n    ",
+        "value": 28
+      },
+      {
+        "name": "A01,\n    ",
+        "value": 29
+      },
+      {
+        "name": "A02,\n    ",
+        "value": 30
+      },
+      {
+        "name": "A03,\n   ",
+        "value": 31
+      },
+      {
+        "name": "A04,\n    ",
+        "value": 32
+      },
+      {
+        "name": "A05,\n    ",
+        "value": 33
+      },
+      {
+        "name": "A06,\n    ",
+        "value": 34
+      },
+      {
+        "name": "A07,\n    ",
+        "value": 35
+      },
+      {
+        "name": "A08,\n    ",
+        "value": 36
+      },
+      {
+        "name": "A09,\n    ",
+        "value": 37
+      },
+      {
+        "name": "A10,\n    ",
+        "value": 38
+      },
+      {
+        "name": "A11,\n    PA",
+        "value": 39
+      },
+      {
+        "name": "A12,\n    PA",
+        "value": 40
+      },
+      {
+        "name": "A13,\n    PA",
+        "value": 41
+      },
+      {
+        "name": "A14,\n    PA",
+        "value": 42
+      },
+      {
+        "name": "A15,\n    PA",
+        "value": 43
+      },
+      {
+        "name": "A16,\n    PA",
+        "value": 44
+      },
+      {
+        "name": "A17,\n    PA",
+        "value": 45
+      },
+      {
+        "name": "A18,\n ",
+        "value": 46
+      },
+      {
+        "name": "A19,\n\n",
+        "value": 47
+      },
+      {
+        "name": "A01,\n    PA",
+        "value": 48
+      },
+      {
+        "name": "A02,\n    PA",
+        "value": 49
+      },
+      {
+        "name": "A03,\n    PA",
+        "value": 50
+      },
+      {
+        "name": "A04,\n    PA",
+        "value": 51
+      },
+      {
+        "name": "A05,\n    PA",
+        "value": 52
+      },
+      {
+        "name": "A06,\n    P",
+        "value": 53
+      },
+      {
+        "name": "A07,\n    PA_",
+        "value": 54
+      },
+      {
+        "name": "A08,\n    PA_",
+        "value": 55
+      },
+      {
+        "name": "A09,\n    PA_",
+        "value": 56
+      },
+      {
+        "name": "A10,\n    PA_",
+        "value": 57
+      },
+      {
+        "name": "A11,\n    PA_",
+        "value": 58
+      },
+      {
+        "name": "A12,\n    PA_",
+        "value": 59
+      },
+      {
+        "name": "A13,\n    PA_",
+        "value": 60
+      },
+      {
+        "name": "A14,\n    PA",
+        "value": 61
+      },
+      {
+        "name": "A15,\n    PA_C",
+        "value": 62
+      },
+      {
+        "name": "A16,\n    PA_C",
+        "value": 63
+      },
+      {
+        "name": "A17,\n    PA_C",
+        "value": 64
+      },
+      {
+        "name": "A18,\n};\n\n/// ",
+        "value": 65
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "x00,\n\n ",
+        "value": 0
+      },
+      {
+        "name": "0 << 0),  //",
+        "value": 1
+      },
+      {
+        "name": "1 << 0),  /",
+        "value": 2
+      },
+      {
+        "name": "2 << 0),  // ",
+        "value": 3
+      },
+      {
+        "name": "3 << 0),  // ",
+        "value": 4
+      },
+      {
+        "name": "4 << 0),\n    ",
+        "value": 5
+      },
+      {
+        "name": "5 << 0),\n    I",
+        "value": 6
+      },
+      {
+        "name": "6 << 0),\n    IO",
+        "value": 7
+      },
+      {
+        "name": "7 << 0),\n\n ",
+        "value": 8
+      },
+      {
+        "name": "0 << 5),  //",
+        "value": 9
+      },
+      {
+        "name": "1 << 5),  //",
+        "value": 10
+      },
+      {
+        "name": "1 << 6),  //",
+        "value": 11
+      },
+      {
+        "name": "1 << 7),  ",
+        "value": 12
+      },
+      {
+        "name": "1 << 8), ",
+        "value": 13
+      },
+      {
+        "name": "1 << 9),  ",
+        "value": 14
+      },
+      {
+        "name": "1 << 10), ",
+        "value": 15
+      },
+      {
+        "name": "1 << 11), // ",
+        "value": 16
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": ",  // O/I can",
+        "value": 0
+      },
+      {
+        "name": ",  // I/O can",
+        "value": 1
+      },
+      {
+        "name": ",  // O/I can",
+        "value": 2
+      },
+      {
+        "name": ",  // I/O can",
+        "value": 3
+      },
+      {
+        "name": ",  // I&O O",
+        "value": 4
+      },
+      {
+        "name": ",  // I&O O",
+        "value": 5
+      },
+      {
+        "name": ",  // I/O pw",
+        "value": 6
+      },
+      {
+        "name": ",  // I/O pw",
+        "value": 7
+      },
+      {
+        "name": ",  // O\n    C",
+        "value": 8
+      },
+      {
+        "name": ",  // O\n    C",
+        "value": 9
+      },
+      {
+        "name": "0, // O\n    C",
+        "value": 10
+      },
+      {
+        "name": "1, // O\n    C",
+        "value": 11
+      },
+      {
+        "name": "2, // O\n    ",
+        "value": 12
+      },
+      {
+        "name": "3, // O\n    C",
+        "value": 13
+      },
+      {
+        "name": "4, // O\n\n    ",
+        "value": 14
+      },
+      {
+        "name": ",  // I\n    C",
+        "value": 15
+      },
+      {
+        "name": ",  // I\n    C",
+        "value": 16
+      },
+      {
+        "name": "0, // I\n    C",
+        "value": 17
+      },
+      {
+        "name": "1, // I\n    ",
+        "value": 18
+      },
+      {
+        "name": "2, // I\n    C",
+        "value": 19
+      },
+      {
+        "name": "3, // I\n\n   ",
+        "value": 20
+      },
+      {
+        "name": "5, // O\n    CSC_G",
+        "value": 21
+      },
+      {
+        "name": "6, // O\n\n    // O",
+        "value": 22
+      },
+      {
+        "name": "7, // O\n    CS",
+        "value": 23
+      },
+      {
+        "name": "8, // O\n    C",
+        "value": 24
+      },
+      {
+        "name": "9, // O\n    CSC_CM",
+        "value": 25
+      },
+      {
+        "name": "0, // O\n    CSC_BB",
+        "value": 26
+      },
+      {
+        "name": "1, // O\n    ",
+        "value": 27
+      },
+      {
+        "name": "2, // O\n    ",
+        "value": 28
+      },
+      {
+        "name": "3, // O\n    C",
+        "value": 29
+      },
+      {
+        "name": "4, // O\n};\n\ne",
+        "value": 30
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": ",\n    CLK_OU",
+        "value": 0
+      },
+      {
+        "name": ",\n    CLK_O",
+        "value": 1
+      },
+      {
+        "name": ",\n    CLK_OUT",
+        "value": 2
+      },
+      {
+        "name": ",\n    CLK_OU",
+        "value": 3
+      },
+      {
+        "name": ",\n    CLK_O",
+        "value": 4
+      },
+      {
+        "name": ",\n    CLK_OUT_",
+        "value": 5
+      },
+      {
+        "name": ",\n    CLK_O",
+        "value": 6
+      },
+      {
+        "name": ",\n    CLK_OU",
+        "value": 7
+      },
+      {
+        "name": ",\n    CLK_OU",
+        "value": 8
+      },
+      {
+        "name": ",\n    CLK_OU",
+        "value": 9
+      },
+      {
+        "name": "0,\n};\n\n\n/*\n",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "IWDT_EN_BIT",
+        "value": 1
+      },
+      {
+        "name": "IWDT_INTEN_BIT",
+        "value": 2
+      },
+      {
+        "name": "IWDT_RSTEN_BIT",
+        "value": 4
+      },
+      {
+        "name": "IWDT_CLKLSI_BIT",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "PWM_CTMR",
+        "value": 0
+      },
+      {
+        "name": "PWM_ATMR",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "PWM_CTMR_CH1",
+        "value": 0
+      },
+      {
+        "name": "PWM_CTMR_CH2",
+        "value": 1
+      },
+      {
+        "name": "PWM_CTMR_CH3",
+        "value": 2
+      },
+      {
+        "name": "PWM_CTMR_CH4",
+        "value": 3
+      },
+      {
+        "name": "PWM_ATMR_CH1P",
+        "value": 4
+      },
+      {
+        "name": "PWM_ATMR_CH2P",
+        "value": 5
+      },
+      {
+        "name": "PWM_ATMR_CH3P",
+        "value": 6
+      },
+      {
+        "name": "PWM_ATMR_CH4P",
+        "value": 7
+      },
+      {
+        "name": "PWM_ATMR_CH1N",
+        "value": 8
+      },
+      {
+        "name": "PWM_ATMR_CH2N",
+        "value": 9
+      },
+      {
+        "name": "PWM_ATMR_CH3N",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "PWC_PSC0",
+        "value": 0
+      },
+      {
+        "name": "PWC_PSC2",
+        "value": 1
+      },
+      {
+        "name": "PWC_PSC4",
+        "value": 2
+      },
+      {
+        "name": "PWC_PSC8",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "PWM_CCxE_POS",
+        "value": 0
+      },
+      {
+        "name": "PWM_CCxE_BIT",
+        "value": 1
+      },
+      {
+        "name": "PWM_CCxP_POS",
+        "value": 1
+      },
+      {
+        "name": "PWM_CCxP_BIT",
+        "value": 2
+      },
+      {
+        "name": "PWM_CCxNE_POS",
+        "value": 2
+      },
+      {
+        "name": "PWM_CCxNE_BIT",
+        "value": 3
+      },
+      {
+        "name": "PWM_CCxNP_POS",
+        "value": 3
+      },
+      {
+        "name": "PWM_CCxNP_BIT",
+        "value": 4
+      },
+      {
+        "name": "PWM_CCxDE_POS",
+        "value": 4
+      },
+      {
+        "name": "PWM_CCxDE_BIT",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "PWM_CCxS_LSB",
+        "value": 0
+      },
+      {
+        "name": "PWM_CCxS_MSK",
+        "value": 1
+      },
+      {
+        "name": "PWM_OCxFE_POS",
+        "value": 2
+      },
+      {
+        "name": "PWM_OCxFE_BIT",
+        "value": 3
+      },
+      {
+        "name": "PWM_OCxPE_POS",
+        "value": 3
+      },
+      {
+        "name": "PWM_OCxPE_BIT",
+        "value": 4
+      },
+      {
+        "name": "PWM_OCxM_LSB",
+        "value": 4
+      },
+      {
+        "name": "PWM_OCxM_MSK",
+        "value": 5
+      },
+      {
+        "name": "PWM_OCxCE_POS",
+        "value": 7
+      },
+      {
+        "name": "PWM_OCxCE_BIT",
+        "value": 8
+      },
+      {
+        "name": "PWM_ICxPSC_LSB",
+        "value": 2
+      },
+      {
+        "name": "PWM_ICxPSC_MSK",
+        "value": 3
+      },
+      {
+        "name": "PWM_ICxF_LSB",
+        "value": 4
+      },
+      {
+        "name": "PWM_ICxF_MSK",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SYS_CLK_16M",
+        "value": 0
+      },
+      {
+        "name": "SYS_CLK_32M",
+        "value": 1
+      },
+      {
+        "name": "SYS_CLK_48M",
+        "value": 2
+      },
+      {
+        "name": "SYS_CLK_64M",
+        "value": 3
+      },
+      {
+        "name": "SYS_CLK_HSI",
+        "value": 4
+      },
+      {
+        "name": "SYS_CLK_LSI",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SYS_FREQ_32K",
+        "value": 32000
+      },
+      {
+        "name": "SYS_FREQ_16M",
+        "value": 16000000
+      },
+      {
+        "name": "SYS_FREQ_32M",
+        "value": 32000000
+      },
+      {
+        "name": "SYS_FREQ_48M",
+        "value": 48000000
+      },
+      {
+        "name": "SYS_FREQ_64M",
+        "value": 64000000
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "FSH_CLK_HSI16",
+        "value": 1
+      },
+      {
+        "name": "FSH_CLK_HSE16",
+        "value": 2
+      },
+      {
+        "name": "FSH_CLK_DPLL",
+        "value": 4
+      },
+      {
+        "name": "FSH_CLK_DPLL128",
+        "value": 8
+      },
+      {
+        "name": "FSH_CLK_DPSC64",
+        "value": 9
+      },
+      {
+        "name": "FSH_CLK_DPSC42",
+        "value": 10
+      },
+      {
+        "name": "FSH_CLK_DPSC32",
+        "value": 11
+      },
+      {
+        "name": "FSH_CLK_DPSC25",
+        "value": 12
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "FSH_FREQ_16MHz",
+        "value": 16
+      },
+      {
+        "name": "FSH_FREQ_48MHz",
+        "value": 48
+      },
+      {
+        "name": "FSH_FREQ_64MHz",
+        "value": 64
+      },
+      {
+        "name": "FSH_FREQ_PSC64",
+        "value": 64
+      },
+      {
+        "name": "FSH_FREQ_PSC42",
+        "value": 42
+      },
+      {
+        "name": "FSH_FREQ_PSC32",
+        "value": 32
+      },
+      {
+        "name": "FSH_FREQ_PSC25",
+        "value": 25
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "AHB_RST_CTRL",
+        "value": 0
+      },
+      {
+        "name": "APB_RST_CTRL",
+        "value": 1
+      },
+      {
+        "name": "AHB_CLK_RUN",
+        "value": 2
+      },
+      {
+        "name": "APB_CLK_RUN",
+        "value": 3
+      },
+      {
+        "name": "AHB_CLK_SLEEP",
+        "value": 4
+      },
+      {
+        "name": "APB_CLK_SLEEP",
+        "value": 5
+      },
+      {
+        "name": "AHB_CLK_DEEPSL",
+        "value": 6
+      },
+      {
+        "name": "APB_CLK_DEEPSL",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "AHB_RCC_BIT",
+        "value": 0
+      },
+      {
+        "name": "AHB_SYSCFG_BIT",
+        "value": 1
+      },
+      {
+        "name": "AHB_CSC_RST_BIT",
+        "value": 2
+      },
+      {
+        "name": "AHB_SPIM_BIT",
+        "value": 3
+      },
+      {
+        "name": "AHB_SPIS_BIT",
+        "value": 4
+      },
+      {
+        "name": "AHB_FSHC_BIT",
+        "value": 5
+      },
+      {
+        "name": "AHB_ADC_BIT",
+        "value": 6
+      },
+      {
+        "name": "AHB_GPIOA_RST_BIT",
+        "value": 7
+      },
+      {
+        "name": "AHB_AHB2P1_BIT",
+        "value": 8
+      },
+      {
+        "name": "AHB_AHB2P2_BIT",
+        "value": 9
+      },
+      {
+        "name": "AHB_CACHE_BIT",
+        "value": 10
+      },
+      {
+        "name": "AHB_USB_BIT",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "APB_BTMR_BIT",
+        "value": 0
+      },
+      {
+        "name": "APB_CTMR_BIT",
+        "value": 1
+      },
+      {
+        "name": "APB_ATMR_BIT",
+        "value": 2
+      },
+      {
+        "name": "APB_UART1_BIT",
+        "value": 3
+      },
+      {
+        "name": "APB_UART2_BIT",
+        "value": 4
+      },
+      {
+        "name": "APB_DMAC_BIT",
+        "value": 5
+      },
+      {
+        "name": "APB_EXTI_BIT",
+        "value": 6
+      },
+      {
+        "name": "APB_I2C_BIT",
+        "value": 7
+      },
+      {
+        "name": "APB_IWDT_BIT",
+        "value": 8
+      },
+      {
+        "name": "APB_MDM_BIT",
+        "value": 9
+      },
+      {
+        "name": "APB_RF_BIT",
+        "value": 10
+      },
+      {
+        "name": "APB_AON_BIT",
+        "value": 11
+      },
+      {
+        "name": "APB_APBMISC_BIT",
+        "value": 12
+      },
+      {
+        "name": "APB_PLLCAL_RST_BIT",
+        "value": 13
+      },
+      {
+        "name": "APB_RCCALIB_RST_BIT",
+        "value": 14
+      },
+      {
+        "name": "APB_RC16MCNT_RST_BIT",
+        "value": 15
+      },
+      {
+        "name": "APB_BLELTMR_RST_BIT",
+        "value": 16
+      },
+      {
+        "name": "APB_RTCSOFT_RST_BIT",
+        "value": 17
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "RCLK_HSE",
+        "value": 0
+      },
+      {
+        "name": "RCLK_DPLL",
+        "value": 1
+      },
+      {
+        "name": "RCLK_DPLL128",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "RCAL_CYCLES_LSB",
+        "value": 0
+      },
+      {
+        "name": "RCAL_CYCLES_MSK",
+        "value": 31
+      },
+      {
+        "name": "RCAL_SCALE_EN",
+        "value": 32
+      },
+      {
+        "name": "RCAL_DELAY_EN",
+        "value": 64
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SADC_CH_VDD33",
+        "value": 0
+      },
+      {
+        "name": "SADC_CH_VBK",
+        "value": 1
+      },
+      {
+        "name": "SADC_CH_VDD12",
+        "value": 2
+      },
+      {
+        "name": "SADC_CH_PGAOUT",
+        "value": 3
+      },
+      {
+        "name": "SADC_CH_MICIN",
+        "value": 4
+      },
+      {
+        "name": "SADC_CH_AIN0",
+        "value": 5
+      },
+      {
+        "name": "SADC_CH_AIN1",
+        "value": 6
+      },
+      {
+        "name": "SADC_CH_AIN2",
+        "value": 7
+      },
+      {
+        "name": "SADC_CH_AIN3",
+        "value": 8
+      },
+      {
+        "name": "SADC_CH_AIN4",
+        "value": 9
+      },
+      {
+        "name": "SADC_CH_AIN5",
+        "value": 10
+      },
+      {
+        "name": "SADC_CH_AIN6",
+        "value": 11
+      },
+      {
+        "name": "SADC_CH_AIN7",
+        "value": 12
+      },
+      {
+        "name": "SADC_CH_AIN8",
+        "value": 13
+      },
+      {
+        "name": "SADC_CH_AIN9",
+        "value": 14
+      },
+      {
+        "name": "SADC_CH_RFRSV",
+        "value": 15
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SADC_RF_TEMP",
+        "value": 1
+      },
+      {
+        "name": "SADC_RF_BANDGAP",
+        "value": 2
+      },
+      {
+        "name": "SADC_RF_RSSI",
+        "value": 4
+      },
+      {
+        "name": "SADC_RF_VDDIF",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SADC_EN_POS",
+        "value": 0
+      },
+      {
+        "name": "SADC_EN_BIT",
+        "value": 1
+      },
+      {
+        "name": "SADC_VREF_TRIM_LSB",
+        "value": 1
+      },
+      {
+        "name": "SADC_VREF_TRIM_1V2",
+        "value": 2
+      },
+      {
+        "name": "SADC_VREF_TRIM_1V8",
+        "value": 3
+      },
+      {
+        "name": "SADC_VREF_TRIM_2V4",
+        "value": 4
+      },
+      {
+        "name": "SADC_VREF_TRIM_3V0",
+        "value": 5
+      },
+      {
+        "name": "SADC_IBSEL_CMP_LSB",
+        "value": 3
+      },
+      {
+        "name": "SADC_IBSEL_CMP_015UA",
+        "value": 4
+      },
+      {
+        "name": "SADC_IBSEL_CMP_105UA",
+        "value": 5
+      },
+      {
+        "name": "SADC_IBSEL_VCM_LSB",
+        "value": 6
+      },
+      {
+        "name": "SADC_IBSEL_VCM_015UA",
+        "value": 7
+      },
+      {
+        "name": "SADC_IBSEL_VCM_105UA",
+        "value": 8
+      },
+      {
+        "name": "SADC_IBSEL_VREF_LSB",
+        "value": 9
+      },
+      {
+        "name": "SADC_IBSEL_VREF_015UA",
+        "value": 10
+      },
+      {
+        "name": "SADC_IBSEL_VREF_105UA",
+        "value": 11
+      },
+      {
+        "name": "SADC_IBSEL_BUF_LSB",
+        "value": 12
+      },
+      {
+        "name": "SADC_IBSEL_BUF_015UA",
+        "value": 13
+      },
+      {
+        "name": "SADC_IBSEL_BUF_105UA",
+        "value": 14
+      },
+      {
+        "name": "SADC_VREF_POS",
+        "value": 15
+      },
+      {
+        "name": "SADC_VREF_VDD",
+        "value": 16
+      },
+      {
+        "name": "SADC_VREF_VBG",
+        "value": 17
+      },
+      {
+        "name": "SADC_CALCAP_LSB",
+        "value": 16
+      },
+      {
+        "name": "SADC_CALCAP_PRECISION",
+        "value": 17
+      },
+      {
+        "name": "SADC_CALCAP_RANGE",
+        "value": 18
+      },
+      {
+        "name": "SADC_CALOS_POS",
+        "value": 18
+      },
+      {
+        "name": "SADC_CALOS_GND",
+        "value": 19
+      },
+      {
+        "name": "SADC_CALOS_VREF",
+        "value": 20
+      },
+      {
+        "name": "SADC_INBUF_BYPSS_POS",
+        "value": 20
+      },
+      {
+        "name": "SADC_INBUF_BYPSS_BIT",
+        "value": 21
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SADC_MIC_MODE_POS",
+        "value": 0
+      },
+      {
+        "name": "SADC_MIC_MODE_CAP",
+        "value": 1
+      },
+      {
+        "name": "SADC_MIC_MODE_NO_CAP",
+        "value": 2
+      },
+      {
+        "name": "SADC_MIC_PWD_POS",
+        "value": 1
+      },
+      {
+        "name": "SADC_MIC_PWD_BIT",
+        "value": 2
+      },
+      {
+        "name": "SADC_MIC_TRIM_LSB",
+        "value": 2
+      },
+      {
+        "name": "SADC_MIC_TRIM_MSK",
+        "value": 3
+      },
+      {
+        "name": "SADC_MIC_VREF_POS",
+        "value": 9
+      },
+      {
+        "name": "SADC_MIC_VREF_750MV",
+        "value": 10
+      },
+      {
+        "name": "SADC_MIC_VREF_1V5",
+        "value": 11
+      },
+      {
+        "name": "SADC_PGA_BIAS_LSB",
+        "value": 10
+      },
+      {
+        "name": "SADC_PGA_BIAS_MSK",
+        "value": 11
+      },
+      {
+        "name": "SADC_PGA_EN_POS",
+        "value": 12
+      },
+      {
+        "name": "SADC_PGA_EN_BIT",
+        "value": 13
+      },
+      {
+        "name": "SADC_PGA_VOL_LSB",
+        "value": 13
+      },
+      {
+        "name": "SADC_PGA_VOL_MSK",
+        "value": 14
+      },
+      {
+        "name": "SADC_PGA_VREF_POS",
+        "value": 18
+      },
+      {
+        "name": "SADC_PGA_VREF_750MV",
+        "value": 19
+      },
+      {
+        "name": "SADC_PGA_VREF_1V5",
+        "value": 20
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SADC_CR_SOC_POS",
+        "value": 0
+      },
+      {
+        "name": "SADC_CR_SOC_BIT",
+        "value": 1
+      },
+      {
+        "name": "SADC_CR_CALIB_POS",
+        "value": 1
+      },
+      {
+        "name": "SADC_CR_CALIB_BIT",
+        "value": 2
+      },
+      {
+        "name": "SADC_CR_CONV_MODE_POS",
+        "value": 2
+      },
+      {
+        "name": "SADC_CR_CONV_MODE_BIT",
+        "value": 3
+      },
+      {
+        "name": "SADC_CR_CONV_SINGLE",
+        "value": 4
+      },
+      {
+        "name": "SADC_CR_CONV_CONTINUE",
+        "value": 5
+      },
+      {
+        "name": "SADC_CR_DMAEN_POS",
+        "value": 3
+      },
+      {
+        "name": "SADC_CR_DMAEN_BIT",
+        "value": 4
+      },
+      {
+        "name": "SADC_CR_CLKPH_POS",
+        "value": 4
+      },
+      {
+        "name": "SADC_CR_CLKPH_NEGEDGE",
+        "value": 5
+      },
+      {
+        "name": "SADC_CR_CLKPH_POSEDGE",
+        "value": 6
+      },
+      {
+        "name": "SADC_CR_SAMP_MODE_LSB",
+        "value": 5
+      },
+      {
+        "name": "SADC_CR_SAMP_MODE_MSK",
+        "value": 6
+      },
+      {
+        "name": "SADC_CR_SAMP_SOFT",
+        "value": 7
+      },
+      {
+        "name": "SADC_CR_SAMP_RSSI",
+        "value": 8
+      },
+      {
+        "name": "SADC_CR_SAMP_PCM",
+        "value": 9
+      },
+      {
+        "name": "SADC_CR_SAMP_ADTMR",
+        "value": 10
+      },
+      {
+        "name": "SADC_CR_PCMEND_POS",
+        "value": 7
+      },
+      {
+        "name": "SADC_CR_PCMEND_BIT",
+        "value": 8
+      },
+      {
+        "name": "SADC_CR_RSSI_DLY_LSB",
+        "value": 8
+      },
+      {
+        "name": "SADC_CR_RSSI_DLY_MSK",
+        "value": 9
+      },
+      {
+        "name": "SADC_CR_DBGEN_POS",
+        "value": 14
+      },
+      {
+        "name": "SADC_CR_DBGEN_BIT",
+        "value": 15
+      },
+      {
+        "name": "SADC_CR_HPF_COEF_LSB",
+        "value": 16
+      },
+      {
+        "name": "SADC_CR_HPF_COEF_MSK",
+        "value": 17
+      },
+      {
+        "name": "SADC_CR_CLK_DIV_LSB",
+        "value": 20
+      },
+      {
+        "name": "SADC_CR_CLK_DIV_MSK",
+        "value": 21
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SPIM_CR_CLK_RATE_LSB",
+        "value": 0
+      },
+      {
+        "name": "SPIM_CR_CLK_RATE_MSK",
+        "value": 1
+      },
+      {
+        "name": "SPIM_CR_CLK_PHASE_BIT",
+        "value": 16
+      },
+      {
+        "name": "SPIM_CR_CLK_POLAR_BIT",
+        "value": 32
+      },
+      {
+        "name": "SPIM_CR_TX_DMA_BIT",
+        "value": 64
+      },
+      {
+        "name": "SPIM_CR_RX_DMA_BIT",
+        "value": 128
+      },
+      {
+        "name": "SPIM_CR_INT_EN_BIT",
+        "value": 256
+      },
+      {
+        "name": "SPIM_CR_TX_EN_BIT",
+        "value": 512
+      },
+      {
+        "name": "SPIM_CR_RX_EN_BIT",
+        "value": 1024
+      },
+      {
+        "name": "SPIM_CR_MSB_FST_BIT",
+        "value": 2048
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SPIM_TXDAT_CLR_BIT",
+        "value": 1
+      },
+      {
+        "name": "SPIM_RXDAT_CLR_BIT",
+        "value": 2
+      },
+      {
+        "name": "SPIM_INTFLG_CLR_BIT",
+        "value": 4
+      },
+      {
+        "name": "SPIM_STATUS_CLR_ALL",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SPIS_CR_LSB_FST_BIT",
+        "value": 1
+      },
+      {
+        "name": "SPIS_CR_CLK_POLAR_BIT",
+        "value": 2
+      },
+      {
+        "name": "SPIS_CR_CLK_PHASE_BIT",
+        "value": 4
+      },
+      {
+        "name": "SPIS_CR_RX_EN_BIT",
+        "value": 8
+      },
+      {
+        "name": "SPIS_CR_RXINT_EN_BIT",
+        "value": 16
+      },
+      {
+        "name": "SPIS_CR_TX_DMA_BIT",
+        "value": 32
+      },
+      {
+        "name": "SPIS_CR_RX_DMA_BIT",
+        "value": 64
+      },
+      {
+        "name": "SPIS_CR_RUN_EN_BIT",
+        "value": 128
+      },
+      {
+        "name": "SPIS_CR_OT_WIN_LSB",
+        "value": 8
+      },
+      {
+        "name": "SPIS_CR_OT_WIN_MSK",
+        "value": 9
+      },
+      {
+        "name": "SPIS_CR_OT_EN_BIT",
+        "value": 65536
+      },
+      {
+        "name": "SPIS_CR_OTINT_EN_BIT",
+        "value": 131072
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SPIS_RXOVER_CLR_BIT",
+        "value": 1
+      },
+      {
+        "name": "SPIS_TXDAT_CLR_BIT",
+        "value": 2
+      },
+      {
+        "name": "SPIS_RXDAT_CLR_BIT",
+        "value": 4
+      },
+      {
+        "name": "SPIS_RXINT_CLR_BIT",
+        "value": 8
+      },
+      {
+        "name": "SPIS_OTINT_CLR_BIT",
+        "value": 16
+      },
+      {
+        "name": "SPIS_INFO_CLR_ALL",
+        "value": 31
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SYS_DBG_PIO00",
+        "value": 0
+      },
+      {
+        "name": "SYS_DBG_PIO01",
+        "value": 1
+      },
+      {
+        "name": "SYS_DBG_PIO02",
+        "value": 2
+      },
+      {
+        "name": "SYS_DBG_PIO03",
+        "value": 3
+      },
+      {
+        "name": "SYS_DBG_PIO04",
+        "value": 4
+      },
+      {
+        "name": "SYS_DBG_PIO05",
+        "value": 5
+      },
+      {
+        "name": "SYS_DBG_PIO06",
+        "value": 6
+      },
+      {
+        "name": "SYS_DBG_PIO07",
+        "value": 7
+      },
+      {
+        "name": "SYS_DBG_PIO08",
+        "value": 8
+      },
+      {
+        "name": "SYS_DBG_PIO09",
+        "value": 9
+      },
+      {
+        "name": "SYS_DBG_PIO10",
+        "value": 10
+      },
+      {
+        "name": "SYS_DBG_PIO11",
+        "value": 11
+      },
+      {
+        "name": "SYS_DBG_PIO12",
+        "value": 12
+      },
+      {
+        "name": "SYS_DBG_PIO13",
+        "value": 13
+      },
+      {
+        "name": "SYS_DBG_PIO14",
+        "value": 14
+      },
+      {
+        "name": "SYS_DBG_PIO15",
+        "value": 15
+      },
+      {
+        "name": "SYS_DBG_PIO_ALL",
+        "value": 1048380
+      },
+      {
+        "name": "SYS_DBG_PIO_MSK",
+        "value": 1048380
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "SYS_DBG_RF",
+        "value": 0
+      },
+      {
+        "name": "SYS_DBG_BLE",
+        "value": 1
+      },
+      {
+        "name": "SYS_DBG_MDM",
+        "value": 2
+      },
+      {
+        "name": "SYS_DBG_USB",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "RF_DBG_TX",
+        "value": 1
+      },
+      {
+        "name": "RF_DBG_RX",
+        "value": 2
+      },
+      {
+        "name": "RF_DBG_CAL",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "BLE_DBG_TX",
+        "value": 131
+      },
+      {
+        "name": "BLE_DBG_RX",
+        "value": 33536
+      },
+      {
+        "name": "BLE_DBG_TXRX",
+        "value": 33667
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "MDM_DBG1",
+        "value": 1
+      },
+      {
+        "name": "MDM_DBG2",
+        "value": 2
+      },
+      {
+        "name": "MDM_DBG3",
+        "value": 3
+      },
+      {
+        "name": "MDM_DBG_EXT_TX",
+        "value": 4
+      },
+      {
+        "name": "MDM_DBG_EXT_RX",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "USB_DBG1",
+        "value": 1
+      },
+      {
+        "name": "USB_DBG2",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "ATEN_AT0_BIT",
+        "value": 1
+      },
+      {
+        "name": "ATEN_AT1_BIT",
+        "value": 2
+      },
+      {
+        "name": "ATEN_AT0_AT1",
+        "value": 3
+      },
+      {
+        "name": "ATEN_CBPF_BIT",
+        "value": 4
+      },
+      {
+        "name": "ATEN_RSSI_BIT",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "AT0_SEL_LSB",
+        "value": 0
+      },
+      {
+        "name": "AT0_VDD_IF",
+        "value": 1
+      },
+      {
+        "name": "AT0_BPF_IOP",
+        "value": 2
+      },
+      {
+        "name": "AT0_BPF_QOP",
+        "value": 3
+      },
+      {
+        "name": "AT0_VDD_PLL",
+        "value": 4
+      },
+      {
+        "name": "AT0_PLL_VCTRL",
+        "value": 5
+      },
+      {
+        "name": "AT0_LMT_OUTI",
+        "value": 6
+      },
+      {
+        "name": "AT0_PLL_FBCLK_DIV2",
+        "value": 7
+      },
+      {
+        "name": "AT0_BPF_CAL_DONE",
+        "value": 8
+      },
+      {
+        "name": "AT0_SEL_MSK",
+        "value": 9
+      },
+      {
+        "name": "AT1_SEL_LSB",
+        "value": 4
+      },
+      {
+        "name": "AT1_VDD_TX",
+        "value": 5
+      },
+      {
+        "name": "AT1_BPF_ION",
+        "value": 6
+      },
+      {
+        "name": "AT1_BPF_QON",
+        "value": 7
+      },
+      {
+        "name": "AT1_VDD_RX",
+        "value": 8
+      },
+      {
+        "name": "AT1_VDD_VCO",
+        "value": 9
+      },
+      {
+        "name": "AT1_RSSI_OUT",
+        "value": 10
+      },
+      {
+        "name": "AT1_LMT_OUTQ",
+        "value": 11
+      },
+      {
+        "name": "AT1_PLL_LOCK",
+        "value": 12
+      },
+      {
+        "name": "AT1_AGC_POWER_DET",
+        "value": 13
+      },
+      {
+        "name": "AT1_SEL_MSK",
+        "value": 14
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "TMR_CR_CEN_BIT",
+        "value": 1
+      },
+      {
+        "name": "TMR_CR_UDIS_BIT",
+        "value": 2
+      },
+      {
+        "name": "TMR_CR_URS_BIT",
+        "value": 4
+      },
+      {
+        "name": "TMR_CR_OPM_BIT",
+        "value": 8
+      },
+      {
+        "name": "TMR_CR_DIR_BIT",
+        "value": 16
+      },
+      {
+        "name": "TMR_CR_CMS_LSB",
+        "value": 5
+      },
+      {
+        "name": "TMR_CR_CMS_MSK",
+        "value": 6
+      },
+      {
+        "name": "TMR_CR_ARPE_BIT",
+        "value": 128
+      },
+      {
+        "name": "TMR_CR_CKD_LSB",
+        "value": 8
+      },
+      {
+        "name": "TMR_CR_CKD_MSK",
+        "value": 9
+      },
+      {
+        "name": "TMR_CR_CMPSEL_LSB",
+        "value": 10
+      },
+      {
+        "name": "TMR_CR_CMPSEL_MSK",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "TMR_IR_NONE",
+        "value": 0
+      },
+      {
+        "name": "TMR_IR_UI_BIT",
+        "value": 1
+      },
+      {
+        "name": "TMR_IR_CC1_BIT",
+        "value": 2
+      },
+      {
+        "name": "TMR_IR_CC2_BIT",
+        "value": 4
+      },
+      {
+        "name": "TMR_IR_CC3_BIT",
+        "value": 8
+      },
+      {
+        "name": "TMR_IR_CC4_BIT",
+        "value": 16
+      },
+      {
+        "name": "TMR_IR_COM_BIT",
+        "value": 32
+      },
+      {
+        "name": "TMR_IR_TI_BIT",
+        "value": 64
+      },
+      {
+        "name": "TMR_IR_BI_BIT",
+        "value": 128
+      },
+      {
+        "name": "TMR_IR_CC1O_BIT",
+        "value": 512
+      },
+      {
+        "name": "TMR_IR_CC2O_BIT",
+        "value": 1024
+      },
+      {
+        "name": "TMR_IR_CC3O_BIT",
+        "value": 2048
+      },
+      {
+        "name": "TMR_IR_CC4O_BIT",
+        "value": 4096
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "TMR_DISABLE",
+        "value": 0
+      },
+      {
+        "name": "TMR_1PULSE_MODE",
+        "value": 1
+      },
+      {
+        "name": "TMR_PERIOD_MODE",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "UART1_PORT",
+        "value": 0
+      },
+      {
+        "name": "UART2_PORT",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "LCR_DATA_BITS_LSB",
+        "value": 0
+      },
+      {
+        "name": "LCD_DATA_BITS_8",
+        "value": 1
+      },
+      {
+        "name": "LCD_DATA_BITS_7",
+        "value": 2
+      },
+      {
+        "name": "LCD_DATA_BITS_6",
+        "value": 3
+      },
+      {
+        "name": "LCD_DATA_BITS_5",
+        "value": 4
+      },
+      {
+        "name": "LCR_STOP_BITS_LSB",
+        "value": 2
+      },
+      {
+        "name": "LCR_STOP_BITS_1",
+        "value": 3
+      },
+      {
+        "name": "LCR_STOP_BITS_2",
+        "value": 4
+      },
+      {
+        "name": "LCR_PARITY_BITS_LSB",
+        "value": 3
+      },
+      {
+        "name": "LCR_PARITY_none",
+        "value": 4
+      },
+      {
+        "name": "LCR_PARITY_odd",
+        "value": 5
+      },
+      {
+        "name": "LCR_PARITY_even",
+        "value": 6
+      },
+      {
+        "name": "LCR_RXEN_BIT",
+        "value": 32
+      },
+      {
+        "name": "LCR_RTOEN_BIT",
+        "value": 256
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "FCR_FIFOEN_BIT",
+        "value": 1
+      },
+      {
+        "name": "FCR_RFRST_BIT",
+        "value": 2
+      },
+      {
+        "name": "FCR_TFRST_BIT",
+        "value": 4
+      },
+      {
+        "name": "FCR_RXTL_LSB",
+        "value": 4
+      },
+      {
+        "name": "FCR_RXTL_1BYTE",
+        "value": 5
+      },
+      {
+        "name": "FCR_RXTL_4BYTE",
+        "value": 6
+      },
+      {
+        "name": "FCR_RXTL_8BYTE",
+        "value": 7
+      },
+      {
+        "name": "FCR_RXTL_14BYTE",
+        "value": 8
+      },
+      {
+        "name": "FCR_TXTL_LSB",
+        "value": 6
+      },
+      {
+        "name": "FCR_TXTL_1BYTE",
+        "value": 7
+      },
+      {
+        "name": "FCR_TXTL_4BYTE",
+        "value": 8
+      },
+      {
+        "name": "FCR_TXTL_8BYTE",
+        "value": 9
+      },
+      {
+        "name": "FCR_TXTL_14BBYTE",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "UART_SR_DR_BIT",
+        "value": 1
+      },
+      {
+        "name": "UART_SR_OE_BIT",
+        "value": 2
+      },
+      {
+        "name": "UART_SR_PE_BIT",
+        "value": 4
+      },
+      {
+        "name": "UART_SR_FE_BIT",
+        "value": 8
+      },
+      {
+        "name": "UART_SR_BF_BIT",
+        "value": 16
+      },
+      {
+        "name": "UART_SR_TBEM_BIT",
+        "value": 32
+      },
+      {
+        "name": "UART_SR_TEM_BIT",
+        "value": 64
+      },
+      {
+        "name": "UART_SR_RFE_BIT",
+        "value": 128
+      },
+      {
+        "name": "UART_SR_BUSY_BIT",
+        "value": 256
+      },
+      {
+        "name": "UART_SR_TFNF_BIT",
+        "value": 512
+      },
+      {
+        "name": "UART_SR_TFEM_BIT",
+        "value": 1024
+      },
+      {
+        "name": "UART_SR_RFNE_BIT",
+        "value": 2048
+      },
+      {
+        "name": "UART_SR_RFF_BIT",
+        "value": 4096
+      },
+      {
+        "name": "UART_SR_DCTS_BIT",
+        "value": 8192
+      },
+      {
+        "name": "UART_SR_CTS_BIT",
+        "value": 16384
+      },
+      {
+        "name": "UART_SR_ALL_MSK",
+        "value": 32767
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "UART_IR_RXRD_BIT",
+        "value": 1
+      },
+      {
+        "name": "UART_IR_TXS_BIT",
+        "value": 2
+      },
+      {
+        "name": "UART_IR_RXS_BIT",
+        "value": 4
+      },
+      {
+        "name": "UART_IR_MDS_BIT",
+        "value": 8
+      },
+      {
+        "name": "UART_IR_RTO_BIT",
+        "value": 16
+      },
+      {
+        "name": "UART_IR_BUSY_BIT",
+        "value": 32
+      },
+      {
+        "name": "UART_IR_ABE_BIT",
+        "value": 64
+      },
+      {
+        "name": "UART_IR_ABTO_BIT",
+        "value": 128
+      },
+      {
+        "name": "UART_IR_LINBK_BIT",
+        "value": 256
+      },
+      {
+        "name": "UART_IR_TC_BIT",
+        "value": 512
+      },
+      {
+        "name": "UART_IR_EOB_BIT",
+        "value": 1024
+      },
+      {
+        "name": "UART_IR_CM_BIT",
+        "value": 2048
+      },
+      {
+        "name": "UART_IR_ALL_MSK",
+        "value": 4095
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "USBD_EVENT_ERROR",
+        "value": 0
+      },
+      {
+        "name": "USBD_EVENT_RESET",
+        "value": 1
+      },
+      {
+        "name": "USBD_EVENT_SOF",
+        "value": 2
+      },
+      {
+        "name": "USBD_EVENT_CONNECTED",
+        "value": 3
+      },
+      {
+        "name": "USBD_EVENT_CONFIGURED",
+        "value": 4
+      },
+      {
+        "name": "USBD_EVENT_SUSPEND",
+        "value": 5
+      },
+      {
+        "name": "USBD_EVENT_DISCONNECTED",
+        "value": 6
+      },
+      {
+        "name": "USBD_EVENT_RESUME",
+        "value": 7
+      },
+      {
+        "name": "USBD_EVENT_SET_INTERFACE",
+        "value": 8
+      },
+      {
+        "name": "USBD_EVENT_SET_REMOTE_WAKEUP",
+        "value": 9
+      },
+      {
+        "name": "USBD_EVENT_CLR_REMOTE_WAKEUP",
+        "value": 10
+      },
+      {
+        "name": "USBD_EVENT_SET_ENDPOINT_HALT",
+        "value": 11
+      },
+      {
+        "name": "USBD_EVENT_CLR_ENDPOINT_HALT",
+        "value": 12
+      },
+      {
+        "name": "USBD_EVENT_UNKNOWN",
+        "value": 13
+      }
+    ]
+  },
+  {
+    "name": "",
+    "brief": "",
+    "values": [
+      {
+        "name": "USBD_OK",
+        "value": 0
+      },
+      {
+        "name": "USBD_BUSY",
+        "value": 1
+      },
+      {
+        "name": "USBD_FAIL",
+        "value": 2
+      },
+      {
+        "name": "USBD_ERR_INVAILD",
+        "value": 3
+      },
+      {
+        "name": "USBD_ERR_STATE",
+        "value": 4
+      },
+      {
+        "name": "USBD_ERR_UNDRN",
+        "value": 5
+      },
+      {
+        "name": "USBD_ERR_OVER",
+        "value": 6
+      },
+      {
+        "name": "USBD_ERR_TIMEOUT",
+        "value": 7
+      }
+    ]
+  }
+]

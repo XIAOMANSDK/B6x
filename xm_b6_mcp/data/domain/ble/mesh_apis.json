@@ -1,0 +1,251 @@
+[
+  {
+    "name": "mesh_djob_cb",
+    "return_type": "void (*)",
+    "parameters": [
+      {
+        "type": "unknown",
+        "name": "void* p_djob"
+      }
+    ],
+    "brief": "Mesh mesh_djob_cb callback",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "mesh_timer_cb",
+    "return_type": "void (*)",
+    "parameters": [
+      {
+        "type": "unknown",
+        "name": "void *p_timer"
+      }
+    ],
+    "brief": "Mesh mesh_timer_cb callback",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "mesh_djob_t",
+    "return_type": "struct",
+    "parameters": [
+      {
+        "type": "list_hdr_t",
+        "name": "hdr"
+      },
+      {
+        "type": "mesh_djob_cb",
+        "name": "cb"
+      }
+    ],
+    "brief": "Mesh mesh_djob_t structure",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "mesh_buf_t",
+    "return_type": "struct",
+    "parameters": [
+      {
+        "type": "list_hdr_t",
+        "name": "hdr"
+      },
+      {
+        "type": "uint16_t",
+        "name": "head_len"
+      },
+      {
+        "type": "uint16_t",
+        "name": "tail_len"
+      },
+      {
+        "type": "uint16_t",
+        "name": "data_len"
+      },
+      {
+        "type": "uint16_t",
+        "name": "buf_len"
+      },
+      {
+        "type": "uint8_t",
+        "name": "block_id"
+      },
+      {
+        "type": "uint8_t",
+        "name": "buf_id"
+      },
+      {
+        "type": "uint8_t",
+        "name": "acq_cnt"
+      },
+      {
+        "type": "uint8_t",
+        "name": "dummy_tag"
+      },
+      {
+        "type": "uint8_t",
+        "name": "env",
+        "array_size": "MESH_BUF_ENV_SIZE"
+      }
+    ],
+    "brief": "Mesh mesh_buf_t structure",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "ms_prov_param_t",
+    "return_type": "struct",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": "dev_uuid",
+        "array_size": "MESH_DEV_UUID_LEN"
+      },
+      {
+        "type": "uint32_t",
+        "name": "uri_hash"
+      },
+      {
+        "type": "uint16_t",
+        "name": "oob_info"
+      },
+      {
+        "type": "uint8_t",
+        "name": "pub_key_oob"
+      },
+      {
+        "type": "uint8_t",
+        "name": "static_oob"
+      },
+      {
+        "type": "uint8_t",
+        "name": "out_oob_size"
+      },
+      {
+        "type": "uint8_t",
+        "name": "in_oob_size"
+      },
+      {
+        "type": "uint16_t",
+        "name": "out_oob_action"
+      },
+      {
+        "type": "uint16_t",
+        "name": "in_oob_action"
+      },
+      {
+        "type": "uint8_t",
+        "name": "info"
+      }
+    ],
+    "brief": "Mesh ms_prov_param_t structure",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "ms_lpn_conf_t",
+    "return_type": "struct",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": "poll_timeout"
+      },
+      {
+        "type": "uint32_t",
+        "name": "poll_intv_ms"
+      },
+      {
+        "type": "uint16_t",
+        "name": "prev_addr"
+      },
+      {
+        "type": "uint8_t",
+        "name": "rx_delay"
+      },
+      {
+        "type": "uint8_t",
+        "name": "rssi_factor"
+      },
+      {
+        "type": "uint8_t",
+        "name": "rx_window_factor"
+      },
+      {
+        "type": "uint8_t",
+        "name": "min_queue_size_log"
+      }
+    ],
+    "brief": "Mesh ms_lpn_conf_t structure",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "ms_lpn_info_t",
+    "return_type": "struct",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": "poll_intv_ms"
+      },
+      {
+        "type": "uint16_t",
+        "name": "lpn_cnt"
+      },
+      {
+        "type": "uint16_t",
+        "name": "frd_addr"
+      },
+      {
+        "type": "uint16_t",
+        "name": "frd_cnt"
+      },
+      {
+        "type": "uint8_t",
+        "name": "rx_delay_ms"
+      },
+      {
+        "type": "uint8_t",
+        "name": "rx_window_ms"
+      },
+      {
+        "type": "uint8_t",
+        "name": "subs_list_size"
+      },
+      {
+        "type": "uint8_t",
+        "name": "fsn"
+      }
+    ],
+    "brief": "Mesh ms_lpn_info_t structure",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "MESH_BUF_ENV_SIZE",
+    "return_type": "32",
+    "parameters": [],
+    "brief": "Mesh configuration: MESH_BUF_ENV_SIZE",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "MESH_BUF_DYN_ALLOC",
+    "return_type": "0xFF",
+    "parameters": [],
+    "brief": "Mesh configuration: MESH_BUF_DYN_ALLOC",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "MESH_BUF_DATA",
+    "return_type": "p_buf",
+    "parameters": [],
+    "brief": "Mesh configuration: MESH_BUF_DATA",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "MESH_TMR2ENV",
+    "return_type": "ptr, env_type, tmr_member",
+    "parameters": [],
+    "brief": "Mesh configuration: MESH_TMR2ENV",
+    "header_file": "mesh.h"
+  },
+  {
+    "name": "MESH_DJOB2ENV",
+    "return_type": "ptr, env_type, djob_member",
+    "parameters": [],
+    "brief": "Mesh configuration: MESH_DJOB2ENV",
+    "header_file": "mesh.h"
+  }
+]

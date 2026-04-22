@@ -1,0 +1,133 @@
+{
+  "constraint_type": "memory_layout",
+  "domain": "domain1",
+  "version": "1.0",
+  "last_updated": "2026-04-22T16:18:56.605372",
+  "total_regions": 6,
+  "variants": [
+    "flash_128kb",
+    "flash_256kb"
+  ],
+  "regions": [
+    {
+      "name": "FLASH_128KB",
+      "variant": "flash_128kb",
+      "base_address": "0x18000000",
+      "address_range": "0x000000",
+      "size_bytes": 131072,
+      "size_kb": 128,
+      "size_human": "128KB",
+      "is_xip": true,
+      "access_type": "READ_WRITE_ERASE",
+      "description": "Flash 128KB variant for B6x series",
+      "geometry": {
+        "page_size": 256,
+        "sector_size": 4096,
+        "pages_per_sector": 16,
+        "total_pages": 512,
+        "total_sectors": 32
+      }
+    },
+    {
+      "name": "DATA_REGION_FLASH_128KB",
+      "variant": "flash_128kb",
+      "base_address": "0x18000000",
+      "address_offset": "0x000000",
+      "size_bytes": 16384,
+      "size_kb": 16,
+      "size_human": "16KB",
+      "is_xip": false,
+      "access_type": "READ_WRITE",
+      "description": "Data storage region for boot info and user data",
+      "sectors": "0 - 3",
+      "sector_count": 4
+    },
+    {
+      "name": "CODE_REGION_FLASH_128KB",
+      "variant": "flash_128kb",
+      "base_address": "0x18004000",
+      "address_offset": "0x004000",
+      "size_bytes": 114688,
+      "size_kb": 112,
+      "size_human": "112KB",
+      "is_xip": true,
+      "access_type": "READ_WRITE_ERASE",
+      "description": "Application code storage region",
+      "sectors": "4 - 31",
+      "sector_count": 28,
+      "iap_support": true
+    },
+    {
+      "name": "FLASH_256KB",
+      "variant": "flash_256kb",
+      "base_address": "0x18000000",
+      "address_range": "0x000000",
+      "size_bytes": 262144,
+      "size_kb": 256,
+      "size_human": "256KB",
+      "is_xip": true,
+      "access_type": "READ_WRITE_ERASE",
+      "description": "Flash 256KB variant for B6x series",
+      "geometry": {
+        "page_size": 256,
+        "sector_size": 4096,
+        "pages_per_sector": 16,
+        "total_pages": 1024,
+        "total_sectors": 64
+      }
+    },
+    {
+      "name": "DATA_REGION_FLASH_256KB",
+      "variant": "flash_256kb",
+      "base_address": "0x18000000",
+      "address_offset": "0x000000",
+      "size_bytes": 16384,
+      "size_kb": 16,
+      "size_human": "16KB",
+      "is_xip": false,
+      "access_type": "READ_WRITE",
+      "description": "Data storage region for boot info and user data",
+      "sectors": "0 - 3",
+      "sector_count": 4
+    },
+    {
+      "name": "CODE_REGION_FLASH_256KB",
+      "variant": "flash_256kb",
+      "base_address": "0x18004000",
+      "address_offset": "0x004000",
+      "size_bytes": 114688,
+      "size_kb": 112,
+      "size_human": "112KB",
+      "is_xip": true,
+      "access_type": "READ_WRITE_ERASE",
+      "description": "Application code storage region",
+      "sectors": "4 - 31",
+      "sector_count": 28,
+      "iap_support": true
+    }
+  ],
+  "magic_codes": {
+    "sram_run": {
+      "value": 2857738241,
+      "description": "Code runs from SRAM (copied from Flash at boot)"
+    },
+    "flash_run": {
+      "value": 2857738244,
+      "description": "Code runs directly from Flash (XIP mode)"
+    }
+  },
+  "memory_mapping": {
+    "flash_base": "0x18000000",
+    "sram_base": "0x20003000",
+    "data_flash_base": "0x18000000"
+  },
+  "constraints": [
+    "DATA Region must not be used for code execution",
+    "LoadInfo page (Page 0) must be programmed before first boot",
+    "MagicCode must be valid for bootloader to recognize firmware",
+    "User area pages can be used for persistent storage",
+    "trimVal page is factory-programmed and read-only"
+  ],
+  "data_source": "yaml_config",
+  "source_file": "config/flash_map.yaml"
+}

@@ -1,0 +1,21 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "companyAnnouncements": [
+    "Welcome to Xiao-Man Corp! Review our code guidelines at www.xiao-man.com"
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/session-start"
+          }
+        ]
+      }
+    ]
+  }
+}

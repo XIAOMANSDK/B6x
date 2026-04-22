@@ -1,0 +1,25 @@
+{
+  "file_path": "drivers/api/svn_ver.h",
+  "functions": [],
+  "macros": [
+    {
+      "name": "_SVN_VER_H_",
+      "value": "",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "drivers/api/svn_ver.h",
+      "line_number": 2
+    },
+    {
+      "name": "SVN_VER",
+      "value": "4325",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "drivers/api/svn_ver.h",
+      "line_number": 4
+    }
+  ],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": []
+}

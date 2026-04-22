@@ -1,0 +1,67 @@
+{
+  "file_path": "drivers/src/iwdt.c",
+  "functions": [
+    {
+      "name": "iwdt_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    RCC_APBCLK_EN(APB_IWDT_BIT);  // 使能IWDT的APB时钟\n\n    IWDT->LOCK    = 0x1ACCE551;   // 解锁IWDT寄存器保护\n    IWDT->CTRL.EN = 0;            // 禁用IWDT外设使能位\n    IWDT->INTCLR  = 1;            // 清除IWDT中断标志位\n\n    IWDT->CTRL.Word = ctrl;       // 配置控制寄存器(CLKSEL/RSTEN/INTEN/EN)\n    IWDT->LOCK = 0;               // 锁定IWDT寄存器保护\n}",
+      "file_path": "drivers/src/iwdt.c",
+      "line_number": 36,
+      "is_static": false
+    },
+    {
+      "name": "iwdt_feed",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    IWDT->LOCK   = 0x1ACCE551;    // 解锁IWDT寄存器保护\n    IWDT->INTCLR = 1;             // 清除中断标志并重新加载计数器\n    IWDT->LOCK   = 0;             // 锁定IWDT寄存器保护\n}",
+      "file_path": "drivers/src/iwdt.c",
+      "line_number": 58,
+      "is_static": false
+    },
+    {
+      "name": "iwdt_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    IWDT->LOCK      = 0x1ACCE551; // 解锁IWDT寄存器保护\n    IWDT->INTCLR    = 1;          // 清除IWDT中断标志位\n    IWDT->CTRL.Word = 0x08;       // 配置控制寄存器(具体值需参考实际需求)\n    IWDT->LOCK      = 0;          // 锁定IWDT寄存器保护\n    RCC_APBCLK_DIS(APB_IWDT_BIT); // 禁用IWDT的APB时钟\n}",
+      "file_path": "drivers/src/iwdt.c",
+      "line_number": 75,
+      "is_static": false
+    },
+    {
+      "name": "iwdt_conf",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint32_t value;\n\n    IWDT->LOCK = 0x1ACCE551;      // 解锁IWDT寄存器保护\n    IWDT->INTCLR = 1;             // 清除IWDT中断标志位\n\n    value = IWDT->VALUE;          // 读取IWDT计数器当前值\n    if (load > 0)\n    {\n        IWDT->LOAD = load;        // 设置IWDT计数器重载值\n        IWDT->CTRL.EN = 1;        // 使能IWDT外设使能位\n    }\n    else\n    {\n        IWDT->CTRL.EN = 0;        // 禁用IWDT外设使能位\n    }\n\n    IWDT->LOCK = 0;               // 锁定IWDT寄存器保护\n\n    return value;\n}",
+      "file_path": "drivers/src/iwdt.c",
+      "line_number": 102,
+      "is_static": false
+    }
+  ],
+  "macros": [],
+  "parse_errors": []
+}

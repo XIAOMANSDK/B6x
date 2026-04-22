@@ -1,0 +1,40 @@
+#! armcc -E -I ..\src\
+#include "cfg.h"
+
+#define SCT_FLASH_BASE          (0x18004000)
+#define SCT_FLASH_END           (0x18020000)
+#define SCT_FLASH_LEN           (SCT_FLASH_END - SCT_FLASH_BASE)
+
+LR_IROM1 SCT_FLASH_BASE SCT_FLASH_LEN
+{
+    ER_IROM1 SCT_FLASH_BASE SCT_FLASH_LEN
+    {
+        *.o (RESET, +First)
+        *(InRoot$$Sections)
+        startup*.o (+RO)
+        .ANY (+RO)
+    }
+    
+    RW_IRAM_VECT 0x20003000 EMPTY 152
+    {
+        ; sram vector
+    }
+    
+    RW_IRAM_USER +0
+    {
+        *.o(ram_func*)
+        .ANY (+RW +ZI)
+    }
+
+    RW_IRAM_STACK 0x20008000-0x600 UNINIT 0x600
+    {
+        .ANY (STACK)
+    }
+    
+    RW_IRAM_RETN 0x20008000 UNINIT 0x2000
+    {
+        ; retention memory 8KB
+        ; user manual init
+        *.o(user_retention)
+    }
+}

@@ -1,0 +1,872 @@
+{
+  "file_path": "drivers/api/dma.h",
+  "functions": [
+    {
+      "name": "dma_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init DMA Module.  *************************************************************************************** /",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 359,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit DMA Module.  *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 367,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init DMA Channel. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@param[in] chsel  Selected peripheral @see enum dma_peripheral\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 378,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit DMA Channel. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 388,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Configure DMA Channel Control, then enable. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*\n@param[in] src_ep Source data end pointer address, eg. (uint32_t)&buff[len-1]\n@param[in] dst_ep Destination data end pointer address\n@param[in] trans  Transfer control value @see enum dma_trans_bfs or DMA_TRANS_CFG_Typedef\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 401,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_reload",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Reload tansfer control value that configured via dma_chnl_conf(), continue run. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@return 'true' means auto turned to alt-channel *only ping-pong mode*\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 412,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_remain",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read DMA Channel remain cycles. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*\n@return Cycles of wait transfer, 0 means done\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 423,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_remain_pingpong",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "len",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read DMA Channel CCM_PING_PONG Mode remain cycles. ",
+      "detailed_description": "***************************************************************************************\n@param[in]  chidx  Channel index @see enum dma_channel, *incl alternate part*\n@param[out] len    remain cycles of wait transfer.\n@return true is alt-channel(pong), false is primary-channel(ping).\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 435,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_ctrl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Enable or disable DMA Channel after configured. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@param[in] ctrl   Control opcode @see enum chnl_ctrl\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 446,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "dma_chnl_done",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read DMA Channel done state, auto clear if be done. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@return done state, true means done\n***************************************************************************************\n/",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 457,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "DMA_CH0",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH1",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH2",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH3",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH4",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH5",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH6",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH7",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH_MAX",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH_ALT",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH0_ALT",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH1_ALT",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH2_ALT",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH3_ALT",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH4_ALT",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH5_ALT",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH6_ALT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "DMA_CH7_ALT",
+          "value": 17,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 32
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "DMA_PID_UART1_RX",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_UART1_TX",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_UART2_RX",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_UART2_TX",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_SADC",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_SPIM_TX",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_SPIM_RX",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_SPIS_TX",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_SPIS_RX",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_CTMR_CH1",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_CTMR_CH2",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_CTMR_CH3",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_CTMR_CH4",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_CTMR_TRIG",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_CTMR_UP",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_ATMR_CH1",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_ATMR_CH2",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_ATMR_CH3",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_ATMR_CH4",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_ATMR_TRIG",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_ATMR_UP",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_ATMR_COM",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_BTMR_UP",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_USB",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_MDM_TX",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_MDM_RX",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PID_MAX",
+          "value": 26,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 58
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "DMA_PTR_UART1_RX",
+          "value": 1073885184,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_UART1_TX",
+          "value": 1073885188,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_UART2_RX",
+          "value": 1073889280,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_UART2_TX",
+          "value": 1073889284,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_SADC_AUX",
+          "value": 1073770516,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_SADC_PCM",
+          "value": 1073770520,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_SPIM_RX",
+          "value": 1073758208,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_SPIM_TX",
+          "value": 1073758212,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_SPIS_TX",
+          "value": 1073762316,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_SPIS_RX",
+          "value": 1073762320,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_CTMR_CH1",
+          "value": 1073877060,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_CTMR_CH2",
+          "value": 1073877064,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_CTMR_CH3",
+          "value": 1073877068,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_CTMR_CH4",
+          "value": 1073877072,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_CTMR_UP",
+          "value": 1073877052,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_ATMR_CH1",
+          "value": 1073881156,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_ATMR_CH2",
+          "value": 1073881160,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_ATMR_CH3",
+          "value": 1073881164,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_ATMR_CH4",
+          "value": 1073881168,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_ATMR_UP",
+          "value": 1073881148,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_BTMR_UP",
+          "value": 1073872956,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_MDM_TX",
+          "value": 1073778736,
+          "brief": ""
+        },
+        {
+          "name": "DMA_PTR_MDM_RX",
+          "value": 1073778740,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 90
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "DMA_STA_IDLE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_RD_CTRL",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_RD_SP",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_RD_DP",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_RD_SRC",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_WR_DST",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_WAIT_CLR",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_WR_CTRL",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_STALLED",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_DONE",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "DMA_STA_PER_SGTX",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 118
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "CCM_STOP",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "CCM_BASIC",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "CCM_AUTO_REQ",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "CCM_PING_PONG",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "CCM_MEM_SG",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "CCM_MEM_SG_ALT",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "CCM_PER_SG",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "CCM_PER_SG_ALT",
+          "value": 7,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 134
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "IN_BYTE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "IN_HALF",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "IN_WORD",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "IN_NONE",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 147
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "CHNL_DIS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "CHNL_EN",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "CHNL_DONE",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 156
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "DMA_TRANS_CCMODE_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_CCMODE_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_NEXTUB_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_NEXTUB_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_CYCLES_LSB",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_CYCLES_MSK",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_RPOWER_LSB",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_RPOWER_MSK",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_SRCPROT_LSB",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_SRCPROT_MSK",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_DSTPROT_LSB",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_DSTPROT_MSK",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_SRCSIZE_LSB",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_SRCSIZE_MSK",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_SRCINC_LSB",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_SRCINC_MSK",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_DSTSIZE_LSB",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_DSTSIZE_MSK",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_DSTINC_LSB",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "DMA_TRANS_DSTINC_MSK",
+          "value": 31,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/dma.h",
+      "line_number": 164
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

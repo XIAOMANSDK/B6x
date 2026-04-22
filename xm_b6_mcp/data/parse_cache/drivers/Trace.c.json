@@ -1,0 +1,348 @@
+{
+  "file_path": "drivers/src/RTT/Trace.c",
+  "functions": [
+    {
+      "name": "trace_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n#if defined(__CC_ARM) || defined(__GNUC__)\n    main_stack_base = (uint32_t)(&CSTACK_BLOCK_START);\n    main_stack_size = (uint32_t)(&CSTACK_BLOCK_END) - main_stack_base;\n    code_image_base = (uint32_t)(&CODE_SECTION_START);\n    code_image_size = (uint32_t)(&CODE_SECTION_END) - code_image_base;\n#elif defined(__ICCARM__)\n    main_stack_base = (uint32_t)__section_begin(CSTACK_BLOCK_NAME);\n    main_stack_size = (uint32_t)__section_end(CSTACK_BLOCK_NAME) - main_stack_base;\n    code_image_base = (uint32_t)__section_begin(CODE_SECTION_NAME);\n    code_image_size = (uint32_t)__section_end(CODE_SECTION_NAME) - code_image_base;\n#else\n    #error \"not supported compiler\"\n#endif\n    stack_is_overflow = false;\n\n    if (main_stack_size == 0) {\n        trace_print(\"Trace: Unable to get STACK info\\r\\n\");\n        return;\n    }\n\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 134,
+      "is_static": false
+    },
+    {
+      "name": "dump_stack",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "size_t",
+          "description": ""
+        },
+        {
+          "name": "stack_pointer",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    if (stack_is_overflow) {\n        trace_print(\"Trace: stack(%08\" PRIx32 \") was overflow\\r\\n\", (uint32_t)stack_pointer);\n\n        if ((uint32_t) stack_pointer < stack_start_addr) {\n            stack_pointer = (uint32_t *) stack_start_addr;\n        } else if ((uint32_t) stack_pointer > stack_start_addr + stack_size) {\n            stack_pointer = (uint32_t *) (stack_start_addr + stack_size);\n        }\n    }\n\n    trace_print(\"[StackInfo]\\r\\n\");\n    for (; (uint32_t) stack_pointer < stack_start_addr + stack_size; stack_pointer++) {\n        trace_print(\"  addr:%08\" PRIx32 \"  data:%08\" PRIx32 \"\\r\\n\", (uint32_t)stack_pointer, *stack_pointer);\n    }\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 161,
+      "is_static": true
+    },
+    {
+      "name": "disassembly_ins_is_bl_blx",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint16_t ins1 = *((uint16_t *)addr);\n    uint16_t ins2 = *((uint16_t *)(addr + 2));\n\n#define BL_INS_MASK         0xF800\n#define BL_INS_HIGH         0xF800\n#define BL_INS_LOW          0xF000\n#define BLX_INX_MASK        0xFF00\n#define BLX_INX             0x4700\n\n    if ((ins2 & BL_INS_MASK) == BL_INS_HIGH && (ins1 & BL_INS_MASK) == BL_INS_LOW) {\n        return true;\n    } else if ((ins2 & BLX_INX_MASK) == BLX_INX) {\n        return true;\n    } else {\n        return false;\n    }\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 180,
+      "is_static": true
+    },
+    {
+      "name": "trace_call_stack",
+      "return_type": "size_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "regs",
+          "type": "fault_regs_t",
+          "description": ""
+        },
+        {
+          "name": "buffer",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint32_t stack_start_addr = main_stack_base, pc;\n    size_t depth = 0, stack_size = main_stack_size;\n    bool regs_saved_lr_is_valid = false;\n\n    if (regs) {\n        if (!stack_is_overflow) {\n            /* first depth is PC */\n            buffer[depth++] = regs->pc;\n            /* fix the LR address in thumb mode */\n            pc = regs->lr - 1;\n            if ((pc >= code_image_base) && (pc <= code_image_base + code_image_size) && (depth < CSTACK_MAX_DEPTH)) {\n                buffer[depth++] = pc;\n                regs_saved_lr_is_valid = true;\n            }\n        }\n    }\n\n    if (stack_is_overflow) {\n        if (sp < stack_start_addr) {\n            sp = stack_start_addr;\n        } else if (sp > stack_start_addr + stack_size) {\n            sp = stack_start_addr + stack_size;\n        }\n    }\n\n    /* copy called function address */\n    for (; sp < stack_start_addr + stack_size; sp += sizeof(size_t)) {\n        /* the *sp value may be LR, so need decrease a word to PC */\n        pc = *((uint32_t *) sp) - sizeof(size_t);\n        /* the Cortex-M using thumb instruction, so the pc must be an odd number */\n        if (pc % 2 == 0) {\n            continue;\n        }\n        /* fix the PC address in thumb mode */\n        pc = *((uint32_t *) sp) - 1;\n        if ((pc >= code_image_base) && (pc <= code_image_base + code_image_size) && (depth < CSTACK_MAX_DEPTH)\n                /* check the the instruction before PC address is 'BL' or 'BLX' */\n                && disassembly_ins_is_bl_blx(pc - sizeof(size_t))) {\n            /* the second depth function may be already saved, so need ignore repeat */\n            if ((depth == 2) && regs_saved_lr_is_valid && (pc == buffer[1])) {\n                continue;\n            }\n            buffer[depth++] = pc;\n        }\n    }\n\n    return depth;\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 208,
+      "is_static": true
+    },
+    {
+      "name": "dump_call_stack",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "regs",
+          "type": "fault_regs_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    size_t i, cur_depth = 0;\n    uint32_t call_stack_buf[CSTACK_MAX_DEPTH];// = {0};\n\n    cur_depth = trace_call_stack(sp, regs, call_stack_buf);\n\n    if (cur_depth) {\n        #if (__CC_ARM)\n        trace_print(\"More ELF Info to run:\\r\\n ..\\\\..\\\\..\\\\..\\\\tools\\\\addr2line -e *%s -a -f -C -p\", ELF_FILE_EXT);\n        #else\n        trace_print(\"More ELF Info to run:\\r\\n arm-none-eabi-addr2line.exe -e *%s -a -f -C -p\", ELF_FILE_EXT);\n        #endif\n        for (i = 0; i < cur_depth; i++) {\n            trace_print(\" %08\" PRIx32, call_stack_buf[i]);\n        }\n        trace_print(\"\\r\\n\");\n    } else {\n        trace_print(\"Trace: call stack error\\r\\n\");\n    }\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 263,
+      "is_static": true
+    },
+    {
+      "name": "trace_assert",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n\n    trace_print(\"\\r\\nAssert Occured (SP:%08\" PRIx32 \")\\r\\n\", sp);\n\n    #ifdef DUMP_STACK_INFO\n    dump_stack(main_stack_base, main_stack_size, (uint32_t *)sp);\n    #endif /* DUMP_STACK_INFO */\n\n    dump_call_stack(sp, NULL);\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 289,
+      "is_static": false
+    },
+    {
+      "name": "trace_hardfault",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint32_t sp = fault_sp;\n    const fault_regs_t* regs = (const fault_regs_t*)fault_sp;\n    trace_print(\"\\r\\nHardFault Occured (LR:%08\" PRIx32 \", SP:%08\" PRIx32 \")\\r\\n\", fault_lr, fault_sp);\n\n    trace_print(\"------------------------------------------------------------\\r\\n\");\n\n    /* delete saved R0~R3, R12, LR,PC,xPSR registers space */\n    sp += sizeof(size_t) * 8;\n\n    #ifdef DUMP_STACK_INFO\n    /* check stack overflow */\n    if (sp < main_stack_base || sp > main_stack_base + main_stack_size) {\n        stack_is_overflow = true;\n    }\n    /* dump stack information */\n    dump_stack(main_stack_base, main_stack_size, (uint32_t *)sp);\n    #endif /* DUMP_STACK_INFO */\n\n    /* the stack frame may be get failed when it is overflow  */\n    if (!stack_is_overflow) {\n        /* dump register */\n        trace_print(\"[Registers]\\r\\n\");\n        trace_print(\"  R0 : %08x  R1 : %08x  R2 : %08x  R3 : %08x\\r\\n\",\n                        regs->r0, regs->r1, regs->r2, regs->r3);\n        trace_print(\"  P12: %08x  LR : %08x  PC : %08x  PSR: %08x\\r\\n\",\n                        regs->r12, regs->lr, regs->pc, regs->psr);\n        trace_print(\"------------------------------------------------------------\\r\\n\");\n    }\n\n    dump_call_stack(sp, regs);\n    while(1); // only call once\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 306,
+      "is_static": false
+    },
+    {
+      "name": "HardFault_Handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    register uint32_t lr_val __asm(\"lr\");\n    register uint32_t sp_val __asm(\"msp\");\n    trace_hardfault(lr_val, sp_val);\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 341,
+      "is_static": false
+    },
+    {
+      "name": "HardFault_Handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    __asm volatile (\n        \"MOV r0, lr              \\n\"\n        \"MOV r1, sp              \\n\"\n        \"B   trace_hardfault     \\n\"\n    );\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 350,
+      "is_static": false
+    },
+    {
+      "name": "HardFault_Handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint32_t fault_sp = __get_MSP();\n    uint32_t fault_lr = (uint32_t)__get_LR();\n    trace_hardfault(fault_lr, fault_sp);\n}",
+      "file_path": "drivers/src/RTT/Trace.c",
+      "line_number": 360,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "CSTACK_MAX_DEPTH",
+      "value": "(4)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 25
+    },
+    {
+      "name": "DUMP_STACK_INFO",
+      "value": "(1)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 29
+    },
+    {
+      "name": "CSTACK_BLOCK_START",
+      "value": "STACK$$Base",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 44
+    },
+    {
+      "name": "CSTACK_BLOCK_END",
+      "value": "STACK$$Limit",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 47
+    },
+    {
+      "name": "CODE_SECTION_START",
+      "value": "Image$$ER_IROM1$$Base",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 51
+    },
+    {
+      "name": "CODE_SECTION_END",
+      "value": "Image$$ER_IROM1$$Limit",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 54
+    },
+    {
+      "name": "ELF_FILE_EXT",
+      "value": "\".axf\"",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 57
+    },
+    {
+      "name": "CSTACK_BLOCK_NAME",
+      "value": "\"CSTACK\"",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 67
+    },
+    {
+      "name": "CODE_SECTION_NAME",
+      "value": "\".text\"",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 71
+    },
+    {
+      "name": "ELF_FILE_EXT",
+      "value": "\".out\"",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 73
+    },
+    {
+      "name": "CSTACK_BLOCK_START",
+      "value": "_sstack",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 80
+    },
+    {
+      "name": "CSTACK_BLOCK_END",
+      "value": "_estack",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 84
+    },
+    {
+      "name": "CODE_SECTION_START",
+      "value": "_stext",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 88
+    },
+    {
+      "name": "CODE_SECTION_END",
+      "value": "_etext",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 92
+    },
+    {
+      "name": "ELF_FILE_EXT",
+      "value": "\".elf\"",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 94
+    },
+    {
+      "name": "BL_INS_MASK",
+      "value": "0xF800",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 184
+    },
+    {
+      "name": "BL_INS_HIGH",
+      "value": "0xF800",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 185
+    },
+    {
+      "name": "BL_INS_LOW",
+      "value": "0xF000",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 186
+    },
+    {
+      "name": "BLX_INX_MASK",
+      "value": "0xFF00",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 187
+    },
+    {
+      "name": "BLX_INX",
+      "value": "0x4700",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\RTT\\Trace.c",
+      "line_number": 188
+    }
+  ],
+  "parse_errors": []
+}

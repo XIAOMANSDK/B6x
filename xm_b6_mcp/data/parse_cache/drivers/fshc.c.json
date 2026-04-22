@@ -1,0 +1,241 @@
+{
+  "file_path": "drivers/src/fshc.c",
+  "functions": [
+    {
+      "name": "puya_enter_dual_read",
+      "return_type": "__SRAMFN(enter_dxip)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 检查是否已处于高性能模式\r\n    if (FSHC->BYPASS_HPM == 0)\r\n        return;\r\n\r\n    // 保存缓存配置并禁用缓存\r\n    uint32_t reg_val = (CACHE->CCR.Word);\r\n    CACHE->CCR.Word  = 0;\r\n//    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效\r\n\r\n    // 禁用全局中断，确保Flash配置不被中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 配置Flash控制器为双线读取模式\r\n    fshc_xip_conf(FSH_CMD_DLRD_HMP, IBUS_DL_1DUMY, IBUS_DLRD_HPM);\r\n    fshc_hpm_conf(true, 0x20, 0x10);\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n\r\n    // 恢复缓存配置\r\n    CACHE->CCR.Word = reg_val;\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 40,
+      "is_static": false
+    },
+    {
+      "name": "puya_exit_dual_read",
+      "return_type": "__SRAMFN(exit_dxip)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 检查是否处于高性能模式\r\n    if (FSHC->BYPASS_HPM == 1)\r\n        return;\r\n\r\n    // 保存缓存配置并禁用缓存\r\n    uint32_t reg_val = (CACHE->CCR.Word);\r\n    CACHE->CCR.Word  = 0;\r\n//    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效\r\n\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 恢复Flash控制器到单线读取模式\r\n    fshc_hpm_conf(false, 0x01, 0x10);\r\n    fshc_xip_conf(FSH_CMD_RD, IBUS_SI_0DUMY, IBUS_SIRD_CFG);\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n\r\n    // 恢复缓存配置\r\n    CACHE->CCR.Word = reg_val;\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 70,
+      "is_static": false
+    },
+    {
+      "name": "boya_flash_quad_mode",
+      "return_type": "__SRAMFN(quad_en)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 等待系统配置寄存器空闲\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 读取Flash状态寄存器1\r\n    uint8_t sta_reg1 = fshc_rd_sta(FSH_CMD_RD_STA1, 1);\r\n\r\n    // 检查是否已启用四线模式\r\n    if ((sta_reg1 & 0x02) != 0x02)\r\n    {\r\n\r\n        // 设置四线模式标志位\r\n        sta_reg1 |= 0x02;\r\n\r\n        // 保存缓存配置并禁用缓存\r\n        uint32_t reg_val = (CACHE->CCR.Word);\r\n        CACHE->CCR.Word  = 0;\r\n        CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);\r\n\r\n        // 发送写使能命令\r\n        fshc_en_cmd(FSH_CMD_WR_EN);\r\n\r\n        // 发送写状态寄存器命令，启用四线模式\r\n        fshc_wr_sta(0x31/*FSH_CMD_WR_STA*/, 1, sta_reg1);\r\n\r\n        // 恢复缓存配置\r\n        CACHE->CCR.Word = reg_val;\r\n\r\n        #if (0)\r\n        // 计算系统时钟相关的延时参数\r\n        uint8_t sys_clk = (rcc_sysclk_get() + 1) << 4;\r\n        // 等待状态寄存器写入完成（最大20ms）\r\n        btmr_delay(sys_clk, 20000);\r\n        #else\r\n        // 等待Flash操作完成\r\n        FSHC_WAIT_COMPLETE();\r\n        #endif\r\n    }\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 100,
+      "is_static": false
+    },
+    {
+      "name": "flash_write",
+      "return_type": "__SRAMFN(word_write)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    ASSERT_ERR(data != NULL);\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 等待系统配置寄存器空闲\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 调用底层Flash写入函数\r\n    fshc_write(offset, data, wlen, FSH_CMD_WR);\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 155,
+      "is_static": false
+    },
+    {
+      "name": "flash_page_erase",
+      "return_type": "__SRAMFN(page_erase)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 等待系统配置寄存器空闲\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 保存缓存配置并禁用缓存\r\n    uint32_t reg_val = (CACHE->CCR.Word);\r\n    CACHE->CCR.Word  = 0;\r\n    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);\r\n\r\n    // 调用底层Flash擦除函数\r\n    fshc_erase(offset, FSH_CMD_ER_PAGE);\r\n\r\n    // 恢复缓存配置\r\n    CACHE->CCR.Word = reg_val;\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 177,
+      "is_static": false
+    },
+    {
+      "name": "flash_byte_write",
+      "return_type": "__SRAMFN(byte_write)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    flen_t wrcnt = 0;\r\n    uint32_t wr_val = 0xFFFFFFFF;\r\n    uint32_t copy_len = 0;\r\n\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 等待系统配置寄存器空闲\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 发送写使能命令\r\n    fshc_en_cmd(FSH_CMD_WR_EN);\r\n\r\n    // 配置Flash写入参数：命令、偏移地址、页大小、控制字、访问位\r\n    fshc_wr_cfg(FSH_CMD_WR, offset, blen/*FLASH_PAGE_SIZE*/, 0x0354, ACBIT_SI_0DUMY);\r\n\r\n    // 填充第一个字数据并启动发送\r\n    while (FSHC->FIFO_STATUS.TXFIFO_FULL);  // 等待TX FIFO非满\r\n    copy_len = (blen - wrcnt >= 4) ? 4 : (blen - wrcnt);\r\n    xmemcpy((uint8_t *)&wr_val, data + wrcnt, copy_len);\r\n    FSHC->SPDR_WR = wr_val;                // 写入数据到Flash数据寄存器\r\n    FSHC->SEND_EN = 1;                     // 使能发送\r\n    wrcnt += copy_len;\r\n\r\n    // 继续填充剩余数据\r\n    while (wrcnt < blen)\r\n    {\r\n        if (!FSHC->FIFO_STATUS.TXFIFO_FULL)\r\n        {\r\n            wr_val = 0xFFFFFFFF;\r\n            copy_len = (blen - wrcnt >= 4) ? 4 : (blen - wrcnt);\r\n            xmemcpy((uint8_t *)&wr_val, data + wrcnt, copy_len);\r\n            FSHC->SPDR_WR = wr_val;\r\n            wrcnt += copy_len;\r\n        }\r\n    }\r\n\r\n    // 填充页剩余部分为0xFFFFFFFF（Flash擦除状态）\r\n//    while (wrcnt < FLASH_PAGE_SIZE)\r\n//    {\r\n//        if (!FSHC->FIFO_STATUS.TXFIFO_FULL)\r\n//        {\r\n//            FSHC->SPDR_WR = 0xFFFFFFFF;\r\n//            wrcnt += 4;\r\n//        }\r\n//    }\r\n\r\n    // 等待Flash操作完成\r\n    FSHC_WAIT_COMPLETE();\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 208,
+      "is_static": false
+    },
+    {
+      "name": "flash_byte_read",
+      "return_type": "__SRAMFN(byte_read)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    flen_t rdcnt = 0;\r\n    uint32_t rd_val = 0, algned4_len = ((blen >> 2) << 2);  // 4字节对齐长度\r\n    uint32_t remain_len = (blen - algned4_len);             // 剩余字节数\r\n\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 等待缓存空闲\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n#if (0)\r\n/// fshc cmd mode\r\n#define FCM_GET_CMD(fcmd)      (((fcmd) & FCM_CMD_MSK) >> FCM_CMD_LSB)\r\n#define FCM_GET_MODE(fcmd)     (((fcmd) & FCM_MODE_MSK) >> FCM_MODE_LSB)\r\n    uint8_t rd_cmd = FCM_GET_CMD(FSH_CMD_RD);\r\n    uint8_t ln_mod = FCM_GET_MODE(FSH_CMD_RD);\r\n\r\n    uint16_t rd_ctrl = SCTRL_RD_DAT(ln_mod);\r\n    // OTP | (Dual or Quad) use 1DUMY\r\n    uint16_t rd_acbit = (FSH_CMD_RD & (FCM_RWOTP_BIT | (2 << FCM_MODE_LSB))) ?  ACBIT_SI_1DUMY : ACBIT_SI_0DUMY;\r\n\r\n    fshc_rd_cfg(rd_cmd, offset, len, rd_ctrl, rd_acbit);\r\n#else\r\n    fshc_rd_cfg(FSH_CMD_RD, offset, blen, 0x0394, 0x01D7);\r\n#endif\r\n\r\n    // 读取4字节对齐的数据\r\n    while (rdcnt < algned4_len)\r\n    {\r\n        if (!FSHC->FIFO_STATUS.RXFIFO_EMPTY)  // 等待RX FIFO非空\r\n        {\r\n            rd_val = FSHC->SPDR_RD;           // 从Flash数据寄存器读取数据\r\n\r\n            xmemcpy(buff + rdcnt, &rd_val, 4);\r\n\r\n            rdcnt += 4;\r\n        }\r\n    }\r\n\r\n    // 读取剩余的非4字节对齐数据\r\n    if ((remain_len) && (!FSHC->FIFO_STATUS.RXFIFO_EMPTY))\r\n    {\r\n        rd_val = FSHC->SPDR_RD;\r\n\r\n        xmemcpy(buff + rdcnt, &rd_val, remain_len);\r\n\r\n        rdcnt += remain_len;\r\n    }\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 272,
+      "is_static": false
+    },
+    {
+      "name": "flash_read",
+      "return_type": "__SRAMFN(word_read)",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 等待系统配置寄存器空闲\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 调用底层Flash读取函数\r\n    fshc_read(offset, buff, wlen, FSH_CMD_RD);\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 335,
+      "is_static": false
+    },
+    {
+      "name": "flash_multi_erase",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n    for (uint16_t i = 0; i < cnt; i++)\r\n    {\r\n        fshc_erase((idx << PER_SIZE[erase_mode]), ERASE_CMD[erase_mode]);\r\n\r\n        ++idx;\r\n    }\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 370,
+      "is_static": false
+    },
+    {
+      "name": "flash_size",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    /****************************************************/\r\n    // Byte0           | Byte1       | Byte2\r\n    // manufacturer ID | memory type | memory density\r\n    // 85              | 44          | 12\r\n    /****************************************************/\r\n    // memory density\r\n    // 10, 64KB\r\n    // 11, 128KB\r\n    // 12, 256KB\r\n    // 13, 512KB\r\n    uint8_t mid;\r\n\r\n    // 禁用全局中断\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // 等待系统配置寄存器空闲\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 读取Flash ID，获取存储密度信息\r\n    // Byte0: manufacturer ID, Byte1: memory type, Byte2: memory density\r\n    mid = (fshc_rd_sta(FSH_CMD_RD_ID, 3) >> 16) & 0xFF;\r\n\r\n    // 恢复全局中断\r\n    GLOBAL_INT_RESTORE();\r\n\r\n    // 根据存储密度计算容量\r\n    // 10: 64KB, 11: 128KB, 12: 256KB, 13: 512KB\r\n    return (mid > 0x20 ? 0 : (0x01UL << mid));\r\n}",
+      "file_path": "drivers/src/fshc.c",
+      "line_number": 388,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "FLASH_PAGE_SIZE",
+      "value": "256 // Flash页大小256字节",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\fshc.c",
+      "line_number": 24
+    },
+    {
+      "name": "FSH_CMD_RD_STA0",
+      "value": "0x05 // 读取状态寄存器0命令",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\fshc.c",
+      "line_number": 26
+    },
+    {
+      "name": "FSH_FLAG_WEL_WIP",
+      "value": "0x03 // 状态标志：bit0-WEL(写使能锁存), bit1-WIP(写进行中)",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\fshc.c",
+      "line_number": 27
+    }
+  ],
+  "parse_errors": [
+    "Line 41, Col 1: '//  '",
+    "Line 71, Col 1: 'f(FS'",
+    "Line 101, Col 1: '    '",
+    "Line 156, Col 1: '\r\n *'",
+    "Line 178, Col 1: 'n/*F'",
+    "Line 209, Col 1: '_PAG'",
+    "Line 273, Col 1: '* @p'",
+    "Line 336, Col 1: 'GLOB'"
+  ]
+}

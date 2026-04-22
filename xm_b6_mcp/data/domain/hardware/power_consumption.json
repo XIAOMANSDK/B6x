@@ -1,0 +1,98 @@
+[
+  {
+    "mode": "SLEEP",
+    "peripherals": [
+      "BLE",
+      "BLE"
+    ],
+    "measurements": [
+      {
+        "peripheral": "BLE",
+        "current_ua": 70.0,
+        "voltage_mv": 3000,
+        "power_mw": 210.0,
+        "conditions": "note: 睡眠<40ms"
+      },
+      {
+        "peripheral": "BLE",
+        "current_ua": 2.01,
+        "voltage_mv": 3000,
+        "power_mw": 6.029999999999999,
+        "conditions": "interval: 1000ms; note: 未断开连接"
+      }
+    ],
+    "name": "SLEEP"
+  },
+  {
+    "mode": "DEEP_SLEEP",
+    "peripherals": [
+      "BLE"
+    ],
+    "measurements": [
+      {
+        "peripheral": "BLE",
+        "current_ua": 2.0,
+        "voltage_mv": 3000,
+        "power_mw": 6.0,
+        "conditions": "note: 睡眠>40ms"
+      }
+    ],
+    "name": "DEEP_SLEEP"
+  },
+  {
+    "mode": "ACTIVE_ADVERTISING",
+    "peripherals": [
+      "BLE",
+      "BLE"
+    ],
+    "measurements": [
+      {
+        "peripheral": "BLE",
+        "current_ua": 69.0,
+        "voltage_mv": 3000,
+        "power_mw": 207.0,
+        "conditions": "duration: 3.75ms; note: 持续1.3秒"
+      },
+      {
+        "peripheral": "BLE",
+        "current_ua": 70.0,
+        "voltage_mv": 3000,
+        "power_mw": 210.0,
+        "conditions": "duration: 22.5ms; note: 持续30秒"
+      }
+    ],
+    "name": "ACTIVE_ADVERTISING"
+  },
+  {
+    "mode": "ACTIVE_TX",
+    "peripherals": [
+      "BLE"
+    ],
+    "measurements": [
+      {
+        "peripheral": "BLE",
+        "current_ua": 70.0,
+        "voltage_mv": 3000,
+        "power_mw": 210.0,
+        "conditions": "interval: 20ms; note: 按下按键时"
+      }
+    ],
+    "name": "ACTIVE_TX"
+  },
+  {
+    "mode": "红外_红外发射/次,耗时95MS",
+    "peripherals": [
+      "BLE"
+    ],
+    "measurements": [
+      {
+        "peripheral": "BLE",
+        "current_ua": 2000.0,
+        "voltage_mv": 3000,
+        "power_mw": 6000.0,
+        "conditions": "note: 按下按键时"
+      }
+    ],
+    "name": "红外_红外发射/次,耗时95MS"
+  }
+]

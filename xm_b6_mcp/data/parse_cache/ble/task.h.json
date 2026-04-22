@@ -1,0 +1,210 @@
+{
+  "file_path": "ble/api/task.h",
+  "functions": [],
+  "macros": [
+    {
+      "name": "TASK_INVALID",
+      "value": "(0xFFFF)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "ble/api/task.h",
+      "line_number": 64
+    },
+    {
+      "name": "MSG_DEFAULT",
+      "value": "(0xFFFF)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "ble/api/task.h",
+      "line_number": 93
+    },
+    {
+      "name": "MSG_TASK_STATE",
+      "value": "(0x0000)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "ble/api/task.h",
+      "line_number": 96
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "MSG_STATUS_FREE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "MSG_STATUS_NO_FREE",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "MSG_STATUS_SAVED",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/task.h",
+      "line_number": 115
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "TASK_OK",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "TASK_FAIL",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "TASK_ERR_UNKNOWN",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "TASK_ERR_EXCEEDED",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "TASK_ERR_EXISTS",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/task.h",
+      "line_number": 123
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "TASK_LLC",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "TASK_HCI",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "TASK_APP",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "TASK_L2CC",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "TASK_GATT",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "TASK_GAPM",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "TASK_GAPC",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "TASK_MAX",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "TASK_NONE",
+          "value": 255,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/task.h",
+      "line_number": 151
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "TID_LLC",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "TID_LLD",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "TID_HCI",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "TID_L2CC",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "TID_GATT",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "TID_GAPM",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "TID_GAPC",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "TID_APP",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "TID_MESH",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "TID_FMNA",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "TID_INVALID",
+          "value": 255,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/task.h",
+      "line_number": 193
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

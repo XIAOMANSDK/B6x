@@ -1,0 +1,279 @@
+{
+  "file_path": "usb/src/demo_cdc_uart.c",
+  "functions": [
+    {
+      "name": "usbd_cdc_updated",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "cdc",
+          "type": "usbd_cdc_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    if (type == CDC_LINE_STATE) {\n        USB_LOG_RAW(\"CDC Update(ep:0x%02X,<DTR:0x%x,RTS:0x%x>)\\r\\n\", cdc->ep_in, (cdc->line_state & 0x01), (cdc->line_state & 0x02));\n\n        dtr_enable = cdc->line_state;\n    } else {\n        USB_LOG_RAW(\"CDC Update(ep:0x%02X,<Rate:%d,DataBits:%d,Parity:%d,StopBits:%d>)\\r\\n\", cdc->ep_in,\n                            cdc->line_coding.dwDTERate, cdc->line_coding.bDataBits,\n                            cdc->line_coding.bParityType, cdc->line_coding.bCharFormat);\n    }\n}",
+      "file_path": "usb/src/demo_cdc_uart.c",
+      "line_number": 146,
+      "is_static": false
+    },
+    {
+      "name": "usbd_cdc_bulk_out_handler",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    uint16_t read_byte;\n    uint8_t data[CDC_BULK_EP_MPS];\n\n    read_byte = usbd_ep_read(ep, CDC_BULK_EP_MPS, data);\n    USB_LOG_RAW(\"CDC Bulk Out(ep:%d,len:%d)\\r\\n\", ep, read_byte);\n\n    /*!< here you can output data to hardware */\n    for (uint8_t i = 0; i < read_byte; i++) {\n        uart_putc(0, data[i]);\n    }\n}",
+      "file_path": "usb/src/demo_cdc_uart.c",
+      "line_number": 159,
+      "is_static": false
+    },
+    {
+      "name": "usbd_notify_handler",
+      "return_type": "__USBIRQ",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "arg",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    switch (event) {\n        case USBD_EVENT_RESET:\n            usbd_cdc_reset();\n            break;\n\n        default:\n            break;\n    }\n}",
+      "file_path": "usb/src/demo_cdc_uart.c",
+      "line_number": 173,
+      "is_static": false
+    },
+    {
+      "name": "usbdInit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    usbd_init();\n    usbd_register(cdc_descriptor, cdc_configuration);\n\n    usbd_cdc_init(0, CDC0_INTF_NUM, CDC0_IN_EP);\n    #if (ENB_CDC_CNT > 1)\n    usbd_cdc_init(1, CDC1_INTF_NUM, CDC1_IN_EP);\n    #endif\n    #if (ENB_CDC_CNT > 2)\n    usbd_cdc_init(2, CDC2_INTF_NUM, CDC2_IN_EP);\n    #endif\n\n    for (uint8_t i = 0; i < CDC_BULK_TX_SIZE; i++) {\n        cdc_bulk_buff[i] = '0' + i;\n    }\n}",
+      "file_path": "usb/src/demo_cdc_uart.c",
+      "line_number": 195,
+      "is_static": false
+    },
+    {
+      "name": "usbdTest",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    if (!usbd_is_configured())\n        return;\n\n    if (dtr_enable)\n    {\n        uint8_t status;\n\n        status = usbd_cdc_ep_send(CDC0_IN_EP, CDC_BULK_TX_SIZE, cdc_bulk_buff);\n        USB_LOG_RAW(\"CDC0 Send(sta:%d,len:%d)\\r\\n\", status, CDC_BULK_TX_SIZE);\n        #if (ENB_CDC_CNT > 1)\n        status = usbd_cdc_ep_send(CDC1_IN_EP, CDC_BULK_TX_SIZE, cdc_bulk_buff);\n        USB_LOG_RAW(\"CDC1 Send(sta:%d,len:%d)\\r\\n\", status, CDC_BULK_TX_SIZE);\n        #endif\n        #if (ENB_CDC_CNT > 2)\n        status = usbd_cdc_ep_send(CDC2_IN_EP, CDC_BULK_TX_SIZE, cdc_bulk_buff);\n        USB_LOG_RAW(\"CDC2 Send(sta:%d,len:%d)\\r\\n\", status, CDC_BULK_TX_SIZE);\n        #endif\n    }\n}",
+      "file_path": "usb/src/demo_cdc_uart.c",
+      "line_number": 213,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "USBD_BCD",
+      "value": "USB_2_0 // Version",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 7
+    },
+    {
+      "name": "USBD_VID",
+      "value": "0xFFFF  // Vendor ID",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 8
+    },
+    {
+      "name": "USBD_PID",
+      "value": "0xFFFF  // Product ID",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 9
+    },
+    {
+      "name": "USBD_MAX_POWER",
+      "value": "100     // unit in mA",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 10
+    },
+    {
+      "name": "USBD_LANGID_STRING",
+      "value": "0x0409  // English(US)",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 11
+    },
+    {
+      "name": "ENB_CDC_CNT",
+      "value": "1",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 14
+    },
+    {
+      "name": "CDC0_IN_EP",
+      "value": "0x81",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 26
+    },
+    {
+      "name": "CDC0_OUT_EP",
+      "value": "0x01",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 27
+    },
+    {
+      "name": "CDC0_INT_EP",
+      "value": "0x81+ENB_CDC_CNT",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 28
+    },
+    {
+      "name": "CDC0_INTF_NUM",
+      "value": "0",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 29
+    },
+    {
+      "name": "CDC1_IN_EP",
+      "value": "0x82",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 32
+    },
+    {
+      "name": "CDC1_OUT_EP",
+      "value": "0x02",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 33
+    },
+    {
+      "name": "CDC1_INT_EP",
+      "value": "0x82+ENB_CDC_CNT",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 34
+    },
+    {
+      "name": "CDC1_INTF_NUM",
+      "value": "2",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 35
+    },
+    {
+      "name": "CDC2_IN_EP",
+      "value": "0x83",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 39
+    },
+    {
+      "name": "CDC2_OUT_EP",
+      "value": "0x03",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 40
+    },
+    {
+      "name": "CDC2_INT_EP",
+      "value": "0x83+ENB_CDC_CNT",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 41
+    },
+    {
+      "name": "CDC2_INTF_NUM",
+      "value": "4",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 42
+    },
+    {
+      "name": "USB_CDC_INTF_CNT",
+      "value": "(2 * ENB_CDC_CNT) // Cmd Intf + Data Intf",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 45
+    },
+    {
+      "name": "USB_CDC_INTF_END",
+      "value": "(USB_CDC_INTF_CNT - 1)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 46
+    },
+    {
+      "name": "USB_CDC_CONFIG_SIZE",
+      "value": "(9 + CDC_ACM_DESCRIPTOR_LEN * ENB_CDC_CNT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 47
+    },
+    {
+      "name": "CDC_BULK_TX_SIZE",
+      "value": "(CDC_BULK_EP_MPS-1)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_cdc_uart.c",
+      "line_number": 191
+    }
+  ],
+  "parse_errors": [
+    "Line 59, Col 5: '#if (ENB_CDC_CNT > 1)'",
+    "Line 61, Col 5: '#endif\n    #if (ENB_CDC_CNT > 2)'",
+    "Line 64, Col 5: '#endif'",
+    "Line 100, Col 5: '#if (USBD_BCD == USB_2_0)'",
+    "Line 102, Col 5: '#endif'",
+    "Line 118, Col 5: '#if (ENB_CDC_CNT > 1)'",
+    "Line 122, Col 5: '#endif\n    #if (ENB_CDC_CNT > 2)'",
+    "Line 127, Col 5: '#endif'",
+    "Line 173, Col 10: 'void'"
+  ]
+}

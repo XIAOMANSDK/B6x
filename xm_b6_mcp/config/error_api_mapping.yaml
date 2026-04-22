@@ -1,0 +1,362 @@
+# B6x SDK Error-to-API Mapping Configuration
+# ===========================================
+#
+# This file provides manual mappings between BLE error codes and the APIs
+# that may return them. These mappings supplement the automatic SDK analysis.
+#
+# Priority: config_file > sdk_analysis
+#
+# Structure:
+# error_to_apis:
+#   ERROR_NAME:
+#     - api: api_function_name
+#       condition: "Description of when this error occurs"
+#       probability: high|medium|low
+#
+# Probability levels:
+#   - high: Common occurrence, check first
+#   - medium: Possible occurrence
+#   - low: Rare occurrence, edge case
+
+error_to_apis:
+
+  # ============================================================================
+  # GAP Errors (0x40-0x4D)
+  # ============================================================================
+
+  GAP_ERR_INVALID_PARAM:
+    - api: gapc_connect_req
+      condition: "Invalid connection parameters (interval, latency, timeout out of range)"
+      probability: high
+    - api: gapc_param_update_req
+      condition: "Invalid connection interval, latency, or supervision timeout"
+      probability: high
+    - api: gapm_start_advertising_req
+      condition: "Invalid advertising parameters (type, interval, channel map)"
+      probability: high
+    - api: gapm_set_dev_config_req
+      condition: "Invalid device configuration parameters"
+      probability: medium
+    - api: gapm_set_phy_req
+      condition: "Invalid PHY configuration"
+      probability: medium
+
+  GAP_ERR_TIMEOUT:
+    - api: gapc_connect_req
+      condition: "Connection attempt timed out (peer not responding or out of range)"
+      probability: high
+    - api: gapc_param_update_req
+      condition: "Connection parameter update negotiation timed out"
+      probability: medium
+    - api: gapc_bond_req
+      condition: "Pairing process timed out waiting for user input"
+      probability: medium
+    - api: gapc_encrypt_req
+      condition: "Encryption setup timed out"
+      probability: medium
+
+  GAP_ERR_DISCONNECTED:
+    - api: gattc_read_req
+      condition: "Read operation interrupted by connection loss"
+      probability: medium
+    - api: gattc_write_req
+      condition: "Write operation interrupted by connection loss"
+      probability: medium
+    - api: gattc_disc_svc_all_req
+      condition: "Service discovery interrupted by disconnection"
+      probability: medium
+
+  GAP_ERR_NOT_FOUND:
+    - api: gapm_scan_req
+      condition: "Scan completed but no devices found matching filter criteria"
+      probability: high
+    - api: gattc_disc_svc_all_req
+      condition: "Service discovery completed but no matching service found"
+      probability: high
+    - api: gattc_disc_char_all_req
+      condition: "Characteristic discovery found no characteristics"
+      probability: medium
+
+  GAP_ERR_REJECTED:
+    - api: gapc_connect_req
+      condition: "Connection rejected by peer device (not accepting connections)"
+      probability: medium
+    - api: gapc_param_update_req
+      condition: "Connection parameter update rejected by peer"
+      probability: medium
+
+  GAP_ERR_ADV_DATA_INVALID:
+    - api: gapm_start_advertising_req
+      condition: "Advertising data exceeds 31 bytes or contains duplicate data"
+      probability: high
+    - api: gapm_set_adv_data_req
+      condition: "Invalid advertising data format or length"
+      probability: high
+
+  GAP_ERR_INSUFF_RESOURCES:
+    - api: gapc_connect_req
+      condition: "Maximum number of connections reached"
+      probability: medium
+    - api: gapm_start_advertising_req
+      condition: "Insufficient memory to start advertising"
+      probability: low
+
+  # ============================================================================
+  # ATT Errors (0x01-0x11, 0x80)
+  # ============================================================================
+
+  ATT_ERR_INVALID_HANDLE:
+    - api: gattc_read_req
+      condition: "Reading with handle that doesn't exist or not discovered yet"
+      probability: high
+    - api: gattc_write_req
+      condition: "Writing to handle that doesn't exist or not discovered yet"
+      probability: high
+    - api: gattc_register_req
+      condition: "Registering to non-existent attribute handle"
+      probability: medium
+
+  ATT_ERR_READ_NOT_PERMITTED:
+    - api: gattc_read_req
+      condition: "Reading characteristic that doesn't have read permission"
+      probability: high
+    - api: gattc_read_long_req
+      condition: "Long read on characteristic without read permission"
+      probability: high
+
+  ATT_ERR_WRITE_NOT_PERMITTED:
+    - api: gattc_write_req
+      condition: "Writing to characteristic without write permission"
+      probability: high
+    - api: gattc_write_long_req
+      condition: "Long write to characteristic without write permission"
+      probability: high
+    - api: gattc_signed_write_req
+      condition: "Signed write to characteristic without write permission"
+      probability: high
+
+  ATT_ERR_INSUFF_AUTHEN:
+    - api: gattc_read_req
+      condition: "Reading authenticated characteristic without authentication"
+      probability: high
+    - api: gattc_write_req
+      condition: "Writing authenticated characteristic without authentication"
+      probability: high
+
+  ATT_ERR_ATTRIBUTE_NOT_FOUND:
+    - api: gattc_read_req
+      condition: "Reading handle returned from discovery but attribute removed"
+      probability: high
+    - api: gattc_write_req
+      condition: "Writing to handle that was removed"
+      probability: high
+    - api: gattc_disc_svc_all_req
+      condition: "Service with specified UUID not found on peer device"
+      probability: medium
+    - api: gattc_disc_char_all_req
+      condition: "Characteristic with specified UUID not found"
+      probability: medium
+
+  ATT_ERR_INSUFF_ENC_KEY_SIZE:
+    - api: gattc_read_req
+      condition: "Reading encrypted characteristic with insufficient key size"
+      probability: medium
+    - api: gattc_write_req
+      condition: "Writing encrypted characteristic with insufficient key size"
+      probability: medium
+
+  ATT_ERR_INVALID_ATTRIBUTE_VAL_LEN:
+    - api: gattc_write_req
+      condition: "Writing value exceeding characteristic max length"
+      probability: high
+    - api: gattc_write_long_req
+      condition: "Long write exceeding allowed length"
+      probability: high
+
+  ATT_ERR_INSUFF_ENC:
+    - api: gattc_read_req
+      condition: "Reading encrypted characteristic before encryption established"
+      probability: high
+    - api: gattc_write_req
+      condition: "Writing encrypted characteristic before encryption established"
+      probability: high
+
+  # ============================================================================
+  # L2C Errors (0x30-0x3F)
+  # ============================================================================
+
+  L2C_ERR_INSUFF_CREDIT:
+    - api: l2cc_send_req
+      condition: "Sending data without available credits (flow control)"
+      probability: high
+    - api: gattc_write_req
+      condition: "Write operation blocked due to no L2CAP credits"
+      probability: medium
+
+  L2C_ERR_INVALID_MTU_EXCEED:
+    - api: l2cc_send_req
+      condition: "Sending PDU exceeding negotiated MTU size"
+      probability: high
+    - api: gattc_write_req
+      condition: "Write data exceeds MTU (should use long write)"
+      probability: medium
+
+  # ============================================================================
+  # GATT Errors (0x50-0x56)
+  # ============================================================================
+
+  GATT_ERR_INVALID_ATT_LEN:
+    - api: gattc_read_cfm
+      condition: "Read response length doesn't match expected"
+      probability: medium
+    - api: gattc_write_cfm
+      condition: "Write response has invalid length"
+      probability: medium
+
+  # ============================================================================
+  # SMP Errors (0x61-0x7C, 0xD0-0xD4)
+  # ============================================================================
+
+  SMP_ERR_LOC_PASSKEY_ENTRY_FAILED:
+    - api: gapc_bond_req
+      condition: "User failed to enter passkey (timeout or wrong input)"
+      probability: high
+
+  SMP_ERR_LOC_ENC_KEY_SIZE:
+    - api: gapc_bond_req
+      condition: "Negotiated encryption key size below minimum requirement"
+      probability: medium
+    - api: gapc_encrypt_req
+      condition: "Encryption key size insufficient"
+      probability: medium
+
+  SMP_ERR_ENC_KEY_MISSING:
+    - api: gapc_encrypt_req
+      condition: "No LTK stored for peer device (need to re-pair)"
+      probability: high
+    - api: gapc_bond_req
+      condition: "Bonding information lost or corrupted"
+      probability: medium
+
+  SMP_ERR_ADDR_RESOLV_FAIL:
+    - api: gapm_addr_renew_req
+      condition: "RPA address resolution failed (peer IRK not in resolving list)"
+      probability: medium
+
+  # ============================================================================
+  # PRF Errors (0x80-0xFF)
+  # ============================================================================
+
+  PRF_ERR_INEXISTENT_HDL:
+    - api: prf_read_req
+      condition: "Reading with handle that doesn't exist"
+      probability: high
+    - api: prf_write_req
+      condition: "Writing to handle that doesn't exist"
+      probability: high
+
+  PRF_ERR_NOT_WRITABLE:
+    - api: prf_write_req
+      condition: "Writing to read-only characteristic"
+      probability: high
+
+  PRF_ERR_NOT_READABLE:
+    - api: prf_read_req
+      condition: "Reading write-only characteristic"
+      probability: high
+
+  PRF_ERR_NTF_DISABLED:
+    - api: prf_send_ntf_req
+      condition: "Sending notification when client hasn't enabled CCCD"
+      probability: high
+
+  PRF_ERR_IND_DISABLED:
+    - api: prf_send_ind_req
+      condition: "Sending indication when client hasn't enabled CCCD"
+      probability: high
+
+  PRF_CCCD_IMPR_CONFIGURED:
+    - api: prf_send_ntf_req
+      condition: "CCCD value is invalid or corrupted"
+      probability: medium
+    - api: prf_send_ind_req
+      condition: "CCCD configuration error"
+      probability: medium
+
+  PRF_PROC_IN_PROGRESS:
+    - api: prf_read_req
+      condition: "Starting new operation while previous one not completed"
+      probability: medium
+    - api: prf_write_req
+      condition: "Concurrent write operations not allowed"
+      probability: medium
+
+  # ============================================================================
+  # LL Errors (0x91-0xCE)
+  # ============================================================================
+
+  LL_ERR_CON_TIMEOUT:
+    - api: gapc_connect_req
+      condition: "Connection supervision timeout (no response from peer)"
+      probability: high
+
+  LL_ERR_CON_LIMIT_EXCEED:
+    - api: gapc_connect_req
+      condition: "Maximum number of connections reached on controller"
+      probability: medium
+
+  LL_ERR_AUTH_FAILURE:
+    - api: gapc_bond_req
+      condition: "Authentication failed during pairing process"
+      probability: high
+    - api: gapc_encrypt_req
+      condition: "Encryption setup failed (wrong keys)"
+      probability: high
+
+  LL_ERR_TERMINATED_MIC_FAILURE:
+    - api: gapc_disconnect_req
+      condition: "Connection terminated due to MIC verification failure"
+      probability: medium
+
+  LL_ERR_CONN_FAILED_TO_BE_EST:
+    - api: gapc_connect_req
+      condition: "Connection failed to establish (interference or peer rejection)"
+      probability: high
+
+  LL_ERR_INSUFFICIENT_SECURITY:
+    - api: gattc_read_req
+      condition: "Reading characteristic requires higher security level"
+      probability: medium
+    - api: gattc_write_req
+      condition: "Writing characteristic requires higher security level"
+      probability: medium
+
+# ============================================================================
+# API-to-Error Summary (for reference)
+# ============================================================================
+#
+# Common APIs and their typical errors:
+#
+# gapc_connect_req:
+#   - GAP_ERR_INVALID_PARAM (high)
+#   - GAP_ERR_TIMEOUT (high)
+#   - GAP_ERR_REJECTED (medium)
+#   - LL_ERR_CON_TIMEOUT (high)
+#   - LL_ERR_CON_LIMIT_EXCEED (medium)
+#
+# gapc_bond_req:
+#   - SMP_ERR_LOC_PASSKEY_ENTRY_FAILED (high)
+#   - LL_ERR_AUTH_FAILURE (high)
+#   - SMP_ERR_LOC_ENC_KEY_SIZE (medium)
+#
+# gattc_read_req:
+#   - ATT_ERR_INVALID_HANDLE (high)
+#   - ATT_ERR_READ_NOT_PERMITTED (high)
+#   - ATT_ERR_INSUFF_AUTHEN (high)
+#   - ATT_ERR_INSUFF_ENC (high)
+#
+# gattc_write_req:
+#   - ATT_ERR_INVALID_HANDLE (high)
+#   - ATT_ERR_WRITE_NOT_PERMITTED (high)
+#   - ATT_ERR_INVALID_ATTRIBUTE_VAL_LEN (high)
+#   - ATT_ERR_INSUFF_AUTHEN (high)

@@ -1,0 +1,1337 @@
+{
+  "file_path": "ble/api/gapm.h",
+  "functions": [],
+  "macros": [
+    {
+      "name": "GAPM_REPORT_NB_MAX",
+      "value": "(5)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 1660
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_CMP_EVT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CONFIG_CMD",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_RESET_CMD",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_DEV_CONFIG_CMD",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_CHANNEL_MAP_CMD",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_DEV_INFO_CMD",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DEV_VERSION_IND",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DEV_BDADDR_IND",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DEV_ADV_TX_POWER_IND",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PEER_NAME_IND",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SEC_ENC_AES_CMD",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_RESOLV_ADDR_CMD",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_RAND_ADDR_CMD",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_USE_ENC_BLOCK_CMD",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_RAND_NB_CMD",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADDR_SOLVED_IND",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_USE_ENC_BLOCK_IND",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_RAND_NB_IND",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PROFILE_TASK_ADD_CMD",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PROFILE_ADDED_IND",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_UNKNOWN_TASK_IND",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SUGG_DFLT_DATA_LEN_IND",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_MAX_DATA_LEN_IND",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_RAL_ADDR_IND",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_IRK_CMD",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LEPSM_REGISTER_CMD",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LEPSM_UNREGISTER_CMD",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LE_TEST_MODE_CTRL_CMD",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LE_TEST_END_IND",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ISO_STAT_IND",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SEC_ENC_ECC_CMD",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_DH_KEY_CMD",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_PUB_KEY_CMD",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_DH_KEY_IND",
+          "value": 33,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PUB_KEY_IND",
+          "value": 34,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_RAL_ADDR_CMD",
+          "value": 35,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LIST_SET_CMD",
+          "value": 36,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LIST_SIZE_IND",
+          "value": 37,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_CMP_EVT",
+          "value": 38,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_CMD",
+          "value": 39,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_CREATE_CMD",
+          "value": 40,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_START_CMD",
+          "value": 41,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_STOP_CMD",
+          "value": 42,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_DELETE_CMD",
+          "value": 43,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_CREATED_IND",
+          "value": 44,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTIVITY_STOPPED_IND",
+          "value": 45,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_ADV_DATA_CMD",
+          "value": 46,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_EXT_ADV_REPORT_IND",
+          "value": 47,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_REQUEST_IND",
+          "value": 48,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SYNC_ESTABLISHED_IND",
+          "value": 49,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_MAX_ADV_DATA_LEN_IND",
+          "value": 50,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_NB_ADV_SETS_IND",
+          "value": 51,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DEV_TX_PWR_IND",
+          "value": 52,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DEV_RF_PATH_COMP_IND",
+          "value": 53,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 33
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_NO_OP",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_RESET",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_DEV_CONFIG",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_CHANNEL_MAP",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_DEV_VERSION",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_DEV_BDADDR",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_DEV_ADV_TX_POWER",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_WLIST_SIZE",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_RESOLV_ADDR",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_RAND_ADDR",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_USE_ENC_BLOCK",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_RAND_NB",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PROFILE_TASK_ADD",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DBG_GET_MEM_INFO",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PLF_RESET",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_SUGGESTED_DFLT_LE_DATA_LEN",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_SUGGESTED_DFLT_LE_DATA_LEN",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_MAX_LE_DATA_LEN",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_RAL_SIZE",
+          "value": 33,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_RAL_LOC_ADDR",
+          "value": 34,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_RAL_PEER_ADDR",
+          "value": 35,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_IRK",
+          "value": 40,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LEPSM_REG",
+          "value": 41,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LEPSM_UNREG",
+          "value": 42,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LE_TEST_STOP",
+          "value": 43,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LE_TEST_RX_START",
+          "value": 44,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LE_TEST_TX_START",
+          "value": 45,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_DH_KEY",
+          "value": 46,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_PUB_KEY",
+          "value": 47,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_WL",
+          "value": 144,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_RAL",
+          "value": 145,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_PAL",
+          "value": 146,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_PAL_SIZE",
+          "value": 149,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CREATE_ADV_ACTIVITY",
+          "value": 160,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CREATE_SCAN_ACTIVITY",
+          "value": 161,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CREATE_INIT_ACTIVITY",
+          "value": 162,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CREATE_PERIOD_SYNC_ACTIVITY",
+          "value": 163,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_START_ACTIVITY",
+          "value": 164,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_STOP_ACTIVITY",
+          "value": 165,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_STOP_ALL_ACTIVITIES",
+          "value": 166,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DELETE_ACTIVITY",
+          "value": 167,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DELETE_ALL_ACTIVITIES",
+          "value": 168,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_ADV_DATA",
+          "value": 169,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_SCAN_RSP_DATA",
+          "value": 170,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SET_PERIOD_ADV_DATA",
+          "value": 171,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_NB_ADV_SETS",
+          "value": 172,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_MAX_LE_ADV_DATA_LEN",
+          "value": 173,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_DEV_TX_PWR",
+          "value": 174,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GET_DEV_RF_PATH_COMP",
+          "value": 175,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 193
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_STATIC_ADDR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_RSLV_ADDR",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_GEN_NON_RSLV_ADDR",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 340
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_PAIRING_DISABLE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PAIRING_LEGACY",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PAIRING_SEC_CON",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PAIRING_FORCE_P256_KEY_GEN",
+          "value": 128,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 355
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_LE_PSM_SEC_LVL_MASK",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_LE_PSM_MI_TASK_MASK",
+          "value": 128,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 377
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_ACTV_TYPE_ADV",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTV_TYPE_SCAN",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTV_TYPE_INIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ACTV_TYPE_PER_SYNC",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 388
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_ADV_TYPE_LEGACY",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_TYPE_EXTENDED",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_TYPE_PERIODIC",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 401
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_REPORT_TYPE_ADV_EXT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_TYPE_ADV_LEG",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_TYPE_SCAN_RSP_EXT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_TYPE_SCAN_RSP_LEG",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_TYPE_PER_ADV",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 412
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_ADV_PROP_CONNECTABLE_POS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_SCANNABLE_POS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_DIRECTED_POS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_HDC_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_RESERVED_4_POS",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_ANONYMOUS_POS",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_TX_PWR_POS",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_PER_TX_PWR_POS",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_SCAN_REQ_NTF_EN_POS",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_2G4_CHL_POS",
+          "value": 9,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 427
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_ADV_PROP_CONNECTABLE_BIT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_SCANNABLE_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_DIRECTED_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_HDC_BIT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_RESERVED_4_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_ANONYMOUS_BIT",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_TX_PWR_BIT",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_PER_TX_PWR_BIT",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_SCAN_REQ_NTF_EN_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_2G4_CHL_BIT",
+          "value": 9,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 460
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_ADV_ALLOW_SCAN_ANY_CON_ANY",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_ALLOW_SCAN_WLST_CON_ANY",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_ALLOW_SCAN_ANY_CON_WLST",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_ALLOW_SCAN_WLST_CON_WLST",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 493
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_ADV_MODE_NON_DISC",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_MODE_GEN_DISC",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_MODE_LIM_DISC",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_MODE_BEACON",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_MODE_MAX",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 506
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_SCAN_TYPE_GEN_DISC",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_TYPE_LIM_DISC",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_TYPE_OBSERVER",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_TYPE_SEL_OBSERVER",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_TYPE_CONN_DISC",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_TYPE_SEL_CONN_DISC",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 520
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_SCAN_PROP_PHY_1M_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_PROP_PHY_CODED_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_PROP_ACTIVE_1M_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_PROP_ACTIVE_CODED_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_PROP_ACCEPT_RPA_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_SCAN_PROP_FILT_TRUNC_BIT",
+          "value": 32,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 537
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_INIT_TYPE_DIRECT_CONN_EST",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_INIT_TYPE_AUTO_CONN_EST",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_INIT_TYPE_NAME_DISC",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 555
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_INIT_PROP_1M_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_INIT_PROP_2M_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_INIT_PROP_CODED_BIT",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 568
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_REPORT_INFO_REPORT_TYPE_MASK",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_INFO_COMPLETE_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_INFO_CONN_ADV_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_INFO_SCAN_ADV_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_REPORT_INFO_DIR_ADV_BIT",
+          "value": 64,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 579
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_DUP_FILT_DIS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DUP_FILT_EN",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_DUP_FILT_EN_PERIOD",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 594
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_PER_SYNC_TYPE_GENERAL",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PER_SYNC_TYPE_SELECTIVE",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 605
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_PHY_TYPE_LE_1M",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PHY_TYPE_LE_2M",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PHY_TYPE_LE_CODED",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 615
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "CFG_FLAG_NONE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "CFG_FLAG_PUBLIC_ADDR_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "CFG_FLAG_TXCHSEL2_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "CFG_FLAG_DLE_MAX_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "CFG_FLAG_ADV_HOP_DIS",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "CFG_FLAG_DIRECT_ADV_NO_DLY",
+          "value": 16,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 625
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_ADV_PROP_NON_CONN_NON_SCAN_MASK",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_BROADCAST_NON_SCAN_MASK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_NON_CONN_SCAN_MASK",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_BROADCAST_SCAN_MASK",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_UNDIR_CONN_MASK",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_DIR_CONN_MASK",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_DIR_CONN_LDC_MASK",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_ADV_PROP_DIR_CONN_HDC_MASK",
+          "value": 7,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 646
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_EXT_ADV_PROP_NON_CONN_NON_SCAN_MASK",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_EXT_ADV_PROP_NON_CONN_SCAN_MASK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_EXT_ADV_PROP_NON_CONN_SCAN_DIR_MASK",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_EXT_ADV_PROP_ANONYM_DIR_MASK",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_EXT_ADV_PROP_UNDIR_CONN_MASK",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_EXT_ADV_PROP_DIR_CONN_MASK",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 667
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_PER_ADV_PROP_UNDIR_MASK",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PER_ADV_PROP_DIR_MASK",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 684
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_CLK_ACC_500",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CLK_ACC_250",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CLK_ACC_150",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CLK_ACC_100",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CLK_ACC_75",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CLK_ACC_50",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CLK_ACC_30",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_CLK_ACC_20",
+          "value": 7,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 693
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPM_PRIV_CFG_PRIV_ADDR_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PRIV_CFG_RSVD",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPM_PRIV_CFG_PRIV_EN_BIT",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapm.h",
+      "line_number": 714
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

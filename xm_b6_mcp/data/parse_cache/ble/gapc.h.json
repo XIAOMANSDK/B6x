@@ -1,0 +1,643 @@
+{
+  "file_path": "ble/api/gapc.h",
+  "functions": [],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_CMP_EVT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CONNECTION_REQ_IND",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CONNECTION_IND",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DISCONNECT_IND",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DISCONNECT_CMD",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CONNECTION_CFG",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_INFO_CMD",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PEER_ATT_INFO_IND",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PEER_VERSION_IND",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PEER_FEATURES_IND",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CON_RSSI_IND",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_DEV_INFO_REQ_IND",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_DEV_INFO_CFM",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_DEV_INFO_REQ_IND",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_DEV_INFO_CFM",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PARAM_UPDATE_CMD",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PARAM_UPDATE_REQ_IND",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PARAM_UPDATE_CFM",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PARAM_UPDATED_IND",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SMP_CMD",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_BOND_CMD",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_ENCRYPT_CMD",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SECURITY_CMD",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SIGN_CMD",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_BOND_REQ_IND",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_BOND_CFM",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_BOND_IND",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_ENCRYPT_REQ_IND",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_ENCRYPT_CFM",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_ENCRYPT_IND",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SECURITY_IND",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SIGN_COUNTER_IND",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CON_CHANNEL_MAP_IND",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_LE_PING_TO_CMD",
+          "value": 33,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LE_PING_TO_VAL_IND",
+          "value": 34,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LE_PING_TO_IND",
+          "value": 35,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_LE_PKT_SIZE_CMD",
+          "value": 36,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LE_PKT_SIZE_IND",
+          "value": 37,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_KEY_PRESS_NOTIFICATION_CMD",
+          "value": 38,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_KEY_PRESS_NOTIFICATION_IND",
+          "value": 39,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_PHY_CMD",
+          "value": 40,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LE_PHY_IND",
+          "value": 41,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CHAN_SEL_ALGO_IND",
+          "value": 42,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_PREF_SLAVE_LATENCY_CMD",
+          "value": 43,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 36
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_NO_OP",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DISCONNECT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_PEER_NAME",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_PEER_VERSION",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_PEER_FEATURES",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_PEER_APPEARANCE",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_PEER_SLV_PREF_PARAMS",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_CON_RSSI",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_CON_CHANNEL_MAP",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_UPDATE_PARAMS",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_BOND",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_ENCRYPT",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SECURITY_REQ",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_LE_PING_TO",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_LE_PING_TO",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_LE_PKT_SIZE",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_ADDR_RESOL_SUPP",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_KEY_PRESS_NOTIFICATION",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_PHY",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_PHY",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_GET_CHAN_SEL_ALGO",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SET_PREF_SLAVE_LATENCY",
+          "value": 26,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 166
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_PAIRING_REQ",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PAIRING_RSP",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PAIRING_SUCCEED",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PAIRING_FAILED",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_TK_EXCH",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_IRK_EXCH",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CSRK_EXCH",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LTK_EXCH",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_REPEATED_ATTEMPT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_OOB_EXCH",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_NC_EXCH",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 240
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_DEV_NAME",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DEV_APPEARANCE",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DEV_SLV_PREF_PARAMS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DEV_CTL_ADDR_RESOL",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DEV_INFO_MAX",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 273
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_ENCRYPT_FEAT_MASK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_CONN_PARAM_REQ_FEAT_MASK",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_EXT_REJECT_IND_FEAT_MASK",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SLAVE_FEAT_EXCH_FEAT_MASK",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LE_PING_FEAT_MASK",
+          "value": 16,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 288
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_PHY_OPT_LE_CODED_ALL_RATES",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PHY_OPT_LE_CODED_500K_RATE",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_PHY_OPT_LE_CODED_125K_RATE",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 303
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_KEY_NTF_ENTRY_STARTED",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_KEY_NTF_DIGIT_ENTERED",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_KEY_NTF_DIGIT_ERASED",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_KEY_NTF_CLEARED",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_KEY_NTF_ENTRY_COMPLETED",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 314
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_SVC_CHANGED_IND_EN_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SVC_CHANGED_IND_EN_POS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DB_UPDATED_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_DB_UPDATED_POS",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 329
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_ROBUST_CACHE_EN_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_ROBUST_CACHE_EN_POS",
+          "value": 0,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 340
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_LK_BONDED",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LK_ENCRYPTED",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_LK_LTK_PRESENT",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 348
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAPC_SMP_INFO_LOCAL",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SMP_INFO_PEER",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "GAPC_SMP_INFO_MAX",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/gapc.h",
+      "line_number": 359
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

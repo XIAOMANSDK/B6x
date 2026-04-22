@@ -1,0 +1,627 @@
+[
+  {
+    "name": "attmdb_svc_create",
+    "brief": "",
+    "file_path": "ble/api/att.h"
+  },
+  {
+    "name": "attm_svc_create_db",
+    "brief": "Function use to ease service database creation. Use @see attmdb_add_service function of attmdb module to create service database, then use @see attmdb_add_attribute function of attmdb module to create attributes according to database description array given in parameter. ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_svc_create_db_128",
+    "brief": "Function use to ease service database creation. Use @see attmdb_add_service function of attmdb module to create service database, then use @see attmdb_add_attribute function of attmdb module to create attributes according to database description array given in parameter. ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_reserve_handle_range",
+    "brief": "Function use to verify if several services can be allocated on a contiguous handle range. If this command succeed, it means that service allocation will succeed.  If start_hdl = 0, it return handle using first available handle (start_hdl is modified); else it verifies if start handle given can be used to allocates handle range. ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_att_set_value",
+    "brief": "Update attribute value  Updating attribute value do not trigger any notification or indication, this shall be handled by GATT task. ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_get_value",
+    "brief": "Retrieve attribute value  ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_att_set_perm",
+    "brief": "Update attribute permission ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_att_update_perm",
+    "brief": "Reset some permissions bit in the Handle passed as parameter. ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_svc_set_perm",
+    "brief": "Update attribute service permission ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_svc_get_perm",
+    "brief": "Retrieve attribute service permission ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attmdb_svc_visibility_set",
+    "brief": "Control visibility of a service from peer device. service present in database but cannot be access by a peer device. ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attmdb_destroy",
+    "brief": "Clear database  For debug purpose only, this function clear the database and unalloc all services within database.  This function shall be used only for qualification and tests in order to manually change database without modifying software. *************************************************************************************** /",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_uuid_comp",
+    "brief": "Compare if two UUIDs matches ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_uuid16_comp",
+    "brief": "Check if two UUIDs matches (2nd UUID is a 16 bits UUID with LSB First) ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_convert_to128",
+    "brief": "Convert UUID value to 128 bit UUID ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_is_bt16_uuid",
+    "brief": "Check if it's a Bluetooth 16-bits UUID for 128-bit input ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "attm_is_bt32_uuid",
+    "brief": "Check if it's a Bluetooth 32 bits UUID for 128-bit input ",
+    "file_path": "ble/api/attm_api.h"
+  },
+  {
+    "name": "ble_heap",
+    "brief": "Configure Heap of Ble Stack  *************************************************************************************** /",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_init",
+    "brief": "Initializes Ble Stack.  *************************************************************************************** /",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "rfmdm_init",
+    "brief": "Initializes RF & Modem.  *************************************************************************************** /",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "rf_pa_set",
+    "brief": "Set RF Tx PA Level. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_reset",
+    "brief": "Reset link layer and the host ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_app",
+    "brief": "Init Task of Application, interval call gapm_reset() to start.  *************************************************************************************** /",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_schedule",
+    "brief": "Schedule all pending events.  *************************************************************************************** /",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_resume",
+    "brief": "Resume BLE quickly to continue run.  *************************************************************************************** /",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_wakeup",
+    "brief": "Wakeup BLE from sleep state. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_sleep",
+    "brief": "BLE try to enter sleep mode. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_time_get",
+    "brief": "Get BLE current time. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_slpdur_get",
+    "brief": "Get max sleep time when BLE is idle state. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_lib_vers",
+    "brief": "Get ble6*.lib version. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_exch_size",
+    "brief": "Get memory size of Exchange with BLE HW. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_txmd_set",
+    "brief": "Config SLAVE_ROLE ACL More Data(MD) ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_drift_set",
+    "brief": "Config LPCLK(RC32K) Drift ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_2G4_set",
+    "brief": "Set Sync Word for BLE-2.4G Protocol. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_latency_applied",
+    "brief": "Set Slave applied latency or not. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "ble_txchsel2_set",
+    "brief": "Set channel selection algorithm #2 is supported or not. ",
+    "file_path": "ble/api/bledef.h"
+  },
+  {
+    "name": "fcc_init",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_stop",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_tx_mod",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_tx_mod_pa",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_rx_mod",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_rx_mod_vco",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_tx_carr",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_tx_carr_pa",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_rx_carr",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "fcc_rx_carr_vco",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "rf_dac_tab0_set",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "rf_dac_tab1_set",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "rf_dac_tab2_set",
+    "brief": "",
+    "file_path": "ble/api/fcc.h"
+  },
+  {
+    "name": "gapc_connect_rsp",
+    "brief": "Response GAPC_CONNECTION_REQ_IND with specific link data configuration. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_param_update_rsp",
+    "brief": "Response GAPC_PARAM_UPDATE_REQ_IND(Master confirm or not). ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_update_phy",
+    "brief": "Set the PHY configuration for current active link. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_update_dle",
+    "brief": "Set the BLE Data Length Extension for current active link. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_update_param",
+    "brief": "Perform update of connection parameters command. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_disconnect",
+    "brief": "Request disconnection of current link command. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_get_info",
+    "brief": "Send gapc_get_info_cmd, Retrieve Connection information ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_get_conidx",
+    "brief": "Retrieve connection index from connection handle. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_get_conhdl",
+    "brief": "Retrieve connection handle from connection index. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_get_role",
+    "brief": "Retrieve connection role from connection index. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_set_local_addr",
+    "brief": "p_addr    Pointer to the resolvable address used by either advertising activity or resolvable activity. *************************************************************************************** /",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_is_sec_set",
+    "brief": "Check if current link support security requirements. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_lk_sec_lvl_get",
+    "brief": "Retrieve Link Security level ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_enc_keysize_get",
+    "brief": "Retrieve the encryption key size of the connection ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_bond_req",
+    "brief": "Send bond request(Master Role). ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_encrypt_req",
+    "brief": "Send encrypt request(Master Role). ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_security_req",
+    "brief": "Send security request. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_key_press_notify",
+    "brief": "Send Keypress Notification. ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_pairing_rsp",
+    "brief": "Respond to peer pairing information request(GAPC_PAIRING_REQ) ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_pairing_ltk_exch",
+    "brief": "Handles LTK exchange part of pairing(GAPC_BOND_REQ_IND) ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_pairing_csrk_exch",
+    "brief": "Handles CSRK exchange part of pairing(GAPC_BOND_REQ_IND) ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_pairing_tk_exch",
+    "brief": "Handles TK exchange part of pairing(GAPC_BOND_REQ_IND) ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_pairing_oob_exch",
+    "brief": "Handles OOB exchange part of pairing(GAPC_BOND_REQ_IND) ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_pairing_nc_exch",
+    "brief": "Handles Numeric Value Acceptance as part of pairing(GAPC_BOND_REQ_IND) ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapc_smp_encrypt_cfm",
+    "brief": "Slave respond to peer device encryption request(GAPC_ENCRYPT_REQ_IND) ",
+    "file_path": "ble/api/gapc_api.h"
+  },
+  {
+    "name": "gapm_reset",
+    "brief": "Reset link layer and the host ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_set_dev",
+    "brief": "Initial device configuration ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_gen_rand",
+    "brief": "Generate a 8-byte random number ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_set_irk",
+    "brief": "Modify current IRK ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_create_activity",
+    "brief": "Create activity. ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_start_activity",
+    "brief": "Start activity. ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_stop_activity",
+    "brief": "Stop activity. ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_delete_activity",
+    "brief": "Delete activity. ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_create_advertising",
+    "brief": "Create advertising activity. ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_start_advertising",
+    "brief": "Start advertising activity. ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gapm_set_adv_data",
+    "brief": "Fill advertising data. ",
+    "file_path": "ble/api/gapm_api.h"
+  },
+  {
+    "name": "gatt_get_mtu",
+    "brief": "Gets the negotiated MTU. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_exmtu",
+    "brief": "Exchange MTU Command. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_svc_chg",
+    "brief": "Change service. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_disc",
+    "brief": "Discovery command. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_write",
+    "brief": "Write command request. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_pre_write",
+    "brief": "Prepare write command request. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_exe_write",
+    "brief": "Execute write characteristic request. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_read",
+    "brief": "Read command. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_read_long",
+    "brief": "Read command. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_read_by_uuid",
+    "brief": "Read Using UUID. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_read_by_multiple",
+    "brief": "Read Multiple Values. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_write_cfm",
+    "brief": "Write Confirm. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_read_cfm",
+    "brief": "Read Confirm. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_info_cfm",
+    "brief": "Info Confirm. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_ntf_send",
+    "brief": "Send notification to peer. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_ind_send",
+    "brief": "Send indication to peer. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "gatt_evt_cfm",
+    "brief": "Event Confirm. ",
+    "file_path": "ble/api/gatt_api.h"
+  },
+  {
+    "name": "ke_task_create",
+    "brief": "Create a task. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_state_get",
+    "brief": "Retrieve the state of a task. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_state_set",
+    "brief": "Set the state of a task(try to activate saved messages queue). ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_msg_send",
+    "brief": "Send a message previously allocated with ke_msg_alloc() functions.  The kernel will take care of freeing the message memory. Once the function have been called, it is not possible to access its data anymore as the kernel may have copied the message and freed the original memory. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_msg_send_basic",
+    "brief": "Send a message that has a zero length parameter member. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_msg_forward",
+    "brief": "Forward a message to another task by changing its tasks IDs. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_free",
+    "brief": "Freeing of a block of memory. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_timer_set",
+    "brief": "Set a timer.  The function first cancel the timer if it is already existing, then it creates a new one. The timer can be one-shot or periodic, i.e. it will be automatically set again after each trigger.  When the timer expires, a message is sent to the task provided as argument, with the timer id as message id. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_timer_clear",
+    "brief": "Remove an registered timer.  This function search for the timer identified by its id and its task id. If found it is stopped and freed, otherwise an error message is returned. ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "ke_timer_active",
+    "brief": "Checks if a requested timer is active(in the timer queue). ",
+    "file_path": "ble/api/ke_api.h"
+  },
+  {
+    "name": "list_init",
+    "brief": "Initialize a list to defaults values. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_pool_init",
+    "brief": "Construct a list of free elements representing a pool ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_push_back",
+    "brief": "Add an element as last on the list. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_push_back_sublist",
+    "brief": "Append a sequence of elements at the end of a list.  Note: the elements to append shall be linked together ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_push_front",
+    "brief": "Add an element as first on the list. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_extract",
+    "brief": "Search for a given element in the list, and extract it if found. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_extract_after",
+    "brief": "Extract an element when the previous element is known  Note: the element to remove shall follow immediately the reference within the list ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_extract_sublist",
+    "brief": "Extract a sub-list when the previous element is known  Note: the elements to remove shall be linked together and  follow immediately the reference element ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_find",
+    "brief": "Searched a given element in the list. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_merge",
+    "brief": "Merge two lists in a single one.  This function appends the list pointed by list2 to the list pointed by list1. Once the merge is done, it empties list2. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_insert_before",
+    "brief": "Insert a given element in the list before the referenced element. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_insert_after",
+    "brief": "Insert a given element in the list after the referenced element. ",
+    "file_path": "ble/api/list.h"
+  },
+  {
+    "name": "list_size",
+    "brief": "Count number of elements present in the list ",
+    "file_path": "ble/api/list.h"
+  }
+]

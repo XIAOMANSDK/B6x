@@ -1,0 +1,72 @@
+{
+  "file_path": "drivers/src/exti.c",
+  "functions": [
+    {
+      "name": "exti_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 启用外部中断APB时钟\n    RCC_APBCLK_EN(APB_EXTI_BIT);\n    // 请求外部中断复位\n    RCC_APBRST_REQ(APB_EXTI_BIT);\n\n    // 配置外部中断去抖时间\n    EXTI->DBC.Word = debounce;  // DBC：设置去抖计数器值，用于消除GPIO抖动\n}",
+      "file_path": "drivers/src/exti.c",
+      "line_number": 20,
+      "is_static": false
+    },
+    {
+      "name": "exti_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 禁用外部中断APB时钟\n    RCC_APBCLK_DIS(APB_EXTI_BIT);\n    // 请求外部中断复位\n    RCC_APBRST_REQ(APB_EXTI_BIT);\n}",
+      "file_path": "drivers/src/exti.c",
+      "line_number": 35,
+      "is_static": false
+    },
+    {
+      "name": "exti_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 根据寄存器类型设置相应的EXTI寄存器\n    // EXTI_BASE + typ * 4 计算寄存器地址偏移\n    (*(volatile uint32_t*)(EXTI_BASE + typ * 4)) = loca;\n}",
+      "file_path": "drivers/src/exti.c",
+      "line_number": 56,
+      "is_static": false
+    },
+    {
+      "name": "exti_get",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 根据寄存器类型读取相应的EXTI寄存器值\n    // EXTI_BASE + typ * 4 计算寄存器地址偏移\n    return (*(volatile uint32_t*)(EXTI_BASE + typ * 4));\n}",
+      "file_path": "drivers/src/exti.c",
+      "line_number": 76,
+      "is_static": false
+    }
+  ],
+  "macros": [],
+  "parse_errors": []
+}

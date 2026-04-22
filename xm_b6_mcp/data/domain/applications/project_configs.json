@@ -1,0 +1,6562 @@
+{
+  "bleAdv_change": {
+    "project_name": "bleAdv_change",
+    "file_path": "projects/bleAdv_change/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 53,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 21,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 22,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x00, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 25,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"myBle-Chng\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 26,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 27,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 33,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 23,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 29,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 30,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 34,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 37,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "ADV_CHNG_PERIOD": {
+        "name": "ADV_CHNG_PERIOD",
+        "value": "(2000)",
+        "category": "other",
+        "description": "unit 1ms",
+        "file_path": "projects/bleAdv_change/src/cfg.h",
+        "line_number": 54,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [
+      "diss"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 1
+    }
+  },
+  "bleANCS": {
+    "project_name": "bleANCS",
+    "file_path": "projects/bleANCS/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(1)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 16,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 20,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 70,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 28,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 29,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x11, 0x08, 0x33, 0xA1, 0x02, 0xD3}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 32,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"B6x-ANCS\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 33,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "Unknown appearance",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 34,
+        "value_type": "hex"
+      },
+      "BLE_AUTH": {
+        "name": "BLE_AUTH",
+        "value": "(GAP_AUTH_REQ_NO_MITM_BOND)",
+        "category": "ble",
+        "description": "BLE authentication requirements",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 45,
+        "value_type": "symbol"
+      }
+    },
+    "profile_config": {},
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "(BRR_115200)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 21,
+        "value_type": "bool"
+      },
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "(6)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(7)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 25,
+        "value_type": "unknown"
+      },
+      "BLE_LITELIB": {
+        "name": "BLE_LITELIB",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 37,
+        "value_type": "unknown"
+      },
+      "BLE_LARGELIB": {
+        "name": "BLE_LARGELIB",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 41,
+        "value_type": "unknown"
+      },
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(1)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 44,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      },
+      "DBG_ANCS": {
+        "name": "DBG_ANCS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 53,
+        "value_type": "bool"
+      },
+      "ANCS_CONN_INTV_MIN": {
+        "name": "ANCS_CONN_INTV_MIN",
+        "value": "(160)",
+        "category": "other",
+        "description": "200ms (N * 1.25ms)",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 57,
+        "value_type": "unknown"
+      },
+      "ANCS_CONN_INTV_MAX": {
+        "name": "ANCS_CONN_INTV_MAX",
+        "value": "(160)",
+        "category": "other",
+        "description": "200ms",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 58,
+        "value_type": "unknown"
+      },
+      "ANCS_CONN_LATENCY": {
+        "name": "ANCS_CONN_LATENCY",
+        "value": "(4)",
+        "category": "other",
+        "description": "Skip 4 connection events",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 59,
+        "value_type": "bool"
+      },
+      "ANCS_CONN_TIMEOUT": {
+        "name": "ANCS_CONN_TIMEOUT",
+        "value": "(600)",
+        "category": "other",
+        "description": "6000ms (N * 10ms)",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 60,
+        "value_type": "unknown"
+      },
+      "ANCS_MTU_SIZE": {
+        "name": "ANCS_MTU_SIZE",
+        "value": "(128)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 63,
+        "value_type": "unknown"
+      },
+      "ANCS_RECONNECT_ENABLE": {
+        "name": "ANCS_RECONNECT_ENABLE",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 66,
+        "value_type": "bool"
+      },
+      "ANCS_RECONNECT_DELAY": {
+        "name": "ANCS_RECONNECT_DELAY",
+        "value": "(5000)",
+        "category": "other",
+        "description": "5 seconds",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 67,
+        "value_type": "unknown"
+      },
+      "UART_CMD": {
+        "name": "UART_CMD",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleANCS/src/cfg.h",
+        "line_number": 71,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(1)",
+      "ble_connections": {
+        "slaves": 0,
+        "masters": 1
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleFCC": {
+    "project_name": "bleFCC",
+    "file_path": "projects/bleFCC/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleFCC/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleFCC/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleFCC/src/cfg.h",
+        "line_number": 26,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {},
+    "profile_config": {},
+    "debug_config": {
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleFCC/src/cfg.h",
+        "line_number": 22,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {},
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": "(1)",
+        "masters": "(0)"
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleFCC_Store_Config": {
+    "project_name": "bleFCC_Store_Config",
+    "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 26,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {},
+    "profile_config": {},
+    "debug_config": {
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 22,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "CONFIG_STORE_OFFSET": {
+        "name": "CONFIG_STORE_OFFSET",
+        "value": "(0x1200)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 29,
+        "value_type": "unknown"
+      },
+      "PA_OFFSET": {
+        "name": "PA_OFFSET",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 32,
+        "value_type": "unknown"
+      },
+      "CAP_OFFSET": {
+        "name": "CAP_OFFSET",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 33,
+        "value_type": "unknown"
+      },
+      "ADJ00_OFFSET": {
+        "name": "ADJ00_OFFSET",
+        "value": "(2)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 34,
+        "value_type": "unknown"
+      },
+      "ADJ12_OFFSET": {
+        "name": "ADJ12_OFFSET",
+        "value": "(3)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 35,
+        "value_type": "unknown"
+      },
+      "ADJ05_OFFSET": {
+        "name": "ADJ05_OFFSET",
+        "value": "(4)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 36,
+        "value_type": "unknown"
+      },
+      "VCO_ADJ_OFFSET": {
+        "name": "VCO_ADJ_OFFSET",
+        "value": "(5)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 37,
+        "value_type": "unknown"
+      },
+      "BG_RES_TRIM_OFFSET": {
+        "name": "BG_RES_TRIM_OFFSET",
+        "value": "(6)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "CONFIG_OFFSET_MAX": {
+        "name": "CONFIG_OFFSET_MAX",
+        "value": "BG_RES_TRIM_OFFSET",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 39,
+        "value_type": "unknown"
+      },
+      "CFG_DEFAULT_TX_POWER": {
+        "name": "CFG_DEFAULT_TX_POWER",
+        "value": "(0x0B)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 42,
+        "value_type": "unknown"
+      },
+      "CFG_DEFAULT_CAP": {
+        "name": "CFG_DEFAULT_CAP",
+        "value": "(0x14)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 43,
+        "value_type": "unknown"
+      },
+      "CFG_DEFAULT_VCO_ADJ": {
+        "name": "CFG_DEFAULT_VCO_ADJ",
+        "value": "(0x03)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 44,
+        "value_type": "unknown"
+      },
+      "CFG_ERASED_BYTE": {
+        "name": "CFG_ERASED_BYTE",
+        "value": "(0xFF)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 45,
+        "value_type": "unknown"
+      },
+      "CFG_PA_MAX": {
+        "name": "CFG_PA_MAX",
+        "value": "(0x0F)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 48,
+        "value_type": "unknown"
+      },
+      "CFG_ADJ_MAX": {
+        "name": "CFG_ADJ_MAX",
+        "value": "(0x3F)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 49,
+        "value_type": "unknown"
+      },
+      "CFG_BG_RES_MAX": {
+        "name": "CFG_BG_RES_MAX",
+        "value": "(0x1F)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleFCC_Store_Config/src/cfg.h",
+        "line_number": 50,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": "(1)",
+        "masters": "(0)"
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleHid": {
+    "project_name": "bleHid",
+    "file_path": "projects/bleHid/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 21,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 22,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x29, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 24,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"B6x-HID\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 25,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x03C1",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 26,
+        "value_type": "hex"
+      },
+      "BLE_PHY": {
+        "name": "BLE_PHY",
+        "value": "(GAP_PHY_LE_1MBPS)",
+        "category": "ble",
+        "description": "BLE PHY configuration",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 27,
+        "value_type": "symbol"
+      },
+      "BLE_AUTH": {
+        "name": "BLE_AUTH",
+        "value": "(GAP_AUTH_REQ_NO_MITM_BOND)",
+        "category": "ble",
+        "description": "BLE authentication requirements",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 28,
+        "value_type": "symbol"
+      },
+      "BLE_DBG_LTK": {
+        "name": "BLE_DBG_LTK",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Debug LTK generation",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 29,
+        "value_type": "bool"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 32,
+        "value_type": "bool"
+      },
+      "PRF_BASS": {
+        "name": "PRF_BASS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Battery Service",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 33,
+        "value_type": "bool"
+      },
+      "PRF_HIDS": {
+        "name": "PRF_HIDS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "HID Service",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 34,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 38,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 39,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 40,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      },
+      "DBG_HIDS": {
+        "name": "DBG_HIDS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "HID Service debug",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_BASS": {
+        "name": "DBG_BASS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Battery Service debug",
+        "file_path": "projects/bleHid/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {},
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 3
+    }
+  },
+  "bleHid_Keybd": {
+    "project_name": "bleHid_Keybd",
+    "file_path": "projects/bleHid_Keybd/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 21,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 22,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x1F, 0x06, 0x23, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 24,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"B6x-KB_\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 25,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x03C1",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 26,
+        "value_type": "hex"
+      },
+      "BLE_PHY": {
+        "name": "BLE_PHY",
+        "value": "(GAP_PHY_LE_1MBPS)",
+        "category": "ble",
+        "description": "BLE PHY configuration",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 27,
+        "value_type": "symbol"
+      },
+      "BLE_AUTH": {
+        "name": "BLE_AUTH",
+        "value": "(GAP_AUTH_REQ_NO_MITM_BOND)",
+        "category": "ble",
+        "description": "BLE authentication requirements",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 28,
+        "value_type": "symbol"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 31,
+        "value_type": "bool"
+      },
+      "PRF_BASS": {
+        "name": "PRF_BASS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Battery Service",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 32,
+        "value_type": "bool"
+      },
+      "PRF_HIDS": {
+        "name": "PRF_HIDS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "HID Service",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 33,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 37,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 38,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 39,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 40,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      },
+      "DBG_HIDS": {
+        "name": "DBG_HIDS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "HID Service debug",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_BASS": {
+        "name": "DBG_BASS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Battery Service debug",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "DBG_KEYS": {
+        "name": "DBG_KEYS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleHid_Keybd/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 3
+    }
+  },
+  "bleHid_Mouse": {
+    "project_name": "bleHid_Mouse",
+    "file_path": "projects/bleHid_Mouse/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(0)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(1)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 52,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 24,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 25,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x31, 0x06, 0x23, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 27,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"B6x-Mouse\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 28,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x03C2",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 29,
+        "value_type": "hex"
+      },
+      "BLE_PHY": {
+        "name": "BLE_PHY",
+        "value": "(GAP_PHY_LE_1MBPS)",
+        "category": "ble",
+        "description": "BLE PHY configuration",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 30,
+        "value_type": "symbol"
+      },
+      "BLE_AUTH": {
+        "name": "BLE_AUTH",
+        "value": "(GAP_AUTH_REQ_NO_MITM_BOND)",
+        "category": "ble",
+        "description": "BLE authentication requirements",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 31,
+        "value_type": "symbol"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 34,
+        "value_type": "bool"
+      },
+      "PRF_BASS": {
+        "name": "PRF_BASS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Battery Service",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 35,
+        "value_type": "bool"
+      },
+      "PRF_HIDS": {
+        "name": "PRF_HIDS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "HID Service",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 36,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 40,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_HIDS": {
+        "name": "DBG_HIDS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "HID Service debug",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_BASS": {
+        "name": "DBG_BASS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Battery Service debug",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "BLE_LITELIB": {
+        "name": "BLE_LITELIB",
+        "value": "(1)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 21,
+        "value_type": "unknown"
+      },
+      "DBG_KEYS": {
+        "name": "DBG_KEYS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "CFG_POWEROFF": {
+        "name": "CFG_POWEROFF",
+        "value": "(BLE_LITELIB)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 53,
+        "value_type": "unknown"
+      },
+      "RC32K_CALIB_PERIOD": {
+        "name": "RC32K_CALIB_PERIOD",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleHid_Mouse/src/cfg.h",
+        "line_number": 54,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(0)",
+      "profiles_enabled": 3
+    }
+  },
+  "bleHid_Uart": {
+    "project_name": "bleHid_Uart",
+    "file_path": "projects/bleHid_Uart/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(0)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x1E, 0x30, 0x05, 0x24, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 27,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"HID-UART-\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 28,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x03C1",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 29,
+        "value_type": "hex"
+      },
+      "BLE_PHY": {
+        "name": "BLE_PHY",
+        "value": "(GAP_PHY_LE_1MBPS)",
+        "category": "ble",
+        "description": "BLE PHY configuration",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 30,
+        "value_type": "symbol"
+      },
+      "BLE_AUTH": {
+        "name": "BLE_AUTH",
+        "value": "(GAP_AUTH_REQ_NO_MITM_BOND)",
+        "category": "ble",
+        "description": "BLE authentication requirements",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 31,
+        "value_type": "symbol"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 34,
+        "value_type": "bool"
+      },
+      "PRF_BASS": {
+        "name": "PRF_BASS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Battery Service",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 35,
+        "value_type": "bool"
+      },
+      "PRF_HIDS": {
+        "name": "PRF_HIDS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "HID Service",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 36,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 40,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_HIDS": {
+        "name": "DBG_HIDS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "HID Service debug",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "(6)",
+        "category": "other",
+        "description": "PA06",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 20,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(7)",
+        "category": "other",
+        "description": "PA07",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 21,
+        "value_type": "unknown"
+      },
+      "WAKEUP_IO_MASK": {
+        "name": "WAKEUP_IO_MASK",
+        "value": "(GPIO07)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 22,
+        "value_type": "unknown"
+      },
+      "BLE_LITELIB": {
+        "name": "BLE_LITELIB",
+        "value": "(1)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 25,
+        "value_type": "unknown"
+      },
+      "STORE_MAC_OFFSET": {
+        "name": "STORE_MAC_OFFSET",
+        "value": "(0x1200)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleHid_Uart/src/cfg.h",
+        "line_number": 48,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [
+      "diss",
+      "bass",
+      "hids"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": "(1)",
+        "masters": "(0)"
+      },
+      "debug_mode": "(0)",
+      "profiles_enabled": 3
+    }
+  },
+  "bleMaster": {
+    "project_name": "bleMaster",
+    "file_path": "projects/bleMaster/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 24,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(2)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 25,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x11, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 27,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"myBle-Master\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 28,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 29,
+        "value_type": "hex"
+      },
+      "BLE_DBG_LTK": {
+        "name": "BLE_DBG_LTK",
+        "value": "(BLE_NB_MASTER)",
+        "category": "ble",
+        "description": "Debug LTK generation",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 36,
+        "value_type": "bool"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 32,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 40,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "(BRR_921600)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 19,
+        "value_type": "bool"
+      },
+      "UART_CMD": {
+        "name": "UART_CMD",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 20,
+        "value_type": "unknown"
+      },
+      "UART1_CONF_BAUD": {
+        "name": "UART1_CONF_BAUD",
+        "value": "(DBG_UART_BAUD)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 21,
+        "value_type": "unknown"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(BLE_NB_MASTER)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 35,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_KEYS": {
+        "name": "DBG_KEYS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleMaster/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 0,
+        "masters": 2
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleMasterSlave": {
+    "project_name": "bleMasterSlave",
+    "file_path": "projects/bleMasterSlave/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 57,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(3)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 27,
+        "value_type": "int"
+      },
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(3)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 28,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x00, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 30,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"myBle-3M3S-\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 31,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 32,
+        "value_type": "hex"
+      },
+      "BLE_DBG_LTK": {
+        "name": "BLE_DBG_LTK",
+        "value": "(BLE_NB_MASTER)",
+        "category": "ble",
+        "description": "Debug LTK generation",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(BLE_NB_SLAVE)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 36,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "(BRR_921600)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 19,
+        "value_type": "bool"
+      },
+      "UART_CMD": {
+        "name": "UART_CMD",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 20,
+        "value_type": "unknown"
+      },
+      "UART1_CONF_BAUD": {
+        "name": "UART1_CONF_BAUD",
+        "value": "(DBG_UART_BAUD)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 21,
+        "value_type": "unknown"
+      },
+      "BLE_LARGELIB": {
+        "name": "BLE_LARGELIB",
+        "value": "(1)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(BLE_NB_SLAVE)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 37,
+        "value_type": "bool"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(BLE_NB_MASTER)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 40,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      },
+      "DBG_KEYS": {
+        "name": "DBG_KEYS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleMasterSlave/src/cfg.h",
+        "line_number": 53,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [
+      "diss"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 3,
+        "masters": 3
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 1
+    }
+  },
+  "bleMesh": {
+    "project_name": "bleMesh",
+    "file_path": "projects/bleMesh/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 17,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 21,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED 播放动画",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 109,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "睡眠模式",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 110,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_PHY": {
+        "name": "BLE_PHY",
+        "value": "(GAP_PHY_LE_1MBPS)",
+        "category": "ble",
+        "description": "BLE PHY configuration",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 39,
+        "value_type": "symbol"
+      },
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(0)",
+        "category": "ble",
+        "description": "从连接数量",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 45,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "主连接数量",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 46,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x2e, 0x20, 0x49, 0x65, 0x42, 0xFC}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 54,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"MeshServer\"",
+        "category": "ble",
+        "description": "设备名称",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 55,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0001",
+        "category": "ble",
+        "description": "设备图标",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 56,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 65,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "应用层调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 95,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "用户流程调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 96,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity 调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 97,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager 调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 98,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Client 调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 99,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "(BRR_921600)",
+        "category": "debug",
+        "description": "调试 UART 波特率 921600",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 22,
+        "value_type": "bool"
+      },
+      "UART1_CONF_BAUD": {
+        "name": "UART1_CONF_BAUD",
+        "value": "(BRR_921600)",
+        "category": "other",
+        "description": "UART1 波特率 921600",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 23,
+        "value_type": "unknown"
+      },
+      "DBG_HARDFAULT": {
+        "name": "DBG_HARDFAULT",
+        "value": "(0)",
+        "category": "debug",
+        "description": "硬故障调试开关",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 24,
+        "value_type": "bool"
+      },
+      "BLE_HEAP_BASE": {
+        "name": "BLE_HEAP_BASE",
+        "value": "(0x20004800)",
+        "category": "ble",
+        "description": "BLE 堆基地址",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 34,
+        "value_type": "unknown"
+      },
+      "BLE_HEAP_ENV_SIZE": {
+        "name": "BLE_HEAP_ENV_SIZE",
+        "value": "(0xD00)",
+        "category": "ble",
+        "description": "BLE 环境变量大小 (3.3KB)",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 35,
+        "value_type": "unknown"
+      },
+      "BLE_HEAP_MSG_SIZE": {
+        "name": "BLE_HEAP_MSG_SIZE",
+        "value": "(0x2000)",
+        "category": "ble",
+        "description": "BLE 消息队列大小 (8KB)",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 36,
+        "value_type": "unknown"
+      },
+      "BLE_ROLE": {
+        "name": "BLE_ROLE",
+        "value": "(GAP_ROLE_PERIPHERAL | GAP_ROLE_OBSERVER)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 41,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 59,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 60,
+        "value_type": "unknown"
+      },
+      "PRF_GATT": {
+        "name": "PRF_GATT",
+        "value": "(0)",
+        "category": "profile",
+        "description": "GATT Profile (设备信息服务)",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 64,
+        "value_type": "bool"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "Serial Service (串口服务)",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 66,
+        "value_type": "bool"
+      },
+      "PRF_MESH": {
+        "name": "PRF_MESH",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Mesh Profile (启用 Mesh)",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 67,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(1)",
+        "category": "other",
+        "description": "使用 128位 UUID",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 89,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(0)",
+        "category": "other",
+        "description": "读支持",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 90,
+        "value_type": "unknown"
+      },
+      "DBG_MESH": {
+        "name": "DBG_MESH",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Mesh 调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 100,
+        "value_type": "bool"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Device Information Service 调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 102,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Serial Service 调试",
+        "file_path": "projects/bleMesh/src/cfg.h",
+        "line_number": 103,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 0,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleOTA": {
+    "project_name": "bleOTA",
+    "file_path": "projects/bleOTA/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(0)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 56,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 57,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 21,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 22,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x26, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 24,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"BXOTA-\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 25,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 26,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 35,
+        "value_type": "bool"
+      },
+      "PRF_OTA": {
+        "name": "PRF_OTA",
+        "value": "(1)",
+        "category": "profile",
+        "description": "OTA Upgrade Service",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 37,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "BLE_MTU": {
+        "name": "BLE_MTU",
+        "value": "(185)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 28,
+        "value_type": "unknown"
+      },
+      "SES_RXD_MAX_LEN": {
+        "name": "SES_RXD_MAX_LEN",
+        "value": "(0x200)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 29,
+        "value_type": "bool"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 31,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 32,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 36,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 40,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 41,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      },
+      "DBG_OTA": {
+        "name": "DBG_OTA",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleOTA/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [
+      "diss",
+      "ota"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(0)",
+      "profiles_enabled": 2
+    }
+  },
+  "bleOTA_Dongle": {
+    "project_name": "bleOTA_Dongle",
+    "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(1)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "1",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 25,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 26,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{ 0x2C, 0x28, 0x08, 0x23, 0x20, 0xD2 }",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 27,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"BXOTA-Dongle\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 28,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 29,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {},
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "DBG_UART_TXD": {
+        "name": "DBG_UART_TXD",
+        "value": "(2)",
+        "category": "debug",
+        "description": "PA02",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 20,
+        "value_type": "bool"
+      },
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "DBG_UART_TXD",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 21,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(3)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 22,
+        "value_type": "unknown"
+      },
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 31,
+        "value_type": "unknown"
+      },
+      "SCAN_ADV_NAME": {
+        "name": "SCAN_ADV_NAME",
+        "value": "\"BXOTA-\"",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 32,
+        "value_type": "unknown"
+      },
+      "SCAN_NUM_MAX": {
+        "name": "SCAN_NUM_MAX",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 33,
+        "value_type": "int"
+      },
+      "SFTMR_SRC": {
+        "name": "SFTMR_SRC",
+        "value": "(0)",
+        "category": "other",
+        "description": "(0-TMS_SysTick)",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 35,
+        "value_type": "unknown"
+      },
+      "BLE_MTU": {
+        "name": "BLE_MTU",
+        "value": "(512)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 36,
+        "value_type": "unknown"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 39,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "LED_GROUP": {
+        "name": "LED_GROUP",
+        "value": "1",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleOTA_Dongle/src/cfg.h",
+        "line_number": 54,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(1)",
+      "ble_connections": {
+        "slaves": 0,
+        "masters": 1
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "blePowerBank": {
+    "project_name": "blePowerBank",
+    "file_path": "projects/blePowerBank/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 54,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 23,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x00, 0x09, 0x08, 0x23, 0x20, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 26,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"XM-PowerBank\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 27,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 28,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 34,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "(6)",
+        "category": "other",
+        "description": "PA06",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 19,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(7)",
+        "category": "other",
+        "description": "PA07",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 20,
+        "value_type": "unknown"
+      },
+      "BLE_MTU": {
+        "name": "BLE_MTU",
+        "value": "(0xFF)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 30,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 31,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 35,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 39,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "DBG_NB401": {
+        "name": "DBG_NB401",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "MDK_HOUR": {
+        "name": "MDK_HOUR",
+        "value": "((__TIME__[0]-'0')*10 + __TIME__[1]-'0')",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 56,
+        "value_type": "unknown"
+      },
+      "MDK_MIN": {
+        "name": "MDK_MIN",
+        "value": "((__TIME__[3]-'0')*10 + __TIME__[4]-'0')",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 57,
+        "value_type": "unknown"
+      },
+      "FIRM_VERTION": {
+        "name": "FIRM_VERTION",
+        "value": "(0x3816)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 59,
+        "value_type": "unknown"
+      },
+      "SW_I2C_MASTER_EN": {
+        "name": "SW_I2C_MASTER_EN",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/blePowerBank/src/cfg.h",
+        "line_number": 60,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": "(0)"
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleUart": {
+    "project_name": "bleUart",
+    "file_path": "projects/bleUart/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 54,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 55,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 21,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 22,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x26, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 24,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"myBle-Uart\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 25,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 26,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 35,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "BLE_MTU": {
+        "name": "BLE_MTU",
+        "value": "(185)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 28,
+        "value_type": "unknown"
+      },
+      "SES_RXD_MAX_LEN": {
+        "name": "SES_RXD_MAX_LEN",
+        "value": "(0x200)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 29,
+        "value_type": "bool"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 31,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 32,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 36,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 39,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 40,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUart/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [
+      "diss"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 1
+    }
+  },
+  "bleUart2USB": {
+    "project_name": "bleUart2USB",
+    "file_path": "projects/bleUart2USB/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(2)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 57,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 58,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 27,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 28,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x13, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 30,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"myBle-Uart2USB_\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 31,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 32,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 38,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "DBG_UART_TXD": {
+        "name": "DBG_UART_TXD",
+        "value": "(11)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 19,
+        "value_type": "bool"
+      },
+      "DBG_UART_RXD": {
+        "name": "DBG_UART_RXD",
+        "value": "(12)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 20,
+        "value_type": "bool"
+      },
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "(BRR_DIV(115200, 48M))",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 21,
+        "value_type": "bool"
+      },
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "(DBG_UART_TXD)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 22,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(DBG_UART_RXD)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 23,
+        "value_type": "unknown"
+      },
+      "UART1_CONF_BAUD": {
+        "name": "UART1_CONF_BAUD",
+        "value": "(DBG_UART_BAUD)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 34,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 35,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 39,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 42,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 43,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUart2USB/src/cfg.h",
+        "line_number": 53,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [
+      "diss"
+    ],
+    "summary": {
+      "sys_clk": "(2)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 1
+    }
+  },
+  "bleUartAT": {
+    "project_name": "bleUartAT",
+    "file_path": "projects/bleUartAT/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 19,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 53,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 22,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 23,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x55, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 26,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"myBle-AT\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 27,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 28,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 31,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "AT_UART_PORT": {
+        "name": "AT_UART_PORT",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 16,
+        "value_type": "unknown"
+      },
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 32,
+        "value_type": "bool"
+      },
+      "PRF_SESC": {
+        "name": "PRF_SESC",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 33,
+        "value_type": "bool"
+      },
+      "PRF_PTSS": {
+        "name": "PRF_PTSS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 34,
+        "value_type": "bool"
+      },
+      "PRF_OTAS": {
+        "name": "PRF_OTAS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 35,
+        "value_type": "bool"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 36,
+        "value_type": "unknown"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 37,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "DBG_ATCMD": {
+        "name": "DBG_ATCMD",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "CFG_SFT_TMR": {
+        "name": "CFG_SFT_TMR",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT/src/cfg.h",
+        "line_number": 54,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 1
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleUartAT-gsmDecodet": {
+    "project_name": "bleUartAT-gsmDecodet",
+    "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(3)",
+        "category": "system",
+        "description": "64MHz for GSM decoder optimization",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 30,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 67,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 33,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 34,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x55, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 37,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"gsmBle-AT\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 38,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 39,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 55,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 56,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 57,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 58,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 59,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "GSM_DECODE_EN": {
+        "name": "GSM_DECODE_EN",
+        "value": "(1)",
+        "category": "other",
+        "description": "Enable GSM decoder",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 18,
+        "value_type": "bool"
+      },
+      "GSM_FLASH_ADDR": {
+        "name": "GSM_FLASH_ADDR",
+        "value": "(0x18020000)",
+        "category": "other",
+        "description": "Flash address for GSM data",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 19,
+        "value_type": "unknown"
+      },
+      "GSM_PWM_FREQ": {
+        "name": "GSM_PWM_FREQ",
+        "value": "(64000)",
+        "category": "other",
+        "description": "PWM frequency for audio output",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 23,
+        "value_type": "unknown"
+      },
+      "GSM_SAMPLE_RATE": {
+        "name": "GSM_SAMPLE_RATE",
+        "value": "(8000)",
+        "category": "other",
+        "description": "GSM sample rate",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "BLE_MTU_SIZE": {
+        "name": "BLE_MTU_SIZE",
+        "value": "(247)",
+        "category": "ble",
+        "description": "Maximum MTU size",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 27,
+        "value_type": "unknown"
+      },
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 35,
+        "value_type": "unknown"
+      },
+      "BLE_LITELIB": {
+        "name": "BLE_LITELIB",
+        "value": "(1)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 42,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "PRF_SESC": {
+        "name": "PRF_SESC",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "PRF_PTSS": {
+        "name": "PRF_PTSS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "PRF_OTAS": {
+        "name": "PRF_OTAS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 50,
+        "value_type": "unknown"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 51,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 60,
+        "value_type": "bool"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 61,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 62,
+        "value_type": "bool"
+      },
+      "DBG_ATCMD": {
+        "name": "DBG_ATCMD",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 63,
+        "value_type": "bool"
+      },
+      "CFG_SFT_TMR": {
+        "name": "CFG_SFT_TMR",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 68,
+        "value_type": "unknown"
+      },
+      "CFG_UART_DMA": {
+        "name": "CFG_UART_DMA",
+        "value": "1",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet/src/cfg.h",
+        "line_number": 70,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(3)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleUartAT-gsmDecodet-AB": {
+    "project_name": "bleUartAT-gsmDecodet-AB",
+    "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(3)",
+        "category": "system",
+        "description": "64MHz for GSM decoder optimization",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 31,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(0)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 68,
+        "value_type": "bool"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 34,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 35,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x55, 0x08, 0x33, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 38,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"gsmBle-AT\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 39,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "03C0-Generic HID,03C1-Keyboard,03C2-Mouse,03C4-Gamepad",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 40,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 56,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 57,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 58,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 59,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 60,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "AT_UART_PORT": {
+        "name": "AT_UART_PORT",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 16,
+        "value_type": "unknown"
+      },
+      "GSM_DECODE_EN": {
+        "name": "GSM_DECODE_EN",
+        "value": "(1)",
+        "category": "other",
+        "description": "Enable GSM decoder",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 19,
+        "value_type": "bool"
+      },
+      "GSM_FLASH_ADDR": {
+        "name": "GSM_FLASH_ADDR",
+        "value": "(0x18020000)",
+        "category": "other",
+        "description": "Flash address for GSM data",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 20,
+        "value_type": "unknown"
+      },
+      "GSM_PWM_FREQ": {
+        "name": "GSM_PWM_FREQ",
+        "value": "(64000)",
+        "category": "other",
+        "description": "PWM frequency for audio output",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "GSM_SAMPLE_RATE": {
+        "name": "GSM_SAMPLE_RATE",
+        "value": "(8000)",
+        "category": "other",
+        "description": "GSM sample rate",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 25,
+        "value_type": "unknown"
+      },
+      "BLE_MTU_SIZE": {
+        "name": "BLE_MTU_SIZE",
+        "value": "(247)",
+        "category": "ble",
+        "description": "Maximum MTU size",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 28,
+        "value_type": "unknown"
+      },
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 36,
+        "value_type": "unknown"
+      },
+      "BLE_LITELIB": {
+        "name": "BLE_LITELIB",
+        "value": "(1)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 43,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      },
+      "PRF_SESC": {
+        "name": "PRF_SESC",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 48,
+        "value_type": "bool"
+      },
+      "PRF_PTSS": {
+        "name": "PRF_PTSS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "PRF_OTAS": {
+        "name": "PRF_OTAS",
+        "value": "(0)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 51,
+        "value_type": "unknown"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 52,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 61,
+        "value_type": "bool"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 62,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 63,
+        "value_type": "bool"
+      },
+      "DBG_ATCMD": {
+        "name": "DBG_ATCMD",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 64,
+        "value_type": "bool"
+      },
+      "CFG_SFT_TMR": {
+        "name": "CFG_SFT_TMR",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 69,
+        "value_type": "unknown"
+      },
+      "CFG_UART_DMA": {
+        "name": "CFG_UART_DMA",
+        "value": "1",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/cfg.h",
+        "line_number": 71,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(3)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "bleUartCMD": {
+    "project_name": "bleUartCMD",
+    "file_path": "projects/bleUartCMD/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 59,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 60,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 29,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x00, 0x09, 0x08, 0x23, 0x20, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 32,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"ble-CMD\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 33,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 34,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 40,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 53,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "SFTMR_NUM": {
+        "name": "SFTMR_NUM",
+        "value": "(8)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 19,
+        "value_type": "int"
+      },
+      "PA_UART1_RTS": {
+        "name": "PA_UART1_RTS",
+        "value": "(4)",
+        "category": "other",
+        "description": "PA04",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 21,
+        "value_type": "unknown"
+      },
+      "PA_UART1_CTS": {
+        "name": "PA_UART1_CTS",
+        "value": "(5)",
+        "category": "other",
+        "description": "PA05",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 22,
+        "value_type": "unknown"
+      },
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "(6)",
+        "category": "other",
+        "description": "PA06",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 23,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(7)",
+        "category": "other",
+        "description": "PA07",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "PA_POWER_ADC": {
+        "name": "PA_POWER_ADC",
+        "value": "(11)",
+        "category": "other",
+        "description": "PA11",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 26,
+        "value_type": "unknown"
+      },
+      "BLE_MTU": {
+        "name": "BLE_MTU",
+        "value": "(0xFF)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 30,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 36,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 37,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 44,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 45,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 54,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 55,
+        "value_type": "bool"
+      },
+      "MDK_HOUR": {
+        "name": "MDK_HOUR",
+        "value": "((__TIME__[0]-'0')*10 + __TIME__[1]-'0')",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 62,
+        "value_type": "unknown"
+      },
+      "MDK_MIN": {
+        "name": "MDK_MIN",
+        "value": "((__TIME__[3]-'0')*10 + __TIME__[4]-'0')",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 63,
+        "value_type": "unknown"
+      },
+      "FIRM_VERTION": {
+        "name": "FIRM_VERTION",
+        "value": "(0x3816)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleUartCMD/src/cfg.h",
+        "line_number": 65,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [
+      "diss"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": "(0)"
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 1
+    }
+  },
+  "bleWeChat": {
+    "project_name": "bleWeChat",
+    "file_path": "projects/bleWeChat/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 55,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 56,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 21,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 22,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x66, 0x08, 0x32, 0xA1, 0x01, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 24,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"WX-AirSync\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 27,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 28,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 34,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 43,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 44,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 45,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 46,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 47,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "BLE_ADDR_B": {
+        "name": "BLE_ADDR_B",
+        "value": "{0xD2, 0x01, 0xA1, 0x32, 0x08, 0x66}",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 25,
+        "value_type": "unknown"
+      },
+      "BLE_DEV_CFG": {
+        "name": "BLE_DEV_CFG",
+        "value": "(CFG_FLAG_ADV_HOP_DIS)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 29,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 30,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 31,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 35,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 39,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 49,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleWeChat/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      }
+    },
+    "enabled_profiles": [
+      "diss"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": 0
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 1
+    }
+  },
+  "bleWeChatETC": {
+    "project_name": "bleWeChatETC",
+    "file_path": "projects/bleWeChatETC/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(0)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 19,
+        "value_type": "enum"
+      },
+      "LED_PLAY": {
+        "name": "LED_PLAY",
+        "value": "(1)",
+        "category": "system",
+        "description": "LED animation support",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 60,
+        "value_type": "bool"
+      },
+      "CFG_SLEEP": {
+        "name": "CFG_SLEEP",
+        "value": "(0)",
+        "category": "system",
+        "description": "Sleep mode configuration",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 61,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 30,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x00, 0x09, 0x08, 0x23, 0x20, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 33,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"ETC-\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 34,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 35,
+        "value_type": "hex"
+      }
+    },
+    "profile_config": {
+      "PRF_DISS": {
+        "name": "PRF_DISS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "Device Information Service",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 41,
+        "value_type": "bool"
+      }
+    },
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(0)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 50,
+        "value_type": "bool"
+      },
+      "DBG_PROC": {
+        "name": "DBG_PROC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Procedure debug",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(0)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 53,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 54,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "BLE_LITELIB": {
+        "name": "BLE_LITELIB",
+        "value": "(1)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 16,
+        "value_type": "unknown"
+      },
+      "SFTMR_NUM": {
+        "name": "SFTMR_NUM",
+        "value": "(8)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 20,
+        "value_type": "int"
+      },
+      "PA_UART1_RTS": {
+        "name": "PA_UART1_RTS",
+        "value": "(4)",
+        "category": "other",
+        "description": "PA04",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 22,
+        "value_type": "unknown"
+      },
+      "PA_UART1_CTS": {
+        "name": "PA_UART1_CTS",
+        "value": "(5)",
+        "category": "other",
+        "description": "PA05",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 23,
+        "value_type": "unknown"
+      },
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "(6)",
+        "category": "other",
+        "description": "PA06",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(7)",
+        "category": "other",
+        "description": "PA07",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 25,
+        "value_type": "unknown"
+      },
+      "PA_POWER_ADC": {
+        "name": "PA_POWER_ADC",
+        "value": "(11)",
+        "category": "other",
+        "description": "PA11",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 27,
+        "value_type": "unknown"
+      },
+      "BLE_MTU": {
+        "name": "BLE_MTU",
+        "value": "(0x200)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 31,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MIN": {
+        "name": "APP_ADV_INT_MIN",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 37,
+        "value_type": "unknown"
+      },
+      "APP_ADV_INT_MAX": {
+        "name": "APP_ADV_INT_MAX",
+        "value": "(32)",
+        "category": "other",
+        "description": "unit in 0.625ms",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "PRF_SESS": {
+        "name": "PRF_SESS",
+        "value": "(1)",
+        "category": "profile",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 42,
+        "value_type": "bool"
+      },
+      "SES_UUID_128": {
+        "name": "SES_UUID_128",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 45,
+        "value_type": "unknown"
+      },
+      "SES_READ_SUP": {
+        "name": "SES_READ_SUP",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 46,
+        "value_type": "unknown"
+      },
+      "DBG_DISS": {
+        "name": "DBG_DISS",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 55,
+        "value_type": "bool"
+      },
+      "DBG_SESS": {
+        "name": "DBG_SESS",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 56,
+        "value_type": "bool"
+      },
+      "MDK_HOUR": {
+        "name": "MDK_HOUR",
+        "value": "((__TIME__[0]-'0')*10 + __TIME__[1]-'0')",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 62,
+        "value_type": "unknown"
+      },
+      "MDK_MIN": {
+        "name": "MDK_MIN",
+        "value": "((__TIME__[3]-'0')*10 + __TIME__[4]-'0')",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 63,
+        "value_type": "unknown"
+      },
+      "FIRM_VERTION": {
+        "name": "FIRM_VERTION",
+        "value": "(0x3816)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 65,
+        "value_type": "unknown"
+      },
+      "ETC_TEST": {
+        "name": "ETC_TEST",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/bleWeChatETC/src/cfg.h",
+        "line_number": 67,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [
+      "diss"
+    ],
+    "summary": {
+      "sys_clk": "(0)",
+      "ble_connections": {
+        "slaves": 1,
+        "masters": "(0)"
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 1
+    }
+  },
+  "ec_demo": {
+    "project_name": "ec_demo",
+    "file_path": "projects/ec_demo/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "2",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 15,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 18,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {},
+    "profile_config": {},
+    "debug_config": {},
+    "other_macros": {
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "(BRR_921600)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 19,
+        "value_type": "bool"
+      },
+      "CONFIG_RES_MEASURE": {
+        "name": "CONFIG_RES_MEASURE",
+        "value": "1",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 22,
+        "value_type": "unknown"
+      },
+      "CONFIG_HEATER_RES_MIN": {
+        "name": "CONFIG_HEATER_RES_MIN",
+        "value": "300    /* Below this = short circuit */",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 25,
+        "value_type": "unknown"
+      },
+      "CONFIG_HEATER_RES_MAX": {
+        "name": "CONFIG_HEATER_RES_MAX",
+        "value": "5000   /* Above this = open circuit */",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 26,
+        "value_type": "unknown"
+      },
+      "CONFIG_HEAT_DETECT_RES_VALUE": {
+        "name": "CONFIG_HEAT_DETECT_RES_VALUE",
+        "value": "36000  /* Reference resistor (milliohms) */",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 27,
+        "value_type": "unknown"
+      },
+      "CONFIG_MIC_RES_START_VALUE": {
+        "name": "CONFIG_MIC_RES_START_VALUE",
+        "value": "(0x1300)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 30,
+        "value_type": "unknown"
+      },
+      "CONFIG_MIC_RES_STOP_VALUE": {
+        "name": "CONFIG_MIC_RES_STOP_VALUE",
+        "value": "(0x1000)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 31,
+        "value_type": "unknown"
+      },
+      "CONFIG_MIC_RES_10BIT_VALUE": {
+        "name": "CONFIG_MIC_RES_10BIT_VALUE",
+        "value": "(0x0300)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 32,
+        "value_type": "unknown"
+      },
+      "CONFIG_BAT_LOW_VALUE": {
+        "name": "CONFIG_BAT_LOW_VALUE",
+        "value": "(3100)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 35,
+        "value_type": "unknown"
+      },
+      "CONFIG_USING_CHILDLOCK": {
+        "name": "CONFIG_USING_CHILDLOCK",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "CONFIG_SMOKING_IN_CHARGING": {
+        "name": "CONFIG_SMOKING_IN_CHARGING",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 41,
+        "value_type": "unknown"
+      },
+      "CONFIG_HEATING_MAX_CNT": {
+        "name": "CONFIG_HEATING_MAX_CNT",
+        "value": "(100)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/ec_demo/src/cfg.h",
+        "line_number": 44,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "2",
+      "ble_connections": {
+        "slaves": "(1)",
+        "masters": "(0)"
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "FindMy_Dongle": {
+    "project_name": "FindMy_Dongle",
+    "file_path": "projects/FindMy_Dongle/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(2)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 23,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(1)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 26,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 32,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(1)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 33,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x2C, 0x28, 0x08, 0x23, 0x20, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 34,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"fmna_receiver_\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 35,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 36,
+        "value_type": "hex"
+      },
+      "BLE_AUTH": {
+        "name": "BLE_AUTH",
+        "value": "(GAP_AUTH_REQ_NO_MITM_NO_BOND)",
+        "category": "ble",
+        "description": "BLE authentication requirements",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 37,
+        "value_type": "symbol"
+      }
+    },
+    "profile_config": {},
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 51,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 53,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(0)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 54,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 55,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "CFG_USB_HID": {
+        "name": "CFG_USB_HID",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 14,
+        "value_type": "unknown"
+      },
+      "HID_INST_CNT": {
+        "name": "HID_INST_CNT",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 17,
+        "value_type": "unknown"
+      },
+      "DONGLE_VER": {
+        "name": "DONGLE_VER",
+        "value": "\"+VER=B631 Dongle, V1.8.28\\r\\n\"",
+        "category": "other",
+        "description": "8月xx日",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 18,
+        "value_type": "unknown"
+      },
+      "CONN_ADDR_NUM": {
+        "name": "CONN_ADDR_NUM",
+        "value": "(5)",
+        "category": "other",
+        "description": "已经连接过的地址",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 20,
+        "value_type": "int"
+      },
+      "DBG_UART_TXD": {
+        "name": "DBG_UART_TXD",
+        "value": "(2)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 27,
+        "value_type": "bool"
+      },
+      "DBG_UART_RXD": {
+        "name": "DBG_UART_RXD",
+        "value": "(18)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 28,
+        "value_type": "bool"
+      },
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "BRR_DIV(921600, 48M)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 29,
+        "value_type": "bool"
+      },
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 38,
+        "value_type": "unknown"
+      },
+      "BLE_SYNC_WORD": {
+        "name": "BLE_SYNC_WORD",
+        "value": "(0x8E89BED6)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 39,
+        "value_type": "unknown"
+      },
+      "SCAN_NUM_MAX": {
+        "name": "SCAN_NUM_MAX",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 41,
+        "value_type": "int"
+      },
+      "CFG_HW_TIMER": {
+        "name": "CFG_HW_TIMER",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 42,
+        "value_type": "unknown"
+      },
+      "BT_MAC_STORE_OFFSET": {
+        "name": "BT_MAC_STORE_OFFSET",
+        "value": "(0x1200)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 44,
+        "value_type": "unknown"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 47,
+        "value_type": "unknown"
+      },
+      "DBG_APP_MSG": {
+        "name": "DBG_APP_MSG",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 52,
+        "value_type": "bool"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 56,
+        "value_type": "bool"
+      },
+      "DBG_USB": {
+        "name": "DBG_USB",
+        "value": "(0)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 57,
+        "value_type": "bool"
+      },
+      "DBG_ATCMD": {
+        "name": "DBG_ATCMD",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 58,
+        "value_type": "bool"
+      },
+      "FMNA_AIS_FWVER_HDL": {
+        "name": "FMNA_AIS_FWVER_HDL",
+        "value": "0x1A",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 62,
+        "value_type": "unknown"
+      },
+      "FMNA_AIS_BATT_LVL_HDL": {
+        "name": "FMNA_AIS_BATT_LVL_HDL",
+        "value": "0x20",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 63,
+        "value_type": "unknown"
+      },
+      "FMNA_NOT_OWNER_CLI_CFG_HDL": {
+        "name": "FMNA_NOT_OWNER_CLI_CFG_HDL",
+        "value": "0x2A",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 64,
+        "value_type": "unknown"
+      },
+      "FMNA_NOT_OWNER_IND_HDL": {
+        "name": "FMNA_NOT_OWNER_IND_HDL",
+        "value": "0x29",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/FindMy_Dongle/src/cfg.h",
+        "line_number": 65,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(2)",
+      "ble_connections": {
+        "slaves": 0,
+        "masters": 1
+      },
+      "debug_mode": "(1)",
+      "profiles_enabled": 0
+    }
+  },
+  "QKIE-BT-2.4G-USB-Receive": {
+    "project_name": "QKIE-BT-2.4G-USB-Receive",
+    "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+    "system_config": {
+      "SYS_CLK": {
+        "name": "SYS_CLK",
+        "value": "(2)",
+        "category": "system",
+        "description": "System Clock (0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 17,
+        "value_type": "enum"
+      },
+      "DBG_MODE": {
+        "name": "DBG_MODE",
+        "value": "(0)",
+        "category": "system",
+        "description": "Debug Mode (0=Disable, 1=UART, 2=RTT)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 20,
+        "value_type": "enum"
+      }
+    },
+    "ble_config": {
+      "BLE_NB_SLAVE": {
+        "name": "BLE_NB_SLAVE",
+        "value": "(0)",
+        "category": "ble",
+        "description": "Number of slave connections",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 33,
+        "value_type": "int"
+      },
+      "BLE_NB_MASTER": {
+        "name": "BLE_NB_MASTER",
+        "value": "(2)",
+        "category": "ble",
+        "description": "Number of master connections",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 34,
+        "value_type": "int"
+      },
+      "BLE_ADDR": {
+        "name": "BLE_ADDR",
+        "value": "{0x01, 0x20, 0x10, 0x23, 0x20, 0xD2}",
+        "category": "ble",
+        "description": "BLE device address",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 37,
+        "value_type": "array"
+      },
+      "BLE_DEV_NAME": {
+        "name": "BLE_DEV_NAME",
+        "value": "\"usb_receiver2_\"",
+        "category": "ble",
+        "description": "BLE device name",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 38,
+        "value_type": "string"
+      },
+      "BLE_DEV_ICON": {
+        "name": "BLE_DEV_ICON",
+        "value": "0x0000",
+        "category": "ble",
+        "description": "BLE appearance icon",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 39,
+        "value_type": "hex"
+      },
+      "BLE_AUTH": {
+        "name": "BLE_AUTH",
+        "value": "(GAP_AUTH_REQ_NO_MITM_NO_BOND)",
+        "category": "ble",
+        "description": "BLE authentication requirements",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 40,
+        "value_type": "symbol"
+      }
+    },
+    "profile_config": {},
+    "debug_config": {
+      "DBG_APP": {
+        "name": "DBG_APP",
+        "value": "(1)",
+        "category": "debug",
+        "description": "App debug",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 58,
+        "value_type": "bool"
+      },
+      "DBG_ACTV": {
+        "name": "DBG_ACTV",
+        "value": "(1)",
+        "category": "debug",
+        "description": "Activity debug",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 59,
+        "value_type": "bool"
+      },
+      "DBG_GAPC": {
+        "name": "DBG_GAPC",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Controller debug",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 60,
+        "value_type": "bool"
+      },
+      "DBG_GAPM": {
+        "name": "DBG_GAPM",
+        "value": "(1)",
+        "category": "debug",
+        "description": "GAP Manager debug",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 61,
+        "value_type": "bool"
+      }
+    },
+    "other_macros": {
+      "CFG_USB": {
+        "name": "CFG_USB",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 14,
+        "value_type": "unknown"
+      },
+      "FAST_DONGLE_MODE": {
+        "name": "FAST_DONGLE_MODE",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 15,
+        "value_type": "unknown"
+      },
+      "DBG_UART_TXD": {
+        "name": "DBG_UART_TXD",
+        "value": "(13)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 21,
+        "value_type": "bool"
+      },
+      "DBG_UART_RXD": {
+        "name": "DBG_UART_RXD",
+        "value": "(18)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 22,
+        "value_type": "bool"
+      },
+      "PA_UART1_TX": {
+        "name": "PA_UART1_TX",
+        "value": "(DBG_UART_TXD)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 24,
+        "value_type": "unknown"
+      },
+      "PA_UART1_RX": {
+        "name": "PA_UART1_RX",
+        "value": "(DBG_UART_RXD)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 25,
+        "value_type": "unknown"
+      },
+      "DBG_UART_BAUD": {
+        "name": "DBG_UART_BAUD",
+        "value": "BRR_DIV(921600, 16M)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 29,
+        "value_type": "bool"
+      },
+      "SCAN_NUM_MAX": {
+        "name": "SCAN_NUM_MAX",
+        "value": "(2)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 35,
+        "value_type": "int"
+      },
+      "BLE_EN_SMP": {
+        "name": "BLE_EN_SMP",
+        "value": "(0)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 36,
+        "value_type": "unknown"
+      },
+      "BLE_SYNC_WORD": {
+        "name": "BLE_SYNC_WORD",
+        "value": "(0x8e89bed6)",
+        "category": "ble",
+        "description": "(0x26D5EF45)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 41,
+        "value_type": "unknown"
+      },
+      "BLE_HEAP_BASE": {
+        "name": "BLE_HEAP_BASE",
+        "value": "(0x20004A00)",
+        "category": "ble",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 43,
+        "value_type": "unknown"
+      },
+      "BT_MAC_STORE_OFFSET": {
+        "name": "BT_MAC_STORE_OFFSET",
+        "value": "(0x1200)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 45,
+        "value_type": "unknown"
+      },
+      "CFG_HW_TIMER": {
+        "name": "CFG_HW_TIMER",
+        "value": "(0)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 47,
+        "value_type": "unknown"
+      },
+      "SFTMR_SRC": {
+        "name": "SFTMR_SRC",
+        "value": "(TMS_SysTick)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 49,
+        "value_type": "unknown"
+      },
+      "GATT_CLI": {
+        "name": "GATT_CLI",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 54,
+        "value_type": "unknown"
+      },
+      "DBG_GATT": {
+        "name": "DBG_GATT",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 62,
+        "value_type": "bool"
+      },
+      "DBG_USB": {
+        "name": "DBG_USB",
+        "value": "(1)",
+        "category": "debug",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 63,
+        "value_type": "bool"
+      },
+      "HID_RPT_KB": {
+        "name": "HID_RPT_KB",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 71,
+        "value_type": "unknown"
+      },
+      "HID_RPT_MEDIA": {
+        "name": "HID_RPT_MEDIA",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 72,
+        "value_type": "unknown"
+      },
+      "HID_RPT_SYSTEM": {
+        "name": "HID_RPT_SYSTEM",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 73,
+        "value_type": "unknown"
+      },
+      "HID_RPT_FULL_KB": {
+        "name": "HID_RPT_FULL_KB",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 74,
+        "value_type": "unknown"
+      },
+      "RPT_ID_KB": {
+        "name": "RPT_ID_KB",
+        "value": "(1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 77,
+        "value_type": "unknown"
+      },
+      "BLE_RPT_LEN_KB": {
+        "name": "BLE_RPT_LEN_KB",
+        "value": "(8)",
+        "category": "ble",
+        "description": "1B(ctlkeys) + 1B(resv) + 6B(keycode)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 78,
+        "value_type": "unknown"
+      },
+      "USB_RPT_LEN_KB": {
+        "name": "USB_RPT_LEN_KB",
+        "value": "(BLE_RPT_LEN_KB)",
+        "category": "other",
+        "description": "+ rptid(1B)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 79,
+        "value_type": "bool"
+      },
+      "RPT_ID_MEDIA": {
+        "name": "RPT_ID_MEDIA",
+        "value": "(2)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 81,
+        "value_type": "unknown"
+      },
+      "BLE_RPT_LEN_MEDIA": {
+        "name": "BLE_RPT_LEN_MEDIA",
+        "value": "(2)",
+        "category": "ble",
+        "description": "24bits",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 82,
+        "value_type": "unknown"
+      },
+      "USB_RPT_LEN_MEDIA": {
+        "name": "USB_RPT_LEN_MEDIA",
+        "value": "(BLE_RPT_LEN_MEDIA + 1)",
+        "category": "other",
+        "description": "+ rptid(1B)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 83,
+        "value_type": "bool"
+      },
+      "RPT_ID_SYSTEM": {
+        "name": "RPT_ID_SYSTEM",
+        "value": "(3)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 85,
+        "value_type": "unknown"
+      },
+      "BLE_RPT_LEN_SYSTEM": {
+        "name": "BLE_RPT_LEN_SYSTEM",
+        "value": "(1)",
+        "category": "ble",
+        "description": "8bits",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 86,
+        "value_type": "unknown"
+      },
+      "USB_RPT_LEN_SYSTEM": {
+        "name": "USB_RPT_LEN_SYSTEM",
+        "value": "(BLE_RPT_LEN_SYSTEM + 1)",
+        "category": "other",
+        "description": "+ rptid(1B)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 87,
+        "value_type": "bool"
+      },
+      "RPT_ID_MOUSE": {
+        "name": "RPT_ID_MOUSE",
+        "value": "(4)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 89,
+        "value_type": "unknown"
+      },
+      "BLE_RPT_LEN_MOUSE": {
+        "name": "BLE_RPT_LEN_MOUSE",
+        "value": "(4)",
+        "category": "ble",
+        "description": "1B(button) + 1B(X) + 1B(Y) + 1B(Wheel)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 90,
+        "value_type": "unknown"
+      },
+      "USB_RPT_LEN_MOUSE": {
+        "name": "USB_RPT_LEN_MOUSE",
+        "value": "(BLE_RPT_LEN_MOUSE)",
+        "category": "other",
+        "description": "no rptid",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 91,
+        "value_type": "bool"
+      },
+      "RPT_ID_FULL_KB": {
+        "name": "RPT_ID_FULL_KB",
+        "value": "(5)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 93,
+        "value_type": "unknown"
+      },
+      "BLE_RPT_LEN_FULL_KB": {
+        "name": "BLE_RPT_LEN_FULL_KB",
+        "value": "(13)",
+        "category": "ble",
+        "description": "1B(ctlkeys) + 12B(keycode)",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 94,
+        "value_type": "unknown"
+      },
+      "USB_RPT_LEN_FULL_KB": {
+        "name": "USB_RPT_LEN_FULL_KB",
+        "value": "(BLE_RPT_LEN_FULL_KB)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 95,
+        "value_type": "bool"
+      },
+      "PKT_KB_LEN": {
+        "name": "PKT_KB_LEN",
+        "value": "(USB_RPT_LEN_KB)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 97,
+        "value_type": "bool"
+      },
+      "PKT_CONSUMER_LEN": {
+        "name": "PKT_CONSUMER_LEN",
+        "value": "(USB_RPT_LEN_MEDIA + 1)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 99,
+        "value_type": "bool"
+      },
+      "PKT_MS_LEN": {
+        "name": "PKT_MS_LEN",
+        "value": "(USB_RPT_LEN_MOUSE)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 100,
+        "value_type": "bool"
+      },
+      "PKT_FULL_KB_LEN": {
+        "name": "PKT_FULL_KB_LEN",
+        "value": "(USB_RPT_LEN_FULL_KB)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 101,
+        "value_type": "bool"
+      },
+      "GATT_KB_HDL": {
+        "name": "GATT_KB_HDL",
+        "value": "(0x23)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 106,
+        "value_type": "unknown"
+      },
+      "GATT_WR_HDL": {
+        "name": "GATT_WR_HDL",
+        "value": "(0x27)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 107,
+        "value_type": "unknown"
+      },
+      "GATT_MEDIA_HDL": {
+        "name": "GATT_MEDIA_HDL",
+        "value": "(0x2A)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 108,
+        "value_type": "unknown"
+      },
+      "GATT_SYS_HDL": {
+        "name": "GATT_SYS_HDL",
+        "value": "(0x2E)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 109,
+        "value_type": "unknown"
+      },
+      "GATT_MOUSE_HDL": {
+        "name": "GATT_MOUSE_HDL",
+        "value": "(0x32)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 110,
+        "value_type": "unknown"
+      },
+      "GATT_FULL_KB_HDL": {
+        "name": "GATT_FULL_KB_HDL",
+        "value": "(0x36)",
+        "category": "other",
+        "description": "",
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/cfg.h",
+        "line_number": 111,
+        "value_type": "unknown"
+      }
+    },
+    "enabled_profiles": [],
+    "summary": {
+      "sys_clk": "(2)",
+      "ble_connections": {
+        "slaves": 0,
+        "masters": 2
+      },
+      "debug_mode": "(0)",
+      "profiles_enabled": 0
+    }
+  }
+}

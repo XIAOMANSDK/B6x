@@ -1,0 +1,921 @@
+{
+  "file_path": "ble/api/le_err.h",
+  "functions": [],
+  "macros": [
+    {
+      "name": "LE_SUCCESS",
+      "value": "0x00",
+      "macro_type": "constant",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 15
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GAP_ERR_NO_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_INVALID_PARAM",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_PROTOCOL_PROBLEM",
+          "value": 65,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_NOT_SUPPORTED",
+          "value": 66,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_COMMAND_DISALLOWED",
+          "value": 67,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_CANCELED",
+          "value": 68,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_TIMEOUT",
+          "value": 69,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_DISCONNECTED",
+          "value": 70,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_NOT_FOUND",
+          "value": 71,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_REJECTED",
+          "value": 72,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_PRIVACY_CFG_PB",
+          "value": 73,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_ADV_DATA_INVALID",
+          "value": 74,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_INSUFF_RESOURCES",
+          "value": 75,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_UNEXPECTED",
+          "value": 76,
+          "brief": ""
+        },
+        {
+          "name": "GAP_ERR_MISMATCH",
+          "value": 77,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 25
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "ATT_ERR_NO_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INVALID_HANDLE",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_READ_NOT_PERMITTED",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_WRITE_NOT_PERMITTED",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INVALID_PDU",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INSUFF_AUTHEN",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_REQUEST_NOT_SUPPORTED",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INVALID_OFFSET",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INSUFF_AUTHOR",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_PREPARE_QUEUE_FULL",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_ATTRIBUTE_NOT_FOUND",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_ATTRIBUTE_NOT_LONG",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INSUFF_ENC_KEY_SIZE",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INVALID_ATTRIBUTE_VAL_LEN",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_UNLIKELY_ERR",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INSUFF_ENC",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_UNSUPP_GRP_TYPE",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_INSUFF_RESOURCE",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "ATT_ERR_APP_ERROR",
+          "value": 128,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 61
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "L2C_ERR_NO_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_CONNECTION_LOST",
+          "value": 48,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INVALID_MTU_EXCEED",
+          "value": 49,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INVALID_MPS_EXCEED",
+          "value": 50,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INVALID_CID",
+          "value": 51,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INVALID_PDU",
+          "value": 52,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_NO_RES_AVAIL",
+          "value": 53,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INSUFF_AUTHEN",
+          "value": 54,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INSUFF_AUTHOR",
+          "value": 55,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INSUFF_ENC_KEY_SIZE",
+          "value": 56,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INSUFF_ENC",
+          "value": 57,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_LEPSM_NOT_SUPP",
+          "value": 58,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_INSUFF_CREDIT",
+          "value": 59,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_NOT_UNDERSTOOD",
+          "value": 60,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_CREDIT_ERROR",
+          "value": 61,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_CID_ALREADY_ALLOC",
+          "value": 62,
+          "brief": ""
+        },
+        {
+          "name": "L2C_ERR_UNKNOWN_PDU",
+          "value": 63,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 105
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "GATT_ERR_NO_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ERR_INVALID_ATT_LEN",
+          "value": 80,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ERR_INVALID_TYPE_IN_SVC_SEARCH",
+          "value": 81,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ERR_WRITE",
+          "value": 82,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ERR_SIGNED_WRITE",
+          "value": 83,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ERR_ATTRIBUTE_CLIENT_MISSING",
+          "value": 84,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ERR_ATTRIBUTE_SERVER_MISSING",
+          "value": 85,
+          "brief": ""
+        },
+        {
+          "name": "GATT_ERR_INVALID_PERM",
+          "value": 86,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 145
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SMP_ERR_NO_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_PASSKEY_ENTRY_FAILED",
+          "value": 97,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_OOB_NOT_AVAILABLE",
+          "value": 98,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_AUTH_REQ",
+          "value": 99,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_CONF_VAL_FAILED",
+          "value": 100,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_PAIRING_NOT_SUPP",
+          "value": 101,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_ENC_KEY_SIZE",
+          "value": 102,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_CMD_NOT_SUPPORTED",
+          "value": 103,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_UNSPECIFIED_REASON",
+          "value": 104,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_REPEATED_ATTEMPTS",
+          "value": 105,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_INVALID_PARAM",
+          "value": 106,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_DHKEY_CHECK_FAILED",
+          "value": 107,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_LOC_NUMERIC_COMPARISON_FAILED",
+          "value": 108,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_PASSKEY_ENTRY_FAILED",
+          "value": 113,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_OOB_NOT_AVAILABLE",
+          "value": 114,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_AUTH_REQ",
+          "value": 115,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_CONF_VAL_FAILED",
+          "value": 116,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_PAIRING_NOT_SUPP",
+          "value": 117,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_ENC_KEY_SIZE",
+          "value": 118,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_CMD_NOT_SUPPORTED",
+          "value": 119,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_UNSPECIFIED_REASON",
+          "value": 120,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_REPEATED_ATTEMPTS",
+          "value": 121,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_INVALID_PARAM",
+          "value": 122,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_DHKEY_CHECK_FAILED",
+          "value": 123,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_REM_NUMERIC_COMPARISON_FAILED",
+          "value": 124,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_ADDR_RESOLV_FAIL",
+          "value": 208,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_SIGN_VERIF_FAIL",
+          "value": 209,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_ENC_KEY_MISSING",
+          "value": 210,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_ENC_NOT_SUPPORTED",
+          "value": 211,
+          "brief": ""
+        },
+        {
+          "name": "SMP_ERR_ENC_TIMEOUT",
+          "value": 212,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 167
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "PRF_ERR_NO_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_APP_ERROR",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_INVALID_PARAM",
+          "value": 129,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_INEXISTENT_HDL",
+          "value": 130,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_STOP_DISC_CHAR_MISSING",
+          "value": 131,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_MULTIPLE_SVC",
+          "value": 132,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_STOP_DISC_WRONG_CHAR_PROP",
+          "value": 133,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_MULTIPLE_CHAR",
+          "value": 134,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_NOT_WRITABLE",
+          "value": 135,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_NOT_READABLE",
+          "value": 136,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_REQ_DISALLOWED",
+          "value": 137,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_NTF_DISABLED",
+          "value": 138,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_IND_DISABLED",
+          "value": 139,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_FEATURE_NOT_SUPPORTED",
+          "value": 140,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_UNEXPECTED_LEN",
+          "value": 141,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_DISCONNECTED",
+          "value": 142,
+          "brief": ""
+        },
+        {
+          "name": "PRF_ERR_PROC_TIMEOUT",
+          "value": 143,
+          "brief": ""
+        },
+        {
+          "name": "PRF_CCCD_IMPR_CONFIGURED",
+          "value": 253,
+          "brief": ""
+        },
+        {
+          "name": "PRF_PROC_IN_PROGRESS",
+          "value": 254,
+          "brief": ""
+        },
+        {
+          "name": "PRF_OUT_OF_RANGE",
+          "value": 255,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 248
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "LL_ERR_NO_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNKNOWN_HCI_COMMAND",
+          "value": 145,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNKNOWN_CONNECTION_ID",
+          "value": 146,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_HARDWARE_FAILURE",
+          "value": 147,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_PAGE_TIMEOUT",
+          "value": 148,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_AUTH_FAILURE",
+          "value": 149,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_PIN_MISSING",
+          "value": 150,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_MEMORY_CAPA_EXCEED",
+          "value": 151,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CON_TIMEOUT",
+          "value": 152,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CON_LIMIT_EXCEED",
+          "value": 153,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_SYNC_CON_LIMIT_DEV_EXCEED",
+          "value": 154,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_ACL_CON_EXISTS",
+          "value": 155,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_COMMAND_DISALLOWED",
+          "value": 156,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CONN_REJ_LIMITED_RESOURCES",
+          "value": 157,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CONN_REJ_SECURITY_REASONS",
+          "value": 158,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CONN_REJ_UNACCEPTABLE_BDADDR",
+          "value": 159,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CONN_ACCEPT_TIMEOUT_EXCEED",
+          "value": 160,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNSUPPORTED",
+          "value": 161,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_INVALID_HCI_PARAM",
+          "value": 162,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_REMOTE_USER_TERM_CON",
+          "value": 163,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_REMOTE_DEV_TERM_LOW_RESOURCES",
+          "value": 164,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_REMOTE_DEV_POWER_OFF",
+          "value": 165,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CON_TERM_BY_LOCAL_HOST",
+          "value": 166,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_REPEATED_ATTEMPTS",
+          "value": 167,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_PAIRING_NOT_ALLOWED",
+          "value": 168,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNKNOWN_LMP_PDU",
+          "value": 169,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNSUPPORTED_REMOTE_FEATURE",
+          "value": 170,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_SCO_OFFSET_REJECTED",
+          "value": 171,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_SCO_INTERVAL_REJECTED",
+          "value": 172,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_SCO_AIR_MODE_REJECTED",
+          "value": 173,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_INVALID_LMP_PARAM",
+          "value": 174,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNSPECIFIED_ERROR",
+          "value": 175,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNSUPPORTED_LMP_PARAM_VALUE",
+          "value": 176,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_ROLE_CHANGE_NOT_ALLOWED",
+          "value": 177,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_LMP_RSP_TIMEOUT",
+          "value": 178,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_LMP_COLLISION",
+          "value": 179,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_LMP_PDU_NOT_ALLOWED",
+          "value": 180,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_ENC_MODE_NOT_ACCEPT",
+          "value": 181,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_LINK_KEY_CANT_CHANGE",
+          "value": 182,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_QOS_NOT_SUPPORTED",
+          "value": 183,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_INSTANT_PASSED",
+          "value": 184,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_PAIRING_WITH_UNIT_KEY_NOT_SUP",
+          "value": 185,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_DIFF_TRANSACTION_COLLISION",
+          "value": 186,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_QOS_UNACCEPTABLE_PARAM",
+          "value": 188,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_QOS_REJECTED",
+          "value": 189,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CHANNEL_CLASS_NOT_SUP",
+          "value": 190,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_INSUFFICIENT_SECURITY",
+          "value": 191,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_PARAM_OUT_OF_MAND_RANGE",
+          "value": 192,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_ROLE_SWITCH_PEND",
+          "value": 194,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_RESERVED_SLOT_VIOLATION",
+          "value": 196,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_ROLE_SWITCH_FAIL",
+          "value": 197,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_EIR_TOO_LARGE",
+          "value": 198,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_SP_NOT_SUPPORTED_HOST",
+          "value": 199,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_HOST_BUSY_PAIRING",
+          "value": 200,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CONTROLLER_BUSY",
+          "value": 202,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_UNACCEPTABLE_CONN_INT",
+          "value": 203,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_DIRECT_ADV_TO",
+          "value": 204,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_TERMINATED_MIC_FAILURE",
+          "value": 205,
+          "brief": ""
+        },
+        {
+          "name": "LL_ERR_CONN_FAILED_TO_BE_EST",
+          "value": 206,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/le_err.h",
+      "line_number": 294
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

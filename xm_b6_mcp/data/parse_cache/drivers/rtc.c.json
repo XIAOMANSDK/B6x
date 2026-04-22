@@ -1,0 +1,132 @@
+{
+  "file_path": "drivers/src/rtc.c",
+  "functions": [
+    {
+      "name": "rtc_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    #if (ROM_UNUSED)\n    // 时钟使能（在ROM中保持使能）\n    // RCC->APBCLK_EN_RUN.AON_CLKEN_RUN     = 1;\n    // RCC->APBCLK_EN_RUN.APBMISC_CLKEN_RUN = 1;\n    RCC_APBCLK_EN(APB_APBMISC_BIT | APB_AON_BIT);  /* 使能APBMISC和AON模块时钟 */\n    #endif\n\n    // RTC中断禁用和状态清除\n    APBMISC->RTCINT_CTRL.Word = 0x02;          /* RTC_INT_EN=0(禁用中断), RTC_INT_CLR=1(清除中断标志) */\n\n    // RTC使能或禁用\n    AON->BLE_RTC_CTL.RTC_EN = en;              /* RTC_EN: RTC模块使能控制位 */\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 38,
+      "is_static": false
+    },
+    {
+      "name": "rtc_time_get",
+      "return_type": "rtc_time_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    rtc_time_t time;\n\n    time.sec = APBMISC->RTC_SEC_SHD;           /* 从影子寄存器读取秒值 */\n    time.ms  = APBMISC->RTC_MS_SHD;            /* 从影子寄存器读取毫秒值 */\n\n    if (time.sec != APBMISC->RTC_SEC_SHD)\n    {\n        // 刚好跨越到下一秒\n        time.sec = APBMISC->RTC_SEC_SHD;       /* 重新读取秒值 */\n        time.ms  = APBMISC->RTC_MS_SHD;        /* 重新读取毫秒值 */\n    }\n\n    return time;\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 64,
+      "is_static": false
+    },
+    {
+      "name": "rtc_time_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    APBMISC->RTC_SEC = sec;                    /* 设置RTC秒寄存器 */\n    APBMISC->RTC_MS  = ms;                     /* 设置RTC毫秒寄存器 */\n\n    // 等待RTC当前时间寄存器写入完成\n    while(APBMISC->RTCINT_CTRL.RTC_SET_BUSY);  /* RTC_SET_BUSY: RTC设置忙状态位 */\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 92,
+      "is_static": false
+    },
+    {
+      "name": "rtc_alarm_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    // 禁用中断，清除上次报警状态\n    APBMISC->RTCINT_CTRL.RTC_INT_EN = 0;       /* RTC_INT_EN: RTC中断使能位 */\n    APBMISC->RTCINT_CTRL.RTC_INT_CLR = 1;      /* RTC_INT_CLR: RTC中断清除位 */\n\n    if (ms_time)\n    {\n        rtc_time_t time;\n\n        // 等待RTC报警时间寄存器写入完成\n        while(APBMISC->RTCINT_CTRL.RTC_SET_BUSY);  /* RTC_SET_BUSY: RTC设置忙状态位 */\n\n        // time = rtc_time_get();\n        time.sec = APBMISC->RTC_SEC_SHD;       /* 读取当前秒值 */\n        time.ms  = APBMISC->RTC_MS_SHD;        /* 读取当前毫秒值 */\n\n        if (time.sec != APBMISC->RTC_SEC_SHD)\n        {\n            // 刚好跨越到下一秒\n            time.sec = APBMISC->RTC_SEC_SHD;   /* 重新读取秒值 */\n            time.ms  = APBMISC->RTC_MS_SHD;    /* 重新读取毫秒值 */\n        }\n\n        // 添加时间偏移，然后设置报警\n        ms_time += time.ms;                    /* 计算总毫秒数 */\n        APBMISC->RTC_ALARM_SEC = time.sec + (ms_time / 1000);  /* 设置报警秒值 */\n        APBMISC->RTC_ALARM_MS  = ms_time % 1000;               /* 设置报警毫秒值 */\n\n        // 使能中断\n        APBMISC->RTCINT_CTRL.RTC_INT_EN = 1;   /* RTC_INT_EN: RTC中断使能位 */\n    }\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 114,
+      "is_static": false
+    },
+    {
+      "name": "rtc_alarm_get",
+      "return_type": "rtc_time_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    rtc_time_t time;\n\n    time.sec = APBMISC->RTC_ALARM_SEC;         /* 读取报警秒寄存器 */\n    time.ms  = APBMISC->RTC_ALARM_MS;          /* 读取报警毫秒寄存器 */\n    return time;\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 157,
+      "is_static": false
+    },
+    {
+      "name": "rtc_is_alarm",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    bool ret = APBMISC->RTCINT_CTRL.RTC_INT_ST;  /* RTC_INT_ST: RTC中断状态位 */\n\n    if (ret)\n    {\n        APBMISC->RTCINT_CTRL.RTC_INT_CLR = 1;  /* RTC_INT_CLR: RTC中断清除位 */\n    }\n\n    return ret;\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 176,
+      "is_static": false
+    },
+    {
+      "name": "rtc_irq_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    APBMISC->RTCINT_CTRL.RTC_INT_EN = en;      /* RTC_INT_EN: RTC中断使能位 */\n    APBMISC->RTCINT_CTRL.RTC_INT_CLR = 1;      /* RTC_INT_CLR: RTC中断清除位 */\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 197,
+      "is_static": false
+    },
+    {
+      "name": "rtc_wkup_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "function_body": "{\n    AON->PMU_WKUP_CTRL.RTC_WKUP_EN = en;       /* RTC_WKUP_EN: RTC唤醒使能位 */\n    APBMISC->AON_PMU_CTRL.WKUP_ST_CLR = 1;     /* WKUP_ST_CLR: 唤醒状态清除位 */\n}",
+      "file_path": "drivers/src/rtc.c",
+      "line_number": 212,
+      "is_static": false
+    }
+  ],
+  "macros": [],
+  "parse_errors": []
+}

@@ -1,0 +1,4312 @@
+[
+  {
+    "id": "bleadv_change_init",
+    "name": "bleAdv_change Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 36,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 46,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 48,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 52,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 53,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 58,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleAdv_change/src/main.c",
+        "line_number": 74,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleAdv_change",
+    "prerequisites": [],
+    "description": "Initialization sequence with 10 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "bleancs_init",
+    "name": "bleANCS Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 35,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 44,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 4,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 57,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 5,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 67,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 6,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 83,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 92,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 8,
+        "file_path": "projects/bleANCS/src/main.c",
+        "line_number": 83,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleANCS",
+    "prerequisites": [],
+    "description": "Initialization sequence with 9 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> uart1Rb_Init..."
+  },
+  {
+    "id": "blefcc_init",
+    "name": "bleFCC Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 35,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 45,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 51,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 52,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "fcc_init",
+        "category": "unknown",
+        "order": 8,
+        "file_path": "projects/bleFCC/src/main.c",
+        "line_number": 56,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleFCC",
+    "prerequisites": [],
+    "description": "Initialization sequence with 9 steps covering: peripheral, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blefcc_store_config_init",
+    "name": "bleFCC_Store_Config Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 76,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 78,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 105,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 106,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "fcc_init",
+        "category": "unknown",
+        "order": 8,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 110,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rf_pa_set",
+        "category": "unknown",
+        "order": 9,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 113,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rf_dac_tab0_set",
+        "category": "unknown",
+        "order": 10,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 127,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rf_dac_tab1_set",
+        "category": "unknown",
+        "order": 11,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 128,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rf_dac_tab2_set",
+        "category": "unknown",
+        "order": 12,
+        "file_path": "projects/bleFCC_Store_Config/src/main.c",
+        "line_number": 129,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleFCC_Store_Config",
+    "prerequisites": [],
+    "description": "Initialization sequence with 13 steps covering: peripheral, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blehid_init",
+    "name": "bleHid Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 49,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 53,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 54,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "batt_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 58,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 61,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleHid/src/main.c",
+        "line_number": 76,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleHid",
+    "prerequisites": [],
+    "description": "Initialization sequence with 11 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blehid_keybd_init",
+    "name": "bleHid_Keybd Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 48,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 51,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 59,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 60,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "batt_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 64,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 68,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleHid_Keybd/src/main.c",
+        "line_number": 83,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleHid_Keybd",
+    "prerequisites": [],
+    "description": "Initialization sequence with 11 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blehid_mouse_init",
+    "name": "bleHid_Mouse Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "core_release_io_latch",
+        "category": "unknown",
+        "order": 4,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 50,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 53,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 60,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 61,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "batt_init",
+        "category": "peripheral",
+        "order": 9,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 65,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 69,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 11,
+        "file_path": "projects/bleHid_Mouse/src/main.c",
+        "line_number": 84,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleHid_Mouse",
+    "prerequisites": [],
+    "description": "Initialization sequence with 12 steps covering: ble_core, peripheral, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> core_release_io_latch..."
+  },
+  {
+    "id": "blehid_uart_init",
+    "name": "bleHid_Uart Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 33,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 35,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 36,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "core_release_io_latch",
+        "category": "unknown",
+        "order": 4,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 45,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 60,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 63,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleHid_Uart/src/main.c",
+        "line_number": 78,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleHid_Uart",
+    "prerequisites": [],
+    "description": "Initialization sequence with 9 steps covering: ble_core, peripheral, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> core_release_io_latch..."
+  },
+  {
+    "id": "bleHid_Uart_ble_app_init",
+    "name": "bleHid_Uart BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 249,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 1,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 250,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 262,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 265,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 266,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 271,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 6,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 274,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleHid_Uart/src/app.c",
+        "line_number": 281,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleHid_Uart",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "blemaster_init",
+    "name": "bleMaster Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 35,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 45,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 6,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 53,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleMaster/src/main.c",
+        "line_number": 68,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleMaster",
+    "prerequisites": [],
+    "description": "Initialization sequence with 8 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blemasterslave_init",
+    "name": "bleMasterSlave Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 44,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 46,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 47,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 49,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 63,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 65,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 6,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 71,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleMasterSlave/src/main.c",
+        "line_number": 95,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleMasterSlave",
+    "prerequisites": [],
+    "description": "Initialization sequence with 8 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blemesh_init",
+    "name": "bleMesh Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 53,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 55,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 56,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 58,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 88,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 5,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 96,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "mesh_init",
+        "category": "mesh",
+        "order": 6,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 98,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 101,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 102,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleMesh/src/main.c",
+        "line_number": 144,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleMesh",
+    "prerequisites": [],
+    "description": "Initialization sequence with 10 steps covering: ble_core, mesh, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "bleota_init",
+    "name": "bleOTA Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 35,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 45,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 6,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 51,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 54,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 55,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleOTA/src/main.c",
+        "line_number": 72,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleOTA",
+    "prerequisites": [],
+    "description": "Initialization sequence with 10 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "bleota_dongle_init",
+    "name": "bleOTA_Dongle Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 34,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 36,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "puya_enter_dual_read",
+        "category": "unknown",
+        "order": 4,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 55,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 57,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 59,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 62,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleOTA_Dongle/src/main.c",
+        "line_number": 77,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleOTA_Dongle",
+    "prerequisites": [],
+    "description": "Initialization sequence with 11 steps covering: ble_core, peripheral, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> puya_enter_dual_read..."
+  },
+  {
+    "id": "bleOTA_Dongle_ble_app_init",
+    "name": "bleOTA_Dongle BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 200,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 1,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 201,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 213,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 216,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 217,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 222,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 6,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 224,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleOTA_Dongle/src/app.c",
+        "line_number": 231,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleOTA_Dongle",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "blepowerbank_init",
+    "name": "blePowerBank Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 54,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 6,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 60,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/blePowerBank/src/main.c",
+        "line_number": 76,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "blePowerBank",
+    "prerequisites": [],
+    "description": "Initialization sequence with 8 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "bleremotecontrol_init",
+    "name": "bleRemoteControl Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 44,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "puya_enter_dual_read",
+        "category": "unknown",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 47,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 48,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "core_release_io_latch",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 49,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 54,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 86,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/vocMI/src/main.c",
+        "line_number": 102,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "Initialization sequence with 9 steps covering: ble_core, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> puya_enter_dual_read -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleremotecontrol_init",
+    "name": "bleRemoteControl Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "puya_enter_dual_read",
+        "category": "unknown",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 46,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "core_release_io_latch",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 47,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 52,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 83,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/main.c",
+        "line_number": 99,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "Initialization sequence with 9 steps covering: ble_core, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> puya_enter_dual_read -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleremotecontrol_init",
+    "name": "bleRemoteControl Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "core_release_io_latch",
+        "category": "unknown",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 48,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iospc_rstpin",
+        "category": "unknown",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 58,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iospc_swdpin",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 59,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 81,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleRemoteControl/Slave/src/main.c",
+        "line_number": 96,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "Initialization sequence with 10 steps covering: ble_core, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> core_release_io_latch..."
+  },
+  {
+    "id": "bleremotecontrol_init",
+    "name": "bleRemoteControl Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "rcc_sysclk_set",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 30,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 32,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 34,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 36,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "boya_flash_quad_mode",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 51,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "puya_enter_dual_read",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 53,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 63,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iospc_rstpin",
+        "category": "unknown",
+        "order": 9,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 68,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 80,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rf_pa_set",
+        "category": "unknown",
+        "order": 11,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 81,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 12,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/main.c",
+        "line_number": 101,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "Initialization sequence with 13 steps covering: ble_core, system, unknown. Starts with: rcc_sysclk_set -> iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleremotecontrol_init",
+    "name": "bleRemoteControl Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "core_release_io_latch",
+        "category": "unknown",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 48,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 72,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/main.c",
+        "line_number": 87,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "Initialization sequence with 8 steps covering: ble_core, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> core_release_io_latch..."
+  },
+  {
+    "id": "bleremotecontrol_init",
+    "name": "bleRemoteControl Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "rcc_sysclk_set",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 30,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 32,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 34,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 36,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "boya_flash_quad_mode",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 51,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "puya_enter_dual_read",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 53,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 87,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iospc_rstpin",
+        "category": "unknown",
+        "order": 9,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 92,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 104,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rf_pa_set",
+        "category": "unknown",
+        "order": 11,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 105,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 12,
+        "file_path": "projects/bleRemoteControl/Master/src/main.c",
+        "line_number": 125,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "Initialization sequence with 13 steps covering: ble_core, system, unknown. Starts with: rcc_sysclk_set -> iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleRemoteControl_ble_app_init",
+    "name": "bleRemoteControl BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 269,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 270,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_wakeup",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 274,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 289,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 292,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 293,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 299,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 301,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_drift_set",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 306,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_txmd_set",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 309,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleRemoteControl/vocMI/src/app/app.c",
+        "line_number": 324,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "bleRemoteControl_ble_app_init",
+    "name": "bleRemoteControl BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 259,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 260,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_wakeup",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 264,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 279,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 282,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 283,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 289,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 291,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_drift_set",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 296,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_txmd_set",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 299,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleRemoteControl/vocGoogle/src/app/app.c",
+        "line_number": 314,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "bleRemoteControl_ble_app_init",
+    "name": "bleRemoteControl BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 269,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 270,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_wakeup",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 274,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 289,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 292,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 293,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 298,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 301,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 304,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_drift_set",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 309,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleRemoteControl/Slave/src/app.c",
+        "line_number": 316,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "bleRemoteControl_ble_app_init",
+    "name": "bleRemoteControl BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/app.c",
+        "line_number": 198,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/app.c",
+        "line_number": 211,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/app.c",
+        "line_number": 214,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/app.c",
+        "line_number": 215,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/MicDongle/src/app.c",
+        "line_number": 219,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "bleRemoteControl_ble_app_init",
+    "name": "bleRemoteControl BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 269,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 270,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_wakeup",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 274,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 290,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 293,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 5,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 294,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_conf",
+        "category": "unknown",
+        "order": 6,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 299,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 302,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rc32k_calib",
+        "category": "unknown",
+        "order": 8,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 305,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_drift_set",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 310,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleRemoteControl/MicDevice/src/app.c",
+        "line_number": 317,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "bleRemoteControl_ble_app_init",
+    "name": "bleRemoteControl BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/bleRemoteControl/Master/src/app.c",
+        "line_number": 191,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 1,
+        "file_path": "projects/bleRemoteControl/Master/src/app.c",
+        "line_number": 204,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/bleRemoteControl/Master/src/app.c",
+        "line_number": 207,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/bleRemoteControl/Master/src/app.c",
+        "line_number": 208,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 4,
+        "file_path": "projects/bleRemoteControl/Master/src/app.c",
+        "line_number": 212,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleRemoteControl",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "bleuart_init",
+    "name": "bleUart Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 55,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 57,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 6,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 61,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 64,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 65,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleUart/src/main.c",
+        "line_number": 87,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleUart",
+    "prerequisites": [],
+    "description": "Initialization sequence with 10 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "bleuart2usb_init",
+    "name": "bleUart2USB Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_sysclk_set",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 47,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 48,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 50,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 60,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 62,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 66,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 67,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_usb_en",
+        "category": "system",
+        "order": 9,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 72,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 77,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 11,
+        "file_path": "projects/bleUart2USB/src/main.c",
+        "line_number": 92,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleUart2USB",
+    "prerequisites": [],
+    "description": "Initialization sequence with 12 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_sysclk_set -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleuartat_init",
+    "name": "bleUartAT Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "rcc_sysclk_set",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 44,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 49,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 51,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_sysclk_freq",
+        "category": "system",
+        "order": 7,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 52,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 57,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 9,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 60,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 67,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 11,
+        "file_path": "projects/bleUartAT/src/main.c",
+        "line_number": 82,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleUartAT",
+    "prerequisites": [],
+    "description": "Initialization sequence with 12 steps covering: ble_core, peripheral, system. Starts with: rcc_sysclk_set -> iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleuartat_gsmdecodet_init",
+    "name": "bleUartAT-gsmDecodet Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 44,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "boya_flash_quad_mode",
+        "category": "unknown",
+        "order": 3,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 48,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 52,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 57,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 59,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_sysclk_freq",
+        "category": "system",
+        "order": 7,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 62,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 67,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 9,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 70,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 77,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 11,
+        "file_path": "projects/bleUartAT-gsmDecodet/src/main.c",
+        "line_number": 138,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleUartAT-gsmDecodet",
+    "prerequisites": [],
+    "description": "Initialization sequence with 12 steps covering: ble_core, peripheral, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> boya_flash_quad_mode -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleuartat_gsmdecodet_ab_init",
+    "name": "bleUartAT-gsmDecodet-AB Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 44,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 45,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "boya_flash_quad_mode",
+        "category": "unknown",
+        "order": 3,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 48,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 52,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 5,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 57,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 59,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_sysclk_freq",
+        "category": "system",
+        "order": 7,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 62,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 8,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 67,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 9,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 70,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 77,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 11,
+        "file_path": "projects/bleUartAT-gsmDecodet-AB/src/main.c",
+        "line_number": 137,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleUartAT-gsmDecodet-AB",
+    "prerequisites": [],
+    "description": "Initialization sequence with 12 steps covering: ble_core, peripheral, system, unknown. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> boya_flash_quad_mode -> rcc_fshclk_set..."
+  },
+  {
+    "id": "bleuartcmd_init",
+    "name": "bleUartCMD Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 55,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 56,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 61,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleUartCMD/src/main.c",
+        "line_number": 76,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleUartCMD",
+    "prerequisites": [],
+    "description": "Initialization sequence with 9 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blewechat_init",
+    "name": "bleWeChat Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 36,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 38,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 46,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "uart1Rb_Init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 48,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 52,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 7,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 53,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 58,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/bleWeChat/src/main.c",
+        "line_number": 74,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleWeChat",
+    "prerequisites": [],
+    "description": "Initialization sequence with 10 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "blewechatetc_init",
+    "name": "bleWeChatETC Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 39,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 40,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 42,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 47,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 5,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 62,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "leds_init",
+        "category": "peripheral",
+        "order": 6,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 63,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 7,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 68,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 8,
+        "file_path": "projects/bleWeChatETC/src/main.c",
+        "line_number": 83,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "bleWeChatETC",
+    "prerequisites": [],
+    "description": "Initialization sequence with 9 steps covering: ble_core, peripheral, system. Starts with: iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set -> rstrsn..."
+  },
+  {
+    "id": "ec_demo_init",
+    "name": "ec_demo Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/ec_demo/src/main.c",
+        "line_number": 39,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "ec_demo",
+    "prerequisites": [],
+    "description": "Initialization sequence with 1 steps covering: system. Starts with: iwdt_disable..."
+  },
+  {
+    "id": "findmy_dongle_init",
+    "name": "FindMy_Dongle Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "rcc_sysclk_set",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 31,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 33,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 35,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 37,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 44,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "boya_flash_quad_mode",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 46,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 6,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 52,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "puya_enter_dual_read",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 54,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 8,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 61,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 9,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 74,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 10,
+        "file_path": "projects/FindMy_Dongle/src/main.c",
+        "line_number": 96,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "FindMy_Dongle",
+    "prerequisites": [],
+    "description": "Initialization sequence with 11 steps covering: ble_core, system, unknown. Starts with: rcc_sysclk_set -> iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set..."
+  },
+  {
+    "id": "FindMy_Dongle_ble_app_init",
+    "name": "FindMy_Dongle BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_resume",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/FindMy_Dongle/src/app.c",
+        "line_number": 216,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 1,
+        "file_path": "projects/FindMy_Dongle/src/app.c",
+        "line_number": 228,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/FindMy_Dongle/src/app.c",
+        "line_number": 231,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "FindMy_Dongle",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  },
+  {
+    "id": "qkie_bt_2.4g_usb_receive_init",
+    "name": "QKIE-BT-2.4G-USB-Receive Initialization",
+    "category": "system",
+    "sequence": [
+      {
+        "api_name": "rcc_sysclk_set",
+        "category": "system",
+        "order": 0,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 28,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "iwdt_disable",
+        "category": "system",
+        "order": 1,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 30,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_ble_en",
+        "category": "system",
+        "order": 2,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 32,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_adc_en",
+        "category": "system",
+        "order": 3,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 34,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 4,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 41,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "boya_flash_quad_mode",
+        "category": "unknown",
+        "order": 5,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 43,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_fshclk_set",
+        "category": "system",
+        "order": 6,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 49,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "puya_enter_dual_read",
+        "category": "unknown",
+        "order": 7,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 51,
+        "calling_function": "sysInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rstrsn",
+        "category": "system",
+        "order": 8,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 77,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rcc_sysclk_freq",
+        "category": "system",
+        "order": 9,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 88,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "sftmr_init",
+        "category": "peripheral",
+        "order": 10,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 92,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "app_init",
+        "category": "ble_core",
+        "order": 11,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 95,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rf_pa_set",
+        "category": "unknown",
+        "order": 12,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 96,
+        "calling_function": "devInit",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_schedule",
+        "category": "ble_core",
+        "order": 13,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/main.c",
+        "line_number": 120,
+        "calling_function": "main",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "QKIE-BT-2.4G-USB-Receive",
+    "prerequisites": [],
+    "description": "Initialization sequence with 14 steps covering: ble_core, peripheral, system, unknown. Starts with: rcc_sysclk_set -> iwdt_disable -> rcc_ble_en -> rcc_adc_en -> rcc_fshclk_set..."
+  },
+  {
+    "id": "QKIE-BT-2.4G-USB-Receive_ble_app_init",
+    "name": "QKIE-BT-2.4G-USB-Receive BLE App Initialization",
+    "category": "ble_core",
+    "sequence": [
+      {
+        "api_name": "ble_heap",
+        "category": "ble_core",
+        "order": 0,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/app.c",
+        "line_number": 194,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_init",
+        "category": "ble_core",
+        "order": 1,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/app.c",
+        "line_number": 197,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "ble_app",
+        "category": "ble_core",
+        "order": 2,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/app.c",
+        "line_number": 199,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      },
+      {
+        "api_name": "rfmdm_init",
+        "category": "ble_core",
+        "order": 3,
+        "file_path": "projects/QKIE-BT-2.4G-USB-Receive/src/app.c",
+        "line_number": 202,
+        "calling_function": "app_init",
+        "is_conditional": false,
+        "context": ""
+      }
+    ],
+    "source_project": "QKIE-BT-2.4G-USB-Receive",
+    "prerequisites": [],
+    "description": "BLE application initialization sequence"
+  }
+]

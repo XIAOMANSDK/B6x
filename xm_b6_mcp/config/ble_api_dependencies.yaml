@@ -1,0 +1,133 @@
+# BLE API Group Dependencies
+# Groups related BLE APIs that share functionality or are used together.
+# Used by map_ble_api_groups() to create pairwise DEPENDS_ON relations
+# for APIs not discoverable through AST or example scanning.
+
+ble_api_groups:
+  - group: attm_database
+    description: "Attribute database management - service/attribute creation and manipulation"
+    apis:
+      - attm_svc_create_db
+      - attm_svc_create_db_128
+      - attm_att_set_value
+      - attm_att_set_perm
+      - attm_att_update_perm
+      - attm_get_value
+      - attm_svc_get_perm
+      - attm_svc_set_perm
+      - attm_reserve_handle_range
+      - attmdb_destroy
+      - attmdb_svc_visibility_set
+    related_apis:
+      - attmdb_svc_create
+
+  - group: attm_uuid
+    description: "UUID comparison and conversion utilities"
+    apis:
+      - attm_uuid_comp
+      - attm_uuid16_comp
+      - attm_convert_to128
+      - attm_is_bt16_uuid
+      - attm_is_bt32_uuid
+
+  - group: list_utility
+    description: "Linked list data structure operations used by BLE stack kernel"
+    apis:
+      - list_init
+      - list_pool_init
+      - list_push_back
+      - list_push_front
+      - list_push_back_sublist
+      - list_insert_after
+      - list_insert_before
+      - list_extract
+      - list_extract_after
+      - list_extract_sublist
+      - list_find
+      - list_merge
+      - list_size
+
+  - group: gapc_connection_info
+    description: "GAP Controller connection information getters"
+    apis:
+      - gapc_get_conidx
+      - gapc_get_conhdl
+      - gapc_get_info
+    related_apis:
+      - gapc_connect_rsp
+      - gapc_disconnect
+
+  - group: gapc_security
+    description: "GAP Controller security and encryption APIs"
+    apis:
+      - gapc_is_sec_set
+      - gapc_lk_sec_lvl_get
+      - gapc_enc_keysize_get
+      - gapc_set_local_addr
+      - gapc_smp_bond_req
+      - gapc_smp_encrypt_req
+      - gapc_smp_pairing_oob_exch
+      - gapc_smp_security_req
+      - gapc_key_press_notify
+      - gapc_update_phy
+    related_apis:
+      - gapc_smp_pairing_rsp
+      - gapc_smp_pairing_ltk_exch
+
+  - group: kernel_messaging
+    description: "Kernel message queue and memory management"
+    apis:
+      - ke_msg_send
+      - ke_msg_send_basic
+      - ke_msg_forward
+      - ke_free
+    related_apis:
+      - ke_sleep
+      - ke_timer_set
+
+  - group: kernel_task
+    description: "Kernel task state management"
+    apis:
+      - ke_task_create
+      - ke_state_get
+      - ke_state_set
+    related_apis:
+      - ke_msg_send
+
+  - group: gapm_misc
+    description: "GAP Manager miscellaneous operations"
+    apis:
+      - gapm_gen_rand
+      - gapm_set_irk
+    related_apis:
+      - gapm_set_dev
+      - gapm_reset
+
+  - group: gatt_client
+    description: "GATT client write and service change operations"
+    apis:
+      - gatt_exe_write
+      - gatt_svc_chg
+    related_apis:
+      - gatt_write
+      - gatt_disc
+
+  - group: ble_core
+    description: "BLE stack core lifecycle and configuration"
+    apis:
+      - ble_reset
+      - ble_lib_vers
+      - ble_exch_size
+      - ble_txchsel2_set
+    related_apis:
+      - ble_init
+      - ble_heap
+
+  - group: fcc_extended
+    description: "FCC factory test with power amplifier variants"
+    apis:
+      - fcc_tx_carr_pa
+      - fcc_tx_mod_pa
+    related_apis:
+      - fcc_tx_carr
+      - fcc_tx_mod

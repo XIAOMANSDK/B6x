@@ -1,0 +1,542 @@
+{
+  "file_path": "usb/api/usbd.h",
+  "functions": [
+    {
+      "name": "usbd_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init device controller.",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n@return N/A.\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 154,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit device controller.",
+      "detailed_description": "@return N/A.\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 160,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_resume",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "brief_description": "Resume request send, call twice as High(true)-10ms(delay)-Low(false).",
+      "detailed_description": "@return N/A.\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 166,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_register",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "desc",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "conf",
+          "type": "usbd_config_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Register Device Description and Configuration. ",
+      "detailed_description": "@param[in] desc  Pointer of description array\n@param[in] conf  Pointer of configuration struct\n(USBD_LEGACY_API Deprecated, replaced by usbd_register_device)\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 176,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_register_device",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "usbd_descriptor_cbk",
+          "description": ""
+        },
+        {
+          "name": "conf",
+          "type": "usbd_config_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Register Device Description and Configuration ",
+      "detailed_description": "@param[in] desc  Callback for description request\n@param[in] conf  Pointer of configuration struct\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 184,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_register_buffer",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Register Big-Buffer for EP0 received(excced MPS), eg. DFU Block ",
+      "detailed_description": "@param[in] size      Buffer size\n@param[in] buff      Buffer pointer, aligned 4\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 192,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_register_events",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "usbd_notify_cbk",
+          "description": ""
+        }
+      ],
+      "brief_description": "Register Handler for Application to notify events ",
+      "detailed_description": "@param[in] evt_msk   Event Mask for notified, bits of @see enum usbd_event_type\n@param[in] ntf_hdl   Notify Handler\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 200,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_register_vendor",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "usbd_request_handler",
+          "description": ""
+        }
+      ],
+      "brief_description": "Register Handler for Vendor requestes. ",
+      "detailed_description": "@param[in] vendor    Vendor Handler\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 207,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_is_configured",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Device be configured or not.",
+      "detailed_description": "@return 0 on not, other on conf_num\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 213,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_is_suspend",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Check if the device is in suspend state",
+      "detailed_description": "@return true or false\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 219,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_ep_write",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "wr_bytes",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Write data to the specified endpoint with poll mode.  This function is called to write data to the specified endpoint. The supplied usbd_endpoint_handler function will be called when data is transmitted out. ",
+      "detailed_description": "@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  data      Pointer to data to write\n@param[in]  data_len  Length of the data requested to write. This may\nbe zero for a zero length status packet.\n@param[out] wr_bytes  Bytes scheduled for transmission. This value\nmay be NULL if the application expects all\nbytes to be written\n@return 0 on success, errno code on fail.\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 239,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_ep_read",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "buff",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read data from the specified endpoint  This function is called by the endpoint handler function, after an OUT interrupt has been received for that EP. The application must only call this function through the supplied usbd_ep_callback function. This function clears the ENDPOINT NAK when max_data_len is 0, if all data in the endpoint FIFO has been read, so as to accept more data from host. ",
+      "detailed_description": "@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  buff      Pointer to data buffer to write to\n@param[in]  max_len   Max length of data to read\n@return Number of bytes read.\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 257,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_ep_stall",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "brief_description": "Set/Clear stall condition for the selected endpoint ",
+      "detailed_description": "@param[in] ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in] set       True as set, False as clear\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 266,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "USB_IRQHandler",
+      "return_type": "__USBIRQ",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "USB interrupt handler.",
+      "detailed_description": "@return N/A.\n/",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 272,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_notify_handler",
+      "return_type": "__USBIRQ",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "arg",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "__WEAK USB Handler (user override, USBD_LEGACY_API Deprecated)\n***************************************************************************\n/\nHandler for Application to notify events",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 281,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_vendor_handler",
+      "return_type": "__USBIRQ",
+      "parameters": [
+        {
+          "name": "setup",
+          "type": "struct usb_setup_packet",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "dlen",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "Handler for USB Vendor specific commands",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 284,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "usbd_get_string_handler",
+      "return_type": "__USBIRQ",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "len",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "Handler for User's String descriptors, eg. iSerial Number",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 287,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "USBD_EVENT_ERROR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_RESET",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_SOF",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_CONNECTED",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_CONFIGURED",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_SUSPEND",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_DISCONNECTED",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_RESUME",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_SET_INTERFACE",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_SET_REMOTE_WAKEUP",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_CLR_REMOTE_WAKEUP",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_SET_ENDPOINT_HALT",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_CLR_ENDPOINT_HALT",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "USBD_EVENT_UNKNOWN",
+          "value": 13,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 25
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "USBD_OK",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "USBD_BUSY",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "USBD_FAIL",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "USBD_ERR_INVAILD",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "USBD_ERR_STATE",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "USBD_ERR_UNDRN",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "USBD_ERR_OVER",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "USBD_ERR_TIMEOUT",
+          "value": 7,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "usb/api/usbd.h",
+      "line_number": 58
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": [
+    "Line 272, Col 10: 'void'",
+    "Line 281, Col 10: 'void'",
+    "Line 284, Col 10: 'uint8_t'",
+    "Line 287, Col 10: 'bool'",
+    "Line 290, Col 10: 'uint8_t'"
+  ]
+}

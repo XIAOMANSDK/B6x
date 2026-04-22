@@ -1,0 +1,311 @@
+{
+  "file_path": "drivers/api/timer.h",
+  "functions": [
+    {
+      "name": "ctmr_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init Common Timer. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] psc  configure prescaler\n@param[in] arr  configure Auto-reload\n***************************************************************************************\n/",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 78,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "ctmr_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit Common Timer.  *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 86,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "ctmr_ctrl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Common Timer control. ",
+      "detailed_description": "***************************************************************************************\n@param[in] mode  Work Mode configure @see enum tmr_mode_def\n@param[in] intr  Interrupt configure @see enum tmr_intr_bfs\n***************************************************************************************\n/",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 97,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "atmr_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init Advance Timer. ",
+      "detailed_description": "***************************************************************************************\n@param[in] psc  configure prescaler\n@param[in] arr  configure Auto-reload\n***************************************************************************************\n/",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 108,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "atmr_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit Advance Timer.  *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 116,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "atmr_ctrl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Advance Timer control. ",
+      "detailed_description": "***************************************************************************************\n@param[in] mode  Work Mode configure @see enum tmr_mode_def\n@param[in] intr  Interrupt configure @see enum tmr_intr_bfs\n***************************************************************************************\n/",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 127,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "TMR_CR_CEN_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_UDIS_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_URS_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_OPM_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_DIR_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_CMS_LSB",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_CMS_MSK",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_ARPE_BIT",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_CKD_LSB",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_CKD_MSK",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_CMPSEL_LSB",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "TMR_CR_CMPSEL_MSK",
+          "value": 11,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 23
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "TMR_IR_NONE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_UI_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC1_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC2_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC3_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC4_BIT",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_COM_BIT",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_TI_BIT",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_BI_BIT",
+          "value": 128,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC1O_BIT",
+          "value": 512,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC2O_BIT",
+          "value": 1024,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC3O_BIT",
+          "value": 2048,
+          "brief": ""
+        },
+        {
+          "name": "TMR_IR_CC4O_BIT",
+          "value": 4096,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 39
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "TMR_DISABLE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "TMR_1PULSE_MODE",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "TMR_PERIOD_MODE",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/timer.h",
+      "line_number": 57
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

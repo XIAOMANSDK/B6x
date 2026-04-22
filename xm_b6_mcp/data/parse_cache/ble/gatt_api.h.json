@@ -1,0 +1,552 @@
+{
+  "file_path": "ble/api/gatt_api.h",
+  "functions": [
+    {
+      "name": "gatt_get_mtu",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Gets the negotiated MTU. ",
+      "detailed_description": "FUNCTION DECLARATIONS\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] conidx   connection index\n@return MTU negotiated\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 36,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_exmtu",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Exchange MTU Command. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx   connection index\n@param[in] mtu   Max MTU value (Minimum is 23)\n@return state in GATT_MTU_CHANGED_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 48,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_svc_chg",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Change service. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx   connection index\n@param[in] shdl  Start handle\n@param[in] ehdl  End handle\n@return state in GATT_SVC_CHANGED_CFG_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 60,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_disc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "uuid",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Discovery command. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        connection index\n@param[in] operation  Operation flags  @see GATT_OPERATION about discovery operation\n@param[in] shdl       Start handle\n@param[in] ehdl       End handle\n@param[in] ulen       UUID length\n@param[in] uuid       Pointer to the uuid data\n@return Info in GATT_DISC_SVC_IND,GATT_DISC_SVC_INCL_IND,GATT_DISC_CHAR_IND or GATT_DISC_CHAR_DESC_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 75,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_write",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "value",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Write command request. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] operation  Operation flags  @see GATT_OPERATION about Operation flags for writing/modifying attributes\n@param[in] handle     Handle to Write\n@param[in] value      Pointer to the value data\n@param[in] length     Value length\n@return state in GATT_WRITE_REQ_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 89,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_pre_write",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "value",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Prepare write command request. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] handle     Handle to write\n@param[in] value      Pointer to the value data\n@param[in] length     Value length\n@param[in] offset     Write offset @see gatt_write_cmd\n@return state in GATT_ATT_INFO_REQ_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 103,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_exe_write",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "brief_description": "Execute write characteristic request. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] execute    Cancel(0) / Execute(1) pending write operations\n@return state in GATT_WRITE_REQ_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 114,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_read",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read command. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] handle     Handle to read\n@param[in] length     Data length\n@return state in GATT_READ_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 126,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_read_long",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read command. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] handle     Handle to read\n@param[in] length     Data length\n@param[in] offset     Read offset @see gatt_read_simple\n@return state in GATT_READ_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 139,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_read_by_uuid",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "uuid",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read Using UUID. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] ulen       UUID length\n@param[in] uuid       Pointer to the uuid data\n@param[in] shdl       Start handle\n@param[in] ehdl       End handle\n@return state in GATT_READ_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 153,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_read_by_multiple",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "handles",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read Multiple Values. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] nb         number of read @see gatt_read_cmd\n@param[in] handles    Pointer to the handles data @see gatt_read_multiple\n@return state in GATT_READ_IND\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 165,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_write_cfm",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Write Confirm. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] status     confirm status to peer. @see att_err\n@param[in] handle     Handle to write confirm.\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 176,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_read_cfm",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Read Confirm. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] status     confirm status to peer. @see att_err\n@param[in] handle     Handle to read confirm.\n@param[in] length     Data length\n@param[in] data       Pointer the confirm data to peer.\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 189,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_info_cfm",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Info Confirm. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] status     confirm status to peer. @see att_err\n@param[in] handle     Handle to info confirm.\n@param[in] length     Data length\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 201,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_ntf_send",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Send notification to peer. ",
+      "detailed_description": "***************************************************************************************\n@param[in] conidx     Connection Index\n@param[in] handle     Handle to NOTIFY.\n@param[in] length     Data length\n@param[in] data       Pointer the data to peer.\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 213,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_ind_send",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Send indication to peer. ",
+      "detailed_description": "***************************************************************************************\n@param[in] conidx     Connection Index\n@param[in] handle     Handle to INDICATE.\n@param[in] length     Data length\n@param[in] data       Pointer the data to peer.\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 225,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "gatt_evt_cfm",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Event Confirm. ",
+      "detailed_description": "***************************************************************************************\n@param[in] idx        Connection index\n@param[in] handle     Handle to event confirm.\n***************************************************************************************\n/",
+      "file_path": "ble/api/gatt_api.h",
+      "line_number": 235,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": []
+}

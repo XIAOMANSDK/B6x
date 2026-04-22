@@ -1,0 +1,217 @@
+{
+  "file_path": "drivers/src/rcc.c",
+  "functions": [
+    {
+      "name": "rcc_bus_get",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t reg_addr = RCC_BASE + RCC_AHBRST_CTRL_ADDR_OFFSET + (idx * 4);\r\n\r\n    return (*(volatile uint32_t *)reg_addr);\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 55,
+      "is_static": false
+    },
+    {
+      "name": "rcc_bus_enb",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t reg_addr = RCC_BASE + RCC_AHBRST_CTRL_ADDR_OFFSET + (idx * 4);\r\n\r\n    (*(volatile uint32_t *)reg_addr) |= bfs;\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 70,
+      "is_static": false
+    },
+    {
+      "name": "rcc_bus_dis",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t reg_addr = RCC_BASE + RCC_AHBRST_CTRL_ADDR_OFFSET + (idx * 4);\r\n\r\n    (*(volatile uint32_t *)reg_addr) &= ~bfs;\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 85,
+      "is_static": false
+    },
+    {
+      "name": "rcc_bus_rst",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t reg_addr = RCC_BASE + RCC_AHBRST_CTRL_ADDR_OFFSET + (idx * 4);\r\n\r\n    (*(volatile uint32_t *)reg_addr) |= bfs;\r\n    (*(volatile uint32_t *)reg_addr) &= ~bfs;\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 100,
+      "is_static": false
+    },
+    {
+      "name": "rcc_adc_en",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // ADC reset: clk=0, rst=1, rst=0, clk=1\r\n    RCC->AHBCLK_EN_RUN.ADC_CLKEN_RUN     = 0;    /* 禁用ADC时钟 */\r\n    RCC->AHBRST_CTRL.ADC_RSTREQ          = 1;    /* 置位ADC复位请求 */\r\n    RCC->AHBRST_CTRL.ADC_RSTREQ          = 0;    /* 清除ADC复位请求 */\r\n    RCC->AHBCLK_EN_RUN.ADC_CLKEN_RUN     = 1;    /* 使能ADC时钟 */\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 115,
+      "is_static": false
+    },
+    {
+      "name": "rcc_ble_en",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // modem&rf clk enable\r\n    //RCC->APBCLK_EN_RUN.Word |= (APB_MDM_BIT | APB_RF_BIT);\r\n    RCC_APBCLK_EN(APB_MDM_BIT | APB_RF_BIT);     /* 使能modem和RF的APB时钟 */\r\n\r\n    // ble clk enable\r\n    RCC->BLE_CLKRST_CTRL.BLE_AHBEN = 1;          /* 使能BLE AHB时钟 */\r\n\r\n    // ble reg reset\r\n    RCC->BLE_CLKRST_CTRL.BLE_AHB_RSTREQ = 1;     /* 置位BLE AHB复位请求 */\r\n    RCC->BLE_CLKRST_CTRL.BLE_AHB_RSTREQ = 0;     /* 清除BLE AHB复位请求 */\r\n\r\n    #if (EM_PWOFF)\r\n    // em power enable\r\n    AON->PWOFF_CTRL.EM_PD_EN = 0;                /* 禁用EM电源关断 */\r\n    AON->PWOFF_CTRL.EM_ACCESS_EN = 1;            /* 使能EM访问 */\r\n    // wait em power stable\r\n    while (AON->PWOFF_CTRL.EM_PD_ACK);           /* 等待EM电源稳定 */\r\n    #endif\r\n\r\n    // ble signal latch release - move to ble_init() / ble_resume()\r\n    //AON->PMU_WKUP_CTRL.BLE_LATCH_N = 1;\r\n    // ble low power source select lsi\r\n    AON->BLE_RTC_CTL.BLELOWCLK_SEL = 0;          /* BLE低功耗时钟选择LSI */\r\n    // ble low power enable\r\n    AON->BLE_RTC_CTL.BLELOWCLK_EN  = 1;          /* 使能BLE低功耗时钟 */\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 132,
+      "is_static": false
+    },
+    {
+      "name": "rcc_usb_en",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // clk rst enable\r\n    RCC_AHBCLK_EN(AHB_USB_BIT);                  /* 使能USB AHB时钟 */\r\n    RCC_AHBRST_REQ(AHB_USB_BIT);                 /* USB AHB复位请求 */\r\n\r\n    // iopad to hiz\r\n    GPIO_DIR_CLR((1UL << PA_USB_DP) | (1UL << PA_USB_DM));   /* 清除USB数据线方向 */\r\n    iom_ctrl(PA_USB_DP, IOM_HIZ);                /* USB DP引脚设为高阻 */\r\n    iom_ctrl(PA_USB_DM, IOM_HIZ);                /* USB DM引脚设为高阻 */\r\n\r\n    // 1.5k pull-up(.USB_PHY_MOD=0, .DIG_USB_PU=3, .DIG_USB_RXEN=1,)\r\n    //SYSCFG->USB_CTRL.DIG_USB_PU   = 3; // FIB result 1 --> 3\r\n    //SYSCFG->USB_CTRL.DIG_USB_RXEN = 1;\r\n    SYSCFG->USB_CTRL.Word = 0x1C;                /* 配置USB PHY控制寄存器 */\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 169,
+      "is_static": false
+    },
+    {
+      "name": "rcc_sysclk_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint8_t clk_sw  = RCC->CFG.SYSCLK_SW;        /* 当前系统时钟源 */\r\n    uint8_t clk_div = 0;                         /* 默认RCC->AHBCLK_DIV = 0 */\r\n    uint8_t ble_div = 0;                         /* 默认RCC->BLE_CLKRST_CTRL.BLECLK_DIV = 0 */\r\n\r\n    // 系统时钟切换，如果已经是目标时钟则跳过\r\n    switch (sclk_sel)\r\n    {\r\n        case SYS_CLK_16M:  /* 16MHz HSE时钟 */\r\n        {\r\n            if (clk_sw == SCLK_HSE) return;      /* 已经是HSE时钟，直接返回 */\r\n\r\n            clk_sw = SCLK_HSE;\r\n            // 使用外部16MHz晶体振荡器作为时钟源\r\n            //AON->PMU_CTRL.OSC_EN_RUN          = 1;\r\n            //APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 1;\r\n            RCC->CLK_EN_ST.HSE_DIG_EN = 1;       /* 使能HSE数字时钟 */\r\n        } break;\r\n\r\n        case SYS_CLK_HSI:  /* 16MHz HSI时钟 */\r\n        {\r\n            if (clk_sw == SCLK_HSI) return;      /* 已经是HSI时钟，直接返回 */\r\n\r\n            clk_sw = SCLK_HSI;\r\n            // 使用内部16MHz RC振荡器作为时钟源\r\n            //APBMISC->AON_PMU_CTRL.HSI_EN_RUN = 1;\r\n            RCC->CLK_EN_ST.HSI_DIG_EN = 1;       /* 使能HSI数字时钟 */\r\n        } break;\r\n\r\n        case SYS_CLK_LSI:  /* 32kHz LSI时钟 */\r\n        {\r\n            if (clk_sw == SCLK_LSI) return;      /* 已经是LSI时钟，直接返回 */\r\n\r\n            clk_sw = SCLK_LSI;\r\n            // 使用内部32kHz RC振荡器作为时钟源\r\n            AON->PMU_CTRL.RC32K_EN_RUN = 1;      /* 使能RC32K振荡器 */\r\n            RCC->CLK_EN_ST.LSI_DIG_EN  = 1;      /* 使能LSI数字时钟 */\r\n        } break;\r\n\r\n        default:  /* PLL时钟(32M/48M/64M) */\r\n        {\r\n            clk_sw = SCLK_PLL;\r\n            ble_div = (sclk_sel - SYS_CLK_16M);  /* 计算BLE时钟分频 */\r\n\r\n            // 使用DPLL作为时钟源\r\n            if (sclk_sel == SYS_CLK_48M)\r\n            {\r\n                RCC->CFG.DPLL_CLK_SW = 1;        /* 选择48MHz DPLL时钟 */\r\n            }\r\n            else\r\n            {\r\n                clk_div = (sclk_sel == SYS_CLK_32M) ? 1 : 0;  /* 32MHz需要2分频，64MHz不分频 */\r\n                RCC->CFG.DPLL_CLK_SW = 0;        /* 选择64MHz DPLL时钟 */\r\n            }\r\n\r\n            APBMISC->DPLL_CTRL.DPLL2_EN = 1;     /* 使能DPLL2 */\r\n            RCC->CLK_EN_ST.DPLL_DIG_EN  = 1;     /* 使能DPLL数字时钟 */\r\n        } break;\r\n    }\r\n\r\n    RCC->BLE_CLKRST_CTRL.BLECLK_DIV = ble_div;   /* 配置BLE时钟分频(BLE必须16MHz) */\r\n    RCC->AHBCLK_DIV    = clk_div;                /* 配置AHB总线时钟分频 */\r\n    RCC->CFG.SYSCLK_SW = clk_sw;                 /* 切换系统时钟源 */\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 208,
+      "is_static": false
+    },
+    {
+      "name": "rcc_sysclk_get",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint8_t sclk_cur;\r\n    uint8_t clk_sw = RCC->CFG.SYSCLK_SW;         /* 读取当前系统时钟源 */\r\n\r\n    if (clk_sw == SCLK_HSE)                      /* HSE时钟源 */\r\n    {\r\n        sclk_cur = SYS_CLK_16M;\r\n    }\r\n    else if (clk_sw == SCLK_PLL)                 /* PLL时钟源 */\r\n    {\r\n        sclk_cur = DPLL_IS_48M() ? SYS_CLK_48M : ((RCC->AHBCLK_DIV == 1) ? SYS_CLK_32M : SYS_CLK_64M);\r\n    }\r\n    else if (clk_sw == SCLK_LSI)                 /* LSI时钟源 */\r\n    {\r\n        sclk_cur = SYS_CLK_LSI;\r\n    }\r\n    else /* SCLK_HSI */                          /* HSI时钟源 */\r\n    {\r\n        sclk_cur = SYS_CLK_HSI;\r\n    }\r\n\r\n    return sclk_cur;\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 288,
+      "is_static": false
+    },
+    {
+      "name": "rcc_sysclk_freq",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t clk_freq;\r\n    uint8_t clk_sw = RCC->CFG.SYSCLK_SW;         /* 读取当前系统时钟源 */\r\n\r\n    if (clk_sw == SCLK_PLL)                      /* PLL时钟源 */\r\n    {\r\n        clk_freq = DPLL_IS_48M() ? SYS_FREQ_48M : SYS_FREQ_64M;\r\n    }\r\n    else if (clk_sw == SCLK_LSI)                 /* LSI时钟源 */\r\n    {\r\n        clk_freq = SYS_FREQ_32K;\r\n    }\r\n    else // SCLK_HSE SCLK_HSI                    /* HSE或HSI时钟源 */\r\n    {\r\n        clk_freq = SYS_FREQ_16M;\r\n    }\r\n\r\n    // 预分频时钟\r\n    uint8_t clk_div = (RCC->AHBCLK_DIV & 0xFF);  /* 读取AHB时钟分频值 */\r\n    if (clk_div > 0)\r\n    {\r\n        clk_freq /= (clk_div + 1);               /* 计算分频后的实际频率 */\r\n    }\r\n\r\n    return clk_freq;\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 329,
+      "is_static": false
+    },
+    {
+      "name": "rcc_fshclk_get",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint8_t fclk_sel = RCC->CLK_EN_ST.FSHCCLK_SEL;   /* 读取Flash时钟选择 */\r\n\r\n    if (fclk_sel == FSH_CLK_DPLL128)                 /* DPLL128时钟源 */\r\n    {\r\n        fclk_sel += (RCC->CLK_EN_ST.FSHCCLK_DIV_NUM);  /* 包含分频配置 */\r\n    }\r\n\r\n    return fclk_sel;\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 367,
+      "is_static": false
+    },
+    {
+      "name": "rcc_fshclk_mhz",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint8_t fclk_mhz;\r\n    uint8_t fclk_sel = RCC->CLK_EN_ST.FSHCCLK_SEL;   /* 读取Flash时钟选择 */\r\n\r\n    if (fclk_sel == FSH_CLK_DPLL128)                 /* DPLL128时钟源 */\r\n    {\r\n        fclk_mhz = 128 / (RCC->CLK_EN_ST.FSHCCLK_DIV_NUM + 1);  /* 计算分频后的频率 */\r\n    }\r\n    else if (fclk_sel == FSH_CLK_DPLL)               /* DPLL时钟源 */\r\n    {\r\n        fclk_mhz = (DPLL_IS_48M() ? FSH_FREQ_48MHz : FSH_FREQ_64MHz);  /* 48MHz或64MHz */\r\n    }\r\n    else // FSH_CLK_HSE16 FSH_CLK_HSI16              /* HSE或HSI时钟源 */\r\n    {\r\n        fclk_mhz = FSH_FREQ_16MHz;                   /* 16MHz */\r\n    }\r\n\r\n    return fclk_mhz;\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 394,
+      "is_static": false
+    },
+    {
+      "name": "rcc_fshclk_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    if (fclk_sel >= FSH_CLK_DPLL128)                /* DPLL128时钟源，需要分频配置 */\r\n    {\r\n        // 注意fshcclk_div_num必须大于0，所以默认2(psc3=42M)\r\n        uint8_t clk_div = (fclk_sel > FSH_CLK_DPLL128) ? (fclk_sel - FSH_CLK_DPLL128) : 2;\r\n\r\n        RCC->CLK_EN_ST.FSHCCLK_SEL = FSH_CLK_HSI16; /* 临时切换到HSI16 */\r\n\r\n        RCC->CLK_EN_ST.FSHCCLK_DIVEN   = 0;         /* 禁用分频器 */\r\n        RCC->CLK_EN_ST.FSHCCLK_DIV_NUM = clk_div;   /* 设置分频系数 */\r\n        // fshcclk_diven必须在fshcclk_sel之前设置为1\r\n        RCC->CLK_EN_ST.FSHCCLK_DIVEN   = 1;         /* 使能分频器 */\r\n\r\n        RCC->CLK_EN_ST.FSHCCLK_SEL = FSH_CLK_DPLL128; /* 切换到DPLL128时钟源 */\r\n    }\r\n    else  /* 其他时钟源直接切换 */\r\n    {\r\n        RCC->CLK_EN_ST.FSHCCLK_SEL = fclk_sel;      /* 直接设置时钟选择 */\r\n    }\r\n}",
+      "file_path": "drivers/src/rcc.c",
+      "line_number": 428,
+      "is_static": false
+    }
+  ],
+  "macros": [],
+  "parse_errors": []
+}

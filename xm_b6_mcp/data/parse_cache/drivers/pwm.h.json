@@ -1,0 +1,472 @@
+{
+  "file_path": "drivers/api/pwm.h",
+  "functions": [
+    {
+      "name": "pwm_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init Timer(Source) for PWM Capture/Compare. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] tmr  Timer ID @see enum pwm_timer\n@param[in] psc  PWM configure prescaler\n@param[in] arr  PWM configure Auto-reload\n***************************************************************************************\n/",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 147,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "pwm_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit Timer Module. ",
+      "detailed_description": "***************************************************************************************\n@param[in] tmr  Timer ID @see enum pwm_timer\n***************************************************************************************\n/",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 156,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "pwm_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config Timer(Source) for PWC(PWM Capture). ",
+      "detailed_description": "***************************************************************************************\n@param[in] tmr   Timer ID @see enum pwm_timer\n@param[in] smcr  PWM Slave mode control\n@param[in] intr  PWM Interrupt configure\n***************************************************************************************\n/",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 168,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "pwm_start",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Start/Enable Timer(Source) for PWM Capture/Compare. ",
+      "detailed_description": "***************************************************************************************\n@param[in] tmr   Timer ID @see enum pwm_timer\n***************************************************************************************\n/",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 178,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "pwm_stop",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Stop Timer(Source) for PWM Capture/Compare. ",
+      "detailed_description": "***************************************************************************************\n@param[in] tmr   Timer ID @see enum pwm_timer\n@Note This API will stop all PWM channels.\nIf you want to stop a single PWM channel, please use pwm_chnl_stop API.\n***************************************************************************************\n/",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 190,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "pwm_chnl_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "conf",
+          "type": "pwm_chnl_cfg_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config special channel for PWM Capture/Compare. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chnl  Channel ID @see enum pwm_channel\n@param[in] conf  Pointer of channel configure @see struct pwm_channel_cfg\nChannel stop when conf is NULL, else start.\n***************************************************************************************\n/",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 202,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "pwm_duty_upd",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Update special channel's duty for PWM Capture/Compare. ",
+      "detailed_description": "***************************************************************************************\n@param[in] chnl  Channel ID @see enum pwm_channel\n@param[in] duty  Value of Duty, ratio = duty / arr\n***************************************************************************************\n/",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 216,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "PWM_CCER_SIPH",
+      "value": "(PWM_CCxE_BIT)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 76
+    },
+    {
+      "name": "PWM_CCER_SIPL",
+      "value": "(PWM_CCxE_BIT | PWM_CCxP_BIT)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 77
+    },
+    {
+      "name": "PWC_CCER_POSEDGE",
+      "value": "(PWM_CCxE_BIT) // rising-edge",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 79
+    },
+    {
+      "name": "PWC_CCER_NEGEDGE",
+      "value": "(PWM_CCxE_BIT | PWM_CCxP_BIT) // falling-edge",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 80
+    },
+    {
+      "name": "PWM_CCMR_MODE1",
+      "value": "(PWM_OCxPE_BIT | PWM_OCxM(6))",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 115
+    },
+    {
+      "name": "PWM_CCMR_MODE2",
+      "value": "(PWM_OCxPE_BIT | PWM_OCxM(7))",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 116
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "PWM_CTMR",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR",
+          "value": 1,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 22
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "PWM_CTMR_CH1",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CTMR_CH2",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CTMR_CH3",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CTMR_CH4",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR_CH1P",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR_CH2P",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR_CH3P",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR_CH4P",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR_CH1N",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR_CH2N",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ATMR_CH3N",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 30
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "PWC_PSC0",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "PWC_PSC2",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "PWC_PSC4",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "PWC_PSC8",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 48
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "PWM_CCxE_POS",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxE_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxP_POS",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxP_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxNE_POS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxNE_BIT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxNP_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxNP_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxDE_POS",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxDE_BIT",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 57
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "PWM_CCxS_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "PWM_CCxS_MSK",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxFE_POS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxFE_BIT",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxPE_POS",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxPE_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxM_LSB",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxM_MSK",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxCE_POS",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "PWM_OCxCE_BIT",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ICxPSC_LSB",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ICxPSC_MSK",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ICxF_LSB",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "PWM_ICxF_MSK",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/pwm.h",
+      "line_number": 83
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

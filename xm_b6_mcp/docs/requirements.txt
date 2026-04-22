@@ -1,0 +1,35 @@
+# B6x MCP Server - Core Dependencies
+# Install: pip install -r requirements.txt
+
+# MCP Server Framework
+mcp>=0.9.0
+
+# Search and Indexing
+whoosh>=2.7.4
+
+# Tree-sitter (C Code Parsing)
+tree-sitter>=0.20.0
+# Note: tree-sitter language grammars are installed separately if needed
+# For C parsing, use: pip install tree-sitter-languages
+
+# Data Processing
+pydantic>=2.0.0
+
+# Excel Parsing (NEW)
+openpyxl>=3.1.0
+pandas>=2.0.0
+
+# Document Parsing (NEW - for SDK documentation integration)
+markitdown>=0.0.1           # Markdown/Word/PDF to Markdown converter
+python-docx>=1.1.0          # Word document parsing (backup)
+PyPDF2>=3.0.0               # PDF document parsing (backup)
+pymupdf>=1.25.3
+
+# Configuration
+pyyaml>=6.0
+
+# Logging
+colorlog>=6.7.0
+
+# Utilities
+python-dotenv>=1.0.0

@@ -1,0 +1,247 @@
+{
+  "file_path": "drivers/src/uart.c",
+  "functions": [
+    {
+      "name": "uart_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    iom_ctrl(io_rx, IOM_SEL_CSC | IOM_PULLUP | IOM_INPUT);    /* 配置接收引脚为CSC功能、上拉、输入模式 */\r\n    iom_ctrl(io_tx, IOM_SEL_CSC | IOM_PULLUP | IOM_DRV_LVL1); /* 配置发送引脚为CSC功能、上拉、驱动电平1 */\r\n\r\n    //iocsc_uart(port, io_tx, io_rx);\r\n    csc_output(io_tx, CSC_UART1_TXD + port * 2);  /* 配置发送引脚CSC输出 */\r\n    csc_input(io_rx,  CSC_UART1_RXD + port * 2);  /* 配置接收引脚CSC输入 */\r\n\r\n    // uart_clk_en rst_req\r\n    RCC_APBCLK_EN(1 << (RCC_UART1_CLKEN_RUN_POS + port));   /* 使能UART时钟 */\r\n    RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port));     /* 请求UART复位 */\r\n\r\n    uint8_t delay_cnt = 0x10;\r\n    // Delay for Uart busy\r\n    while (delay_cnt--)  //220ns/cnt(64Mhz test need delay 906ns)  --20231204 WHL\r\n    {\r\n        if ((GPIO->PIN >> io_rx) & 0x01)  /* 检查接收引脚电平 */\r\n            return;\r\n    }\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 41,
+      "is_static": false
+    },
+    {
+      "name": "uart_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // uart_clk_dis rst_req\r\n    RCC_APBCLK_DIS(1 << (RCC_UART1_CLKEN_RUN_POS + port));  /* 禁用UART时钟 */\r\n    RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port));     /* 请求UART复位 */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 67,
+      "is_static": false
+    },
+    {
+      "name": "uart_hwfc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef* uart = UART_PTR(port);\r\n\r\n    //iocsc_uart_hwfc(port, io_rts, io_cts);\r\n    csc_output(io_rts, CSC_UART1_RTS + port);  /* 配置RTS引脚CSC输出 */\r\n    csc_input(io_cts,  CSC_UART1_CTS + port);  /* 配置CTS引脚CSC输入 */\r\n\r\n    iom_ctrl(io_rts, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP); /* 配置RTS引脚为CSC功能、驱动电平1、上拉 */\r\n    iom_ctrl(io_cts, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);  /* 配置CTS引脚为CSC功能、上拉、输入模式 */\r\n\r\n    // enable auto ctrl bit[3:2] (.AFCEN=1, .RTSCTRL=1)\r\n    uart->MCR.Word |= 0x0C;  /* MCR: 使能自动流控制(AFCEN)和RTS控制(RTSCTRL) */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 80,
+      "is_static": false
+    },
+    {
+      "name": "uart_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef* uart = UART_PTR(port);\r\n\r\n    // clear en\r\n    uart->LCR.Word   = 0;  /* LCR: 清除线路控制寄存器 */\r\n\r\n    // update BaudRate\r\n    uart->LCR.BRWEN  = 1;      /* LCR: 使能波特率更新 */\r\n    uart->BRR        = cfg_BRR; /* BRR: 设置波特率分频值 */\r\n    uart->LCR.BRWEN  = 0;      /* LCR: 禁用波特率更新 */\r\n\r\n    // enable fifo mode, reset\r\n    uart->FCR.Word |= 0x07; /* FCR: 使能FIFO(FIFOEN)、复位接收FIFO(RFRST)、复位发送FIFO(TFRST) */\r\n\r\n    // config params, enable\r\n    uart->LCR.Word = cfg_LCR | LCR_RXEN_BIT;  /* LCR: 配置通信参数并启用接收 */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 101,
+      "is_static": false
+    },
+    {
+      "name": "uart_update_baud",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef* uart = UART_PTR(port);\r\n\r\n    uint32_t io_cfg  = CSC->CSC_PIO[io_rx].Word;\r\n    uint32_t reg_fcr = uart->FCR.Word;\r\n    uint32_t reg_mcr = uart->MCR.Word;\r\n    uint32_t reg_lcr = uart->LCR.Word;\r\n    uint32_t reg_ier = uart->IVS.Word;\r\n\r\n    // 关闭接收\r\n    uart->LCR.RXEN = 0;\r\n\r\n    // 配置rx脚为io功能\r\n    iom_ctrl(io_rx, IOM_SEL_GPIO | IOM_PULLUP);\r\n\r\n    RCC_APBCLK_DIS(1 << (RCC_UART1_CLKEN_RUN_POS + port));  /* 禁用UART时钟 */\r\n    RCC_APBRST_REQ(1 << (RCC_UART1_RSTREQ_POS + port));     /* 请求UART复位 */\r\n    RCC_APBCLK_EN(1 << (RCC_UART1_CLKEN_RUN_POS + port));   /* 使能UART时钟 */\r\n\r\n    // update BaudRate\r\n    uart->LCR.BRWEN  = 1;      /* LCR: 使能波特率更新 */\r\n    uart->BRR        = cfg_BRR; /* BRR: 设置波特率分频值 */\r\n    do\r\n    {\r\n        uart->LCR.BRWEN  = 0;      /* LCR: 禁用波特率更新 */\r\n    } while(uart->LCR.BRWEN);\r\n\r\n    uart->IER.Word = reg_ier;\r\n    // enable fifo mode, reset\r\n    uart->FCR.Word = reg_fcr | 0x07;\r\n    uart->LCR.Word = reg_lcr | LCR_RXEN_BIT;\r\n    uart->MCR.Word = reg_mcr;\r\n\r\n    // 恢复rx脚功能\r\n    iom_ctrl(io_rx, io_cfg);\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 137,
+      "is_static": false
+    },
+    {
+      "name": "uart_fctl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef* uart = UART_PTR(port);\r\n\r\n    uart->FCR.Word  = fifo_ctl; /* FCR: 配置FIFO控制 */\r\n    uart->RTOR.Word = bits_rto; /* RTOR: 设置接收超时值 */\r\n    uart->LCR.RTOEN = (bits_rto) ? 1 : 0;  /* LCR: 使能/禁用接收超时 */\r\n\r\n    uart->IDR.Word  = UART_IR_ALL_MSK;  /* IDR: 禁用所有中断 */\r\n    uart->IER.Word  = intr_en;          /* IER: 使能指定中断 */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 182,
+      "is_static": false
+    },
+    {
+      "name": "uart_mctl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef *uart = UART_PTR(port);\r\n\r\n    uart->MCR.DMAEN = dma;      /* MCR: 使能/禁用DMA */\r\n    uart->LCR.RTO_SEL = dma;    /* LCR: 设置RTO选择模式 */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 199,
+      "is_static": false
+    },
+    {
+      "name": "uart_putc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef *uart = UART_PTR(port);\r\n\r\n    while (!(uart->SR.TBEM));  /* SR: 等待发送缓冲区空 */\r\n    uart->TBR = ch;            /* TBR: 写入发送数据 */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 212,
+      "is_static": false
+    },
+    {
+      "name": "uart_getc",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef *uart = UART_PTR(port);\r\n\r\n    while (!(uart->SR.DR));    /* SR: 等待数据就绪 */\r\n    return (uint8_t)(uart->RBR);  /* RBR: 读取接收数据 */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 225,
+      "is_static": false
+    },
+    {
+      "name": "uart_wait",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    UART_TypeDef *uart = UART_PTR(port);\r\n\r\n    while (!(uart->SR.TBEM)); /* SR: 等待发送缓冲区空 */\r\n    while (uart->SR.BUSY);    /* SR: 等待UART空闲 */\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 237,
+      "is_static": false
+    },
+    {
+      "name": "uart_send",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "data",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    ASSERT_ERR(data != NULL);\r\n    UART_TypeDef *uart = UART_PTR(port);\r\n\r\n    while (len--)\r\n    {\r\n        while (!(uart->SR.TBEM));  /* SR: 等待发送缓冲区空 */\r\n        uart->TBR = *data++;       /* TBR: 发送数据 */\r\n    }\r\n\r\n//    while (!(uart->SR.TBEM)); // wait tx finish\r\n//    while (uart->SR.BUSY);    // wait idle state\r\n}",
+      "file_path": "drivers/src/uart.c",
+      "line_number": 251,
+      "is_static": false
+    }
+  ],
+  "macros": [],
+  "parse_errors": []
+}

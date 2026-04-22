@@ -1,0 +1,56 @@
+{
+  "build_date": "2026-04-22T16:18:56.922622",
+  "sdk_root": "<resolved_at_runtime>",
+  "results": {
+    "success_count": 6,
+    "skipped_count": 0,
+    "failed_count": 0,
+    "details": {
+      "success": [
+        [
+          "flash_map.yaml",
+          "flash_map.json"
+        ],
+        [
+          "sram_map.yaml",
+          "sram_map.json"
+        ],
+        [
+          "sram_map.yaml",
+          "memory_boundaries.json"
+        ],
+        [
+          "B6x_IO_MAP.xlsx",
+          "io_map.json"
+        ],
+        [
+          "B6x_BLE-功耗参考.xlsx",
+          "power_consumption.json"
+        ],
+        [
+          "B6x BLE兼容性列表.xlsx",
+          "phone_compatibility_issues.json"
+        ]
+      ],
+      "failed": [],
+      "skipped": []
+    }
+  },
+  "generated_files": [
+    {
+      "name": "io_map.json",
+      "source": "B6x_IO_MAP.xlsx",
+      "domain": "domain1"
+    },
+    {
+      "name": "power_consumption.json",
+      "source": "B6x_BLE-功耗参考.xlsx",
+      "domain": "domain3"
+    },
+    {
+      "name": "phone_compatibility_issues.json",
+      "source": "B6x BLE兼容性列表.xlsx",
+      "domain": "domain3"
+    }
+  ]
+}

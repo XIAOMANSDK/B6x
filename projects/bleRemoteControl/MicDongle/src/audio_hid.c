@@ -1,0 +1,654 @@
+/**
+ ****************************************************************************************
+ *
+ * @file audio_hid.c
+ *
+ * @brief USB Audio + HID composite device for TV Box dongle
+ *
+ ****************************************************************************************
+ */
+
+#include "usbd.h"
+#include "usbd_hid.h"
+#include "usbd_audio.h"
+#include "drvs.h"
+#include "dbg.h"
+
+#define DEMO_AUDIO_HID              (1)
+
+#if (DBG_GATT)
+#include "dbg.h"
+#define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
+#else
+#define DEBUG(format, ...)
+#define debugHex(dat, len)
+#endif
+
+#if (DEMO_AUDIO_HID)
+
+#define USBD_VID                    0x0C40 //0x0D8C
+#define USBD_PID                    0x7A1C //0x0312
+#define USBD_BCD                    0x0200
+#define USBD_MAX_POWER              100
+#define USBD_LANGID_STRING          0x0409 // English(US)
+
+
+/*
+ * Audio DEFINES
+ ****************************************************************************
+ */
+
+#define AUDIO_IN_EP                 0x83
+#if defined(AUDIO_INTV)
+#define AUDIO_IN_EP_INTV            AUDIO_INTV
+#else
+#define AUDIO_IN_EP_INTV            0x01   // unit in 1ms
+#endif
+
+#if defined(AUDIO_FREQ)
+#define AUDIO_IN_FREQ               AUDIO_FREQ
+#else
+#define AUDIO_IN_FREQ               16000U // 16K
+#endif
+
+#define AUDIO_IN_FRAME_SIZE         2      // unit in byte
+#define AUDIO_IN_RESOL_BITS         16     // unit in bit
+#define AUDIO_IN_CHNLS              1      // Mono:1
+
+/// Packet Size = AudioFreq * DataSize (16bit: 2) * NumChannels(Mono: 1) / 1000ms
+#define AUDIO_IN_EP_MPS             ((AUDIO_IN_FREQ * AUDIO_IN_FRAME_SIZE * AUDIO_IN_CHNLS * AUDIO_IN_EP_INTV) / 1000)
+#if (AUDIO_IN_EP_MPS > 64)
+    #error "Max Packet Size <= 64"
+#endif
+
+/// Mono: 1, Stereo: 2
+#define AUDIO_INPUT_CTRL            0x43, 0x00
+#define AUDIO_INPUT_CHEN            0x0000
+
+enum audio_id {
+    AUDIO_UNDEFINED_ID              = 0,
+
+    AUDIO_IN_TERM_ID                = 4,
+    AUDIO_IN_FEAT_ID                = 5,
+    AUDIO_OUT_TERM_ID               = 6,
+    AUDIO_OUT_SELTR_ID              = 7,
+};
+
+
+/*
+ * HID DEFINES
+ ****************************************************************************
+ */
+
+/*!< standard interface config */
+#define HID_KBD_IN_EP               0x82 // address
+#define HID_KBD_IN_EP_MPS           16   // max packet size
+#define HID_KBD_IN_EP_INTV          1    // polling time in ms
+#define HID_KBD_REPORT_DESC_SIZE    sizeof(hid_kbd_report_desc)
+
+#define HID_MOUSE_IN_EP             0x81
+#define HID_MOUSE_IN_EP_MPS         16
+#define HID_MOUSE_IN_EP_INTV        1
+#define HID_MOUSE_REPORT_DESC_SIZE  sizeof(hid_mouse_report_desc)
+
+#define RPT_ID_KBD_STD              1 // 8Bytes - Standard
+#define RPT_ID_KBD_CSM              3 // 16Bits - Consumer Array
+#define RPT_ID_KBD_SYS              5 // 2Bits  - System PowerDown, Sleep
+#define RPT_ID_MOUSE                2 // 4Bytes - Btn,X,Y,Wheel
+
+static const uint8_t hid_kbd_report_desc[] = {
+    0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x06,        // Usage (Keyboard)
+    0xA1, 0x01,        // Collection (Application)
+    0x85, 0x01,        //   Report ID (1)
+    0x05, 0x07,        //   Usage Page (Kbrd/Keypad)
+    0x19, 0xE0,        //   Usage Minimum (0xE0)
+    0x29, 0xE7,        //   Usage Maximum (0xE7)
+    0x15, 0x00,        //   Logical Minimum (0)
+    0x25, 0x01,        //   Logical Maximum (1)
+    0x75, 0x01,        //   Report Size (1)
+    0x95, 0x08,        //   Report Count (8)
+    0x81, 0x02,        //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x01,        //   Report Count (1)
+    0x75, 0x08,        //   Report Size (8)
+    0x81, 0x01,        //   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x05,        //   Report Count (5)
+    0x75, 0x01,        //   Report Size (1)
+    0x05, 0x08,        //   Usage Page (LEDs)
+    0x19, 0x01,        //   Usage Minimum (Num Lock)
+    0x29, 0x05,        //   Usage Maximum (Kana)
+    0x91, 0x02,        //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x95, 0x01,        //   Report Count (1)
+    0x75, 0x03,        //   Report Size (3)
+    0x91, 0x01,        //   Output (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x95, 0x06,        //   Report Count (6)
+    0x75, 0x08,        //   Report Size (8)
+    0x15, 0x00,        //   Logical Minimum (0)
+    0x26, 0xFF, 0x00,  //   Logical Maximum (255)
+    0x05, 0x07,        //   Usage Page (Kbrd/Keypad)
+    0x19, 0x00,        //   Usage Minimum (0x00)
+    0x2A, 0xFF, 0x00,  //   Usage Maximum (0xFF)
+    0x81, 0x00,        //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,              // End Collection
+    0x05, 0x0C,        // Usage Page (Consumer)
+    0x09, 0x01,        // Usage (Consumer Control)
+    0xA1, 0x01,        // Collection (Application)
+    0x85, 0x03,        //   Report ID (3)
+    0x19, 0x00,        //   Usage Minimum (Unassigned)
+    0x2A, 0x9C, 0x02,  //   Usage Maximum (AC Distribute Vertically)
+    0x15, 0x00,        //   Logical Minimum (0)
+    0x26, 0x9C, 0x02,  //   Logical Maximum (668)
+    0x95, 0x01,        //   Report Count (1)
+    0x75, 0x10,        //   Report Size (16)
+    0x81, 0x00,        //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,              // End Collection
+    0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x80,        // Usage (Sys Control)
+    0xA1, 0x01,        // Collection (Application)
+    0x85, 0x05,        //   Report ID (5)
+    0x05, 0x01,        //   Usage Page (Generic Desktop Ctrls)
+    0x15, 0x00,        //   Logical Minimum (0)
+    0x25, 0x01,        //   Logical Maximum (1)
+    0x75, 0x01,        //   Report Size (1)
+    0x95, 0x02,        //   Report Count (2)
+    0x09, 0x81,        //   Usage (Sys Power Down)
+    0x09, 0x82,        //   Usage (Sys Sleep)
+    0x81, 0x02,        //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x75, 0x01,        //   Report Size (1)
+    0x95, 0x06,        //   Report Count (6)
+    0x81, 0x03,        //   Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,              // End Collection
+
+    // 123 bytes
+};
+
+static const uint8_t hid_mouse_report_desc[] = {
+    0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x02,        // Usage (Mouse)
+    0xA1, 0x01,        // Collection (Application)
+    0x85, 0x02,        //   Report ID (2)
+    0x09, 0x01,        //   Usage (Pointer)
+    0xA1, 0x00,        //   Collection (Physical)
+    0x05, 0x09,        //     Usage Page (Button)
+    0x19, 0x01,        //     Usage Minimum (0x01)
+    0x29, 0x03,        //     Usage Maximum (0x03)
+    0x15, 0x00,        //     Logical Minimum (0)
+    0x25, 0x01,        //     Logical Maximum (1)
+    0x95, 0x03,        //     Report Count (3)
+    0x75, 0x01,        //     Report Size (1)
+    0x81, 0x02,        //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x95, 0x01,        //     Report Count (1)
+    0x75, 0x05,        //     Report Size (5)
+    0x81, 0x01,        //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x05, 0x01,        //     Usage Page (Generic Desktop Ctrls)
+    0x09, 0x30,        //     Usage (X)
+    0x09, 0x31,        //     Usage (Y)
+    0x09, 0x38,        //     Usage (Wheel)
+    0x15, 0x81,        //     Logical Minimum (-127)
+    0x25, 0x7F,        //     Logical Maximum (127)
+    0x75, 0x08,        //     Report Size (8)
+    0x95, 0x03,        //     Report Count (3)
+    0x81, 0x06,        //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
+    0xC0,              //   End Collection
+    0xC0,              // End Collection
+
+    // 54 bytes
+};
+
+
+/*
+ * Device Descriptor
+ ****************************************************************************
+ */
+
+/*!< count of interface descriptor */
+enum intf_num {
+    /* Audio class interface */
+    AUDIO_AC_INTF_NUM               = 0,
+    AUDIO_AS_INTF_NUM,
+
+    /* HID class interface */
+    HID_KBD_INTF_NUM,
+    HID_MOUSE_INTF_NUM,
+
+    /* total interface count */
+    USB_CONFIG_INTF_CNT,
+
+    /* start&end interface */
+    USB_AUDIO_INTF_START            = AUDIO_AC_INTF_NUM,
+    USB_AUDIO_INTF_END              = AUDIO_AS_INTF_NUM,
+
+    USB_HID_INTF_START              = HID_KBD_INTF_NUM,
+    USB_HID_INTF_END                = HID_MOUSE_INTF_NUM,
+};
+
+
+/*!< Length of Configure descriptor */
+/// Audio Desc Size (Audio Control & Audio Stream)
+#define AUDIO_AC_CTRL_SIZE          ( AUDIO_SIZEOF_AC_HEADER_DESC(1) +                          \
+                                      AUDIO_SIZEOF_AC_INPUT_TERMINAL_DESC +                     \
+                                      AUDIO_SIZEOF_AC_OUTPUT_TERMINAL_DESC +                    \
+                                      /*AUDIO_SIZEOF_AC_SELECTOR_UNIT_DESC +*/                      \
+                                      AUDIO_SIZEOF_AC_FEATURE_UNIT_DESC(AUDIO_IN_CHNLS, 1) )
+
+#define AUDIO_AC_DESC_SIZE          ( USB_INTERFACE_DESC_SIZE + AUDIO_SIZEOF_AC_SELECTOR_UNIT_DESC + AUDIO_AC_CTRL_SIZE )
+
+#define AUDIO_AS_DESC_SIZE          ( AUDIO_AS_DESCRIPTOR_INIT_LEN(1) )
+
+#define AUDIO_AC_STRING_INDEX       (6)
+
+/// HID Desc Size
+#define HID_KBD_DESC_SIZE           ( 18 + 7*1 ) // 1 EP: IN
+#define HID_MOUSE_DESC_SIZE         ( 18 + 7*1 ) // 1 EP: IN
+
+/// Total Desc Size
+#define USB_CONFIG_TOTAL_SIZE       ( USB_CONFIG_DESC_SIZE                     \
+                                    + AUDIO_AC_DESC_SIZE + AUDIO_AS_DESC_SIZE  \
+                                    + HID_KBD_DESC_SIZE + HID_MOUSE_DESC_SIZE )
+
+
+/*!< USB device descriptor */
+const uint8_t usb_descriptor[] = {
+    /* Descriptor - Device (Size:18) */
+    USB_DEVICE_DESCRIPTOR_INIT(USB_2_0, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, USBD_BCD, 0x01),
+
+    /* Descriptor - Configuration (Total Size:9+Intf_Size) */
+    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT,
+            0x01, USB_CONFIG_BUS_POWERED | USB_CONFIG_REMOTE_WAKEUP, USBD_MAX_POWER),
+
+    /* Descriptor - Audio Control */
+    AUDIO_AC_HEADER_INIT(AUDIO_AC_INTF_NUM, AUDIO_AC_CTRL_SIZE, AUDIO_AC_STRING_INDEX, AUDIO_AS_INTF_NUM),
+    AUDIO_AC_INPUT_TERMINAL_DESCRIPTOR_INIT(AUDIO_IN_TERM_ID, AUDIO_INTERM_MIC, AUDIO_IN_CHNLS, AUDIO_INPUT_CHEN),
+    AUDIO_AC_OUTPUT_TERMINAL_DESCRIPTOR_INIT(AUDIO_OUT_TERM_ID, AUDIO_TERMINAL_STREAMING, 0x02, AUDIO_OUT_SELTR_ID),
+    AUDIO_AC_SELECTOR_UNIT_DESCRIPTOR_INIT(AUDIO_OUT_SELTR_ID, AUDIO_IN_FEAT_ID, 0x01),
+    AUDIO_AC_FEATURE_UNIT_DESCRIPTOR_INIT(AUDIO_IN_FEAT_ID, AUDIO_IN_TERM_ID, 0x01, AUDIO_INPUT_CTRL),
+
+    /* Descriptor - Audio Stream */
+    AUDIO_AS_DESCRIPTOR_INIT(AUDIO_AS_INTF_NUM, AUDIO_OUT_TERM_ID, AUDIO_IN_CHNLS, AUDIO_IN_FRAME_SIZE, AUDIO_IN_RESOL_BITS,
+                                AUDIO_IN_EP, 0x05, AUDIO_IN_EP_MPS, AUDIO_IN_EP_INTV, AUDIO_SAMPLE_FREQ_3B(AUDIO_IN_FREQ)),
+
+    /* Descriptor - Keyboard Interface (Size:18+7*1) */
+    HID_INTERFACE_INIT1(HID_KBD_INTF_NUM, 1, HID_SUBCLASS_NONE, HID_PROTOCOL_KEYBOARD, 0, HID_KBD_REPORT_DESC_SIZE, HID_BCD_0201),
+    HID_ENDPOINT_DESC(HID_KBD_IN_EP, HID_KBD_IN_EP_MPS, HID_KBD_IN_EP_INTV),
+
+    /* Descriptor - Mouse Interface (Size:18+7*1) */
+    HID_INTERFACE_INIT1(HID_MOUSE_INTF_NUM, 1, HID_SUBCLASS_NONE, HID_PROTOCOL_MOUSE, 0, HID_MOUSE_REPORT_DESC_SIZE, HID_BCD_0201),
+    HID_ENDPOINT_DESC(HID_MOUSE_IN_EP, HID_MOUSE_IN_EP_MPS, HID_MOUSE_IN_EP_INTV),
+
+    ///////////////////////////////////////
+    /// string0 descriptor
+    ///////////////////////////////////////
+    USB_LANGID_INIT(USBD_LANGID_STRING),
+
+    // String1 - iManufacturer
+    0x14,                       /* bLength */
+    USB_DESC_TYPE_STRING,       /* bDescriptorType */
+    WCHAR('Q'),                 /* wcChar0 */
+    WCHAR('U'),                 /* wcChar1 */
+    WCHAR('A'),                 /* wcChar2 */
+    WCHAR('L'),                 /* wcChar3 */
+    WCHAR('S'),                 /* wcChar4 */
+    WCHAR('E'),                 /* wcChar5 */
+    WCHAR('N'),                 /* wcChar6 */
+    WCHAR('S'),                 /* wcChar7 */
+    WCHAR('E'),                 /* wcChar8 */
+
+    // String2 - iProduct
+    0x1A,                       /* bLength */
+    USB_DESC_TYPE_STRING,       /* bDescriptorType */
+    WCHAR('A'),                 /* wcChar0 */
+    WCHAR('u'),                 /* wcChar1 */
+    WCHAR('d'),                 /* wcChar2 */
+    WCHAR('i'),                 /* wcChar3 */
+    WCHAR('o'),                 /* wcChar4 */
+    WCHAR(' '),                 /* wcChar5 */
+    WCHAR('D'),                 /* wcChar6 */
+    WCHAR('e'),                 /* wcChar7 */
+    WCHAR('v'),                 /* wcChar8 */
+    WCHAR('i'),                 /* wcChar9 */
+    WCHAR('c'),                 /* wcChar10 */
+    WCHAR('e'),                 /* wcChar11 */
+
+//    // String3 - iSerialNumber
+//    0x02,                       /* bLength */
+//    USB_DESC_TYPE_STRING, /* bDescriptorType */
+
+    /* Descriptor - Device Qualifier (Size:10) */
+    #if (USBD_BCD == USB_2_0)
+    USB_QUALIFIER_INIT(0x01),
+    #endif
+
+    0x00
+};
+
+const uint8_t usb_string_iSerial[] = {
+    // String3 - iSerial
+    0x22,                       /* bLength */
+    USB_DESC_TYPE_STRING,       /* bDescriptorType */
+    WCHAR('H'),                 /* wcChar0 */
+    WCHAR('S'),                 /* wcChar1 */
+    WCHAR('M'),                 /* wcChar2 */
+    WCHAR('A'),                 /* wcChar3 */
+    WCHAR('6'),                 /* wcChar4 */
+    WCHAR('2'),                 /* wcChar5 */
+    WCHAR('4'),                 /* wcChar6 */
+    WCHAR('0'),                 /* wcChar7 */
+    WCHAR('4'),                 /* wcChar8 */
+    WCHAR('0'),                 /* wcChar9 */
+    WCHAR('5'),                 /* wcChar10 */
+    WCHAR('0'),                 /* wcChar11 */
+    WCHAR('0'),                 /* wcChar12 */
+    WCHAR('6'),                 /* wcChar13 */
+    WCHAR('0'),                 /* wcChar14 */
+    WCHAR('3'),                 /* wcChar15 */
+};
+
+const uint8_t usb_string_iAudio[] = {
+    // String - AUDIO_AC_STRING_INDEX
+    0x1A,                       /* bLength */
+    USB_DESC_TYPE_STRING,       /* bDescriptorType */
+    WCHAR('A'),                 /* wcChar0 */
+    WCHAR('u'),                 /* wcChar1 */
+    WCHAR('d'),                 /* wcChar2 */
+    WCHAR('i'),                 /* wcChar3 */
+    WCHAR('o'),                 /* wcChar4 */
+    WCHAR(' '),                 /* wcChar5 */
+    WCHAR('D'),                 /* wcChar6 */
+    WCHAR('e'),                 /* wcChar7 */
+    WCHAR('v'),                 /* wcChar8 */
+    WCHAR('i'),                 /* wcChar9 */
+    WCHAR('c'),                 /* wcChar10 */
+    WCHAR('e'),                 /* wcChar11 */
+};
+
+
+/*
+ * Configuration
+ ****************************************************************************
+ */
+
+/*!< Declaration of endpoint Handlers  */
+void usbd_audio_ep_in_handler(uint8_t ep);
+
+/*!< table of Audio entity */
+#define USB_AUDIO_ENTITY_CNT        ARRAY_SIZE(audio_entity_tab)
+
+static const audio_entity_t audio_entity_tab[] = {
+    AUDIO_ENTITY_T(AUDIO_IN_EP, AUDIO_IN_FEAT_ID, AUDIO_CONTROL_FEATURE_UNIT),
+};
+
+/*!< table of hid interface */
+#define USB_HID_INTF_CNT            ARRAY_SIZE(hid_interface)
+
+static const hid_intf_t hid_interface[] = {
+    HID_INTF_T(HID_KBD_INTF_NUM, HID_KBD_IN_EP, hid_kbd_report_desc),
+    HID_INTF_T(HID_MOUSE_INTF_NUM, HID_MOUSE_IN_EP, hid_mouse_report_desc),
+};
+
+/*!< table of endpoints */
+static const usbd_ep_t endpoint_tab[] = {
+    // Audio endpoints
+    USBD_EP_T(AUDIO_IN_EP, USB_EP_TYPE_ISOCHRONOUS, AUDIO_IN_EP_MPS, &usbd_audio_ep_in_handler),
+
+    // HID endpoints
+    USBD_EP_T(HID_KBD_IN_EP,   USB_EP_TYPE_INTERRUPT, HID_KBD_IN_EP_MPS,   &usbd_hid_ep_in_handler),
+    USBD_EP_T(HID_MOUSE_IN_EP, USB_EP_TYPE_INTERRUPT, HID_MOUSE_IN_EP_MPS, &usbd_hid_ep_in_handler),
+};
+
+/*!< table of class */
+static const usbd_class_t class_tab[] = {
+    // Audio class
+    USBD_CLASS_T(USB_AUDIO_INTF_START, USB_AUDIO_INTF_END, &usbd_audio_class_handler),
+    // HID class
+    USBD_CLASS_T(USB_HID_INTF_START, USB_HID_INTF_END, &usbd_hid_class_handler),
+};
+
+/*!< USBD Configuration */
+static const usbd_config_t usb_configuration[] = {
+    USBD_CONFIG_T(1, USB_CONFIG_INTF_CNT, class_tab, endpoint_tab)
+};
+
+
+/*
+ * Handlers
+ ****************************************************************************
+ */
+
+enum mic_state_tag {
+    MIC_OFF,
+    MIC_IDLE, // on
+    MIC_BUSY,
+};
+
+volatile uint8_t mic_state = MIC_OFF;
+
+#include "adpcm.h"
+#define ADPCM_BLOCK_SIZE        MIC_LEN
+
+#define NB_MIC_MAX              4 // 2**n
+#define NB_PCM_16K              248*2
+#define NB_PCM_INC              16
+
+uint8_t pkt_mic[NB_MIC_MAX][MIC_LEN];
+volatile uint16_t pkt_mic_sidx, pkt_mic_eidx, pkt_mic_offset;
+volatile bool pkt_mic_dec;
+struct adpcm_state adpcm_state;
+int16_t pcm_buff[NB_PCM_16K];
+int16_t pcm_none[NB_PCM_INC] = {0};
+
+static void mic_pcm_decode(void)
+{
+    uint8_t *block_buf = pkt_mic[pkt_mic_eidx];
+
+    adpcm_state.valprev = (block_buf[1] << 8) | block_buf[0];
+    adpcm_state.index   = block_buf[2];
+    adpcm_decoder2((char*)&block_buf[4], pcm_buff, ADPCM_BLOCK_SIZE - 4, &adpcm_state);
+
+    pkt_mic_offset = 0;
+    pkt_mic_dec = true;
+}
+
+static uint8_t *micDataGet(void)
+{
+    uint8_t *data;
+
+    if ((pkt_mic_eidx != pkt_mic_sidx) && (pkt_mic_dec))
+    {
+        data = (uint8_t *)&pcm_buff[pkt_mic_offset];
+
+        pkt_mic_offset += NB_PCM_INC;
+        if (pkt_mic_offset >= NB_PCM_16K)
+        {
+            pkt_mic_dec = false;
+            pkt_mic_eidx = (pkt_mic_eidx + 1) & (NB_MIC_MAX - 1);
+        }
+    }
+    else
+    {
+        data = (uint8_t *)pcm_none;
+    }
+
+    return data;
+}
+
+static void micInit(void)
+{
+    pkt_mic_sidx = 0;
+    pkt_mic_eidx = 0;
+    pkt_mic_offset = 0;
+    pkt_mic_dec = false;
+
+}
+
+static void micDeinit(void)
+{
+
+}
+
+static void usbd_mic_send(void)
+{
+    uint8_t *mic_buffer = micDataGet();
+    if (mic_buffer)
+    {
+        uint8_t status = 0;
+
+        mic_state = MIC_BUSY;
+        status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
+
+        if (status != USBD_OK) {
+            if (mic_state != MIC_OFF) {
+                mic_state = MIC_IDLE;
+            }
+            USB_LOG_RAW("err:%d\r\n", status);
+        }
+    }
+}
+
+void usbd_mic_report(void)
+{
+    if (mic_state != MIC_OFF)
+    {
+        if (!pkt_mic_dec && (pkt_mic_eidx != pkt_mic_sidx))
+        {
+            mic_pcm_decode();
+
+            if (mic_state == MIC_IDLE)
+            {
+                usbd_mic_send();
+            }
+        } else {
+        }
+    }
+}
+
+void usbd_mic_push(const uint8_t *apcm)
+{
+    if (mic_state != MIC_OFF)
+    {
+        // check if ring buffer is full before writing
+        uint16_t next_sidx = (pkt_mic_sidx + 1) & (NB_MIC_MAX - 1);
+        if (next_sidx == pkt_mic_eidx)
+        {
+            // buffer full, discard oldest
+            pkt_mic_eidx = (pkt_mic_eidx + 1) & (NB_MIC_MAX - 1);
+        }
+        xmemcpy(pkt_mic[pkt_mic_sidx], apcm, MIC_LEN);
+        pkt_mic_sidx = next_sidx;
+
+        usbd_mic_report();
+    }
+}
+
+/// Audio Entity Retrieve
+const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
+{
+    const audio_entity_t *entity = NULL;
+
+    if (bEntityId == AUDIO_IN_FEAT_ID) {
+        entity = &audio_entity_tab[0];
+    }
+    return entity;
+}
+
+/// Callback for SET_INTERFACE
+void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
+{
+    if (intf_num == AUDIO_AS_INTF_NUM) {
+        if (alt_setting == 1) {
+            mic_state = MIC_IDLE;
+            USB_LOG_RAW("Mic On\r\n");
+            micInit();
+        } else {
+            mic_state = MIC_OFF;
+            USB_LOG_RAW("Mic Off\r\n");
+            micDeinit();
+        }
+    }
+}
+
+/// Callback for Mic endpoint
+void usbd_audio_ep_in_handler(uint8_t ep)
+{
+    (void)ep;
+    if (mic_state == MIC_BUSY) {
+        mic_state = MIC_IDLE;
+        usbd_mic_send();
+    }
+    //USB_LOG_RAW("ep_in:0x%x\r\n", ep);
+}
+
+__USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
+{
+    (void)arg;
+    switch (event) {
+        case USBD_EVENT_RESET:
+            usbd_hid_reset();
+            break;
+        case USBD_EVENT_RESUME:
+            break;
+        case USBD_EVENT_SUSPEND:
+            break;
+
+        default:
+            break;
+    }
+}
+
+__USBIRQ bool usbd_get_string_handler(uint16_t index, uint8_t **data, uint16_t *len)
+{
+    if (index == USB_STRING_SERIAL_INDEX) {
+        *data = (uint8_t *)usb_string_iSerial;
+        *len = usb_string_iSerial[0];
+        return true;
+    }
+
+    if (index == AUDIO_AC_STRING_INDEX) {
+        *data = (uint8_t *)usb_string_iAudio;
+        *len = usb_string_iAudio[0];
+        return true;
+    }
+
+    return false;
+}
+
+/*
+ * Test Functions
+ ****************************************************************************
+ */
+
+void usbdInit()
+{
+    // enable USB clk and iopad
+    rcc_usb_en();
+
+    usbd_init();
+    usbd_register(usb_descriptor, usb_configuration);
+
+    usbd_audio_init();
+    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {
+        usbd_hid_init(idx, &hid_interface[idx]);
+    }
+
+    NVIC_SetPriority(BLE_IRQn, 1);
+    NVIC_EnableIRQ(USB_IRQn);
+}
+
+void usbd_kb_report(uint8_t len, const uint8_t *data)
+{
+    uint8_t buff[1+8];
+
+    //usbd_hid_send_report(HID_KBD_IN_EP, len, data);
+    if (len == 8)
+    {
+        buff[0] = RPT_ID_KBD_STD;
+        memcpy(&buff[1], data, 8);
+
+        if (data[2] == HID_KEY_F5) // change VoiceKey
+        {
+            buff[3] = HID_KBD_USAGE_F24;
+        }
+        usbd_hid_send_report(HID_KBD_IN_EP, 9, buff);
+    }
+}
+
+#endif

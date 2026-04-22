@@ -1,0 +1,65 @@
+{
+  "file_path": "drivers/api/drvs.h",
+  "functions": [],
+  "macros": [
+    {
+      "name": "SYS_CLK",
+      "value": "(0)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/drvs.h",
+      "line_number": 59
+    },
+    {
+      "name": "RC32K_CAL_CYCLES",
+      "value": "(9)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/drvs.h",
+      "line_number": 78
+    },
+    {
+      "name": "RC32K_CAL_CYCLES",
+      "value": "(7)",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/drvs.h",
+      "line_number": 80
+    },
+    {
+      "name": "__SRAMFN",
+      "value": "__attribute__((section(\"ram_func\")))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/drvs.h",
+      "line_number": 93
+    },
+    {
+      "name": "__ATTR_SRAM",
+      "value": "__attribute__((section(\"ram_func\")))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/drvs.h",
+      "line_number": 101
+    },
+    {
+      "name": "__RETENTION",
+      "value": "__attribute__((section(\"user_retention\"), zero_init))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/drvs.h",
+      "line_number": 118
+    },
+    {
+      "name": "__RETENTION",
+      "value": "__attribute__((section(\"user_retention\")))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "drivers/api/drvs.h",
+      "line_number": 120
+    }
+  ],
+  "enums": [],
+  "typedefs": [],
+  "parse_errors": []
+}

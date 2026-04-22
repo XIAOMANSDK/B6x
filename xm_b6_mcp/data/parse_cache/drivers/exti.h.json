@@ -1,0 +1,155 @@
+{
+  "file_path": "drivers/api/exti.h",
+  "functions": [
+    {
+      "name": "exti_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Init EXTI, enable clk and rst, config debounce ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] dbc  debounce for IO, @see EXTI_DBC(psc, cnt)\n***************************************************************************************\n/",
+      "file_path": "drivers/api/exti.h",
+      "line_number": 59,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "exti_deinit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Deinit EXTI Module. Diable EXTI Clock.  *************************************************************************************** /",
+      "detailed_description": "***************************************************************************************",
+      "file_path": "drivers/api/exti.h",
+      "line_number": 67,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "exti_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Enable Bits Field of BUS Register ",
+      "detailed_description": "***************************************************************************************\n@param[in] typ  Type of local src @see enum exti_loca_typ\n@param[in] loca Value Bits of local src @see EXTI_SRC(pa)\n***************************************************************************************\n/",
+      "file_path": "drivers/api/exti.h",
+      "line_number": 78,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "exti_get",
+      "return_type": "uint32_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get EXTI local src value ",
+      "detailed_description": "***************************************************************************************\n@param[in] typ  Type of local src @see enum exti_loca_typ\n@return local src value\n***************************************************************************************\n/",
+      "file_path": "drivers/api/exti.h",
+      "line_number": 89,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "EXTI_IER",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_IDR",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_IVS",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_RIF",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_IFM",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_ICR",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_RTS",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_FTS",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_SWI",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_ADTE",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "EXTI_DBE",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/exti.h",
+      "line_number": 30
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

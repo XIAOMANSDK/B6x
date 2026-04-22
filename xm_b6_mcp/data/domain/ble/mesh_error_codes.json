@@ -1,0 +1,128 @@
+[
+  {
+    "code": 1,
+    "hex_code": "0x0001",
+    "name": "MESH_ERR_MDL_INVALID_CFG",
+    "group": "MDL",
+    "description": "Invalid Model Configuration"
+  },
+  {
+    "code": 2,
+    "hex_code": "0x0002",
+    "name": "MESH_ERR_MDL_INVALID_MDL_ID",
+    "group": "MDL",
+    "description": "Invalid Model Configuration"
+  },
+  {
+    "code": 3,
+    "hex_code": "0x0003",
+    "name": "MESH_ERR_MDL_INVALID_OPCODE",
+    "group": "MDL",
+    "description": "Invalid Model Identifier"
+  },
+  {
+    "code": 4,
+    "hex_code": "0x0004",
+    "name": "MESH_ERR_MDL_INVALID_GROUP",
+    "group": "MDL",
+    "description": "Invalid Opcode"
+  },
+  {
+    "code": 5,
+    "hex_code": "0x0005",
+    "name": "MESH_ERR_MDL_UNKNOWN_GROUP",
+    "group": "MDL",
+    "description": "Invalid model group local index"
+  },
+  {
+    "code": 6,
+    "hex_code": "0x0006",
+    "name": "MESH_ERR_MDL_MDL_ALREADY_IN_GROUP",
+    "group": "MDL",
+    "description": "Unknown model group"
+  },
+  {
+    "code": 7,
+    "hex_code": "0x0007",
+    "name": "MESH_ERR_MDL_GROUP_FULL",
+    "group": "MDL",
+    "description": "Model already part of the group"
+  },
+  {
+    "code": 8,
+    "hex_code": "0x0008",
+    "name": "MESH_ERR_MDL_ALREADY_REGISTERED",
+    "group": "MDL",
+    "description": "Group of model is full"
+  },
+  {
+    "code": 9,
+    "hex_code": "0x0009",
+    "name": "MESH_ERR_MDL_INVALID_MDL_LID",
+    "group": "MDL",
+    "description": "One of the models has already been registered"
+  },
+  {
+    "code": 10,
+    "hex_code": "0x000A",
+    "name": "MESH_ERR_MDL_INVALID_ROLE",
+    "group": "MDL",
+    "description": "Provided Model Local Index is not valid"
+  },
+  {
+    "code": 11,
+    "hex_code": "0x000B",
+    "name": "MESH_ERR_MDL_COMMAND_NOT_AVAILABLE",
+    "group": "MDL",
+    "description": "Invalid role"
+  },
+  {
+    "code": 12,
+    "hex_code": "0x000C",
+    "name": "MESH_ERR_NO_EFFECT",
+    "group": "INTERNAL",
+    "description": "Failed to access ECDH - Critical error"
+  },
+  {
+    "code": 13,
+    "hex_code": "0x000D",
+    "name": "MESH_ERR_CANNOT_FRAGMENT",
+    "group": "INTERNAL",
+    "description": "Request has no effect"
+  },
+  {
+    "code": 14,
+    "hex_code": "0x000E",
+    "name": "MESH_ERR_UNABLE_TO_CHANGE_STATE",
+    "group": "PROTOCOL",
+    "description": "Cannot Bind"
+  },
+  {
+    "code": 15,
+    "hex_code": "0x000F",
+    "name": "MESH_ERR_CANNOT_SET",
+    "group": "PROTOCOL",
+    "description": "Temporarily Unable to Change State"
+  },
+  {
+    "code": 16,
+    "hex_code": "0x0010",
+    "name": "MESH_ERR_UNSPECIFIED_ERROR",
+    "group": "PROTOCOL",
+    "description": "Cannot Set"
+  },
+  {
+    "code": 17,
+    "hex_code": "0x0011",
+    "name": "MESH_ERR_INVALID_BINDING",
+    "group": "PROTOCOL",
+    "description": "Unspecified Error"
+  },
+  {
+    "code": 0,
+    "hex_code": "0x0000",
+    "name": "MESH_ERR_PROV_PROHIBITED",
+    "group": "PROVISIONING",
+    "description": "Prohibited"
+  }
+]

@@ -1,0 +1,7 @@
+语音遥控器-主机工程:
+需使用USB连接上位机软件,进行调试.
+
+上位机调试软件:
+sdk6\tools\HidVoc\hidVoc.exe
+上位机调试软件源码:
+sdk6\tools\HidVoc\\projects

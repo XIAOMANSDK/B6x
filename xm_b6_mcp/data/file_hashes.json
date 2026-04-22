@@ -1,0 +1,693 @@
+{
+  "version": "1.1",
+  "last_updated": "2026-04-22T16:20:59.607843",
+  "sdk_root": "<resolved_at_runtime>",
+  "file_hashes": {
+    "excel_constraints": {},
+    "documents": {
+      "doc\\B6x_api(部分)设计指导.docx": {
+        "path": "doc/B6x_api(部分)设计指导.docx",
+        "md5": "29f6d93ba7995b482c7aa041c0aba6b1",
+        "size_bytes": 620736,
+        "mtime": 1744536687.1390676,
+        "last_built": "2026-04-22T10:39:49.587975",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\B6x常见应用解答.docx": {
+        "path": "doc/B6x常见应用解答.docx",
+        "md5": "6ad92b34747f46baba919b7097b452ce",
+        "size_bytes": 458190,
+        "mtime": 1744536687.1390676,
+        "last_built": "2026-04-22T10:39:50.294959",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\B6x无线认证指导.docx": {
+        "path": "doc/B6x无线认证指导.docx",
+        "md5": "d373295662c26de83945787731c5361f",
+        "size_bytes": 1780025,
+        "mtime": 1744536687.1390676,
+        "last_built": "2026-04-22T10:39:51.000384",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\bxISP_Programmer_User_Guide_V1.0_CN.docx": {
+        "path": "doc/bxISP_Programmer_User_Guide_V1.0_CN.docx",
+        "md5": "c3a773825c7c019e2caf251128aa2d90",
+        "size_bytes": 3027101,
+        "mtime": 1744536694.7621875,
+        "last_built": "2026-04-22T10:39:52.530800",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\DataSheet\\B6x_DataSheet_v3.7_CN.docx": {
+        "path": "doc/DataSheet/B6x_DataSheet_v3.7_CN.docx",
+        "md5": "f076c205cf265514632c89678e63fb0d",
+        "size_bytes": 3058235,
+        "mtime": 1776825410.5746205,
+        "last_built": "2026-04-22T10:39:54.926683",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\DataSheet\\B6x_DataSheet_v3.7_EN.docx": {
+        "path": "doc/DataSheet/B6x_DataSheet_v3.7_EN.docx",
+        "md5": "3629c2b9bd65ee3ef4b532cb9fa67080",
+        "size_bytes": 3559788,
+        "mtime": 1776825410.585097,
+        "last_built": "2026-04-22T10:39:57.386552",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\HW_Spec\\典型Layout设计错误(必看).docx": {
+        "path": "doc/HW_Spec/典型Layout设计错误(必看).docx",
+        "md5": "edd1aedab339d01a9de2c1539a20969d",
+        "size_bytes": 1564694,
+        "mtime": 1713927493.5553,
+        "last_built": "2026-04-22T10:39:57.596865",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\HW_Spec\\开发板使用说明.docx": {
+        "path": "doc/HW_Spec/开发板使用说明.docx",
+        "md5": "aa86f7cf24f3d5d1c870d36a11646367",
+        "size_bytes": 2785944,
+        "mtime": 1739014519.4439685,
+        "last_built": "2026-04-22T10:39:58.926826",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\HW_Spec\\硬件设计指导.docx": {
+        "path": "doc/HW_Spec/硬件设计指导.docx",
+        "md5": "106f285d41d0ac9b9874a84b6bc63510",
+        "size_bytes": 2742700,
+        "mtime": 1739014518.7616246,
+        "last_built": "2026-04-22T10:39:59.475011",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\B6x_BLE芯片使用指南_V1.0.0.docx": {
+        "path": "doc/SW_Spec/B6x_BLE芯片使用指南_V1.0.0.docx",
+        "md5": "092c52a63d771acff69a401fd4ea543b",
+        "size_bytes": 1854064,
+        "mtime": 1744536687.1649525,
+        "last_built": "2026-04-22T10:40:27.034396",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\B6x_BLE芯片使用指南_V1.0.1.docx": {
+        "path": "doc/SW_Spec/B6x_BLE芯片使用指南_V1.0.1.docx",
+        "md5": "f8ad416b1afe8b8c290e7c2d59e05a18",
+        "size_bytes": 1893981,
+        "mtime": 1744536687.170928,
+        "last_built": "2026-04-22T10:40:51.927013",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\JFlash配置说明.docx": {
+        "path": "doc/SW_Spec/JFlash配置说明.docx",
+        "md5": "bcaf53270b89b9cc1bc9792bf499df5c",
+        "size_bytes": 400350,
+        "mtime": 1710583652.6657884,
+        "last_built": "2026-04-22T10:40:52.107063",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\MP_Spec\\量产软件\\ISP Tool\\ISP Tool量产说明文档.docx": {
+        "path": "doc/MP_Spec/量产软件/ISP Tool/ISP Tool量产说明文档.docx",
+        "md5": "03c448b8d7e3f3946ee2792ea557c729",
+        "size_bytes": 2961893,
+        "mtime": 1744536694.4553878,
+        "last_built": "2026-04-22T10:40:53.337173",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\B6x无线认证资料\\认证指导手册\\B6x无线认证指导.docx": {
+        "path": "doc/B6x无线认证资料/认证指导手册/B6x无线认证指导.docx",
+        "md5": "a2b69c5fe0ea2d2e7867bcad1f760b07",
+        "size_bytes": 5901395,
+        "mtime": 1769927646.9382722,
+        "last_built": "2026-04-22T10:40:53.793016",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\musbfsfc_pg.pdf": {
+        "path": "doc/SW_Spec/musbfsfc_pg.pdf",
+        "md5": "ea864b549d0ea6c1a3918d2014911852",
+        "size_bytes": 246632,
+        "mtime": 1710583522.694407,
+        "last_built": "2026-04-22T10:41:07.437441",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\musbfsfc_ps.pdf": {
+        "path": "doc/SW_Spec/musbfsfc_ps.pdf",
+        "md5": "10c7e88239cc5b935dbecd44b20b8c97",
+        "size_bytes": 159900,
+        "mtime": 1710583522.691414,
+        "last_built": "2026-04-22T10:41:14.972361",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\MP_Spec\\量产软件\\bxISP\\bxISP_Programmer_User_Guide.pdf": {
+        "path": "doc/MP_Spec/量产软件/bxISP/bxISP_Programmer_User_Guide.pdf",
+        "md5": "312c4a73a74766f9c38610ef5159d848",
+        "size_bytes": 1354509,
+        "mtime": 1764216143.0871754,
+        "last_built": "2026-04-22T10:41:17.380820",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\HW_Spec\\QFN32\\DataSheet_Reference\\Datasheet.pdf": {
+        "path": "doc/HW_Spec/QFN32/DataSheet_Reference/Datasheet.pdf",
+        "md5": "ce3e079c6206b395beb4404a3d1700d5",
+        "size_bytes": 49885,
+        "mtime": 1744536694.5245595,
+        "last_built": "2026-04-22T10:41:17.730652",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\HW_Spec\\QFN32\\01Developmentboard\\2023-07-29\\B6_32D_20230729.pdf": {
+        "path": "doc/HW_Spec/QFN32/01Developmentboard/2023-07-29/B6_32D_20230729.pdf",
+        "md5": "fc9045c1f09a9e449a76875aa5d935a1",
+        "size_bytes": 893838,
+        "mtime": 1739014518.7910733,
+        "last_built": "2026-04-22T10:41:23.210813",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\B6x BLE兼容性列表.xlsx": {
+        "path": "doc/B6x BLE兼容性列表.xlsx",
+        "md5": "bcb887ad1b69fc4bec17e0ba7cd9365d",
+        "size_bytes": 17272,
+        "mtime": 1713927492.681989,
+        "last_built": "2026-04-22T10:41:23.438608",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\B6x-Flash-Map.xlsx": {
+        "path": "doc/SW_Spec/B6x-Flash-Map.xlsx",
+        "md5": "452667c774fae8f60705afcb6d162025",
+        "size_bytes": 98109,
+        "mtime": 1732013855.3748739,
+        "last_built": "2026-04-22T10:41:26.895233",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\B6x_BLE-Sram空间分配.xlsx": {
+        "path": "doc/SW_Spec/B6x_BLE-Sram空间分配.xlsx",
+        "md5": "8a5f1ea927148acd977478acfa5fa00f",
+        "size_bytes": 497422,
+        "mtime": 1772521871.3950536,
+        "last_built": "2026-04-22T10:41:27.102942",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\B6x_BLE-功耗参考.xlsx": {
+        "path": "doc/SW_Spec/B6x_BLE-功耗参考.xlsx",
+        "md5": "039d5e27cdeab8c05d31ae15be46db71",
+        "size_bytes": 438571,
+        "mtime": 1734400868.2569292,
+        "last_built": "2026-04-22T10:41:27.303639",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\B6x_IO_MAP.xlsx": {
+        "path": "doc/SW_Spec/B6x_IO_MAP.xlsx",
+        "md5": "c889bfc582220f704255cd75bde8c136",
+        "size_bytes": 30694,
+        "mtime": 1744536687.1390676,
+        "last_built": "2026-04-22T10:41:27.623507",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\B6x系列芯片Flash及SRAM说明.md": {
+        "path": "doc/SW_Spec/B6x系列芯片Flash及SRAM说明.md",
+        "md5": "6d02cae57fe997b682041239debc3866",
+        "size_bytes": 2912,
+        "mtime": 1772673722.3259778,
+        "last_built": "2026-04-22T10:41:27.640262",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\ClaudeCode安装配置以及使用说明.md": {
+        "path": "doc/SW_Spec/ClaudeCode安装配置以及使用说明.md",
+        "md5": "c376a34907a13b808c1ed2f95c789133",
+        "size_bytes": 16733,
+        "mtime": 1776405841.517303,
+        "last_built": "2026-04-22T10:41:27.657628",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\SW_Spec\\GNU开发环境配置\\GNU开发环境.md": {
+        "path": "doc/SW_Spec/GNU开发环境配置/GNU开发环境.md",
+        "md5": "cdbeadef40aae8105bec152c29c2e310",
+        "size_bytes": 8613,
+        "mtime": 1773716626.2835193,
+        "last_built": "2026-04-22T10:41:27.673060",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      },
+      "doc\\MP_Spec\\量产软件\\bxISP\\vers.md": {
+        "path": "doc/MP_Spec/量产软件/bxISP/vers.md",
+        "md5": "6b2883916a303d3880d015c62062029b",
+        "size_bytes": 1158,
+        "mtime": 1769927636.5801258,
+        "last_built": "2026-04-22T10:41:27.688660",
+        "outputs": [
+          "xm_b6_mcp/data/parsed_documents.json"
+        ]
+      }
+    },
+    "c_headers": {
+      "drivers\\api\\btmr.h": {
+        "path": "drivers/api/btmr.h",
+        "md5": "29397bff12e4e22c5b225fc0d6e326af",
+        "size_bytes": 611,
+        "mtime": 1762480964.563254,
+        "last_built": "2026-04-22T16:20:46.407065",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\core.h": {
+        "path": "drivers/api/core.h",
+        "md5": "e5ebe0032b65b57158ce34bac2fbf20f",
+        "size_bytes": 9495,
+        "mtime": 1769927647.0934067,
+        "last_built": "2026-04-22T16:20:46.409660",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\dma.h": {
+        "path": "drivers/api/dma.h",
+        "md5": "52b66884be8d3bfc88159f86a8406b7c",
+        "size_bytes": 18180,
+        "mtime": 1772521744.9871244,
+        "last_built": "2026-04-22T16:20:46.412072",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\drvs.h": {
+        "path": "drivers/api/drvs.h",
+        "md5": "4ad4e0a6cbc916307194c030d1aa2aa2",
+        "size_bytes": 2954,
+        "mtime": 1776405839.9693184,
+        "last_built": "2026-04-22T16:20:46.414380",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\exti.h": {
+        "path": "drivers/api/exti.h",
+        "md5": "687ebf7df1f75a3855b58d18da950398",
+        "size_bytes": 2851,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-04-22T16:20:46.416793",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\flash.h": {
+        "path": "drivers/api/flash.h",
+        "md5": "53a3b7d06f3d8437e926ec8243f6090b",
+        "size_bytes": 6513,
+        "mtime": 1773622739.1275141,
+        "last_built": "2026-04-22T16:20:46.419148",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\fshc.h": {
+        "path": "drivers/api/fshc.h",
+        "md5": "fa9840d58fad9566d524f8563c0f4c7d",
+        "size_bytes": 12368,
+        "mtime": 1710583664.3850024,
+        "last_built": "2026-04-22T16:20:46.421858",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\gpio.h": {
+        "path": "drivers/api/gpio.h",
+        "md5": "5dc535c5ad28a67f426c5cd5de2bdce4",
+        "size_bytes": 8906,
+        "mtime": 1776405839.9616501,
+        "last_built": "2026-04-22T16:20:46.424243",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\i2c.h": {
+        "path": "drivers/api/i2c.h",
+        "md5": "886964c152977ee98d291ea451a69341",
+        "size_bytes": 9919,
+        "mtime": 1710583664.334894,
+        "last_built": "2026-04-22T16:20:46.427316",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\iopad.h": {
+        "path": "drivers/api/iopad.h",
+        "md5": "0613202034865141d550a2e895f8d151",
+        "size_bytes": 11371,
+        "mtime": 1774008932.4782228,
+        "last_built": "2026-04-22T16:20:46.431292",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\iwdt.h": {
+        "path": "drivers/api/iwdt.h",
+        "md5": "705ecf109afc1f857d8e7222da801098",
+        "size_bytes": 2201,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-04-22T16:20:46.434330",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\pwm.h": {
+        "path": "drivers/api/pwm.h",
+        "md5": "1c2bd54ddb6c1769582c682f58e00767",
+        "size_bytes": 6857,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-04-22T16:20:46.437855",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\rcc.h": {
+        "path": "drivers/api/rcc.h",
+        "md5": "fef996ed2b327b1f65a32eeeadc85bd4",
+        "size_bytes": 9021,
+        "mtime": 1710583664.3125587,
+        "last_built": "2026-04-22T16:20:46.440920",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\rco.h": {
+        "path": "drivers/api/rco.h",
+        "md5": "2e129c690d675a13eddc9108b2afcad4",
+        "size_bytes": 3594,
+        "mtime": 1710583664.3695893,
+        "last_built": "2026-04-22T16:20:46.443576",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\rtc.h": {
+        "path": "drivers/api/rtc.h",
+        "md5": "a687fdb1fe7bd1583ffdeb6ae5ba50f4",
+        "size_bytes": 4402,
+        "mtime": 1710583664.387234,
+        "last_built": "2026-04-22T16:20:46.445978",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\sadc.h": {
+        "path": "drivers/api/sadc.h",
+        "md5": "00d5084a638fba713a5f661f4cc2aa75",
+        "size_bytes": 13265,
+        "mtime": 1762164598.0514245,
+        "last_built": "2026-04-22T16:20:46.448428",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\spi.h": {
+        "path": "drivers/api/spi.h",
+        "md5": "79547db03501a614465fccb1cd2a3ffa",
+        "size_bytes": 9037,
+        "mtime": 1773622811.6789987,
+        "last_built": "2026-04-22T16:20:46.450835",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\svn_ver.h": {
+        "path": "drivers/api/svn_ver.h",
+        "md5": "8c068992de1c79117b656ca94a78234c",
+        "size_bytes": 97,
+        "mtime": 1776825412.864699,
+        "last_built": "2026-04-22T16:20:46.453437",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\sysdbg.h": {
+        "path": "drivers/api/sysdbg.h",
+        "md5": "a11a1d9d5263d59e7a7370d857f5e710",
+        "size_bytes": 5669,
+        "mtime": 1710583664.2719207,
+        "last_built": "2026-04-22T16:20:46.456488",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\timer.h": {
+        "path": "drivers/api/timer.h",
+        "md5": "16e9580375de9d668078d15666ca994d",
+        "size_bytes": 4575,
+        "mtime": 1722908856.9277108,
+        "last_built": "2026-04-22T16:20:46.459173",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\trim.h": {
+        "path": "drivers/api/trim.h",
+        "md5": "a90cc3b3722508763568c05f8b14ebea",
+        "size_bytes": 952,
+        "mtime": 1713927494.329942,
+        "last_built": "2026-04-22T16:20:46.461855",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\uart.h": {
+        "path": "drivers/api/uart.h",
+        "md5": "a33cc1ff5a677bfcc1edd7e5e54970a4",
+        "size_bytes": 11420,
+        "mtime": 1776405839.9656506,
+        "last_built": "2026-04-22T16:20:46.464360",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "drivers\\api\\utils.h": {
+        "path": "drivers/api/utils.h",
+        "md5": "40bb2dc414276208abcc6ff68bbbfc36",
+        "size_bytes": 15878,
+        "mtime": 1776405839.9636505,
+        "last_built": "2026-04-22T16:20:46.467174",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\att.h": {
+        "path": "ble/api/att.h",
+        "md5": "12ca841982050d892bc3e0661fd2da33",
+        "size_bytes": 50582,
+        "mtime": 1730534610.5918386,
+        "last_built": "2026-04-22T16:20:59.562869",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\attm_api.h": {
+        "path": "ble/api/attm_api.h",
+        "md5": "9d09ccf5cf7632bdbebe53cba2bc8157",
+        "size_bytes": 24056,
+        "mtime": 1730534610.5728903,
+        "last_built": "2026-04-22T16:20:59.565918",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\bledef.h": {
+        "path": "ble/api/bledef.h",
+        "md5": "82ffb61d9ed73b0b709dd4bbca630a7b",
+        "size_bytes": 8106,
+        "mtime": 1773622538.6569092,
+        "last_built": "2026-04-22T16:20:59.568825",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\blelib.h": {
+        "path": "ble/api/blelib.h",
+        "md5": "ce443f6993344c543b78170c97f7887e",
+        "size_bytes": 3449,
+        "mtime": 1773622538.6569092,
+        "last_built": "2026-04-22T16:20:59.571938",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\fcc.h": {
+        "path": "ble/api/fcc.h",
+        "md5": "79aafaa44d0c5eed3f29fde2500caa99",
+        "size_bytes": 1198,
+        "mtime": 1772521762.7015095,
+        "last_built": "2026-04-22T16:20:59.575415",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gap.h": {
+        "path": "ble/api/gap.h",
+        "md5": "27331917683d3700e5c42354c70677cd",
+        "size_bytes": 24872,
+        "mtime": 1730534610.5778763,
+        "last_built": "2026-04-22T16:20:59.578507",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapc.h": {
+        "path": "ble/api/gapc.h",
+        "md5": "a1ae254211c03f0e1eb2e0c9ef5cbb0e",
+        "size_bytes": 32416,
+        "mtime": 1730534610.5808685,
+        "last_built": "2026-04-22T16:20:59.581168",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapc_api.h": {
+        "path": "ble/api/gapc_api.h",
+        "md5": "48099181fc7ce578f26ef50587867324",
+        "size_bytes": 12988,
+        "mtime": 1730534610.576882,
+        "last_built": "2026-04-22T16:20:59.583679",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapm.h": {
+        "path": "ble/api/gapm.h",
+        "md5": "78da947cea4d48ace6d2f9f282b71c7d",
+        "size_bytes": 62004,
+        "mtime": 1730534610.586852,
+        "last_built": "2026-04-22T16:20:59.586261",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gapm_api.h": {
+        "path": "ble/api/gapm_api.h",
+        "md5": "877ac2de3e04513dc1e0ba762ea501d4",
+        "size_bytes": 5459,
+        "mtime": 1722908854.718833,
+        "last_built": "2026-04-22T16:20:59.589002",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gatt.h": {
+        "path": "ble/api/gatt.h",
+        "md5": "c790b0a1c3a7294402860540201835f7",
+        "size_bytes": 24486,
+        "mtime": 1730534610.5738878,
+        "last_built": "2026-04-22T16:20:59.591517",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\gatt_api.h": {
+        "path": "ble/api/gatt_api.h",
+        "md5": "eada378ae844f02042824e79f5af0ea4",
+        "size_bytes": 9066,
+        "mtime": 1730534610.589844,
+        "last_built": "2026-04-22T16:20:59.594496",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\ke_api.h": {
+        "path": "ble/api/ke_api.h",
+        "md5": "a7d0737bab55ce68a03732790db1ae09",
+        "size_bytes": 10183,
+        "mtime": 1772521762.7118094,
+        "last_built": "2026-04-22T16:20:59.597264",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\l2cc.h": {
+        "path": "ble/api/l2cc.h",
+        "md5": "8b5acbf2f8685b0a510732c54ac03fe6",
+        "size_bytes": 7415,
+        "mtime": 1730534610.5848575,
+        "last_built": "2026-04-22T16:20:59.599684",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\le_err.h": {
+        "path": "ble/api/le_err.h",
+        "md5": "fc0d813349df5166a118b24af6c2d813",
+        "size_bytes": 18333,
+        "mtime": 1730534610.5798714,
+        "last_built": "2026-04-22T16:20:59.602151",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\list.h": {
+        "path": "ble/api/list.h",
+        "md5": "a712e723f50717d780eb2ef2ba3e51c1",
+        "size_bytes": 9685,
+        "mtime": 1772521762.7015095,
+        "last_built": "2026-04-22T16:20:59.605141",
+        "outputs": [
+          "whoosh_index"
+        ]
+      },
+      "ble\\api\\task.h": {
+        "path": "ble/api/task.h",
+        "md5": "21c6b1f127e45cd36e2f87bd2b777a71",
+        "size_bytes": 7105,
+        "mtime": 1730534610.5758815,
+        "last_built": "2026-04-22T16:20:59.607835",
+        "outputs": [
+          "whoosh_index"
+        ]
+      }
+    },
+    "c_sources": {}
+  }
+}

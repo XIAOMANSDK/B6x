@@ -1,0 +1,348 @@
+[
+  {
+    "name": "CFG_PMU_DFLT_CNTL",
+    "value": "(CFG_PMU_CLK_STB(0x3F))",
+    "brief": ""
+  },
+  {
+    "name": "CFG_WKUP_PWROFF_MSK",
+    "value": "(0x1B)",
+    "brief": ""
+  },
+  {
+    "name": "CFG_WKUP_DEEPSL_MSK",
+    "value": "(0x1B)",
+    "brief": ""
+  },
+  {
+    "name": "CFG_WKUP_ST_MSK",
+    "value": "(0x030F)",
+    "brief": ""
+  },
+  {
+    "name": "CFG_WKUP_ST_CLR_MSK",
+    "value": "(0xC00000)",
+    "brief": ""
+  },
+  {
+    "name": "CFG_WKUP_BLE_EN",
+    "value": "(1 << WKUP_BLE_SEL_LSB)",
+    "brief": ""
+  },
+  {
+    "name": "CFG_WKUP_RTC_EN",
+    "value": "(WKUP_RTC_EN_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "CFG_WKUP_IO_EN",
+    "value": "(WKUP_IO_EN_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "SYS_CLK",
+    "value": "(0)",
+    "brief": ""
+  },
+  {
+    "name": "RC32K_CAL_CYCLES",
+    "value": "(9)",
+    "brief": "",
+    "variants": [
+      "(7)"
+    ]
+  },
+  {
+    "name": "__SRAMFN",
+    "value": "__attribute__((section(\"ram_func\")))",
+    "brief": ""
+  },
+  {
+    "name": "__ATTR_SRAM",
+    "value": "__attribute__((section(\"ram_func\")))",
+    "brief": ""
+  },
+  {
+    "name": "__RETENTION",
+    "value": "__attribute__((section(\"user_retention\"), zero_init))",
+    "brief": "",
+    "variants": [
+      "__attribute__((section(\"user_retention\")))"
+    ]
+  },
+  {
+    "name": "FCM_MODE_DUAL",
+    "value": "(DUAL_MODE << FCM_MODE_LSB)",
+    "brief": ""
+  },
+  {
+    "name": "FCM_MODE_QUAD",
+    "value": "(QUAD_MODE << FCM_MODE_LSB)",
+    "brief": ""
+  },
+  {
+    "name": "FCM_TYPE_BLOCKING",
+    "value": "(0)",
+    "brief": ""
+  },
+  {
+    "name": "FCM_TYPE_NOTWAIT",
+    "value": "(FCM_NOTWAIT_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "FCM_TYPE_SUSPEND",
+    "value": "(FCM_SUSPEND_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "FCM_TYPE_PKTSTART",
+    "value": "(FCM_PACKETS_BIT | FCM_NOTWAIT_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "FCM_TYPE_PKTNEXT",
+    "value": "(FCM_PACKETS_BIT | FCM_NEXTPKT_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "SCLK_100K",
+    "value": "(0x27)",
+    "brief": "",
+    "variants": [
+      "(0x2B)",
+      "(0x2F)",
+      "(0x23)"
+    ]
+  },
+  {
+    "name": "SCLK_200K",
+    "value": "(0x23)",
+    "brief": "",
+    "variants": [
+      "(0x25)",
+      "(0x27)",
+      "(0x21)"
+    ]
+  },
+  {
+    "name": "SCLK_400K",
+    "value": "(0x21)",
+    "brief": "",
+    "variants": [
+      "(0x22)",
+      "(0x23)",
+      "(0x11)"
+    ]
+  },
+  {
+    "name": "I2C_RD_OP",
+    "value": "(0x01)",
+    "brief": ""
+  },
+  {
+    "name": "CSC_FEN_BIT",
+    "value": "(1UL << 7)",
+    "brief": ""
+  },
+  {
+    "name": "ioSelUartTxRx",
+    "value": "iocsc_uart",
+    "brief": ""
+  },
+  {
+    "name": "ioSelUartRtsCts",
+    "value": "iocsc_uart_hwfc",
+    "brief": ""
+  },
+  {
+    "name": "ioSelI2c",
+    "value": "iocsc_i2c",
+    "brief": ""
+  },
+  {
+    "name": "ioSelSpiMaster",
+    "value": "iocsc_spim",
+    "brief": ""
+  },
+  {
+    "name": "ioSelSpiSlave",
+    "value": "iocsc_spis",
+    "brief": ""
+  },
+  {
+    "name": "IWDT_CR_DFLT",
+    "value": "(IWDT_EN_BIT | IWDT_RSTEN_BIT | IWDT_CLKLSI_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "PWM_CCER_SIPH",
+    "value": "(PWM_CCxE_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "PWM_CCER_SIPL",
+    "value": "(PWM_CCxE_BIT | PWM_CCxP_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "PWC_CCER_POSEDGE",
+    "value": "(PWM_CCxE_BIT) // rising-edge",
+    "brief": ""
+  },
+  {
+    "name": "PWC_CCER_NEGEDGE",
+    "value": "(PWM_CCxE_BIT | PWM_CCxP_BIT) // falling-edge",
+    "brief": ""
+  },
+  {
+    "name": "PWM_CCMR_MODE1",
+    "value": "(PWM_OCxPE_BIT | PWM_OCxM(6))",
+    "brief": ""
+  },
+  {
+    "name": "PWM_CCMR_MODE2",
+    "value": "(PWM_OCxPE_BIT | PWM_OCxM(7))",
+    "brief": ""
+  },
+  {
+    "name": "SADC_ANA_DFLT",
+    "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+    "brief": ""
+  },
+  {
+    "name": "SADC_ANA_VREF_1V2",
+    "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+    "brief": ""
+  },
+  {
+    "name": "SADC_ANA_VREF_1V8",
+    "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+    "brief": ""
+  },
+  {
+    "name": "SADC_ANA_VREF_2V4",
+    "value": "(SADC_VREF_VBG | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+    "brief": ""
+  },
+  {
+    "name": "SADC_ANA_VREF_VDD",
+    "value": "(SADC_VREF_VDD | SADC_CALCAP_PRECISION | SADC_IBSEL_BUF(3) | SADC_IBSEL_VREF(3)",
+    "brief": ""
+  },
+  {
+    "name": "SADC_MIC_DFLT",
+    "value": "(SADC_PGA_VOL(0x1B) | SADC_PGA_BIAS(1) | SADC_MIC_TRIM(0x40)",
+    "brief": ""
+  },
+  {
+    "name": "SADC_CLK_DIV",
+    "value": "(((SYS_CLK + 1) * 4) - 1) // div_4M",
+    "brief": ""
+  },
+  {
+    "name": "SADC_CR_DFLT",
+    "value": "(SADC_CR_CLK(SADC_CLK_DIV) | SADC_CR_HPF(11) | SADC_CR_CLKPH_POSEDGE",
+    "brief": ""
+  },
+  {
+    "name": "SPIM_CR_DFLT",
+    "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x01))  // SPI 8MHz",
+    "brief": "",
+    "variants": [
+      "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x02))  // SPI 6MHz",
+      "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x03))  // SPI 8MHz",
+      "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)  // SPI 8MHz"
+    ]
+  },
+  {
+    "name": "SPIS_CR_DFLT",
+    "value": "(SPIS_CR_RX_EN_BIT | SPIS_CR_RUN_EN_BIT)",
+    "brief": ""
+  },
+  {
+    "name": "_SVN_VER_H_",
+    "value": "",
+    "brief": ""
+  },
+  {
+    "name": "SVN_VER",
+    "value": "4325",
+    "brief": ""
+  },
+  {
+    "name": "LCR_BITS_DFLT",
+    "value": "LCR_BITS(8, 1, none) // default: 8 DataBits, 1 StopBits, None Parity",
+    "brief": ""
+  },
+  {
+    "name": "BRR_115200",
+    "value": "BRR_DIV(115200, 32M) // default use SYS_FREQ_32M",
+    "brief": "",
+    "variants": [
+      "BRR_DIV(115200, 48M) // default use SYS_FREQ_48M",
+      "BRR_DIV(115200, 64M) // default use SYS_FREQ_64M",
+      "BRR_DIV(115200, 16M) // default use SYS_FREQ_16M"
+    ]
+  },
+  {
+    "name": "BRR_921600",
+    "value": "BRR_DIV(921600, 32M) // default use SYS_FREQ_32M",
+    "brief": "",
+    "variants": [
+      "BRR_DIV(921600, 48M) // default use SYS_FREQ_48M",
+      "BRR_DIV(921600, 64M) // default use SYS_FREQ_64M",
+      "BRR_DIV(921600, 16M) // default use SYS_FREQ_16M"
+    ]
+  },
+  {
+    "name": "_USB_DEF_H",
+    "value": "",
+    "brief": ""
+  },
+  {
+    "name": "__USED",
+    "value": "__attrib",
+    "brief": ""
+  },
+  {
+    "name": "USB_DBG_DISABLE",
+    "value": "0",
+    "brief": ""
+  },
+  {
+    "name": "USB_DBG_ERROR",
+    "value": "1",
+    "brief": ""
+  },
+  {
+    "name": "USB_DBG_WARNING",
+    "value": "2",
+    "brief": ""
+  },
+  {
+    "name": "USB_DBG_INFO",
+    "value": "3",
+    "brief": ""
+  },
+  {
+    "name": "USB_DBG_LOG",
+    "value": "4",
+    "brief": ""
+  },
+  {
+    "name": "USB_DBG_LEVEL",
+    "value": "USB_DBG_DISABLE //USB_DBG_ERROR",
+    "brief": ""
+  },
+  {
+    "name": "USB_PRINTF",
+    "value": "printf",
+    "brief": ""
+  },
+  {
+    "name": "COLOR_TERMINAL",
+    "value": "(0)",
+    "brief": ""
+  }
+]

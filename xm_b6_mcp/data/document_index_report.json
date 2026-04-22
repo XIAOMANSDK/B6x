@@ -1,0 +1,112 @@
+{
+  "build_date": "2026-04-22T16:20:39.155281",
+  "build_version": "0.2.0",
+  "steps": {
+    "step1": {
+      "status": "success",
+      "total_documents": 28,
+      "parsed_by_type": {
+        "word": 14,
+        "pdf": 5,
+        "excel": 5,
+        "markdown": 4
+      },
+      "parsed_by_domain": {
+        "domain2": 3,
+        "domain4": 2,
+        "domain5": 7,
+        "domain1": 12,
+        "domain3": 4
+      },
+      "errors": [],
+      "incremental": false,
+      "files_processed": 28,
+      "files_cached": 0
+    },
+    "step2": {
+      "status": "success",
+      "domains": {
+        "domain1": {
+          "name": "Hardware & Registers",
+          "count": 12,
+          "documents": [
+            "B6x_DataSheet_v3.7_CN.docx",
+            "B6x_DataSheet_v3.7_EN.docx",
+            "典型Layout设计错误(必看).docx",
+            "开发板使用说明.docx",
+            "硬件设计指导.docx",
+            "B6x_BLE芯片使用指南_V1.0.0.docx",
+            "B6x_BLE芯片使用指南_V1.0.1.docx",
+            "musbfsfc_pg.pdf",
+            "musbfsfc_ps.pdf",
+            "Datasheet.pdf",
+            "B6_32D_20230729.pdf",
+            "B6x-Flash-Map.xlsx"
+          ]
+        },
+        "domain2": {
+          "name": "SOC Drivers",
+          "count": 3,
+          "documents": [
+            "B6x_api(部分)设计指导.docx",
+            "B6x_IO_MAP.xlsx",
+            "ClaudeCode安装配置以及使用说明.md"
+          ]
+        },
+        "domain3": {
+          "name": "BLE Stack",
+          "count": 4,
+          "documents": [
+            "B6x BLE兼容性列表.xlsx",
+            "B6x_BLE-Sram空间分配.xlsx",
+            "B6x_BLE-功耗参考.xlsx",
+            "B6x系列芯片Flash及SRAM说明.md"
+          ]
+        },
+        "domain4": {
+          "name": "Applications",
+          "count": 2,
+          "documents": [
+            "B6x常见应用解答.docx",
+            "JFlash配置说明.docx"
+          ]
+        },
+        "domain5": {
+          "name": "Production & Toolchain",
+          "count": 7,
+          "documents": [
+            "B6x无线认证指导.docx",
+            "bxISP_Programmer_User_Guide_V1.0_CN.docx",
+            "ISP Tool量产说明文档.docx",
+            "B6x无线认证指导.docx",
+            "bxISP_Programmer_User_Guide.pdf",
+            "GNU开发环境.md",
+            "vers.md"
+          ]
+        }
+      },
+      "total_classified": 28
+    },
+    "step3": {
+      "status": "success",
+      "index_dir": "data/whoosh_index",
+      "total_documents": 28,
+      "indexed_count": 28,
+      "failed_count": 0
+    }
+  },
+  "summary": {
+    "excel_constraints": 7,
+    "documents_parsed": 28,
+    "documents_classified": 28,
+    "documents_indexed": 28,
+    "total_errors": 0
+  },
+  "paths": {
+    "sdk_root": "<resolved_at_runtime>",
+    "mcp_root": "<resolved_at_runtime>",
+    "doc_dir": "doc",
+    "index_dir": "data\\whoosh_index",
+    "constraints_dir": "data\\constraints"
+  }
+}

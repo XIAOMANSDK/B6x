@@ -1,0 +1,201 @@
+{
+  "file_path": "drivers/api/rco.h",
+  "functions": [
+    {
+      "name": "rc32k_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Enable and Config rc32k ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ref_clk   reference clock for calibration @see enum rc32k_ref_clk\n@param[in] cal_ctrl  config control for calibration @see enum rc32k_cal_ctrl\n***************************************************************************************\n/",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 68,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rc32k_calib",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Start rc32k calibration, after rc32k_conf(). ",
+      "detailed_description": "***************************************************************************************\n@return rc32k trim value\n***************************************************************************************\n/",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 77,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rc32k_trim_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Direct Set trim value to calibrate rc32k. ",
+      "detailed_description": "***************************************************************************************\n@param[in] value   calib-target value\n***************************************************************************************\n/",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 87,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rc32k_trim_get",
+      "return_type": "uint16_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get current value of rc32k calibrated or used. ",
+      "detailed_description": "***************************************************************************************\n@return calib-target value\n***************************************************************************************\n/",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 97,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rc16m_trim_set",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Direct Set trim value to calibrate rc16m. ",
+      "detailed_description": "***************************************************************************************\n@param[in] value   calib-target value 0~63\n***************************************************************************************\n/",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 107,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rc16m_trim_get",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Get current value of rc16m calibrated or used. ",
+      "detailed_description": "***************************************************************************************\n@return calib-target value 0~63\n***************************************************************************************\n/",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 117,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "rc16m_calib",
+      "return_type": "uint8_t",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "Start rc16m calibration in dichotomy. ",
+      "detailed_description": "***************************************************************************************\n@return rc16m trim value (0~63)\n***************************************************************************************\n/",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 127,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "RCLK_HSE",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "RCLK_DPLL",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "RCLK_DPLL128",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 23
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "RCAL_CYCLES_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "RCAL_CYCLES_MSK",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "RCAL_SCALE_EN",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "RCAL_DELAY_EN",
+          "value": 64,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/rco.h",
+      "line_number": 31
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

@@ -1,0 +1,989 @@
+{
+  "file_path": "drivers/api/iopad.h",
+  "functions": [
+    {
+      "name": "iocsc_uart",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "复合CSC配置 - I2C功能 ",
+      "detailed_description": "和接收引脚，包括CSC连接和IO模式设置\n/\nvoid iocsc_uart(uint8_t port, uint8_t pad_tx, uint8_t pad_rx);\n@param[in] port    UART端口号(0-UART1, 1-UART2)\n@param[in] pad_rts 用于UART RTS的IO引脚 @see enum pad_idx\n@param[in] pad_cts 用于UART CTS的IO引脚 @see enum pad_idx\n@note 配置UART的硬件流控制引脚(RTS/CTS)，包括CSC连接和IO模式设置\n/\nvoid iocsc_uart_hwfc(uint8_t port, uint8_t pad_rts, uint8_t pad_cts);",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 248,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iocsc_uart_hwfc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "复合CSC配置 - SPI主设备功能",
+      "detailed_description": "] pad_sda 用于I2C SDA的IO引脚 @see enum pad_idx\n@note 配置I2C的时钟和数据引脚，支持双向开漏通信\n/\nvoid iocsc_i2c(uint8_t pad_scl, uint8_t pad_sda);\n@param[in] pad_clk  用于SPI CLK的IO引脚 @see enum pad_idx\n@param[in] pad_miso 用于SPI MISO的IO引脚 @see enum pad_idx\n@param[in] pad_mosi 用于SPI MOSI的IO引脚 @see enum pad_idx",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 257,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iocsc_i2c",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "复合CSC配置 - SPI从设备功能",
+      "detailed_description": "8_t pad_miso, uint8_t pad_mosi);\n@param[in] pad_cs   用于SPI CS的IO引脚 @see enum pad_idx\n@param[in] pad_clk  用于SPI CLK的IO引脚 @see enum pad_idx\n@param[in] pad_miso 用于SPI MISO的IO引脚 @see enum pad_idx\n@param[",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 265,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iocsc_spim",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "复合CSC配置 - CTMR定时器通道功能",
+      "detailed_description": "ote 配置SPI从设备的片选、时钟、数据输入和数据输出引脚\n/\nvoid iocsc_spis(uint8_t pad_cs, uint8_t pad_clk, uint8_t pad_miso, uint8_t pad_mosi);\n@param[in] pad_ch1 用于CTMR CH1的IO引脚 @see enum pad_idx\n@param[in] pad_ch2 用于CTMR CH2的IO引脚 @see enum pad_idx\n@note 配置CTMR定时器的PWM/PWC通道引脚，支持输入捕获和输出比较\n/\nvoid iocsc",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 274,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iocsc_spis",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "配置USB DP/DM引脚（固定PA06 PA07，高阻模式）",
+      "detailed_description": "@param[in] pad   IO引脚编号\n@param[in] fsel  模拟功能选择 @see enum csc_fsel (17~24)\n@note 配置指定IO引脚为模拟观察输出功能\n/\nvoid iocsc_observe(uint8_t pad, uint8_t fsel);\n@param[in] clk  选择的时钟类型 @see enum clk_out\n@note 配置PA05引脚为时钟输出功能，支持多种时钟源选择\n/\nvoid iospc_clkout(uint8_t clk);\n@note 配置USB数据引脚为高阻模式，用于USB通信\n/\nvoid iospc_",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 284,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iocsc_ctmr_chnl",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "配置复位引脚功能（固定PA19）",
+      "detailed_description": "void iospc_swdpin(void);\n@param[in] as_gpio  True-作为GPIO，False-作为nRESET\n@note 配置PA19引脚功能，可选择作为普通GPIO或系统复位引脚\n/\nvoid iospc_rstpin(bool as_gpio);\nMacro for Deprecated Functions {\n#define ioSelUartTxRx                iocsc_uart\n#define ioSe",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 292,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iocsc_observe",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "iocsc_i2c\n#define ioSelSpiMaster               iocsc_spim\n#define ioSelSpiSlave                iocsc_spis\n#define ioClkOut(clk)                iospc_clkout(clk)\n#define ioOscen(pad",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 300,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iospc_clkout",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "AG)\n#define ioRFen(pad)                  iocsc_observe(pad, CSC_RFEN_FLAG)\n#define ioCoreSleep(pad)             iocsc_observe(pad, CSC_CM0P_DEEPSLEEP)\n#define ioBleSleep(pad)              iocsc_observ",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 307,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iospc_usbpin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "ioBleTxRx(pad_tx, pad_rx)    do{iocsc_observe(pad_tx, CSC_BB_TX_EN);iocsc_observe(pad_rx, CSC_BB_RX_EN);}while(0)\n#define ioModemTxRx(pad_",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 313,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iospc_swdpin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "ve(pad_tx, CSC_MDM_TX_EN);iocsc_observe(pad_rx, CSC_MDM_RX_EN);}while(0)\n}\n#endif // _IOPAD_H_",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 319,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "iospc_rstpin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "bool",
+          "description": ""
+        }
+      ],
+      "brief_description": "",
+      "detailed_description": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 326,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "CSC_FEN_BIT",
+      "value": "(1UL << 7)",
+      "macro_type": "bitmask",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 200
+    },
+    {
+      "name": "ioSelUartTxRx",
+      "value": "iocsc_uart",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 329
+    },
+    {
+      "name": "ioSelUartRtsCts",
+      "value": "iocsc_uart_hwfc",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 330
+    },
+    {
+      "name": "ioSelI2c",
+      "value": "iocsc_i2c",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 331
+    },
+    {
+      "name": "ioSelSpiMaster",
+      "value": "iocsc_spim",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 332
+    },
+    {
+      "name": "ioSelSpiSlave",
+      "value": "iocsc_spis",
+      "macro_type": "other",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 333
+    }
+  ],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": ",\n  ",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": ",\n  ",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "0,\n ",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "1,\n ",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "2,\n ",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "3,\n ",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "4,\n ",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "5,\n ",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "6,\n ",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "7,\n ",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "8,\n ",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "9,\n ",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": " speci",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "A00,\n   ",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "A01,\n   ",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "A05,\n    ",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "A19,\n\n   ",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "A06,\n    ",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "A07,\n    ",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "A15,\n\n   ",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "A00,\n    ",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "A01,\n    ",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "A02,\n    ",
+          "value": 30,
+          "brief": ""
+        },
+        {
+          "name": "A03,\n   ",
+          "value": 31,
+          "brief": ""
+        },
+        {
+          "name": "A04,\n    ",
+          "value": 32,
+          "brief": ""
+        },
+        {
+          "name": "A05,\n    ",
+          "value": 33,
+          "brief": ""
+        },
+        {
+          "name": "A06,\n    ",
+          "value": 34,
+          "brief": ""
+        },
+        {
+          "name": "A07,\n    ",
+          "value": 35,
+          "brief": ""
+        },
+        {
+          "name": "A08,\n    ",
+          "value": 36,
+          "brief": ""
+        },
+        {
+          "name": "A09,\n    ",
+          "value": 37,
+          "brief": ""
+        },
+        {
+          "name": "A10,\n    ",
+          "value": 38,
+          "brief": ""
+        },
+        {
+          "name": "A11,\n    PA",
+          "value": 39,
+          "brief": ""
+        },
+        {
+          "name": "A12,\n    PA",
+          "value": 40,
+          "brief": ""
+        },
+        {
+          "name": "A13,\n    PA",
+          "value": 41,
+          "brief": ""
+        },
+        {
+          "name": "A14,\n    PA",
+          "value": 42,
+          "brief": ""
+        },
+        {
+          "name": "A15,\n    PA",
+          "value": 43,
+          "brief": ""
+        },
+        {
+          "name": "A16,\n    PA",
+          "value": 44,
+          "brief": ""
+        },
+        {
+          "name": "A17,\n    PA",
+          "value": 45,
+          "brief": ""
+        },
+        {
+          "name": "A18,\n ",
+          "value": 46,
+          "brief": ""
+        },
+        {
+          "name": "A19,\n\n",
+          "value": 47,
+          "brief": ""
+        },
+        {
+          "name": "A01,\n    PA",
+          "value": 48,
+          "brief": ""
+        },
+        {
+          "name": "A02,\n    PA",
+          "value": 49,
+          "brief": ""
+        },
+        {
+          "name": "A03,\n    PA",
+          "value": 50,
+          "brief": ""
+        },
+        {
+          "name": "A04,\n    PA",
+          "value": 51,
+          "brief": ""
+        },
+        {
+          "name": "A05,\n    PA",
+          "value": 52,
+          "brief": ""
+        },
+        {
+          "name": "A06,\n    P",
+          "value": 53,
+          "brief": ""
+        },
+        {
+          "name": "A07,\n    PA_",
+          "value": 54,
+          "brief": ""
+        },
+        {
+          "name": "A08,\n    PA_",
+          "value": 55,
+          "brief": ""
+        },
+        {
+          "name": "A09,\n    PA_",
+          "value": 56,
+          "brief": ""
+        },
+        {
+          "name": "A10,\n    PA_",
+          "value": 57,
+          "brief": ""
+        },
+        {
+          "name": "A11,\n    PA_",
+          "value": 58,
+          "brief": ""
+        },
+        {
+          "name": "A12,\n    PA_",
+          "value": 59,
+          "brief": ""
+        },
+        {
+          "name": "A13,\n    PA_",
+          "value": 60,
+          "brief": ""
+        },
+        {
+          "name": "A14,\n    PA",
+          "value": 61,
+          "brief": ""
+        },
+        {
+          "name": "A15,\n    PA_C",
+          "value": 62,
+          "brief": ""
+        },
+        {
+          "name": "A16,\n    PA_C",
+          "value": 63,
+          "brief": ""
+        },
+        {
+          "name": "A17,\n    PA_C",
+          "value": 64,
+          "brief": ""
+        },
+        {
+          "name": "A18,\n};\n\n/// ",
+          "value": 65,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 23
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "x00,\n\n ",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "0 << 0),  //",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "1 << 0),  /",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "2 << 0),  // ",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "3 << 0),  // ",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "4 << 0),\n    ",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "5 << 0),\n    I",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "6 << 0),\n    IO",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "7 << 0),\n\n ",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "0 << 5),  //",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "1 << 5),  //",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "1 << 6),  //",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "1 << 7),  ",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "1 << 8), ",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "1 << 9),  ",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "1 << 10), ",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "1 << 11), // ",
+          "value": 16,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 103
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": ",  // O/I can",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": ",  // I/O can",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": ",  // O/I can",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": ",  // I/O can",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": ",  // I&O O",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": ",  // I&O O",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": ",  // I/O pw",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": ",  // I/O pw",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": ",  // O\n    C",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": ",  // O\n    C",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "0, // O\n    C",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "1, // O\n    C",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "2, // O\n    ",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "3, // O\n    C",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "4, // O\n\n    ",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": ",  // I\n    C",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": ",  // I\n    C",
+          "value": 16,
+          "brief": ""
+        },
+        {
+          "name": "0, // I\n    C",
+          "value": 17,
+          "brief": ""
+        },
+        {
+          "name": "1, // I\n    ",
+          "value": 18,
+          "brief": ""
+        },
+        {
+          "name": "2, // I\n    C",
+          "value": 19,
+          "brief": ""
+        },
+        {
+          "name": "3, // I\n\n   ",
+          "value": 20,
+          "brief": ""
+        },
+        {
+          "name": "5, // O\n    CSC_G",
+          "value": 21,
+          "brief": ""
+        },
+        {
+          "name": "6, // O\n\n    // O",
+          "value": 22,
+          "brief": ""
+        },
+        {
+          "name": "7, // O\n    CS",
+          "value": 23,
+          "brief": ""
+        },
+        {
+          "name": "8, // O\n    C",
+          "value": 24,
+          "brief": ""
+        },
+        {
+          "name": "9, // O\n    CSC_CM",
+          "value": 25,
+          "brief": ""
+        },
+        {
+          "name": "0, // O\n    CSC_BB",
+          "value": 26,
+          "brief": ""
+        },
+        {
+          "name": "1, // O\n    ",
+          "value": 27,
+          "brief": ""
+        },
+        {
+          "name": "2, // O\n    ",
+          "value": 28,
+          "brief": ""
+        },
+        {
+          "name": "3, // O\n    C",
+          "value": 29,
+          "brief": ""
+        },
+        {
+          "name": "4, // O\n};\n\ne",
+          "value": 30,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 132
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": ",\n    CLK_OU",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_O",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_OUT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_OU",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_O",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_OUT_",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_O",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_OU",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_OU",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": ",\n    CLK_OU",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "0,\n};\n\n\n/*\n",
+          "value": 10,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/iopad.h",
+      "line_number": 176
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

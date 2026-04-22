@@ -1,0 +1,256 @@
+{
+  "file_path": "drivers/src/spi.c",
+  "functions": [
+    {
+      "name": "spim_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // i2c_clk_en rst_req or soft_reset\r\n    RCC_AHBCLK_EN(AHB_SPIM_BIT);  /* 使能SPI主设备时钟 */\r\n    RCC_AHBRST_REQ(AHB_SPIM_BIT); /* 请求SPI主设备复位 */\r\n\r\n    // csc connect\r\n    csc_output(io_clk,  CSC_SPIM_CLK);  /* 配置时钟引脚为SPI主设备时钟输出 */\r\n    csc_input(io_miso,  CSC_SPIM_MISO); /* 配置MISO引脚为SPI主设备数据输入 */\r\n    csc_output(io_mosi, CSC_SPIM_MOSI); /* 配置MOSI引脚为SPI主设备数据输出 */\r\n\r\n    // iomode control\r\n    iom_ctrl(io_clk,  IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP); /* 时钟引脚：CSC功能、驱动电平1、上拉 */\r\n    iom_ctrl(io_miso, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);  /* MISO引脚：CSC功能、上拉、输入模式 */\r\n    iom_ctrl(io_mosi, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP); /* MOSI引脚：CSC功能、驱动电平1、上拉 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 42,
+      "is_static": false
+    },
+    {
+      "name": "spim_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // clear FiFo and inner counter\r\n    SPIM->STATUS_CLR.Word = SPIM_STATUS_CLR_ALL; /* STATUS_CLR: 清除所有状态标志 */\r\n\r\n    // config ctrl\r\n    SPIM->CTRL.Word = ctrl; /* CTRL: 配置SPI主设备控制参数 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 63,
+      "is_static": false
+    },
+    {
+      "name": "spim_begin",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    //if (SPIM->STATUS.SPIM_BUSY == 0) - rm, dma mode not fit\r\n    SPIM_BGN(data_len); /* DAT_LEN: 设置数据长度，TXRX_BGN: 开始传输 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 76,
+      "is_static": false
+    },
+    {
+      "name": "spim_wait",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    SPIM_WAIT(); /* STATUS: 等待SPI忙标志清除，STATUS_CLR: 清除所有状态标志 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 85,
+      "is_static": false
+    },
+    {
+      "name": "spim_duplex",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "tx_data",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "rx_buff",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    ASSERT_ERR(tx_data != NULL);\r\n    ASSERT_ERR(rx_buff != NULL);\r\n    uint32_t tidx, ridx;\r\n\r\n    SPIM_BGN(length); /* DAT_LEN: 设置数据长度，TXRX_BGN: 开始传输 */\r\n\r\n    for (tidx = 0, ridx = 0; ridx < length; )\r\n    {\r\n        if ((tidx < length) && (SPIM->STATUS.SPIM_TX_FFULL == 0)) /* STATUS: 检查发送FIFO未满 */\r\n        {\r\n            SPIM->TX_DATA = tx_data[tidx++]; /* TX_DATA: 写入发送数据 */\r\n        }\r\n\r\n        if (SPIM->STATUS.SPIM_RX_FEMPTY == 0) /* STATUS: 检查接收FIFO非空 */\r\n        {\r\n            rx_buff[ridx++] = SPIM->RX_DATA; /* RX_DATA: 读取接收数据 */\r\n        }\r\n    }\r\n\r\n    SPIM_WAIT(); /* STATUS: 等待SPI忙标志清除，STATUS_CLR: 清除所有状态标志 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 96,
+      "is_static": false
+    },
+    {
+      "name": "spim_transimit",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "tx_data",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t tidx, ridx;;\r\n\r\n    SPIM_BGN(length); /* DAT_LEN: 设置数据长度，TXRX_BGN: 开始传输 */\r\n\r\n    // send cmd\r\n    for (tidx = 0, ridx = 0; ridx < length; )\r\n    {\r\n        if ((tidx < length) && (SPIM->STATUS.SPIM_TX_FFULL == 0)) /* STATUS: 检查发送FIFO未满 */\r\n        {\r\n            SPIM->TX_DATA = tx_data[tidx++]; /* TX_DATA: 写入发送数据 */\r\n        }\r\n\r\n        if (SPIM->STATUS.SPIM_RX_FEMPTY == 0) /* STATUS: 检查接收FIFO非空 */\r\n        {\r\n            SPIM->RX_DATA; // drop /* RX_DATA: 丢弃接收数据 */\r\n            ridx++;\r\n        }\r\n    }\r\n\r\n    SPIM_WAIT(); /* STATUS: 等待SPI忙标志清除，STATUS_CLR: 清除所有状态标志 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 125,
+      "is_static": false
+    },
+    {
+      "name": "spim_receive",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "rx_buff",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t tidx, ridx;\r\n\r\n    SPIM_BGN(length); /* DAT_LEN: 设置数据长度，TXRX_BGN: 开始传输 */\r\n\r\n    // recv rsp\r\n    for (tidx = 0, ridx = 0; ridx < length; )\r\n    {\r\n        if ((tidx < length) && (SPIM->STATUS.SPIM_TX_FFULL == 0)) /* STATUS: 检查发送FIFO未满 */\r\n        {\r\n            SPIM->TX_DATA = NSG_BYTE; /* TX_DATA: 发送非有效数据以产生时钟 */\r\n            tidx++;\r\n        }\r\n\r\n        if (SPIM->STATUS.SPIM_RX_FEMPTY == 0) /* STATUS: 检查接收FIFO非空 */\r\n        {\r\n            rx_buff[ridx++] = SPIM->RX_DATA; /* RX_DATA: 读取接收数据 */\r\n        }\r\n    }\r\n\r\n    SPIM_WAIT(); /* STATUS: 等待SPI忙标志清除，STATUS_CLR: 清除所有状态标志 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 154,
+      "is_static": false
+    },
+    {
+      "name": "spim_halfdx",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "cmd",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        },
+        {
+          "name": "rsp",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint16_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    uint32_t tidx, ridx;\r\n\r\n    SPIM_BGN(clen + rlen); /* DAT_LEN: 设置总数据长度，TXRX_BGN: 开始传输 */\r\n\r\n    // send cmd\r\n    for (tidx = 0, ridx = 0; ridx < clen; )\r\n    {\r\n        if ((tidx < clen) && (SPIM->STATUS.SPIM_TX_FFULL == 0)) /* STATUS: 检查发送FIFO未满 */\r\n        {\r\n            SPIM->TX_DATA = cmd[tidx++]; /* TX_DATA: 写入命令数据 */\r\n        }\r\n\r\n        if (SPIM->STATUS.SPIM_RX_FEMPTY == 0) /* STATUS: 检查接收FIFO非空 */\r\n        {\r\n            SPIM->RX_DATA; // drop /* RX_DATA: 丢弃接收数据 */\r\n            ridx++;\r\n        }\r\n    }\r\n\r\n    // recv rsp\r\n    for (tidx = 0, ridx = 0; ridx < rlen; )\r\n    {\r\n        if ((tidx < rlen) && (SPIM->STATUS.SPIM_TX_FFULL == 0)) /* STATUS: 检查发送FIFO未满 */\r\n        {\r\n            SPIM->TX_DATA = NSG_BYTE; /* TX_DATA: 发送非有效数据以产生时钟 */\r\n            tidx++;\r\n        }\r\n\r\n        if (SPIM->STATUS.SPIM_RX_FEMPTY == 0) /* STATUS: 检查接收FIFO非空 */\r\n        {\r\n            rsp[ridx++] = SPIM->RX_DATA; /* RX_DATA: 读取响应数据 */\r\n        }\r\n    }\r\n\r\n    SPIM_WAIT(); /* STATUS: 等待SPI忙标志清除，STATUS_CLR: 清除所有状态标志 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 185,
+      "is_static": false
+    },
+    {
+      "name": "spis_init",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // i2c_clk_en rst_req or soft_reset\r\n    RCC_AHBCLK_EN(AHB_SPIS_BIT);  /* 使能SPI从设备时钟 */\r\n    RCC_AHBRST_REQ(AHB_SPIS_BIT); /* 请求SPI从设备复位 */\r\n\r\n    // csc connect\r\n    csc_input(io_cs,    CSC_SPIS_CSN);  /* 配置片选引脚为SPI从设备片选输入 */\r\n    csc_input(io_clk,   CSC_SPIS_CLK);  /* 配置时钟引脚为SPI从设备时钟输入 */\r\n    csc_output(io_miso, CSC_SPIS_MISO); /* 配置MISO引脚为SPI从设备数据输出 */\r\n    csc_input(io_mosi,  CSC_SPIS_MOSI); /* 配置MOSI引脚为SPI从设备数据输入 */\r\n\r\n    // iomode control\r\n    iom_ctrl(io_cs,   IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);  /* 片选引脚：CSC功能、上拉、输入模式 */\r\n    iom_ctrl(io_clk,  IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);  /* 时钟引脚：CSC功能、上拉、输入模式 */\r\n    iom_ctrl(io_miso, IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP); /* MISO引脚：CSC功能、驱动电平1、上拉 */\r\n    iom_ctrl(io_mosi, IOM_SEL_CSC | IOM_PULLUP   | IOM_INPUT);  /* MOSI引脚：CSC功能、上拉、输入模式 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 236,
+      "is_static": false
+    },
+    {
+      "name": "spis_conf",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    // disable run\r\n    SPIS->CTRL.Word = 0; /* CTRL: 禁用SPI从设备 */\r\n    // clear FiFo and Interrupt\r\n    SPIS->INFO_CLR.Word = SPIS_INFO_CLR_ALL; /* INFO_CLR: 清除所有信息和中断标志 */\r\n\r\n    // config ctrl\r\n    SPIS->CTRL.Word = ctrl; /* CTRL: 配置SPI从设备控制参数 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 259,
+      "is_static": false
+    },
+    {
+      "name": "spis_getc",
+      "return_type": "bool",
+      "parameters": [
+        {
+          "name": "ch",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    if (SPIS->STATUS.SPIS_RXFIFO_EMPTY == 0) /* STATUS: 检查接收FIFO非空 */\r\n    {\r\n        *ch = SPIS->RX_DAT; /* RX_DAT: 读取接收数据 */\r\n        //SPIS->INFO_CLR.Word = SPIS_RXINT_CLR_BIT;\r\n        return true;\r\n    }\r\n\r\n    return false;\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 275,
+      "is_static": false
+    },
+    {
+      "name": "spis_putc",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    while (SPIS->STATUS.SPIS_TXFIFO_FULL); /* STATUS: 等待发送FIFO非满 */\r\n    SPIS->TX_DAT = ch; /* TX_DAT: 写入发送数据 */\r\n}",
+      "file_path": "drivers/src/spi.c",
+      "line_number": 291,
+      "is_static": false
+    }
+  ],
+  "macros": [
+    {
+      "name": "NSG_BYTE",
+      "value": "(0xFF) ///< 非有效数据字节",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\spi.c",
+      "line_number": 23
+    }
+  ],
+  "parse_errors": []
+}

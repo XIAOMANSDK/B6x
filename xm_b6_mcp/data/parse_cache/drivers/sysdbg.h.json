@@ -1,0 +1,454 @@
+{
+  "file_path": "drivers/api/sysdbg.h",
+  "functions": [
+    {
+      "name": "sysdbg_iomap",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Map iopads for debug observation. ",
+      "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] pio  Bits of PAxx @see enum sysdbg_pio\n***************************************************************************************\n/",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 164,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sysdbg_select",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint32_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Select debug module to observe. ",
+      "detailed_description": "***************************************************************************************\n@param[in] dbgsel  Debug Selected @see enum sysdbg_sel\n@param[in] diag    Mode Value @see enum rf_dbg or ble_dbg or mdm_dbg\n***************************************************************************************\n/",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 175,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    },
+    {
+      "name": "sysdbg_anatst",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        },
+        {
+          "name": "",
+          "type": "uint8_t",
+          "description": ""
+        }
+      ],
+      "brief_description": "Config AT0 AT1 for RF debug observation. ",
+      "detailed_description": "***************************************************************************************\n@param[in] tsten  Analog test bits @see enum ana_tst_en\n@param[in] atsel  Selected func @see enum ana_tst_sel\n***************************************************************************************\n/",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 186,
+      "is_exported": false,
+      "implementation_file": "",
+      "implementation_line": 0,
+      "has_implementation": false
+    }
+  ],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SYS_DBG_PIO00",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO01",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO02",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO03",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO04",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO05",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO06",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO07",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO08",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO09",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO10",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO11",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO12",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO13",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO14",
+          "value": 14,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO15",
+          "value": 15,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO_ALL",
+          "value": 1048380,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_PIO_MSK",
+          "value": 1048380,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 23
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "SYS_DBG_RF",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_BLE",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_MDM",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "SYS_DBG_USB",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 46
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "RF_DBG_TX",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "RF_DBG_RX",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "RF_DBG_CAL",
+          "value": 3,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 55
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "BLE_DBG_TX",
+          "value": 131,
+          "brief": ""
+        },
+        {
+          "name": "BLE_DBG_RX",
+          "value": 33536,
+          "brief": ""
+        },
+        {
+          "name": "BLE_DBG_TXRX",
+          "value": 33667,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 63
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "MDM_DBG1",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "MDM_DBG2",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "MDM_DBG3",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "MDM_DBG_EXT_TX",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "MDM_DBG_EXT_RX",
+          "value": 5,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 71
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "USB_DBG1",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "USB_DBG2",
+          "value": 2,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 81
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "ATEN_AT0_BIT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "ATEN_AT1_BIT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "ATEN_AT0_AT1",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "ATEN_CBPF_BIT",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "ATEN_RSSI_BIT",
+          "value": 8,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 88
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "AT0_SEL_LSB",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "AT0_VDD_IF",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "AT0_BPF_IOP",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "AT0_BPF_QOP",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "AT0_VDD_PLL",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "AT0_PLL_VCTRL",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "AT0_LMT_OUTI",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "AT0_PLL_FBCLK_DIV2",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "AT0_BPF_CAL_DONE",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "AT0_SEL_MSK",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "AT1_SEL_LSB",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "AT1_VDD_TX",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "AT1_BPF_ION",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "AT1_BPF_QON",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "AT1_VDD_RX",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "AT1_VDD_VCO",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "AT1_RSSI_OUT",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "AT1_LMT_OUTQ",
+          "value": 11,
+          "brief": ""
+        },
+        {
+          "name": "AT1_PLL_LOCK",
+          "value": 12,
+          "brief": ""
+        },
+        {
+          "name": "AT1_AGC_POWER_DET",
+          "value": 13,
+          "brief": ""
+        },
+        {
+          "name": "AT1_SEL_MSK",
+          "value": 14,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "drivers/api/sysdbg.h",
+      "line_number": 99
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

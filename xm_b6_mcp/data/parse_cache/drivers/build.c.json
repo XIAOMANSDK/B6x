@@ -1,0 +1,22 @@
+{
+  "file_path": "drivers/src/build.c",
+  "functions": [
+    {
+      "name": "drvs_build_info",
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "",
+          "type": "void",
+          "description": ""
+        }
+      ],
+      "function_body": "{\r\n    printf(\"drvs build <Ver:%d> <Date:%s>\\r\\n\", SVN_VER, __DATE__);\r\n}",
+      "file_path": "drivers/src/build.c",
+      "line_number": 4,
+      "is_static": false
+    }
+  ],
+  "macros": [],
+  "parse_errors": []
+}

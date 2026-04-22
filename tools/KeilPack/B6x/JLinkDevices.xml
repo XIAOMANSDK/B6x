@@ -1,0 +1,9 @@
+<DataBase>
+  <!--                                    -->
+  <!--                DragonC             -->
+  <!--                                    -->
+  <Device>
+    <ChipInfo Vendor="B6x" Name="B6x" Core="JLINK_CORE_CORTEX_M0" WorkRAMAddr="0x20003000" WorkRAMSize="0x4000" JLinkScriptFile="Devices/B6x/B6x.jlinkscript"/>
+    <FlashBankInfo Name="QSPI Flash" BaseAddr="0x18000000" MaxSize="0x40000" Loader="Devices/B6x/B6x_256kB_PY_D.FLM" LoaderType="FLASH_ALGO_TYPE_OPEN" />
+  </Device>
+</DataBase>

@@ -1,0 +1,2929 @@
+[
+  {
+    "name": "btmr_delay",
+    "brief": "使用SysTick定时器实现延时",
+    "detailed": "@param tpsc 预分频器值，实际分频系数 = tpsc\n@param tcnt 自动重载值，决定延时周期数\n@note 此函数使用基本定时器的单次模式实现精确延时\n/\nvoid btmr_delay(uint16_t tpsc, uint16_t tcnt);\n#endif\n@param tpsc 预分频系数\n@param",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/btmr.h",
+    "has_implementation": true
+  },
+  {
+    "name": "tick_delay",
+    "brief": "",
+    "detailed": "void tick_delay(uint16_t tpsc, uint16_t tcnt);\n#endif",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/btmr.h",
+    "has_implementation": true
+  },
+  {
+    "name": "core_ldoset",
+    "brief": "Set ldo register value. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ctrl   PMU_ANA_CTRL[23:0] & ANAMISC_CTRL[29:24].\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/core.h",
+    "has_implementation": true
+  },
+  {
+    "name": "core_ldoget",
+    "brief": "Get ldo register value. ",
+    "detailed": "***************************************************************************************\n@return value. PMU_ANA_CTRL[23:0] & ANAMISC_CTRL[29:24].\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/core.h",
+    "has_implementation": true
+  },
+  {
+    "name": "core_sleep",
+    "brief": "Core Sleep Mode. ",
+    "detailed": "***************************************************************************************\n@param[in] cfg_wkup  Bits field of value @see enum wkup_ctrl_bfs.\n@return wake-up status @see wkup_st_bfs.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/core.h",
+    "has_implementation": true
+  },
+  {
+    "name": "wakeup_io_sw",
+    "brief": "Set IO wake-up sleep or power off. ",
+    "detailed": "***************************************************************************************\n@param[in] wkup_en  IO that supports wake-up(one bit one io).\n@param[in] pad_pu   IO that pull-up(one bit one io).\n@note pad_pu Corresponding bit 1:Falling edge wake-up, 0: Rising edge wake-up.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/core.h",
+    "has_implementation": true
+  },
+  {
+    "name": "core_pwroff",
+    "brief": "Core Power Off Mode. ",
+    "detailed": "***************************************************************************************\n@param[in] cfg_wkup  Bits field of value @see enum wkup_ctrl_bfs.\n@note PA19 Restore PULL-UP and Input Enable.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/core.h",
+    "has_implementation": true
+  },
+  {
+    "name": "core_release_io_latch",
+    "brief": "Release IO Latch. *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/core.h",
+    "has_implementation": true
+  },
+  {
+    "name": "core_unique_id",
+    "brief": "Get IC 128bits Unique ID. ",
+    "detailed": "***************************************************************************************\n@param[in]  size        Length of Unique ID Buffer.\n@param[out] unique_id   Pointer of Unique ID buffer.\n@note size must be less than or equal to 16.\n@note IC Must have Flash.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "unique_id"
+      }
+    ],
+    "file_path": "drivers/api/core.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_init",
+    "brief": "Init DMA Module.  *************************************************************************************** /",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_deinit",
+    "brief": "Deinit DMA Module.  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_init",
+    "brief": "Init DMA Channel. ",
+    "detailed": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@param[in] chsel  Selected peripheral @see enum dma_peripheral\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_deinit",
+    "brief": "Deinit DMA Channel. ",
+    "detailed": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_conf",
+    "brief": "Configure DMA Channel Control, then enable. ",
+    "detailed": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*\n@param[in] src_ep Source data end pointer address, eg. (uint32_t)&buff[len-1]\n@param[in] dst_ep Destination data end pointer address\n@param[in] trans  Transfer control value @see enum dma_trans_bfs or DMA_TRANS_CFG_Typedef\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_reload",
+    "brief": "Reload tansfer control value that configured via dma_chnl_conf(), continue run. ",
+    "detailed": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@return 'true' means auto turned to alt-channel *only ping-pong mode*\n***************************************************************************************\n/",
+    "return_type": "bool",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_remain",
+    "brief": "Read DMA Channel remain cycles. ",
+    "detailed": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*\n@return Cycles of wait transfer, 0 means done\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_remain_pingpong",
+    "brief": "Read DMA Channel CCM_PING_PONG Mode remain cycles. ",
+    "detailed": "***************************************************************************************\n@param[in]  chidx  Channel index @see enum dma_channel, *incl alternate part*\n@param[out] len    remain cycles of wait transfer.\n@return true is alt-channel(pong), false is primary-channel(ping).\n***************************************************************************************\n/",
+    "return_type": "bool",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": "len"
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_ctrl",
+    "brief": "Enable or disable DMA Channel after configured. ",
+    "detailed": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@param[in] ctrl   Control opcode @see enum chnl_ctrl\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "dma_chnl_done",
+    "brief": "Read DMA Channel done state, auto clear if be done. ",
+    "detailed": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@return done state, true means done\n***************************************************************************************\n/",
+    "return_type": "bool",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/dma.h",
+    "has_implementation": true
+  },
+  {
+    "name": "exti_init",
+    "brief": "Init EXTI, enable clk and rst, config debounce ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] dbc  debounce for IO, @see EXTI_DBC(psc, cnt)\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/exti.h",
+    "has_implementation": true
+  },
+  {
+    "name": "exti_deinit",
+    "brief": "Deinit EXTI Module. Diable EXTI Clock.  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/exti.h",
+    "has_implementation": true
+  },
+  {
+    "name": "exti_set",
+    "brief": "Enable Bits Field of BUS Register ",
+    "detailed": "***************************************************************************************\n@param[in] typ  Type of local src @see enum exti_loca_typ\n@param[in] loca Value Bits of local src @see EXTI_SRC(pa)\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/exti.h",
+    "has_implementation": true
+  },
+  {
+    "name": "exti_get",
+    "brief": "Get EXTI local src value ",
+    "detailed": "***************************************************************************************\n@param[in] typ  Type of local src @see enum exti_loca_typ\n@return local src value\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/exti.h",
+    "has_implementation": true
+  },
+  {
+    "name": "puya_enter_dual_read",
+    "brief": "Puya Flash Enter Dual Read Mode(2 X IO Read Mod). *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "puya_exit_dual_read",
+    "brief": "Puya Flash Exti Dual Read Mode. *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "boya_flash_quad_mode",
+    "brief": "Boya Flash Quad Enable bit set 1. *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "flash_write",
+    "brief": "Write data to Flash. ",
+    "detailed": "***************************************************************************************\n@param[in] offset Where offset to write.\n@param[in] data   The pointer of data write to flash.\n@param[in] wlen   The number of word write to flash.\n@note  offset Must be 0x100 Aligned.\n@note  data address Must be 4-byte Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": "data"
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "flash_read",
+    "brief": "Read Flash data. ",
+    "detailed": "***************************************************************************************\n@param[in] offset  Where offset to read.\n@param[in] buff    The pointer that store data read from flash.\n@param[in] wlen    The number of word read from flash.\n@note  buff address Must be 4-byte Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": "buff"
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "flash_page_erase",
+    "brief": "Erases the specified FLASH page. ",
+    "detailed": "***************************************************************************************\n@param[in] offset address of the page to erase.\n@note  offset Must be 0x100 Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "flash_byte_write",
+    "brief": "Write data to Flash. ",
+    "detailed": "***************************************************************************************\n@param[in] offset Where offset to write.\n@param[in] data   The pointer of data write to flash.\n@param[in] blen   The number of byte write to flash.(Must be a multiple of 4)\n@note  offset Must be 0x100 Aligned.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "data"
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "flash_byte_read",
+    "brief": "Read Flash data. ",
+    "detailed": "***************************************************************************************\n@param[in] offset  Where offset to read.\n@param[in] buff    The pointer that store data read from flash.\n@param[in] blen    The number of byte read from flash.\n@note  if hpm, must exit_hpm.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "buff"
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "flash_size",
+    "brief": "Get Flash Size. ",
+    "detailed": "***************************************************************************************\n@return  size in bytes.\n@note   0 is invalid size.\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/flash.h",
+    "has_implementation": true
+  },
+  {
+    "name": "fshc_en_cmd",
+    "brief": "Send control/enable command without value ",
+    "detailed": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_RST_EN FSH_CMD_RESET FSH_CMD_EXIT_HMP\nFSH_CMD_WR_EN FSH_CMD_WR_STA_EN)\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_wr_sta",
+    "brief": "Write value to flash state register ",
+    "detailed": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_WR_STA)\n@param[in] len  Length of value, range 1~4 Bytes\n@param[in] val  State value, valid range 8/16/24/32bits by 'len'\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_rd_sta",
+    "brief": "Read value from flash state register ",
+    "detailed": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_RD_ID FSH_CMD_RD_STA0 FSH_CMD_RD_STA1)\n@param[in] len  Length of value, range 1~4 Bytes\n@return value  State value, valid range 8/16/24/32bits by 'len'\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_wr_cfg",
+    "brief": "Perpare write data to flash ",
+    "detailed": "***************************************************************************************\n@param[in] cmd     fshc access cmd (example read cmd: 0x03)\n@param[in] offset  access flash addr offset\n@param[in] len     access flash data len, unit is byte\n@param[in] sctrl   access flash mode config(example: spi mode, dual mode...)\n@param[in] acbit   dummy cycle\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "flen_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_wr_fifo",
+    "brief": "",
+    "detailed": "",
+    "return_type": "flen_t",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": "data"
+      },
+      {
+        "type": "flen_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_rd_cfg",
+    "brief": "Perpare read data from flash ",
+    "detailed": "***************************************************************************************\n@param[in] cmd     fshc access cmd (example read cmd: 0x03)\n@param[in] offset  access flash addr offset\n@param[in] len     access flash data len, unit is byte\n@param[in] sctrl   access flash mode config(example: spi mode, dual mode...)\n@param[in] acbit   dummy cycle\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "flen_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_rd_fifo",
+    "brief": "",
+    "detailed": "",
+    "return_type": "flen_t",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": "buff"
+      },
+      {
+        "type": "flen_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_xip_conf",
+    "brief": "",
+    "detailed": "",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_hpm_conf",
+    "brief": "",
+    "detailed": "",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "bool",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_erase",
+    "brief": "",
+    "detailed": "",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_read",
+    "brief": "",
+    "detailed": "",
+    "return_type": "flen_t",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": "buff"
+      },
+      {
+        "type": "flen_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_write",
+    "brief": "",
+    "detailed": "",
+    "return_type": "flen_t",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": "data"
+      },
+      {
+        "type": "flen_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_cache_conf",
+    "brief": "",
+    "detailed": "",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "fshc_suspend_conf",
+    "brief": "",
+    "detailed": "",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/fshc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "bits",
+    "brief": "",
+    "detailed": "",
+    "return_type": "uint32_t",
+    "parameters": [],
+    "file_path": "drivers/api/gpio.h",
+    "has_implementation": false
+  },
+  {
+    "name": "i2c_init",
+    "brief": "Init I2C Module. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] io_scl  io used for I2C scl @see enum pad_idx.\n@param[in] io_sda  io used for I2C sda @see enum pad_idx.\n@param[in] sclk    i2c clk. Bits field of I2C Clock @see enumi2c_clk_bfs.\n@note sclk = CLK/(2^clk_samp * (clk_scl+1) *10). Macro SCLK_100K/SCLK_200K/SCLK_400K\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "i2c_deinit",
+    "brief": "Deinit I2C. Disable I2C Module. *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "i2c_start",
+    "brief": "I2C Send Start. ",
+    "detailed": "***************************************************************************************\n@param[in] slv_addr  device Address.\n@return I2C status @see enum i2c_status_def.\n***************************************************************************************\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "i2c_stop",
+    "brief": "I2C Send Stop. *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "i2c_send",
+    "brief": "I2C Send data. ",
+    "detailed": "***************************************************************************************\n@param[in] len    data length.\n@param[in] data   data pointer.\n@return send data cnt.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "data"
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "i2c_recv",
+    "brief": "I2C Receive data. ",
+    "detailed": "***************************************************************************************\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return receive data cnt.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "buff"
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "i2c_read",
+    "brief": "I2C Read data. ",
+    "detailed": "***************************************************************************************\n@param[in] addr_r device Address.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return read data cnt.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "buff"
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "i2c_write",
+    "brief": "I2C Write data. ",
+    "detailed": "***************************************************************************************\n@param[in] addr_w device Address.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return write data cnt.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "data"
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "eeprom_read",
+    "brief": "I2C Read eeprom data. ",
+    "detailed": "***************************************************************************************\n@param[in] eep    eeprom device Address.\n@param[in] addr   Where eeprom addr to read.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return read data cnt.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "buff"
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "eeprom_write",
+    "brief": "I2C Write eeprom data. ",
+    "detailed": "***************************************************************************************\n@param[in] eep    eeprom device Address.\n@param[in] addr   Where eeprom addr to write.\n@param[in] len    data length.\n@param[in] data   data pointer.\n@return write data cnt.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "data"
+      }
+    ],
+    "file_path": "drivers/api/i2c.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iocsc_uart",
+    "brief": "复合CSC配置 - I2C功能 ",
+    "detailed": "和接收引脚，包括CSC连接和IO模式设置\n/\nvoid iocsc_uart(uint8_t port, uint8_t pad_tx, uint8_t pad_rx);\n@param[in] port    UART端口号(0-UART1, 1-UART2)\n@param[in] pad_rts 用于UART RTS的IO引脚 @see enum pad_idx\n@param[in] pad_cts 用于UART CTS的IO引脚 @see enum pad_idx\n@note 配置UART的硬件流控制引脚(RTS/CTS)，包括CSC连接和IO模式设置\n/\nvoid iocsc_uart_hwfc(uint8_t port, uint8_t pad_rts, uint8_t pad_cts);",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iocsc_uart_hwfc",
+    "brief": "复合CSC配置 - SPI主设备功能",
+    "detailed": "] pad_sda 用于I2C SDA的IO引脚 @see enum pad_idx\n@note 配置I2C的时钟和数据引脚，支持双向开漏通信\n/\nvoid iocsc_i2c(uint8_t pad_scl, uint8_t pad_sda);\n@param[in] pad_clk  用于SPI CLK的IO引脚 @see enum pad_idx\n@param[in] pad_miso 用于SPI MISO的IO引脚 @see enum pad_idx\n@param[in] pad_mosi 用于SPI MOSI的IO引脚 @see enum pad_idx",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iocsc_i2c",
+    "brief": "复合CSC配置 - SPI从设备功能",
+    "detailed": "8_t pad_miso, uint8_t pad_mosi);\n@param[in] pad_cs   用于SPI CS的IO引脚 @see enum pad_idx\n@param[in] pad_clk  用于SPI CLK的IO引脚 @see enum pad_idx\n@param[in] pad_miso 用于SPI MISO的IO引脚 @see enum pad_idx\n@param[",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iocsc_spim",
+    "brief": "复合CSC配置 - CTMR定时器通道功能",
+    "detailed": "ote 配置SPI从设备的片选、时钟、数据输入和数据输出引脚\n/\nvoid iocsc_spis(uint8_t pad_cs, uint8_t pad_clk, uint8_t pad_miso, uint8_t pad_mosi);\n@param[in] pad_ch1 用于CTMR CH1的IO引脚 @see enum pad_idx\n@param[in] pad_ch2 用于CTMR CH2的IO引脚 @see enum pad_idx\n@note 配置CTMR定时器的PWM/PWC通道引脚，支持输入捕获和输出比较\n/\nvoid iocsc",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iocsc_spis",
+    "brief": "配置USB DP/DM引脚（固定PA06 PA07，高阻模式）",
+    "detailed": "@param[in] pad   IO引脚编号\n@param[in] fsel  模拟功能选择 @see enum csc_fsel (17~24)\n@note 配置指定IO引脚为模拟观察输出功能\n/\nvoid iocsc_observe(uint8_t pad, uint8_t fsel);\n@param[in] clk  选择的时钟类型 @see enum clk_out\n@note 配置PA05引脚为时钟输出功能，支持多种时钟源选择\n/\nvoid iospc_clkout(uint8_t clk);\n@note 配置USB数据引脚为高阻模式，用于USB通信\n/\nvoid iospc_",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iocsc_ctmr_chnl",
+    "brief": "配置复位引脚功能（固定PA19）",
+    "detailed": "void iospc_swdpin(void);\n@param[in] as_gpio  True-作为GPIO，False-作为nRESET\n@note 配置PA19引脚功能，可选择作为普通GPIO或系统复位引脚\n/\nvoid iospc_rstpin(bool as_gpio);\nMacro for Deprecated Functions {\n#define ioSelUartTxRx                iocsc_uart\n#define ioSe",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iocsc_observe",
+    "brief": "",
+    "detailed": "iocsc_i2c\n#define ioSelSpiMaster               iocsc_spim\n#define ioSelSpiSlave                iocsc_spis\n#define ioClkOut(clk)                iospc_clkout(clk)\n#define ioOscen(pad",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iospc_clkout",
+    "brief": "",
+    "detailed": "AG)\n#define ioRFen(pad)                  iocsc_observe(pad, CSC_RFEN_FLAG)\n#define ioCoreSleep(pad)             iocsc_observe(pad, CSC_CM0P_DEEPSLEEP)\n#define ioBleSleep(pad)              iocsc_observ",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iospc_usbpin",
+    "brief": "",
+    "detailed": "ioBleTxRx(pad_tx, pad_rx)    do{iocsc_observe(pad_tx, CSC_BB_TX_EN);iocsc_observe(pad_rx, CSC_BB_RX_EN);}while(0)\n#define ioModemTxRx(pad_",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iospc_swdpin",
+    "brief": "",
+    "detailed": "ve(pad_tx, CSC_MDM_TX_EN);iocsc_observe(pad_rx, CSC_MDM_RX_EN);}while(0)\n}\n#endif // _IOPAD_H_",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iospc_rstpin",
+    "brief": "",
+    "detailed": "",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "bool",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iopad.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iwdt_init",
+    "brief": "Init Config IWDT. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ctrl  Bits field of value @see enum iwdt_ctrl_bfs.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iwdt.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iwdt_deinit",
+    "brief": "Deinit IWDT Module.  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iwdt.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iwdt_feed",
+    "brief": "reload IWDT. *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iwdt.h",
+    "has_implementation": true
+  },
+  {
+    "name": "iwdt_conf",
+    "brief": "Config IWDT, feed or disable ",
+    "detailed": "***************************************************************************************\n@param[in] load  LOAD to feed watchdog, 0 means disable\n@return Timer value\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/iwdt.h",
+    "has_implementation": true
+  },
+  {
+    "name": "pwm_init",
+    "brief": "Init Timer(Source) for PWM Capture/Compare. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] tmr  Timer ID @see enum pwm_timer\n@param[in] psc  PWM configure prescaler\n@param[in] arr  PWM configure Auto-reload\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/pwm.h",
+    "has_implementation": true
+  },
+  {
+    "name": "pwm_deinit",
+    "brief": "Deinit Timer Module. ",
+    "detailed": "***************************************************************************************\n@param[in] tmr  Timer ID @see enum pwm_timer\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/pwm.h",
+    "has_implementation": true
+  },
+  {
+    "name": "pwm_conf",
+    "brief": "Config Timer(Source) for PWC(PWM Capture). ",
+    "detailed": "***************************************************************************************\n@param[in] tmr   Timer ID @see enum pwm_timer\n@param[in] smcr  PWM Slave mode control\n@param[in] intr  PWM Interrupt configure\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/pwm.h",
+    "has_implementation": true
+  },
+  {
+    "name": "pwm_start",
+    "brief": "Start/Enable Timer(Source) for PWM Capture/Compare. ",
+    "detailed": "***************************************************************************************\n@param[in] tmr   Timer ID @see enum pwm_timer\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/pwm.h",
+    "has_implementation": true
+  },
+  {
+    "name": "pwm_stop",
+    "brief": "Stop Timer(Source) for PWM Capture/Compare. ",
+    "detailed": "***************************************************************************************\n@param[in] tmr   Timer ID @see enum pwm_timer\n@Note This API will stop all PWM channels.\nIf you want to stop a single PWM channel, please use pwm_chnl_stop API.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/pwm.h",
+    "has_implementation": true
+  },
+  {
+    "name": "pwm_chnl_set",
+    "brief": "Config special channel for PWM Capture/Compare. ",
+    "detailed": "***************************************************************************************\n@param[in] chnl  Channel ID @see enum pwm_channel\n@param[in] conf  Pointer of channel configure @see struct pwm_channel_cfg\nChannel stop when conf is NULL, else start.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "pwm_chnl_cfg_t",
+        "name": "conf"
+      }
+    ],
+    "file_path": "drivers/api/pwm.h",
+    "has_implementation": true
+  },
+  {
+    "name": "pwm_duty_upd",
+    "brief": "Update special channel's duty for PWM Capture/Compare. ",
+    "detailed": "***************************************************************************************\n@param[in] chnl  Channel ID @see enum pwm_channel\n@param[in] duty  Value of Duty, ratio = duty / arr\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/pwm.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_bus_get",
+    "brief": "Get BUS Register's value ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] idx  Index of register @see enum rcc_bus_idx\n@return value\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_bus_enb",
+    "brief": "Enable Bits Field of BUS Register ",
+    "detailed": "***************************************************************************************\n@param[in] idx  Index of register @see enum rcc_bus_idx\n@param[in] bfs  Bits field of value @see enum rcc_ahb_bfs OR rcc_apb_bfs\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_bus_dis",
+    "brief": "Disable Bits Field of BUS Register ",
+    "detailed": "***************************************************************************************\n@param[in] idx  Index of register @see enum rcc_bus_idx\n@param[in] bfs  Bits field of value @see enum rcc_ahb_bfs OR rcc_apb_bfs\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_bus_rst",
+    "brief": "Reset Bits Field of BUS Register (Combine rcc_bus_enb & rcc_bus_dis) ",
+    "detailed": "***************************************************************************************\n@param[in] idx  Index of register @see enum rcc_bus_idx\n@param[in] bfs  Bits field of value @see enum rcc_ahb_bfs OR rcc_apb_bfs\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_adc_en",
+    "brief": "Enable ADC Clock Configure  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_ble_en",
+    "brief": "Enable BLE Clock Configure  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_usb_en",
+    "brief": "Enable USB Clock/Pad Configure  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_sysclk_set",
+    "brief": "Set system clock selection ",
+    "detailed": "***************************************************************************************\n@param[in] sys_clk  Index of Clock Selected @see enum sys_clk_sel\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_sysclk_get",
+    "brief": "Get system clock selection ",
+    "detailed": "***************************************************************************************\n@return Clock Selected @see enum sys_clk_sel\n***************************************************************************************\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_sysclk_freq",
+    "brief": "Get clock frequency of core system, unit in Hz ",
+    "detailed": "***************************************************************************************\n@return frequency @see enum sys_clk_freq\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_fshclk_get",
+    "brief": "Get flash controlor clock selection ",
+    "detailed": "***************************************************************************************\n@return Clock Selected @see enum fsh_clk_sel\n***************************************************************************************\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_fshclk_mhz",
+    "brief": "Get clock frequency of flash controlor, unit in MHz. ",
+    "detailed": "***************************************************************************************\n@return freq in MHz @see enum fsh_clk_freq\n***************************************************************************************\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rcc_fshclk_set",
+    "brief": "Set flash controlor clock selection ",
+    "detailed": "***************************************************************************************\n@param[in] fclk_sel  Index of Clock Selected @see enum fsh_clk_sel\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rcc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rc32k_conf",
+    "brief": "Enable and Config rc32k ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ref_clk   reference clock for calibration @see enum rc32k_ref_clk\n@param[in] cal_ctrl  config control for calibration @see enum rc32k_cal_ctrl\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rco.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rc32k_calib",
+    "brief": "Start rc32k calibration, after rc32k_conf(). ",
+    "detailed": "***************************************************************************************\n@return rc32k trim value\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rco.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rc32k_trim_set",
+    "brief": "Direct Set trim value to calibrate rc32k. ",
+    "detailed": "***************************************************************************************\n@param[in] value   calib-target value\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rco.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rc32k_trim_get",
+    "brief": "Get current value of rc32k calibrated or used. ",
+    "detailed": "***************************************************************************************\n@return calib-target value\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rco.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rc16m_trim_set",
+    "brief": "Direct Set trim value to calibrate rc16m. ",
+    "detailed": "***************************************************************************************\n@param[in] value   calib-target value 0~63\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rco.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rc16m_trim_get",
+    "brief": "Get current value of rc16m calibrated or used. ",
+    "detailed": "***************************************************************************************\n@return calib-target value 0~63\n***************************************************************************************\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rco.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rc16m_calib",
+    "brief": "Start rc16m calibration in dichotomy. ",
+    "detailed": "***************************************************************************************\n@return rc16m trim value (0~63)\n***************************************************************************************\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rco.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rtc_conf",
+    "brief": "Config rtc module, enabled after 1ms if set True. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] en  True to enable, False to disable\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "bool",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rtc_time_get",
+    "brief": "Get current rtc-time. ",
+    "detailed": "***************************************************************************************\n@return rtc-time value\n***************************************************************************************\n/",
+    "return_type": "rtc_time_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rtc_time_set",
+    "brief": "Set/Change current time ",
+    "detailed": "***************************************************************************************\n@param[in] sec  second time\n@param[in] ms   millisecond time (range: 0~999ms)\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "alm_sec",
+    "brief": "",
+    "detailed": "Read current alarm time, add ms_time to renew it.",
+    "return_type": "uint32_t",
+    "parameters": [],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "alm_ms",
+    "brief": "",
+    "detailed": "",
+    "return_type": "uint32_t",
+    "parameters": [],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": false
+  },
+  {
+    "name": "rtc_alarm_set",
+    "brief": "Set alarm time ",
+    "detailed": "***************************************************************************************\n@param[in] ms_time  time(unit in ms) to alarm\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rtc_alarm_get",
+    "brief": "Get configured alarm rtc-time. ",
+    "detailed": "***************************************************************************************\n@return rtc-time value\n***************************************************************************************\n/",
+    "return_type": "rtc_time_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rtc_is_alarm",
+    "brief": "Judge alarm time reached or not, auto clear if reached. ",
+    "detailed": "***************************************************************************************\n@return True if time reached, else False\n***************************************************************************************\n/",
+    "return_type": "bool",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rtc_irq_set",
+    "brief": "Set rtc interrupt mode ",
+    "detailed": "***************************************************************************************\n@param[in] en  True to interrupt enable, False to disable\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "bool",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "rtc_wkup_set",
+    "brief": "Set rtc wakeup mode ",
+    "detailed": "***************************************************************************************\n@param[in] en  True to enable wakeup, False to disable\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "bool",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/rtc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_init",
+    "brief": "Init SADC Module. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ana_ctrl   Bits field of value @see enum sadc_ana_ctrl.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_deinit",
+    "brief": "Deinit SADC Module.  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_conf",
+    "brief": "Config SADC Module. ",
+    "detailed": "***************************************************************************************\n@param[in] ctrl   Bits field of value @see enum sadc_ctrl_bfs.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_read",
+    "brief": "SADC read data. ",
+    "detailed": "***************************************************************************************\n@param[in] chset  Bits field of value @see enum sadc_chnl_set.\n@param[in] times  Number of times sadc read.\n@return Multiple(times) averages.\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_dma",
+    "brief": "Config SADC Support DMA. ",
+    "detailed": "***************************************************************************************\n@param[in] sw_auto  SADC auto chnl.\n@param[in] ch_ctrl  Bits field of value @see enum sadc_chnl_set.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_pcm",
+    "brief": "Config SADC Support PCM. ",
+    "detailed": "***************************************************************************************\n@param[in] mic_sel  Bits field of value @see enum sadc_mic_sel.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_atmr",
+    "brief": "Config SADC Support ATMR. ",
+    "detailed": "***************************************************************************************\n@param[in] sw_auto  SADC auto chnl.\n@param[in] ch_ctrl  Bits field of value @see enum sadc_chnl_set.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_rand_num",
+    "brief": "Random Number Generated by SADC. ",
+    "detailed": "***************************************************************************************\n@return Random Number.\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sadc_temperature",
+    "brief": "SADC RF Temperature. ",
+    "detailed": "***************************************************************************************\n@param[in] times  Number of times sadc read.\n@return Multiple(times) averages.\n@note Called after rfmdm_init().\n***************************************************************************************\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sadc.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_init",
+    "brief": "Init SPI Master Module. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] io_clk   io used for SPI clk @see enum pad_idx.\n@param[in] io_miso  io used for SPI miso @see enum pad_idx.\n@param[in] io_mosi  io used for SPI mosi @see enum pad_idx.\n@note User Control CS IO. Macro SPIM_CS_H & SPIM_CS_L\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_conf",
+    "brief": "Config SPI Master. ",
+    "detailed": "***************************************************************************************\n@param[in] ctrl   Bits field of value @see enum spim_ctrl_bfs.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_begin",
+    "brief": "SPI Master Begin. ",
+    "detailed": "***************************************************************************************\n@param[in] data_len   The number of byte transimit/receive from SPI.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_wait",
+    "brief": "SPI Master Wait Idle. *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_duplex",
+    "brief": "SPI Master Duplex. ",
+    "detailed": "***************************************************************************************\n@param[in] tx_data   SPI transimit data pointer.\n@param[in] rx_buff   SPI receive buff pointer.\n@param[in] data_len  The number of byte receive from SPI.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": "tx_data"
+      },
+      {
+        "type": "uint8_t",
+        "name": "rx_buff"
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_transimit",
+    "brief": "SPI Master transimit data. ",
+    "detailed": "***************************************************************************************\n@param[in] tx_data   SPI transimit data pointer.\n@param[in] data_len  The number of byte transimit to SPI.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": "tx_data"
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_receive",
+    "brief": "SPI Master receive data. ",
+    "detailed": "***************************************************************************************\n@param[in] rx_buff   SPI receive buff pointer.\n@param[in] data_len  The number of byte receive from SPI.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": "rx_buff"
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spim_halfdx",
+    "brief": "SPI Master Half-Duplex. ",
+    "detailed": "***************************************************************************************\n@param[in] cmd   SPI transimit data pointer.\n@param[in] clen  The number of byte transimit to SPI.\n@param[in] rsp   SPI receive buff pointer.\n@param[in] rlen  The number of byte receive from SPI.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": "cmd"
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "rsp"
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spis_init",
+    "brief": "Init SPI Slave Module. ",
+    "detailed": "***************************************************************************************\n@param[in] io_cs    io used for SPI cs @see enum pad_idx.\n@param[in] io_clk   io used for SPI clk @see enum pad_idx.\n@param[in] io_miso  io used for SPI miso @see enum pad_idx.\n@param[in] io_mosi  io used for SPI mosi @see enum pad_idx.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spis_conf",
+    "brief": "Config SPI Slave. ",
+    "detailed": "***************************************************************************************\n@param[in] ctrl   Bits field of value @see enum spis_ctrl_bfs.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spis_getc",
+    "brief": "SPI Slave get the received data. ",
+    "detailed": "***************************************************************************************\n@param[in] ch  received data.\n@return true   received data success. false   received data failed.\n***************************************************************************************\n/",
+    "return_type": "bool",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": "ch"
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "spis_putc",
+    "brief": "SPI Slave Transmits one byte data. ",
+    "detailed": "***************************************************************************************\n@param[in] ch    the data transmited\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/spi.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sysdbg_iomap",
+    "brief": "Map iopads for debug observation. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] pio  Bits of PAxx @see enum sysdbg_pio\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sysdbg.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sysdbg_select",
+    "brief": "Select debug module to observe. ",
+    "detailed": "***************************************************************************************\n@param[in] dbgsel  Debug Selected @see enum sysdbg_sel\n@param[in] diag    Mode Value @see enum rf_dbg or ble_dbg or mdm_dbg\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint32_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sysdbg.h",
+    "has_implementation": true
+  },
+  {
+    "name": "sysdbg_anatst",
+    "brief": "Config AT0 AT1 for RF debug observation. ",
+    "detailed": "***************************************************************************************\n@param[in] tsten  Analog test bits @see enum ana_tst_en\n@param[in] atsel  Selected func @see enum ana_tst_sel\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/sysdbg.h",
+    "has_implementation": true
+  },
+  {
+    "name": "ctmr_init",
+    "brief": "Init Common Timer. ",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] psc  configure prescaler\n@param[in] arr  configure Auto-reload\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/timer.h",
+    "has_implementation": true
+  },
+  {
+    "name": "ctmr_deinit",
+    "brief": "Deinit Common Timer.  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/timer.h",
+    "has_implementation": true
+  },
+  {
+    "name": "ctmr_ctrl",
+    "brief": "Common Timer control. ",
+    "detailed": "***************************************************************************************\n@param[in] mode  Work Mode configure @see enum tmr_mode_def\n@param[in] intr  Interrupt configure @see enum tmr_intr_bfs\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/timer.h",
+    "has_implementation": true
+  },
+  {
+    "name": "atmr_init",
+    "brief": "Init Advance Timer. ",
+    "detailed": "***************************************************************************************\n@param[in] psc  configure prescaler\n@param[in] arr  configure Auto-reload\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/timer.h",
+    "has_implementation": true
+  },
+  {
+    "name": "atmr_deinit",
+    "brief": "Deinit Advance Timer.  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/timer.h",
+    "has_implementation": true
+  },
+  {
+    "name": "atmr_ctrl",
+    "brief": "Advance Timer control. ",
+    "detailed": "***************************************************************************************\n@param[in] mode  Work Mode configure @see enum tmr_mode_def\n@param[in] intr  Interrupt configure @see enum tmr_intr_bfs\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/timer.h",
+    "has_implementation": true
+  },
+  {
+    "name": "trim_load",
+    "brief": "Load FT Trim.  *************************************************************************************** /",
+    "detailed": "***************************************************************************************",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/trim.h",
+    "has_implementation": true
+  },
+  {
+    "name": "get_trim_rc16m_freq",
+    "brief": "Get RC16M Freq. ",
+    "detailed": "***************************************************************************************\n@return rc16m freq(unit:Hz).\n@note   0 is invalid freq.\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/trim.h",
+    "has_implementation": true
+  },
+  {
+    "name": "get_trim_vdd12_voltage",
+    "brief": "Get VDD12 Voltage. ",
+    "detailed": "***************************************************************************************\n@return vdd12 voltage(unit:mv).\n***************************************************************************************\n/",
+    "return_type": "uint32_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/trim.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_init",
+    "brief": "Init uart port (enable clock, reset, IO func map). ",
+    "detailed": "SYS_CLK\nFUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n@param[in] io_tx  iopad of TXD @see enum pad_idx\n@param[in] io_rx  iopad of RXD @see enum pad_idx\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_deinit",
+    "brief": "Deinit uart port(disable clock). ",
+    "detailed": "***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_hwfc",
+    "brief": "Config uart hardware flow control (IO func map, enable auto RTS). ",
+    "detailed": "***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n@param[in] io_rts  iopad of RTS @see enum pad_idx\n@param[in] io_cts  iopad of CTS @see enum pad_idx\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_conf",
+    "brief": "Config uart params, baudrate and ctrl bits. ",
+    "detailed": "***************************************************************************************\n@param[in] port     index of port @see enum uart_port\n@param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()\n@param[in] cfg_LCR  line-control bits @see LCR_BITS()\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_fctl",
+    "brief": "Config uart fifo level and receive timeout. ",
+    "detailed": "***************************************************************************************\n@param[in] port      index of port @see enum uart_port\n@param[in] fifo_ctl  fifo control @see enum uart_fcr_bfs\n@param[in] bits_rto  rx timeout (unit in bits)\n@param[in] intr_en   interrupt enable @see enum uart_intr_bfs\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_mctl",
+    "brief": "Config uart mode control. ",
+    "detailed": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] dma   enable DMA or not\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_putc",
+    "brief": "Transmits one byte data through the UART port. ",
+    "detailed": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] ch    the data transmited\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_getc",
+    "brief": "Get the most recent received data by UART port. ",
+    "detailed": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@return received data\n***************************************************************************************\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_wait",
+    "brief": "Wait uart transmit finish, in idle state. ",
+    "detailed": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_send",
+    "brief": "Transmits bytes data through the UART port(Blocking Mode). ",
+    "detailed": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] len    data length\n@param[in] data   data pointer\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "data"
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "uart_update_baud",
+    "brief": "Update uart baudrate. ",
+    "detailed": "***************************************************************************************\n@param[in] port     index of port @see enum uart_port\n@param[in] io_rx    iopad of RXD @see enum pad_idx\n@param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()\n@note This function will reset uart and restore uart params.\n***************************************************************************************\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      }
+    ],
+    "file_path": "drivers/api/uart.h",
+    "has_implementation": true
+  },
+  {
+    "name": "usbd_init",
+    "brief": "Init device controller.",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n@return N/A.\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_deinit",
+    "brief": "Deinit device controller.",
+    "detailed": "@return N/A.\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_resume",
+    "brief": "Resume request send, call twice as High(true)-10ms(delay)-Low(false).",
+    "detailed": "@return N/A.\n/",
+    "return_type": "bool",
+    "parameters": [
+      {
+        "type": "bool",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_register",
+    "brief": "Register Device Description and Configuration. ",
+    "detailed": "@param[in] desc  Pointer of description array\n@param[in] conf  Pointer of configuration struct\n(USBD_LEGACY_API Deprecated, replaced by usbd_register_device)\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": "desc"
+      },
+      {
+        "type": "usbd_config_t",
+        "name": "conf"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_register_device",
+    "brief": "Register Device Description and Configuration ",
+    "detailed": "@param[in] desc  Callback for description request\n@param[in] conf  Pointer of configuration struct\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "usbd_descriptor_cbk",
+        "name": ""
+      },
+      {
+        "type": "usbd_config_t",
+        "name": "conf"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_register_buffer",
+    "brief": "Register Big-Buffer for EP0 received(excced MPS), eg. DFU Block ",
+    "detailed": "@param[in] size      Buffer size\n@param[in] buff      Buffer pointer, aligned 4\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "buff"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_register_events",
+    "brief": "Register Handler for Application to notify events ",
+    "detailed": "@param[in] evt_msk   Event Mask for notified, bits of @see enum usbd_event_type\n@param[in] ntf_hdl   Notify Handler\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "usbd_notify_cbk",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_register_vendor",
+    "brief": "Register Handler for Vendor requestes. ",
+    "detailed": "@param[in] vendor    Vendor Handler\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "usbd_request_handler",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_is_configured",
+    "brief": "Device be configured or not.",
+    "detailed": "@return 0 on not, other on conf_num\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_is_suspend",
+    "brief": "Check if the device is in suspend state",
+    "detailed": "@return true or false\n/",
+    "return_type": "bool",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_ep_write",
+    "brief": "Write data to the specified endpoint with poll mode.  This function is called to write data to the specified endpoint. The supplied usbd_endpoint_handler function will be called when data is transmitted out. ",
+    "detailed": "@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  data      Pointer to data to write\n@param[in]  data_len  Length of the data requested to write. This may\nbe zero for a zero length status packet.\n@param[out] wr_bytes  Bytes scheduled for transmission. This value\nmay be NULL if the application expects all\nbytes to be written\n@return 0 on success, errno code on fail.\n/",
+    "return_type": "uint8_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "data"
+      },
+      {
+        "type": "uint16_t",
+        "name": "wr_bytes"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_ep_read",
+    "brief": "Read data from the specified endpoint  This function is called by the endpoint handler function, after an OUT interrupt has been received for that EP. The application must only call this function through the supplied usbd_ep_callback function. This function clears the ENDPOINT NAK when max_data_len is 0, if all data in the endpoint FIFO has been read, so as to accept more data from host. ",
+    "detailed": "@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  buff      Pointer to data buffer to write to\n@param[in]  max_len   Max length of data to read\n@return Number of bytes read.\n/",
+    "return_type": "uint16_t",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": "buff"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_ep_stall",
+    "brief": "Set/Clear stall condition for the selected endpoint ",
+    "detailed": "@param[in] ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in] set       True as set, False as clear\n/",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "bool",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "USB_IRQHandler",
+    "brief": "USB interrupt handler.",
+    "detailed": "@return N/A.\n/",
+    "return_type": "__USBIRQ",
+    "parameters": [
+      {
+        "type": "void",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_notify_handler",
+    "brief": "",
+    "detailed": "__WEAK USB Handler (user override, USBD_LEGACY_API Deprecated)\n***************************************************************************\n/\nHandler for Application to notify events",
+    "return_type": "__USBIRQ",
+    "parameters": [
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "void",
+        "name": "arg"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": true
+  },
+  {
+    "name": "usbd_vendor_handler",
+    "brief": "",
+    "detailed": "Handler for USB Vendor specific commands",
+    "return_type": "__USBIRQ",
+    "parameters": [
+      {
+        "type": "struct usb_setup_packet",
+        "name": "setup"
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": "dlen"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": false
+  },
+  {
+    "name": "usbd_get_string_handler",
+    "brief": "",
+    "detailed": "Handler for User's String descriptors, eg. iSerial Number",
+    "return_type": "__USBIRQ",
+    "parameters": [
+      {
+        "type": "uint16_t",
+        "name": ""
+      },
+      {
+        "type": "uint8_t",
+        "name": ""
+      },
+      {
+        "type": "uint16_t",
+        "name": "len"
+      }
+    ],
+    "file_path": "usb/api/usbd.h",
+    "has_implementation": true
+  },
+  {
+    "name": "usb_assert",
+    "brief": "assert the position of file and line /",
+    "detailed": "",
+    "return_type": "void",
+    "parameters": [
+      {
+        "type": "char",
+        "name": "filename"
+      },
+      {
+        "type": "int",
+        "name": ""
+      }
+    ],
+    "file_path": "usb/api/usb_log.h",
+    "has_implementation": false
+  }
+]

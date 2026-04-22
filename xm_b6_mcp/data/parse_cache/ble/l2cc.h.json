@@ -1,0 +1,112 @@
+{
+  "file_path": "ble/api/l2cc.h",
+  "functions": [],
+  "macros": [],
+  "enums": [
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "L2CC_CMP_EVT",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_CONNECT_CMD",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_CONNECT_REQ_IND",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_CONNECT_CFM",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_CONNECT_IND",
+          "value": 4,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_DISCONNECT_CMD",
+          "value": 5,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_DISCONNECT_IND",
+          "value": 6,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_ADD_CMD",
+          "value": 7,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_ADD_IND",
+          "value": 8,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_SDU_SEND_CMD",
+          "value": 9,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_SDU_RECV_IND",
+          "value": 10,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_UNKNOWN_MSG_IND",
+          "value": 11,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/l2cc.h",
+      "line_number": 30
+    },
+    {
+      "name": "",
+      "values": [
+        {
+          "name": "L2CC_NO_OP",
+          "value": 0,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_CONNECT",
+          "value": 1,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_DISCONNECT",
+          "value": 2,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_CREDIT_ADD",
+          "value": 3,
+          "brief": ""
+        },
+        {
+          "name": "L2CC_LECB_SDU_SEND",
+          "value": 4,
+          "brief": ""
+        }
+      ],
+      "underlying_type": "",
+      "brief": "",
+      "file_path": "ble/api/l2cc.h",
+      "line_number": 62
+    }
+  ],
+  "typedefs": [],
+  "parse_errors": []
+}

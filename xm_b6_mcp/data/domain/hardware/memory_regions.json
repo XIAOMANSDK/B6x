@@ -1,0 +1,30 @@
+[
+  {
+    "name": "STACK",
+    "origin": 536883200,
+    "length": 1536,
+    "attributes": "rw",
+    "region_type": "unknown"
+  },
+  {
+    "name": "RAM",
+    "origin": 536884736,
+    "length": 18944,
+    "attributes": "rwx",
+    "region_type": "ram"
+  },
+  {
+    "name": "FLASH",
+    "origin": 402669568,
+    "length": 114688,
+    "attributes": "rx",
+    "region_type": "flash"
+  },
+  {
+    "name": "EM",
+    "origin": 536903680,
+    "length": 8192,
+    "attributes": "rw",
+    "region_type": "unknown"
+  }
+]
