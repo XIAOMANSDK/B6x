@@ -13,7 +13,7 @@
 # Binary & Intermediate
 *.axf
 *.elf
-*.bin
+#*.bin
 *.hex
 *.map
 *.o
