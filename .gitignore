@@ -1,0 +1,39 @@
+# B6x SDK .gitignore
+
+# ====================
+# Build Outputs (MDK & GCC)
+# ====================
+**/output/
+**/build/
+**/Objects/
+**/Listings/
+**/RTE/
+**/DebugConfig/
+
+# Binary & Intermediate
+*.axf
+*.elf
+#*.bin
+*.hex
+*.map
+*.o
+*.d
+*.crf
+*.dep
+*.i
+*.lnp
+*.lst
+*.su
+*.scvd
+
+# ====================
+# IDE & Local Config
+# ====================
+*.uvguix.*
+.mcp.local.json
+
+# ====================
+# Python Cache
+# ====================
+**/__pycache__/
+*.py[cod]
