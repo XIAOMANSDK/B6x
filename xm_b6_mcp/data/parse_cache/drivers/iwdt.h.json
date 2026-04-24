@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\iwdt.h",
+  "file_path": "drivers/api/iwdt.h",
   "functions": [
     {
       "name": "iwdt_init",
@@ -13,7 +13,7 @@
       ],
       "brief_description": "Init Config IWDT. ",
       "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ctrl  Bits field of value @see enum iwdt_ctrl_bfs.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\iwdt.h",
+      "file_path": "drivers/api/iwdt.h",
       "line_number": 46,
       "is_exported": false,
       "implementation_file": "",
@@ -32,7 +32,7 @@
       ],
       "brief_description": "Deinit IWDT Module.  *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\iwdt.h",
+      "file_path": "drivers/api/iwdt.h",
       "line_number": 54,
       "is_exported": false,
       "implementation_file": "",
@@ -51,7 +51,7 @@
       ],
       "brief_description": "reload IWDT. *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\iwdt.h",
+      "file_path": "drivers/api/iwdt.h",
       "line_number": 61,
       "is_exported": false,
       "implementation_file": "",
@@ -70,7 +70,7 @@
       ],
       "brief_description": "Config IWDT, feed or disable ",
       "detailed_description": "***************************************************************************************\n@param[in] load  LOAD to feed watchdog, 0 means disable\n@return Timer value\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\iwdt.h",
+      "file_path": "drivers/api/iwdt.h",
       "line_number": 73,
       "is_exported": false,
       "implementation_file": "",
@@ -84,7 +84,7 @@
       "value": "(IWDT_EN_BIT | IWDT_RSTEN_BIT | IWDT_CLKLSI_BIT)",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./drivers\\api\\iwdt.h",
+      "file_path": "drivers/api/iwdt.h",
       "line_number": 31
     }
   ],
@@ -115,7 +115,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\iwdt.h",
+      "file_path": "drivers/api/iwdt.h",
       "line_number": 23
     }
   ],

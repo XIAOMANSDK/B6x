@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\btmr.h",
+  "file_path": "drivers/api/btmr.h",
   "functions": [
     {
       "name": "btmr_delay",
@@ -18,7 +18,7 @@
       ],
       "brief_description": "使用SysTick定时器实现延时",
       "detailed_description": "@param tpsc 预分频器值，实际分频系数 = tpsc\n@param tcnt 自动重载值，决定延时周期数\n@note 此函数使用基本定时器的单次模式实现精确延时\n/\nvoid btmr_delay(uint16_t tpsc, uint16_t tcnt);\n#endif\n@param tpsc 预分频系数\n@param",
-      "file_path": "./drivers\\api\\btmr.h",
+      "file_path": "drivers/api/btmr.h",
       "line_number": 13,
       "is_exported": false,
       "implementation_file": "",
@@ -42,7 +42,7 @@
       ],
       "brief_description": "",
       "detailed_description": "void tick_delay(uint16_t tpsc, uint16_t tcnt);\n#endif",
-      "file_path": "./drivers\\api\\btmr.h",
+      "file_path": "drivers/api/btmr.h",
       "line_number": 22,
       "is_exported": false,
       "implementation_file": "",

@@ -67,7 +67,7 @@
 
 /**
  * PNP ID Value - LSB -> MSB, Length=7(DIS_PNP_ID_LEN)
- *      Vendor ID Source : 0x02 (USB Implementer��s Forum assigned Vendor ID value)
+ *      Vendor ID Source : 0x02 (USB Implementer's Forum assigned Vendor ID value)
  *      Vendor ID : 0x045E      (Microsoft Corp)
  *      Product ID : 0x0040
  *      Product Version : 0x0300

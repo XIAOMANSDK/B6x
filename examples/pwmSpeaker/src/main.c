@@ -3,7 +3,7 @@
  *
  * @file main.c
  *
- * @brief PWM≤•∑≈”Ô“Ù æ¿˝.
+ * @brief Main Entry of the application - PWM Speaker test
  *
  ****************************************************************************************
  */
@@ -12,40 +12,59 @@
 #include "drvs.h"
 #include "dbg.h"
 
+
 /*
- * DEFINES
+ * FUNCTIONS
  ****************************************************************************************
  */
-extern void pwmInit(void);
-extern void speakerPlay(void);
 
-static void sysInit(void)
+extern void speaker_pwm_init(void);
+extern void speaker_play(void);
+
+/**
+ ****************************************************************************************
+ * @brief System initialization
+ ****************************************************************************************
+ */
+static void sys_init(void)
 {
-    // Todo config, if need
     SYS_CLK_ALTER();
     rcc_fshclk_set(FSH_CLK_DPSC64);
     boya_flash_quad_mode();
     boya_enter_hpm();
 }
 
-static void devInit(void)
+/**
+ ****************************************************************************************
+ * @brief Device initialization
+ *
+ * @details Disable watchdog, initialize debug interface
+ ****************************************************************************************
+ */
+static void dev_init(void)
 {
     iwdt_disable();
-    
+
     dbgInit();
 }
 
+/**
+ ****************************************************************************************
+ * @brief Main entry
+ * @return Program exit code (never returns)
+ ****************************************************************************************
+ */
 int main(void)
 {
-    sysInit();
-    devInit();
-    
-    pwmInit();
-    
-    while (1)    
+    sys_init();
+    dev_init();
+
+    speaker_pwm_init();
+
+    while (1)
     {
-        speakerPlay();
-        
+        speaker_play();
+
         bootDelayMs(2000);
     }
 }

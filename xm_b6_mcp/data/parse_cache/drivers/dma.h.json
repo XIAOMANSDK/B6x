@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\dma.h",
+  "file_path": "drivers/api/dma.h",
   "functions": [
     {
       "name": "dma_init",
@@ -13,8 +13,8 @@
       ],
       "brief_description": "Init DMA Module.  *************************************************************************************** /",
       "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 355,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 359,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -32,8 +32,8 @@
       ],
       "brief_description": "Deinit DMA Module.  *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 363,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 367,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -56,8 +56,8 @@
       ],
       "brief_description": "Init DMA Channel. ",
       "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@param[in] chsel  Selected peripheral @see enum dma_peripheral\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 374,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 378,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -75,8 +75,8 @@
       ],
       "brief_description": "Deinit DMA Channel. ",
       "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 384,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 388,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -109,8 +109,8 @@
       ],
       "brief_description": "Configure DMA Channel Control, then enable. ",
       "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*\n@param[in] src_ep Source data end pointer address, eg. (uint32_t)&buff[len-1]\n@param[in] dst_ep Destination data end pointer address\n@param[in] trans  Transfer control value @see enum dma_trans_bfs or DMA_TRANS_CFG_Typedef\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 397,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 401,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -128,8 +128,8 @@
       ],
       "brief_description": "Reload tansfer control value that configured via dma_chnl_conf(), continue run. ",
       "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@return 'true' means auto turned to alt-channel *only ping-pong mode*\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 408,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 412,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -147,8 +147,8 @@
       ],
       "brief_description": "Read DMA Channel remain cycles. ",
       "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *incl alternate part*\n@return Cycles of wait transfer, 0 means done\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 419,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 423,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -171,8 +171,8 @@
       ],
       "brief_description": "Read DMA Channel CCM_PING_PONG Mode remain cycles. ",
       "detailed_description": "***************************************************************************************\n@param[in]  chidx  Channel index @see enum dma_channel, *incl alternate part*\n@param[out] len    remain cycles of wait transfer.\n@return true is alt-channel(pong), false is primary-channel(ping).\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 431,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 435,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -195,8 +195,8 @@
       ],
       "brief_description": "Enable or disable DMA Channel after configured. ",
       "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@param[in] ctrl   Control opcode @see enum chnl_ctrl\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 442,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 446,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -214,8 +214,8 @@
       ],
       "brief_description": "Read DMA Channel done state, auto clear if be done. ",
       "detailed_description": "***************************************************************************************\n@param[in] chidx  Channel index @see enum dma_channel, *only primary part*\n@return done state, true means done\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 453,
+      "file_path": "drivers/api/dma.h",
+      "line_number": 457,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -320,8 +320,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 28
+      "file_path": "drivers/api/dma.h",
+      "line_number": 32
     },
     {
       "name": "",
@@ -464,8 +464,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 54
+      "file_path": "drivers/api/dma.h",
+      "line_number": 58
     },
     {
       "name": "",
@@ -588,8 +588,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 86
+      "file_path": "drivers/api/dma.h",
+      "line_number": 90
     },
     {
       "name": "",
@@ -652,8 +652,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 114
+      "file_path": "drivers/api/dma.h",
+      "line_number": 118
     },
     {
       "name": "",
@@ -701,8 +701,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 130
+      "file_path": "drivers/api/dma.h",
+      "line_number": 134
     },
     {
       "name": "",
@@ -730,8 +730,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 143
+      "file_path": "drivers/api/dma.h",
+      "line_number": 147
     },
     {
       "name": "",
@@ -754,8 +754,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 152
+      "file_path": "drivers/api/dma.h",
+      "line_number": 156
     },
     {
       "name": "",
@@ -863,8 +863,8 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\dma.h",
-      "line_number": 160
+      "file_path": "drivers/api/dma.h",
+      "line_number": 164
     }
   ],
   "typedefs": [],

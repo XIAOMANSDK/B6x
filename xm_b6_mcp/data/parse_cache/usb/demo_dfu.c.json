@@ -1,5 +1,5 @@
 {
-  "file_path": "./usb\\src\\demo_dfu.c",
+  "file_path": "usb/src/demo_dfu.c",
   "functions": [
     {
       "name": "usbd_notify_handler",
@@ -17,7 +17,7 @@
         }
       ],
       "function_body": "{\n    switch (event) {\n        case USBD_EVENT_RESET:\n            break;\n        case USBD_EVENT_CONNECTED:\n            break;\n        case USBD_EVENT_DISCONNECTED:\n            break;\n        case USBD_EVENT_RESUME:\n            break;\n        case USBD_EVENT_SUSPEND:\n            break;\n        case USBD_EVENT_CONFIGURED:\n            break;\n        case USBD_EVENT_SET_REMOTE_WAKEUP:\n            break;\n        case USBD_EVENT_CLR_REMOTE_WAKEUP:\n            break;\n\n        default:\n            break;\n    }\n}",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "usb/src/demo_dfu.c",
       "line_number": 165,
       "is_static": false
     },
@@ -32,7 +32,7 @@
         }
       ],
       "function_body": "{\n    usbd_init();\n    usbd_register(dfu_descriptor, dfu_configuration);\n\n    usbd_dfu_init();\n}",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "usb/src/demo_dfu.c",
       "line_number": 196,
       "is_static": false
     },
@@ -41,7 +41,7 @@
       "return_type": "void",
       "parameters": [],
       "function_body": "{\n    if (usbd_is_configured()) {\n\n    }\n}",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "usb/src/demo_dfu.c",
       "line_number": 204,
       "is_static": false
     },
@@ -66,7 +66,7 @@
         }
       ],
       "function_body": "{\n    //DEBUG(\"offset:%X, len:%d\", offset, wlen);\n\n    FSHC_CACHE_DISABLE();\n\n    fshc_write(offset, data, wlen, FSH_CMD_WR);\n\n    FSHC_CACHE_RESTORE();\n}",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "usb/src/demo_dfu.c",
       "line_number": 237,
       "is_static": false
     },
@@ -90,8 +90,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    uint32_t offset = ((uint32_t)dest) & 0xFFFFFF;\n    \n    USB_LOG_RAW(\"    WR(src:%p,dst:%p,len:%d)\\r\\n\", src, dest, len);\n    uint32_t nb_page = PAGE_NB(len);\n    for (uint32_t page_idx = 0; page_idx < nb_page; ++page_idx)\n    {\n        dfu_page_write(offset + (page_idx * PAGE_SIZE), (uint32_t *)(src + (page_idx * PAGE_SIZE)), PAGE_SIZE_WLEN);\n    }\n    return 0;\n}",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "function_body": "{\n    uint32_t offset = ((uint32_t)dest) & 0xFFFFFF;\n\n    USB_LOG_RAW(\"    WR(src:%p,dst:%p,len:%d)\\r\\n\", src, dest, len);\n    uint32_t nb_page = PAGE_NB(len);\n    for (uint32_t page_idx = 0; page_idx < nb_page; ++page_idx)\n    {\n        dfu_page_write(offset + (page_idx * PAGE_SIZE), (uint32_t *)(src + (page_idx * PAGE_SIZE)), PAGE_SIZE_WLEN);\n    }\n    return 0;\n}",
+      "file_path": "usb/src/demo_dfu.c",
       "line_number": 248,
       "is_static": false
     },
@@ -105,8 +105,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    USB_LOG_RAW(\"    ER(addr:%X)\\r\\n\", addr);\n    FSHC_CACHE_DISABLE();\n    \n    fshc_erase(addr & 0xFFFFFF, FSH_CMD_ER_SECTOR);\n\n    FSHC_CACHE_RESTORE();\n    return 0;\n}",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "function_body": "{\n    USB_LOG_RAW(\"    ER(addr:%X)\\r\\n\", addr);\n    FSHC_CACHE_DISABLE();\n\n    fshc_erase(addr & 0xFFFFFF, FSH_CMD_ER_SECTOR);\n\n    FSHC_CACHE_RESTORE();\n    return 0;\n}",
+      "file_path": "usb/src/demo_dfu.c",
       "line_number": 262,
       "is_static": false
     }
@@ -117,7 +117,7 @@
       "value": "0x3839//0x0483//0xffff",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 8
     },
     {
@@ -125,7 +125,7 @@
       "value": "0xDF11//0xfff0",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 9
     },
     {
@@ -133,7 +133,7 @@
       "value": "100",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 10
     },
     {
@@ -141,7 +141,7 @@
       "value": "1033",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 11
     },
     {
@@ -149,7 +149,7 @@
       "value": "(9 + DFU_DESCRIPTOR_LEN)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 27
     },
     {
@@ -157,7 +157,7 @@
       "value": "\"@Internal Flash /0x18000000/1*004Ka,63*004Kg\"",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 29
     },
     {
@@ -165,7 +165,7 @@
       "value": "256",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 232
     },
     {
@@ -173,7 +173,7 @@
       "value": "(PAGE_SIZE/4)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_dfu.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_dfu.c",
       "line_number": 233
     }
   ],

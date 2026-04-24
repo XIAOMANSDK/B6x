@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\attm_api.h",
+  "file_path": "ble/api/attm_api.h",
   "functions": [
     {
       "name": "attm_svc_create_db",
@@ -48,7 +48,7 @@
       ],
       "brief_description": "Function use to ease service database creation. Use @see attmdb_add_service function of attmdb module to create service database, then use @see attmdb_add_attribute function of attmdb module to create attributes according to database description array given in parameter. ",
       "detailed_description": "FUNCTION DECLARATIONS\n***************************************************************************************\n/\n***************************************************************************************\n@note: database description array shall be const to reduce memory consumption (only ROM)\n@note: It supports only 16 bits UUIDs\n@note: If shdl = 0, it return handle using first available handle (shdl is\nmodified); else it verifies if start handle given can be used to allocates handle range.\n@param[in|out] shdl          Service start handle.\n@param[in]     uuid          Service UUID\n@param[in|out] cfg_flag      Configuration Flag, each bit matches with an attribute of\natt_db (Max: 32 attributes); if the bit is set to 1, the\nattribute will be added in the service.\n@param[in]     max_nb_att    Number of attributes in the service\n@param[in|out] att_tbl       Array which will be fulfilled with the difference between\neach characteristic handle and the service start handle.\nThis array is useful if several characteristics are optional\nwithin the service, can be set to NULL if not needed.\n@param[in]     dest_id       Task ID linked to the service. This task will be notified\neach time the service content is modified by a peer device.\n@param[in|out] att_db        Table containing all attributes information\n@param[in]     svc_perm      Service permission (@see enum attm_svc_perm_mask)\n@return Command status code:\n- @ref LE_SUCCESS: If database creation succeeds.\n- @ref ATT_ERR_INVALID_HANDLE: If start_hdl given in parameter + nb of attribute override\nsome existing services handles.\n- @ref ATT_ERR_INSUFF_RESOURCE: There is not enough memory to allocate service buffer.\nor of new attribute cannot be added because all expected\nattributes already added or buffer overflow detected during\nallocation\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 334,
       "is_exported": false,
       "implementation_file": "",
@@ -102,7 +102,7 @@
       ],
       "brief_description": "Function use to ease service database creation. Use @see attmdb_add_service function of attmdb module to create service database, then use @see attmdb_add_attribute function of attmdb module to create attributes according to database description array given in parameter. ",
       "detailed_description": "***************************************************************************************\n@note: database description array shall be const to reduce memory consumption (only ROM)\n@note: It supports 128, 32 and 16 bits UUIDs\n@note: If shdl = 0, it return handle using first available handle (shdl is\nmodified); else it verifies if start handle given can be used to allocates handle range.\n@param[in|out] shdl          Service start handle.\n@param[in]     uuid          Service UUID\n@param[in|out] cfg_flag      Configuration Flag, each bit matches with an attribute of\natt_db (Max: 32 attributes); if the bit is set to 1, the\nattribute will be added in the service.\n@param[in]     max_nb_att    Number of attributes in the service\n@param[in|out] att_tbl       Array which will be fulfilled with the difference between\neach characteristic handle and the service start handle.\nThis array is useful if several characteristics are optional\nwithin the service, can be set to NULL if not needed.\n@param[in]     dest_id       Task ID linked to the service. This task will be notified\neach time the service content is modified by a peer device.\n@param[in|out] att_db        Table containing all attributes information\n@param[in]     svc_perm      Service permission (@see enum attm_svc_perm_mask)\n@return Command status code:\n- @ref LE_SUCCESS: If database creation succeeds.\n- @ref ATT_ERR_INVALID_HANDLE: If start_hdl given in parameter + nb of attribute override\nsome existing services handles.\n- @ref ATT_ERR_INSUFF_RESOURCE: There is not enough memory to allocate service buffer.\nor of new attribute cannot be added because all expected\nattributes already added or buffer overflow detected during\nallocation\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 376,
       "is_exported": false,
       "implementation_file": "",
@@ -126,7 +126,7 @@
       ],
       "brief_description": "Function use to verify if several services can be allocated on a contiguous handle range. If this command succeed, it means that service allocation will succeed.  If start_hdl = 0, it return handle using first available handle (start_hdl is modified); else it verifies if start handle given can be used to allocates handle range. ",
       "detailed_description": "***************************************************************************************\n@param[in|out] start_hdl     Service start handle.\n@param[in]     nb_att        Number of handle to allocate (containing service handles)\n@return Command status code:\n- @ref LE_SUCCESS: If service allocation succeeds.\n- @ref ATT_ERR_INVALID_HANDLE: If start_hdl given in parameter or UUIDs value invalid\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 397,
       "is_exported": false,
       "implementation_file": "",
@@ -160,7 +160,7 @@
       ],
       "brief_description": "Update attribute value  Updating attribute value do not trigger any notification or indication, this shall be handled by GATT task. ",
       "detailed_description": "***************************************************************************************\n@param[in] handle Attribute handle.\n@param[in] length Size of new attribute value\n@param[in] offset Data offset of in the payload to set\n@param[in] value  Attribute value payload\n@return Command status code:\n- @ref LE_SUCCESS: If attribute value update succeeds\n- @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database\n- @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute data not present in database or\ncannot be modified\n- @ref ATT_ERR_INVALID_ATTRIBUTE_VAL_LEN: If new value length exceeds maximum attribute\nvalue length.\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 421,
       "is_exported": false,
       "implementation_file": "",
@@ -189,7 +189,7 @@
       ],
       "brief_description": "Retrieve attribute value  ",
       "detailed_description": "***************************************************************************************\n@param[in]  handle Attribute handle.\n@param[out] length Size of attribute value\n@param[out] value  Pointer to attribute value payload\n@return Command status code:\n- @ref LE_SUCCESS: If request succeeds\n- @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database\n- @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute data not present in database\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 438,
       "is_exported": false,
       "implementation_file": "",
@@ -218,7 +218,7 @@
       ],
       "brief_description": "Update attribute permission ",
       "detailed_description": "***************************************************************************************\n@param[in] handle Attribute handle.\n- @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute data not present in database\n@param[in] perm       New attribute permission\n@param[in] ext_perm   New attribute extended permission\n@return Command status code:\n- @ref LE_SUCCESS: If request succeeds\n- @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database\n- @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute permission is fixed\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 455,
       "is_exported": false,
       "implementation_file": "",
@@ -247,7 +247,7 @@
       ],
       "brief_description": "Reset some permissions bit in the Handle passed as parameter. ",
       "detailed_description": "***************************************************************************************\n@param[in] handle      Attribute handle.\n@param[in] access_mask Access mask of permission to update\n@param[in] perm        New value of the permission to update\n@return Command status code:\n- @ref LE_SUCCESS: If request succeeds\n- @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database\n- @ref ATT_ERR_REQUEST_NOT_SUPPORTED: If attribute permission is fixed\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 472,
       "is_exported": false,
       "implementation_file": "",
@@ -271,7 +271,7 @@
       ],
       "brief_description": "Update attribute service permission ",
       "detailed_description": "***************************************************************************************\n@param[in] handle Attribute handle.\n@param[in] perm   New attribute permission\n@return Command status code:\n- @ref LE_SUCCESS: If request succeeds\n- @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 486,
       "is_exported": false,
       "implementation_file": "",
@@ -295,7 +295,7 @@
       ],
       "brief_description": "Retrieve attribute service permission ",
       "detailed_description": "***************************************************************************************\n@param[in]  handle Attribute handle.\n@param[out] perm   Permission value to return\n@return Command status code:\n- @ref LE_SUCCESS: If request succeeds\n- @ref ATT_ERR_INVALID_HANDLE: If handle doesn't exist in database\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 500,
       "is_exported": false,
       "implementation_file": "",
@@ -319,7 +319,7 @@
       ],
       "brief_description": "Control visibility of a service from peer device. service present in database but cannot be access by a peer device. ",
       "detailed_description": "***************************************************************************************\n@param[in] handle Service handle.\n@param[in] hide   True to hide the service, False to restore visibility\n@return Command status code:\n- @ref LE_SUCCESS: If service allocation succeeds.\n- @ref ATT_ERR_INVALID_HANDLE: If start_hdl given in parameter or UUIDs value invalid\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 515,
       "is_exported": false,
       "implementation_file": "",
@@ -338,7 +338,7 @@
       ],
       "brief_description": "Clear database  For debug purpose only, this function clear the database and unalloc all services within database.  This function shall be used only for qualification and tests in order to manually change database without modifying software. *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 528,
       "is_exported": false,
       "implementation_file": "",
@@ -372,7 +372,7 @@
       ],
       "brief_description": "Compare if two UUIDs matches ",
       "detailed_description": "***************************************************************************************\n@param[in]  uuid_a      UUID A value\n@param[in]  uuid_a_len  UUID A length\n@param[in]  uuid_b      UUID B value\n@param[in]  uuid_b_len  UUID B length\n@return true if UUIDs matches, false otherwise\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 542,
       "is_exported": false,
       "implementation_file": "",
@@ -401,7 +401,7 @@
       ],
       "brief_description": "Check if two UUIDs matches (2nd UUID is a 16 bits UUID with LSB First) ",
       "detailed_description": "***************************************************************************************\n@param[in]  uuid_a      UUID A value\n@param[in]  uuid_a_len  UUID A length\n@param[in]  uuid_b      UUID B 16 bit value\n@return true if UUIDs matches, false otherwise\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 555,
       "is_exported": false,
       "implementation_file": "",
@@ -430,7 +430,7 @@
       ],
       "brief_description": "Convert UUID value to 128 bit UUID ",
       "detailed_description": "***************************************************************************************\n@param[out] uuid128   converted 32-bit Bluetooth UUID to 128-bit UUID\n@param[in]  uuid      UUID to convert to 128-bit UUID\n@param[in]  uuid_len  UUID length\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 567,
       "is_exported": false,
       "implementation_file": "",
@@ -449,7 +449,7 @@
       ],
       "brief_description": "Check if it's a Bluetooth 16-bits UUID for 128-bit input ",
       "detailed_description": "***************************************************************************************\n@param[in]  uuid      128-bit UUID\n@return true if uuid  is a Bluetooth 16-bit UUID, false else.\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 578,
       "is_exported": false,
       "implementation_file": "",
@@ -468,7 +468,7 @@
       ],
       "brief_description": "Check if it's a Bluetooth 32 bits UUID for 128-bit input ",
       "detailed_description": "***************************************************************************************\n@param[in]  uuid      128-bit UUID\n@return true if uuid  is a Bluetooth 32-bits UUID, false else.\n***************************************************************************************\n/",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 589,
       "is_exported": false,
       "implementation_file": "",
@@ -482,7 +482,7 @@
       "value": "{{NULL}, false}",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 71
     }
   ],
@@ -628,7 +628,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 91
     },
     {
@@ -687,7 +687,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 150
     },
     {
@@ -756,7 +756,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 185
     },
     {
@@ -775,7 +775,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 208
     },
     {
@@ -804,7 +804,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 217
     },
     {
@@ -848,7 +848,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 230
     },
     {
@@ -867,7 +867,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\attm_api.h",
+      "file_path": "ble/api/attm_api.h",
       "line_number": 246
     }
   ],

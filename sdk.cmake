@@ -308,7 +308,6 @@ copy_sdk_lib_to_build("libble6.a"           "${SDK_BLE_DIR}/lib")
 copy_sdk_lib_to_build("libble6_lite.a"      "${SDK_BLE_DIR}/lib")
 copy_sdk_lib_to_build("libble6_8act_6con.a" "${SDK_BLE_DIR}/lib")
 copy_sdk_lib_to_build("libble6_mesh.a"      "${SDK_MESH_DIR}/lib")
-copy_sdk_lib_to_build("libble6_mesh_full.a" "${SDK_MESH_DIR}/lib")
 copy_sdk_lib_to_build("libsig_model.a"      "${SDK_MESH_DIR}/lib")
 
 # 11.3 定义库文件路径变量 (使用复制后的路径)
@@ -326,7 +325,6 @@ set(BLE_LIB_LARGE      "${CMAKE_BINARY_DIR}/lib/libble6_8act_6con.a")
 
 # Mesh 库
 set(BLE_LIB_MESH       "${CMAKE_BINARY_DIR}/lib/libble6_mesh.a")
-set(BLE_LIB_MESH_FULL  "${CMAKE_BINARY_DIR}/lib/libble6_mesh_full.a")
 set(BLE_LIB_SIG_MODEL  "${CMAKE_BINARY_DIR}/lib/libsig_model.a")
 
 

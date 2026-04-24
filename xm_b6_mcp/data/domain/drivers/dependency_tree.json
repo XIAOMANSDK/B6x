@@ -129,6 +129,7 @@
     "requires_peripheral_clock": false,
     "requires_gpio_config": false,
     "calls_in_implementation": [
+      "ASSERT_ERR",
       "DMA_CHNL_CTRL",
       "DMA_CHNL_CTRL"
     ]
@@ -217,6 +218,7 @@
     "requires_peripheral_clock": false,
     "requires_gpio_config": false,
     "calls_in_implementation": [
+      "ASSERT_ERR",
       "GLOBAL_INT_DISABLE",
       "fshc_write",
       "GLOBAL_INT_RESTORE"
@@ -430,6 +432,7 @@
     "requires_peripheral_clock": false,
     "requires_gpio_config": false,
     "calls_in_implementation": [
+      "ASSERT_ERR",
       "I2C_PUTC",
       "I2C_STAT_GET",
       "I2C_STAT_GET"
@@ -1039,6 +1042,8 @@
     "requires_peripheral_clock": false,
     "requires_gpio_config": false,
     "calls_in_implementation": [
+      "ASSERT_ERR",
+      "ASSERT_ERR",
       "SPIM_BGN",
       "SPIM_WAIT"
     ]
@@ -1296,6 +1301,7 @@
     "requires_peripheral_clock": false,
     "requires_gpio_config": false,
     "calls_in_implementation": [
+      "ASSERT_ERR",
       "UART_PTR"
     ]
   },

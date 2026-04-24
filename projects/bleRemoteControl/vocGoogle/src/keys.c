@@ -12,6 +12,7 @@
 #include "prf_hids.h"
 #include "keys.h"
 #include "app_user.h"
+#include "micphone.h"
 #include "gapc_api.h"
 #include "ble_priv_data.h"
 
@@ -348,7 +349,7 @@ static uint16_t ble_keys_scan(void)
         key_press = false;
 
         #if (VOICE)
-        if (SADC->CTRL.SADC_DMAC_EN)
+        if (mic_is_active())
         {
             SADC->CTRL.SADC_DMAC_EN = 0;  // voice stop
         }

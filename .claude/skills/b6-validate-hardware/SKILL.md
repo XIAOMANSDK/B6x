@@ -37,7 +37,7 @@ allowed-tools: Read, Grep, Glob, mcp__b6x-mcp-server__validate_config
 
 ### Step 1: 定位配置文件
 
-1. 检查 `<project_path>/src/cfg.h` 是否存在
+1. 依次检查 `<project_path>/src/cfg.h` 和 `<project_path>/inc/cfg.h`，取第一个存在的
 2. 检查 `<project_path>/src/main.c` 是否存在
 3. 若项目路径未指定，使用当前目录
 4. 若 cfg.h 不存在，报告错误并退出
@@ -212,42 +212,6 @@ DMA 配置:
 | ADC 引脚无效 | 提示 ADC 只能在 PA00-PA02, PA04-PA16 |
 | 外设无法工作 | 检查时钟使能 |
 | DMA 冲突 | 建议分配不同通道 |
-
----
-
-## 示例
-
-```
-用户: /b6-validate-hardware projects/bleHid_Uart
-
-输出:
-状态: PASS
-错误: 0 | 警告: 1
-
-引脚配置:
-  PA06 (UART1_TX)  ✓
-  PA07 (UART1_RX)  ✓
-  PA00 (GPIO)      ✓
-
-时钟配置:
-  系统时钟 16MHz ✓ (SYS_CLK=0)
-  UART1 使能     ✓
-
-警告:
-  DMA 未使用，可考虑启用以提高性能
-
-统计: 8/8 通过
-```
-
----
-
-## 与其他 Skill 协作
-
-| Skill | 协作方式 |
-|-------|----------|
-| `/b6-create-project` | Phase 7 自动调用 |
-| `/b6-build` | 编译前验证硬件配置 |
-| `/b6-code-review` | 硬件配置专项审查 |
 
 ---
 

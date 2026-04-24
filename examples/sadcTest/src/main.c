@@ -26,9 +26,8 @@
  */
 
 static void sysInit(void)
-{    
-    // Todo config, if need
-    
+{
+    SYS_CLK_ALTER();
 }
 
 static void devInit(void)

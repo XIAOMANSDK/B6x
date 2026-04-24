@@ -3,21 +3,22 @@
  *
  * @file hid_boot.c
  *
- * @brief USB HID Boot设备类型实现
+ * @brief USB HID Boot device implementation (keyboard + mouse)
  *
- * DEMO_HID_BOOT示例：
-
- *设备初始化：使能USB时钟，初始化USB控制器，注册描述符和配置
- *枚举过程：主机读取设备描述符、配置描述符等，完成设备枚举
- *数据传输：通过中断端点定期发送键盘和鼠标报告数据
- *电源管理：处理挂起和恢复事件，支持远程唤醒
- *用户交互：通过按键扫描或定时循环生成测试数据
- * USB HID设备基于USB协议的人类接口设备类规范，通过以下机制工作：
-
- *描述符定义：通过设备描述符、配置描述符、接口描述符、端点描述符和报告描述符定义设备功能和特性
- *中断传输：使用中断端点进行低延迟的数据传输，适合人机交互设备
- *报告机制：通过预定义的报告格式在设备和主机间交换数据
- *协议处理：USB核心处理标准USB请求，HID类处理特定于HID的请求
+ * @details
+ * DEMO_HID_BOOT example:
+ * - Device init: enable USB clock, init USB controller, register descriptors
+ * - Enumeration: host reads device/config descriptors, completes enumeration
+ * - Data transfer: periodically send keyboard and mouse reports via interrupt endpoints
+ * - Power management: handle suspend/resume events, support remote wakeup
+ * - User interaction: generate test data via button scan or auto-timer loop
+ *
+ * USB HID device based on USB Human Interface Device class specification:
+ * - Descriptor definition: device, config, interface, endpoint, and report descriptors
+ * - Interrupt transfer: low-latency data transfer via interrupt endpoints
+ * - Report mechanism: predefined report formats for device-host data exchange
+ * - Protocol handling: USB core handles standard requests, HID class handles HID-specific
+ *
  ****************************************************************************************
  */
 
@@ -25,45 +26,64 @@
 #include "usbd_hid.h"
 #include "keys.h"
 #include "drvs.h"
+#include "dbg.h"
 
 #if (DEMO_HID_BOOT)
 
-#define USBD_BCD                  USB_1_1 // Version
-#define USBD_VID                  0xFFFF  // Vendor ID
-#define USBD_PID                  0xFFF0  // Product ID
-#define USBD_MAX_POWER            100     // unit in mA
-#define USBD_LANGID_STRING        0x0409  // English(US)
+/*
+ * DEFINES - USB Device Configuration
+ ****************************************************************************************
+ */
 
-#define ENB_KEYBD                 0         ///< 使能键盘接口
-#define ENB_MOUSE                 1         ///< 使能鼠标接口
+#define USBD_BCD                  USB_1_1     ///< USB specification version
+#define USBD_VID                  0xFFFF      ///< Vendor ID
+#define USBD_PID                  0xFFF0      ///< Product ID
+#define USBD_MAX_POWER            100         ///< Max power (mA)
+#define USBD_LANGID_STRING        0x0409      ///< English (US)
 
-#if ((ENB_KEYBD > 1) || (ENB_MOUSE > 1) || (ENB_KEYBD+ENB_MOUSE == 0))
+/*
+ * DEFINES - HID Interface Configuration
+ ****************************************************************************************
+ */
+
+/// Enable keyboard interface (0=disable, 1=enable)
+#define ENB_KEYBD                 0
+
+/// Enable mouse interface (0=disable, 1=enable)
+#define ENB_MOUSE                 1
+
+#if ((ENB_KEYBD > 1) || (ENB_MOUSE > 1) || (ENB_KEYBD + ENB_MOUSE == 0))
 #error "The Count of HID Interface be 1 or 2."
 #endif
 
-
 /*
- * Descriptor
- ****************************************************************************
+ * DEFINES - Descriptor Sizes
+ ****************************************************************************************
  */
 
-/*!< count of hid interface descriptor */
+/// Total HID interface count
 #define USB_HID_INTF_CNT          (ENB_KEYBD + ENB_MOUSE)
+
+/// Last interface number
 #define USB_HID_INTF_END          (USB_HID_INTF_CNT - 1)
 
-/*!< config descriptor size (only in endpoint) */
-#define USB_HID_CONFIG_SIZE       (9+(18+7)*USB_HID_INTF_CNT)
+/// Configuration descriptor total size
+#define USB_HID_CONFIG_SIZE       (9 + (18 + 7) * USB_HID_INTF_CNT)
+
+/*
+ * DEFINES - Keyboard Endpoint Configuration
+ ****************************************************************************************
+ */
 
 #if (ENB_KEYBD)
-/*!< keyboard interface config */
-#define KEYBD_INTF_NUM            0     ///< 键盘输入端点地址
-#define KEYBD_IN_EP               0x81  ///< 键盘输入端点地址
-#define KEYBD_IN_EP_SIZE          8     ///< 键盘端点最大包长度
-//INTERVAL:1, 2, 4, 8, 16, ... 2**n
-#define KEYBD_IN_EP_INTERVAL      8     ///< 键盘端点轮询间隔
+#define KEYBD_INTF_NUM            0           ///< Keyboard interface number
+#define KEYBD_IN_EP               0x81        ///< Keyboard IN endpoint address
+#define KEYBD_IN_EP_SIZE          8           ///< Keyboard endpoint max packet size
+/// Endpoint polling interval: 1, 2, 4, 8, 16, ... 2^n
+#define KEYBD_IN_EP_INTERVAL      8
 #define KEYBD_REPORT_DESC_SIZE    sizeof(hid_keybd_report_desc)
 
-/*!< keyboard report descriptor */
+/// Keyboard HID report descriptor
 static const uint8_t hid_keybd_report_desc[] = {
     0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
     0x09, 0x06, // Usage (Keyboard)
@@ -75,19 +95,19 @@ static const uint8_t hid_keybd_report_desc[] = {
     0x25, 0x01, //   Logical Maximum (1)
     0x75, 0x01, //   Report Size (1)
     0x95, 0x08, //   Report Count (8)
-    0x81, 0x02, //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x81, 0x02, //   Input (Data,Var,Abs)
     0x95, 0x01, //   Report Count (1)
     0x75, 0x08, //   Report Size (8)
-    0x81, 0x03, //   Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x81, 0x03, //   Input (Const,Var,Abs)
     0x95, 0x05, //   Report Count (5)
     0x75, 0x01, //   Report Size (1)
     0x05, 0x08, //   Usage Page (LEDs)
     0x19, 0x01, //   Usage Minimum (Num Lock)
     0x29, 0x05, //   Usage Maximum (Kana)
-    0x91, 0x02, //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x91, 0x02, //   Output (Data,Var,Abs)
     0x95, 0x01, //   Report Count (1)
     0x75, 0x03, //   Report Size (3)
-    0x91, 0x03, //   Output (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x91, 0x03, //   Output (Const,Var,Abs)
     0x95, 0x06, //   Report Count (6)
     0x75, 0x08, //   Report Size (8)
     0x15, 0x00, //   Logical Minimum (0)
@@ -95,215 +115,176 @@ static const uint8_t hid_keybd_report_desc[] = {
     0x05, 0x07, //   Usage Page (Kbrd/Keypad)
     0x19, 0x00, //   Usage Minimum (0x00)
     0x29, 0x65, //   Usage Maximum (0x65)
-    0x81, 0x00, //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x81, 0x00, //   Input (Data,Array,Abs)
     0xC0,       // End Collection
 };
+#endif
+
+/*
+ * DEFINES - Mouse Endpoint Configuration
+ ****************************************************************************************
+ */
+
+#if (ENB_MOUSE)
+#define MOUSE_INTF_NUM            (0 + ENB_KEYBD)         ///< Mouse interface number
+#define MOUSE_IN_EP               (0x81 + ENB_KEYBD)      ///< Mouse IN endpoint address
+#define MOUSE_IN_EP_SIZE          4                        ///< Mouse endpoint max packet size
+/// Endpoint polling interval: 1, 2, 4, 8, 16, ... 2^n
+#define MOUSE_IN_EP_INTERVAL      1
+#define MOUSE_REPORT_DESC_SIZE    sizeof(hid_mouse_report_desc)
+
+/// Mouse HID report descriptor
+static const uint8_t hid_mouse_report_desc[] = {
+    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
+    0x09, 0x02, // Usage (Mouse)
+    0xA1, 0x01, // Collection (Application)
+    0x09, 0x01, //   Usage (Pointer)
+    0xA1, 0x00, //   Collection (Physical)
+    0x05, 0x09, //     Usage Page (Button)
+    0x19, 0x01, //     Usage Minimum (0x01)
+    0x29, 0x03, //     Usage Maximum (0x03)
+    0x15, 0x00, //     Logical Minimum (0)
+    0x25, 0x01, //     Logical Maximum (1)
+    0x95, 0x03, //     Report Count (3)
+    0x75, 0x01, //     Report Size (1)
+    0x81, 0x02, //     Input (Data,Var,Abs)
+    0x95, 0x01, //     Report Count (1)
+    0x75, 0x05, //     Report Size (5)
+    0x81, 0x01, //     Input (Const,Array,Abs)
+    0x05, 0x01, //     Usage Page (Generic Desktop Ctrls)
+    0x09, 0x30, //     Usage (X)
+    0x09, 0x31, //     Usage (Y)
+    0x09, 0x38, //     Usage (Wheel)
+    0x15, 0x81, //     Logical Minimum (-127)
+    0x25, 0x7F, //     Logical Maximum (127)
+    0x75, 0x08, //     Report Size (8)
+    0x95, 0x03, //     Report Count (3)
+    0x81, 0x06, //     Input (Data,Var,Rel)
+    0xC0,       //   End Collection
+    0xC0,       // End Collection
+};
+#endif
+
+/*
+ * LOCAL DATA - USB Descriptors
+ ****************************************************************************************
+ */
+
+/// HID device descriptor
+static const uint8_t hid_descriptor[] = {
+    /* Device descriptor (18 bytes) */
+    USB_DEVICE_DESCRIPTOR_INIT(USBD_BCD, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, 0x0002, 0x01),
+
+    /* Configuration descriptor */
+    USB_CONFIG_DESCRIPTOR_INIT(USB_HID_CONFIG_SIZE, USB_HID_INTF_CNT,
+            0x01, USB_CONFIG_BUS_POWERED | USB_CONFIG_REMOTE_WAKEUP, USBD_MAX_POWER),
+
+#if (ENB_KEYBD)
+    /* Keyboard interface (18+7 bytes) */
+    HID_INTERFACE_INIT(KEYBD_INTF_NUM, 1, HID_SUBCLASS_BOOTIF, HID_PROTOCOL_KEYBOARD, 0, KEYBD_REPORT_DESC_SIZE),
+    HID_ENDPOINT_DESC(KEYBD_IN_EP, KEYBD_IN_EP_SIZE, KEYBD_IN_EP_INTERVAL),
 #endif
 
 #if (ENB_MOUSE)
-/*!< mouse interface config */
-#define MOUSE_INTF_NUM            (0 + ENB_KEYBD) ///< 鼠标接口编号
-#define MOUSE_IN_EP               (0x81 + ENB_KEYBD) ///< 鼠标输入端点地址
-#define MOUSE_IN_EP_SIZE          4       ///< 鼠标端点最大包长度
-//INTERVAL:1, 2, 4, 8, 16, ... 2**n
-#define MOUSE_IN_EP_INTERVAL      1       ///< 鼠标端点轮询间隔
-#define MOUSE_REPORT_DESC_SIZE    sizeof(hid_mouse_report_desc) ///< 鼠标报告描述符大小
-
-/*!< mouse report descriptor */
-static const uint8_t hid_mouse_report_desc[] = {
-    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
-    0x09, 0x02, // Usage (Mouse)
-    0xA1, 0x01, // Collection (Application)
-    0x09, 0x01, //   Usage (Pointer)
-    0xA1, 0x00, //   Collection (Physical)
-    0x05, 0x09, //     Usage Page (Button)
-    0x19, 0x01, //     Usage Minimum (0x01)
-    0x29, 0x03, //     Usage Maximum (0x03)
-    0x15, 0x00, //     Logical Minimum (0)
-    0x25, 0x01, //     Logical Maximum (1)
-    0x95, 0x03, //     Report Count (3)
-    0x75, 0x01, //     Report Size (1)
-    0x81, 0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-    0x95, 0x01, //     Report Count (1)
-    0x75, 0x05, //     Report Size (5)
-    0x81, 0x01, //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
-    0x05, 0x01, //     Usage Page (Generic Desktop Ctrls)
-    0x09, 0x30, //     Usage (X)
-    0x09, 0x31, //     Usage (Y)
-    0x09, 0x38, //     Usage (Wheel)
-    0x15, 0x81, //     Logical Minimum (-127)
-    0x25, 0x7F, //     Logical Maximum (127)
-    0x75, 0x08, //     Report Size (8)
-    0x95, 0x03, //     Report Count (3)
-    0x81, 0x06, //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
-    0xC0,       //   End Collection
-    0xC0,       // End Collection
-};
-
-#if (COPY_MOUSE)
-static const uint8_t hid_mouse_report_desc[] = {
-    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
-    0x09, 0x02, // Usage (Mouse)
-    0xA1, 0x01, // Collection (Application)
-    0x09, 0x01, //   Usage (Pointer)
-    0xA1, 0x00, //   Collection (Physical)
-    0x05, 0x09, //     Usage Page (Button)
-    0x19, 0x01, //     Usage Minimum (0x01)
-    0x29, 0x03, //     Usage Maximum (0x03)
-    0x15, 0x00, //     Logical Minimum (0)
-    0x25, 0x01, //     Logical Maximum (1)
-    0x75, 0x01, //     Report Size (1)
-    0x95, 0x03, //     Report Count (3)
-    0x81, 0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-    0x75, 0x05, //     Report Size (5)
-    0x95, 0x01, //     Report Count (1)
-    0x81, 0x01, //     Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
-    0x05, 0x01, //     Usage Page (Generic Desktop Ctrls)
-    0x09, 0x30, //     Usage (X)
-    0x09, 0x31, //     Usage (Y)
-    0x09, 0x38, //     Usage (Wheel)
-    0x15, 0x81, //     Logical Minimum (-127)
-    0x25, 0x7F, //     Logical Maximum (127)
-    0x75, 0x08, //     Report Size (8)
-    0x95, 0x03, //     Report Count (3)
-    0x81, 0x06, //     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position)
-    0xC0,       //   End Collection
-    0xC0,       // End Collection
-};
-
-static const uint8_t hid_descriptor[] = {
-    0x12, 0x01, 0x10, 0x01, 0x00, 0x00, 0x00, 0x08, 0x3A, 0x09, 0x12, 0x25, 0x00, 0x01, 0x01, 0x02, 0x00, 0x01,
-    0x09, 0x02, 0x22, 0x00, 0x01, 0x01, 0x00, 0xE0, 0x32, 0x09, 0x04, 0x00, 0x00, 0x01, 0x03, 0x01, 0x02, 0x00, 0x09, 0x21, 0x11, 0x01, 0x00, 0x01, 0x22, 0x34, 0x00, 0x07, 0x05, 0x81, 0x03, 0x04, 0x00, 0x0A,
-    0x04, 0x03, 0x09, 0x04,
-    0x0E, 0x03, 0x50, 0x00, 0x69, 0x00, 0x78, 0x00, 0x41, 0x00, 0x72, 0x00, 0x74, 0x00,
-    0x24, 0x03, 0x55, 0x00, 0x53, 0x00, 0x42, 0x00, 0x20, 0x00, 0x4F, 0x00, 0x70, 0x00, 0x74, 0x00, 0x69, 0x00, 0x63, 0x00, 0x61, 0x00, 0x6C, 0x00, 0x20, 0x00, 0x4D, 0x00, 0x6F, 0x00, 0x75, 0x00, 0x73, 0x00, 0x65, 0x00,
-    /* Descriptor - EOF */
-    0x00
-};
-#endif
-
-#endif
-
-/*!< hid device descriptor */
-static const uint8_t hid_descriptor[] = {
-    /* Descriptor - Device (Size:18) */
-    USB_DEVICE_DESCRIPTOR_INIT(USBD_BCD, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, 0x0002, 0x01),
-
-    /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_HID_CONFIG_SIZE, USB_HID_INTF_CNT, 
-            0x01, USB_CONFIG_BUS_POWERED | USB_CONFIG_REMOTE_WAKEUP, USBD_MAX_POWER),
-
-    #if (ENB_KEYBD)
-    /* Descriptor - Keyboard Interface (Size:18+7*1) */
-    HID_INTERFACE_INIT(KEYBD_INTF_NUM, 1, HID_SUBCLASS_BOOTIF, HID_PROTOCOL_KEYBOARD, 0, KEYBD_REPORT_DESC_SIZE),
-    HID_ENDPOINT_DESC(KEYBD_IN_EP, KEYBD_IN_EP_SIZE, KEYBD_IN_EP_INTERVAL),
-    #endif
-    
-    #if (ENB_MOUSE)
-    /* Descriptor - Mouse Interface (Size:18+7*1) */
+    /* Mouse interface (18+7 bytes) */
     HID_INTERFACE_INIT(MOUSE_INTF_NUM, 1, HID_SUBCLASS_BOOTIF, HID_PROTOCOL_MOUSE, 0, MOUSE_REPORT_DESC_SIZE),
     HID_ENDPOINT_DESC(MOUSE_IN_EP, MOUSE_IN_EP_SIZE, MOUSE_IN_EP_INTERVAL),
-    #endif
-    
-    /* Descriptor - String */
-    // String0 - Language ID (Size:4)
-    USB_LANGID_INIT(USBD_LANGID_STRING),
-    
-    // String1 - iManufacturer
-    0x02,                       /* bLength */
-    USB_DESC_TYPE_STRING,       /* bDescriptorType */
+#endif
 
-    // String2 - iProduct
-    0x16,                       /* bLength */
-    USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('U'),
-    WCHAR('S'),
-    WCHAR('B'),
-    WCHAR('2'),
-    WCHAR('.'),
-    WCHAR('0'),
-    WCHAR(' '),
-    WCHAR('H'),
-    WCHAR('I'),
-    WCHAR('D'),
-    
-    // String3 - iSerialNumber
-//    0x10,                       /* bLength */
-//    USB_DESC_TYPE_STRING,       /* bDescriptorType */
-//    WCHAR('6'),
-//    WCHAR('.'),
-//    WCHAR('2'),
-//    WCHAR('2'),
-//    WCHAR('.'),
-//    WCHAR('0'),
-//    WCHAR('7'),
-    
-    /* Descriptor - Device Qualifier (Size:10) */
-    #if (USBD_BCD == USB_2_0)
+    /* String 0 - Language ID */
+    USB_LANGID_INIT(USBD_LANGID_STRING),
+
+    /* String 1 - iManufacturer */
+    0x02,
+    USB_DESC_TYPE_STRING,
+
+    /* String 2 - iProduct: "USB2.0 HID" */
+    0x16,
+    USB_DESC_TYPE_STRING,
+    WCHAR('U'), WCHAR('S'), WCHAR('B'), WCHAR('2'),
+    WCHAR('.'), WCHAR('0'), WCHAR(' '), WCHAR('H'),
+    WCHAR('I'), WCHAR('D'),
+
+    /* Device qualifier (USB 2.0 only) */
+#if (USBD_BCD == USB_2_0)
     USB_QUALIFIER_INIT(0x01),
-    #endif
-    
-    /* Descriptor - EOF */
+#endif
+
+    /* End of descriptor */
     0x00
 };
 
-
 /*
- * Configuration
- ****************************************************************************
+ * LOCAL DATA - USB Configuration Tables
+ ****************************************************************************************
  */
 
-/*!< table of hid interface */
+/// HID interface table
 static const hid_intf_t hid_interface[] = {
-    #if (ENB_KEYBD)
+#if (ENB_KEYBD)
     HID_INTF_T(KEYBD_INTF_NUM, KEYBD_IN_EP, hid_keybd_report_desc),
-    #endif
-    #if (ENB_MOUSE)
+#endif
+#if (ENB_MOUSE)
     HID_INTF_T(MOUSE_INTF_NUM, MOUSE_IN_EP, hid_mouse_report_desc),
-    #endif
+#endif
 };
 
-/*!< table of endpoints */
+/// Endpoint table
 static const usbd_ep_t endpoint_tab[] = {
-    #if (ENB_KEYBD)
+#if (ENB_KEYBD)
     USBD_EP_T(KEYBD_IN_EP, USB_EP_TYPE_INTERRUPT, KEYBD_IN_EP_SIZE, &usbd_hid_ep_in_handler),
-    #endif
-    #if (ENB_MOUSE)
+#endif
+#if (ENB_MOUSE)
     USBD_EP_T(MOUSE_IN_EP, USB_EP_TYPE_INTERRUPT, MOUSE_IN_EP_SIZE, &usbd_hid_ep_in_handler),
-    #endif
+#endif
 };
 
-/*!< table of class */
+/// Class table
 static const usbd_class_t class_tab[] = {
     USBD_CLASS_T(0, USB_HID_INTF_END, &usbd_hid_class_handler),
 };
 
-/*!< USBD Configuration */
+/// Device configuration
 static const usbd_config_t hid_configuration[] = {
     USBD_CONFIG_T(1, USB_HID_INTF_CNT, class_tab, endpoint_tab)
 };
 
-
 /*
- * Handlers
- ****************************************************************************
+ * LOCAL DATA
+ ****************************************************************************************
  */
 
-volatile bool suspend = false;
+/// USB suspend flag
+static volatile bool suspend = false;
 
+/*
+ * CALLBACK FUNCTIONS
+ ****************************************************************************************
+ */
+
+/**
+ ****************************************************************************************
+ * @brief USB device event notification handler
+ *
+ * @param[in] event  Event type
+ * @param[in] arg    Event argument (unused)
+ ****************************************************************************************
+ */
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
+    (void)arg;
+
     switch (event)
     {
         case USBD_EVENT_RESET:
             suspend = false;
             usbd_hid_reset();
             break;
-        
+
         case USBD_EVENT_SUSPEND:
             suspend = true;
             break;
-        
+
         case USBD_EVENT_RESUME:
         case USBD_EVENT_CLR_REMOTE_WAKEUP:
             suspend = false;
@@ -314,56 +295,73 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
     }
 }
 
-
 /*
- * Test Functions
- ****************************************************************************
+ * REPORT FUNCTIONS
+ ****************************************************************************************
  */
+
 /**
- * @brief 发送键盘报告
- * @param code 键值代码
- * @return 发送结果
+ ****************************************************************************************
+ * @brief Send keyboard report
+ *
+ * @param[in] code  Key code
+ *
+ * @return 0 on success, non-zero on failure
+ ****************************************************************************************
  */
-uint8_t hid_keybd_send_report(uint8_t code)
+static uint8_t hid_keybd_send_report(uint8_t code)
 {
     uint8_t ret = 0;
-    
-    #if (ENB_KEYBD)
-    uint8_t kyebd_report[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; //A
-    
-    kyebd_report[2] = code;
-    
-    ret = usbd_hid_send_report(KEYBD_IN_EP, 8, kyebd_report);
+
+#if (ENB_KEYBD)
+    uint8_t keybd_report[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+    keybd_report[2] = code;
+
+    ret = usbd_hid_send_report(KEYBD_IN_EP, 8, keybd_report);
     USB_LOG_RAW("keybd(k:%d,ret:%d)\r\n", code, ret);
-    #endif
-    
+#endif
+
     return ret;
 }
+
 /**
- * @brief 发送鼠标报告
- * @param x X轴移动量
- * @return 发送结果
+ ****************************************************************************************
+ * @brief Send mouse report
+ *
+ * @param[in] x  X-axis movement
+ *
+ * @return 0 on success, non-zero on failure
+ ****************************************************************************************
  */
-uint8_t hid_mouse_send_report(int8_t x)
+static uint8_t hid_mouse_send_report(int8_t x)
 {
     uint8_t ret = 0;
-    
-    #if (ENB_MOUSE)
-    uint8_t mouse_report[4] = {0x00/*btns*/, 0/*x*/, 0/*y*/, 0/*wheel*/};
-    
+
+#if (ENB_MOUSE)
+    uint8_t mouse_report[4] = { 0x00, 0x00, 0x00, 0x00 };
+
     mouse_report[1] = x;
     ret = usbd_hid_send_report(MOUSE_IN_EP, MOUSE_IN_EP_SIZE, mouse_report);
-    USB_LOG_RAW("mouse(x:%d,ret:%d)\r\n", mouse_report[1],ret);
-    #endif
-    
+    USB_LOG_RAW("mouse(x:%d,ret:%d)\r\n", mouse_report[1], ret);
+#endif
+
     return ret;
 }
 
-#if (USE_KEYS)
-/**
- * @brief USB唤醒处理
+/*
+ * TEST FUNCTIONS
+ ****************************************************************************************
  */
-void usbd_wakeup(void)
+
+#if (USE_KEYS)
+
+/**
+ ****************************************************************************************
+ * @brief Trigger USB remote wakeup if suspended
+ ****************************************************************************************
+ */
+static void usbd_wakeup(void)
 {
     if (suspend && usbd_resume(1))
     {
@@ -371,124 +369,146 @@ void usbd_wakeup(void)
         usbd_resume(0);
     }
 }
+
 /**
- * @brief HID LED状态处理
- * @param leds LED状态位
+ ****************************************************************************************
+ * @brief HID LED state callback (from host)
+ *
+ * @param[in] leds  LED state bitmask
+ ****************************************************************************************
  */
 void usbd_hid_leds(uint8_t leds)
 {
-    if (leds & 0x02/*CAPS_LOCK*/)
+    if (leds & 0x02) /* CAPS_LOCK */
         GPIO_DAT_CLR(LED2);
     else
         GPIO_DAT_SET(LED2);
 }
+
 /**
- * @brief USB HID测试函数(按键版本)
+ ****************************************************************************************
+ * @brief USB HID test with physical buttons
+ ****************************************************************************************
  */
 void usbdTest(void)
 {
-    // keys_scan to send report
     static uint32_t btn_lvl = BTNS;
     uint8_t ret = 0;
     uint32_t value = GPIO_PIN_GET() & BTNS;
     uint32_t chng = btn_lvl ^ value;
     btn_lvl = value;
-    
-    if (chng) {
+
+    if (chng)
+    {
         uint8_t code = 0;
-        
+
         usbd_wakeup();
-        
-        if ((chng & BTN1) && ((value & BTN1) == 0)) {
+
+        if ((chng & BTN1) && ((value & BTN1) == 0))
             code = HID_KEY_A;
-        }
-        if ((chng & BTN2) && ((value & BTN2) == 0)) {
+        if ((chng & BTN2) && ((value & BTN2) == 0))
             code = HID_KEY_B;
-        }
-        if ((chng & BTN3) && ((value & BTN3) == 0)) {
+        if ((chng & BTN3) && ((value & BTN3) == 0))
             code = HID_KEY_C;
-        }
-        
+
         debug("keys(val:%X,chng:%X,code:%d)\r\n", btn_lvl, chng, code);
         ret = hid_keybd_send_report(code);
-        if (ret != 0) {
+        if (ret != 0)
             debug("keys Fail(sta:%d)\r\n", ret);
-        }
-        
-        if (code) {
+
+        if (code)
+        {
             GPIO_DAT_CLR(LED1);
             hid_mouse_send_report(100);
         }
-        else {
+        else
+        {
             GPIO_DAT_SET(LED1);
             hid_mouse_send_report(-100);
         }
     }
 }
-#else
-/// circle data
-int8_t x_offset[] = {-1,-2,-4,-5,-6,-7,-8,-9,-8,-8,-9,-8,-7,-6,-5,-4,-2,-1, 1, 2, 4, 5, 6, 7, 8, 9, 8,8,9,8,7,6,5,4,2,1};
-int8_t y_offset[] = { 8, 9, 8, 7, 6, 5, 4, 2, 1,-1,-2,-4,-5,-6,-7,-8,-9,-8,-8,-9,-8,-7,-6,-5,-4,-2,-1,1,2,4,5,6,7,8,9,8};
+
+#else /* !USE_KEYS - auto circle test */
+
+/// Circle movement X offsets
+static const int8_t x_offset[] = {
+    -1,-2,-4,-5,-6,-7,-8,-9,-8,-8,-9,-8,-7,-6,-5,-4,-2,-1,
+     1, 2, 4, 5, 6, 7, 8, 9, 8,8,9,8,7,6,5,4,2,1
+};
+
+/// Circle movement Y offsets
+static const int8_t y_offset[] = {
+     8, 9, 8, 7, 6, 5, 4, 2, 1,-1,-2,-4,-5,-6,-7,-8,-9,-8,
+    -8,-9,-8,-7,-6,-5,-4,-2,-1,1,2,4,5,6,7,8,9,8
+};
 
 /**
- * @brief USB HID测试函数(循环测试版本)
+ ****************************************************************************************
+ * @brief USB HID test with auto-circle data
+ ****************************************************************************************
  */
 void usbdTest(void)
 {
-    // circle polling to send report
     static uint8_t keynum = 0;
     uint8_t ret;
-    
+
     if (!usbd_is_configured())
         return;
 
-    #if (ENB_KEYBD)
-    /*!< keyboard test */
+#if (ENB_KEYBD)
+    /* Keyboard test */
     {
-        uint8_t kyebd_report[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; //A
+        uint8_t keybd_report[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
         if ((keynum % 2) == 0)
-            kyebd_report[2] = HID_KEY_A + keynum/2;
-        
-        ret = usbd_hid_send_report(KEYBD_IN_EP, 8, kyebd_report);
+            keybd_report[2] = HID_KEY_A + keynum / 2;
+
+        ret = usbd_hid_send_report(KEYBD_IN_EP, 8, keybd_report);
         USB_LOG_RAW("hid_keybd(key:%d,ret:%d)\r\n", keynum, ret);
     }
-    #endif
-    #if (ENB_MOUSE)
-    /*!< mouse test */
+#endif
+
+#if (ENB_MOUSE)
+    /* Mouse test */
     {
-        uint8_t mouse_report[4] = {0x00/*btns*/, 0/*x*/, 0/*y*/, 0/*wheel*/};
+        uint8_t mouse_report[4] = { 0x00, 0x00, 0x00, 0x00 };
 
         mouse_report[1] = (x_offset[keynum] * 2);
         mouse_report[2] = (y_offset[keynum] * 2);
         ret = usbd_hid_send_report(MOUSE_IN_EP, MOUSE_IN_EP_SIZE, mouse_report);
-        USB_LOG_RAW("hid_mouse(x:%d,ret:%d)\r\n", mouse_report[1],ret);
+        USB_LOG_RAW("hid_mouse(x:%d,ret:%d)\r\n", mouse_report[1], ret);
     }
-    #endif
+#endif
 
-    if (ret == USBD_OK) {
+    if (ret == USBD_OK)
+    {
         keynum = (keynum + 1) % sizeof(x_offset);
         bootDelayUs(990);
     }
 }
 
-#endif
+#endif /* USE_KEYS */
+
 /**
- * @brief USB HID初始化函数
+ ****************************************************************************************
+ * @brief Initialize USB HID boot device
+ ****************************************************************************************
  */
 void usbdInit(void)
 {
     suspend = false;
-    // enable USB clk and iopad
     rcc_usb_en();
     usbd_init();
     usbd_register(hid_descriptor, hid_configuration);
     NVIC_EnableIRQ(USB_IRQn);
-    
-    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {
+
+    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++)
+    {
         usbd_hid_init(idx, &hid_interface[idx]);
     }
-    
+
     keys_init();
 }
 
-#endif // (DEMO_HID_BOOT)
+#endif /* DEMO_HID_BOOT */

@@ -6,7 +6,7 @@
     "is_primary": true,
     "is_standard": true,
     "description": "Battery Service - Server Role Implementation.",
-    "source_file": "./ble\\prf\\prf_bass.c",
+    "source_file": "ble/prf/prf_bass.c",
     "profile_api_prefix": "bas",
     "num_characteristics": 2,
     "characteristics": [
@@ -60,7 +60,7 @@
     "is_primary": true,
     "is_standard": true,
     "description": "Device Information Service(DIS) - Server Role Implementation.",
-    "source_file": "./ble\\prf\\prf_diss.c",
+    "source_file": "ble/prf/prf_diss.c",
     "profile_api_prefix": "dis",
     "num_characteristics": 9,
     "characteristics": [
@@ -245,7 +245,7 @@
     "is_primary": true,
     "is_standard": true,
     "description": "HID Service Profile - Template Source.",
-    "source_file": "./ble\\prf\\prf_hids.c",
+    "source_file": "ble/prf/prf_hids.c",
     "profile_api_prefix": "hid",
     "num_characteristics": 15,
     "characteristics": [
@@ -558,7 +558,7 @@
     "is_primary": true,
     "is_standard": false,
     "description": "Profile Testing Service - Server Role Implementation.",
-    "source_file": "./ble\\prf\\prf_ptss.c",
+    "source_file": "ble/prf/prf_ptss.c",
     "profile_api_prefix": "pts0",
     "num_characteristics": 3,
     "characteristics": [
@@ -632,7 +632,7 @@
     "is_primary": true,
     "is_standard": false,
     "description": "Profile Testing Service - Server Role Implementation.",
-    "source_file": "./ble\\prf\\prf_ptss.c",
+    "source_file": "ble/prf/prf_ptss.c",
     "profile_api_prefix": "pts1",
     "num_characteristics": 3,
     "characteristics": [
@@ -707,7 +707,7 @@
     "is_primary": true,
     "is_standard": false,
     "description": "Scan Parameters Profile Server Role.",
-    "source_file": "./ble\\prf\\prf_scps.c",
+    "source_file": "ble/prf/prf_scps.c",
     "profile_api_prefix": "scp",
     "num_characteristics": 2,
     "characteristics": [
@@ -759,7 +759,7 @@
     "is_primary": true,
     "is_standard": false,
     "description": "",
-    "source_file": "./ble\\prf\\prf_sess.c",
+    "source_file": "ble/prf/prf_sess.c",
     "profile_api_prefix": "ses",
     "num_characteristics": 3,
     "characteristics": [

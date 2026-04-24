@@ -23,4 +23,7 @@ void micInit(void);
 void micDeinit(void);
 
 void micPut(void);
-#endif // SADC_H_
+/// Check if microphone DMA is actively capturing
+bool mic_is_active(void);
+
+#endif // MICPHONE_H_

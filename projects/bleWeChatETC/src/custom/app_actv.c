@@ -10,6 +10,7 @@
 
 #include "app.h"
 #include "gapm_api.h"
+#include "cmd.h"
 
 #if (DBG_ACTV)
 #include "dbg.h"
@@ -173,8 +174,6 @@ static void app_adv_create(void)
 
     gapm_create_advertising(GAPM_STATIC_ADDR, &adv_param);
 }
-
-#include "cmd.h"
 
 extern SYS_CONFIG sysCfg;
 static void app_adv_set_adv_data(void)

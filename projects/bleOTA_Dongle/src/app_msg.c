@@ -41,17 +41,17 @@ void app_init_start(void)
 {
     if ((get_auto_conn()) && (app_state_get() < APP_CONNECTED))
     {
+        const struct gap_bdaddr *list = scan_list_get();
         struct gap_bdaddr invalid_mac = { { {0} }, 0 };
-        if (memcmp((uint8_t *)&invalid_mac, scan_addr_list, 7))
+        if (memcmp((uint8_t *)&invalid_mac, list, 7))
         {
             DEBUG("init timer-->");
             app_scan_action(ACTV_STOP);
             init_timer_stop();
 
-            app_start_initiating(scan_addr_list + 0);
+            app_start_initiating(list);
 
-            memset((uint8_t *)scan_addr_list, 0x00, (sizeof(struct gap_bdaddr) * SCAN_NUM_MAX));
-            scan_cnt = 0;
+            scan_list_reset();
         }
     }
 }
@@ -84,7 +84,6 @@ void ota_ok_wait_next(void)
  * @brief SubTask Handler of Custom or Unknow Message. (__WEAK func)
  ****************************************************************************************
  */
-// uint8_t mouse_data[4] = {0, 1, 0, 0};
 __WEAK APP_SUBTASK_HANDLER(custom)
 {
     (void)dest_id; (void)src_id;
@@ -96,8 +95,7 @@ __WEAK APP_SUBTASK_HANDLER(custom)
     }
     else if (APP_WAIT_NEXT == msgid)
     {
-        memset((uint8_t *)scan_addr_list, 0x00, (sizeof(struct gap_bdaddr) * SCAN_NUM_MAX));
-        scan_cnt = 0;
+        scan_list_reset();
         init_timer_start();
         app_scan_action(ACTV_START);
     }

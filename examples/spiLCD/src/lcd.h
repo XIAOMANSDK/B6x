@@ -1,11 +1,14 @@
+#ifndef LCD_H_
+#define LCD_H_
+
 /**
  ****************************************************************************************
  *
- * @file lcd.c
+ * @file lcd.h
  *
  * @brief LCD Driver, Support two LCDs in Mirror.
  *       [KAC-1.33' IPS_LCD, Pixel:240*240, Driver IC:ST7789, Interface:SPI] or other
- * 
+ *
  ****************************************************************************************
  */
 
@@ -56,13 +59,13 @@
 #define PORTRAIT_NORMAL         (0x00) // (Normal)
 #define PORTRAIT_FLIP           (MADCTL_MY_BIT) //0x80 (flip vertically)
 #define PORTRAIT_MIORR          (MADCTL_MX_BIT) //0X40 (Left-Right Mirror)
-#define PORTRAIT_ROT180         (MADCTL_MY_BIT | MADCTL_MX_BIT) //0xC0 (180бу rotation)
+#define PORTRAIT_ROT180         (MADCTL_MY_BIT | MADCTL_MX_BIT) //0xC0 (180 degree rotation)
 
 // Landscape Display general mode
 #define LANDSCAPE_NORMAL        (MADCTL_MV_BIT | MADCTL_MX_BIT) //0x60 (Normal)
 #define LANDSCAPE_FLIP          (MADCTL_MV_BIT | MADCTL_MY_BIT | MADCTL_MX_BIT) //0xE0 (flip vertically)
 #define LANDSCAPE_MIRROR        (MADCTL_MV_BIT) //0X20 (Left-Right Mirror)
-#define LANDSCAPE_ROT180        (MADCTL_MV_BIT | MADCTL_MY_BIT) //0XA0 (180бу rotation)
+#define LANDSCAPE_ROT180        (MADCTL_MV_BIT | MADCTL_MY_BIT) //0XA0 (180 degree rotation)
 
 /// Color RGB565
 #define RGB565_BLACK            0x0000
@@ -113,3 +116,5 @@ void lcd_wait_done(void);
 bool lcd_fill_color(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t rgb565);
 bool lcd_fill_pixel(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16_t *pixel);
 bool lcd_draw_image(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const void *pic);
+
+#endif // LCD_H_

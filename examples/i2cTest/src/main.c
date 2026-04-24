@@ -3,13 +3,13 @@
  *
  * @file main.c
  *
- * @brief 应用程序主入口
+ * @brief Main Entry of the application - I2C test
  *
  * @details
- * 程序执行流程：
- * 1. 系统初始化：配置时钟
- * 2. 设备初始化：关闭看门狗，初始化调试接口
- * 3. 执行I2C测试程序
+ * Program flow:
+ * 1. System init: configure clock
+ * 2. Device init: disable watchdog, init debug
+ * 3. Run I2C test (master or slave mode per cfg.h)
  *
  ****************************************************************************************
  */
@@ -20,65 +20,47 @@
 
 
 /*
- * DEFINES
- ****************************************************************************************
- */
-
-
-
-/*
  * FUNCTIONS
  ****************************************************************************************
  */
 
 /**
  ****************************************************************************************
- * @brief 系统初始化函数
- *
- * @details
- * 配置系统时钟等基础设置
+ * @brief System initialization
  ****************************************************************************************
  */
-static void sysInit(void)
+static void sys_init(void)
 {
-    // 如需配置，在此添加
-    rcc_sysclk_set(SYS_CLK);  ///< 设置系统时钟
+    // Todo config, if need
+    rcc_sysclk_set(SYS_CLK);
 }
 
 /**
  ****************************************************************************************
- * @brief 设备初始化函数
+ * @brief Device initialization
  *
- * @details
- * 初始化外设和调试接口
+ * @details Disable watchdog, initialize debug interface
  ****************************************************************************************
  */
-static void devInit(void)
+static void dev_init(void)
 {
-    iwdt_disable();  ///< 禁用独立看门狗
-    
-    // 初始化调试接口
-    dbgInit();       ///< 初始化调试模块
+    iwdt_disable();
+
+    dbgInit();
 }
 
-extern void i2cTest(void);  ///< 声明I2C测试函数
+extern void i2c_test(void);
 
 /**
  ****************************************************************************************
- * @brief 主函数
- *
- * @return int 程序退出状态
- *
- * @details
- * 程序执行主流程：
- * 系统初始化 → 设备初始化 → I2C测试
+ * @brief Main entry
+ * @return Program exit code (never returns)
  ****************************************************************************************
  */
 int main(void)
 {
-    sysInit();    ///< 系统初始化
-    
-    devInit();    ///< 设备初始化
-    
-    i2cTest();    ///< 执行I2C测试
+    sys_init();
+    dev_init();
+
+    i2c_test();
 }

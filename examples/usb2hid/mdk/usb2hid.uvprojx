@@ -333,7 +333,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
+              <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h --locale=english</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\usb\api;..\..\..\usb\class\hid</IncludePath>
@@ -409,6 +409,11 @@
               <FileName>hid_custom.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\hid_custom.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hid_test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\usb_hid_test.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -20,34 +20,34 @@
 #define AT_DFT_ADV_INTV     (0x20)
 #define AT_DFT_RSSI         (0)
 
-// �������û���������Ϣ��ӻ���Ϣ
+// Factory reset parameter settings: user info, slave info
 typedef enum
 {
-    All_FACTORY_REST = 0,           //ȫ���ָ���������
-    PAIR_FACTORY_RESET = 1,         //�����Ϣ�ָ���������-�൱����������Ϣ��ӻ���Ϣ
+    All_FACTORY_REST = 0,           // Full factory reset
+    PAIR_FACTORY_RESET = 1,         // Pairing info factory reset
 }PARA_SET_FACTORY;
 
-// AT ָ�������
+// AT command error codes
 enum err_code
 {
-  ERR_HARD_WARE,                // �豸Ӳ��������
-  ERR_NO_CONNECT,               // û������        
-  ERR_OPERATION,                // ����������
-  ERR_INVALID,                  // ����������Ч
-  ERR_TIMEOUT,                  // ��ʱ
-  ERR_MEMORY,                   // �ڴ�ʧ��
-  ERR_PROTOCOL,                 // Э��ʧ��        
+  ERR_HARD_WARE,                // Device hardware error
+  ERR_NO_CONNECT,               // Not connected
+  ERR_OPERATION,                // Operation error
+  ERR_INVALID,                  // Invalid parameter
+  ERR_TIMEOUT,                  // Timeout
+  ERR_MEMORY,                   // Memory failure
+  ERR_PROTOCOL,                 // Protocol error
 };
 
-// AT ָ���ַ�����
+// AT command string enumeration
 enum cmd_str
 {
-    CMD_NULL,                 // 
-    CMD_ECHO,                 // 
-    CMD_ALL,                  // 
-    CMD_MAC_R,                // 
-    CMD_VER_R,                // 
-    CMD_NAME_R,               // 
+    CMD_NULL,                 //
+    CMD_ECHO,                 //
+    CMD_ALL,                  //
+    CMD_MAC_R,                //
+    CMD_VER_R,                //
+    CMD_NAME_R,               //
     CMD_NAME_S,               //
     CMD_BAUD_R,
     CMD_BAUD_S,
@@ -80,7 +80,7 @@ typedef struct at_cmd_format
 {
     uint8_t str_len_min;
     uint8_t str_len_max;
-    const char *str;    
+    const char *str;
 }AT_CMD_FORMAT_T;
 
 ///Information about Connected device
@@ -89,28 +89,28 @@ struct connected_result
     struct gap_bdaddr paddr;
 };
 
-typedef struct 
+typedef struct
 {
-    uint8_t name_len;     // �豸���ƣ�� 11 λ���ֻ���ĸ�����л��ߺ��»��ߣ��������������ַ�
-    uint8_t rssi;                              //  RSSI �ź�ֵ 
-                                  
-    uint16_t adv_intv_time;                 // �㲥��� 
-    
-    uint32_t baudrate;                 //������
+    uint8_t name_len;     // Device name length (max 11 chars: letters/digits/dash/underscore)
+    uint8_t rssi;                              // RSSI signal value
+
+    uint16_t adv_intv_time;                 // Advertising interval
+
+    uint32_t baudrate;                 // UART baud rate
 
     uint8_t uuids[MAX_UUID_LEN];
     uint8_t uuidn[MAX_UUID_LEN];
     uint8_t uuidw[MAX_UUID_LEN];
-    
-    uint8_t uuid_len;     
-    uint8_t name[DEV_NAME_MAX_LEN]; 
-    
-    uint8_t adv_data_len;
-    uint8_t adv_data[MAX_ADV_DATA_LEN]; 
-    
-    uint8_t mac_addr[GAP_BD_ADDR_LEN];            //����mac��ַ ���12λ �ַ���ʾ
 
-    uint8_t connect_mac_addr[GAP_BD_ADDR_LEN];    //�Զ�����mac��ַ      
+    uint8_t uuid_len;
+    uint8_t name[DEV_NAME_MAX_LEN];
+
+    uint8_t adv_data_len;
+    uint8_t adv_data[MAX_ADV_DATA_LEN];
+
+    uint8_t mac_addr[GAP_BD_ADDR_LEN];            // Local MAC address
+
+    uint8_t connect_mac_addr[GAP_BD_ADDR_LEN];    // Remote peer MAC address
 
 }SYS_CONFIG __attribute__((aligned(4)));
 
@@ -121,9 +121,7 @@ extern struct connected_result connected_list[];
 
 void atConfigFlashRead(void);
 void atSetBleDefault(PARA_SET_FACTORY flag);
-bool atCmdHandle(const uint8_t *buff, uint8_t buff_len);  
 bool atProc(const uint8_t *buff, uint8_t buff_len);
 void atBleTx(const uint8_t *buff, uint8_t buff_len);
 
 #endif
-

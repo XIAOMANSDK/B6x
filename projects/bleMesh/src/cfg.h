@@ -27,7 +27,7 @@
 // 0: Server 模式 (被控制端，注册 Server 模型)
 // 1: Client 模式 (控制端，注册 Client 模型)
 // 注意：修改此宏后需重新编译生成不同的 bin 文件
-#define MESH_APP_MODE         (0)
+//#define MESH_APP_MODE         (1)
 
 /// Redefine BLE Heap Size, Note: Mesh's STACK Size ~2.5K
 // BLE 堆大小配置 (Mesh 栈大小约 2.5K)

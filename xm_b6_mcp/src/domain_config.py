@@ -30,7 +30,7 @@ class DomainConfig:
     domain_type: DomainType
     source_dirs: List[str]
     parser_types: List[str]
-    output_file: str
+    output_files: List[str]
     dependencies: List[str] = None
 
     def __post_init__(self):
@@ -48,7 +48,20 @@ DOMAIN_REGISTRY: Dict[str, DomainConfig] = {
             "doc/SW_Spec",             # Excel specs for pin mux, memory
         ],
         parser_types=["svd", "excel", "linker", "interrupt"],
-        output_file="data/domain/hardware/hardware_domain.json",
+        output_files=[
+            "data/domain/hardware/pin_mux.json",
+            "data/domain/hardware/pin_mux_metadata.json",
+            "data/domain/hardware/interrupts.json",
+            "data/domain/hardware/memory_boundaries.json",
+            "data/domain/hardware/memory_boundaries_metadata.json",
+            "data/domain/hardware/memory_regions.json",
+            "data/domain/hardware/memory_regions_metadata.json",
+            "data/domain/hardware/sram_regions.json",
+            "data/domain/hardware/sram_regions_metadata.json",
+            "data/domain/hardware/power_consumption.json",
+            "data/domain/hardware/power_consumption_metadata.json",
+            "data/domain/hardware/registers.json",
+        ],
         dependencies=[]
     ),
     "drivers": DomainConfig(
@@ -59,7 +72,15 @@ DOMAIN_REGISTRY: Dict[str, DomainConfig] = {
             "drivers/src",            # Driver implementations
         ],
         parser_types=["tree_sitter", "struct", "dependency"],
-        output_file="data/domain/drivers/drivers_domain.json",
+        output_files=[
+            "data/domain/drivers/apis.json",
+            "data/domain/drivers/structs.json",
+            "data/domain/drivers/enums.json",
+            "data/domain/drivers/macros.json",
+            "data/domain/drivers/dependencies.json",
+            "data/domain/drivers/call_graph.json",
+            "data/domain/drivers/dependency_tree.json",
+        ],
         dependencies=["hardware"]
     ),
     "ble": DomainConfig(
@@ -71,7 +92,16 @@ DOMAIN_REGISTRY: Dict[str, DomainConfig] = {
             "ble/lib",                # BLE libraries
         ],
         parser_types=["tree_sitter", "profile", "error_code", "mesh"],
-        output_file="data/domain/ble/ble_domain.json",
+        output_files=[
+            "data/domain/ble/apis.json",
+            "data/domain/ble/profiles.json",
+            "data/domain/ble/error_codes.json",
+            "data/domain/ble/mesh_apis.json",
+            "data/domain/ble/mesh_models.json",
+            "data/domain/ble/mesh_error_codes.json",
+            "data/domain/ble/phone_compatibility_issues.json",
+            "data/domain/ble/phone_compatibility_metadata.json",
+        ],
         dependencies=["hardware", "drivers"]
     ),
     "applications": DomainConfig(
@@ -82,7 +112,14 @@ DOMAIN_REGISTRY: Dict[str, DomainConfig] = {
             "projects",               # Sample projects
         ],
         parser_types=["example_scanner", "call_chain", "config"],
-        output_file="data/domain/apps/apps_domain.json",
+        output_files=[
+            "data/domain/applications/examples.json",
+            "data/domain/applications/call_chains.json",
+            "data/domain/applications/init_sequences.json",
+            "data/domain/applications/config_summary.json",
+            "data/domain/applications/known_init_sequences.json",
+            "data/domain/applications/project_configs.json",
+        ],
         dependencies=["drivers", "ble"]
     ),
 }

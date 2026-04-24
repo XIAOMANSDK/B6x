@@ -9,6 +9,7 @@
  */
 
 #include "dbg.h"
+#include "drvs.h"
 
 #if (DBG_MODE == DBG_VIA_UART)
 #include "uart.h"

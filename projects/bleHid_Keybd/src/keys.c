@@ -11,6 +11,7 @@
 #include "b6x.h"
 #include "drvs.h"
 #include "app.h"
+#include "keys.h"
 #include "hid_desc.h"
 
 #if (DBG_KEYS)
@@ -41,6 +42,13 @@
 #define BTN2                BIT(PA_BTN2)
 #define BTNS                (BTN0 | BTN1 | BTN2)
 
+/// HID keyboard LED lock bits
+#define LED_LOCK_NUM        (0x01)  ///< Num Lock LED bit
+#define LED_LOCK_CAPS       (0x02)  ///< Caps Lock LED bit
+
+/// Default mouse movement offset (test only)
+#define MOUSE_MOVE_DX       (10)
+
 
 /*
  * FUNCTIONS
@@ -49,7 +57,7 @@
 
 void hids_led_lock(uint8_t leds)
 {
-    if (leds & 0x01/*NUM_LOCK*/)
+    if (leds & LED_LOCK_NUM)
     {
         GPIO_DAT_CLR(LED0);
     }
@@ -58,7 +66,7 @@ void hids_led_lock(uint8_t leds)
         GPIO_DAT_SET(LED0);
     }
 
-    if (leds & 0x02/*CAPS_LOCK*/)
+    if (leds & LED_LOCK_CAPS)
     {
         GPIO_DAT_CLR(LED1);
     }
@@ -72,11 +80,11 @@ uint8_t hid_keybd_send_report(uint8_t code)
 {
     uint8_t ret = 0;
 
-    uint8_t kyebd_report[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; //A
+    uint8_t keybd_report[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-    kyebd_report[2] = code;
+    keybd_report[2] = code;
 
-    ret = keybd_report_send(app_env.curidx, kyebd_report);
+    ret = keybd_report_send(app_env.curidx, keybd_report);
 
     return ret;
 }
@@ -133,13 +141,13 @@ void keys_scan(void)
         uint8_t code = 0;
 
         if ((chng & BTN0) && ((value & BTN0) == 0)) {
-            code = 40;//HID_KEY_ENTER;
+            code = KEY_ENTER;
         }
         if ((chng & BTN1) && ((value & BTN1) == 0)) {
-            code = 82;//HID_KEY_UP;
+            code = KEY_UP;
         }
         if ((chng & BTN2) && ((value & BTN2) == 0)) {
-            code = 81;//HID_KEY_DOWN;
+            code = KEY_DOWN;
         }
 
         DEBUG("keys(val:%X,chng:%X,code:%d)\r\n", btn_lvl, chng, code);
@@ -152,12 +160,10 @@ void keys_scan(void)
             }
 
             if (code) {
-                //GPIO_DAT_CLR(LED0);
-                hid_mouse_send_report(10);
+                hid_mouse_send_report(MOUSE_MOVE_DX);
             }
             else {
-                //GPIO_DAT_SET(LED0);
-                hid_mouse_send_report(-10);
+                hid_mouse_send_report(-MOUSE_MOVE_DX);
             }
         }
     }

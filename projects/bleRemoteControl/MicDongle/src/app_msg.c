@@ -86,7 +86,6 @@ void init_timer_stop(void)
  * @brief SubTask Handler of Custom or Unknow Message. (__WEAK func)
  ****************************************************************************************
  */
-//uint8_t mouse_data[4] = {0, 1, 0, 0};
 __WEAK APP_SUBTASK_HANDLER(custom)
 {
     (void)msgid;(void)param;(void)dest_id;(void)src_id;

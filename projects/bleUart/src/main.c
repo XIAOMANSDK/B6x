@@ -3,7 +3,7 @@
  *
  * @file main.c
  *
- * @brief Main Entry of the application.
+ * @brief Main entry of the BLE UART transparent transmission application.
  *
  ****************************************************************************************
  */
@@ -17,6 +17,8 @@
 #include "uartRb.h"
 #include "dbg.h"
 
+#include "proc.h"
+
 /*
  * DEFINES
  ****************************************************************************************
@@ -28,8 +30,11 @@
  ****************************************************************************************
  */
 
-extern void user_procedure(void);
-
+/**
+ ****************************************************************************************
+ * @brief Initialize system clocks and enable necessary peripherals.
+ ****************************************************************************************
+ */
 static void sysInit(void)
 {
     iwdt_disable();
@@ -40,6 +45,11 @@ static void sysInit(void)
     rcc_fshclk_set(FSH_CLK_DPSC42);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Initialize device peripherals and BLE application.
+ ****************************************************************************************
+ */
 static void devInit(void)
 {
     uint16_t rsn = rstrsn();
@@ -49,7 +59,7 @@ static void devInit(void)
 
     // Init BLE App
     app_init(rsn);
-    
+
     #if (LED_PLAY)
     sftmr_init();
     leds_init();
@@ -57,14 +67,19 @@ static void devInit(void)
     #endif //(LED_PLAY)
 }
 
+/**
+ ****************************************************************************************
+ * @brief Application entry point.
+ ****************************************************************************************
+ */
 int main(void)
 {
     sysInit();
     devInit();
-    
+
     // Global Interrupt Enable
     GLOBAL_INT_START();
-    
+
     // main loop
     while (1)
     {

@@ -13,7 +13,6 @@
 
 /// System Clock(0=16MHz, 1=32MHz, 2=48MHz, 3=64MHz)
 #define SYS_CLK                (3)  // 64MHz for GSM decoder optimization
-#define AT_UART_PORT           (0)
 
 // GSM Decoder Configuration
 #define GSM_DECODE_EN          (1)     // Enable GSM decoder

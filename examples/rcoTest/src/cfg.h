@@ -3,7 +3,7 @@
  *
  * @file cfg.h
  *
- * @brief App Configure MACRO, --preinclude
+ * @brief Application configuration macros (--preinclude)
  *
  ****************************************************************************************
  */
@@ -17,4 +17,4 @@
 #define RC16M_TEST          (1)
 #define RC32K_TEST          (1)
 
-#endif  //_APP_CFG_H_
+#endif /* _APP_CFG_H_ */

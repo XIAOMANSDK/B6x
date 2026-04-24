@@ -24625,5 +24625,1951 @@
       }
     ],
     "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CR1",
+    "full_address": "0x40021000",
+    "base_address": "0x40021000",
+    "address_offset": "0x000",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Control register 1",
+    "fields": [
+      {
+        "name": "CEN",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Counter Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "UDIS",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Update Disable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "URS",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Update Request Source",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OPM",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "One Pulse Mode",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "DIR",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Direction",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CMS",
+        "bit_range": "[6:5]",
+        "bit_offset": 5,
+        "bit_width": 2,
+        "description": "Center-aligned Mode Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "ARPE",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Auto-Reload Preload Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CKD",
+        "bit_range": "[9:8]",
+        "bit_offset": 8,
+        "bit_width": 2,
+        "description": "Clock Division",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CMPSEL",
+        "bit_range": "[11:10]",
+        "bit_offset": 10,
+        "bit_width": 2,
+        "description": "Compare input Select (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CR2",
+    "full_address": "0x40021004",
+    "base_address": "0x40021000",
+    "address_offset": "0x004",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Control register 2",
+    "fields": [
+      {
+        "name": "CCPC",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Capture/Compare Preload Control (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CCUS",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare Control Update Select (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CCDS",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare DMA Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "MMS",
+        "bit_range": "[6:4]",
+        "bit_offset": 4,
+        "bit_width": 3,
+        "description": "Master Mode Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TI1S",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "TI1 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OIS1",
+        "bit_range": "[8:8]",
+        "bit_offset": 8,
+        "bit_width": 1,
+        "description": "Output Idle State1 (OC1 Output) (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OIS1N",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Output Idle State1 (OC1N Output) (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OIS2",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Output Idle State2 (OC2 Output) (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OIS2N",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Output Idle State2 (OC2N Output) (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OIS3",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Output Idle State3 (OC3 Output) (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OIS3N",
+        "bit_range": "[13:13]",
+        "bit_offset": 13,
+        "bit_width": 1,
+        "description": "Output Idle State3 (OC3N Output) (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OIS4",
+        "bit_range": "[14:14]",
+        "bit_offset": 14,
+        "bit_width": 1,
+        "description": "Output Idle State4 (OC4 Output) (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "SMCR",
+    "full_address": "0x40021008",
+    "base_address": "0x40021000",
+    "address_offset": "0x008",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Slave mode control register",
+    "fields": [
+      {
+        "name": "SMS",
+        "bit_range": "[2:0]",
+        "bit_offset": 0,
+        "bit_width": 3,
+        "description": "Slave Mode Select",
+        "access": "read-write",
+        "enumerated_values": [
+          {
+            "name": "Disabled",
+            "value": "0",
+            "description": "Slave mode disabled"
+          },
+          {
+            "name": "Reset_Mode",
+            "value": "4",
+            "description": "Rising edge of TRGI reinitializes counter"
+          },
+          {
+            "name": "Gated_Mode",
+            "value": "5",
+            "description": "Counter clock enabled when TRGI is high"
+          },
+          {
+            "name": "Trigger_Mode",
+            "value": "6",
+            "description": "Counter starts at rising edge of TRGI"
+          }
+        ]
+      },
+      {
+        "name": "TS",
+        "bit_range": "[6:4]",
+        "bit_offset": 4,
+        "bit_width": 3,
+        "description": "Trigger Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "MSM",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Master/Slave Mode",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "ETF",
+        "bit_range": "[11:8]",
+        "bit_offset": 8,
+        "bit_width": 4,
+        "description": "External Trigger Filter",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "ETPS",
+        "bit_range": "[13:12]",
+        "bit_offset": 12,
+        "bit_width": 2,
+        "description": "External Trigger Prescaler",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "ETE",
+        "bit_range": "[14:14]",
+        "bit_offset": 14,
+        "bit_width": 1,
+        "description": "External Clock Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "ETP",
+        "bit_range": "[15:15]",
+        "bit_offset": 15,
+        "bit_width": 1,
+        "description": "External Trigger Polarity",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": "| MMS | 6:4 | Master mode selection这些 Bit 位可以对主模式下发送给从计时器进行同步(TRGO)的信息进行选择。组合如下:000: Reset \\-TIMx\\_EGR 寄存器的 UG 信号作为 trigger 输出(TRGO)。 如果此复位是由 trigger 输入(在复位模式下配置从模式控制器)生成的， 那么TRGO 上的信号与实际复位相比会有延迟.001: Enable \\-计数器使能信号 CNT\\_EN 作为 trigger 输出(TRGO)。 这对于同时启动多个计时器或控制启用从计时器窗口是很有用的。计数器使能信号是在门控模式下由 CEN 控制位与 trigger 输入进行逻辑或生成的。当计数器使能信号由 trigger 输入控制时， TRGO 上有一个延迟，除非选择了主/从模式(参见 TIMx\\_SMCR 寄存器中的 MSM 位描述).010: Update –事件更新作为 trigger 输出（TRGO） 例如，主定时器可以用作从定时器的预分频器.011: Compare Pulse – 一旦捕获或比较匹配产生， 在设置 CC1IF 标志位为1 的同时（即使它已经是高电平） trigger 输出将发送一个正脉冲（TRGO） .100: Compare \\- OC1REF 信号作为 trigger 输出(TRGO)101: Compare \\- OC2REF 信号作为 trigger 输出 (TRGO)110: Compare \\- OC3REF 信号作为 trigger 输出(TRGO)111: Compare \\- OC4REF 信号作为 trigger 输出 (TRGO) | | RSV\\_NOUSE1 | 3:0 | 保留 | "
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "IER",
+    "full_address": "0x4002100C",
+    "base_address": "0x40021000",
+    "address_offset": "0x00C",
+    "size": 32,
+    "access": "write-only",
+    "reset_value": "0x00000000",
+    "description": "Interrupt Enable register",
+    "fields": [
+      {
+        "name": "UI",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1I",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2I",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3I",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4I",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMI",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "COM Interrupt (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TI",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BI",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Break Interrupt (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1OI",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2OI",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3OI",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4OI",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "IDR",
+    "full_address": "0x40021010",
+    "base_address": "0x40021000",
+    "address_offset": "0x010",
+    "size": 32,
+    "access": "write-only",
+    "reset_value": "0x00000000",
+    "description": "Interrupt Disable register",
+    "fields": [
+      {
+        "name": "UI",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1I",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2I",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3I",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4I",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMI",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "COM Interrupt (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TI",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BI",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Break Interrupt (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1OI",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2OI",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3OI",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4OI",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Overcapture Interrupt",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "IVS",
+    "full_address": "0x40021014",
+    "base_address": "0x40021000",
+    "address_offset": "0x014",
+    "size": 32,
+    "access": "read-only",
+    "reset_value": "0x00000000",
+    "description": "Interrupt Valid status register",
+    "fields": [
+      {
+        "name": "UI",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1I",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2I",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3I",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4I",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMI",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "COM Interrupt Valid Status (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TI",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BI",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Break Interrupt Valid Status (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1OI",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Overcapture Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2OI",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Overcapture Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3OI",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Overcapture Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4OI",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Overcapture Interrupt Valid Status",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "RIF",
+    "full_address": "0x40021018",
+    "base_address": "0x40021000",
+    "address_offset": "0x018",
+    "size": 32,
+    "access": "read-only",
+    "reset_value": "0x00000000",
+    "description": "Raw interrupt Flag",
+    "fields": [
+      {
+        "name": "UI",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1I",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2I",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3I",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4I",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMI",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "COM Raw Interrupt Flag (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TI",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BI",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Break Raw Interrupt Flag (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1OI",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Overcapture Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2OI",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Overcapture Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3OI",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Overcapture Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4OI",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Overcapture Raw Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "IFM",
+    "full_address": "0x4002101C",
+    "base_address": "0x40021000",
+    "address_offset": "0x01C",
+    "size": 32,
+    "access": "read-only",
+    "reset_value": "0x00000000",
+    "description": "Masked interrupt Flag",
+    "fields": [
+      {
+        "name": "UI",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1I",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2I",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3I",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4I",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMI",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "COM Masked Interrupt Flag (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TI",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BI",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Break Masked Interrupt Flag (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1OI",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Overcapture Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2OI",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Overcapture Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3OI",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Overcapture Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4OI",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Overcapture Masked Interrupt Flag",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "ICR",
+    "full_address": "0x40021020",
+    "base_address": "0x40021000",
+    "address_offset": "0x020",
+    "size": 32,
+    "access": "write-only",
+    "reset_value": "0x00000000",
+    "description": "Interrupt Clear status register",
+    "fields": [
+      {
+        "name": "UI",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1I",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2I",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3I",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4I",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMI",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "COM Interrupt Clear (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TI",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BI",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Break Interrupt Clear (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1OI",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Overcapture Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2OI",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Overcapture Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3OI",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Overcapture Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4OI",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Overcapture Interrupt Clear",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "EGR",
+    "full_address": "0x40021024",
+    "base_address": "0x40021000",
+    "address_offset": "0x024",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Event generation register",
+    "fields": [
+      {
+        "name": "UG",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update Generation",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1G",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Generation",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2G",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Generation",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3G",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Generation",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4G",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Generation",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMG",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "Capture/Compare Control Update Generation (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TG",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger Generation",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BG",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Break Generation (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCMR1_Output",
+    "full_address": "0x40021028",
+    "base_address": "0x40021000",
+    "address_offset": "0x028",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare mode register 1 (Output mode)",
+    "fields": [
+      {
+        "name": "CC1S",
+        "bit_range": "[1:0]",
+        "bit_offset": 0,
+        "bit_width": 2,
+        "description": "Capture/Compare 1 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC1FE",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Output Compare 1 Fast Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC1PE",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Output Compare 1 Preload Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC1M",
+        "bit_range": "[6:4]",
+        "bit_offset": 4,
+        "bit_width": 3,
+        "description": "Output Compare 1 Mode",
+        "access": "read-write",
+        "enumerated_values": [
+          {
+            "name": "Frozen",
+            "value": "0",
+            "description": "Frozen"
+          },
+          {
+            "name": "Active_on_match",
+            "value": "1",
+            "description": "Set channel to active level on match"
+          },
+          {
+            "name": "Inactive_on_match",
+            "value": "2",
+            "description": "Set channel to inactive level on match"
+          },
+          {
+            "name": "Toggle",
+            "value": "3",
+            "description": "Toggle"
+          },
+          {
+            "name": "Force_inactive",
+            "value": "4",
+            "description": "Force inactive level"
+          },
+          {
+            "name": "Force_active",
+            "value": "5",
+            "description": "Force active level"
+          },
+          {
+            "name": "PWM_mode1",
+            "value": "6",
+            "description": "PWM mode 1"
+          },
+          {
+            "name": "PWM_mode2",
+            "value": "7",
+            "description": "PWM mode 2"
+          }
+        ]
+      },
+      {
+        "name": "OC1CE",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Output Compare 1 Clear Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2S",
+        "bit_range": "[9:8]",
+        "bit_offset": 8,
+        "bit_width": 2,
+        "description": "Capture/Compare 2 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC2FE",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Output Compare 2 Fast Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC2PE",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Output Compare 2 Preload Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC2M",
+        "bit_range": "[14:12]",
+        "bit_offset": 12,
+        "bit_width": 3,
+        "description": "Output Compare 2 Mode",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC2CE",
+        "bit_range": "[15:15]",
+        "bit_offset": 15,
+        "bit_width": 1,
+        "description": "Output Compare 2 Clear Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCMR1_Input",
+    "full_address": "0x40021028",
+    "base_address": "0x40021000",
+    "address_offset": "0x028",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare mode register 1 (Input mode)",
+    "fields": [
+      {
+        "name": "CC1S",
+        "bit_range": "[1:0]",
+        "bit_offset": 0,
+        "bit_width": 2,
+        "description": "Capture/Compare 1 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC1PSC",
+        "bit_range": "[3:2]",
+        "bit_offset": 2,
+        "bit_width": 2,
+        "description": "Input Capture 1 Prescaler",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC1F",
+        "bit_range": "[7:4]",
+        "bit_offset": 4,
+        "bit_width": 4,
+        "description": "Input Capture 1 Filter",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2S",
+        "bit_range": "[9:8]",
+        "bit_offset": 8,
+        "bit_width": 2,
+        "description": "Capture/Compare 2 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC2PSC",
+        "bit_range": "[11:10]",
+        "bit_offset": 10,
+        "bit_width": 2,
+        "description": "Input Capture 2 Prescaler",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC2F",
+        "bit_range": "[15:12]",
+        "bit_offset": 12,
+        "bit_width": 4,
+        "description": "Input Capture 2 Filter",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCMR2_Output",
+    "full_address": "0x4002102C",
+    "base_address": "0x40021000",
+    "address_offset": "0x02C",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare mode register 2 (Output mode)",
+    "fields": [
+      {
+        "name": "CC3S",
+        "bit_range": "[1:0]",
+        "bit_offset": 0,
+        "bit_width": 2,
+        "description": "Capture/Compare 3 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC3FE",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Output Compare 3 Fast Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC3PE",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Output Compare 3 Preload Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC3M",
+        "bit_range": "[6:4]",
+        "bit_offset": 4,
+        "bit_width": 3,
+        "description": "Output Compare 3 Mode",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC3CE",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Output Compare 3 Clear Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4S",
+        "bit_range": "[9:8]",
+        "bit_offset": 8,
+        "bit_width": 2,
+        "description": "Capture/Compare 4 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC4FE",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Output Compare 4 Fast Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC4PE",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Output Compare 4 Preload Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC4M",
+        "bit_range": "[14:12]",
+        "bit_offset": 12,
+        "bit_width": 3,
+        "description": "Output Compare 4 Mode",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OC4CE",
+        "bit_range": "[15:15]",
+        "bit_offset": 15,
+        "bit_width": 1,
+        "description": "Output Compare 4 Clear Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCMR2_Input",
+    "full_address": "0x4002102C",
+    "base_address": "0x40021000",
+    "address_offset": "0x02C",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare mode register 2 (Input mode)",
+    "fields": [
+      {
+        "name": "CC3S",
+        "bit_range": "[1:0]",
+        "bit_offset": 0,
+        "bit_width": 2,
+        "description": "Capture/Compare 3 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC3PSC",
+        "bit_range": "[3:2]",
+        "bit_offset": 2,
+        "bit_width": 2,
+        "description": "Input Capture 3 Prescaler",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC3F",
+        "bit_range": "[7:4]",
+        "bit_offset": 4,
+        "bit_width": 4,
+        "description": "Input Capture 3 Filter",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4S",
+        "bit_range": "[9:8]",
+        "bit_offset": 8,
+        "bit_width": 2,
+        "description": "Capture/Compare 4 Select",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC4PSC",
+        "bit_range": "[11:10]",
+        "bit_offset": 10,
+        "bit_width": 2,
+        "description": "Input Capture 4 Prescaler",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "IC4F",
+        "bit_range": "[15:12]",
+        "bit_offset": 12,
+        "bit_width": 4,
+        "description": "Input Capture 4 Filter",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCER",
+    "full_address": "0x40021030",
+    "base_address": "0x40021000",
+    "address_offset": "0x030",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare enable register",
+    "fields": [
+      {
+        "name": "CC1E",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Output Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1P",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Output Polarity",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1NE",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Complementary Output Enable (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1NP",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 Complementary Output Polarity (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2E",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Output Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2P",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Output Polarity",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2NE",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Complementary Output Enable (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2NP",
+        "bit_range": "[7:7]",
+        "bit_offset": 7,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 Complementary Output Polarity (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3E",
+        "bit_range": "[8:8]",
+        "bit_offset": 8,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Output Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3P",
+        "bit_range": "[9:9]",
+        "bit_offset": 9,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Output Polarity",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3NE",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Complementary Output Enable (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3NP",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 Complementary Output Polarity (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4E",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Output Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4P",
+        "bit_range": "[13:13]",
+        "bit_offset": 13,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 Output Polarity",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CNT",
+    "full_address": "0x40021034",
+    "base_address": "0x40021000",
+    "address_offset": "0x034",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Timer Counter",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "PSC",
+    "full_address": "0x40021038",
+    "base_address": "0x40021000",
+    "address_offset": "0x038",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Prescaler",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "ARR",
+    "full_address": "0x4002103C",
+    "base_address": "0x40021000",
+    "address_offset": "0x03C",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Auto-reload register",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCR1",
+    "full_address": "0x40021044",
+    "base_address": "0x40021000",
+    "address_offset": "0x044",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare register 1",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCR2",
+    "full_address": "0x40021048",
+    "base_address": "0x40021000",
+    "address_offset": "0x048",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare register 2",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCR3",
+    "full_address": "0x4002104C",
+    "base_address": "0x40021000",
+    "address_offset": "0x04C",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare register 3",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "CCR4",
+    "full_address": "0x40021050",
+    "base_address": "0x40021000",
+    "address_offset": "0x050",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Capture/compare register 4",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "CTMR",
+    "name": "DMAEN",
+    "full_address": "0x40021058",
+    "base_address": "0x40021000",
+    "address_offset": "0x058",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "DMA trigger event enable",
+    "fields": [
+      {
+        "name": "UDE",
+        "bit_range": "[0:0]",
+        "bit_offset": 0,
+        "bit_width": 1,
+        "description": "Update DMA Request Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC1DE",
+        "bit_range": "[1:1]",
+        "bit_offset": 1,
+        "bit_width": 1,
+        "description": "Capture/Compare 1 DMA Request Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC2DE",
+        "bit_range": "[2:2]",
+        "bit_offset": 2,
+        "bit_width": 1,
+        "description": "Capture/Compare 2 DMA Request Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC3DE",
+        "bit_range": "[3:3]",
+        "bit_offset": 3,
+        "bit_width": 1,
+        "description": "Capture/Compare 3 DMA Request Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "CC4DE",
+        "bit_range": "[4:4]",
+        "bit_offset": 4,
+        "bit_width": 1,
+        "description": "Capture/Compare 4 DMA Request Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "COMDE",
+        "bit_range": "[5:5]",
+        "bit_offset": 5,
+        "bit_width": 1,
+        "description": "COM DMA Request Enable (Only ATMR)",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "TDE",
+        "bit_range": "[6:6]",
+        "bit_offset": 6,
+        "bit_width": 1,
+        "description": "Trigger DMA Request Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "ATMR",
+    "name": "RCR",
+    "full_address": "0x40022040",
+    "base_address": "0x40022000",
+    "address_offset": "0x040",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Repetition counter register (Only ATMR)",
+    "fields": [],
+    "user_guide_notes": ""
+  },
+  {
+    "peripheral": "ATMR",
+    "name": "BDTR",
+    "full_address": "0x40022054",
+    "base_address": "0x40022000",
+    "address_offset": "0x054",
+    "size": 32,
+    "access": "read-write",
+    "reset_value": "0x00000000",
+    "description": "Break and dead-time register (Only ATMR)",
+    "fields": [
+      {
+        "name": "DTG",
+        "bit_range": "[7:0]",
+        "bit_offset": 0,
+        "bit_width": 8,
+        "description": "Dead-Time Generator Setup",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "LOCK",
+        "bit_range": "[9:8]",
+        "bit_offset": 8,
+        "bit_width": 2,
+        "description": "Lock Configuration",
+        "access": "read-write",
+        "enumerated_values": [
+          {
+            "name": "Level_0",
+            "value": "0",
+            "description": "No lock"
+          },
+          {
+            "name": "Level_1",
+            "value": "1",
+            "description": "Lock Level 1"
+          },
+          {
+            "name": "Level_2",
+            "value": "2",
+            "description": "Lock Level 2"
+          },
+          {
+            "name": "Level_3",
+            "value": "3",
+            "description": "Lock Level 3"
+          }
+        ]
+      },
+      {
+        "name": "OSSI",
+        "bit_range": "[10:10]",
+        "bit_offset": 10,
+        "bit_width": 1,
+        "description": "Off-state Selection for Idle Mode",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "OSSR",
+        "bit_range": "[11:11]",
+        "bit_offset": 11,
+        "bit_width": 1,
+        "description": "Off-state Selection for Run Mode",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BKE",
+        "bit_range": "[12:12]",
+        "bit_offset": 12,
+        "bit_width": 1,
+        "description": "Break Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "BKP",
+        "bit_range": "[13:13]",
+        "bit_offset": 13,
+        "bit_width": 1,
+        "description": "Break Polarity",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "AOE",
+        "bit_range": "[14:14]",
+        "bit_offset": 14,
+        "bit_width": 1,
+        "description": "Automatic Output Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      },
+      {
+        "name": "MOE",
+        "bit_range": "[15:15]",
+        "bit_offset": 15,
+        "bit_width": 1,
+        "description": "Main Output Enable",
+        "access": "read-write",
+        "enumerated_values": []
+      }
+    ],
+    "user_guide_notes": ""
   }
 ]

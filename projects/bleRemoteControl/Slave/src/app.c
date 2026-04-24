@@ -309,7 +309,7 @@ __WEAK void app_init(uint16_t rsn)
         ble_drift_set(1200);
         #endif
 
-        adv_dir_flag = true;// 定向广播
+        adv_dir_flag = true;// 瀹氬悜骞挎挱
     }
 
     // Init RF & Modem
@@ -347,10 +347,10 @@ __WEAK void app_state_set(uint8_t state)
  */
 __WEAK uint8_t app_name_get(uint8_t size, uint8_t *name)
 {
-    (void)size;
     uint8_t BLE_DEV_NAME_A[] = BLE_DEV_NAME;
 
     uint8_t len = sizeof(BLE_DEV_NAME_A) - 1;
+    if (len > size) len = size;
 
     memcpy(name, BLE_DEV_NAME_A, len);
 
@@ -395,7 +395,7 @@ __WEAK void app_conf_fsm(uint8_t evt)
 
         if (findPairInfo())
         {
-            // 配对信息存在, 进入广播模式
+            // 閰嶅淇℃伅瀛樺湪, 杩涘叆骞挎挱妯″紡
             // Create Activities
             app_actv_create();
             ke_timer_set(APP_TIMER_KEY_SCAN, TASK_APP, KEY_SCAN_PERIOD);
@@ -447,7 +447,7 @@ __WEAK void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
             if (dis_param->reason == LE_ERR_HL2HCI(LL_ERR_CON_TERM_BY_LOCAL_HOST))
             {
 //                app_adv_action(ACTV_START);
-                adv_dir_flag = true;// 定向广播
+                adv_dir_flag = true;// 瀹氬悜骞挎挱
                 app_adv_action(ACTV_RELOAD);
 
                 app_state_set(APP_READY);

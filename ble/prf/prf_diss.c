@@ -67,7 +67,7 @@
 
 /**
  * PNP ID Value - LSB -> MSB, Length=7(DIS_PNP_ID_LEN)
- *      Vendor ID Source : 0x02 (USB Implementer¡¯s Forum assigned Vendor ID value)
+ *      Vendor ID Source : 0x02 (USB Implementerâ€™s Forum assigned Vendor ID value)
  *      Vendor ID : 0x045E      (Microsoft Corp)
  *      Product ID : 0x0040
  *      Product Version : 0x0300
@@ -227,6 +227,7 @@ static uint8_t diss_get_val_idx(uint16_t handle)
 /// Handles reception of the read request from peer device
 static void diss_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const void *param)
 {
+    ASSERT_ERR(param != NULL);
     (void)param;
     uint8_t val_idx = diss_get_val_idx(handle);
 
@@ -289,7 +290,7 @@ uint8_t diss_svc_init(void)
     // Create Service in database
     status = attmdb_svc_create(&diss_env.start_hdl, (uint8_t *)&cfg_att, &dis_svc_db, diss_svc_func);
 
-    DEBUG("svc_init(sta:0x%X,shdl:%d,feat:0x%X,cfg:0x%X)",
+    DEBUG("svc_init(sta:0x%X,shdl:%d,feat:0x%X,cfg:0x%"PRIX32")",
             status, diss_env.start_hdl, diss_env.features, cfg_att);
 
     return status;

@@ -106,7 +106,7 @@ uint8_t* micDataGet(void)
     {
         if (voiceSendFt)
         {
-            // ¹ýÂË
+            // è¿‡æ»¤
             dma_chnl_reload(MICPHONE_DMA_CHNL);
             voiceSendFt--;
             return NULL;

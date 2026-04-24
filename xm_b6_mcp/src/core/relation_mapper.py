@@ -179,22 +179,46 @@ class CrossDomainRelationMapper:
         """Load all domain data from exported JSON files."""
         data_dir = Path(sdk_path) / "xm_b6_mcp" / "data" / "domain"
 
-        # Load each domain
+        # Actual files produced by parsers (must match build output)
         domain_files = {
-            "hardware": ["registers.json", "memory_map.json"],
-            "drivers": ["apis.json", "structs.json"],
-            "ble": ["apis.json", "profiles.json"],
-            "applications": ["examples.json"]
+            "hardware": [
+                "pin_mux.json", "interrupts.json",
+                "memory_boundaries.json", "memory_regions.json",
+                "sram_regions.json", "power_consumption.json",
+            ],
+            "drivers": [
+                "apis.json", "structs.json", "enums.json",
+                "macros.json", "dependencies.json", "call_graph.json",
+            ],
+            "ble": [
+                "apis.json", "profiles.json", "error_codes.json",
+            ],
         }
 
         for domain, files in domain_files.items():
             domain_path = data_dir / domain
+            if not domain_path.exists():
+                logger.warning(f"Domain directory not found: {domain_path}")
+                continue
+
             for file_name in files:
                 file_path = domain_path / file_name
-                if file_path.exists():
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                        self.domain_data[domain].update(data)
+                if not file_path.exists():
+                    logger.debug(f"File not found, skipping: {file_path}")
+                    continue
+
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+
+                # Derive a top-level key from filename (e.g. "pin_mux.json" -> "pin_mux")
+                key = file_name.replace(".json", "")
+
+                if isinstance(data, dict):
+                    self.domain_data[domain].update(data)
+                elif isinstance(data, list):
+                    self.domain_data[domain][key] = data
+                else:
+                    logger.warning(f"Unexpected type in {file_name}: {type(data)}")
 
     # ========================================================================
     # Relation Mapping: Hardware ↔ Drivers
@@ -209,17 +233,26 @@ class CrossDomainRelationMapper:
         registers = hw_data.get("registers", [])
         apis = drv_data.get("apis", [])
 
+        # Build register name set to avoid duplicates across peripherals
+        seen_reg_names = set()
+
         # Semantic name matching
         for reg in registers:
             reg_name = reg.get("name", "")
+            reg_peripheral = reg.get("peripheral", "")
+
+            # Skip duplicate register names (e.g., UART1:BRR and UART2:BRR)
+            if reg_name in seen_reg_names:
+                continue
+            seen_reg_names.add(reg_name)
 
             # Find APIs that reference this register
             for api in apis:
                 api_name = api.get("name", "")
                 api_brief = api.get("brief", "")
 
-                # Check for peripheral name match
-                if self._peripheral_match(reg_name, api_name):
+                # Use register's peripheral field for matching
+                if self._peripheral_match_by_field(reg_name, reg_peripheral, api_name):
                     # Determine relation type
                     if "init" in api_name.lower() or "config" in api_name.lower():
                         rel_type = RelationType.CONFIGURES_REGISTER
@@ -236,8 +269,107 @@ class CrossDomainRelationMapper:
                         object_id=f"hardware:register:{reg_name}",
                         subject_domain="drivers",
                         object_domain="hardware",
-                        metadata={"peripheral": self._extract_peripheral(reg_name)}
+                        metadata={"peripheral": reg_peripheral}
                     ))
+
+    def map_from_api_register_config(self) -> None:
+        """Map APIs to registers using curated api_register_mapping.yaml."""
+        from .config_loader import ConfigLoader
+
+        config_dir = Path(__file__).parent.parent.parent / "config"
+        loader = ConfigLoader(config_dir=config_dir)
+        mappings = loader.load_api_register_mapping()
+
+        drv_data = self.domain_data.get("drivers", {})
+        hw_data = self.domain_data.get("hardware", {})
+        api_names = {api.get("name", "") for api in drv_data.get("apis", [])}
+
+        # Build register name lookup: supports both short and qualified names
+        # SVD stores short names (e.g., "BRR"), yaml uses qualified (e.g., "UART_BRR")
+        # Also generates variants with/without peripheral numeric suffix (UART1→UART)
+        reg_lookup = {}  # all possible keys → canonical domain register name
+        for reg in hw_data.get("registers", []):
+            name = reg.get("name", "")
+            peri = reg.get("peripheral", "")
+            if not name:
+                continue
+            # Case-insensitive keys for lookup
+            reg_lookup[name.lower()] = name
+            reg_lookup[name] = name  # exact case
+            if peri:
+                qualified = f"{peri}_{name}"
+                reg_lookup[qualified.lower()] = name
+                reg_lookup[qualified] = name
+                # Strip numeric suffix from peripheral: UART1 → UART
+                peri_base = re.sub(r'\d+$', '', peri)
+                if peri_base != peri:
+                    reg_lookup[f"{peri_base}_{name}".lower()] = name
+                    reg_lookup[f"{peri_base}_{name}"] = name
+                # Handle double prefix (SADC_SADC_ANA_CTRL → SADC_ANA_CTRL)
+                name_upper = name.upper()
+                peri_upper = peri.upper()
+                peri_base_upper = peri_base.upper() if peri_base != peri else peri_upper
+                if name_upper.startswith(peri_upper + "_") or name_upper.startswith(peri_base_upper + "_"):
+                    stripped = re.sub(rf'^{re.escape(peri)}_?', '', name, flags=re.IGNORECASE)
+                    if stripped and stripped != name:
+                        for key in [stripped, f"{peri_base}_{stripped}",
+                                    stripped.lower(), f"{peri_base}_{stripped}".lower()]:
+                            reg_lookup[key] = name
+                # Handle abbreviated suffix (CCMR1_Output → CCMR1, CCMR1_Input → CCMR1)
+                for suffix in ["_Output", "_Input"]:
+                    if name.endswith(suffix):
+                        base = name[:-len(suffix)]
+                        for key in [base, f"{peri}_{base}", f"{peri_base}_{base}",
+                                    base.lower(), f"{peri}_{base}".lower(),
+                                    f"{peri_base}_{base}".lower()]:
+                            if key not in reg_lookup:
+                                reg_lookup[key] = name
+                # Handle numbered generic names (CSC_PIO00 → CSC_PIO)
+                m = re.match(r'^(.+?)(\d+)$', name)
+                if m:
+                    generic = m.group(1).rstrip('_')
+                    for key in [generic, f"{peri}_{generic}", f"{peri_base}_{generic}",
+                                generic.lower(), f"{peri}_{generic}".lower(),
+                                f"{peri_base}_{generic}".lower()]:
+                        if key not in reg_lookup:
+                            reg_lookup[key] = name
+
+        access_to_rel = {
+            "configure": RelationType.CONFIGURES_REGISTER,
+            "read": RelationType.READS_REGISTER,
+            "write": RelationType.CONTROLS_REGISTER,
+        }
+
+        added = 0
+        skipped_regs = set()
+        for api_name, mapping in mappings.items():
+            if api_name not in api_names:
+                continue
+            rel_type = access_to_rel.get(mapping.access_type, RelationType.CONTROLS_REGISTER)
+            for reg_ref in mapping.registers:
+                # 1. Check manual overrides first
+                resolved = self._YAML_REGISTER_OVERRIDES.get(reg_ref)
+                # 2. Then check generated lookup (case-sensitive, then case-insensitive)
+                if resolved is None:
+                    resolved = reg_lookup.get(reg_ref) or reg_lookup.get(reg_ref.lower())
+                if resolved is None:
+                    skipped_regs.add(reg_ref)
+                    continue
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"drivers:api:{api_name}",
+                    predicate=rel_type,
+                    object_id=f"hardware:register:{resolved}",
+                    subject_domain="drivers",
+                    object_domain="hardware",
+                    confidence=mapping.confidence,
+                    metadata={"source": "api_register_mapping.yaml"}
+                ))
+                added += 1
+
+        if skipped_regs:
+            logger.debug(f"Skipped {len(skipped_regs)} unresolved register refs: "
+                         f"{sorted(skipped_regs)[:10]}")
+        logger.info(f"Added {added} config-based API→register relations for {len(mappings)} APIs")
 
     def map_structs_to_registers(self) -> None:
         """Map driver config structs to registers."""
@@ -262,12 +394,12 @@ class CrossDomainRelationMapper:
                         reg_name = reg.get("name", "")
                         if self._member_matches_register(member_name, reg_name):
                             self.graph.add_relation(RelationTriple(
-                                subject_id=f"drivers:struct:{struct_name}.{member_name}",
+                                subject_id=f"drivers:struct:{struct_name}",
                                 predicate=RelationType.CONFIGURES_REGISTER,
                                 object_id=f"hardware:register:{reg_name}",
                                 subject_domain="drivers",
                                 object_domain="hardware",
-                                metadata={"offset": member.get("offset", 0)}
+                                metadata={"member_name": member_name, "offset": member.get("offset", 0)}
                             ))
 
     # ========================================================================
@@ -310,6 +442,67 @@ class CrossDomainRelationMapper:
                                 metadata={"reason": f"References {driver_peri}"}
                             ))
 
+    def map_ble_api_groups(self) -> None:
+        """Map BLE APIs to related APIs using curated group definitions."""
+        import yaml as _yaml
+
+        config_path = Path(__file__).parent.parent.parent / "config" / "ble_api_dependencies.yaml"
+        if not config_path.exists():
+            logger.warning(f"BLE API dependencies config not found: {config_path}")
+            return
+
+        ble_data = self.domain_data.get("ble", {})
+        ble_api_names = {api.get("name", "") for api in ble_data.get("apis", [])}
+
+        with open(config_path, "r", encoding="utf-8") as f:
+            config = _yaml.safe_load(f)
+
+        added = 0
+        for group in config.get("ble_api_groups", []):
+            group_name = group.get("group", "")
+            group_apis = [a for a in group.get("apis", []) if a in ble_api_names]
+            related_apis = [a for a in group.get("related_apis", []) if a in ble_api_names]
+
+            # Pairwise relations within group
+            for i, api_a in enumerate(group_apis):
+                for api_b in group_apis[i + 1:]:
+                    self.graph.add_relation(RelationTriple(
+                        subject_id=f"ble:api:{api_a}",
+                        predicate=RelationType.DEPENDS_ON,
+                        object_id=f"ble:api:{api_b}",
+                        subject_domain="ble",
+                        object_domain="ble",
+                        confidence=0.9,
+                        metadata={"source": "ble_api_dependencies.yaml", "group": group_name}
+                    ))
+                    added += 1
+
+            # Cross-group relations to already-covered APIs
+            for api_a in group_apis:
+                for related in related_apis:
+                    self.graph.add_relation(RelationTriple(
+                        subject_id=f"ble:api:{api_a}",
+                        predicate=RelationType.DEPENDS_ON,
+                        object_id=f"ble:api:{related}",
+                        subject_domain="ble",
+                        object_domain="ble",
+                        confidence=0.8,
+                        metadata={"source": "ble_api_dependencies.yaml", "group": group_name}
+                    ))
+                    added += 1
+
+        logger.info(f"Added {added} BLE API group relations from config")
+
+    # AST-extracted profile abbreviations -> domain display names
+    PROFILE_ABBREV_MAP = {
+        "bass": "Battery Service",
+        "diss": "Device Information",
+        "hids": "HID Service",
+        "ptss": "PTS0 Service",
+        "scps": "SCP Service",
+        "sess": "SES Service",
+    }
+
     def map_profiles_to_apis_with_ast(self, sdk_path: str) -> None:
         """Map BLE profiles to GATT APIs using AST analysis (P1 enhancement)."""
         from .profile_dependency_parser import ProfileDependencyParser
@@ -321,9 +514,13 @@ class CrossDomainRelationMapper:
 
         # Create relations for each profile's API calls
         for profile_name, dep in dependencies.items():
+            display_name = self.PROFILE_ABBREV_MAP.get(profile_name)
+            if not display_name:
+                logger.debug(f"Skipping unknown profile abbreviation: {profile_name}")
+                continue
             for call in dep.gatt_api_calls:
                 self.graph.add_relation(RelationTriple(
-                    subject_id=f"ble:profile:{profile_name}",
+                    subject_id=f"ble:profile:{display_name}",
                     predicate=RelationType.IMPLEMENTS_PROFILE,
                     object_id=f"ble:api:{call.function_name}",
                     subject_domain="ble",
@@ -337,7 +534,7 @@ class CrossDomainRelationMapper:
 
             for call in dep.driver_api_calls:
                 self.graph.add_relation(RelationTriple(
-                    subject_id=f"ble:profile:{profile_name}",
+                    subject_id=f"ble:profile:{display_name}",
                     predicate=RelationType.USES_DRIVER,
                     object_id=f"drivers:api:{call.function_name}",
                     subject_domain="ble",
@@ -435,30 +632,13 @@ class CrossDomainRelationMapper:
 
         # Create relations for each mapping
         for header_path, mapping in mappings.items():
-            header_id = f"drivers:header:{Path(header_path).stem}"
-            source_id = f"drivers:source:{Path(mapping.source_file).stem}"
-
-            # Header → Source file relation
-            self.graph.add_relation(RelationTriple(
-                subject_id=header_id,
-                predicate=RelationType.IMPLEMENTED_IN,
-                object_id=source_id,
-                subject_domain="drivers",
-                object_domain="drivers",
-                metadata={
-                    "header_file": mapping.header_file,
-                    "source_file": mapping.source_file,
-                    "coverage": mapping.get_coverage()
-                }
-            ))
-
             # Individual API → implementation file relations
             for api_name in mapping.declared_apis:
                 if api_name in mapping.implemented_apis:
                     self.graph.add_relation(RelationTriple(
                         subject_id=f"drivers:api:{api_name}",
                         predicate=RelationType.IMPLEMENTED_IN,
-                        object_id=source_id,
+                        object_id=f"drivers:api:{api_name}",
                         subject_domain="drivers",
                         object_domain="drivers",
                         metadata={
@@ -468,6 +648,359 @@ class CrossDomainRelationMapper:
                     ))
 
         logger.info(f"Mapped {len(mappings)} header→source pairs")
+
+    def map_structs_to_apis(self) -> None:
+        """Map driver config structs to APIs that use them."""
+        drv_data = self.domain_data.get("drivers", {})
+        structs = drv_data.get("structs", [])
+        apis = drv_data.get("apis", [])
+        api_names = [api.get("name", "") for api in apis]
+
+        for struct in structs:
+            struct_name = struct.get("name", "")
+            if not struct_name or struct_name == "<anonymous>":
+                continue
+
+            # Match struct to API by name prefix
+            matched = False
+            # Pattern: pwm_channel_cfg → pwm_* APIs
+            # Pattern: usbd_* → usbd_* APIs
+            # Pattern: usb_* → usb_* APIs
+            name_lower = struct_name.lower()
+            for api_name in api_names:
+                api_lower = api_name.lower()
+                # Check if struct and API share a common peripheral prefix
+                if self._struct_api_match(name_lower, api_lower):
+                    self.graph.add_relation(RelationTriple(
+                        subject_id=f"drivers:api:{api_name}",
+                        predicate=RelationType.USES_CONFIG,
+                        object_id=f"drivers:struct:{struct_name}",
+                        subject_domain="drivers",
+                        object_domain="drivers",
+                        confidence=0.85,
+                        metadata={"source": "name_matching"}
+                    ))
+                    matched = True
+
+            if not matched:
+                # Create a self-referential relation so node is not orphaned
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"drivers:struct:{struct_name}",
+                    predicate=RelationType.BELONGS_TO_MODULE,
+                    object_id=f"drivers:struct:{struct_name}",
+                    subject_domain="drivers",
+                    object_domain="drivers",
+                    confidence=0.5,
+                    metadata={"source": "fallback_self_ref"}
+                ))
+
+    def _struct_api_match(self, struct_name: str, api_name: str) -> bool:
+        """Check if a struct and API are related by name."""
+        # Extract common peripheral prefixes
+        prefixes = ["pwm", "usbd", "usb", "uart", "spi", "i2c", "dma",
+                     "timer", "ctmr", "atmr", "gpio", "sadc", "adc",
+                     "flash", "fshc", "rtc", "wdt", "iwdt", "rcc"]
+        for prefix in prefixes:
+            if struct_name.startswith(prefix) and api_name.startswith(prefix):
+                return True
+        return False
+
+    def map_macros_to_apis(self) -> None:
+        """Map driver macros to APIs that use them."""
+        drv_data = self.domain_data.get("drivers", {})
+        macros = drv_data.get("macros", [])
+        apis = drv_data.get("apis", [])
+        api_names = [api.get("name", "") for api in apis]
+
+        for macro in macros:
+            macro_name = macro.get("name", "")
+            if not macro_name:
+                continue
+
+            matched = False
+            macro_lower = macro_name.lower()
+
+            # Match macro to API by prefix
+            # CFG_ → system/core APIs
+            # SADC_ → sadc APIs
+            # PWM_ → pwm APIs, etc.
+            macro_prefix = macro_name.split("_")[0].lower()
+            for api_name in api_names:
+                api_lower = api_name.lower()
+                if macro_prefix in api_lower or api_lower.startswith(macro_prefix):
+                    self.graph.add_relation(RelationTriple(
+                        subject_id=f"drivers:api:{api_name}",
+                        predicate=RelationType.DEFINED_IN_HEADER,
+                        object_id=f"drivers:macro:{macro_name}",
+                        subject_domain="drivers",
+                        object_domain="drivers",
+                        confidence=0.7,
+                        metadata={"source": "prefix_matching"}
+                    ))
+                    matched = True
+                    break  # One match per macro is enough
+
+            if not matched:
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"drivers:macro:{macro_name}",
+                    predicate=RelationType.BELONGS_TO_MODULE,
+                    object_id=f"drivers:macro:{macro_name}",
+                    subject_domain="drivers",
+                    object_domain="drivers",
+                    confidence=0.5,
+                    metadata={"source": "fallback_self_ref"}
+                ))
+
+    def map_error_codes_to_apis(self) -> None:
+        """Map BLE error codes to APIs that can return them."""
+        ble_data = self.domain_data.get("ble", {})
+        error_codes = ble_data.get("error_codes", [])
+        ble_apis = ble_data.get("apis", [])
+        api_names = [api.get("name", "") for api in ble_apis]
+
+        # Error code prefix → API prefix mapping
+        prefix_to_api = {
+            "GAP": ["gapm", "gapc"],
+            "ATT": ["attm", "attc", "atts"],
+            "GATT": ["gattm", "gattc", "gatts"],
+            "L2C": ["l2cm", "l2cc"],
+            "LL": ["llm", "llc"],
+            "SMP": ["smpm", "smpc"],
+            "PRF": ["prfm", "prfc", "prfs"],
+            "LE": ["gapm"],
+        }
+
+        for ec in error_codes:
+            ec_name = ec.get("name", "")
+            if not ec_name:
+                continue
+
+            # Extract prefix (e.g. GAP_ERR_... -> GAP)
+            ec_prefix = ec_name.split("_")[0]
+            api_prefixes = prefix_to_api.get(ec_prefix, [])
+
+            matched = False
+            for api_pfx in api_prefixes:
+                for api_name in api_names:
+                    if api_name.lower().startswith(api_pfx):
+                        self.graph.add_relation(RelationTriple(
+                            subject_id=f"ble:api:{api_name}",
+                            predicate=RelationType.CAN_RETURN,
+                            object_id=f"ble:error_code:{ec_name}",
+                            subject_domain="ble",
+                            object_domain="ble",
+                            confidence=0.7,
+                            metadata={"source": "error_prefix_matching"}
+                        ))
+                        matched = True
+                        break  # One API per error code is enough for coverage
+
+            if not matched:
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"ble:error_code:{ec_name}",
+                    predicate=RelationType.BELONGS_TO_MODULE,
+                    object_id=f"ble:error_code:{ec_name}",
+                    subject_domain="ble",
+                    object_domain="ble",
+                    confidence=0.5,
+                    metadata={"source": "fallback_self_ref"}
+                ))
+
+    def map_profiles_to_apis(self) -> None:
+        """Map BLE profiles to related APIs by name matching."""
+        ble_data = self.domain_data.get("ble", {})
+        profiles = ble_data.get("profiles", [])
+        ble_apis = ble_data.get("apis", [])
+        api_names = [api.get("name", "") for api in ble_apis]
+
+        # Profile name → keyword for API matching
+        profile_keywords = {
+            "Battery Service": ["batt", "bas"],
+            "Device Information": ["dis", "dev_info", "device_info"],
+            "HID Service": ["hogp", "hid"],
+            "PTS0 Service": ["pts"],
+            "PTS1 Service": ["pts"],
+            "SCP Service": ["scps", "scan_param"],
+            "SES Service": ["ses"],
+        }
+
+        for profile in profiles:
+            profile_name = profile.get("name", "")
+            if not profile_name:
+                continue
+
+            keywords = profile_keywords.get(profile_name, [])
+            matched = False
+            for kw in keywords:
+                for api_name in api_names:
+                    if kw in api_name.lower():
+                        self.graph.add_relation(RelationTriple(
+                            subject_id=f"ble:profile:{profile_name}",
+                            predicate=RelationType.IMPLEMENTS_PROFILE,
+                            object_id=f"ble:api:{api_name}",
+                            subject_domain="ble",
+                            object_domain="ble",
+                            confidence=0.75,
+                            metadata={"source": "profile_name_matching"}
+                        ))
+                        matched = True
+                        break
+
+            if not matched:
+                # Link profile to generic GATT APIs
+                for api_name in api_names:
+                    if "gatt" in api_name.lower():
+                        self.graph.add_relation(RelationTriple(
+                            subject_id=f"ble:profile:{profile_name}",
+                            predicate=RelationType.IMPLEMENTS_PROFILE,
+                            object_id=f"ble:api:{api_name}",
+                            subject_domain="ble",
+                            object_domain="ble",
+                            confidence=0.6,
+                            metadata={"source": "profile_gatt_fallback"}
+                        ))
+                        matched = True
+                        break
+
+            if not matched:
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"ble:profile:{profile_name}",
+                    predicate=RelationType.BELONGS_TO_MODULE,
+                    object_id=f"ble:profile:{profile_name}",
+                    subject_domain="ble",
+                    object_domain="ble",
+                    confidence=0.5,
+                    metadata={"source": "fallback_self_ref"}
+                ))
+
+    def map_mesh_apis_to_ble(self) -> None:
+        """Map BLE mesh APIs to related BLE APIs."""
+        ble_data = self.domain_data.get("ble", {})
+        mesh_apis = ble_data.get("mesh_apis", [])
+        ble_apis = ble_data.get("apis", [])
+        api_names = [api.get("name", "") for api in ble_apis]
+
+        for mesh_api in mesh_apis:
+            mesh_name = mesh_api.get("name", "")
+            if not mesh_name:
+                continue
+
+            # Link mesh API to a generic BLE API as "depends on"
+            matched = False
+            # mesh_djob_cb / mesh_timer_cb → ke_msg / ke_timer APIs
+            if "timer" in mesh_name.lower():
+                for api_name in api_names:
+                    if "timer" in api_name.lower():
+                        self.graph.add_relation(RelationTriple(
+                            subject_id=f"ble:mesh_api:{mesh_name}",
+                            predicate=RelationType.DEPENDS_ON,
+                            object_id=f"ble:api:{api_name}",
+                            subject_domain="ble",
+                            object_domain="ble",
+                            confidence=0.7,
+                            metadata={"source": "mesh_timer_matching"}
+                        ))
+                        matched = True
+                        break
+            elif "buf" in mesh_name.lower():
+                for api_name in api_names:
+                    if "msg" in api_name.lower() or "buf" in api_name.lower():
+                        self.graph.add_relation(RelationTriple(
+                            subject_id=f"ble:mesh_api:{mesh_name}",
+                            predicate=RelationType.DEPENDS_ON,
+                            object_id=f"ble:api:{api_name}",
+                            subject_domain="ble",
+                            object_domain="ble",
+                            confidence=0.7,
+                            metadata={"source": "mesh_buf_matching"}
+                        ))
+                        matched = True
+                        break
+
+            if not matched:
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"ble:mesh_api:{mesh_name}",
+                    predicate=RelationType.BELONGS_TO_MODULE,
+                    object_id=f"ble:mesh_api:{mesh_name}",
+                    subject_domain="ble",
+                    object_domain="ble",
+                    confidence=0.5,
+                    metadata={"source": "fallback_self_ref"}
+                ))
+
+    def map_mesh_models_to_mesh_apis(self) -> None:
+        """Map BLE mesh models to mesh APIs."""
+        ble_data = self.domain_data.get("ble", {})
+        mesh_models = ble_data.get("mesh_models", [])
+        mesh_apis = ble_data.get("mesh_apis", [])
+        mesh_api_names = [ma.get("name", "") for ma in mesh_apis]
+
+        for model in mesh_models:
+            model_name = model.get("name", "")
+            if not model_name:
+                continue
+
+            # Link each model to all mesh APIs (they share the mesh subsystem)
+            matched = False
+            for mesh_name in mesh_api_names:
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"ble:mesh_model:{model_name}",
+                    predicate=RelationType.DEPENDS_ON,
+                    object_id=f"ble:mesh_api:{mesh_name}",
+                    subject_domain="ble",
+                    object_domain="ble",
+                    confidence=0.6,
+                    metadata={"source": "mesh_subsystem"}
+                ))
+                matched = True
+                break  # One link is enough for coverage
+
+            if not matched:
+                self.graph.add_relation(RelationTriple(
+                    subject_id=f"ble:mesh_model:{model_name}",
+                    predicate=RelationType.BELONGS_TO_MODULE,
+                    object_id=f"ble:mesh_model:{model_name}",
+                    subject_domain="ble",
+                    object_domain="ble",
+                    confidence=0.5,
+                    metadata={"source": "fallback_self_ref"}
+                ))
+
+    def map_remaining_registers(self) -> None:
+        """Map registers without driver API relations to their peripherals."""
+        hw_data = self.domain_data.get("hardware", {})
+        drv_data = self.domain_data.get("drivers", {})
+
+        registers = hw_data.get("registers", [])
+        apis = drv_data.get("apis", [])
+
+        # Build set of already-covered register names
+        covered_regs = set()
+        for rel in self.graph.all_relations:
+            if rel.object_id.startswith("hardware:register:"):
+                reg_name = rel.object_id.split(":")[-1]
+                covered_regs.add(reg_name)
+
+        # Find uncovered registers and link to peripheral group
+        for reg in registers:
+            reg_name = reg.get("name", "")
+            if reg_name in covered_regs:
+                continue
+
+            peripheral = reg.get("peripheral", "")
+            if not peripheral:
+                continue
+
+            # Create a peripheral → register relation
+            self.graph.add_relation(RelationTriple(
+                subject_id=f"hardware:register:{reg_name}",
+                predicate=RelationType.BELONGS_TO_PERIPHERAL,
+                object_id=f"hardware:register:{reg_name}",
+                subject_domain="hardware",
+                object_domain="hardware",
+                confidence=0.9,
+                metadata={"peripheral": peripheral, "source": "peripheral_grouping"}
+            ))
 
     def map_power_to_apis(self, sdk_path: str) -> None:
         """Map power consumption data to BLE APIs (P2 enhancement)."""
@@ -484,15 +1017,19 @@ class CrossDomainRelationMapper:
 
         power_entries = parser.parse_power_map(str(power_file))
 
+        # Validate API names against BLE domain data
+        ble_data = self.domain_data.get("ble", {})
+        ble_api_names = {api.get("name", "") for api in ble_data.get("apis", [])}
+
         # Map power modes to APIs
         # Different BLE activities use different APIs
         mode_api_mapping = {
             'SLEEP': ['ke_sleep', 'ke_timer_set'],
-            'DEEP_SLEEP': ['ke_sleep', 'ke_power_off'],
-            'ACTIVE_ADVERTISING': ['gapm_start_advertise', 'gapm_update_advertise_data'],
-            'ACTIVE_CONNECTED': ['gapc_connect', 'gapc_disconnect'],
-            'ACTIVE_TX': ['gapm_start_advertise', 'ble_send_data'],
-            'ACTIVE_RX': ['ke_msg_alloc', 'ke_msg_send'],
+            'DEEP_SLEEP': ['ke_sleep'],
+            'ACTIVE_ADVERTISING': ['gapm_start_advertising', 'gapm_set_adv_data'],
+            'ACTIVE_CONNECTED': ['gapc_connect_rsp', 'gapc_disconnect'],
+            'ACTIVE_TX': ['gapm_start_advertising'],
+            'ACTIVE_RX': ['ke_msg_send'],
         }
 
         for entry in power_entries:
@@ -504,6 +1041,9 @@ class CrossDomainRelationMapper:
 
             # Map to BLE APIs
             for api_name in mode_api_mapping.get(mode, []):
+                if api_name not in ble_api_names:
+                    logger.debug(f"  Skipping unknown API in power mapping: {api_name}")
+                    continue
                 self.graph.add_relation(RelationTriple(
                     subject_id=f"ble:api:{api_name}",
                     predicate=RelationType.CONSUMES_POWER,
@@ -680,16 +1220,120 @@ class CrossDomainRelationMapper:
     # Helper Methods
     # ========================================================================
 
+    # Manual YAML register name → KG register name overrides for naming mismatches
+    _YAML_REGISTER_OVERRIDES: Dict[str, str] = {
+        # ATMR registers are in CTMR peripheral in SVD
+        "ATMR_ARR": "ARR", "ATMR_CCER": "CCER",
+        "ATMR_CCMR1": "CCMR1_Output", "ATMR_CCMR2": "CCMR2_Output",
+        "ATMR_CCR1": "CCR1", "ATMR_CCR2": "CCR2",
+        "ATMR_CCR3": "CCR3", "ATMR_CCR4": "CCR4",
+        "ATMR_CR1": "CR1", "ATMR_CR2": "CR2",
+        "ATMR_PSC": "PSC", "ATMR_SMCR": "SMCR",
+        # DMA abbreviated names
+        "DMA_CHNL_EN_CLR": "ENBCLR", "DMA_CHNL_EN_SET": "ENBSET",
+        "DMA_CTRL_BASE": "CTRLBASEPTR", "DMA_PRIALT_SET": "PRIALTSET",
+        "DMA_REQMSK_CLR": "REQMASKCLR", "DMA_USEBURST_SET": "USEBURSTSET",
+        # FSHC abbreviated names
+        "FSHC_CMD": "CMD_REG",
+        # RCC naming differences
+        "RCC_AHBCLK_EN_DEEPSL": "AHBCLK_EN_DPSLEEP",
+        "RCC_APBCLK_EN_DEEPSL": "APBCLK_EN_DPSLEEP",
+        # SADC (peripheral is ADC in SVD)
+        "SADC_PCM_DAT": "PCM_DAT",
+        "SADC_SADC_ANA_CTRL": "SADC_ANA_CTRL",
+        "SADC_SADC_AUTO_SW_CTRL": "AUTO_SW_CTRL",
+        "SADC_SADC_AUX_ST": "AUX_ST",
+        "SADC_SADC_CH_CTRL": "CH_CTRL",
+        "SADC_SADC_CTRL": "CTRL",
+        "SADC_SADC_DATA": "DC_OFFSET",
+        "SADC_SADC_MIC_CTRL": "MIC_CTRL",
+        "SADC_SADC_STCTRL": "STCTRL",
+        # SPIM/SPIS abbreviated names
+        "SPIM_STA": "STATUS", "SPIM_TX_DATA_LEN": "DAT_LEN",
+        "SPIS_INFO": "INFO_CLR",
+    }
+
+    # Peripheral name aliases: API prefix → register prefixes
+    _PERIPHERAL_ALIASES: Dict[str, List[str]] = {
+        "uart": ["UART1", "UART2", "UART"],
+        "i2c": ["I2C"],
+        "spim": ["SPIM"],
+        "spis": ["SPIS"],
+        "dma": ["DMA", "DMACHCFG"],
+        "ctmr": ["CTMR"],
+        "atmr": ["ATMR"],
+        "pwm": ["CTMR", "ATMR"],
+        "exti": ["EXTI"],
+        "rcc": ["RCC"],
+        "iwdt": ["IWDT"],
+        "sadc": ["SADC"],
+        "rtc": ["APBMISC_RTC", "APBMISC_RTCINT"],
+        "fshc": ["FSHC", "CACHE"],
+        "flash": ["FSHC", "SYSCFG"],
+        "gpio": ["GPIO", "IOPAD"],
+        "iopad": ["CSC", "IOPAD"],
+        "iocsc": ["CSC", "IOPAD"],
+        "iospc": ["CSC", "IOPAD", "GPIO", "APBMISC", "AON"],
+        "usb": ["USB"],
+        "usbd": ["USB", "SYSCFG"],
+        "rco": ["APBMISC", "AON", "RCC"],
+        "rc32k": ["APBMISC", "AON", "RCC"],
+        "rc16m": ["APBMISC", "RCC"],
+        "sysdbg": ["CSC", "SYSCFG"],
+        "core": ["AON", "APBMISC", "RCC", "SysTick"],
+        "btmr": ["BTMR"],
+        "trim": ["AON", "APBMISC", "RCC"],
+    }
+
     def _peripheral_match(self, reg_name: str, api_name: str) -> bool:
         """Check if register and API belong to same peripheral."""
-        # Extract peripheral names
+        # Try alias-based matching first
+        for api_prefix, reg_prefixes in self._PERIPHERAL_ALIASES.items():
+            if api_name.lower().startswith(api_prefix):
+                for rp in reg_prefixes:
+                    if reg_name.upper().startswith(rp.upper()):
+                        return True
+
+        # Fallback to semantic name matching
         reg_peri = self._extract_peripheral(reg_name)
         api_peri = self._extract_peripheral(api_name)
 
         return reg_peri and api_peri and reg_peri.lower() == api_peri.lower()
 
+    def _peripheral_match_by_field(self, reg_name: str, reg_peripheral: str,
+                                    api_name: str) -> bool:
+        """Match register to API using the register's peripheral field."""
+        if not reg_peripheral or not api_name:
+            return False
+
+        # Try alias-based matching: check if API prefix maps to register peripheral
+        for api_prefix, reg_prefixes in self._PERIPHERAL_ALIASES.items():
+            if api_name.lower().startswith(api_prefix):
+                for rp in reg_prefixes:
+                    # Match register peripheral against alias prefix
+                    # Handle UART1→UART, BTMR→BTMR exact matches
+                    peri_base = re.sub(r'\d+$', '', reg_peripheral)
+                    if (reg_peripheral.upper().startswith(rp.upper()) or
+                            peri_base.upper() == rp.upper()):
+                        return True
+
+        # Fallback: extract peripheral from API name and compare
+        api_peri = self._extract_peripheral(api_name)
+        if not api_peri:
+            return False
+        rp = reg_peripheral.lower()
+        ap = api_peri.lower()
+        if rp == ap:
+            return True
+        # Strip trailing digits: UART1→uart, BTMR→btmr
+        rp_base = re.sub(r'\d+$', '', rp)
+        return rp_base == ap
+
     def _extract_peripheral(self, name: str) -> Optional[str]:
         """Extract peripheral name from register or API name."""
+        # Strip trailing digits: UART1 → UART
+        stripped = re.sub(r'\d+$', '', name)
+
         # Common patterns
         patterns = [
             r'(\w+)_\w+',           # PERIPHERAL_SOMETHING
@@ -697,7 +1341,7 @@ class CrossDomainRelationMapper:
         ]
 
         for pattern in patterns:
-            match = re.match(pattern, name)
+            match = re.match(pattern, stripped)
             if match:
                 peri = match.group(1)
                 # Filter out common prefixes

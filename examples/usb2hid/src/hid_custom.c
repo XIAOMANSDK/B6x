@@ -3,74 +3,99 @@
  *
  * @file hid_custom.c
  *
- * @brief USB HID Custom 设备类型实现
+ * @brief USB HID Custom device implementation (keyboard + raw bidirectional HID)
  *
- *DEMO_HID_CUSTOM示例：
+ * @details
+ * DEMO_HID_CUSTOM example:
+ * - Device init: similar to boot example, but with bidirectional endpoints
+ * - Enumeration: host recognizes composite device with keyboard and custom raw data
+ * - Bidirectional communication: send data to host AND receive LED state / custom data
+ * - Data processing: handle host-sent data and perform corresponding actions
  *
- *设备初始化：类似BOOT示例，但包含双向端点
- *枚举过程：主机识别为复合设备，包含键盘和自定义原始数据接口
- *双向通信：不仅发送数据到主机，还接收来自主机的LED状态和自定义数据
- *数据处理：处理主机下发的数据并执行相应操作
- * USB HID设备基于USB协议的人类接口设备类规范，通过以下机制工作：
- *
- *描述符定义：通过设备描述符、配置描述符、接口描述符、端点描述符和报告描述符定义设备功能和特性
- *中断传输：使用中断端点进行低延迟的数据传输，适合人机交互设备
- *报告机制：通过预定义的报告格式在设备和主机间交换数据
- *协议处理：USB核心处理标准USB请求，HID类处理特定于HID的请求
+ * USB HID device based on USB Human Interface Device class specification:
+ * - Descriptor definition: device, config, interface, endpoint, and report descriptors
+ * - Interrupt transfer: low-latency data transfer via interrupt endpoints
+ * - Report mechanism: predefined report formats for device-host data exchange
+ * - Protocol handling: USB core handles standard requests, HID class handles HID-specific
  ****************************************************************************************
  */
+
 #include "usbd.h"
 #include "usbd_hid.h"
 #include "drvs.h"
+#include "dbg.h"
 
 #if (DEMO_HID_CUSTOM)
 
-#define USBD_BCD                  USB_2_0 // Version
-#define USBD_VID                  0xFFFF  // Vendor ID
-#define USBD_PID                  0xFFFF  // Product ID
-#define USBD_MAX_POWER            100     // unit in mA
-#define USBD_LANGID_STRING        0x0409  // English(US)
-
-
 /*
- * Descriptor
- ****************************************************************************
+ * DEFINES - USB Device Configuration
+ ****************************************************************************************
  */
 
-/*!< count of hid interface descriptor */
+#define USBD_BCD                  USB_2_0     ///< USB specification version
+#define USBD_VID                  0xFFFF      ///< Vendor ID
+#define USBD_PID                  0xFFFF      ///< Product ID
+#define USBD_MAX_POWER            100         ///< Max power (mA)
+#define USBD_LANGID_STRING        0x0409      ///< English (US)
+
+/*
+ * DEFINES - Interface & Descriptor Sizes
+ ****************************************************************************************
+ */
+
+/// Total HID interface count
 #define USB_HID_INTF_CNT          2
+
+/// Last interface number
 #define USB_HID_INTF_END          (USB_HID_INTF_CNT - 1)
 
-/*!< config descriptor size (in & out endpoints) */
-#define USB_HID_CONFIG_SIZE       (9+(18+7+7)*USB_HID_INTF_CNT)
+/// Configuration descriptor total size (in & out endpoints per interface)
+#define USB_HID_CONFIG_SIZE       (9 + (18 + 7 + 7) * USB_HID_INTF_CNT)
 
-/*!< keyboard interface config */
-#define KBD_INTF_NUM              0    /*!< interfaceNumber */
-#define KBD_IN_EP                 0x81 /*!< address */
-#define KBD_IN_EP_SIZE            8    /*!< max packet length */
-#define KBD_IN_EP_INTERVAL        10   /*!< polling time */
-#define KBD_OUT_EP                0x01
-#define KBD_OUT_EP_SIZE           1
-//INTERVAL:1, 2, 4, 8, 16, ... 2**n
+/*
+ * DEFINES - Keyboard Endpoint Configuration
+ ****************************************************************************************
+ */
+
+#define KBD_INTF_NUM              0           ///< Keyboard interface number
+#define KBD_IN_EP                 0x81        ///< Keyboard IN endpoint address
+#define KBD_IN_EP_SIZE            8           ///< Keyboard IN max packet size
+#define KBD_IN_EP_INTERVAL        10          ///< Keyboard IN polling interval (ms)
+#define KBD_OUT_EP                0x01        ///< Keyboard OUT endpoint address
+#define KBD_OUT_EP_SIZE           1           ///< Keyboard OUT max packet size
+/// Endpoint polling interval: 1, 2, 4, 8, 16, ... 2^n
 #define KBD_OUT_EP_INTERVAL       8
 #define KBD_REPORT_DESC_SIZE      sizeof(hid_kbd_report_desc)
 
-/*!< custom-raw interface config */
-#define RAW_INTF_NUM              1
-#define RAW_IN_EP                 0x82
-#define RAW_IN_EP_SIZE            64
-#define RAW_IN_EP_INTERVAL        10
-#define RAW_OUT_EP                0x02
-#define RAW_OUT_EP_SIZE           64
-//INTERVAL:1, 2, 4, 8, 16, ... 2**n
+/*
+ * DEFINES - Custom Raw Endpoint Configuration
+ ****************************************************************************************
+ */
+
+#define RAW_INTF_NUM              1           ///< Raw data interface number
+#define RAW_IN_EP                 0x82        ///< Raw data IN endpoint address
+#define RAW_IN_EP_SIZE            64          ///< Raw data IN max packet size
+#define RAW_IN_EP_INTERVAL        10          ///< Raw data IN polling interval (ms)
+#define RAW_OUT_EP                0x02        ///< Raw data OUT endpoint address
+#define RAW_OUT_EP_SIZE           64          ///< Raw data OUT max packet size
+/// Endpoint polling interval: 1, 2, 4, 8, 16, ... 2^n
 #define RAW_OUT_EP_INTERVAL       8
 #define RAW_REPORT_DESC_SIZE      sizeof(hid_raw_report_desc)
 
-/*!< Declaration of endpoint Handlers  */
+/*
+ * Forward Declarations
+ ****************************************************************************************
+ */
+
 void usbd_hid_kbd_out_handler(uint8_t ep);
 void usbd_hid_raw_out_handler(uint8_t ep);
 
-/*!< hid keyboard report descriptor */
+/*
+ * LOCAL DATA - Report Descriptors
+ ****************************************************************************************
+ */
+
+/// HID keyboard report descriptor
 static const uint8_t hid_kbd_report_desc[] = {
     0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
     0x09, 0x06, // Usage (Keyboard)
@@ -82,19 +107,19 @@ static const uint8_t hid_kbd_report_desc[] = {
     0x25, 0x01, //   Logical Maximum (1)
     0x75, 0x01, //   Report Size (1)
     0x95, 0x08, //   Report Count (8)
-    0x81, 0x02, //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x81, 0x02, //   Input (Data,Var,Abs)
     0x95, 0x01, //   Report Count (1)
     0x75, 0x08, //   Report Size (8)
-    0x81, 0x03, //   Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x81, 0x03, //   Input (Const,Var,Abs)
     0x95, 0x05, //   Report Count (5)
     0x75, 0x01, //   Report Size (1)
     0x05, 0x08, //   Usage Page (LEDs)
     0x19, 0x01, //   Usage Minimum (Num Lock)
     0x29, 0x05, //   Usage Maximum (Kana)
-    0x91, 0x02, //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x91, 0x02, //   Output (Data,Var,Abs)
     0x95, 0x01, //   Report Count (1)
     0x75, 0x03, //   Report Size (3)
-    0x91, 0x03, //   Output (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x91, 0x03, //   Output (Const,Var,Abs)
     0x95, 0x06, //   Report Count (6)
     0x75, 0x08, //   Report Size (8)
     0x15, 0x00, //   Logical Minimum (0)
@@ -102,11 +127,11 @@ static const uint8_t hid_kbd_report_desc[] = {
     0x05, 0x07, //   Usage Page (Kbrd/Keypad)
     0x19, 0x00, //   Usage Minimum (0x00)
     0x29, 0x65, //   Usage Maximum (0x65)
-    0x81, 0x00, //   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x81, 0x00, //   Input (Data,Array,Abs)
     0xC0,       // End Collection
 };
 
-/*!< hid custom-raw report descriptor */
+/// HID custom raw report descriptor (vendor-defined, bidirectional)
 static const uint8_t hid_raw_report_desc[] = {
     0x06, 0x00, 0xFF, // Usage Page (Vendor Defined 0xFF00)
     0x09, 0x01,       // Usage (0x01)
@@ -116,90 +141,76 @@ static const uint8_t hid_raw_report_desc[] = {
     0x26, 0xFF, 0x00, //   Logical Maximum (255)
     0x95, 0x40,       //   Report Count (64)
     0x75, 0x08,       //   Report Size (8)
-    0x81, 0x02,       //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+    0x81, 0x02,       //   Input (Data,Var,Abs)
     0x09, 0x01,       //   Usage (0x01)
     0x15, 0x00,       //   Logical Minimum (0)
     0x26, 0xFF, 0x00, //   Logical Maximum (255)
     0x95, 0x40,       //   Report Count (64)
     0x75, 0x08,       //   Report Size (8)
-    0x91, 0x02,       //   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile)
+    0x91, 0x02,       //   Output (Data,Var,Abs)
     0xC0,             // End Collection
 };
 
-/*!< hid device descriptor */
-static const uint8_t hid_descriptor[] = {
-    /* Descriptor - Device (Size:18) */
-    USB_DEVICE_DESCRIPTOR_INIT(USBD_BCD, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, 0x0002, 0x01),
-    
-    /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_HID_CONFIG_SIZE, USB_HID_INTF_CNT, 
-            0x01, USB_CONFIG_BUS_POWERED, USBD_MAX_POWER),
+/*
+ * LOCAL DATA - USB Device Descriptor
+ ****************************************************************************************
+ */
 
-    /* Descriptor - Keyboard Interface (Size:18+7*2) */
+/// Full HID device descriptor (device + config + interfaces + strings)
+static const uint8_t hid_descriptor[] = {
+    /* Device descriptor (18 bytes) */
+    USB_DEVICE_DESCRIPTOR_INIT(USBD_BCD, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, 0x0002, 0x01),
+
+    /* Configuration descriptor */
+    USB_CONFIG_DESCRIPTOR_INIT(USB_HID_CONFIG_SIZE, USB_HID_INTF_CNT,
+            0x01, USB_CONFIG_BUS_POWERED | USB_CONFIG_REMOTE_WAKEUP, USBD_MAX_POWER),
+
+    /* Keyboard interface (18 + 7*2 bytes) */
     HID_INTERFACE_INIT(KBD_INTF_NUM, 2, HID_SUBCLASS_BOOTIF, HID_PROTOCOL_KEYBOARD, 0, KBD_REPORT_DESC_SIZE),
     HID_ENDPOINT_DESC(KBD_IN_EP, KBD_IN_EP_SIZE, KBD_IN_EP_INTERVAL),
     HID_ENDPOINT_DESC(KBD_OUT_EP, KBD_OUT_EP_SIZE, KBD_OUT_EP_INTERVAL),
-    
-    /* Descriptor - Custom-Raw Interface (Size:18+7*2) */
+
+    /* Custom raw interface (18 + 7*2 bytes) */
     HID_INTERFACE_INIT(RAW_INTF_NUM, 2, HID_SUBCLASS_BOOTIF, HID_PROTOCOL_NONE, 0, RAW_REPORT_DESC_SIZE),
     HID_ENDPOINT_DESC(RAW_IN_EP, RAW_IN_EP_SIZE, RAW_IN_EP_INTERVAL),
     HID_ENDPOINT_DESC(RAW_OUT_EP, RAW_OUT_EP_SIZE, RAW_OUT_EP_INTERVAL),
- 
-    /* Descriptor - String */
-    // String0 - Language ID (Size:4)
+
+    /* String descriptors */
+    // String 0 - Language ID (4 bytes)
     USB_LANGID_INIT(USBD_LANGID_STRING),
-    
-    // String1 - iManufacturer
-    0x02,                       /* bLength */
-    USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    
-    // String2 - iProduct
-    0x16,                       /* bLength */
-    USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('U'),
-    WCHAR('S'),
-    WCHAR('B'),
-    WCHAR(' '),
-    WCHAR('R'),
-    WCHAR('a'),
-    WCHAR('w'),
-    WCHAR('H'),
-    WCHAR('I'),
-    WCHAR('D'),
-    
-    // String3 - iSerialNumber
-//    0x10,                       /* bLength */
-//    USB_DESC_TYPE_STRING,       /* bDescriptorType */
-//    WCHAR('6'),
-//    WCHAR('.'),
-//    WCHAR('2'),
-//    WCHAR('2'),
-//    WCHAR('.'),
-//    WCHAR('0'),
-//    WCHAR('8'),
-    
-    /* Descriptor - Device Qualifier (Size:10) */
-    #if (USBD_BCD == USB_2_0)
+
+    // String 1 - iManufacturer
+    0x02,
+    USB_DESC_TYPE_STRING,
+
+    // String 2 - iProduct: "USB RawHID"
+    0x16,
+    USB_DESC_TYPE_STRING,
+    WCHAR('U'), WCHAR('S'), WCHAR('B'), WCHAR(' '),
+    WCHAR('R'), WCHAR('a'), WCHAR('w'), WCHAR('H'),
+    WCHAR('I'), WCHAR('D'),
+
+    /* Device qualifier (USB 2.0 only) */
+#if (USBD_BCD == USB_2_0)
     USB_QUALIFIER_INIT(0x01),
-    #endif
-    
-    /* Descriptor - EOF */
+#endif
+
+    /* End of descriptor */
     0x00
 };
 
-
 /*
- * Configuration
- ****************************************************************************
+ * LOCAL DATA - Configuration Tables
+ ****************************************************************************************
  */
 
-/*!< table of hid interface */
+/// HID interface table
 static const hid_intf_t hid_interface[] = {
     HID_INTF_T(KBD_INTF_NUM, KBD_IN_EP, hid_kbd_report_desc),
     HID_INTF_T(RAW_INTF_NUM, RAW_IN_EP, hid_raw_report_desc),
 };
 
-/*!< table of endpoints */
+/// Endpoint table
 static const usbd_ep_t endpoint_tab[] = {
     USBD_EP_T(KBD_IN_EP,  USB_EP_TYPE_INTERRUPT, KBD_IN_EP_SIZE,  &usbd_hid_ep_in_handler),
     USBD_EP_T(KBD_OUT_EP, USB_EP_TYPE_INTERRUPT, KBD_OUT_EP_SIZE, &usbd_hid_kbd_out_handler),
@@ -208,55 +219,78 @@ static const usbd_ep_t endpoint_tab[] = {
     USBD_EP_T(RAW_OUT_EP, USB_EP_TYPE_INTERRUPT, RAW_OUT_EP_SIZE, &usbd_hid_raw_out_handler),
 };
 
-/*!< table of class */
+/// Class handler table
 static const usbd_class_t class_tab[] = {
     USBD_CLASS_T(0, USB_HID_INTF_END, &usbd_hid_class_handler),
 };
 
-/*!< USBD Configuration */
+/// USBD Configuration
 static const usbd_config_t hid_configuration[] = {
     USBD_CONFIG_T(1, USB_HID_INTF_CNT, class_tab, endpoint_tab)
 };
 
-
 /*
- * Handlers
- ****************************************************************************
+ * CALLBACK FUNCTIONS
+ ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief Keyboard OUT endpoint handler (receives LED state from host)
+ *
+ * @param[in] ep  Endpoint address
+ ****************************************************************************************
+ */
 void usbd_hid_kbd_out_handler(uint8_t ep)
 {
     uint8_t led_state;
-    
-    /*!< read the led data from host send */
+
+    /* Read LED data sent by host */
     usbd_ep_read(ep, KBD_OUT_EP_SIZE, &led_state);
     USB_LOG_RAW("led_state:%02X\r\n", led_state);
-    
-    /*!< here you can write the LED processing from the host */
+
+    /* Process LED state */
     usbd_hid_leds(led_state);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Raw data OUT endpoint handler (receives custom data from host)
+ *
+ * @param[in] ep  Endpoint address (unused)
+ ****************************************************************************************
+ */
 void usbd_hid_raw_out_handler(uint8_t ep)
 {
     (void)ep;
     uint8_t custom_data[RAW_OUT_EP_SIZE];
-    
-    /*!< read the data from host send */
+
+    /* Read custom data from host */
     usbd_ep_read(RAW_OUT_EP, RAW_OUT_EP_SIZE, custom_data);
 
-    /*!< you can use the data do some thing you like */
+    /* Process custom data here */
 }
 
+/**
+ ****************************************************************************************
+ * @brief USB device event notification handler
+ *
+ * @param[in] event  Event type
+ * @param[in] arg    Event argument (unused)
+ ****************************************************************************************
+ */
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
     (void)arg;
-    switch (event) {
+
+    switch (event)
+    {
         case USBD_EVENT_RESET:
             usbd_hid_reset();
             break;
-        case USBD_EVENT_RESUME:
-            break;
+
         case USBD_EVENT_SUSPEND:
+        case USBD_EVENT_RESUME:
             break;
 
         default:
@@ -264,57 +298,69 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
     }
 }
 
-
 /*
- * Test Functions
- ****************************************************************************
+ * PUBLIC FUNCTIONS
+ ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief Initialize USB HID custom device
+ ****************************************************************************************
+ */
 void usbdInit(void)
 {
-    // enable USB clk and iopad
     rcc_usb_en();
     usbd_init();
     usbd_register(hid_descriptor, hid_configuration);
     NVIC_EnableIRQ(USB_IRQn);
-    
-    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {
+
+    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++)
+    {
         usbd_hid_init(idx, &hid_interface[idx]);
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief USB HID custom test function (call in main loop)
+ *
+ * @details
+ * Cycles through keyboard keys and sends raw data patterns.
+ * Each iteration: key-down, key-up, then 64-byte raw pattern.
+ ****************************************************************************************
+ */
 void usbdTest(void)
 {
-    // circle polling to send report
     static uint8_t keynum = 0;
-    
+
     if (!usbd_is_configured())
         return;
-    
-    /*!< keyboard test */
+
+    /* Keyboard test: send key down */
     {
-        uint8_t sendbuffer1[KBD_IN_EP_SIZE] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; //A
-    
-        sendbuffer1[2] = HID_KEY_A + keynum;
-        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);
-        /*!< delay 10ms */
+        uint8_t sendbuffer[KBD_IN_EP_SIZE] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+        sendbuffer[2] = HID_KEY_A + keynum;
+        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer);
         bootDelayMs(10);
-        /*!< send button up */
-        sendbuffer1[2] = 0;
-        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);
+
+        /* Send key up */
+        sendbuffer[2] = 0;
+        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer);
     }
-    
-    /*!< delay 100ms the custom test */
+
+    /* Raw data test: send 64-byte pattern */
     {
+        uint8_t sendbuffer[RAW_IN_EP_SIZE];
         bootDelayMs(100);
-        /*!< custom test */
-        uint8_t sendbuffer2[RAW_IN_EP_SIZE];
-        
-        memset(sendbuffer2, keynum, RAW_IN_EP_SIZE);
-        usbd_hid_send_report(RAW_IN_EP, RAW_IN_EP_SIZE, sendbuffer2);
+
+        memset(sendbuffer, keynum, RAW_IN_EP_SIZE);
+        usbd_hid_send_report(RAW_IN_EP, RAW_IN_EP_SIZE, sendbuffer);
     }
-    
-    if (++keynum > 94) keynum = 0;
+
+    if (++keynum > 94)
+        keynum = 0;
 }
 
-#endif // (DEMO_HID_CUSTOM)
+#endif /* DEMO_HID_CUSTOM */

@@ -37,6 +37,11 @@
  ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief Handle GAPC command complete event
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_cmp_evt)
 {
     (void)msgid;(void)dest_id;(void)src_id;
@@ -49,6 +54,11 @@ APP_MSG_HANDLER(gapc_cmp_evt)
     #endif
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle BLE connection request indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_connection_req_ind)
 {
     (void)msgid;(void)dest_id;
@@ -63,6 +73,11 @@ APP_MSG_HANDLER(gapc_connection_req_ind)
     app_conn_fsm(BLE_CONNECTING, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle BLE connection established
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_connection_ind)
 {
     (void)msgid;(void)dest_id;
@@ -74,6 +89,11 @@ APP_MSG_HANDLER(gapc_connection_ind)
     app_conn_fsm(BLE_CONNECTED, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle BLE disconnection
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_disconnect_ind)
 {
     (void)msgid;(void)dest_id;
@@ -84,6 +104,11 @@ APP_MSG_HANDLER(gapc_disconnect_ind)
     app_conn_fsm(BLE_DISCONNECTED, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle connection parameter update request
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_param_update_req_ind)
 {
     (void)msgid;(void)dest_id;
@@ -143,6 +168,11 @@ APP_MSG_HANDLER(gapc_param_updated_ind)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle LE packet size indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_le_pkt_size_ind)
 {
     (void)msgid;(void)dest_id;
@@ -156,6 +186,11 @@ APP_MSG_HANDLER(gapc_le_pkt_size_ind)
 }
 
 #if (BLE_EN_SMP)
+/**
+ ****************************************************************************************
+ * @brief Handle SMP bonding request
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_bond_req_ind)
 {
     (void)msgid;(void)dest_id;
@@ -261,6 +296,11 @@ APP_MSG_HANDLER(gapc_bond_req_ind)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle bonding result indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_bond_ind)
 {
     (void)msgid;(void)dest_id;
@@ -314,6 +354,11 @@ APP_MSG_HANDLER(gapc_bond_ind)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle encryption start request
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_encrypt_req_ind)
 {
     (void)msgid;(void)dest_id;
@@ -339,6 +384,11 @@ APP_MSG_HANDLER(gapc_encrypt_req_ind)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle encryption status indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_encrypt_ind)
 {
     (void)msgid;(void)dest_id;
@@ -349,6 +399,11 @@ APP_MSG_HANDLER(gapc_encrypt_ind)
     app_conn_fsm(BLE_ENCRYPTED, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle security procedure indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_security_ind)
 {
     (void)msgid;(void)dest_id;(void)src_id;
@@ -365,6 +420,11 @@ APP_MSG_HANDLER(gapc_security_ind)
 /**
  ****************************************************************************************
  * @brief SubTask Handler of GAP controller Message.
+ ****************************************************************************************
+ */
+/**
+ ****************************************************************************************
+ * @brief Main GAPC message subtask dispatcher
  ****************************************************************************************
  */
 APP_SUBTASK_HANDLER(gapc_msg)

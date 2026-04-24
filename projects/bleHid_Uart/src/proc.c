@@ -23,8 +23,6 @@
 
 #define RELEASE_KEY (0)
 
-#define UART_SEND(len, data) uart_send(UART1_PORT, len, data)
-
 /*
  * DEFINES
  ****************************************************************************************
@@ -38,6 +36,11 @@ void hids_led_lock(uint8_t leds)
 }
 
 /// Uart Data procedure
+/**
+ ****************************************************************************************
+ * @brief Process UART protocol packets
+ ****************************************************************************************
+ */
 void uart_proc(struct pt_pkt *pkt, uint8_t status)
 {
     #if (DBG_PROC)

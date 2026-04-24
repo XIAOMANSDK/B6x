@@ -1,3 +1,9 @@
+/**
+ ****************************************************************************************
+ * @file micphone.c
+ * @brief Microphone audio capture for vocGoogle voice assistant
+ ****************************************************************************************
+ */
 #include "app_user.h"
 #include "drvs.h"
 #include "regs.h"
@@ -7,7 +13,6 @@
 #include "bledef.h"
 #include "prf_hids.h"
 #include "app.h"
-#include "app_user.h"
 #include "msbc.h"
 #include "adpcm.h"
 
@@ -42,7 +47,7 @@ struct ADPCMBlock
 #define PCM_SAMPLE_NB   (READ_UNIT_SIZE/2)     // 256: 32ms  8000Hz
 #endif
 
-extern uint8_t voice_start_flag;
+extern volatile uint8_t voice_start_flag;
 
 __ATTR_SRAM int16_t pcm_buff0[PCM_SAMPLE_NB];
 __ATTR_SRAM int16_t pcm_buff1[PCM_SAMPLE_NB];
@@ -50,6 +55,11 @@ __ATTR_SRAM int16_t pcm_buff1[PCM_SAMPLE_NB];
 __ATTR_SRAM struct ADPCMBlock adpcm_buff;
 struct adpcm_state state;
 
+/**
+ ****************************************************************************************
+ * @brief Send raw data bytes over UART for debug
+ ****************************************************************************************
+ */
 void uartTxSend(const uint8_t *data, uint16_t len)
 {
     while(len--)
@@ -89,6 +99,11 @@ __SRAMFN static void ble_adpcm_encode_package_send(int16_t *sample_buf, int len)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Initialize microphone SADC DMA and ADPCM encoder
+ ****************************************************************************************
+ */
 void micInit(void)
 {
     rc_voice_init();
@@ -135,6 +150,11 @@ void micDeinit(void)
     voiceSendFt = 4;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Process DMA completion and send ADPCM voice data
+ ****************************************************************************************
+ */
 void micPut(void)
 {
     // primary or alternate transfer done
@@ -162,6 +182,11 @@ void micPut(void)
         // GPIO_DAT_SET(1UL << 7);
         ble_adpcm_encode_package_send(pbuff, PCM_SAMPLE_NB);
         // GPIO_DAT_CLR(1UL << 7);
-    } 
+    }
 }
 #endif
+
+bool mic_is_active(void)
+{
+    return (SADC->CTRL.SADC_DMAC_EN != 0);
+}

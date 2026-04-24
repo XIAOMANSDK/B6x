@@ -1,53 +1,45 @@
 /**
- * @file usbd_audio.c
- * @brief USB音频设备实现文件
- * 
- * 工作原理及过程说明：
- * 
- * 本代码实现了一个USB音频输入设备，支持8KHz采样率、16位分辨率、单声道的麦克风输入。
- * 
- * 工作流程：
- * 1. 初始化阶段：
- *    - 配置USB时钟和IO引脚
- *    - 注册USB设备描述符和配置信息
- *    - 使能USB中断
- * 
- * 2. 枚举阶段：
- *    - 主机读取设备描述符，识别为音频设备
- *    - 建立通信连接，配置音频接口和端点
- * 
- * 3. 数据传输阶段：
- *    - 通过等时传输端点实时发送音频数据
- *    - 使用状态机管理麦克风的开关和数据传输状态
- *    - 当主机选择音频接口时启动数据传输
- * 
- * 4. 状态管理：
- *    - MIC_OFF: 麦克风关闭状态
- *    - MIC_IDLE: 麦克风就绪，等待数据传输
- *    - MIC_BUSY: 数据传输中状态
+ ****************************************************************************************
+ *
+ * @file audio_mic.c
+ *
+ * @brief USB audio microphone device implementation
+ *
+ * @details
+ * Implements a USB audio input device with 8KHz/16bit/mono microphone input.
+ *
+ * Workflow:
+ * 1. Init: configure USB clock, descriptors, and endpoints
+ * 2. Enumerate: host recognizes audio device and sets up interfaces
+ * 3. Transfer: send audio data via isochronous endpoint using state machine
+ * 4. State machine: MIC_OFF -> MIC_IDLE -> MIC_BUSY (per transfer)
+ *
+ ****************************************************************************************
  */
+
 #include "usbd.h"
 #include "usbd_audio.h"
 #include "drvs.h"
+#include "micphone.h"
 
 #if (DEMO_AUDIO_MIC)
 
-#define USBD_VID                    0x0D8C    /**< 厂商ID */
-#define USBD_PID                    0x0312    /**< 产品ID */
-#define USBD_BCD                    0x0306    /**< 设备版本号 */
-#define USBD_MAX_POWER              100       /**< 最大功耗(mA) */
-#define USBD_LANGID_STRING          0x0409    /**< 语言ID: 英语(美国) */
+#define USBD_VID                    0x0D8C    /**< Vendor ID */
+#define USBD_PID                    0x0312    /**< Product ID */
+#define USBD_BCD                    0x0306    /**< Device version */
+#define USBD_MAX_POWER              100       /**< Max power (mA) */
+#define USBD_LANGID_STRING          0x0409    /**< Language ID: English (US) */
 
-/* AUDIO Class Config */
-#define AUDIO_IN_EP                 0x81      /**< 音频输入端点地址 */
-#define AUDIO_IN_EP_INTV            0x01      /**< 端点间隔时间(单位:1ms) */
+/* Audio Class Config */
+#define AUDIO_IN_EP                 0x81      /**< Audio IN endpoint address */
+#define AUDIO_IN_EP_INTV            0x01      /**< Endpoint interval (ms) */
 
-#define AUDIO_IN_FREQ               8000U     /**< 采样频率: 8KHz */
-#define AUDIO_IN_FRAME_SIZE         2         /**< 帧大小(字节): 16位=2字节 */
-#define AUDIO_IN_RESOL_BITS         16        /**< 分辨率(位): 16位 */
-#define AUDIO_IN_CHNLS              1         /**< 声道数: 单声道 */
+#define AUDIO_IN_FREQ               8000U     /**< Sample rate: 8KHz */
+#define AUDIO_IN_FRAME_SIZE         2         /**< Frame size (bytes): 16-bit */
+#define AUDIO_IN_RESOL_BITS         16        /**< Resolution: 16-bit */
+#define AUDIO_IN_CHNLS              1         /**< Channel count: mono */
 
-/// Packet Size = AudioFreq * DataSize (16bit: 2) * NumChannels(Mono: 1) / 1000ms
+/// Packet Size = AudioFreq * DataSize * NumChannels / 1000ms
 #define AUDIO_IN_EP_MPS             ((uint32_t)((AUDIO_IN_FREQ * AUDIO_IN_FRAME_SIZE * AUDIO_IN_CHNLS) / 1000))
 
 /// Mono: 1, Stereo: 2
@@ -59,7 +51,7 @@
 #define AUDIO_INPUT_CHEN            0x0003
 #endif
 
-/** 音频实体ID定义 */
+/** Audio entity IDs */
 enum audio_id {
     AUDIO_UNDEFINED_ID              = 0,
 
@@ -68,8 +60,7 @@ enum audio_id {
     AUDIO_OUT_TERM_ID,
 };
 
-
-/*!< 接口描述符数量 */
+/** Interface descriptor numbers */
 enum intf_num {
     /* Audio class interface */
     AUDIO_AC_INTF_NUM               = 0,
@@ -83,9 +74,7 @@ enum intf_num {
     USB_AUDIO_INTF_END              = AUDIO_AS_INTF_NUM,
 };
 
-
-/*!< Length of Configure descriptor */
-/// Audio Desc Size (Audio Control & Audio Stream)
+/** Audio Control descriptor size */
 #define AUDIO_AC_CTRL_SIZE          ( AUDIO_SIZEOF_AC_HEADER_DESC(1) +                          \
                                       AUDIO_SIZEOF_AC_INPUT_TERMINAL_DESC +                     \
                                       AUDIO_SIZEOF_AC_OUTPUT_TERMINAL_DESC +                    \
@@ -95,31 +84,29 @@ enum intf_num {
 
 #define AUDIO_AS_DESC_SIZE          ( AUDIO_AS_DESCRIPTOR_INIT_LEN(1) )
 
-#define AUDIO_AC_STRING_INDEX       (0) // none
+#define AUDIO_AC_STRING_INDEX       (0)
 
-/// Total DescSize
+/// Total configuration descriptor size
 #define USB_CONFIG_TOTAL_SIZE       ( USB_CONFIG_DESC_SIZE                      \
                                     + AUDIO_AC_DESC_SIZE + AUDIO_AS_DESC_SIZE )
 
-
-/*!< USB device descriptor */
+/** USB device descriptor */
 const uint8_t audio_descriptor[] = {
     /* Descriptor - Device (Size:18) */
     USB_DEVICE_DESCRIPTOR_INIT(USB_1_1, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, USBD_BCD, 0x01),
-    
+
     /* Descriptor - Configuration (Total Size:9+Intf_Size) */
-    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT, 
+    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_TOTAL_SIZE, USB_CONFIG_INTF_CNT,
             0x01, USB_CONFIG_BUS_POWERED | USB_CONFIG_REMOTE_WAKEUP, USBD_MAX_POWER),
-    
+
     /* Descriptor - Audio Control */
     AUDIO_AC_HEADER_INIT(AUDIO_AC_INTF_NUM, AUDIO_AC_CTRL_SIZE, AUDIO_AC_STRING_INDEX, AUDIO_AS_INTF_NUM),
-
     AUDIO_AC_INPUT_TERMINAL_DESCRIPTOR_INIT(AUDIO_IN_TERM_ID, AUDIO_INTERM_MIC, AUDIO_IN_CHNLS, AUDIO_INPUT_CHEN),
     AUDIO_AC_FEATURE_UNIT_DESCRIPTOR_INIT(AUDIO_IN_FEAT_ID, AUDIO_IN_TERM_ID, 0x01, AUDIO_INPUT_CTRL),
     AUDIO_AC_OUTPUT_TERMINAL_DESCRIPTOR_INIT(AUDIO_OUT_TERM_ID, AUDIO_TERMINAL_STREAMING, 0x02, AUDIO_IN_FEAT_ID),
 
     /* Descriptor - Audio Stream */
-    AUDIO_AS_DESCRIPTOR_INIT(AUDIO_AS_INTF_NUM, AUDIO_OUT_TERM_ID, AUDIO_IN_CHNLS, AUDIO_IN_FRAME_SIZE, AUDIO_IN_RESOL_BITS, 
+    AUDIO_AS_DESCRIPTOR_INIT(AUDIO_AS_INTF_NUM, AUDIO_OUT_TERM_ID, AUDIO_IN_CHNLS, AUDIO_IN_FRAME_SIZE, AUDIO_IN_RESOL_BITS,
                                 AUDIO_IN_EP, 0x05, AUDIO_IN_EP_MPS, AUDIO_IN_EP_INTV, AUDIO_SAMPLE_FREQ_3B(AUDIO_IN_FREQ)),
 
     ///////////////////////////////////////
@@ -130,29 +117,25 @@ const uint8_t audio_descriptor[] = {
     // String1 - iManufacturer
     0x10,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('X'),                 /* wcChar0 */
-    WCHAR('M'),                 /* wcChar1 */
-    WCHAR('-'),                 /* wcChar2 */
-    WCHAR('U'),                 /* wcChar3 */
-    WCHAR('S'),                 /* wcChar4 */
-    WCHAR('B'),                 /* wcChar5 */
-    WCHAR('D'),                 /* wcChar6 */
+    WCHAR('X'),
+    WCHAR('M'),
+    WCHAR('-'),
+    WCHAR('U'),
+    WCHAR('S'),
+    WCHAR('B'),
+    WCHAR('D'),
 
     // String2 - iProduct
     0x12,                       /* bLength */
-    USB_DESC_TYPE_STRING, /* bDescriptorType */
-    WCHAR('U'),                 /* wcChar0 */
-    WCHAR('A'),                 /* wcChar1 */
-    WCHAR('C'),                 /* wcChar2 */
-    WCHAR(' '),                 /* wcChar3 */
-    WCHAR('D'),                 /* wcChar4 */
-    WCHAR('E'),                 /* wcChar5 */
-    WCHAR('M'),                 /* wcChar6 */
-    WCHAR('O'),                 /* wcChar7 */
-
-//    // String3 - iSerialNumber
-//    0x02,                       /* bLength */
-//    USB_DESC_TYPE_STRING, /* bDescriptorType */
+    USB_DESC_TYPE_STRING,       /* bDescriptorType */
+    WCHAR('U'),
+    WCHAR('A'),
+    WCHAR('C'),
+    WCHAR(' '),
+    WCHAR('D'),
+    WCHAR('E'),
+    WCHAR('M'),
+    WCHAR('O'),
 
     /* Descriptor - Device Qualifier (Size:10) */
     #if (USBD_BCD == USB_2_0)
@@ -170,22 +153,22 @@ const uint8_t audio_descriptor[] = {
 
 extern void usbd_audio_ep_in_handler(uint8_t ep);
 
-/*!< table of Audio entity */
+/** Audio entity table */
 static const audio_entity_t audio_entity_tab[] = {
     AUDIO_ENTITY_T(AUDIO_IN_EP, AUDIO_IN_FEAT_ID, AUDIO_CONTROL_FEATURE_UNIT),
 };
 
-/*!< table of endpoints */
+/** Endpoint table */
 static const usbd_ep_t endpoint_tab[] = {
     USBD_EP_T(AUDIO_IN_EP, USB_EP_TYPE_ISOCHRONOUS, AUDIO_IN_EP_MPS, &usbd_audio_ep_in_handler),
 };
 
-/*!< table of class */
+/** Class table */
 static const usbd_class_t class_tab[] = {
     USBD_CLASS_T(USB_AUDIO_INTF_START, USB_AUDIO_INTF_END, &usbd_audio_class_handler),
 };
 
-/*!< USBD Configuration */
+/** USBD configuration */
 static const usbd_config_t audio_configuration[] = {
     USBD_CONFIG_T(1, USB_CONFIG_INTF_CNT, class_tab, endpoint_tab)
 };
@@ -196,19 +179,23 @@ static const usbd_config_t audio_configuration[] = {
  ****************************************************************************
  */
 
-/** 麦克风状态定义 */
+/** Microphone state */
 enum mic_state_tag {
     MIC_OFF,
-    MIC_IDLE, // on
+    MIC_IDLE, ///< ON, ready for transfer
     MIC_BUSY,
 };
 
-volatile uint8_t mic_state = MIC_OFF;
+static volatile uint8_t mic_state = MIC_OFF;
 
 /**
- * @brief 获取音频实体
- * @param bEntityId 实体ID
- * @return 音频实体指针
+ ****************************************************************************************
+ * @brief Get audio entity by ID
+ *
+ * @param[in] bEntityId  Entity ID
+ *
+ * @return Pointer to audio entity, or NULL if not found
+ ****************************************************************************************
  */
 const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 {
@@ -221,9 +208,12 @@ const audio_entity_t *usbd_audio_get_entity(uint8_t bEntityId)
 }
 
 /**
- * @brief 接口切换回调函数
- * @param intf_num 接口号
- * @param alt_setting 备用设置
+ ****************************************************************************************
+ * @brief Interface change callback (SET_INTERFACE)
+ *
+ * @param[in] intf_num    Interface number
+ * @param[in] alt_setting Alternate setting
+ ****************************************************************************************
  */
 void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
 {
@@ -239,16 +229,19 @@ void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
 }
 
 /**
- * @brief 音频输入端点处理函数
- * @param ep 端点地址
+ ****************************************************************************************
+ * @brief Audio IN endpoint transfer complete handler
+ *
+ * @param[in] ep  Endpoint address
+ ****************************************************************************************
  */
 void usbd_audio_ep_in_handler(uint8_t ep)
 {
     (void)ep;
+
     if (mic_state == MIC_BUSY) {
         mic_state = MIC_IDLE;
     }
-    //USB_LOG_RAW("ep_in:0x%x\r\n", ep);
 }
 
 /*
@@ -256,15 +249,16 @@ void usbd_audio_ep_in_handler(uint8_t ep)
  ****************************************************************************
  */
 
-static uint8_t mic_tmp = 0;                     /**< 测试数据临时变量 */
-static uint8_t mic_buffer[AUDIO_IN_EP_MPS];     /**< 麦克风数据缓冲区 */
+static uint8_t mic_buffer[AUDIO_IN_EP_MPS];     /**< Mic data buffer */
+static bool mic_flag = false;                    /**< Mic data ready flag */
 
 /**
- * @brief USB设备初始化
+ ****************************************************************************************
+ * @brief Initialize USB audio device
+ ****************************************************************************************
  */
- void usbdInit()
+void usbdInit(void)
 {
-    // enable USB clk and iopad
     rcc_usb_en();
 
     usbd_init();
@@ -273,62 +267,27 @@ static uint8_t mic_buffer[AUDIO_IN_EP_MPS];     /**< 麦克风数据缓冲区 */
     NVIC_EnableIRQ(USB_IRQn);
 }
 
-//void usbdTest()
-//{
-//    if (usbd_is_configured()) {
-//        if (mic_state == MIC_IDLE) {
-//            
-//            uint8_t status = 0;
-//            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
-//            
-//            GPIO_DIR_SET_HI(GPIO16);
-//            mic_state = MIC_BUSY;
-//            status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
-
-//            if (status != USBD_OK) {
-//                if (mic_state != MIC_OFF) {
-//                    mic_state = MIC_IDLE;
-//                }
-//                USB_LOG_RAW("err:%d, tmp:%02X\r\n", status, mic_tmp);
-//            } else {
-//                USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
-//            }
-//            GPIO_DIR_SET_LO(GPIO16);
-//            
-//            mic_tmp++;
-//        }
-//    }
-//}
-
-#include "micphone.h"
-bool mic_flag = false;  /**< 麦克风数据就绪标志 */
-
 /**
- * @brief USB设备测试函数
- * 
- * 主要功能：
- * 1. 获取麦克风数据
- * 2. 当设备已配置且麦克风就绪时发送数据
- * 3. 管理数据传输状态
+ ****************************************************************************************
+ * @brief USB audio device test loop
+ *
+ * Capture mic data and send via USB isochronous endpoint.
+ * Called repeatedly from main loop.
+ ****************************************************************************************
  */
-
-void usbdTest()
+void usbdTest(void)
 {
     uint8_t *ptr = micDataGet();
 
-    if (ptr != NULL)
-    {
+    if (ptr != NULL) {
         mic_flag = true;
-        memcpy(mic_buffer, ptr, AUDIO_IN_EP_MPS);  // PCM_SAMPLE_NB = 8;
+        memcpy(mic_buffer, ptr, AUDIO_IN_EP_MPS);
     }
-    
+
     if (usbd_is_configured()) {
         if ((mic_state == MIC_IDLE) && mic_flag) {
-            
             uint8_t status = 0;
-//            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
-            
-            GPIO_DIR_SET_HI(GPIO16);
+
             mic_state = MIC_BUSY;
             status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
 
@@ -336,16 +295,11 @@ void usbdTest()
                 if (mic_state != MIC_OFF) {
                     mic_state = MIC_IDLE;
                 }
-                USB_LOG_RAW("err:%d, tmp:%02X\r\n", status, mic_tmp);
-            } else {
-                USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
+                USB_LOG_RAW("ep_write err:%d\r\n", status);
             }
-            GPIO_DIR_SET_LO(GPIO16);
-            
-            mic_tmp++;
-            
             mic_flag = false;
         }
     }
 }
-#endif
+
+#endif /* DEMO_AUDIO_MIC */

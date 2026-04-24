@@ -29,24 +29,22 @@
  ****************************************************************************************
  */
 
-#define BLE_MAX_LEN 64 //(BLE_MTU - 3)
+#define BLE_MAX_LEN 64
+#define NULL_CNT    20
+#define SCAN_NAME_MAX  29  // 31 - 2
+#define SCAN_DUR_DFT   50
 
 static uint8_t  buff[BLE_MAX_LEN];
 static uint16_t buff_len = 0;
-#define NULL_CNT 20
-
-#define SCAN_NAME_MAX 29 // 31 - 2
-
-#define SWAP_BT_ORDER (0)
 
 struct cmd_env_tag
 {
-    uint8_t scan_name[30];
+    uint8_t scan_name[SCAN_NAME_MAX + 1];
     uint8_t auto_conn;
     uint8_t scan_duration;
 } __attribute__((packed));
 
-struct cmd_env_tag cmd_env;
+static struct cmd_env_tag cmd_env;
 
 enum
 {
@@ -85,7 +83,7 @@ void user_init(void)
     cmd_env.scan_name[0] = sizeof(SCAN_ADV_NAME) - 1;
     memcpy(cmd_env.scan_name + 1, SCAN_ADV_NAME, cmd_env.scan_name[0]);
     //    cmd_env.auto_conn = 1;
-    cmd_env.scan_duration = 50;
+    cmd_env.scan_duration = SCAN_DUR_DFT;
 
     uart_rx_to = sftmr_tick() + UART_RX_TO;
 }
@@ -95,7 +93,7 @@ void user_init(void)
  ****************************************************************************************
  */
 #if (SWAP_BT_ORDER)
-__INLINE__ void co_bswap(uint8_t *p_val_out, const uint8_t *p_val_in, uint16_t len)
+__STATIC_FORCEINLINE void co_bswap(uint8_t *p_val_out, const uint8_t *p_val_in, uint16_t len)
 {
     while (len > 0)
     {
@@ -146,6 +144,7 @@ void user_procedure(void)
                 if (buff_len > 2)
                 {
                     uint8_t name_len = buff[2];
+                    if (name_len > SCAN_NAME_MAX) break;
                     if (buff_len >= name_len + 2)
                     {
                         memcpy(cmd_env.scan_name, buff + 2, name_len + 1);

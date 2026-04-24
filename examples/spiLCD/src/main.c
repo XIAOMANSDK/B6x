@@ -27,7 +27,7 @@
  ****************************************************************************************
  */
 
-volatile uint32_t _sysTickCnt;
+static volatile uint32_t _sysTickCnt;
 
 void SysTick_Handler(void)
 {
@@ -39,7 +39,7 @@ uint32_t micros(void)
     return _sysTickCnt * 10000;
 }
 
-void delayMs(uint32_t ms)
+void delay_ms(uint32_t ms)
 {
     uint32_t cur_tick = _sysTickCnt;
     uint32_t cnt_delay = ((ms + 9) / 10);
@@ -47,7 +47,7 @@ void delayMs(uint32_t ms)
     while ((uint32_t)(_sysTickCnt - cur_tick) < cnt_delay);
 }
 
-static void sysInit(void)
+static void sys_init(void)
 {
     SYS_CLK_ALTER();
     puya_enter_dual_read();
@@ -63,7 +63,7 @@ static void sysInit(void)
     GLOBAL_INT_START();
 }
 
-static void devInit(void)
+static void dev_init(void)
 {
     uint16_t rsn = rstrsn();
 
@@ -80,7 +80,7 @@ void lcd_logo(void)
                     Logo_WIDTH, Logo_HEIGHT, Logo_DATA);
     lcd_wait_done();
 
-    delayMs(1000);
+    delay_ms(1000);
 
     lcd_fill_color((LCD_WIDTH-Logo_WIDTH)>>1/*x*/, (LCD_HEIGHT-Logo_HEIGHT)>>1/*y*/,
                     Logo_WIDTH, Logo_HEIGHT, RGB565_BLACK);
@@ -92,8 +92,8 @@ void lcd_logo(void)
 
 int main(void)
 {
-    sysInit();
-    devInit();
+    sys_init();
+    dev_init();
 
     lcd_init();
 

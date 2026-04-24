@@ -3,7 +3,8 @@
  *
  * @file proc.c
  *
- * @brief user procedure.
+ * @brief User procedure - UART to BLE transparent data forwarding with command
+ *        parsing for disconnect, reset, and speed-test modes.
  *
  ****************************************************************************************
  */
@@ -30,13 +31,28 @@
  ****************************************************************************************
  */
 
-#define BLE_MAX_LEN           (BLE_MTU - 3)
-#define NULL_CNT              20
+/** BLE_MAX_LEN = MTU - 3 (1 byte ATT opcode + 2 bytes ATT handle) */
+#define BLE_MAX_LEN                 (BLE_MTU - 3)
 
-static uint8_t buff[BLE_MAX_LEN];
-static uint16_t buff_len = 0;
+/** Idle poll count threshold before flushing partial UART data */
+#define UART_IDLE_FLUSH_THRESHOLD   (20)
 
-bool speed_test = 0;
+/** Command byte: disconnect BLE link */
+#define CMD_DISCONNECT              (0xAA)
+
+/** Command byte: enter speed test mode */
+#define CMD_SPEED_TEST              ('S')
+
+
+/*
+ * VARIABLES
+ ****************************************************************************************
+ */
+
+static uint8_t  g_uart_rx_buf[BLE_MAX_LEN];
+static uint16_t g_uart_rx_len = 0;
+static bool     g_speed_test = false;
+
 
 /*
  * FUNCTIONS
@@ -44,103 +60,133 @@ bool speed_test = 0;
  */
 
 #if !(DBG_SESS)
-/// Override - Callback on received data from peer device
+/**
+ ****************************************************************************************
+ * @brief Callback on data received from BLE peer. Forwards data to UART1.
+ *
+ * @param[in] conidx   Connection index
+ * @param[in] len      Data length
+ * @param[in] data     Pointer to received data
+ ****************************************************************************************
+ */
+/**
+ ****************************************************************************************
+ * @brief BLE session data received callback
+ ****************************************************************************************
+ */
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     (void)conidx;
     uart_send(UART1_PORT, len, data);
 }
-#endif //!(DBG_SESS)
+#endif /* !(DBG_SESS) */
 
-/// Uart Data procedure
+/**
+ ****************************************************************************************
+ * @brief Process UART data: accumulate into buffer and forward to BLE.
+ *
+ *        Reads UART ring buffer into g_uart_rx_buf. When the buffer is full or
+ *        UART has been idle for UART_IDLE_FLUSH_THRESHOLD polls, the data is
+ *        sent over BLE via sess_txd_send(). Special command bytes:
+ *        - CMD_DISCONNECT: disconnect BLE or reset stack
+ *        - CMD_SPEED_TEST: enable speed test mode
+ ****************************************************************************************
+ */
 static void data_proc(void)
 {
-    // Todo Loop-Proc
-    static uint8_t null_cnt = 0;
-    uint16_t len;
+    static uint8_t idle_poll_cnt = 0;
+    uint16_t read_len;
 
-    len = uart1Rb_Read(&buff[buff_len], BLE_MAX_LEN - buff_len);
-    if (len > 0)
+    read_len = uart1Rb_Read(&g_uart_rx_buf[g_uart_rx_len], BLE_MAX_LEN - g_uart_rx_len);
+    if (read_len > 0)
     {
-        buff_len += len;
-        if (buff_len < BLE_MAX_LEN)
+        g_uart_rx_len += read_len;
+        if (g_uart_rx_len < BLE_MAX_LEN)
         {
-            return; // wait full
+            return;
         }
     }
     else
     {
-        if ((buff_len > 0) && (null_cnt++ > NULL_CNT))
+        if ((g_uart_rx_len > 0) && (idle_poll_cnt++ > UART_IDLE_FLUSH_THRESHOLD))
         {
-            //finish = true;
-            null_cnt = 0;
+            idle_poll_cnt = 0;
         }
         else
         {
-            return; // wait again
+            return;
         }
     }
 
     if (app_state_get() == APP_CONNECTED)
     {
-        if (buff[0] == 0xAA)
+        if (g_uart_rx_buf[0] == CMD_DISCONNECT)
         {
-            speed_test = false;
-            DEBUG("GAP Disc!\r\n");
+            g_speed_test = false;
+            DEBUG("GAP Disc!");
             gapc_disconnect(app_env.curidx);
-            buff_len = 0;
+            g_uart_rx_len = 0;
         }
-        else if (buff[0] == 'S')
+        else if (g_uart_rx_buf[0] == CMD_SPEED_TEST)
         {
-            speed_test = true;
-            buff_len = 0;
+            g_speed_test = true;
+            g_uart_rx_len = 0;
         }
-        else if (sess_txd_send(app_env.curidx, buff_len, buff) == LE_SUCCESS)
+        else if (sess_txd_send(app_env.curidx, g_uart_rx_len, g_uart_rx_buf) == LE_SUCCESS)
         {
-            debugHex(buff, buff_len);
-            buff_len = 0;
+            debugHex(g_uart_rx_buf, g_uart_rx_len);
+            g_uart_rx_len = 0;
+            idle_poll_cnt = 0;
         }
     }
     else
     {
-        // goto reset
-        if (buff[0] == 0xAA)
+        if (g_uart_rx_buf[0] == CMD_DISCONNECT)
         {
-            DEBUG("GAP Reset!\r\n");
+            DEBUG("GAP Reset!");
             gapm_reset();
         }
 
-        buff_len = 0;
+        g_uart_rx_len = 0;
     }
 }
 
 #if (CFG_SLEEP)
+/**
+ ****************************************************************************************
+ * @brief Enter low-power sleep when BLE stack permits.
+ ****************************************************************************************
+ */
 static void sleep_proc(void)
 {
     uint8_t lpsta = ble_sleep(BLE_SLP_TWOSC, BLE_SLP_DURMAX);
 
     if (lpsta == BLE_IN_SLEEP)
     {
-        uint16_t lpret = core_sleep(CFG_WKUP_BLE_EN);
-        //DEBUG("ble sta:%d, wksrc:%X", lpsta, lpret);
-    }
-    else
-    {
-        //DEBUG("ble sta:%d", lpsta);
+        (void)core_sleep(CFG_WKUP_BLE_EN);
     }
 }
-#endif //(CFG_SLEEP)
+#endif /* (CFG_SLEEP) */
 
+/**
+ ****************************************************************************************
+ * @brief Main user procedure called every loop iteration.
+ *        Handles sleep, UART-to-BLE data forwarding, and speed test.
+ ****************************************************************************************
+ */
 void user_procedure(void)
 {
     #if (CFG_SLEEP)
     sleep_proc();
-    #endif //(CFG_SLEEP)
+    #endif
 
     data_proc();
 
-    if ((app_state_get() == APP_CONNECTED) && (speed_test))
+    if ((app_state_get() == APP_CONNECTED) && (g_speed_test))
     {
-        sess_txd_send(app_env.curidx, BLE_MAX_LEN, buff);
+        if (sess_txd_send(app_env.curidx, BLE_MAX_LEN, g_uart_rx_buf) == LE_SUCCESS)
+        {
+            g_uart_rx_len = 0;
+        }
     }
 }

@@ -1,3 +1,9 @@
+/**
+ ****************************************************************************************
+ * @file pt_pkt.c
+ * @brief Protocol packet parser and handler dispatcher
+ ****************************************************************************************
+ */
 #include <stdint.h>
 #include <stdbool.h>
 #include "proto.h"

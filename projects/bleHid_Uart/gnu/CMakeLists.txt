@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20.0)
 
-# 如果 SDK_ROOT 未定义，使用相对路径设置
+# Set SDK_ROOT using relative path if not defined
 if(NOT SDK_ROOT)
     set(SDK_ROOT "${CMAKE_CURRENT_LIST_DIR}/../../..")
 endif()
@@ -9,11 +9,11 @@ include("${SDK_ROOT}/sdk.cmake")
 project(bleHid_Uart C ASM)
 
 set(LOCAL_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../src")
-# 添加 .c 文件
+# Add source files
 aux_source_directory("${LOCAL_SRC_DIR}" SRC_LIST)
 aux_source_directory("${CMAKE_CURRENT_SOURCE_DIR}/../protocol" SRC_LIST)
 
-# 按需添加其它源文件
+# Add additional source files as needed
 list(APPEND SRC_LIST
     ${STARTUP_SRC}
     ${SDK_MODULES_SRC_DIR}/leds.c
@@ -28,13 +28,13 @@ list(APPEND SRC_LIST
     ${SDK_BLE_PRF_DIR}/prf_hids.c
 )
 
-# 设置 __MODULE__ 宏定义
+# Set __MODULE__ macro definitions
 set_module_definitions(SRC_LIST)
 
 set(LINKER_SCRIPT_IN ${BLE_LITE_LINK_SCRIPT})
 set(PROCESSED_LINKER_SCRIPT "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.ld")
 
-# 添加预处理自定义命令
+# Add linker script preprocessing command
 add_custom_command(
   OUTPUT ${PROCESSED_LINKER_SCRIPT}
   COMMAND ${CMAKE_C_COMPILER}
@@ -51,7 +51,7 @@ add_custom_command(
 
 add_executable(${PROJECT_NAME} ${SRC_LIST} ${PROCESSED_LINKER_SCRIPT})
 
-# 头文件搜索路径
+# Header file include paths
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${COMMON_INCLUDE_DIRS}
     "${LOCAL_SRC_DIR}"
@@ -59,7 +59,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${SDK_BLE_INCLUDE}
 )
 
-# 链接静态库
+# Link static libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${DRVS_LIB}
     ${BLE_LIB_LITE}

@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\src\\rco.c",
+  "file_path": "drivers/src/rco.c",
   "functions": [
     {
       "name": "rc32k_conf",
@@ -17,7 +17,7 @@
         }
       ],
       "function_body": "{\n    uint32_t target = 0;               // bit[19:0]  /* 校准目标值 */\n    uint8_t cycle = (cal_ctrl & 0x1F); // bit[27:20] /* 校准周期数 */\n\n    #if (ROM_UNUSED)\n    // 时钟使能（在ROM中保持使能）\n    // RCC->APBCLK_EN_RUN.AON_CLKEN_RUN     = 1;\n    // RCC->APBCLK_EN_RUN.APBMISC_CLKEN_RUN = 1;\n    RCC_APBCLK_EN(APB_APBMISC_BIT | APB_AON_BIT);  /* 使能AON和APBMISC时钟 */\n    #endif\n\n    RCC->CLK_EN_ST.RCCALIB_CLKEN  = 1;         /* 使能RCCALIB时钟 */\n    RCC->CLK_EN_ST.RCCALIB_CLKSEL = ref_clk;   /* 选择RCCALIB参考时钟源 */\n\n    if (ref_clk == RCLK_HSE/*0*/)\n    {\n        target = HSE_CALIB_MULTI * (cycle + 1);  /* 使用HSE作为参考时钟计算目标值 */\n    }\n    else //if ((ref_clk == RCLK_DPLL64/*1*/) || (ref_clk == RCLK_DPLL128/*2*/))\n    {\n        uint16_t multi = ((RCC->CFG.DPLL_CLK_SW == 0) || (ref_clk == RCLK_DPLL128) ? DPLL_CAKLIB_MULTI : DPLL48M_CAKLIB_MULTI);  /* 根据DPLL时钟选择倍数 */\n        #if (TARGET_32000HZ)\n        target =  multi* ref_clk * (cycle + 1);  /* 计算32000Hz目标值 */\n        #else\n        target =  multi* ref_clk * (cycle + 1) / 10;  /* 计算31992Hz目标值 */\n        #endif\n    }\n\n    // bit[19:0]--rccalib_target, bit[27:20]--cycle, bit28--SCAL_EN, bit29--DLY\n    APBMISC->RCCALIB_CTRL.Word = (target & 0xFFFFFUL) | ((uint32_t)cal_ctrl << APBMISC_RCCALIB_CYCLES_LSB) | (1UL << APBMISC_RCCALIB_DLY_POS);  /* 配置RCCALIB控制寄存器 */\n}",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "drivers/src/rco.c",
       "line_number": 53,
       "is_static": false
     },
@@ -32,7 +32,7 @@
         }
       ],
       "function_body": "{\n    uint16_t trim_val = 0;\n\n    // 使用校准结果控制RC32K\n    AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL = 1;     /* 选择RCCALIB修调值控制RC32K */\n\n    // 启动RC校准\n    APBMISC->RCCALIB_START = 1;                /* 启动RCCALIB校准过程 */\n\n    // 等待完成，然后清除标志\n    while(!APBMISC->RCCALIB_STCLR.RCCALIB_DONE);  /* 等待校准完成 */\n    APBMISC->RCCALIB_STCLR.RCCALIB_DONE_CLR = 1;  /* 清除校准完成标志 */\n\n    // 获取RC32K校准修调值\n    //AON->BKHOLD_CTRL.RC32K_MSB_TRIM_CFG = APBMISC->RC32K_CALIB_ST.RC32K_MSB_CALIB;\n    //AON->BKHOLD_CTRL.RC32K_LSB_TRIM_CFG = APBMISC->RC32K_CALIB_ST.RC32K_LSB_CALIB;\n    //uint16_t value = APBMISC->RC32K_CALIB_ST.RC32K_MSB_CALIB | (APBMISC->RC32K_CALIB_ST.RC32K_LSB_CALIB << 4);\n    trim_val = (APBMISC->RC32K_CALIB_ST.Word & 0xF/*MSB*/) | (((APBMISC->RC32K_CALIB_ST.Word >> 16) & 0x3FF) << 4/*LSB*/);  /* 组合MSB和LSB修调值 */\n\n    AON->BKHOLD_CTRL.Word = (AON->BKHOLD_CTRL.Word & ~(0x3FFF << 0)) | (((uint32_t)trim_val & 0x3FFF) << 0);  /* 配置修调值到AON寄存器 */\n\n    // 使用AON的修调值控制RC32K\n    AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL = 0;     /* 恢复使用AON修调值控制RC32K */\n\n    return trim_val;\n}",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "drivers/src/rco.c",
       "line_number": 98,
       "is_static": false
     },
@@ -47,7 +47,7 @@
         }
       ],
       "function_body": "{\n    #if (ROM_UNUSED)\n    // 时钟使能（在ROM中保持使能）\n    // RCC->APBCLK_EN_RUN.AON_CLKEN_RUN = 1;\n    RCC_APBCLK_EN(APB_AON_BIT);                /* 使能AON时钟 */\n    #endif\n\n    //AON->BKHOLD_CTRL.RC32K_MSB_TRIM_CFG = value & 0xF;          // bit[3:0]\n    //AON->BKHOLD_CTRL.RC32K_LSB_TRIM_CFG = (value >> 4) & 0x3FF; // bit[13:4]\n    AON->BKHOLD_CTRL.Word = (AON->BKHOLD_CTRL.Word & ~(0x3FFF << 0)) | (((uint32_t)value & 0x3FFF) << 0);  /* 直接配置修调值 */\n\n    // 使用AON的修调值控制RC32K\n    AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL = 0;     /* 选择AON修调值控制RC32K */\n}",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "drivers/src/rco.c",
       "line_number": 136,
       "is_static": false
     },
@@ -62,7 +62,7 @@
         }
       ],
       "function_body": "{\n    uint16_t value;\n\n    #if (ROM_UNUSED)\n    // RCC->APBCLK_EN_RUN.AON_CLKEN_RUN = 1;\n    RCC_APBCLK_EN(APB_AON_BIT);                /* 使能AON时钟 */\n    #endif\n\n    if (AON->PMU_WKUP_CTRL.RC32K_TRIM_SEL == 0)\n        value = (AON->BKHOLD_CTRL.Word >> 0) & 0x3FFF; // 0=AON_RC32K_MSB_TRIM_CFG_LSB  /* 从AON寄存器获取修调值 */\n    else\n        value = (APBMISC->RC32K_CALIB_ST.Word & 0xF/*MSB*/) | (((APBMISC->RC32K_CALIB_ST.Word >> 16) & 0x3FF) << 4/*LSB*/);  /* 从RCCALIB状态寄存器获取修调值 */\n\n    return value;\n}",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "drivers/src/rco.c",
       "line_number": 162,
       "is_static": false
     },
@@ -77,7 +77,7 @@
         }
       ],
       "function_body": "{\n    #if (ROM_UNUSED)\n    // 时钟使能（在ROM中保持使能）\n    // RCC->APBCLK_EN_RUN.APBMISC_CLKEN_RUN = 1;\n    RCC_APBCLK_EN(APB_APBMISC_BIT);            /* 使能APBMISC时钟 */\n    #endif\n\n    APBMISC->RC16M_FREQ_TRIM = value;          /* 设置RC16M频率修调值 */\n}",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "drivers/src/rco.c",
       "line_number": 188,
       "is_static": false
     },
@@ -92,7 +92,7 @@
         }
       ],
       "function_body": "{\n    uint8_t value;\n\n    #if (ROM_UNUSED)\n    // RCC->APBCLK_EN_RUN.APBMISC_CLKEN_RUN = 1;\n    RCC_APBCLK_EN(APB_APBMISC_BIT);            /* 使能APBMISC时钟 */\n    #endif\n\n    value = APBMISC->RC16M_FREQ_TRIM;          /* 读取RC16M频率修调值 */\n\n    return value;\n}",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "drivers/src/rco.c",
       "line_number": 208,
       "is_static": false
     },
@@ -107,7 +107,7 @@
         }
       ],
       "function_body": "{\n    uint8_t trim_val = 0x20; // bit[5:0]  /* 初始修调值 */\n    int win_cnt = 0;\n    int win_set = APBMISC->RC16M_CNT_CTRL.RC16M_WIN_SET;  /* 获取目标窗口计数值 */\n\n    RCC->CLK_EN_ST.RC16M_CNT_CLKEN = 1;        /* 使能RC16M计数时钟 */\n\n    for (uint8_t step = 0x20; step > 0; step >>= 1)  /* 二分法步进 */\n    {\n        RCC->APBRST_CTRL.RC16M_CNT_RSTREQ = 1; /* 请求RC16M计数器复位 */\n        RCC->APBRST_CTRL.RC16M_CNT_RSTREQ = 0;\n\n        APBMISC->RC16M_FREQ_TRIM = trim_val;   /* 设置当前修调值 */\n        APBMISC->RC16M_CNT_CTRL.RC16M_CNT_START = 1;  /* 启动RC16M计数 */\n\n        while (!APBMISC->RC16M_CNT_CTRL.RC16M_CNT_DONE);  /* 等待计数完成 */\n        win_cnt = APBMISC->RC16M_CNT_CTRL.RC16M_WIN_CNT;  /* 获取实际窗口计数值 */\n\n        //if ((win_cnt > (win_set - 100)) && (win_cnt < (win_set + 100)))\n        if (co_abs(win_cnt - win_set) <= 100)  /* 检查是否达到目标精度 */\n            break;\n\n        trim_val = trim_val + (step >> 1) - ((win_cnt > win_set) ? step : 0);  /* 根据计数结果调整修调值 */\n    }\n\n    //RCC->CLK_EN_ST.RC16M_CNT_CLKEN = 0;\n\n    return trim_val;\n}",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "drivers/src/rco.c",
       "line_number": 236,
       "is_static": false
     }
@@ -118,7 +118,7 @@
       "value": "1",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\rco.c",
       "line_number": 19
     },
     {
@@ -126,7 +126,7 @@
       "value": "500 // 16M/32K",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./drivers\\src\\rco.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\rco.c",
       "line_number": 25
     }
   ],

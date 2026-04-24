@@ -1,9 +1,9 @@
 /**
  ****************************************************************************************
  *
- * @file esam.h
+ * @file iso7816.h
  *
- * @brief Header file
+ * @brief ISO7816 smart card interface driver
  *
  ****************************************************************************************
  */
@@ -27,38 +27,68 @@
     #define ISO7816_BAUD          BRR_DIV(129032, 64M)
 #else
     #define ISO7816_BAUD          BRR_DIV(129032, 16M)
-#endif //SYS_CLK
+#endif
+
 #define ISO7816_CLK_4M           ((SYS_CLK + 1) * 2 - 1)
 
-//LCR_STOP_BITS_1: 0.5 StopBits; LCR_STOP_BITS_2: 1.5 StopBits
-#define ISO7816_LCRS          LCR_BITS(8, 2, even) // default: 8 DataBits, 1.5 StopBits, Even Parity
+/// LCR config: 8 data bits, 1.5 stop bits (LCR_STOP_BITS_2), even parity
+#define ISO7816_LCRS          LCR_BITS(8, 2, even)
 
-/// Avoid conflict GPIOs of UART_DBG if diff port
-
+/// Default pin assignments (overridden by cfg.h)
 #ifndef PA_ISO7816_RST
 #define PA_ISO7816_RST         (17)
 #define PA_ISO7816_DATA        (16)
 #define PA_ISO7816_CLK         (15)
 #endif
 
-/* 
+/*
  * FUNCTION DECLARATION
  ****************************************************************************************
  */
 
-/// Init UARTx and its RB, enable IRQ.
+/**
+ ****************************************************************************************
+ * @brief Initialize ISO7816 UART, ring buffer, DMA, and interrupts
+ ****************************************************************************************
+ */
 void iso7816Init(void);
 
-/// Empty RingBuffer to reset.
+/**
+ ****************************************************************************************
+ * @brief Reset the receive ring buffer
+ ****************************************************************************************
+ */
 void iso7816RbReset(void);
 
-/// Get Length of data in RB.
+/**
+ ****************************************************************************************
+ * @brief Get number of bytes in receive ring buffer
+ *
+ * @return Number of bytes available
+ ****************************************************************************************
+ */
 uint16_t iso7816RbLen(void);
 
-/// Read data from RB, return the Length of data copied.
+/**
+ ****************************************************************************************
+ * @brief Read data from receive ring buffer
+ *
+ * @param[out] buff  Destination buffer
+ * @param[in]  max   Maximum bytes to read
+ *
+ * @return Number of bytes actually read
+ ****************************************************************************************
+ */
 uint16_t iso7816RbRead(uint8_t *buff, uint16_t max);
 
-
+/**
+ ****************************************************************************************
+ * @brief Send data via ISO7816 interface (blocking, runs from SRAM)
+ *
+ * @param[in] len   Data length
+ * @param[in] data  Data to send
+ ****************************************************************************************
+ */
 void iso7816Send(uint16_t len, const uint8_t *data);
 
-#endif //
+#endif /* _ISO7816_H_ */

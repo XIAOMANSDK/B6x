@@ -26,7 +26,7 @@
 
 #if (0)
 #define VOICE                  (1)
-#define BLE_DEV_NAME           {0xE8,0x93,0x9D,0xE7,0x89,0x99,0xE8,0xAF,0xAD,0xE9,0x9F,0xB3,0xE9,0x81,0xA5,0xE6,0x8E,0xA7,0xE5,0x99,0xA8,0x00} // À¶ÑÀÓïÒôÒ£¿ØÆ÷
+#define BLE_DEV_NAME           {0xE8,0x93,0x9D,0xE7,0x89,0x99,0xE8,0xAF,0xAD,0xE9,0x9F,0xB3,0xE9,0x81,0xA5,0xE6,0x8E,0xA7,0xE5,0x99,0xA8,0x00} // è“ç‰™è¯­éŸ³é¥æ§å™¨
 #else
 #define DBG_UART_TXD            (0) //PA00
 #define DBG_UART_RXD            (2) //PA02
@@ -70,12 +70,12 @@
 #define RC32K_CALIB_PERIOD     (10000)
 #define NOKEY_PRESS_UPDATE_PARAM (3000) // 10s(unit in 1ms)
 #define KEY_SCAN_PERIOD        (50)
-#define G_NO_ACTION_CNT        (1)  // ÎŞ²Ù×÷n*RC32K_CALIB_PERIOD, ½øÈëË¯Ãß
+#define G_NO_ACTION_CNT        (1)  // æ— æ“ä½œn*RC32K_CALIB_PERIOD, è¿›å…¥ç¡çœ 
 
 #define ADV_LED_GPIO           (GPIO00)
 #define IR_TX_PAD              (7)       // PA9  ATMR IO PA7~PA13
-#define KEY_IR_PERIOD          (110)     // ºìÍâÖØ¸´Âë´¦Àí110ms
-#define IR_TX_ADR              0x0816    // µØÖ·0x16, µØÖ··´Âë0x08
+#define KEY_IR_PERIOD          (110)     // çº¢å¤–é‡å¤ç å¤„ç†110ms
+#define IR_TX_ADR              0x0816    // åœ°å€0x16, åœ°å€åç 0x08
 
-#define ADV_LED_PERIOD         (1000)     // LED´¦Àí1000ms
+#define ADV_LED_PERIOD         (1000)     // LEDå¤„ç†1000ms
 #endif  //_APP_CFG_H_

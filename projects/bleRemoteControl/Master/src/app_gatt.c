@@ -39,7 +39,7 @@
 uint8_t pkt_kb[NB_PKT_MAX][KB_LEN];
 volatile uint16_t pkt_sidx, pkt_eidx;
 
-uint8_t pkt_mic[64][MIC_LEN];
+uint8_t pkt_mic[NB_PKT_MAX][MIC_LEN];
 volatile uint16_t pkt_mic_sidx, pkt_mic_eidx;
 #endif
 
@@ -125,11 +125,13 @@ uint8_t *get_kb_pkt(void)
 {
     uint8_t *pkt = NULL;
 
+    GLOBAL_INT_DISABLE();
     if (pkt_eidx != pkt_sidx)
     {
         pkt = pkt_kb[pkt_eidx];
         pkt_eidx = (pkt_eidx + 1)  % NB_PKT_MAX;
     }
+    GLOBAL_INT_RESTORE();
 
     return pkt;
 }
@@ -138,11 +140,13 @@ uint8_t *get_mic_pkt(void)
 {
     uint8_t *pkt = NULL;
 
+    GLOBAL_INT_DISABLE();
     if (pkt_mic_eidx != pkt_mic_sidx)
     {
         pkt = pkt_mic[pkt_mic_eidx];
         pkt_mic_eidx = (pkt_mic_eidx + 1)  % NB_PKT_MAX;
     }
+    GLOBAL_INT_RESTORE();
 
     return pkt;
 }

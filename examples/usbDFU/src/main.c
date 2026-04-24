@@ -3,7 +3,20 @@
  *
  * @file main.c
  *
- * @brief Main Entry of the application.
+ * @brief USB DFU (Device Firmware Upgrade) bootloader
+ *
+ * @details
+ * Implements a USB DFU mode bootloader that runs from a dedicated flash region.
+ *
+ * Boot flow:
+ * 1. Check DFU flag (AON backup register) or verify app flash is empty (0xFFFFFFFF)
+ * 2. If DFU requested: switch sysclk to 48MHz, init USB, enter DFU mode
+ * 3. If app present: jump to application at FLASH_CODE_BASE (0x18004000)
+ *
+ * DFU mode:
+ * - Host sends firmware via USB DFU class (DFU_MODE protocol)
+ * - Flash write is page-based (256 bytes), erase is sector-based (4KB)
+ * - On DFU leave: restore sysclk, enable watchdog, jump to new app
  *
  ****************************************************************************************
  */
@@ -23,8 +36,8 @@
 #define debugHex(dat, len)
 #endif
 
-#define USBD_VID                    0x3839//0x0483//0xffff
-#define USBD_PID                    0xDF11//0xfff0
+#define USBD_VID                    0x3839
+#define USBD_PID                    0xDF11
 #define USBD_MAX_POWER              100
 #define USBD_LANGID_STRING          1033
 
@@ -59,110 +72,85 @@ const uint8_t dfu_descriptor[] = {
     USB_CONFIG_DESCRIPTOR_INIT(USB_DFU_CONFIG_SIZE, USB_CONFIG_INTF_CNT,
             0x01, USB_CONFIG_BUS_POWERED, USBD_MAX_POWER),
 
-    DFU_DESCRIPTOR_INIT(0, DFU_PROTOCOL_DFUMODE, DFU_ATTR_CAPABLE, 0x04/*FLASH_DESC_iSTR*/),
+    DFU_DESCRIPTOR_INIT(0, DFU_PROTOCOL_DFUMODE, DFU_ATTR_CAPABLE, 0x04),
 
     /* Descriptor - String */
     // String0 - Language ID (Size:4)
     USB_LANGID_INIT(USBD_LANGID_STRING),
 
     // String1 - iManufacturer
-    #if (0)
-    0x10,                       /* bLength */
-    USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('X'),                 /* wcChar0 */
-    WCHAR('M'),                 /* wcChar1 */
-    WCHAR('-'),                 /* wcChar2 */
-    WCHAR('U'),                 /* wcChar3 */
-    WCHAR('S'),                 /* wcChar4 */
-    WCHAR('B'),                 /* wcChar5 */
-    WCHAR('D'),                 /* wcChar6 */
-    #else
     0x06,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('X'),                 /* wcChar0 */
-    WCHAR('M'),                 /* wcChar1 */
-    #endif
+    WCHAR('X'),
+    WCHAR('M'),
 
     // String2 - iProduct
-    #if (0)
-    0x12,                       /* bLength */
-    USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('D'),                 /* wcChar0 */
-    WCHAR('F'),                 /* wcChar1 */
-    WCHAR('U'),                 /* wcChar2 */
-    WCHAR(' '),                 /* wcChar3 */
-    WCHAR('D'),                 /* wcChar4 */
-    WCHAR('E'),                 /* wcChar5 */
-    WCHAR('M'),                 /* wcChar6 */
-    WCHAR('O'),                 /* wcChar7 */
-    #else
     0x08,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('D'),                 /* wcChar0 */
-    WCHAR('F'),                 /* wcChar1 */
-    WCHAR('U'),                 /* wcChar2 */
-    #endif
+    WCHAR('D'),
+    WCHAR('F'),
+    WCHAR('U'),
 
     // String3 - iSerialNumber
     #if (SRNM_STR)
     0x16,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('2'),                 /* wcChar0 */
-    WCHAR('0'),                 /* wcChar1 */
-    WCHAR('2'),                 /* wcChar2 */
-    WCHAR('5'),                 /* wcChar3 */
-    WCHAR('0'),                 /* wcChar4 */
-    WCHAR('6'),                 /* wcChar5 */
-    WCHAR('1'),                 /* wcChar6 */
-    WCHAR('8'),                 /* wcChar7 */
-    WCHAR('0'),                 /* wcChar8 */
-    WCHAR('8'),                 /* wcChar9 */
+    WCHAR('2'),
+    WCHAR('0'),
+    WCHAR('2'),
+    WCHAR('5'),
+    WCHAR('0'),
+    WCHAR('6'),
+    WCHAR('1'),
+    WCHAR('8'),
+    WCHAR('0'),
+    WCHAR('8'),
     #else
     0x02,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
     #endif
 
-    // String4 FLASH descriptor
+    // String4 - FLASH descriptor
     0x4E,                       /* bLength */
     USB_DESC_TYPE_STRING,       /* bDescriptorType */
-    WCHAR('@'),                 /* wcChar0 */
-    WCHAR('I'),                 /* wcChar1 */
-    WCHAR('n'),                 /* wcChar2 */
-    WCHAR('t'),                 /* wcChar3 */
-    WCHAR(' '),                 /* wcChar9 */
-    WCHAR('F'),                 /* wcChar10 */
-    WCHAR('l'),                 /* wcChar11*/
-    WCHAR('a'),                 /* wcChar12 */
-    WCHAR('s'),                 /* wcChar13 */
-    WCHAR('h'),                 /* wcChar14 */
-    WCHAR(' '),                 /* wcChar15 */
-    WCHAR('/'),                 /* wcChar16 */
-    WCHAR('0'),                 /* wcChar17 */
-    WCHAR('x'),                 /* wcChar18 */
-    WCHAR('1'),                 /* wcChar19 */
-    WCHAR('8'),                 /* wcChar20 */
-    WCHAR('0'),                 /* wcChar21*/
-    WCHAR('0'),                 /* wcChar22 */
-    WCHAR('0'),                 /* wcChar23 */
-    WCHAR('0'),                 /* wcChar24 */
-    WCHAR('0'),                 /* wcChar25 */
-    WCHAR('0'),                 /* wcChar26 */
-    WCHAR('/'),                 /* wcChar27 */
-    WCHAR('0'),                 /* wcChar28 */
-    WCHAR('1'),                 /* wcChar29 */
-    WCHAR('*'),                 /* wcChar30 */
-    WCHAR('0'),                 /* wcChar32 */
-    WCHAR('4'),                 /* wcChar33 */
-    WCHAR('K'),                 /* wcChar34 */
-    WCHAR('a'),                 /* wcChar35 */
-    WCHAR(','),                 /* wcChar36 */
-    WCHAR('6'),                 /* wcChar38 */
-    WCHAR('3'),                 /* wcChar39 */
-    WCHAR('*'),                 /* wcChar40 */
-    WCHAR('0'),                 /* wcChar42 */
-    WCHAR('4'),                 /* wcChar43 */
-    WCHAR('K'),                 /* wcChar44 */
-    WCHAR('g'),                 /* wcChar45 */
+    WCHAR('@'),
+    WCHAR('I'),
+    WCHAR('n'),
+    WCHAR('t'),
+    WCHAR(' '),
+    WCHAR('F'),
+    WCHAR('l'),
+    WCHAR('a'),
+    WCHAR('s'),
+    WCHAR('h'),
+    WCHAR(' '),
+    WCHAR('/'),
+    WCHAR('0'),
+    WCHAR('x'),
+    WCHAR('1'),
+    WCHAR('8'),
+    WCHAR('0'),
+    WCHAR('0'),
+    WCHAR('0'),
+    WCHAR('0'),
+    WCHAR('0'),
+    WCHAR('0'),
+    WCHAR('/'),
+    WCHAR('0'),
+    WCHAR('1'),
+    WCHAR('*'),
+    WCHAR('0'),
+    WCHAR('4'),
+    WCHAR('K'),
+    WCHAR('a'),
+    WCHAR(','),
+    WCHAR('6'),
+    WCHAR('3'),
+    WCHAR('*'),
+    WCHAR('0'),
+    WCHAR('4'),
+    WCHAR('K'),
+    WCHAR('g'),
 
     #if (CONFIG_USB_HS)
     /* Descriptor - Device Qualifier (Size:10) */
@@ -195,6 +183,14 @@ static const usbd_config_t dfu_configuration[] = {
  ****************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief USB event notification handler
+ *
+ * @param[in] event  Event type
+ * @param[in] arg    Event parameter
+ ****************************************************************************************
+ */
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {
     (void)arg;
@@ -223,7 +219,7 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 
 
 /*
- * Test Functions
+ * DFU Flash Operations
  ****************************************************************************
  */
 
@@ -231,20 +227,26 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 #define __SRAMFN_LN(name)   __attribute__((section("ram_func."#name)))
 #endif
 
-/* Wait cache idle, thene disable-flush cache */
-
+/// Disable cache around flash operations
 #define FSHC_CACHE_DISABLE()        GLOBAL_INT_DISABLE()
 #define FSHC_CACHE_RESTORE()        GLOBAL_INT_RESTORE()
 
 #define PAGE_SIZE                   256
-#define PAGE_SIZE_WLEN              (PAGE_SIZE/4)
+#define PAGE_SIZE_WLEN              (PAGE_SIZE / 4)
 #define PAGE_NB(len)                (((len) + (PAGE_SIZE - 1)) / PAGE_SIZE)
 
+/**
+ ****************************************************************************************
+ * @brief Write a flash page (runs from SRAM)
+ *
+ * @param[in] offset  Flash offset address
+ * @param[in] data    Data to write (word-aligned)
+ * @param[in] wlen    Number of uint32_t words
+ ****************************************************************************************
+ */
 __SRAMFN_LN("dfu.write")
 void dfu_page_write(uint32_t offset, uint32_t *data, uint32_t wlen)
 {
-    //DEBUG("offset:%X, len:%d", offset, wlen);
-
     FSHC_CACHE_DISABLE();
 
     fshc_write(offset, data, wlen, FSH_CMD_WR);
@@ -252,6 +254,17 @@ void dfu_page_write(uint32_t offset, uint32_t *data, uint32_t wlen)
     FSHC_CACHE_RESTORE();
 }
 
+/**
+ ****************************************************************************************
+ * @brief DFU write callback - program flash pages
+ *
+ * @param[in] addr  Target flash address
+ * @param[in] data  Data buffer
+ * @param[in] len   Data length in bytes
+ *
+ * @return DFU_STATUS_OK on success
+ ****************************************************************************************
+ */
 uint8_t dfu_itf_write(uint32_t addr, const uint8_t *data, uint32_t len)
 {
     uint32_t offset = addr & 0xFFFFFF;
@@ -265,6 +278,15 @@ uint8_t dfu_itf_write(uint32_t addr, const uint8_t *data, uint32_t len)
     return DFU_STATUS_OK;
 }
 
+/**
+ ****************************************************************************************
+ * @brief DFU erase callback - erase a 4KB flash sector
+ *
+ * @param[in] addr  Target flash address (must be 4KB-aligned)
+ *
+ * @return DFU_STATUS_OK on success, DFU_STATUS_ERR_ERASE on failure
+ ****************************************************************************************
+ */
 __SRAMFN_LN("dfu.erase")
 uint8_t dfu_itf_erase(uint32_t addr)
 {
@@ -272,7 +294,7 @@ uint8_t dfu_itf_erase(uint32_t addr)
 
     if (offset)
     {
-        if ((offset & 0x0FFF) == 0) //4K sector aligned
+        if ((offset & 0x0FFF) == 0) // 4K sector aligned
         {
             FSHC_CACHE_DISABLE();
             fshc_erase(offset, FSH_CMD_ER_SECTOR);
@@ -282,20 +304,30 @@ uint8_t dfu_itf_erase(uint32_t addr)
     }
     else
     {
-        // todo mass-erase
+        // Mass erase not supported
     }
 
     return DFU_STATUS_ERR_ERASE;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Jump to application at FLASH_CODE_BASE
+ ****************************************************************************************
+ */
 static void appJump(void)
 {
     AON->BACKUP1 &= ~DFU_FLAG;
     sysJumpTo(FLASH_CODE_BASE);
 }
 
-//uint8_t gSysClk;
-
+/**
+ ****************************************************************************************
+ * @brief DFU leave callback - reset and jump to application
+ *
+ * @param[in] timeout  Delay in ms before jumping
+ ****************************************************************************************
+ */
 void dfu_itf_leave(uint16_t timeout)
 {
     if (timeout > 1)
@@ -303,8 +335,8 @@ void dfu_itf_leave(uint16_t timeout)
         bootDelayMs(timeout);
     }
 
-    // restore sysclk and watchdog
-    rcc_sysclk_set(SYS_CLK_16M); //(gSysClk);
+    // Restore sysclk and watchdog before jumping to app
+    rcc_sysclk_set(SYS_CLK_16M);
     iwdt_conf(IWDT_RST_TO);
 
     appJump();
@@ -316,9 +348,13 @@ void dfu_itf_leave(uint16_t timeout)
  ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief Initialize USB DFU device
+ ****************************************************************************************
+ */
 static void usbdInit(void)
 {
-    // enable USB clk and iopad
     rcc_usb_en();
 
     usbd_init();
@@ -328,18 +364,21 @@ static void usbdInit(void)
 
     NVIC_EnableIRQ(USB_IRQn);
 
-    // Global Interrupt Enable
     GLOBAL_INT_START();
 }
 
+/**
+ ****************************************************************************************
+ * @brief System initialization -- decide DFU mode or app jump
+ ****************************************************************************************
+ */
 static void sysInit(void)
 {
     uint32_t no_app_code = RD_32(0x18004000);
 
     if ((AON->BACKUP1 & DFU_FLAG) || (no_app_code == 0xFFFFFFFFU))
     {
-        // record current, then switch syclk to 48M for USB
-        //gSysClk = rcc_sysclk_get();
+        // Switch sysclk to 48MHz for USB
         rcc_sysclk_set(SYS_CLK_48M);
         iwdt_disable();
 
@@ -351,6 +390,11 @@ static void sysInit(void)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief DFU bootloader entry point
+ ****************************************************************************************
+ */
 int __main(void)
 {
     sysInit();

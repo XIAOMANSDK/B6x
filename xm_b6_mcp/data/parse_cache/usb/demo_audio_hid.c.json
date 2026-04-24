@@ -1,12 +1,12 @@
 {
-  "file_path": "./usb\\src\\demo_audio_hid.c",
+  "file_path": "usb/src/demo_audio_hid.c",
   "functions": [
     {
       "name": "",
       "return_type": "audio_entity_t",
       "parameters": [],
       "function_body": "{\n    const audio_entity_t *entity = NULL;\n\n    if (bEntityId == AUDIO_IN_FEAT_ID) {\n        entity = &audio_entity_tab[0];\n    }\n    return entity;\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 404,
       "is_static": false
     },
@@ -26,7 +26,7 @@
         }
       ],
       "function_body": "{\n    if (intf_num == AUDIO_AS_INTF_NUM) {\n        if (alt_setting == 1) {\n            mic_state = MIC_IDLE;\n            USB_LOG_RAW(\"Mic On\\r\\n\");\n        } else {\n            mic_state = MIC_OFF;\n            USB_LOG_RAW(\"Mic Off\\r\\n\");\n        }\n    }\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 415,
       "is_static": false
     },
@@ -41,7 +41,7 @@
         }
       ],
       "function_body": "{\n    if (mic_state == MIC_BUSY) {\n        mic_state = MIC_IDLE;\n    }\n    //USB_LOG_RAW(\"ep_in:0x%x\\r\\n\", ep);\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 429,
       "is_static": false
     },
@@ -55,8 +55,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    uint8_t custom_data[HID_RAW_OUT_EP_MPS];\n    \n    /*!< read the data from host send */\n    uint16_t dlen = usbd_ep_read(HID_RAW_OUT_EP, HID_RAW_OUT_EP_MPS, custom_data);\n\n    /*!< you can use the data do some thing you like */\n    USB_LOG_RAW(\"HID Raw dlen=%d\\r\\n\", dlen);\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "function_body": "{\n    uint8_t custom_data[HID_RAW_OUT_EP_MPS];\n\n    /*!< read the data from host send */\n    uint16_t dlen = usbd_ep_read(HID_RAW_OUT_EP, HID_RAW_OUT_EP_MPS, custom_data);\n\n    /*!< you can use the data do some thing you like */\n    USB_LOG_RAW(\"HID Raw dlen=%d\\r\\n\", dlen);\n}",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 437,
       "is_static": false
     },
@@ -76,7 +76,7 @@
         }
       ],
       "function_body": "{\n    switch (event) {\n        case USBD_EVENT_RESET:\n            usbd_hid_reset();\n            break;\n        case USBD_EVENT_RESUME:\n            break;\n        case USBD_EVENT_SUSPEND:\n            break;\n\n        default:\n            break;\n    }\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 448,
       "is_static": false
     },
@@ -101,7 +101,7 @@
         }
       ],
       "function_body": "{\n    bool found = false;\n\n    if (index == USB_STRING_SERIAL_INDEX) {\n        *data = (uint8_t *)usb_string_iSerial;\n        *len = usb_string_iSerial[0];\n        found = true;\n    } else if (index == AUDIO_AC_STRING_INDEX) {\n        *data = (uint8_t *)usb_string_iAudio;\n        *len = usb_string_iAudio[0];\n        found = true;\n    }\n\n    return found;\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 464,
       "is_static": false
     },
@@ -110,7 +110,7 @@
       "return_type": "void",
       "parameters": [],
       "function_body": "{\n    usbd_init();\n    usbd_register(usb_descriptor, usb_configuration);\n\n    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {\n        usbd_hid_init(idx, &hid_interface[idx]);\n    }\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 489,
       "is_static": false
     },
@@ -118,8 +118,8 @@
       "name": "usbdTest",
       "return_type": "void",
       "parameters": [],
-      "function_body": "{\n    if (usbd_is_configured()) {\n        if (mic_state == MIC_IDLE) {\n            uint8_t status = 0;\n            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);\n\n            GPIO_DAT_SET(GPIO16);\n            mic_state = MIC_BUSY;\n            status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);\n\n            if (status != USBD_OK) {\n                if (mic_state != MIC_OFF) {\n                    mic_state = MIC_IDLE;\n                }\n                USB_LOG_RAW(\"err:%d, tmp:%02X\\r\\n\", status, mic_tmp);\n            } else {\n                USB_LOG_RAW(\"curr tmp:%02X\\r\\n\", mic_tmp);\n            }\n            GPIO_DAT_CLR(GPIO16);\n            \n            mic_tmp++;\n        }\n    }\n}",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "function_body": "{\n    if (usbd_is_configured()) {\n        if (mic_state == MIC_IDLE) {\n            uint8_t status = 0;\n            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);\n\n            GPIO_DAT_SET(GPIO16);\n            mic_state = MIC_BUSY;\n            status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);\n\n            if (status != USBD_OK) {\n                if (mic_state != MIC_OFF) {\n                    mic_state = MIC_IDLE;\n                }\n                USB_LOG_RAW(\"err:%d, tmp:%02X\\r\\n\", status, mic_tmp);\n            } else {\n                USB_LOG_RAW(\"curr tmp:%02X\\r\\n\", mic_tmp);\n            }\n            GPIO_DAT_CLR(GPIO16);\n\n            mic_tmp++;\n        }\n    }\n}",
+      "file_path": "usb/src/demo_audio_hid.c",
       "line_number": 499,
       "is_static": false
     }
@@ -130,7 +130,7 @@
       "value": "0x0D8C",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 8
     },
     {
@@ -138,7 +138,7 @@
       "value": "0x0312",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 9
     },
     {
@@ -146,7 +146,7 @@
       "value": "0x0306",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 10
     },
     {
@@ -154,7 +154,7 @@
       "value": "100",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 11
     },
     {
@@ -162,7 +162,7 @@
       "value": "0x0409 // English(US)",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 12
     },
     {
@@ -170,7 +170,7 @@
       "value": "0x83",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 20
     },
     {
@@ -178,7 +178,7 @@
       "value": "0x01   // unit in 1ms",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 21
     },
     {
@@ -186,7 +186,7 @@
       "value": "16000U // 16K",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 23
     },
     {
@@ -194,7 +194,7 @@
       "value": "2      // unit in byte",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 24
     },
     {
@@ -202,7 +202,7 @@
       "value": "16     // unit in bit",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 25
     },
     {
@@ -210,7 +210,7 @@
       "value": "1      // Mono:1",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 26
     },
     {
@@ -218,7 +218,7 @@
       "value": "((uint32_t)((AUDIO_IN_FREQ * AUDIO_IN_FRAME_SIZE * AUDIO_IN_CHNLS) / 1000))",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 29
     },
     {
@@ -226,7 +226,7 @@
       "value": "0x43, 0x00",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 32
     },
     {
@@ -234,7 +234,7 @@
       "value": "0x0000",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 33
     },
     {
@@ -242,7 +242,7 @@
       "value": "0x82 // address",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 51
     },
     {
@@ -250,7 +250,7 @@
       "value": "16   // max packet size",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 52
     },
     {
@@ -258,7 +258,7 @@
       "value": "1    // polling time in ms",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 53
     },
     {
@@ -266,7 +266,7 @@
       "value": "sizeof(hid_std_report_desc)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 54
     },
     {
@@ -274,7 +274,7 @@
       "value": "0x84",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 57
     },
     {
@@ -282,7 +282,7 @@
       "value": "64",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 58
     },
     {
@@ -290,7 +290,7 @@
       "value": "1",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 59
     },
     {
@@ -298,7 +298,7 @@
       "value": "0x04",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 60
     },
     {
@@ -306,7 +306,7 @@
       "value": "64",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 61
     },
     {
@@ -314,7 +314,7 @@
       "value": "1",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 62
     },
     {
@@ -322,7 +322,7 @@
       "value": "sizeof(hid_raw_report_desc)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 63
     },
     {
@@ -330,7 +330,7 @@
       "value": "( AUDIO_SIZEOF_AC_HEADER_DESC(1) +",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 189
     },
     {
@@ -338,7 +338,7 @@
       "value": "( USB_INTERFACE_DESC_SIZE + AUDIO_SIZEOF_AC_SELECTOR_UNIT_DESC + AUDIO_AC_CTRL_SIZE )",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 195
     },
     {
@@ -346,7 +346,7 @@
       "value": "( AUDIO_AS_DESCRIPTOR_INIT_LEN(1) )",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 197
     },
     {
@@ -354,7 +354,7 @@
       "value": "(6)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 199
     },
     {
@@ -362,7 +362,7 @@
       "value": "( 18 + 7*1 ) // 1 EP: IN",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 202
     },
     {
@@ -370,7 +370,7 @@
       "value": "( 18 + 7*2 ) // 2 EP: IN and OUT",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 203
     },
     {
@@ -378,7 +378,7 @@
       "value": "( USB_CONFIG_DESC_SIZE",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 206
     },
     {
@@ -386,7 +386,7 @@
       "value": "ARRAY_SIZE(audio_entity_tab)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 351
     },
     {
@@ -394,7 +394,7 @@
       "value": "ARRAY_SIZE(hid_interface)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_audio_hid.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_audio_hid.c",
       "line_number": 358
     }
   ],

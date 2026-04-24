@@ -48,7 +48,7 @@
     #define DBG_GAPM           (0)
     #define DBG_GAPC           (1)
     #define DBG_GATT           (1)
-    
+
     #define DBG_SESS           (1)
     #define DBG_KEYS           (0)
 #endif

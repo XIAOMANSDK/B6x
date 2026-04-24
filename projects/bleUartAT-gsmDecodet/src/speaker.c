@@ -68,7 +68,7 @@
 #define SPEAKER_PWM_TMR_ARR (1000 - 1) // Auto-reload 64MHz/1000 = 64KHz(Freq/ARR=DutyRatio)
 #define SPEAKER_PWM_TMR_REP (8- 1)     // Repeat count 1 64KHz/8 = 8KHz(SampleRate)
 
-volatile uint8_t dam_done;
+volatile uint8_t dma_done;
 
 /*
  * FUNCTIONS
@@ -129,19 +129,19 @@ void pwmInit(void)
 
     GLOBAL_INT_START();
 
-    dam_done = true;
+    dma_done = true;
 }
 
 /**
  ****************************************************************************************
  * @brief DMA completion callback for speaker
  * @details Called from unified DMAC_IRQHandler in dma_handler.c
- *          Sets dam_done flag to signal that DMA transfer is complete
+ *          Sets dma_done flag to signal that DMA transfer is complete
  ****************************************************************************************
  */
 void speaker_dma_handler(void)
 {
-    dam_done = true;
+    dma_done = true;
 }
 
 /**
@@ -152,22 +152,22 @@ void speaker_dma_handler(void)
  * @param samples Number of samples to play (typically 160 for GSM frame)
  *
  * @details This function:
- *          1. Waits for previous DMA transfer to complete (dam_done)
+ *          1. Waits for previous DMA transfer to complete (dma_done)
  *          2. Configures DMA to transfer samples to PWM duty cycle register
  *          3. Starts DMA transfer
- *          4. Resets dam_done flag for next transfer
+ *          4. Resets dma_done flag for next transfer
  *
- *          Note: Blocks until dam_done is set from previous transfer
+ *          Note: Blocks until dma_done is set from previous transfer
  ****************************************************************************************
  */
 void speakerPlay(int16_t *buff, uint16_t samples)
 {
     if(samples)
     {
-        while(!dam_done);
+        while(!dma_done);
         SPEAKER_DMA_ATMR_CHx_CONF_HALF(SPEAKER_DMA_CHNL, (uint16_t *)buff, samples, CCM_BASIC);
         ATMR->DMAEN.UDE = 1;
-        dam_done = false;
+        dma_done = false;
     }
 }
 
@@ -196,7 +196,7 @@ void speakerStop(void)
  */
 uint8_t speaker_is_ready(void)
 {
-    return dam_done;
+    return dma_done;
 }
 
 /**
@@ -206,7 +206,7 @@ uint8_t speaker_is_ready(void)
  * @param buff Pointer to 16-bit PCM samples (signed)
  * @param samples Number of samples to play
  *
- * @details This function assumes dam_done is already set (speaker_is_ready() returned true).
+ * @details This function assumes dma_done is already set (speaker_is_ready() returned true).
  *          Does NOT wait for previous transfer to complete.
  *          Used for ping-pong buffer implementation to minimize CPU blocking.
  *
@@ -215,10 +215,10 @@ uint8_t speaker_is_ready(void)
  */
 void speakerPlay_nonblock(int16_t *buff, uint16_t samples)
 {
-    if (samples && dam_done)
+    if (samples && dma_done)
     {
         SPEAKER_DMA_ATMR_CHx_CONF_HALF(SPEAKER_DMA_CHNL, (uint16_t *)buff, samples, CCM_BASIC);
         ATMR->DMAEN.UDE = 1;
-        dam_done = false;
+        dma_done = false;
     }
 }

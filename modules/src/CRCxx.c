@@ -26,6 +26,8 @@ uint8_t crc4_itu(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -52,6 +54,8 @@ uint8_t crc5_epc(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0x48; // Initial value: 0x48 = 0x09<<(8-5)
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -78,6 +82,8 @@ uint8_t crc5_itu(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -104,6 +110,8 @@ uint8_t crc5_usb(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0x1F; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -130,6 +138,8 @@ uint8_t crc6_itu(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -157,6 +167,8 @@ uint8_t crc7_mmc(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -184,6 +196,8 @@ uint8_t crc8(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -211,6 +225,8 @@ uint8_t crc8_itu(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -237,6 +253,8 @@ uint8_t crc8_rohc(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0xFF; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -265,6 +283,8 @@ uint8_t crc8_maxim(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint8_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -293,6 +313,8 @@ uint16_t crc16(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -319,6 +341,8 @@ uint16_t crc16_maxim(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -345,6 +369,8 @@ uint16_t crc16_usb(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0xffff; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -371,6 +397,8 @@ uint16_t crc16_modbus(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0xffff; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -398,6 +426,8 @@ uint16_t crc16_ccitt(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -424,6 +454,8 @@ uint16_t crc16_ccitt_false(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0xffff; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= (uint16_t)(*data++) << 8;
@@ -450,6 +482,8 @@ uint16_t crc16_x25(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0xffff; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -477,6 +511,8 @@ uint16_t crc16_xmodem(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= (uint16_t)(*data++) << 8;
@@ -504,6 +540,8 @@ uint16_t crc16_dnp(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint16_t crc = 0; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -532,6 +570,8 @@ uint32_t crc24(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0x7320ED; // Initial value: 0x7320ED = revbit24(0xB704CE)
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -558,6 +598,8 @@ uint32_t crc24_ble(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0xAAAAAA; // Initial value: 0xAAAAAA = revbit24(0x555555)
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -584,6 +626,8 @@ uint32_t crc24_flexraya(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0x5D3B7F; // Initial value: 0x5D3B7F = revbit24(0xFEDCBA)
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -610,6 +654,8 @@ uint32_t crc24_flexrayb(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0xF7B3D5; // Initial value: 0xF7B3D5 = revbit24(0xABCDEF)
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -636,6 +682,8 @@ uint32_t crc24_lte_a(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0x000000; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= (uint32_t)(*data++) << 16;
@@ -662,6 +710,8 @@ uint32_t crc24_lte_b(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0x000000; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= (uint32_t)(*data++) << 16;
@@ -688,6 +738,8 @@ uint32_t crc24_os9(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0xFFFFFF; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= (uint32_t)(*data++) << 16;
@@ -714,6 +766,8 @@ uint32_t crc24_interlaken(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0xFFFFFF; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= (uint32_t)(*data++) << 16;
@@ -743,6 +797,8 @@ uint32_t crc32(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0xffffffff; // Initial value
+    if (data == NULL)
+        return 0;
     while (length--)
     {
         crc ^= *data++;
@@ -769,6 +825,8 @@ uint32_t crc32_mpeg2(uint8_t *data, ulen_t length)
 {
     uint8_t i;
     uint32_t crc = 0xffffffff; // Initial value
+    if (data == NULL)
+        return 0;
     while(length--)
     {
         crc ^= (uint32_t)(*data++) << 24;

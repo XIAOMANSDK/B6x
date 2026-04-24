@@ -35,6 +35,11 @@ extern APP_SUBTASK_HANDLER(gatt_msg);
 extern APP_SUBTASK_HANDLER(l2cc_msg);
 extern APP_SUBTASK_HANDLER(mesh_msg);
 
+/**
+ ****************************************************************************************
+ * @brief Update BLE connection parameters based on key activity
+ ****************************************************************************************
+ */
 void app_conn_param_update(bool key_change)
 {
     if ((app_state_get() >= APP_BONDED) && (last_sta != key_change))
@@ -118,12 +123,12 @@ __WEAK APP_SUBTASK_HANDLER(custom)
         {
             if (app_state_get() < APP_CONNECTED)
             {
-                // 取消定向广播
-                adv_dir_flag = false; // 取消定向广播
+                // 鍙栨秷瀹氬悜骞挎挱
+                adv_dir_flag = false; // 鍙栨秷瀹氬悜骞挎挱
                 app_adv_action(ACTV_RELOAD);
 
                 #if (!DBG_MODE)
-                // LED闪烁指示
+                // LED闂儊鎸囩ず
                 iom_ctrl(PA00, IOM_SEL_GPIO);
                 GPIO_DIR_SET_HI(ADV_LED_GPIO);
                 ke_timer_set(APP_TIMER_ADV_LED, TASK_APP, ADV_LED_PERIOD);
@@ -134,17 +139,17 @@ __WEAK APP_SUBTASK_HANDLER(custom)
 
         case APP_TIMER_KEY_IR:
         {
-            // 红外处理 110ms定时
+            // 绾㈠澶勭悊 110ms瀹氭椂
             irCmdRepeat();
             ke_timer_set(APP_TIMER_KEY_IR, TASK_APP, KEY_IR_PERIOD); //
         } break;
 
         case APP_TIMER_ADV_LED:
         {
-            // LED 1000ms定时
+            // LED 1000ms瀹氭椂
             if (app_state_get() == APP_READY)
             {
-                GPIO_DAT_TOG(ADV_LED_GPIO); // 电平翻转
+                GPIO_DAT_TOG(ADV_LED_GPIO); // 鐢靛钩缈昏浆
 
                 ke_timer_set(APP_TIMER_ADV_LED, TASK_APP, ADV_LED_PERIOD);
             }

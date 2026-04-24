@@ -3,7 +3,7 @@
  *
  * @file main.c
  *
- * @brief 应用程序主入口
+ * @brief Main Entry of the application - SPI Slave test
  *
  ****************************************************************************************
  */
@@ -27,41 +27,39 @@
 
 /**
  ****************************************************************************************
- * @brief 系统初始化
+ * @brief System initialization (template placeholder)
  ****************************************************************************************
  */
-static void sysInit(void)
+static void sys_init(void)
 {
-    // 如有需要，在此进行配置
-    
+    // Todo config, if need
+
 }
 
 /**
  ****************************************************************************************
- * @brief 设备初始化
+ * @brief Device initialization
  ****************************************************************************************
  */
-static void devInit(void)
+static void dev_init(void)
 {
-    iwdt_disable();  // 禁用独立看门狗
-    
-    // 初始化调试功能
+    iwdt_disable();
+
     dbgInit();
 }
 
-extern void spisTest(void);  // 声明SPI从设备测试函数
+extern void spis_test(void);
 
 /**
  ****************************************************************************************
- * @brief 主函数 - 程序入口
- * @return int 程序退出码
+ * @brief Main entry
+ * @return Program exit code (never returns)
  ****************************************************************************************
  */
 int main(void)
 {
-    sysInit();      // 系统初始化
-    
-    devInit();      // 设备初始化
+    sys_init();
+    dev_init();
 
-    spisTest();     // 执行SPI从设备测试
+    spis_test();
 }

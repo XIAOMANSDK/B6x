@@ -3,7 +3,7 @@
  *
  * @file main.c
  *
- * @brief 应用程序主入口
+ * @brief Main Entry of the application - SPI Master test
  *
  ****************************************************************************************
  */
@@ -14,55 +14,49 @@
 
 
 /*
- * DEFINES
- ****************************************************************************************
- */
-
-
-
-/*
  * FUNCTIONS
  ****************************************************************************************
  */
 
 /**
- * @brief 系统初始化函数
- * 
- * 配置系统时钟和外设时钟
+ ****************************************************************************************
+ * @brief System initialization (template placeholder)
+ ****************************************************************************************
  */
-static void sysInit(void)
+static void sys_init(void)
 {
-    // 如需配置，请在此处添加
-    SYS_CLK_ALTER();    ///< 系统时钟调整
-    
-    rcc_adc_en();       ///< 使能ADC时钟
+    // Todo config, if need
+    SYS_CLK_ALTER();
+
+    rcc_adc_en();
 }
 
 /**
- * @brief 设备初始化函数
- * 
- * 禁用看门狗，初始化调试接口
+ ****************************************************************************************
+ * @brief Device initialization
+ *
+ * @details Disable watchdog, initialize debug interface
+ ****************************************************************************************
  */
-static void devInit(void)
+static void dev_init(void)
 {
-    iwdt_disable();     ///< 禁用独立看门狗
-    
-    // 初始化调试接口
+    iwdt_disable();
+
     dbgInit();
 }
 
-extern void spimTest(void); ///< 声明SPI Master测试函数
+extern void spim_test(void);
 
 /**
- * @brief 主函数
- * 
- * 程序入口，依次执行系统初始化、设备初始化和SPI测试
+ ****************************************************************************************
+ * @brief Main entry
+ * @return Program exit code (never returns)
+ ****************************************************************************************
  */
 int main(void)
 {
-    sysInit();      ///< 系统初始化
-    
-    devInit();      ///< 设备初始化
+    sys_init();
+    dev_init();
 
-    spimTest();     ///< 执行SPI Master测试
+    spim_test();
 }

@@ -22,5 +22,6 @@
 #define DBG_UART_BAUD           (BRR_921600)
 
 #define CFG_TEST                (1)
+#define DBG_NTAG                (1)
 
 #endif  //_APP_CFG_H_

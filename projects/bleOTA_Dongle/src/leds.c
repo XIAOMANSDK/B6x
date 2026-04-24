@@ -51,7 +51,7 @@ typedef struct
 } led_env_t;
 
 /// global variables
-static led_env_t led_env;
+static volatile led_env_t led_env;
 
 /*
  * USER CUSTOMIZE

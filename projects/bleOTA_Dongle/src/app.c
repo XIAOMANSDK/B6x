@@ -388,8 +388,7 @@ __WEAK void app_conn_fsm(uint8_t evt, uint8_t conidx, const void *param)
             }
             else
             {
-                memset((uint8_t *)scan_addr_list, 0x00, (sizeof(struct gap_bdaddr) * SCAN_NUM_MAX));
-                scan_cnt = 0;
+                scan_list_reset();
                 init_timer_start();
                 app_scan_action(ACTV_START);
             }

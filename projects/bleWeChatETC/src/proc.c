@@ -19,7 +19,6 @@
 #include "proto.h"
 #include "cmd.h"
 #include "regs.h"
-#include "regs.h"
 #include "weChat.h"
 
 #if (DBG_PROC)
@@ -108,6 +107,13 @@ void sess_cb_rxd1(uint16_t handle, uint16_t len, const uint8_t *data)
 {
     if (handle == sess_get_att_handle(SES_IDX_RXD_VAL)) // WECHAT
     {
+        // Check free space before writing to ring buffer
+        uint16_t free_space = RXD_BUFF_SIZE - ble_rxd_size() - 1;
+        if (len > free_space)
+        {
+            return;
+        }
+
         if (ble_rxd.head + len <= RXD_BUFF_SIZE)
         {
             memcpy(&ble_rxd.data[ble_rxd.head], data, len);
@@ -140,10 +146,15 @@ void bleDataSet(uint8_t len, uint8_t *data) // ble send
 
 void bleEtcDataSet(uint8_t len, uint8_t *data) // ETC send
 {
-    pkt_wc *pkt = (pkt_wc *)bleSendBuff;
-    if(!(len < 128)) bleSendLen++;
+    // Validate len fits in bleSendBuff after header
+    uint16_t header_offset = (len < 128) ? 4 : 5;
+    if ((uint16_t)header_offset + len > sizeof(bleSendBuff))
+    {
+        return;
+    }
 
-    bleSendLen = len + 15; // 微信协议包总长度
+    pkt_wc *pkt = (pkt_wc *)bleSendBuff;
+    bleSendLen = len + 15; // WeChat protocol packet total length
     pkt->head.bMagicNumber = FIX_HEAD_MAGIC;
     pkt->head.bVer         = FIX_HEAD_VER;
     pkt->head.nLength[0]      = __SWP16_H(bleSendLen);
@@ -175,7 +186,7 @@ void ble_data_send(void) // ble 分包发送
 {
     if (bleSendLen)
     {
-        uint16_t send_mtu = 23 - 3; //gatt_get_mtu(0)
+        uint16_t send_mtu = GAP_MIN_LE_MTU - 3; // ATT payload = MTU - opcode(1B) - handle(2B)
         uint16_t sendLen = send_mtu > bleSendLen ? bleSendLen: send_mtu;
 
         if (sess_txd_send1(bleSendHandle, sendLen, &bleSendBuff[bleSendCnt]) == LE_SUCCESS)
@@ -234,6 +245,11 @@ void uart_proc(struct pt_pkt *pkt, uint8_t status)
         } break;
         case PT_CMD_SET_BLE_NAME:
         {
+            if (pkt->len > sizeof(sysCfg.name_info.name))
+            {
+                pt_rsp_cmd_res(pkt->code, PT_ERROR, 0, NULL);
+                break;
+            }
             sysCfg.name_info.len = pkt->len;
             memcpy(sysCfg.name_info.name,  pkt->payl, pkt->len);
             pt_rsp_ok(pkt->code);
@@ -285,7 +301,7 @@ void uart_proc(struct pt_pkt *pkt, uint8_t status)
         {
             bleReset = false;
 
-            sysCfg.baudrate = atoi((char *)&pkt->payl);
+            sysCfg.baudrate = (uint32_t)strtol((char *)&pkt->payl, NULL, 10);
             // update BaudRate
             UART1->LCR.BRWEN  = 1;
             UART1->BRR        = BRR_DIV(sysCfg.baudrate, 16M); // (rcc_sysclk_get() + (baud >> 1)) / baud
@@ -615,7 +631,11 @@ void uart_proc(struct pt_pkt *pkt, uint8_t status)
                 SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_READ_VAL;
 
                 ses_read_info[sess_read_nmb].length = pkt->payl[3];
-                memcpy(ses_read_info[sess_read_nmb++].data, &pkt->payl[4], pkt->payl[3]);
+                if (pkt->payl[3] <= sizeof(ses_read_info[0].data))
+                {
+                    memcpy(ses_read_info[sess_read_nmb].data, &pkt->payl[4], pkt->payl[3]);
+                }
+                sess_read_nmb++;
             }
             else if (att_val & 0x0C)
             {
@@ -650,7 +670,7 @@ void uart_proc(struct pt_pkt *pkt, uint8_t status)
     }
 
     if (bleReset)
-    gapm_reset();
+        gapm_reset();
 
     if (cfgSave)
     {
@@ -849,7 +869,7 @@ void ble_wc_sch(void)
             uint16_t length = ble_rxd_size();
             uint16_t pkt_len = (((uint16_t)ble_rxd.data[(ble_rxd.tail+2)%RXD_BUFF_SIZE] << 8) | ble_rxd.data[(ble_rxd.tail+3)%RXD_BUFF_SIZE]);
 
-            if (length >= pkt_len)
+            if (pkt_len <= sizeof(buffR) && length >= pkt_len)
             {
               ble_rxd_read(buffR, pkt_len);
 
@@ -859,7 +879,7 @@ void ble_wc_sch(void)
         }
         else
         {
-            ble_rxd.tail++;
+            ble_rxd.tail = (ble_rxd.tail + 1) % RXD_BUFF_SIZE;
         }
      }
 

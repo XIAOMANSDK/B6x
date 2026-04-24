@@ -69,6 +69,49 @@ def get_paths() -> Dict[str, Path]:
     }
 
 
+def convert_paths_to_relative(data, sdk_root: Path):
+    """
+    Recursively convert absolute paths to relative paths in data structures.
+
+    Args:
+        data: Any data structure (dict, list, str, etc.)
+        sdk_root: SDK root path for relative conversion
+
+    Returns:
+        Data structure with paths converted to relative
+    """
+    import re
+
+    if isinstance(data, dict):
+        return {k: convert_paths_to_relative(v, sdk_root) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [convert_paths_to_relative(item, sdk_root) for item in data]
+    elif isinstance(data, str):
+        # Check if this looks like a Windows absolute path
+        if re.match(r'^[A-Z]:[/\\]', data):
+            # Try to extract relative part from SDK path
+            sdk_str = str(sdk_root)
+            data_normalized = data.replace('/', '\\')
+            sdk_normalized = sdk_str.replace('/', '\\')
+
+            if data_normalized.lower().startswith(sdk_normalized.lower()):
+                # Extract relative part
+                rel_part = data[len(sdk_str):].lstrip('/\\')
+                return rel_part.replace('\\', '/')  # Normalize to forward slashes
+
+            # Try to find SDK root in path
+            for sdk_part in ['sdk6', 'sdk', 'bxx_DragonC1']:
+                idx = data.lower().find(sdk_part.lower())
+                if idx >= 0:
+                    remaining = data[idx + len(sdk_part):].lstrip('/\\')
+                    if remaining:
+                        return remaining.replace('\\', '/')
+
+        return data
+    else:
+        return data
+
+
 # ============================================================================
 # Build Steps
 # ============================================================================
@@ -231,8 +274,11 @@ def step_1_parse_documents(paths: Dict[str, Path], cache_manager=None, increment
                 errors.append(f"{file_path.name}: {e}")
 
         # Save parsed documents for next step
-        # Convert to serializable format
-        docs_data = [doc.to_dict() for doc in all_docs]
+        # Convert to serializable format with relative paths
+        docs_data = [
+            convert_paths_to_relative(doc.to_dict(), paths['sdk_root'])
+            for doc in all_docs
+        ]
         docs_file = paths['data_dir'] / "parsed_documents.json"
 
         with open(docs_file, 'w', encoding='utf-8') as f:
@@ -377,7 +423,7 @@ def step_3_index_whoosh(paths: Dict[str, Path]) -> Dict[str, Any]:
 
     stats = {
         'status': 'success',
-        'index_dir': str(index_dir),
+        'index_dir': 'data/whoosh_index',  # Relative path
         'total_documents': len(parsed_docs),
         'indexed_count': indexed_count,
         'failed_count': len(parsed_docs) - indexed_count
@@ -419,11 +465,11 @@ def step_4_generate_report(paths: Dict[str, Path], all_steps: Dict[str, Any]) ->
             )
         },
         'paths': {
-            'sdk_root': str(paths['sdk_root']),
-            'mcp_root': str(paths['mcp_root']),
-            'doc_dir': str(paths['doc_dir']),
-            'index_dir': str(paths['index_dir']),
-            'constraints_dir': str(paths['constraints_dir'])
+            'sdk_root': '<resolved_at_runtime>',  # Portable marker
+            'mcp_root': '<resolved_at_runtime>',  # Portable marker
+            'doc_dir': 'doc',  # Relative to SDK root
+            'index_dir': str(paths['index_dir'].relative_to(paths['mcp_root'])),
+            'constraints_dir': str(paths['constraints_dir'].relative_to(paths['mcp_root']))
         }
     }
 

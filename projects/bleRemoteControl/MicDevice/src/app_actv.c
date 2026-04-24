@@ -172,6 +172,9 @@ static void app_adv_create(void)
 
     if (adv_dir_flag)
     {
+        // TODO: Read peer address from bond storage instead of hardcoded value
+        // This hardcoded address is for testing only and must be replaced with
+        // the actual bonded master address before production deployment.
         uint8_t masterAddr[6] = {0x11, 0x88, 0x3F, 0xA1, 0x01, 0xf3};
         adv_param.prop = GAPM_ADV_PROP_DIR_CONN_MASK;
         memcpy(&adv_param.peer_addr.addr.addr[0], masterAddr, GAP_BD_ADDR_LEN);
@@ -631,6 +634,7 @@ void app_actv_report_ind(struct gapm_ext_adv_report_ind const* report)
             }
 
             /* Go to next advertising info */
+            if (*p_cursor == 0) break;  // skip zero-length AD structure
             p_cursor += (*p_cursor + 1);
         }
     }

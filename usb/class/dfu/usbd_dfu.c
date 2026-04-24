@@ -100,6 +100,11 @@ __WEAK uint8_t dfu_itf_read(uint32_t addr, uint8_t *buff, uint32_t len)
 {
     USB_LOG_INFO("    RD(addr:0x%X,buff:%p,len:%d)\r\n", addr, buff, len);
 
+    if (buff == NULL)
+    {
+        return DFU_STATUS_ERR_ADDRESS;
+    }
+
     /* Return a valid address to avoid HardFault */
     memcpy(buff, (uint8_t *)addr, len);
 

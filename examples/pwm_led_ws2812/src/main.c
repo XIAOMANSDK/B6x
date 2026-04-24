@@ -27,7 +27,7 @@
  ****************************************************************************************
  */
 #define LOOP_PERIOD  _MS(10000)
-uint8_t test_mode_idx;
+static uint8_t test_mode_idx;
 static tmr_tk_t ws2812_mode_loop_test(tmr_id_t id)
 {
     (void)id;

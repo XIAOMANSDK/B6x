@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\src\\core.c",
+  "file_path": "drivers/src/core.c",
   "functions": [
     {
       "name": "_delay",
@@ -17,8 +17,8 @@
         }
       ],
       "function_body": "{\r\n#if (DELAY_TIMER)\r\n    // 配置基本定时器参数\r\n    BTMR->CR1.Word = BTMR_CR1_MODE;  // CR1：设置定时器模式\r\n    BTMR->PSC = tpsc - 1;            // PSC：设置预分频器值\r\n    BTMR->ARR = tcnt - 1;            // ARR：设置自动重载值\r\n    BTMR->CNT = 0;                   // CNT：清零计数器\r\n    BTMR->EGR = 1;                   // EGR：生成更新事件，重新初始化计数器\r\n\r\n    // 使能计数器并等待定时完成\r\n    BTMR->CR1.CEN = 1;               // CR1.CEN：使能计数器\r\n    while(!BTMR->RIF && BTMR->CR1.CEN); // RIF：等待更新中断标志置位\r\n    BTMR->ICR = 1;                   // ICR：清除中断标志\r\n\r\n    // 清除定时器模式\r\n    BTMR->CR1.Word = 0;              // CR1：禁用计数器\r\n#else\r\n    // 使用SysTick定时器延时\r\n    uint32_t temp;\r\n\r\n    SysTick->LOAD = tcnt * tpsc - 1;    // 设置重载值\r\n    SysTick->VAL  = 0x00;               // 清零当前值\r\n    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk; // 使能SysTick\r\n\r\n    do\r\n    {\r\n        temp = SysTick->CTRL;           // 读取控制状态寄存器\r\n    } while((temp & SysTick_CTRL_ENABLE_Msk) && !(temp & SysTick_CTRL_COUNTFLAG_Msk));\r\n\r\n    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk; // 禁用SysTick\r\n    SysTick->VAL   = 0x00;              // 清零当前值\r\n#endif\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 128,
+      "file_path": "drivers/src/core.c",
+      "line_number": 125,
       "is_static": true
     },
     {
@@ -32,8 +32,8 @@
         }
       ],
       "function_body": "{\r\n    volatile uint32_t reg_sclk, reg_dpll;\r\n\r\n    /************************************************************************\r\n     **************             禁用时钟和电源              **************\r\n     ************************************************************************/\r\n    // 等待Flash缓存空闲\r\n    while(SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 关闭DPLL，如果当前使用DPLL则先切换系统时钟\r\n    reg_sclk = RCC->CFG.Word;      // CFG：读取系统时钟配置\r\n    if ((reg_sclk & 0x0F) == 4/*SCLK_PLL*/)\r\n    {\r\n        RCC->CFG.Word = (reg_sclk & ~0x0F) | 2/*SCLK_HSE*/; // CFG：切换到HSE时钟\r\n    }\r\n\r\n    reg_dpll = APBMISC->DPLL_CTRL.Word;\r\n    APBMISC->DPLL_CTRL.Word = 0;   // DPLL_CTRL：禁用DPLL\r\n\r\n    /************************************************************************\r\n     **************              进入深度睡眠               **************\r\n     ************************************************************************/\r\n    SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk); // SCR：配置深度睡眠模式\r\n    __WFI();                           // 等待中断，进入睡眠\r\n    SCB->SCR &= ~(SCB_SCR_SLEEPDEEP_Msk); // SCR：退出深度睡眠模式\r\n\r\n    /************************************************************************\r\n     **************             恢复时钟和电源              **************\r\n     ************************************************************************/\r\n    // 恢复DPLL和系统时钟\r\n    APBMISC->DPLL_CTRL.Word = reg_dpll; // DPLL_CTRL：恢复DPLL设置\r\n    // if enable dpll2_en, delay 50us wait dpll clk stable\r\n    if (reg_dpll & APBMISC_DPLL2_EN_BIT)\r\n        boot_delayUs(50);            // 如果启用DPLL2，等待时钟稳定\r\n    RCC->CFG.Word = reg_sclk;        // CFG：恢复系统时钟配置\r\n\r\n    // 复位Flash控制器，恢复单线模式\r\n    // 2022.11.05 --- wq.\r\n    RCC->AHBRST_CTRL.FSHC_RSTREQ = 1; // AHBRST_CTRL：请求Flash复位\r\n    RCC->AHBRST_CTRL.FSHC_RSTREQ = 0; // AHBRST_CTRL：释放Flash复位\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 167,
+      "file_path": "drivers/src/core.c",
+      "line_number": 164,
       "is_static": false
     },
     {
@@ -47,8 +47,8 @@
         }
       ],
       "function_body": "{\r\n    // 获取复位原因\r\n    uint16_t ret_st = (RCC->CHIP_RST_ST_CLR.Word & 0xFF); // CHIP_RST_ST_CLR：读取复位状态\r\n\r\n    // 获取掉电唤醒源\r\n    if (AON->PMU_CTRL.POWEROFF_LOG)\r\n    {\r\n        ret_st |= ((AON->PMU_WKUP_ST.Word & 0x0F) << 8); // PMU_WKUP_ST：读取唤醒状态\r\n        APBMISC->POWEROFF_LOG_CLR = 1;                   // POWEROFF_LOG_CLR：清除掉电日志\r\n    }\r\n\r\n    // 清除状态标志\r\n    RCC->CHIP_RST_ST_CLR.Word = (0xFF << 8);            // CHIP_RST_ST_CLR：清除复位状态\r\n    APBMISC->AON_PMU_CTRL.Word |= (1 << APBMISC_WKUP_ST_CLR_POS) | (1 << APBMISC_AON_PMU_INT_CLR_POS);\r\n\r\n    return ret_st;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 216,
+      "file_path": "drivers/src/core.c",
+      "line_number": 213,
       "is_static": false
     },
     {
@@ -67,8 +67,8 @@
         }
       ],
       "function_body": "{\r\n    // 配置定时器参数\r\n    BTMR->CR1.Word = CR1_ONE_MODE;  // CR1：设置单次模式\r\n    BTMR->PSC = tpsc - 1;           // PSC：设置预分频器\r\n    BTMR->ARR = tcnt - 1;           // ARR：设置自动重载值\r\n    BTMR->CNT = 0;                  // CNT：清零计数器\r\n    BTMR->EGR = 1;                  // EGR：生成更新事件\r\n\r\n    // 使能计数器并等待定时完成\r\n    BTMR->CR1.CEN = 1;              // CR1.CEN：使能计数器\r\n    while(!BTMR->RIF && BTMR->CR1.CEN); // RIF：等待中断标志\r\n    BTMR->ICR = 1;                  // ICR：清除中断标志\r\n\r\n    // 清除定时器模式\r\n    BTMR->CR1.Word = 0;             // CR1：禁用计数器\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 240,
+      "file_path": "drivers/src/core.c",
+      "line_number": 237,
       "is_static": false
     },
     {
@@ -82,8 +82,8 @@
         }
       ],
       "function_body": "{\r\n    // 配置16MHz晶体振荡器\r\n    AON->XOSC16M_CTRL.EN_LDO_SEL = 0;  // XOSC16M_CTRL：LDO由XOSC16M_EN控制\r\n    AON->PMU_CTRL.OSC_EN_RUN = 1;      // PMU_CTRL：使能运行模式振荡器\r\n    APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 1; // XOSC16M_CTRL：使能晶体缓冲器\r\n\r\n    // 等待振荡器稳定\r\n    boot_delayUs(2000);\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 261,
+      "file_path": "drivers/src/core.c",
+      "line_number": 258,
       "is_static": false
     },
     {
@@ -97,8 +97,8 @@
         }
       ],
       "function_body": "{\r\n    AON->XOSC16M_CTRL.Word = (1 << AON_EN_LDO_XOSC_REG_POS) | (1 << AON_EN_LDO_SEL_POS);\r\n    AON->PMU_CTRL.OSC_EN_RUN = 0;\r\n    APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 0;\r\n    AON->BKHOLD_CTRL.XOSC_EST_MODE = 1;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 275,
+      "file_path": "drivers/src/core.c",
+      "line_number": 272,
       "is_static": false
     },
     {
@@ -112,8 +112,8 @@
         }
       ],
       "function_body": "{\r\n    // 启用DPLL电源和时钟\r\n    AON->PMU_ANA_CTRL.ANA_RESV |= 0x4; // PMU_ANA_CTRL：启用DPLL LDO\r\n    APBMISC->DPLL_CTRL.DPLL2_EN = 1;   // DPLL_CTRL：启用DPLL2\r\n\r\n    // 等待DPLL稳定\r\n    boot_delayUs(50);\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 286,
+      "file_path": "drivers/src/core.c",
+      "line_number": 283,
       "is_static": false
     },
     {
@@ -127,8 +127,8 @@
         }
       ],
       "function_body": "{\r\n    volatile uint32_t reg_sclk, reg_dpll;\r\n\r\n    /************************************************************************\r\n     **************             禁用时钟和电源              **************\r\n     ************************************************************************/\r\n    // 等待Flash缓存空闲\r\n    while(SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // close dpll, First switch sysclk if dpll used.\r\n    reg_sclk = RCC->CFG.Word;      // .SYSCLK_SW; bit[3:0]\r\n\r\n    // 切换到RC16M时钟\r\n    reg_sclk = RCC->CFG.Word;\r\n    RCC->CFG.Word = (reg_sclk & ~0x0F) | 1/*SCLK_HSI*/; // CFG：切换到RC16M时钟\r\n\r\n    // 关闭外部晶体缓冲器，配置低功耗模式\r\n    APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 0;\r\n    APBMISC->AON_PMU_CTRL.OSC_EN_DP = 1;\r\n    // XOSC16M_LP=0,about 150uA\r\n    APBMISC->XOSC16M_CTRL.XOSC16M_LP = 1;\r\n\r\n    /**************************************************************/\r\n    // 降低功耗配置\r\n    uint32_t reg_usb_ctrl = SYSCFG->USB_CTRL.Word;\r\n    SYSCFG->USB_CTRL.Word &= ~(0x01 << SYSCFG_DIG_USB_RXEN_POS); // USB_CTRL：禁用USB接收\r\n\r\n    // 降低核心LDO偏置电流\r\n    AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x1F; // PMU_ANA_CTRL：设置LDO偏置\r\n\r\n    RF->ANA_PWR_CTRL.Word = 0x007F7F00; // ANA_PWR_CTRL：禁用PLL时钟\r\n    RF->ANA_EN_CTRL.Word = 0x00060000;  // ANA_EN_CTRL：禁用带隙基准\r\n    /**************************************************************/\r\n\r\n    reg_dpll = APBMISC->DPLL_CTRL.Word;\r\n    APBMISC->DPLL_CTRL.Word = 0;   // DPLL_CTRL：禁用DPLL\r\n\r\n    /************************************************************************\r\n     **************              进入深度睡眠               **************\r\n     ************************************************************************/\r\n    SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk);\r\n    __WFI();\r\n    SCB->SCR &= ~(SCB_SCR_SLEEPDEEP_Msk);\r\n\r\n    /************************************************************************\r\n     **************             恢复时钟和电源              **************\r\n     ************************************************************************/\r\n    // 恢复外部晶体和时钟配置\r\n    APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 1;\r\n    APBMISC->XOSC16M_CTRL.XOSC16M_LP = 0;\r\n\r\n    /**************************************************************/\r\n    // 恢复功耗配置\r\n    AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x10;\r\n\r\n    RF->ANA_EN_CTRL.Word = 0x00070000;  // ANA_EN_CTRL：启用带隙基准\r\n    RF->ANA_PWR_CTRL.Word = 0x07FF7F08; // ANA_PWR_CTRL：启用PLL时钟\r\n    SYSCFG->USB_CTRL.Word = reg_usb_ctrl;\r\n    /**************************************************************/\r\n\r\n    // 恢复DPLL和系统时钟\r\n    APBMISC->DPLL_CTRL.Word = reg_dpll;\r\n    if (reg_dpll & APBMISC_DPLL2_EN_BIT)\r\n        btmr_delay(16, 50);        // 等待DPLL稳定\r\n\r\n    RCC->CFG.Word = reg_sclk;      // CFG：恢复系统时钟\r\n\r\n    // Reset FSHC, Restore Single Line\r\n    // 2022.11.05 --- wq.\r\n//    RCC->AHBRST_CTRL.FSHC_RSTREQ = 1;\r\n//    RCC->AHBRST_CTRL.FSHC_RSTREQ = 0;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 302,
+      "file_path": "drivers/src/core.c",
+      "line_number": 299,
       "is_static": false
     },
     {
@@ -141,9 +141,9 @@
           "description": ""
         }
       ],
-      "function_body": "{\r\n    volatile uint32_t reg_sclk, reg_dpll;\r\n\r\n    /************************************************************************\r\n     **************             禁用时钟和电源              **************\r\n     ************************************************************************/\r\n    // 等待Flash缓存空闲\r\n    while(SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 关闭DPLL，如果当前使用DPLL则先切换系统时钟\r\n    reg_sclk = RCC->CFG.Word;      // CFG：读取系统时钟配置\r\n    if (dis_xo16m)\r\n    {\r\n        APBMISC->AON_PMU_CTRL.OSC_EN_DP = 0;\r\n        // if ((reg_sclk & 0x0F) == 4/*SCLK_PLL*/)\r\n        {\r\n            RCC->CFG.Word = (reg_sclk & ~0x0F) | 2/*SCLK_HSE*/; // CFG：切换到HSE时钟\r\n        }\r\n    }\r\n    else\r\n    {\r\n        RCC->CFG.Word = (reg_sclk & ~0x0F) | 1/*SCLK_HSI*/; // CFG：切换到RC16M时钟\r\n\r\n        // 关闭外部晶体缓冲器，配置低功耗模式\r\n        APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 0;\r\n        APBMISC->AON_PMU_CTRL.OSC_EN_DP   = 1;\r\n        // XOSC16M_LP=0,about 150uA\r\n        APBMISC->XOSC16M_CTRL.XOSC16M_LP  = 1;\r\n    }\r\n\r\n    /**************************************************************/\r\n    // 降低功耗配置\r\n    uint32_t reg_usb_ctrl  = SYSCFG->USB_CTRL.Word;\r\n    SYSCFG->USB_CTRL.Word &= ~(0x01 << SYSCFG_DIG_USB_RXEN_POS); // USB_CTRL：禁用USB接收\r\n\r\n\r\n    // ECO. LDO_DPLL_EN Current Leakage Bug.\r\n    bool is_c2 = (0x904A3A8F == RD_32(0x18000F40));\r\n\r\n    AON_PMU_ANA_CTRL_TypeDef reg_pmu_ana = AON->PMU_ANA_CTRL;\r\n\r\n    reg_pmu_ana.LDO12_IBSEL = 0x1F;\r\n    reg_pmu_ana.Word       &= ~(is_c2 << PMU_ANA_CTRL_DPLL_LDO_POS);\r\n    AON->PMU_ANA_CTRL       = reg_pmu_ana;\r\n\r\n    // 降低核心LDO偏置电流\r\n//    AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x1F; // PMU_ANA_CTRL：设置LDO偏置\r\n\r\n    RF->ANA_PWR_CTRL.Word = 0x007F7F00; // ANA_PWR_CTRL：禁用PLL时钟\r\n    RF->ANA_EN_CTRL.Word  = 0x00060000; // ANA_EN_CTRL：禁用带隙基准\r\n    /**************************************************************/\r\n\r\n    reg_dpll = APBMISC->DPLL_CTRL.Word;\r\n    APBMISC->DPLL_CTRL.Word = 0;   // DPLL_CTRL：禁用DPLL\r\n\r\n    /************************************************************************\r\n     **************              进入深度睡眠               **************\r\n     ************************************************************************/\r\n    SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk); // SCR：配置深度睡眠模式\r\n    __WFI();                           // 等待中断，进入睡眠\r\n    SCB->SCR &= ~(SCB_SCR_SLEEPDEEP_Msk); // SCR：退出深度睡眠模式\r\n    /**************************************************************/\r\n\r\n    if (!dis_xo16m)\r\n    {\r\n        // 恢复外部晶体和时钟配置\r\n        APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 1;\r\n        APBMISC->XOSC16M_CTRL.XOSC16M_LP  = 0;\r\n    }\r\n\r\n    reg_pmu_ana.LDO12_IBSEL = 0x10;\r\n    reg_pmu_ana.Word |= (is_c2 << PMU_ANA_CTRL_DPLL_LDO_POS);\r\n    AON->PMU_ANA_CTRL = reg_pmu_ana;\r\n\r\n    // 恢复功耗配置\r\n//    AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x10;\r\n\r\n    RF->ANA_EN_CTRL.Word  = 0x00070000; // ANA_EN_CTRL：启用带隙基准\r\n    RF->ANA_PWR_CTRL.Word = 0x07FF7F08; // ANA_PWR_CTRL：启用PLL时钟\r\n    SYSCFG->USB_CTRL.Word = reg_usb_ctrl;\r\n    /**************************************************************/\r\n\r\n    /************************************************************************\r\n     **************             恢复时钟和电源              **************\r\n     ************************************************************************/\r\n    // 恢复DPLL和系统时钟\r\n    APBMISC->DPLL_CTRL.Word = reg_dpll; // DPLL_CTRL：恢复DPLL设置\r\n    // if enable dpll2_en, delay 50us wait dpll clk stable\r\n    if (reg_dpll & APBMISC_DPLL2_EN_BIT)\r\n        bootDelayUs(50);            // 如果启用DPLL2，等待时钟稳定\r\n    RCC->CFG.Word = reg_sclk;        // CFG：恢复系统时钟配置\r\n\r\n    // 复位Flash控制器，恢复单线模式\r\n    // 2022.11.05 --- wq.\r\n    RCC->AHBRST_CTRL.FSHC_RSTREQ = 1; // AHBRST_CTRL：请求Flash复位\r\n    RCC->AHBRST_CTRL.FSHC_RSTREQ = 0; // AHBRST_CTRL：释放Flash复位\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 384,
+      "function_body": "{\r\n    volatile uint32_t reg_sclk, reg_dpll;\r\n\r\n    /************************************************************************\r\n     **************             禁用时钟和电源              **************\r\n     ************************************************************************/\r\n    // 等待Flash缓存空闲\r\n    while(SYSCFG->ACC_CCR_BUSY);\r\n\r\n    // 关闭DPLL，如果当前使用DPLL则先切换系统时钟\r\n    reg_sclk = RCC->CFG.Word;      // CFG：读取系统时钟配置\r\n    if (dis_xo16m)\r\n    {\r\n        APBMISC->AON_PMU_CTRL.OSC_EN_DP = 0;\r\n        // if ((reg_sclk & 0x0F) == 4/*SCLK_PLL*/)\r\n        {\r\n            RCC->CFG.Word = (reg_sclk & ~0x0F) | 2/*SCLK_HSE*/; // CFG：切换到HSE时钟\r\n        }\r\n    }\r\n    else\r\n    {\r\n        RCC->CFG.Word = (reg_sclk & ~0x0F) | 1/*SCLK_HSI*/; // CFG：切换到RC16M时钟\r\n\r\n        // 关闭外部晶体缓冲器，配置低功耗模式\r\n        APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 0;\r\n        APBMISC->AON_PMU_CTRL.OSC_EN_DP   = 1;\r\n        // XOSC16M_LP=0,about 150uA\r\n        APBMISC->XOSC16M_CTRL.XOSC16M_LP  = 1;\r\n    }\r\n\r\n    /**************************************************************/\r\n    // 降低功耗配置\r\n    uint32_t reg_usb_ctrl  = SYSCFG->USB_CTRL.Word;\r\n    SYSCFG->USB_CTRL.Word &= ~(0x01 << SYSCFG_DIG_USB_RXEN_POS); // USB_CTRL：禁用USB接收\r\n\r\n\r\n    // ECO. LDO_DPLL_EN Current Leakage Bug.\r\n    bool is_c2 = (0x904A3A8F == RD_32(0x18000F40));\r\n\r\n    AON_PMU_ANA_CTRL_TypeDef reg_pmu_ana = AON->PMU_ANA_CTRL;\r\n\r\n    reg_pmu_ana.LDO12_IBSEL = 0x1F;\r\n    // LVD, about 3uA.\r\n    reg_pmu_ana.LDO_LVD_EN  = 0;\r\n    reg_pmu_ana.Word       &= ~(is_c2 << PMU_ANA_CTRL_DPLL_LDO_POS);\r\n    AON->PMU_ANA_CTRL       = reg_pmu_ana;\r\n\r\n    // 降低核心LDO偏置电流\r\n//    AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x1F; // PMU_ANA_CTRL：设置LDO偏置\r\n\r\n    RF->ANA_PWR_CTRL.Word = 0x007F7F00; // ANA_PWR_CTRL：禁用PLL时钟\r\n    RF->ANA_EN_CTRL.Word  = 0x00060000; // ANA_EN_CTRL：禁用带隙基准\r\n    /**************************************************************/\r\n\r\n    reg_dpll = APBMISC->DPLL_CTRL.Word;\r\n    APBMISC->DPLL_CTRL.Word = 0;   // DPLL_CTRL：禁用DPLL\r\n\r\n    /************************************************************************\r\n     **************              进入深度睡眠               **************\r\n     ************************************************************************/\r\n    SCB->SCR |= (SCB_SCR_SLEEPDEEP_Msk); // SCR：配置深度睡眠模式\r\n    __WFI();                           // 等待中断，进入睡眠\r\n    SCB->SCR &= ~(SCB_SCR_SLEEPDEEP_Msk); // SCR：退出深度睡眠模式\r\n    /**************************************************************/\r\n\r\n    if (!dis_xo16m)\r\n    {\r\n        // 恢复外部晶体和时钟配置\r\n        APBMISC->XOSC16M_CTRL.EN_XO16MBUF = 1;\r\n        APBMISC->XOSC16M_CTRL.XOSC16M_LP  = 0;\r\n    }\r\n\r\n    reg_pmu_ana.LDO12_IBSEL = 0x10;\r\n    reg_pmu_ana.LDO_LVD_EN  = 1;\r\n    reg_pmu_ana.Word |= (is_c2 << PMU_ANA_CTRL_DPLL_LDO_POS);\r\n    AON->PMU_ANA_CTRL = reg_pmu_ana;\r\n\r\n    // 恢复功耗配置\r\n//    AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x10;\r\n\r\n    RF->ANA_EN_CTRL.Word  = 0x00070000; // ANA_EN_CTRL：启用带隙基准\r\n    RF->ANA_PWR_CTRL.Word = 0x07FF7F08; // ANA_PWR_CTRL：启用PLL时钟\r\n    SYSCFG->USB_CTRL.Word = reg_usb_ctrl;\r\n    /**************************************************************/\r\n\r\n    /************************************************************************\r\n     **************             恢复时钟和电源              **************\r\n     ************************************************************************/\r\n    // 恢复DPLL和系统时钟\r\n    APBMISC->DPLL_CTRL.Word = reg_dpll; // DPLL_CTRL：恢复DPLL设置\r\n    // if enable dpll2_en, delay 50us wait dpll clk stable\r\n    if (reg_dpll & APBMISC_DPLL2_EN_BIT)\r\n        bootDelayUs(50);            // 如果启用DPLL2，等待时钟稳定\r\n    RCC->CFG.Word = reg_sclk;        // CFG：恢复系统时钟配置\r\n\r\n    // 复位Flash控制器，恢复单线模式\r\n    // 2022.11.05 --- wq.\r\n    RCC->AHBRST_CTRL.FSHC_RSTREQ = 1; // AHBRST_CTRL：请求Flash复位\r\n    RCC->AHBRST_CTRL.FSHC_RSTREQ = 0; // AHBRST_CTRL：释放Flash复位\r\n}",
+      "file_path": "drivers/src/core.c",
+      "line_number": 381,
       "is_static": true
     },
     {
@@ -162,7 +162,7 @@
         }
       ],
       "function_body": "{\r\n    uint32_t temp;\r\n\r\n    SysTick->LOAD = tcnt * tpsc - 1;\r\n    SysTick->VAL  = 0x00;\r\n    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;\r\n\r\n    do\r\n    {\r\n        temp = SysTick->CTRL;\r\n    } while((temp & SysTick_CTRL_ENABLE_Msk) && !(temp & SysTick_CTRL_COUNTFLAG_Msk));\r\n\r\n    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;\r\n    SysTick->VAL   = 0x00;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
+      "file_path": "drivers/src/core.c",
       "line_number": 493,
       "is_static": false
     },
@@ -177,7 +177,7 @@
         }
       ],
       "function_body": "{\r\n    // 启用时钟\r\n    RCC_APBCLK_EN(APB_BTMR_BIT | APB_APBMISC_BIT | APB_AON_BIT | APB_IWDT_BIT);\r\n    RCC_AHBCLK_EN(AHB_SYSCFG_BIT);\r\n\r\n    // 配置DPLL时钟\r\n    RCC->CFG.DPLL_CLK_SW = 0;          // CFG：选择DPLL时钟\r\n    // 启用BLE时钟\r\n    RCC->BLE_CLKRST_CTRL.BLE_AHBEN = 1; // BLE_CLKRST_CTRL：启用BLE AHB时钟\r\n    // 启用BLE电源\r\n    AON->PMU_CTRL.EM_PD_EN = 0;        // PMU_CTRL：禁用BLE电源关断\r\n    while (AON->PMU_CTRL.EM_PD_ACK);   // 等待电源稳定\r\n    AON->PMU_CTRL.EM_ACCESS_EN = 1;    // PMU_CTRL：启用BLE访问\r\n\r\n    // 配置IO锁存和复位引脚\r\n    AON->PMU_WKUP_CTRL.IO_LATCH_N = 1; // PMU_WKUP_CTRL：启用IO锁存\r\n    AON->BKHOLD_CTRL.PIOA19_FUNC_SEL = 0; // BKHOLD_CTRL：配置复位引脚功能\r\n}",
-      "file_path": "./drivers\\src\\core.c",
+      "file_path": "drivers/src/core.c",
       "line_number": 514,
       "is_static": false
     },
@@ -192,7 +192,7 @@
         }
       ],
       "function_body": "{\r\n    APBMISC->AON_PMU_CTRL.CLK_STB_TIME = step; // AON_PMU_CTRL：设置时钟稳定时间\r\n}",
-      "file_path": "./drivers\\src\\core.c",
+      "file_path": "drivers/src/core.c",
       "line_number": 538,
       "is_static": false
     },
@@ -206,8 +206,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\r\n    DEBUG(\"pmu:%X\\r\\n\", APBMISC->AON_PMU_CTRL.Word);\r\n}",
-      "file_path": "./drivers\\src\\core.c",
+      "function_body": "{\r\n    (void)pmu_ctrl;\r\n    DEBUG(\"pmu:%X\\r\\n\", APBMISC->AON_PMU_CTRL.Word);\r\n}",
+      "file_path": "drivers/src/core.c",
       "line_number": 547,
       "is_static": false
     },
@@ -222,8 +222,8 @@
         }
       ],
       "function_body": "{\r\n    AON->PMU_ANA_CTRL.Word = (ctrl & 0x1FFFFFF);        // PMU_ANA_CTRL：设置模拟LDO控制\r\n    APBMISC->ANAMISC_CTRL.Word = (ctrl >> 25);          // ANAMISC_CTRL：设置其他LDO控制\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 556,
+      "file_path": "drivers/src/core.c",
+      "line_number": 557,
       "is_static": false
     },
     {
@@ -237,8 +237,8 @@
         }
       ],
       "function_body": "{\r\n    uint32_t val = (AON->PMU_ANA_CTRL.Word & 0x1FFFFFF);\r\n    val |= (APBMISC->ANAMISC_CTRL.Word << 25);\r\n    return val;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 566,
+      "file_path": "drivers/src/core.c",
+      "line_number": 567,
       "is_static": false
     },
     {
@@ -252,13 +252,13 @@
         }
       ],
       "function_body": "{\r\n    APBMISC->BLE_DP_TWCORE = tw_ble; // BLE_DP_TWCORE：设置BLE深度睡眠时间窗口\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 585,
+      "file_path": "drivers/src/core.c",
+      "line_number": 586,
       "is_static": false
     },
     {
       "name": "core_sysclk_get",
-      "return_type": "uint8_t",
+      "return_type": "__STATIC_FORCEINLINE",
       "parameters": [
         {
           "name": "",
@@ -267,9 +267,9 @@
         }
       ],
       "function_body": "{\r\n    uint8_t sclk_cur = SYS_CLK_16M;\r\n\r\n    if ((RCC->CFG.Word & 0x0F) == 4/*SCLK_PLL*/)\r\n    {\r\n        sclk_cur = RCC->CFG.DPLL_CLK_SW ? SYS_CLK_48M : ((RCC->AHBCLK_DIV == 1) ? SYS_CLK_32M : SYS_CLK_64M);\r\n    }\r\n\r\n    return sclk_cur;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 594,
-      "is_static": true
+      "file_path": "drivers/src/core.c",
+      "line_number": 595,
+      "is_static": false
     },
     {
       "name": "c1_core_sleep",
@@ -282,8 +282,8 @@
         }
       ],
       "function_body": "{\r\n    uint32_t irq_bak;\r\n    uint32_t peri_en = 0;\r\n    uint16_t wkup_st = 0;\r\n\r\n    wkup_en &= CFG_WKUP_DEEPSL_MSK;\r\n\r\n    // Don't enter core sleep, if no wakeup source\r\n    if (wkup_en == 0) return 0;\r\n\r\n    GLOBAL_INT_DISABLE();\r\n    DBG_TIM_PIO_H();\r\n\r\n    // Confirmed if no WKUP_BLE_EN, or else to do\r\n    bool confirm = ((wkup_en & CFG_WKUP_BLE_EN) == 0);\r\n\r\n    if (confirm || BLE_IS_DP_ON())\r\n    {\r\n        // Disable SysTick if possible\r\n        if (SysTick->CTRL & SysTick_CTRL_ENABLE_Msk)\r\n        {\r\n            SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;\r\n            peri_en |= PERI_SYSTICK_EN_BIT;\r\n        }\r\n\r\n        // Backup and Disable External IRQs\r\n        irq_bak = NVIC->ISER[0];\r\n        NVIC->ICER[0] = irq_bak;\r\n\r\n        // Enable AON_PMU, config WKUP_CTRL\r\n        AON->PMU_WKUP_CTRL.Word = (AON->PMU_WKUP_CTRL.Word & ~CFG_WKUP_DEEPSL_MSK) | wkup_en;\r\n        APBMISC->AON_PMU_CTRL.Word      |= CFG_WKUP_ST_CLR_MSK;\r\n        APBMISC->AON_PMU_CTRL.OSC_EN_DP  = 0;\r\n\r\n        NVIC->ICPR[0] = (1 << AON_PMU_IRQn) | (1 << BB_LP_IRQn);\r\n        NVIC->ISER[0] = (1 << AON_PMU_IRQn);\r\n\r\n        // Disable peripheral: SADC ...\r\n        if (SADC->SADC_ANA_CTRL.SADC_EN)\r\n        {\r\n            SADC->SADC_ANA_CTRL.SADC_EN = 0;\r\n            peri_en |= PERI_SADC_EN_BIT;\r\n        }\r\n\r\n        /**************************************************************/\r\n        // Add. door --- 2023.07.04\r\n        uint32_t reg_usb_ctrl = SYSCFG->USB_CTRL.Word;\r\n        SYSCFG->USB_CTRL.Word &= ~(0x01 << SYSCFG_DIG_USB_RXEN_POS);\r\n\r\n        // Wait BLE been deepsleep state, check enough time or not\r\n        if (!confirm)\r\n        {\r\n            while (BLE_IS_DP_ON())\r\n            {\r\n                if (BLE_IS_DP_STA())\r\n                {\r\n                    DBG_TIM_PIO_L();\r\n                    //BLE_IS_DP_STA = 1 -> BLE_DP_VALID = 1, about 2 rc32k clk\r\n                    uint8_t dly_us = (core_sysclk_get() + 1) * 62;\r\n                    bootDelayUs(dly_us);\r\n\r\n                    confirm = BLE_IS_DP_VALID();\r\n                    DBG_TIM_PIO_H();\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n\r\n        // Confirm to enter deep sleep\r\n        if (confirm)\r\n        {\r\n            // reduce coreldo bias current\r\n            AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x1F;\r\n\r\n            // close dpll, First switch sysclk if dpll used.\r\n            uint32_t reg_sclk = RCC->CFG.Word;      // .SYSCLK_SW; bit[3:0]\r\n            if ((reg_sclk & 0x0F) == 4/*SCLK_PLL*/)\r\n            {\r\n                RCC->CFG.Word = (reg_sclk & ~0x0F) | 2/*SCLK_HSE*/;\r\n            }\r\n\r\n            RF->ANA_PWR_CTRL.Word = 0x007F7F00; // dis CLK_EN_PLL\r\n            RF->ANA_EN_CTRL.Word  = 0x00060000; // dis EN_BG\r\n            /**************************************************************/\r\n\r\n            DBG_TIM_PIO_L();\r\n            deepsleep();\r\n            DBG_TIM_PIO_H();\r\n\r\n            /**************************************************************/\r\n            // Add. door --- 2023.07.04\r\n            // reduce coreldo bias current\r\n            AON->PMU_ANA_CTRL.LDO12_IBSEL = 0x10;\r\n\r\n            RF->ANA_EN_CTRL.Word  = 0x00070000; // en EN_BG\r\n            RF->ANA_PWR_CTRL.Word = 0x07FF7F08;\r\n\r\n            RCC->CFG.Word         = reg_sclk;\r\n        }\r\n\r\n        SYSCFG->USB_CTRL.Word = reg_usb_ctrl;\r\n        /**************************************************************/\r\n\r\n        // Enable peripheral: SADC ...\r\n        if (peri_en & PERI_SADC_EN_BIT)\r\n        {\r\n            SADC->SADC_ANA_CTRL.SADC_EN = 1;\r\n        }\r\n\r\n        // Disable AON_PMU, Read & Clear WKUP_ST\r\n        NVIC->ICER[0] = (1 << AON_PMU_IRQn);\r\n        NVIC->ICPR[0] = (1 << AON_PMU_IRQn) | (1 << BB_LP_IRQn);\r\n        wkup_st = AON->PMU_WKUP_ST.Word & CFG_WKUP_ST_MSK;\r\n        APBMISC->AON_PMU_CTRL.Word |= CFG_WKUP_ST_CLR_MSK;\r\n\r\n        // Restore External IRQs\r\n        NVIC->ISER[0] = irq_bak;\r\n\r\n        // Restore SysTick\r\n        if (peri_en & PERI_SYSTICK_EN_BIT)\r\n        {\r\n            SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;\r\n        }\r\n    }\r\n    else\r\n    {\r\n        // Don't enter core sleep, if BLE is ongoing\r\n    }\r\n\r\n    DBG_TIM_PIO_L();\r\n    GLOBAL_INT_RESTORE();\r\n\r\n    return wkup_st;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 612,
+      "file_path": "drivers/src/core.c",
+      "line_number": 613,
       "is_static": false
     },
     {
@@ -297,8 +297,8 @@
         }
       ],
       "function_body": "{\r\n    uint32_t irq_bak;\r\n    uint32_t peri_en = 0;\r\n    uint16_t wkup_st = 0;\r\n\r\n    wkup_en &= CFG_WKUP_DEEPSL_MSK;\r\n\r\n    // Don't enter core sleep, if no wakeup source\r\n    if (wkup_en == 0) return 0;\r\n\r\n    GLOBAL_INT_DISABLE();\r\n    DBG_TIM_PIO_H();\r\n\r\n    // Confirmed if no WKUP_BLE_EN, or else to do\r\n    bool confirm = ((wkup_en & CFG_WKUP_BLE_EN) == 0);\r\n\r\n    if (confirm || BLE_IS_DP_ON())\r\n    {\r\n        // Disable SysTick if possible\r\n        if (SysTick->CTRL & SysTick_CTRL_ENABLE_Msk)\r\n        {\r\n            SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;\r\n            peri_en |= PERI_SYSTICK_EN_BIT;\r\n        }\r\n\r\n        // Backup and Disable External IRQs\r\n        irq_bak = NVIC->ISER[0];\r\n        NVIC->ICER[0] = irq_bak;\r\n\r\n        // Enable AON_PMU, config WKUP_CTRL\r\n        AON->PMU_WKUP_CTRL.Word = (AON->PMU_WKUP_CTRL.Word & ~CFG_WKUP_DEEPSL_MSK) | wkup_en;\r\n        APBMISC->AON_PMU_CTRL.Word |= CFG_WKUP_ST_CLR_MSK;\r\n\r\n        NVIC->ICPR[0] = (1 << AON_PMU_IRQn) | (1 << BB_LP_IRQn);\r\n        NVIC->ISER[0] = (1 << AON_PMU_IRQn);\r\n\r\n        // Disable peripheral: SADC ...\r\n        if (SADC->SADC_ANA_CTRL.SADC_EN)\r\n        {\r\n            SADC->SADC_ANA_CTRL.SADC_EN = 0;\r\n            peri_en |= PERI_SADC_EN_BIT;\r\n        }\r\n\r\n        // Wait BLE been deepsleep state, check enough time or not\r\n        if (!confirm)\r\n        {\r\n            while (BLE_IS_DP_ON())\r\n            {\r\n                if (BLE_IS_DP_STA())\r\n                {\r\n                    DBG_TIM_PIO_L();\r\n                    //BLE_IS_DP_STA = 1 -> BLE_DP_VALID = 1, about 2 rc32k clk\r\n                    uint8_t dly_us = (core_sysclk_get() + 1) * 62;\r\n                    bootDelayUs(dly_us);\r\n                    confirm = BLE_IS_DP_VALID();\r\n                    DBG_TIM_PIO_H();\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n\r\n        // Confirm to enter deep sleep\r\n        if (confirm)\r\n        {\r\n            DBG_TIM_PIO_L();\r\n            _SLEEP();\r\n            DBG_TIM_PIO_H();\r\n        }\r\n\r\n        // Enable peripheral: SADC ...\r\n        if (peri_en & PERI_SADC_EN_BIT)\r\n        {\r\n            SADC->SADC_ANA_CTRL.SADC_EN = 1;\r\n        }\r\n\r\n        // Disable AON_PMU, Read & Clear WKUP_ST\r\n        NVIC->ICER[0] = (1 << AON_PMU_IRQn);\r\n        NVIC->ICPR[0] = (1 << AON_PMU_IRQn);\r\n        wkup_st = AON->PMU_WKUP_ST.Word & CFG_WKUP_ST_MSK;\r\n        APBMISC->AON_PMU_CTRL.Word |= CFG_WKUP_ST_CLR_MSK;\r\n\r\n        // Restore External IRQs\r\n        NVIC->ISER[0] = irq_bak;\r\n\r\n        // Restore SysTick\r\n        if (peri_en & PERI_SYSTICK_EN_BIT)\r\n        {\r\n            SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;\r\n        }\r\n    }\r\n    else\r\n    {\r\n        // Don't enter core sleep, if BLE is ongoing\r\n    }\r\n\r\n    DBG_TIM_PIO_L();\r\n    GLOBAL_INT_RESTORE();\r\n\r\n    return wkup_st;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 757,
+      "file_path": "drivers/src/core.c",
+      "line_number": 758,
       "is_static": false
     },
     {
@@ -317,8 +317,8 @@
         }
       ],
       "function_body": "{\r\n    uint32_t irq_bak;\r\n    uint32_t peri_en = 0;\r\n    uint16_t wkup_st = 0;\r\n\r\n    wkup_en &= CFG_WKUP_DEEPSL_MSK;\r\n\r\n    // Don't enter core sleep, if no wakeup source\r\n    if (wkup_en == 0) return 0;\r\n\r\n    GLOBAL_INT_DISABLE();\r\n    DBG_TIM_PIO_H();\r\n\r\n    // Confirmed if no WKUP_BLE_EN, or else to do\r\n    bool confirm = ((wkup_en & CFG_WKUP_BLE_EN) == 0);\r\n\r\n    if (confirm || BLE_IS_DP_ON())\r\n    {\r\n        // Disable SysTick if possible\r\n        if (SysTick->CTRL & SysTick_CTRL_ENABLE_Msk)\r\n        {\r\n            SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;\r\n            peri_en |= PERI_SYSTICK_EN_BIT;\r\n        }\r\n\r\n        // Backup and Disable External IRQs\r\n        irq_bak = NVIC->ISER[0];\r\n        NVIC->ICER[0] = irq_bak;\r\n\r\n        // Enable AON_PMU, config WKUP_CTRL\r\n        AON->PMU_WKUP_CTRL.Word = (AON->PMU_WKUP_CTRL.Word & ~CFG_WKUP_DEEPSL_MSK) | wkup_en;\r\n        APBMISC->AON_PMU_CTRL.Word |= CFG_WKUP_ST_CLR_MSK;\r\n\r\n        NVIC->ICPR[0] = (1 << AON_PMU_IRQn) | (1 << BB_LP_IRQn);\r\n        NVIC->ISER[0] = (1 << AON_PMU_IRQn);\r\n\r\n        // Disable peripheral: SADC ...\r\n        if (SADC->SADC_ANA_CTRL.SADC_EN)\r\n        {\r\n            SADC->SADC_ANA_CTRL.SADC_EN = 0;\r\n            peri_en |= PERI_SADC_EN_BIT;\r\n        }\r\n\r\n        // Wait BLE been deepsleep state, check enough time or not\r\n        if (!confirm)\r\n        {\r\n            while (BLE_IS_DP_ON())\r\n            {\r\n                if (BLE_IS_DP_STA())\r\n                {\r\n                    DBG_TIM_PIO_L();\r\n                    //BLE_IS_DP_STA = 1 -> BLE_DP_VALID = 1, about 2 rc32k clk\r\n                    uint8_t dly_us = (core_sysclk_get() + 1) * 62;\r\n                    bootDelayUs(dly_us);\r\n                    confirm = BLE_IS_DP_VALID();\r\n                    DBG_TIM_PIO_H();\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n\r\n        // Confirm to enter deep sleep\r\n        if (confirm)\r\n        {\r\n            DBG_TIM_PIO_L();\r\n            C2_SLEEP(dis_xo16m);\r\n            DBG_TIM_PIO_H();\r\n        }\r\n\r\n        // Enable peripheral: SADC ...\r\n        if (peri_en & PERI_SADC_EN_BIT)\r\n        {\r\n            SADC->SADC_ANA_CTRL.SADC_EN = 1;\r\n        }\r\n\r\n        // Disable AON_PMU, Read & Clear WKUP_ST\r\n        NVIC->ICER[0] = (1 << AON_PMU_IRQn);\r\n        NVIC->ICPR[0] = (1 << AON_PMU_IRQn);\r\n        wkup_st = AON->PMU_WKUP_ST.Word & CFG_WKUP_ST_MSK;\r\n        APBMISC->AON_PMU_CTRL.Word |= CFG_WKUP_ST_CLR_MSK;\r\n\r\n        // Restore External IRQs\r\n        NVIC->ISER[0] = irq_bak;\r\n\r\n        // Restore SysTick\r\n        if (peri_en & PERI_SYSTICK_EN_BIT)\r\n        {\r\n            SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;\r\n        }\r\n    }\r\n    else\r\n    {\r\n        // Don't enter core sleep, if BLE is ongoing\r\n    }\r\n\r\n    DBG_TIM_PIO_L();\r\n    GLOBAL_INT_RESTORE();\r\n\r\n    return wkup_st;\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 866,
+      "file_path": "drivers/src/core.c",
+      "line_number": 867,
       "is_static": true
     },
     {
@@ -332,8 +332,8 @@
         }
       ],
       "function_body": "{\r\n    return c2_core_sleep(cfg_wkup, true);\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 968,
+      "file_path": "drivers/src/core.c",
+      "line_number": 969,
       "is_static": false
     },
     {
@@ -347,8 +347,8 @@
         }
       ],
       "function_body": "{\r\n    return c2_core_sleep(cfg_wkup, false);\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 973,
+      "file_path": "drivers/src/core.c",
+      "line_number": 974,
       "is_static": false
     },
     {
@@ -367,8 +367,8 @@
         }
       ],
       "function_body": "{\r\n    APBMISC->PIOA_WKUP_NEG = pad_pu;   // PIOA_WKUP_NEG：设置下降沿唤醒引脚\r\n    APBMISC->PIOA_WKUP_POS = wkup_en^pad_pu; // PIOA_WKUP_POS：设置上升沿唤醒引脚\r\n\r\n    // 配置复位引脚为GPIO功能\r\n    if ((1UL << PA_RSTPIN) & wkup_en)\r\n    {\r\n        AON->BKHOLD_CTRL.PIOA19_FUNC_SEL = 1; // BKHOLD_CTRL：配置PIOA19为GPIO\r\n    }\r\n\r\n    // 配置唤醒IO引脚\r\n    for (uint8_t io_idx = 0; io_idx < PA_MAX; ++io_idx)\r\n    {\r\n        if ((1UL << io_idx) & wkup_en)\r\n        {\r\n            CSC->CSC_PIO[io_idx].Word = (pad_pu & (1UL << io_idx)) ? PWIO_EDGE_FALLING : PWIO_EDGE_RISING;\r\n        }\r\n    }\r\n\r\n    GPIO->DIR_CLR = wkup_en;           // DIR_CLR：配置为输入方向\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 996,
+      "file_path": "drivers/src/core.c",
+      "line_number": 997,
       "is_static": false
     },
     {
@@ -382,13 +382,13 @@
         }
       ],
       "function_body": "{\r\n    uint32_t reg_sclk = RCC->CFG.Word;\r\n    if ((reg_sclk & 0x0F) == 4/*SCLK_PLL*/)\r\n    {\r\n        RCC->CFG.Word = (reg_sclk & ~0x0F) | 2/*SCLK_HSE*/; // CFG：切换到HSE时钟\r\n    }\r\n\r\n    reg_sclk = RCC->CLK_EN_ST.FSHCCLK_SEL;\r\n    if ((reg_sclk == FSH_CLK_DPLL128) || (reg_sclk == FSH_CLK_DPLL))\r\n    {\r\n        RCC->CLK_EN_ST.FSHCCLK_SEL = FSH_CLK_HSE16; // CLK_EN_ST：切换Flash时钟\r\n    }\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 1022,
+      "file_path": "drivers/src/core.c",
+      "line_number": 1023,
       "is_static": true
     },
     {
       "name": "ble_retain",
-      "return_type": "__weak",
+      "return_type": "__WEAK",
       "parameters": [
         {
           "name": "",
@@ -397,8 +397,8 @@
         }
       ],
       "function_body": "{\r\n    // 在BLE库中实现\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 1040,
+      "file_path": "drivers/src/core.c",
+      "line_number": 1041,
       "is_static": false
     },
     {
@@ -412,8 +412,8 @@
         }
       ],
       "function_body": "{\r\n    uint16_t wkup_en = (cfg_wkup & CFG_WKUP_PWROFF_MSK) | (WKUP_IO_LATCH_N_BIT | WKUP_BLE_LATCH_N_BIT);\r\n    uint32_t aon_pmu_ctrl = AON->PMU_CTRL.Word;\r\n\r\n    GLOBAL_INT_STOP();\r\n\r\n    // 配置IO锁存\r\n    if (cfg_wkup & WKUP_IO_LATCH_N_BIT)\r\n    {\r\n        wkup_en &= ~WKUP_IO_LATCH_N_BIT;\r\n        AON->BACKUP0 |= BKUP0_IO_LATCH_BIT; // BACKUP0：设置IO锁存保持\r\n    }\r\n\r\n    // 配置BLE状态保持\r\n    if (cfg_wkup & WKUP_BLE_SEL_MSK)\r\n    {\r\n        wkup_en &= ~WKUP_BLE_LATCH_N_BIT;\r\n        ble_retain();\r\n    }\r\n\r\n    if (wkup_en & WKUP_RTC_EN_BIT)\r\n    {\r\n        //rtc_alarm_set(rtc_ms); remove to outside\r\n    }\r\n\r\n    // 关闭Retention SRAM\r\n    if (cfg_wkup & WKUP_RETENTION_MEM_PD_BIT)\r\n    {\r\n        aon_pmu_ctrl |= BIT(AON_EM_PD_EN_POS);\r\n    }\r\n\r\n    // 关闭RC32K\r\n    if (cfg_wkup & WKUP_RC32K_PD_BIT)\r\n    {\r\n        aon_pmu_ctrl |= BIT(AON_AUTO_DIS_RC32K_POS);\r\n    }\r\n\r\n    // 更新PMU控制\r\n    if (aon_pmu_ctrl != AON->PMU_CTRL.Word)\r\n    {\r\n        AON->PMU_CTRL.Word = aon_pmu_ctrl;\r\n    }\r\n\r\n    // Fixed Bug: Core1V2 not down to 0V when LDO_TEST_EN=1 - add 6vp 0720\r\n    RF->DIG_CTRL.Word = 8;             // DIG_CTRL：配置低功耗模式\r\n\r\n    // 配置唤醒控制\r\n    AON->PMU_WKUP_CTRL.Word = wkup_en; // PMU_WKUP_CTRL：设置唤醒源\r\n    APBMISC->AON_PMU_CTRL.Word |= CFG_WKUP_ST_CLR_MSK; // AON_PMU_CTRL：清除唤醒状态\r\n    APBMISC->POWEROFF_LOG_CLR = 1;     // POWEROFF_LOG_CLR：清除掉电日志\r\n\r\n    // 切换时钟以降低功耗\r\n    pwroff_clk_sw();\r\n\r\n    // 关闭DPLL LDO和LVD\r\n    AON->PMU_ANA_CTRL.Word &= ~(PMU_ANA_CTRL_DPLL_LDO_BIT | PMU_ANA_CTRL_LDO_LVD_EN_BIT);\r\n\r\n    // 进入掉电模式\r\n    while (1)\r\n    {\r\n        APBMISC->POWEROFF_WORD_CMD = 0x77ED29B4; // POWEROFF_WORD_CMD：发送掉电命令\r\n        APBMISC->AON_PMU_CTRL.Word |= CFG_WKUP_ST_CLR_MSK;\r\n        APBMISC->POWEROFF_LOG_CLR = 1;\r\n    }\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 1049,
+      "file_path": "drivers/src/core.c",
+      "line_number": 1050,
       "is_static": false
     },
     {
@@ -427,8 +427,8 @@
         }
       ],
       "function_body": "{\r\n    AON->BACKUP0 &= ~BKUP0_IO_LATCH_BIT; // BACKUP0：清除IO锁存保持\r\n    AON->PMU_WKUP_CTRL.IO_LATCH_N = 1;   // PMU_WKUP_CTRL：启用IO锁存\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 1119,
+      "file_path": "drivers/src/core.c",
+      "line_number": 1120,
       "is_static": false
     },
     {
@@ -442,8 +442,8 @@
         }
       ],
       "function_body": "{\r\n    uint32_t i;\r\n\r\n    // 复制向量表到SRAM\r\n    for (i = 0; i < LEN_VECTOR; i++)\r\n    {\r\n        WR_32((SRAM_VECTOR + (i << 2)), RD_32(addr+ (i << 2)));\r\n    }\r\n\r\n    // 设置向量表偏移寄存器\r\n    __DMB();\r\n    SCB->VTOR = SRAM_VECTOR;            // VTOR：设置向量表偏移\r\n    __DSB();\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 1129,
+      "file_path": "drivers/src/core.c",
+      "line_number": 1130,
       "is_static": false
     },
     {
@@ -462,8 +462,8 @@
         }
       ],
       "function_body": "{\r\n    // read value\r\n    uint32_t tmp_id[4];\r\n\r\n    GLOBAL_INT_DISABLE();\r\n\r\n    // wait cache idle\r\n    while (SYSCFG->ACC_CCR_BUSY);\r\n    // cmd(1B)+addr(3B)+dummy(1B) = cmd(1B)+dummy(4B)\r\n    fshc_rd_cfg(0x4B, 0x00, 16, 0x0395, 0x01DF);\r\n    fshc_rd_fifo(tmp_id, 4, 0x4B);\r\n\r\n    // ascii\"B6x-\"\r\n    tmp_id[0] = 0x2D783642;\r\n    xmemcpy(unique_id, (uint8_t *)tmp_id, (size > 16 ? 16 : size));\r\n\r\n    GLOBAL_INT_RESTORE();\r\n}",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 1151,
+      "file_path": "drivers/src/core.c",
+      "line_number": 1152,
       "is_static": false
     }
   ],
@@ -473,236 +473,236 @@
       "value": "0x50000030",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 65
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 66
     },
     {
       "name": "BLE_DEEPSL_ON_BIT",
       "value": "((uint32_t)0x00000004)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 66
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 67
     },
     {
       "name": "BLE_DEEPSL_STA_MSK",
       "value": "((uint32_t)0x00008004)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 67
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 68
     },
     {
       "name": "BLE_DEEPSLWKUP_ADDR",
       "value": "0x50000034",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 69
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 70
     },
     {
       "name": "BLE_DEEPSLTIME_MASK",
       "value": "((uint32_t)0xFFFFFFFF)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 70
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 71
     },
     {
       "name": "BLE_DEEPSLTIME_LSB",
       "value": "0",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 71
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 72
     },
     {
       "name": "BLE_DEEPSLTIME_WIDTH",
       "value": "((uint32_t)0x00000020)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 72
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 73
     },
     {
       "name": "BLE_DEEPSLSTAT_ADDR",
       "value": "0x50000038",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 74
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 75
     },
     {
       "name": "BLE_DEEPSLDUR_MASK",
       "value": "((uint32_t)0xFFFFFFFF)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 75
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 76
     },
     {
       "name": "BLE_DEEPSLDUR_LSB",
       "value": "0",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 76
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 77
     },
     {
       "name": "BLE_DEEPSLDUR_WIDTH",
       "value": "((uint32_t)0x00000020)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 77
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 78
     },
     {
       "name": "BLE_ENBPRESET_ADDR",
       "value": "0x5000003C",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 79
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 80
     },
     {
       "name": "BLE_TWEXT_MASK",
       "value": "((uint32_t)0xFFE00000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 80
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 81
     },
     {
       "name": "BLE_TWEXT_LSB",
       "value": "21",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 81
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 82
     },
     {
       "name": "BLE_TWEXT_WIDTH",
       "value": "((uint32_t)0x0000000B)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 82
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 83
     },
     {
       "name": "BLE_TWOSC_MASK",
       "value": "((uint32_t)0x001FFC00)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 83
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 84
     },
     {
       "name": "BLE_TWOSC_LSB",
       "value": "10",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 84
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 85
     },
     {
       "name": "BLE_TWOSC_WIDTH",
       "value": "((uint32_t)0x0000000B)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 85
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 86
     },
     {
       "name": "BLE_TWRM_MASK",
       "value": "((uint32_t)0x000003FF)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 86
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 87
     },
     {
       "name": "BLE_TWRM_LSB",
       "value": "0",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 87
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 88
     },
     {
       "name": "BLE_TWRM_WIDTH",
       "value": "((uint32_t)0x0000000A)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 88
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 89
     },
     {
       "name": "PMU_ANA_CTRL_DPLL_LDO_POS",
       "value": "18",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 94
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 95
     },
     {
       "name": "PMU_ANA_CTRL_DPLL_LDO_BIT",
       "value": "((uint32_t)0x00040000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 95
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 96
     },
     {
       "name": "PMU_ANA_CTRL_LDO_LVD_EN_BIT",
       "value": "((uint32_t)0x00000400)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 96
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 97
     },
     {
       "name": "BKUP0_IO_LATCH_BIT",
       "value": "((uint32_t)0x00008000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 98
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 99
     },
     {
       "name": "APBMISC_DPLL2_EN_BIT",
       "value": "((uint32_t)0x00000004)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 101
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 102
     },
     {
       "name": "LEN_VECTOR",
       "value": "38",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 103
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 104
     },
     {
       "name": "SRAM_VECTOR",
       "value": "0x20003000",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 104
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 105
     },
     {
       "name": "CFG_CHIP_C1",
       "value": "(0)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\core.c",
-      "line_number": 110
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\core.c",
+      "line_number": 107
     }
   ],
   "parse_errors": [
-    "Line 106, Col 16: '1_MODE'",
-    "Line 1040, Col 8: ''"
+    "Line 595, Col 22: '       '",
+    "Line 1041, Col 8: ''"
   ]
 }

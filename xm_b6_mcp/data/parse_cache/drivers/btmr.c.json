@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\src\\btmr.c",
+  "file_path": "drivers/src/btmr.c",
   "functions": [
     {
       "name": "btmr_delay",
@@ -17,7 +17,7 @@
         }
       ],
       "function_body": "{\n    // 配置定时器参数\n    BTMR->CR1.Word = CR1_ONE_MODE;  // 设置单次模式，URS=1(只有计数器溢出时生成更新事件)，OPM=1(单脉冲模式)\n    BTMR->PSC = tpsc - 1;           // 设置预分频器值\n    BTMR->ARR = tcnt - 1;           // 设置自动重载值\n    BTMR->CNT = 0;                  // 清零计数器\n    BTMR->EGR = 1;                  // 生成更新事件，重新初始化计数器\n    BTMR->ICR = 1;                  // 清除更新中断标志\n\n    // 使能计数器，等待定时器到达设定时间\n    BTMR->CR1.CEN = 1;              // CEN=1，使能计数器\n    while(!BTMR->RIF && BTMR->CR1.CEN); // 等待更新中断标志置位或计数器停止\n    BTMR->ICR = 1;                  // 清除更新中断标志\n\n    // 清除模式设置\n    BTMR->CR1.Word = 0;             // 禁用计数器，清除所有控制位\n}",
-      "file_path": "./drivers\\src\\btmr.c",
+      "file_path": "drivers/src/btmr.c",
       "line_number": 23,
       "is_static": false
     },
@@ -37,7 +37,7 @@
         }
       ],
       "function_body": "{\n    uint32_t temp;\n\n    SysTick->LOAD = tcnt * tpsc - 1;    // 设置重载值\n    SysTick->VAL  = 0x00;               // 清零当前值\n    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk; // 使能SysTick，使用处理器时钟\n\n    do\n    {\n        temp = SysTick->CTRL;           // 读取控制状态寄存器\n    } while((temp & SysTick_CTRL_ENABLE_Msk) && !(temp & SysTick_CTRL_COUNTFLAG_Msk)); // 等待计数完成\n\n    SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk; // 禁用SysTick\n    SysTick->VAL   = 0x00;              // 清零当前值\n}",
-      "file_path": "./drivers\\src\\btmr.c",
+      "file_path": "drivers/src/btmr.c",
       "line_number": 49,
       "is_static": false
     }
@@ -48,7 +48,7 @@
       "value": "(0x0C) // 单次模式配置：URS=1(bit2), OPM=1(bit3)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\btmr.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\btmr.c",
       "line_number": 15
     }
   ],

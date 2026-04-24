@@ -3,9 +3,9 @@
  *
  * @file music.h
  *
- * @brief 音频文件,原始PCM数据.
+ * @brief Audio file, raw PCM data.
  *
- * @note 音频转换:TXT->在线TTS(.mp3)->Audition->pcm
+ * @note Audio conversion: TXT->TTS(.mp3)->Audition->pcm
  ****************************************************************************************
  */
 
@@ -15,8 +15,8 @@
 #include <stdint.h>
 #include "drvs.h"
 
-// 64KHz 16位PCM 原始数据. "1-2-3-4-5", 总大小221KB,时间1.76S.
-const int16_t spealer_64Khz[] = 
+// 64KHz 16-bit PCM raw data. "1-2-3-4-5", total size 221KB, duration 1.76S.
+const int16_t speaker_64Khz[] =
 {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFF, 0xFFFF,
     0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,

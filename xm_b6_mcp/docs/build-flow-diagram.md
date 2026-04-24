@@ -225,7 +225,7 @@
 │  │ SVD Parser + BLE User Guide                                          │   │
 │  │ gen/SVD/DragonC.svd + doc/.../B6x_BLE芯片使用指南.docx                 │   │
 │  │   ↓                                                                    │   │
-│  │ data/domain/hardware/registers.json (368 寄存器)                       │   │
+│  │ data/domain/hardware/interrupts.json + pin_mux.json                    │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
@@ -380,14 +380,16 @@ data/
 │
 ├── domain/                      (分域数据)
 │   ├── hardware/
-│   │   ├── registers.json        (368 个寄存器)
 │   │   ├── pin_mux.json          (引脚复用)
-│   │   ├── power_consumption.json
-│   │   └── memory_regions.json    (内存区域)
+│   │   ├── interrupts.json       (中断定义)
+│   │   ├── memory_boundaries.json (内存边界)
+│   │   ├── memory_regions.json    (内存区域)
+│   │   ├── sram_regions.json      (SRAM 区域)
+│   │   └── power_consumption.json
 │   ├── drivers/
-│   │   ├── apis.json             (18 个 API)
+│   │   ├── apis.json             (171 个 API)
 │   │   ├── structs.json          (38 个结构体)
-│   │   ├── macros.json           (293 个宏)
+│   │   ├── macros.json           (82 个宏)
 │   │   └── enums.json            (89 个枚举)
 │   └── ble/
 │       ├── apis.json

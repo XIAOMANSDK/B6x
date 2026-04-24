@@ -1,5 +1,5 @@
 {
-  "file_path": "./usb\\src\\main.c",
+  "file_path": "usb/src/main.c",
   "functions": [
     {
       "name": "sysInit",
@@ -11,8 +11,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    // switch syclk to 48M for USB\n    rcc_sysclk_set(SYS_CLK_48M);\n\n    // enable USB clk and iopad\n    rcc_usb_en();\n    \n    //rcc_fshclk_set(FSH_CLK_DPSC42);\n}",
-      "file_path": "./usb\\src\\main.c",
+      "function_body": "{\n    // switch syclk to 48M for USB\n    rcc_sysclk_set(SYS_CLK_48M);\n\n    // enable USB clk and iopad\n    rcc_usb_en();\n\n    //rcc_fshclk_set(FSH_CLK_DPSC42);\n}",
+      "file_path": "usb/src/main.c",
       "line_number": 31,
       "is_static": true
     },
@@ -26,8 +26,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    uint16_t rsn = rstrsn();\n    \n    iwdt_disable();\n    \n    //sysdbg_iomap(0x3F3C);//sys_dbg_init();\n    dbgInit();\n    debug(\"Start(rsn:0x%X, %s)...\\r\\n\", rsn, __TIMESTAMP__);\n\n    usbdInit();\n    //sysdbg_select(SYS_DBG_USB, USB_DBG2);\n    //GPIO_DIR_SET_LO(GPIO03 | GPIO04);\n}",
-      "file_path": "./usb\\src\\main.c",
+      "function_body": "{\n    uint16_t rsn = rstrsn();\n\n    iwdt_disable();\n\n    //sysdbg_iomap(0x3F3C);//sys_dbg_init();\n    dbgInit();\n    debug(\"Start(rsn:0x%X, %s)...\\r\\n\", rsn, __TIMESTAMP__);\n\n    usbdInit();\n    //sysdbg_select(SYS_DBG_USB, USB_DBG2);\n    //GPIO_DIR_SET_LO(GPIO03 | GPIO04);\n}",
+      "file_path": "usb/src/main.c",
       "line_number": 42,
       "is_static": true
     },
@@ -42,7 +42,7 @@
         }
       ],
       "function_body": "{\n    sysInit();\n    devInit();\n\n    NVIC_EnableIRQ(USB_IRQn);\n    __enable_irq();\n\n    while (1)\n    {\n        usbdTest();\n    }\n}",
-      "file_path": "./usb\\src\\main.c",
+      "file_path": "usb/src/main.c",
       "line_number": 57,
       "is_static": false
     }

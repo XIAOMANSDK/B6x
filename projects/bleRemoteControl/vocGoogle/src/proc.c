@@ -17,6 +17,7 @@
 #include "uartRb.h"
 #include "prf_bass.h"
 #include "app_user.h"
+#include "micphone.h"
 
 #if (DBG_PROC)
 #include "dbg.h"
@@ -28,8 +29,8 @@
 
 #define BLE_SLP_MS(ms)           ((ms) << 5)
 
-// 主机回应语音是否可以开始发送的flag
-uint8_t voice_start_flag = 0;
+// Host response flag for voice start (shared between BLE callback and main loop)
+volatile uint8_t voice_start_flag = 0;
 
 void ble_hid_voice_start(uint8_t streamId)
 {
@@ -48,6 +49,7 @@ void ble_hid_voice_stop(uint8_t reason)
 
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
+    if (data == NULL || len == 0) return;
     debugHex(data, len);
 
     switch(data[0])
@@ -76,7 +78,7 @@ static void sleep_proc(void)
     if (keys_active())
     {
         #if (VOICE)
-        if (SADC->CTRL.SADC_DMAC_EN)
+        if (mic_is_active())
         {
             // 语音不睡眠
             keys_proc();

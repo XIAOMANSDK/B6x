@@ -33,12 +33,14 @@ allowed-tools: Read, Grep, Glob, mcp__b6x-mcp-server__search_sdk
 
 ## 执行步骤
 
-1. 分析需求：连接数、应用类型、RAM 约束
-2. **强制使用 MCP b6x-mcp-server 检索 SDK 信息**：`mcp__b6x-mcp-server__search_sdk("BLE library")`
-3. 输出推荐和 cfg.h 配置
-4. 验证当前lib配置， SRAM配置是否合理
-
-> **注意**: 禁止使用 Grep/Glob 直接搜索 SDK 源码检索 BLE 库信息，必须通过 MCP Server 获取。
+1. **需求澄清**：若用户未明确说明以下信息，先提问后再推荐：
+   - 连接数（同时连接几个设备？）
+   - 角色（作为从设备被连接、还是主动连接其他设备？）
+   - 特殊需求（低功耗优先？Apple FindMy？Mesh？）
+2. 根据需求选择库，输出推荐和 cfg.h 配置
+3. 若用户提供了现有 cfg.h，对比推荐结果并说明差异；否则跳过此步
+4. 若需查询特定 Profile 或不常见场景的 SDK 支持情况，按需调用：
+   `mcp__b6x-mcp-server__search_sdk("<具体查询词>")`
 
 ## cfg.h 配置模板
 

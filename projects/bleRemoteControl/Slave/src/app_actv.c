@@ -624,6 +624,7 @@ void app_actv_report_ind(struct gapm_ext_adv_report_ind const* report)
             }
 
             /* Go to next advertising info */
+            if (*p_cursor == 0) break;  // skip zero-length AD structure
             p_cursor += (*p_cursor + 1);
         }
     }

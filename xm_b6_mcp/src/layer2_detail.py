@@ -37,12 +37,13 @@ except ImportError as e:
 # Import NodeId standardization
 try:
     from src.common.node_id import NodeId, NodeType
+    from src.common.node_id import node_id_to_relation_ids, relation_id_to_node_id
 except ImportError:
     # Define fallback if common module not available
     class NodeType(str, Enum):
         API = "api"
-        REGISTER = "register"
-        DOCS = "docs"
+        REGISTER = "reg"
+        DOCS = "doc"
         MACRO = "macro"
         MACROS = "macro"  # Alias for MACRO (plural form)
         EXAMPLE = "ex"
@@ -133,6 +134,16 @@ class NodeInspector:
         (NodeType.DOCS, ViewType.FULL): ("_get_doc_content", None),
         (NodeType.DOCS, ViewType.DOC_CONTENT): ("_get_doc_content", None),
         (NodeType.DOCS, ViewType.DOC_SUMMARY): ("_get_doc_summary", None),
+
+        # Example strategies
+        (NodeType.EXAMPLE, ViewType.AUTO): ("_get_example_summary", None),
+        (NodeType.EXAMPLE, ViewType.SUMMARY): ("_get_example_summary", None),
+        (NodeType.EXAMPLE, ViewType.FULL): ("_get_example_full", None),
+
+        # Macro strategies
+        (NodeType.MACRO, ViewType.AUTO): ("_get_macro_summary", None),
+        (NodeType.MACRO, ViewType.SUMMARY): ("_get_macro_summary", None),
+        (NodeType.MACRO, ViewType.DEFINITION): ("_get_macro_summary", None),
     }
 
     def __init__(self):
@@ -155,6 +166,10 @@ class NodeInspector:
             logger.warning(f"NodeInspector: Failed to load dependency overrides: {e}")
             self.config_loader = None
             self.dependencies = {}
+
+        # Load relation index for related_nodes traversal
+        self._relation_index: Dict[str, list] = {}
+        self._init_relations()
 
     def _init_parsers(self):
         """Initialize all parsers"""
@@ -190,6 +205,31 @@ class NodeInspector:
                 logger.info(f"NodeInspector: SVD parser loaded from {svd_path}")
         except Exception as e:
             logger.warning(f"NodeInspector: Failed to load SVD: {e}")
+
+    def _init_relations(self):
+        """Load relation data and build bidirectional lookup index."""
+        import json
+        from collections import defaultdict
+        try:
+            relations_path = Path(__file__).parent.parent / "data" / "relations.json"
+            if not relations_path.exists():
+                logger.debug("NodeInspector: relations.json not found, skipping")
+                return
+            with open(relations_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            relations = data.get("relations", [])
+            self._relation_index = defaultdict(list)
+            for rel in relations:
+                subject = rel.get("subject_id", "")
+                obj = rel.get("object_id", "")
+                if subject:
+                    self._relation_index[subject].append(rel)
+                if obj:
+                    self._relation_index[obj].append(rel)
+            logger.info(f"NodeInspector: Loaded {len(relations)} relations into index")
+        except Exception as e:
+            logger.warning(f"NodeInspector: Failed to load relations: {e}")
+            self._relation_index = {}
 
     async def inspect(
         self,
@@ -388,19 +428,28 @@ class NodeInspector:
         # Try to get from Whoosh index
         if "whoosh" in self.parsers:
             try:
-                results = self.parsers["whoosh"].search(api_name, limit=1)
+                # Filter by entry_type='function' to avoid matching document entries
+                results = self.parsers["whoosh"].search(
+                    api_name, limit=1, filter_entry_type='function'
+                )
                 if results and len(results) > 0:
                     result = results[0]
-                    return {
-                        "name": api_name,
-                        "signature": result.get("signature", ""),
-                        "brief": result.get("brief", ""),
-                        "description": result.get("description", ""),
-                        "parameters": result.get("parameters", []),
-                        "return_type": result.get("return_type", "void"),
-                        "header_file": result.get("header_file", ""),
-                        "line_number": result.get("line_number", 0),
-                    }
+                    # Validate: only accept function entries
+                    if result.get("entry_type", "") == "function":
+                        return {
+                            "name": api_name,
+                            "signature": result.get("signature", ""),
+                            "brief": result.get("brief", ""),
+                            "description": result.get("description", ""),
+                            "parameters": result.get("parameters", []),
+                            "return_type": result.get("return_type", "void"),
+                            "header_file": result.get("header_file", ""),
+                            "line_number": result.get("line_number", 0),
+                        }
+                    logger.warning(
+                        f"Whoosh returned non-function entry (type={result.get('entry_type')}) "
+                        f"for API '{api_name}', falling back to mock"
+                    )
             except Exception as e:
                 logger.warning(f"Whoosh search failed: {e}")
 
@@ -706,14 +755,185 @@ B6x_UART_Init(UART1, &uart_config);
         return {}
 
     async def _get_related_nodes(self, node_type: NodeType, node_id: str) -> List[Dict[str, str]]:
-        """Get related nodes"""
-        if node_type == NodeType.API and "UART" in node_id:
-            return [
-                {"node_id": "UART1_CTRL", "relation": "uses_register", "node_type": "register"},
-                {"node_id": "B6x_UART_Transmit", "relation": "related_api", "node_type": "api"},
-                {"node_id": "uart_example", "relation": "example", "node_type": "examples"},
-            ]
-        return []
+        """Get related nodes from the relation index."""
+        from src.common.node_id import node_id_to_relation_ids, relation_id_to_node_id
+
+        if not self._relation_index or node_id_to_relation_ids is None:
+            return []
+
+        full_node_id = f"{node_type.value}:{node_id}"
+        candidates = node_id_to_relation_ids(full_node_id)
+
+        related: List[Dict[str, str]] = []
+        seen: set[str] = set()
+
+        for candidate_id in candidates:
+            for rel in self._relation_index.get(candidate_id, []):
+                subject_id = rel.get("subject_id", "")
+                object_id = rel.get("object_id", "")
+                predicate = rel.get("predicate", "")
+
+                # Outgoing: this node is subject, target is related
+                if subject_id == candidate_id:
+                    target = relation_id_to_node_id(object_id)
+                    if target and target not in seen:
+                        seen.add(target)
+                        related.append({
+                            "node_id": target,
+                            "relation": predicate,
+                            "node_type": target.split(":", 1)[0],
+                        })
+
+                # Incoming: this node is object, source is related
+                if object_id == candidate_id:
+                    source = relation_id_to_node_id(subject_id)
+                    if source and source != full_node_id and source not in seen:
+                        seen.add(source)
+                        related.append({
+                            "node_id": source,
+                            "relation": predicate,
+                            "node_type": source.split(":", 1)[0],
+                        })
+
+        return related
+
+    # ========================================================================
+    # Example Handlers
+    # ========================================================================
+
+    def _load_examples_index(self) -> Dict[str, Any]:
+        """Load examples.json index for example lookups."""
+        if hasattr(self, '_examples_cache'):
+            return self._examples_cache
+        try:
+            from pathlib import Path
+            examples_path = Path(__file__).parent.parent / "data" / "domain" / "applications" / "examples.json"
+            if examples_path.exists():
+                import json
+                with open(examples_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                # Build lookup by file_path
+                self._examples_cache = {}
+                for entry in data:
+                    fp = entry.get("file_path", "")
+                    if fp:
+                        self._examples_cache[fp] = entry
+                return self._examples_cache
+        except Exception as e:
+            logger.warning(f"Failed to load examples index: {e}")
+        self._examples_cache = {}
+        return self._examples_cache
+
+    async def _get_example_summary(self, file_path: str, context: Dict = None) -> Dict[str, Any]:
+        """Get example summary from examples.json data."""
+        index = self._load_examples_index()
+        entry = index.get(file_path)
+
+        if entry:
+            return {
+                "name": entry.get("name", ""),
+                "file_path": file_path,
+                "used_apis": entry.get("used_apis", []),
+                "functions_defined": entry.get("functions_defined", []),
+                "included_headers": entry.get("included_headers", []),
+                "total_api_calls": entry.get("total_api_calls", 0),
+                "type": entry.get("type", ""),
+                "brief": f"Example: {entry.get('name', file_path)} with {len(entry.get('used_apis', []))} API calls",
+            }
+
+        # Fallback: file not found in index
+        return self._mock_example_summary(file_path)
+
+    async def _get_example_full(self, file_path: str, context: Dict = None) -> Dict[str, Any]:
+        """Get example full view with summary + source code."""
+        summary = await self._get_example_summary(file_path, context)
+
+        # Read source file if available
+        source_code = ""
+        try:
+            from pathlib import Path
+            sdk_path = Path(__file__).parent.parent.parent
+            source_path = sdk_path / file_path
+            if source_path.exists():
+                source_code = source_path.read_text(encoding="utf-8", errors="replace")
+        except Exception as e:
+            logger.warning(f"Could not read example source: {e}")
+
+        return {
+            **summary,
+            "source_code": source_code,
+        }
+
+    def _mock_example_summary(self, file_path: str) -> Dict[str, Any]:
+        """Generate mock example data with warning."""
+        return {
+            "_mock": True,
+            "_warning": self.MOCK_DATA_WARNING,
+            "_suggestion": self.MOCK_DATA_SUGGESTION,
+            "name": Path(file_path).stem if file_path else "unknown",
+            "file_path": file_path,
+            "used_apis": [],
+            "total_api_calls": 0,
+            "brief": f"[MOCK] Example at {file_path}",
+        }
+
+    # ========================================================================
+    # Macro Handlers
+    # ========================================================================
+
+    def _load_macros_index(self) -> Dict[str, Any]:
+        """Load macros.json index for macro lookups."""
+        if hasattr(self, '_macros_cache'):
+            return self._macros_cache
+        try:
+            from pathlib import Path
+            macros_path = Path(__file__).parent.parent / "data" / "domain" / "drivers" / "macros.json"
+            if macros_path.exists():
+                import json
+                with open(macros_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                # Build lookup by name
+                self._macros_cache = {}
+                if isinstance(data, list):
+                    for entry in data:
+                        name = entry.get("name", "")
+                        if name:
+                            self._macros_cache[name] = entry
+                elif isinstance(data, dict):
+                    self._macros_cache = data
+                return self._macros_cache
+        except Exception as e:
+            logger.warning(f"Failed to load macros index: {e}")
+        self._macros_cache = {}
+        return self._macros_cache
+
+    async def _get_macro_summary(self, macro_name: str, context: Dict = None) -> Dict[str, Any]:
+        """Get macro summary from macros.json data."""
+        index = self._load_macros_index()
+        entry = index.get(macro_name)
+
+        if entry:
+            return {
+                "name": entry.get("name", macro_name),
+                "value": entry.get("value", ""),
+                "brief": entry.get("brief", ""),
+                "macro_type": entry.get("macro_type", ""),
+                "header_file": entry.get("header_file", ""),
+            }
+
+        # Fallback: macro not found in index
+        return self._mock_macro_summary(macro_name)
+
+    def _mock_macro_summary(self, macro_name: str) -> Dict[str, Any]:
+        """Generate mock macro data with warning."""
+        return {
+            "_mock": True,
+            "_warning": self.MOCK_DATA_WARNING,
+            "_suggestion": self.MOCK_DATA_SUGGESTION,
+            "name": macro_name,
+            "value": "",
+            "brief": f"[MOCK] Macro {macro_name}",
+        }
 
     def _error_response(
         self,

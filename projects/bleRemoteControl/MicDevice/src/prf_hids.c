@@ -21,7 +21,6 @@
 #include "dbg.h"
 #include "bledef.h"
 #if (DBG_HIDS)
-#include "dbg.h"
 #define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
@@ -328,6 +327,11 @@ const struct svc_decl hid_svc_db =
  */
 
 /// Retrieve attribute index form handle
+/**
+ ****************************************************************************************
+ * @brief Get attribute index from ATT handle
+ ****************************************************************************************
+ */
 static uint8_t hids_get_att_idx(uint16_t handle)
 {
     ASSERT_ERR((handle >= hids_env.start_hdl) && (handle < hids_env.start_hdl + HID_IDX_NB));
@@ -336,6 +340,11 @@ static uint8_t hids_get_att_idx(uint16_t handle)
 }
 
 /// Retrieve Report attribute handle from rpt_idx (@see rpt_ntf_idx) or ATT_INVALID_HDL
+/**
+ ****************************************************************************************
+ * @brief Get ATT handle for report index
+ ****************************************************************************************
+ */
 static uint16_t hids_get_rpt_handle(uint8_t rpt_idx)
 {
     uint8_t att_idx = 0;
@@ -434,6 +443,11 @@ static uint8_t hids_rpt_ntf_cfg(uint8_t conidx, uint8_t rpt_idx, const struct at
 }
 
 /// Confirm ATTS_WRITE_REQ
+/**
+ ****************************************************************************************
+ * @brief Handle ATT write requests from peer
+ ****************************************************************************************
+ */
 static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle, const struct atts_write_ind *ind)
 {
     uint8_t status = LE_SUCCESS;
@@ -545,12 +559,12 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
         gatt_write_cfm(conidx, status, handle);
 }
 
-const uint8_t hid_report_feature6[] =
-{
-    0x27, 0x17, 0x32, 0xb8, 0x36, 0x04, 0x64, 0x19, 0xa2, 0x00, 0x00, 0x00,
-};
-
 /// Confirm ATTS_READ_REQ
+/**
+ ****************************************************************************************
+ * @brief Handle ATT read requests from peer
+ ****************************************************************************************
+ */
 static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
 {
     uint16_t length = 0;
@@ -761,8 +775,8 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_MIC_IN_RPT_REF:
         {
             struct hid_report_ref refer;
-            refer.report_id = 6;
-            refer.report_type = HID_REPORT_FEATURE;
+            refer.report_id = RPT_ID_MIC;
+            refer.report_type = HID_REPORT_INPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
         } break;
         #endif //(HID_RPT_MIC)
@@ -777,11 +791,16 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
 }
 
 /// Handles reception of the atts request from peer device
+/**
+ ****************************************************************************************
+ * @brief Main HID service ATT request handler
+ ****************************************************************************************
+ */
 static void hids_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const void *param)
 {
     uint8_t att_idx = hids_get_att_idx(handle);
 
-    ASSERT_ERR(coindx < HID_CONN_MAX);
+    ASSERT_ERR(conidx < HID_CONN_MAX);
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,att:%d)", conidx, opcode, handle, att_idx);
 
     switch (opcode)
@@ -868,7 +887,7 @@ uint8_t hids_prf_init(void)
     // Create Service in database
     status = attmdb_svc_create(&hids_env.start_hdl, NULL, &hid_svc_db, hids_svc_func);
     DEBUG("svc_init(sta:0x%X,shdl:%d,atts:%d)", status, hids_env.start_hdl, HID_IDX_NB-1);
-    debug("KB_HDL:%d   MEDIA_HDL:%d   MIC_HDL:%d\r\n", hids_get_rpt_handle(RPT_IDX_KB), hids_get_rpt_handle(RPT_IDX_MEDIA), hids_get_rpt_handle(RPT_IDX_MIC));
+    DEBUG("KB_HDL:%d   MEDIA_HDL:%d   MIC_HDL:%d", hids_get_rpt_handle(RPT_IDX_KB), hids_get_rpt_handle(RPT_IDX_MEDIA), hids_get_rpt_handle(RPT_IDX_MIC));
     return status;
 }
 

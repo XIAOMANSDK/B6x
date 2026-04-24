@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\list.h",
+  "file_path": "ble/api/list.h",
   "functions": [
     {
       "name": "list_init",
@@ -12,9 +12,9 @@
         }
       ],
       "brief_description": "Initialize a list to defaults values. ",
-      "detailed_description": "FUNCTION DECLARATIONS\n***************************************************************************************\n***************************************************************************************\n@param list           Pointer to the list structure.\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 60,
+      "detailed_description": "FUNCTION DECLARATIONS\n***************************************************************************************\n/\n***************************************************************************************\n@param list           Pointer to the list structure.\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 56,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -46,9 +46,9 @@
         }
       ],
       "brief_description": "Construct a list of free elements representing a pool ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param pool           Pointer to the pool to be initialized\n@param elmt_size      Size of one element of the pool\n@param elmt_cnt       Nb of elements available in the pool\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 72,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param pool           Pointer to the pool to be initialized\n@param elmt_size      Size of one element of the pool\n@param elmt_cnt       Nb of elements available in the pool\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 68,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -70,9 +70,9 @@
         }
       ],
       "brief_description": "Add an element as last on the list. ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Pointer to the header to add at the end of the list\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 83,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Pointer to the header to add at the end of the list\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 79,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -99,9 +99,9 @@
         }
       ],
       "brief_description": "Append a sequence of elements at the end of a list.  Note: the elements to append shall be linked together ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param first_hdr      Pointer to the first element to append\n@param last_hdr       Pointer to the last element to append\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 96,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param first_hdr      Pointer to the first element to append\n@param last_hdr       Pointer to the last element to append\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 92,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -123,9 +123,9 @@
         }
       ],
       "brief_description": "Add an element as first on the list. ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Pointer to the header to add at the beginning of the list\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 106,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Pointer to the header to add at the beginning of the list\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 102,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -147,9 +147,9 @@
         }
       ],
       "brief_description": "Search for a given element in the list, and extract it if found. ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Element to extract\n@return true if the element is found in the list, false otherwise\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 127,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Element to extract\n@return true if the element is found in the list, false otherwise\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 123,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -176,9 +176,9 @@
         }
       ],
       "brief_description": "Extract an element when the previous element is known  Note: the element to remove shall follow immediately the reference within the list ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param elt_ref_hdr    Pointer to the referenced element (NULL if element to extract is the first in the list)\n@param elt_to_rem_hdr Pointer to the element to be extracted\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 140,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param elt_ref_hdr    Pointer to the referenced element (NULL if element to extract is the first in the list)\n@param elt_to_rem_hdr Pointer to the element to be extracted\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 136,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -205,9 +205,9 @@
         }
       ],
       "brief_description": "Extract a sub-list when the previous element is known  Note: the elements to remove shall be linked together and  follow immediately the reference element ",
-      "detailed_description": "***************************************************************************************\n@param[in] list       Pointer to the list structure\n@param[in] ref_hdr    Pointer to the referenced element (NULL if first element to extract is first in the list)\n@param[in] last_hdr   Pointer to the last element to extract ()\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 153,
+      "detailed_description": "***************************************************************************************\n@param[in] list       Pointer to the list structure\n@param[in] ref_hdr    Pointer to the referenced element (NULL if first element to extract is first in the list)\n@param[in] last_hdr   Pointer to the last element to extract ()\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 149,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -229,9 +229,9 @@
         }
       ],
       "brief_description": "Searched a given element in the list. ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Pointer to the searched element\n@return true if the element is found in the list, false otherwise\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 165,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param list_hdr       Pointer to the searched element\n@return true if the element is found in the list, false otherwise\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 161,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -253,9 +253,9 @@
         }
       ],
       "brief_description": "Merge two lists in a single one.  This function appends the list pointed by list2 to the list pointed by list1. Once the merge is done, it empties list2. ",
-      "detailed_description": "***************************************************************************************\n@param list1          Pointer to the destination list\n@param list2          Pointer to the list to append to list1\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 178,
+      "detailed_description": "***************************************************************************************\n@param list1          Pointer to the destination list\n@param list2          Pointer to the list to append to list1\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 174,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -282,9 +282,9 @@
         }
       ],
       "brief_description": "Insert a given element in the list before the referenced element. ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param elt_ref_hdr    Pointer to the referenced element\n@param elt_to_add_hdr Pointer to the element to be inserted\n@return true if the element is found in the list, false otherwise\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 191,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param elt_ref_hdr    Pointer to the referenced element\n@param elt_to_add_hdr Pointer to the element to be inserted\n@return true if the element is found in the list, false otherwise\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 187,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -311,9 +311,9 @@
         }
       ],
       "brief_description": "Insert a given element in the list after the referenced element. ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param elt_ref_hdr    Pointer to the referenced element\n@param elt_to_add_hdr Pointer to the element to be inserted\n@return true if the element is found in the list, false otherwise\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 204,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@param elt_ref_hdr    Pointer to the referenced element\n@param elt_to_add_hdr Pointer to the element to be inserted\n@return true if the element is found in the list, false otherwise\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 200,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -330,28 +330,21 @@
         }
       ],
       "brief_description": "Count number of elements present in the list ",
-      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@return Number of elements present in the list\n***************************************************************************************",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 215,
+      "detailed_description": "***************************************************************************************\n@param list           Pointer to the list structure\n@return Number of elements present in the list\n***************************************************************************************\n/",
+      "file_path": "ble/api/list.h",
+      "line_number": 211,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
       "has_implementation": false
     }
   ],
-  "macros": [
-    {
-      "name": "__INLINE__",
-      "value": "__forceinline static",
-      "macro_type": "other",
-      "brief": "",
-      "file_path": "./ble\\api\\list.h",
-      "line_number": 23
-    }
-  ],
+  "macros": [],
   "enums": [],
   "typedefs": [],
   "parse_errors": [
-    "Line 22, Col 16: 'E__\n#d'"
+    "Line 220, Col 22: 'bool'",
+    "Line 234, Col 22: 'list_hdr_t'",
+    "Line 248, Col 22: 'list_hdr_t'"
   ]
 }

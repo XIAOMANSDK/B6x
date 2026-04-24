@@ -1778,7 +1778,7 @@
         "value": 19
       },
       {
-        "name": "d of s",
+        "name": " speci",
         "value": 20
       },
       {
@@ -1794,7 +1794,7 @@
         "value": 23
       },
       {
-        "name": "A19,\n    ",
+        "name": "A19,\n\n   ",
         "value": 24
       },
       {
@@ -1806,7 +1806,7 @@
         "value": 26
       },
       {
-        "name": "A15,\n    ",
+        "name": "A15,\n\n   ",
         "value": 27
       },
       {
@@ -1886,8 +1886,80 @@
         "value": 46
       },
       {
-        "name": "A19,\n}",
+        "name": "A19,\n\n",
         "value": 47
+      },
+      {
+        "name": "A01,\n    PA",
+        "value": 48
+      },
+      {
+        "name": "A02,\n    PA",
+        "value": 49
+      },
+      {
+        "name": "A03,\n    PA",
+        "value": 50
+      },
+      {
+        "name": "A04,\n    PA",
+        "value": 51
+      },
+      {
+        "name": "A05,\n    PA",
+        "value": 52
+      },
+      {
+        "name": "A06,\n    P",
+        "value": 53
+      },
+      {
+        "name": "A07,\n    PA_",
+        "value": 54
+      },
+      {
+        "name": "A08,\n    PA_",
+        "value": 55
+      },
+      {
+        "name": "A09,\n    PA_",
+        "value": 56
+      },
+      {
+        "name": "A10,\n    PA_",
+        "value": 57
+      },
+      {
+        "name": "A11,\n    PA_",
+        "value": 58
+      },
+      {
+        "name": "A12,\n    PA_",
+        "value": 59
+      },
+      {
+        "name": "A13,\n    PA_",
+        "value": 60
+      },
+      {
+        "name": "A14,\n    PA",
+        "value": 61
+      },
+      {
+        "name": "A15,\n    PA_C",
+        "value": 62
+      },
+      {
+        "name": "A16,\n    PA_C",
+        "value": 63
+      },
+      {
+        "name": "A17,\n    PA_C",
+        "value": 64
+      },
+      {
+        "name": "A18,\n};\n\n/// ",
+        "value": 65
       }
     ]
   },
@@ -1896,7 +1968,7 @@
     "brief": "",
     "values": [
       {
-        "name": "x00,\n  ",
+        "name": "x00,\n\n ",
         "value": 0
       },
       {
@@ -1928,7 +2000,7 @@
         "value": 7
       },
       {
-        "name": "7 << 0),\n  ",
+        "name": "7 << 0),\n\n ",
         "value": 8
       },
       {
@@ -2026,7 +2098,7 @@
         "value": 13
       },
       {
-        "name": "4, // O\n    \n",
+        "name": "4, // O\n\n    ",
         "value": 14
       },
       {
@@ -2058,7 +2130,7 @@
         "value": 21
       },
       {
-        "name": "6, // O\n    \n    ",
+        "name": "6, // O\n\n    // O",
         "value": 22
       },
       {
@@ -3962,59 +4034,59 @@
     "brief": "",
     "values": [
       {
-        "name": "ed by the contro",
+        "name": "USBD_EVENT_ERROR",
         "value": 0
       },
       {
-        "name": "R,\n    /** USB r",
+        "name": "USBD_EVENT_RESET",
         "value": 1
       },
       {
-        "name": "rt of Frame re",
+        "name": "USBD_EVENT_SOF",
         "value": 2
       },
       {
-        "name": "numeration completed",
+        "name": "USBD_EVENT_CONNECTED",
         "value": 3
       },
       {
-        "name": "B configuration done ",
+        "name": "USBD_EVENT_CONFIGURED",
         "value": 4
       },
       {
-        "name": "uspended by the HO",
+        "name": "USBD_EVENT_SUSPEND",
         "value": 5
       },
       {
-        "name": " USB connection lost */",
+        "name": "USBD_EVENT_DISCONNECTED",
         "value": 6
       },
       {
-        "name": " resumed by the H",
+        "name": "USBD_EVENT_RESUME",
         "value": 7
       },
       {
-        "name": "B interface selected */\n",
+        "name": "USBD_EVENT_SET_INTERFACE",
         "value": 8
       },
       {
-        "name": "MOTE_WAKEUP received */\n    ",
+        "name": "USBD_EVENT_SET_REMOTE_WAKEUP",
         "value": 9
       },
       {
-        "name": "MOTE_WAKEUP received */\n    ",
+        "name": "USBD_EVENT_CLR_REMOTE_WAKEUP",
         "value": 10
       },
       {
-        "name": "DPOINT_HALT received */\n    ",
+        "name": "USBD_EVENT_SET_ENDPOINT_HALT",
         "value": 11
       },
       {
-        "name": "DPOINT_HALT received */\n    ",
+        "name": "USBD_EVENT_CLR_ENDPOINT_HALT",
         "value": 12
       },
       {
-        "name": "SB connection stat",
+        "name": "USBD_EVENT_UNKNOWN",
         "value": 13
       }
     ]
@@ -4024,35 +4096,35 @@
     "brief": "",
     "values": [
       {
-        "name": "enum us",
+        "name": "USBD_OK",
         "value": 0
       },
       {
-        "name": "tus_type ",
+        "name": "USBD_BUSY",
         "value": 1
       },
       {
-        "name": "USBD_OK,\n",
+        "name": "USBD_FAIL",
         "value": 2
       },
       {
-        "name": "BD_BUSY,\n    USB",
+        "name": "USBD_ERR_INVAILD",
         "value": 3
       },
       {
-        "name": ",\n    USBD_ERR",
+        "name": "USBD_ERR_STATE",
         "value": 4
       },
       {
-        "name": "LD,\n    USBD_E",
+        "name": "USBD_ERR_UNDRN",
         "value": 5
       },
       {
-        "name": "TE,\n    USBD_",
+        "name": "USBD_ERR_OVER",
         "value": 6
       },
       {
-        "name": "DRN,\n    USBD_ER",
+        "name": "USBD_ERR_TIMEOUT",
         "value": 7
       }
     ]

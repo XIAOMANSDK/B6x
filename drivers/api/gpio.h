@@ -21,8 +21,8 @@
  ****************************************************************************************
  */
 
-#if !defined(BIT)
-    #define BIT(n)             (1UL << (n))
+#ifndef BIT
+    #define BIT(pos)              (1UL << ((pos) & 31))
 #endif
 
 /**
@@ -221,7 +221,7 @@ static inline void gpio_set_hiz(uint8_t pad)
 static inline void gpio_dir_output(uint8_t pad, uint8_t oe)
 {
     uint32_t bits = 1UL << pad;
-    
+
     if (oe == OE_HIGH)
     {
         GPIO_DAT_SET(bits);  /* DAT_SET: IO输出高电平 */
@@ -230,7 +230,7 @@ static inline void gpio_dir_output(uint8_t pad, uint8_t oe)
     {
         GPIO_DAT_CLR(bits);  /* DAT_CLR: IO输出低电平 */
     }
-    
+
     GPIO_DIR_SET(bits);  /* DIR_SET: 输出使能 */
 }
 

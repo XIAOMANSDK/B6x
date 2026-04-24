@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\task.h",
+  "file_path": "ble/api/task.h",
   "functions": [],
   "macros": [
     {
@@ -7,7 +7,7 @@
       "value": "(0xFFFF)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\task.h",
+      "file_path": "ble/api/task.h",
       "line_number": 64
     },
     {
@@ -15,7 +15,7 @@
       "value": "(0xFFFF)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\task.h",
+      "file_path": "ble/api/task.h",
       "line_number": 93
     },
     {
@@ -23,7 +23,7 @@
       "value": "(0x0000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\task.h",
+      "file_path": "ble/api/task.h",
       "line_number": 96
     }
   ],
@@ -49,7 +49,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\task.h",
+      "file_path": "ble/api/task.h",
       "line_number": 115
     },
     {
@@ -83,7 +83,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\task.h",
+      "file_path": "ble/api/task.h",
       "line_number": 123
     },
     {
@@ -137,7 +137,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\task.h",
+      "file_path": "ble/api/task.h",
       "line_number": 151
     },
     {
@@ -201,7 +201,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\task.h",
+      "file_path": "ble/api/task.h",
       "line_number": 193
     }
   ],

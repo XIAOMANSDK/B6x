@@ -458,15 +458,12 @@ uint8_t sess_txd_send(uint8_t conidx, uint16_t len, const uint8_t* data)
  */
 __WEAK void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
-    (void)conidx;(void)len;(void)data;
     #if (DBG_SESS)
     debugHex(data, len);
+    (void)conidx;
     #else
-    (void)len;(void)data;
+    (void)conidx;(void)len;(void)data;
     #endif
-
-    // Loopback to txd, just test.
-    //sess_txd_send(conidx, len, data);
 }
 
 #if (SES_READ_SUP)

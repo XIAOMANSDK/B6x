@@ -113,7 +113,7 @@ struct ota_env_tag
     struct prf_desc_inf descs[CHAR_IDX_MAX];
 };
 
-struct ota_env_tag ota_env;
+static struct ota_env_tag ota_env;
 
 #define ota_fsm_sta ota_env.ota_fsm
 
@@ -159,14 +159,14 @@ enum ota_fsm
     OTA_END,
 };
 
-// 开始查询服务.
+// Start OTA service discovery and query device info.
 void disc_ota_init(uint8_t conidx)
 {
     memset((uint8_t *)&ota_env + BUFF_LEN, 0x00, sizeof(ota_env) - BUFF_LEN);
     ota_total_size = OTA_DATA_LEN;
     DEBUG("\r\ndisc start...%d, %d, %X", sizeof(ota_env), ota_total_size, OTA_DATA_STORE_POS);
 
-    // 无效的bin信息.
+    // Validate bin info before proceeding.
     if ((ota_total_size == 0xFFFFFFFF) || (OTA_DATA_STORE_POS == 0xFFFFFFFF))
     {
         return;
@@ -278,7 +278,7 @@ void ota_send_data(uint8_t conidx)
         uint16_t pkt_len = ota_pkt_size;
         DEBUG("idx[%d, %d], pkt_len:%d, total:%d", ota_pkt_idx, ota_block_pkt_nb, pkt_len,
             ota_total_size);
-        uint8_t data_pkt[BLE_MTU];
+        static uint8_t data_pkt[BLE_MTU];
 
         data_pkt[0] = OTA_CMD_HEAD;
         data_pkt[1] = OTA_CMD_DATA_WC;
@@ -329,6 +329,12 @@ void ota_ntf_event_proc(uint8_t conidx, const uint8_t *data, uint16_t len)
                 break;
             }
             ota_pkt_size     = read16p(data + 6) - OTA_DATA_POS;
+            if (ota_pkt_size == 0 || ota_pkt_size > ota_block_size)
+            {
+                ota_fsm_sta = OTA_IDLE;
+                gapc_disconnect(conidx);
+                break;
+            }
             ota_block_pkt_nb = ota_block_size / ota_pkt_size + 1;
 
             uint32_t reset_hdl = RD_32(OTA_DATA_STORE_POS + 4);
@@ -550,6 +556,8 @@ APP_MSG_HANDLER(gatt_event_ind)
     DEBUG("notify(typ:%d,hdl:%d,len:%d, fsm:%d, %d)", param->type, param->handle, param->length,
         ota_fsm_sta, ota_total_size);
     debugDump("notify", param->value, param->length);
+
+    if (param->length < 2) return;
 
     uint8_t head = param->value[0];
     uint8_t sta  = param->value[1];

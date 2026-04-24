@@ -205,8 +205,8 @@ magic_codes:
 
 # Memory mapping base addresses (for linker scripts)
 memory_mapping:
-  flash_base: "0x08000000"
-  sram_base: "0x20000000"
+  flash_base: "0x18000000"
+  sram_base: "0x20003000"
   data_flash_base: "0x18000000"
 
 # Common constraints

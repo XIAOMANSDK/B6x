@@ -10,6 +10,7 @@
 
 #include "drvs.h"
 #include "regs.h"
+#include "utils.h"
 
 /*
  * DEFINES
@@ -154,6 +155,7 @@ void boya_flash_quad_mode(void)
 __SRAMFN(word_write)
 void flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
 {
+    ASSERT_ERR(data != NULL);
     // 禁用全局中断
     GLOBAL_INT_DISABLE();
 

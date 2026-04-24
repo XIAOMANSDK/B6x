@@ -122,7 +122,9 @@ Inspect a specific SDK node (API, register, doc) with detailed view.
 |------|--------|---------|
 | API | `api:` | `api:B6x_UART_Init` |
 | Register | `reg:` | `reg:UART1_BRR` |
-| Document | `docs:` | `docs:uart_guide` |
+| Document | `doc:` | `doc:uart_guide` |
+| Example | `ex:` | `ex:examples/spiMaster/src/main.c` |
+| Macro | `macro:` | `macro:SPIM_CR_DFLT` |
 
 **View Types:**
 - `"auto"` - Automatically select best view

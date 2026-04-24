@@ -12,6 +12,7 @@
 #define _DBG_H_
 
 #include <stdint.h>
+#include <inttypes.h>
 
 /// Debug Mode: 0=Disable, 1=via UART, 2=RTT Viewer
 #define DBG_DISABLE  0

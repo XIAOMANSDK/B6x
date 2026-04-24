@@ -1,11 +1,11 @@
 {
   "constraint_type": "pin_mux",
   "version": "1.0",
-  "last_updated": "2026-03-17T18:05:45.732311",
+  "last_updated": "2026-04-22T16:18:56.709524",
   "total_pins": 20,
   "pins": [
     {
-      "pin_name": "PADA0",
+      "pin_name": "PA00",
       "functions": [
         {
           "name": "PA00",
@@ -28,14 +28,14 @@
       ],
       "default_function": "SWCLK",
       "peripherals": [
-        "GPIO",
         "DEBUG",
-        "CSC"
+        "CSC",
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA1",
+      "pin_name": "PA01",
       "functions": [
         {
           "name": "PA01",
@@ -64,15 +64,15 @@
       ],
       "default_function": "CTMR_ETR(I)",
       "peripherals": [
-        "CTMR",
-        "GPIO",
         "DEBUG",
-        "CSC"
+        "CSC",
+        "CTMR",
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA2",
+      "pin_name": "PA02",
       "functions": [
         {
           "name": "PA02",
@@ -95,14 +95,14 @@
       ],
       "default_function": null,
       "peripherals": [
+        "CSC",
         "CTMR",
-        "GPIO",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA3",
+      "pin_name": "PA03",
       "functions": [
         {
           "name": "PA03",
@@ -125,14 +125,14 @@
       ],
       "default_function": null,
       "peripherals": [
+        "CSC",
         "CTMR",
-        "GPIO",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA4",
+      "pin_name": "PA04",
       "functions": [
         {
           "name": "PA04",
@@ -161,15 +161,15 @@
       ],
       "default_function": null,
       "peripherals": [
-        "CTMR",
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO",
+        "CTMR"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA5",
+      "pin_name": "PA05",
       "functions": [
         {
           "name": "PA05",
@@ -198,15 +198,15 @@
       ],
       "default_function": null,
       "peripherals": [
-        "CTMR",
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO",
+        "CTMR"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA6",
+      "pin_name": "PA06",
       "functions": [
         {
           "name": "PA06",
@@ -229,14 +229,14 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA7",
+      "pin_name": "PA07",
       "functions": [
         {
           "name": "PA07",
@@ -259,14 +259,14 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA8",
+      "pin_name": "PA08",
       "functions": [
         {
           "name": "PA08",
@@ -289,14 +289,14 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA9",
+      "pin_name": "PA09",
       "functions": [
         {
           "name": "PA09",
@@ -325,15 +325,15 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "USB",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA10",
+      "pin_name": "PA10",
       "functions": [
         {
           "name": "PA10",
@@ -362,15 +362,15 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "USB",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA11",
+      "pin_name": "PA11",
       "functions": [
         {
           "name": "PA11",
@@ -399,15 +399,15 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "USB",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA12",
+      "pin_name": "PA12",
       "functions": [
         {
           "name": "PA12",
@@ -430,14 +430,14 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA13",
+      "pin_name": "PA13",
       "functions": [
         {
           "name": "PA13",
@@ -460,14 +460,14 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA14",
+      "pin_name": "PA14",
       "functions": [
         {
           "name": "PA14",
@@ -490,14 +490,14 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
+        "CSC",
         "UNKNOWN",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA15",
+      "pin_name": "PA15",
       "functions": [
         {
           "name": "PA15",
@@ -520,14 +520,14 @@
       ],
       "default_function": null,
       "peripherals": [
+        "CSC",
         "CTMR",
-        "GPIO",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA16",
+      "pin_name": "PA16",
       "functions": [
         {
           "name": "PA16",
@@ -550,14 +550,14 @@
       ],
       "default_function": null,
       "peripherals": [
+        "CSC",
         "CTMR",
-        "GPIO",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA17",
+      "pin_name": "PA17",
       "functions": [
         {
           "name": "PA17",
@@ -580,14 +580,14 @@
       ],
       "default_function": null,
       "peripherals": [
+        "CSC",
         "CTMR",
-        "GPIO",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA18",
+      "pin_name": "PA18",
       "functions": [
         {
           "name": "PA18",
@@ -610,14 +610,14 @@
       ],
       "default_function": null,
       "peripherals": [
+        "CSC",
         "CTMR",
-        "GPIO",
-        "CSC"
+        "GPIO"
       ],
       "constraints": []
     },
     {
-      "pin_name": "PADA19",
+      "pin_name": "PA19",
       "functions": [
         {
           "name": "PA19",
@@ -634,13 +634,13 @@
       ],
       "default_function": null,
       "peripherals": [
-        "GPIO",
-        "CSC"
+        "CSC",
+        "GPIO"
       ],
       "constraints": []
     }
   ],
   "domain": "domain1",
   "data_source": "excel_parsing",
-  "source_file": "./doc\\SW_Spec\\B6x_IO_MAP.xlsx"
+  "source_file": "doc/SW_Spec/B6x_IO_MAP.xlsx"
 }

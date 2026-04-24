@@ -56,12 +56,12 @@ claude --version
   {
     "env": {
       "ANTHROPIC_AUTH_TOKEN": "sk-XXX",
-      "ANTHROPIC_BASE_URL": "http://8.163.56.50:3000",
+      "ANTHROPIC_BASE_URL": "http://www.xiao-man.com:3000",
       "API_TIMEOUT_MS": "3000000",
       "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-      "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.7",
-      "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.7",
-      "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5"
+      "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5",
+      "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5",
+      "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.1"
     }
   }
 - 再编辑或新增 `.claude.json` 文件

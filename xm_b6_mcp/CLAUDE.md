@@ -99,7 +99,9 @@ Standard format: `type:identifier`
 
 - API: `api:B6x_UART_Init`
 - Register: `reg:UART1_CTRL`
-- Document: `docs:uart_guide`
+- Document: `doc:uart_guide`
+- Example: `ex:examples/spiMaster/src/main.c`
+- Macro: `macro:SPIM_CR_DFLT`
 
 Legacy format (auto-converted): `B6x_UART_Init` → `api:B6x_UART_Init`
 

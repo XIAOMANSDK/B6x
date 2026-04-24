@@ -5,7 +5,7 @@
  *
  * @brief Application Messages Handler - Example
  *
- * < If want to modify it, recommend to copy the file to 'user porject'/src >
+ * < If want to modify it, recommend to copy the file to 'user project'/src >
  ****************************************************************************************
  */
 

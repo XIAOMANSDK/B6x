@@ -29,6 +29,17 @@ allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 | ERROR | **0** | 必须无错误 |
 | WARNING | **≤ 5** | 警告数量不超过 5 个 |
 
+## 红旗 — 看到这些想法时停止
+
+| 想法 | 为什么禁止 |
+|------|-----------|
+| "加 `-w` 或 `--no-warnings`" | 隐藏问题不等于解决问题 |
+| "用 `#pragma` 全局禁用警告" | 掩盖真实的代码缺陷 |
+| "WARNING 不重要，能编译就行" | 嵌入式代码中警告常是潜在 bug |
+| "这个 WARNING 修不了，跳过" | 必须≤5 条达标才算成功 |
+
+**禁止**: 通过编译选项全局禁用警告。个别抑制必须有注释说明原因。
+
 ---
 
 ## Step 1: 检测工具链
@@ -42,14 +53,13 @@ allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 4. 若都不存在 → 报错退出
 ```
 
-### 检测命令
+### 检测方法
 
-```bash
-# Keil 工程
-find <project_path> -name "*.uvprojx" -type f 2>/dev/null | head -1
+使用 Glob 工具（不用 find 命令）：
 
-# GCC 工程
-find <project_path> -path "*/gnu/CMakeLists.txt" -type f 2>/dev/null | head -1
+```
+Glob pattern: <project_path>/mdk/*.uvprojx      → Keil 工程
+Glob pattern: <project_path>/gnu/CMakeLists.txt → GCC 工程
 ```
 
 ---
@@ -59,16 +69,22 @@ find <project_path> -path "*/gnu/CMakeLists.txt" -type f 2>/dev/null | head -1
 ### Keil 编译
 
 ```bash
-"C:\Keil_v5\UV4\UV4.exe" -r "<project>.uvprojx" -t "<target>" -j0 -o"build_log.txt"
+"C:/Keil_v5/UV4/UV4.exe" -r "<project>.uvprojx" -t "<target>" -j0 -o"build_log.txt"
 ```
+
+**获取 target 名称**：读取 uvprojx 文件，搜索 `<TargetName>` 标签取第一个值。
 
 ### GCC 编译
 
+进入项目的 `gnu/` 目录执行（项目名已在 CMakeLists.txt 的 `project()` 中定义，无需额外参数）：
+
 ```bash
-cd D:\svn\bxx_DragonC1\sdk6
-cmake -B build -G Ninja -DTARGET_NAME=<project_name>
+cd <project_path>/gnu
+cmake -B build -G Ninja
 cmake --build build
 ```
+
+输出产物位于 `<project_path>/gnu/build/bin/` 下。
 
 ---
 
@@ -93,31 +109,20 @@ LINKER:  undefined reference to .+
 
 ## Step 4: 修复问题
 
-### ERROR 修复策略
+### ERROR 修复
 
-| 错误类型 | 常见原因 | 修复方法 |
-|----------|----------|----------|
-| 语法错误 | 缺少分号、括号不匹配 | 检查语法，添加缺失符号 |
-| 未定义符号 | 变量/函数未声明 | 添加声明或包含头文件 |
-| 类型错误 | 类型不匹配 | 添加显式类型转换 |
-| 链接错误 | 缺少库/源文件 | Keil: 检查工程配置; GCC: 检查 CMakeLists.txt |
-| 找不到头文件 | include 路径未配置 | Keil: Options → C/C++; GCC: target_include_directories |
+- 缺少头文件: 包含对应 `drivers/api/*.h` 或 `ble/api/*.h`
+- 链接错误: Keil → 检查工程文件 Source Groups; GCC → 检查 CMakeLists.txt 的 target_sources
 
-### WARNING 修复策略
-
-| 警告类型 | 常见原因 | 修复方法 |
-|----------|----------|----------|
-| 未使用变量 | 声明但未使用 | 移除变量或 `(void)var;` |
-| 隐式转换 | 类型不匹配 | 添加显式类型转换 |
-| 未初始化变量 | 变量未初始化 | 添加初始化值 |
-| 不可达代码 | 死代码 | 移除或重构 |
-| 严格别名 (GCC) | 指针类型转换 | 使用 union 或 memcpy |
-
-### 修复优先级
+### WARNING 修复优先级
 
 1. **Critical (ERROR)**: 必须立即修复
 2. **High (WARNING > 5)**: 需要修复以达标
 3. **Medium (WARNING ≤ 5)**: 可选修复
+
+### WARNING 修复顺序
+
+移除无用代码 → 显式类型转换 → `(void)var` 抑制 → 最后才考虑 `#pragma`（禁止全局禁用）
 
 ---
 
@@ -127,93 +132,30 @@ LINKER:  undefined reference to .+
 
 ---
 
-## 工具链对照
-
-| 特性 | Keil | GCC |
-|------|------|-----|
-| 构建系统 | uvprojx | CMake + Ninja |
-| 编译器 | armcc/armclang | arm-none-eabi-gcc |
-| 链接脚本 | .sct | .ld |
-| 启动文件 | startup.s | startup_gnu.S |
-| 调试 | ULINK/J-Link | GDB + J-Link |
-| CI/CD | 有限支持 | 原生支持 |
-
----
-
-## 与其他 Skill 协作
-
-| Skill | 协作方式 |
-|-------|----------|
-| `/b6-code-review` | 编译前进行代码审查 |
-| `/b6-validate-hardware` | 编译前验证硬件配置 |
-| `/b6-project-checklist` | 编译前检查项目完整性 |
-| `/b6-cmake-init` | 为现有项目生成 CMakeLists.txt (GCC) |
-| `/b6-translate-error` | 翻译 BLE 相关错误码 |
-
----
-
 ## 退出条件
 
 | 结果 | 条件 | 操作 |
 |------|------|------|
-| ✅ 成功 | ERROR=0 且 WARNING≤5 | 报告成功，输出文件位置 |
+| ✅ 成功 | 达到编译标准 | 报告成功，**使用 `/b6_verification-before-completion` 证据模板输出** |
 | ⚠️ 部分成功 | ERROR=0 且 WARNING>5 | 报告警告详情，询问是否继续修复 |
 | ❌ 失败 | 迭代5次后仍有 ERROR | 报告剩余问题，建议用户手动检查 |
 | ❌ 失败 | 无法检测工具链 | 提示用户检查工程文件 |
+
+**退出时必须输出编译证据**（无论成功或失败）：
+```
+编译验证证据：
+   工具链: {Keil MDK / GCC}
+   输出: {N} Error(s), {M} Warning(s)
+   产物: {文件路径}
+   退出码: {0 / 非0}
+```
 
 ---
 
 ## 修复示例
 
-### 示例 1: 未定义符号
-
 **错误**: `error: #20: identifier "B6x_UART_Init" is undefined`
 
-**诊断**: 缺少头文件包含
-
-**修复前**:
-```c
-void uart_test(void) {
-    B6x_UART_Init(UART1, &cfg);  // error: undefined
-}
-```
-
-**修复后**:
-```c
-#include "drivers/api/uart.h"  // 添加头文件
-
-void uart_test(void) {
-    B6x_UART_Init(UART1, &cfg);  // OK
-}
-```
-
-### 示例 2: 类型不匹配 (GCC)
-
-**错误**: `warning: implicit conversion from 'float' to 'int'`
-
-**修复前**:
-```c
-int value = 3.14f;  // warning: implicit conversion
-```
-
-**修复后**:
-```c
-int value = (int)3.14f;  // explicit cast
-```
-
-### 示例 3: 未使用变量
-
-**错误**: `warning: unused variable 'temp'`
-
-**修复方案 A** (移除):
-```c
-// 删除未使用的变量
-```
-
-**修复方案 B** (抑制):
-```c
-int temp;
-(void)temp;  // 明确标记为有意未使用
-```
+**修复**: 包含项目头文件 `#include "drivers/api/uart.h"`
 
 ---

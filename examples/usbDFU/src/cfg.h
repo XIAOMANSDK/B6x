@@ -26,7 +26,10 @@
 #define USB_DBG_LEVEL       (1)
 #endif
 
-/// Type 1=spi Flash, 0=internal Flash
-#define MSC_FLASH_TYPE      (0)
+/// DFU Debug: 0=Disable, 1=Enable
+#define DBG_DFU             (0)
+
+/// Include serial number string in descriptor: 0=No, 1=Yes
+#define SRNM_STR            (0)
 
 #endif  //_APP_CFG_H_

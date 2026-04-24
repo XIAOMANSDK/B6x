@@ -13,6 +13,7 @@
 #include "reg_dma.h"
 #include "reg_dmachcfg.h"
 #include "compiler.h"
+#include "utils.h"
 
 /*
  * DEFINES
@@ -222,6 +223,7 @@ uint16_t dma_chnl_remain(uint8_t chidx)
  */
 bool dma_chnl_remain_pingpong(uint8_t chidx, uint16_t *len)
 {
+    ASSERT_ERR(len != NULL);
     bool pong = false;
     DMA_CHNL_CTRL_Typedef *chnl_cur;
 

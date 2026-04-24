@@ -1,21 +1,21 @@
 {
-  "build_date": "2026-03-17T18:07:04.453842",
+  "build_date": "2026-04-22T16:20:39.155281",
   "build_version": "0.2.0",
   "steps": {
     "step1": {
       "status": "success",
       "total_documents": 28,
       "parsed_by_type": {
-        "word": 13,
-        "pdf": 6,
+        "word": 14,
+        "pdf": 5,
         "excel": 5,
         "markdown": 4
       },
       "parsed_by_domain": {
         "domain2": 3,
         "domain4": 2,
-        "domain5": 8,
-        "domain1": 11,
+        "domain5": 7,
+        "domain1": 12,
         "domain3": 4
       },
       "errors": [],
@@ -28,9 +28,10 @@
       "domains": {
         "domain1": {
           "name": "Hardware & Registers",
-          "count": 11,
+          "count": 12,
           "documents": [
-            "B6x_DataSheet_v3.4.docx",
+            "B6x_DataSheet_v3.7_CN.docx",
+            "B6x_DataSheet_v3.7_EN.docx",
             "典型Layout设计错误(必看).docx",
             "开发板使用说明.docx",
             "硬件设计指导.docx",
@@ -72,14 +73,13 @@
         },
         "domain5": {
           "name": "Production & Toolchain",
-          "count": 8,
+          "count": 7,
           "documents": [
             "B6x无线认证指导.docx",
             "bxISP_Programmer_User_Guide_V1.0_CN.docx",
             "ISP Tool量产说明文档.docx",
             "B6x无线认证指导.docx",
             "bxISP_Programmer_User_Guide.pdf",
-            "B6X_RF_LabTest工具操作使用说明.pdf",
             "GNU开发环境.md",
             "vers.md"
           ]
@@ -89,7 +89,7 @@
     },
     "step3": {
       "status": "success",
-      "index_dir": "./xm_b6_mcp\\data\\whoosh_index",
+      "index_dir": "data/whoosh_index",
       "total_documents": 28,
       "indexed_count": 28,
       "failed_count": 0
@@ -103,10 +103,10 @@
     "total_errors": 0
   },
   "paths": {
-    "sdk_root": ".",
-    "mcp_root": "./xm_b6_mcp",
-    "doc_dir": "./doc",
-    "index_dir": "./xm_b6_mcp\\data\\whoosh_index",
-    "constraints_dir": "./xm_b6_mcp\\data\\constraints"
+    "sdk_root": "<resolved_at_runtime>",
+    "mcp_root": "<resolved_at_runtime>",
+    "doc_dir": "doc",
+    "index_dir": "data\\whoosh_index",
+    "constraints_dir": "data\\constraints"
   }
 }

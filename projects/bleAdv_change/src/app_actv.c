@@ -5,7 +5,7 @@
  *
  * @brief Application Activity(Advertising, Scanning and Initiating) - Example
  *
- * < If want to modify it, recommend to copy the file to 'user porject'/src >
+ * < If want to modify it, recommend to copy the file to 'user project'/src >
  ****************************************************************************************
  */
 
@@ -50,7 +50,7 @@ struct actv_env_tag
 };
 
 /// Activities environment
-struct actv_env_tag actv_env;
+static struct actv_env_tag actv_env;
 
 
 /*
@@ -107,6 +107,19 @@ struct actv_env_tag actv_env;
 /// Fast advertising interval
 #define APP_ADV_FAST_INT      (32)
 
+/// Advertising data constants
+#define ADV_FLAGS_TYPE_LEN    (0x02) ///< Length field in AD flags structure
+#define ADV_FLAGS_VALUE       (0x06) ///< LE General Discoverable + BR/EDR Not Supported
+#define ADV_MANU_LEN          (0x05) ///< Manufacturer data AD structure length (excl. length byte)
+#define ADV_DATA_TOTAL_LEN    (9)    ///< Total advertising data length (flags + manu)
+
+/// Scan filter constants
+#define SCAN_DURATION_MS      (500)  ///< Scan duration in 10ms units
+#define APPEAR_HID_GAMEPAD    (0x03C1)
+#define APPEAR_HID_JOYSTICK   (0x03C5)
+#define UUID_FILTER_18F0      (0x18F0)
+#define UUID_FILTER_FF00      (0xFF00)
+
 /*
  * FUNCTION DEFINITIONS
  ****************************************************************************************
@@ -140,18 +153,18 @@ uint32_t g_rand_num;
 
 static void app_adv_set_adv_data(void)
 {
-    // Reserve 3Bytes for AD_TYPE_FLAGS
     uint8_t adv_data[GAP_ADV_DATA_LEN];
-    uint8_t length = 9;
+    uint8_t length = ADV_DATA_TOTAL_LEN;
 
     g_rand_num = sadc_rand_num();
 
     // Set flags: 3B
-    adv_data[0] = 0x02;
+    adv_data[0] = ADV_FLAGS_TYPE_LEN;
     adv_data[1] = GAP_AD_TYPE_FLAGS;
-    adv_data[2] = 0x06;
+    adv_data[2] = ADV_FLAGS_VALUE;
 
-    adv_data[3] = 0x05;
+    // Set manufacturer data: 6B
+    adv_data[3] = ADV_MANU_LEN;
     adv_data[4] = GAP_AD_TYPE_MANU_SPECIFIC_DATA;
     write32p(adv_data + 5, g_rand_num);
 
@@ -161,7 +174,8 @@ static void app_adv_set_adv_data(void)
 static void app_adv_set_scan_rsp(void)
 {
     uint8_t length;
-    uint8_t rsp_data[DEV_NAME_MAX_LEN+2];
+    // Buffer: name(max 20) + header(2) + suffix '-' + 4 hex chars = 27
+    uint8_t rsp_data[DEV_NAME_MAX_LEN+7];
 
     // Set device name
     length = app_name_get(DEV_NAME_MAX_LEN, &rsp_data[2]);
@@ -326,8 +340,8 @@ void app_adv_event(uint8_t gapm_op, uint8_t status)
 
 #define SCAN_NUM_MAX         (5)
 
-uint8_t scan_cnt = 0;
-struct gap_bdaddr scan_addr_list[SCAN_NUM_MAX];
+static uint8_t scan_cnt = 0;
+static struct gap_bdaddr scan_addr_list[SCAN_NUM_MAX];
 
 
 /*
@@ -348,14 +362,9 @@ static void app_start_scanning(void)
     /// Scan window opening parameters for LE 1M PHY (in unit of 625us)
     scan_param.scan_param_1m.scan_intv = GAP_SCAN_FAST_INTV;
     scan_param.scan_param_1m.scan_wd   = GAP_SCAN_FAST_WIND;
-    /// Scan window opening parameters for LE Coded PHY
-    //scan_param.scan_param_coded.scan_intv = GAP_SCAN_SLOW_INTV1;
-    //scan_param.scan_param_coded.scan_wd   = GAP_SCAN_SLOW_WIND1;
-    /// Scan duration (in unit of 10ms). 0 means that the controller will scan continuously until
-    /// reception of a stop command from the application
-    scan_param.duration = 500;//GAP_TMR_GEN_DISC_SCAN;
-    /// Scan period (in unit of 1.28s). Time interval betweem two consequent starts of a scan duration
-    /// by the controller. 0 means that the scan procedure is not periodic
+    /// Scan duration (in unit of 10ms). 0 means continuous scanning
+    scan_param.duration = SCAN_DURATION_MS;
+    /// Scan period (in unit of 1.28s). 0 means non-periodic scan
     scan_param.period = 0;
 
     gapm_start_activity(actv_env.scanidx, sizeof(struct gapm_scan_param), &scan_param);
@@ -516,30 +525,30 @@ void app_actv_report_ind(struct gapm_ext_adv_report_ind const* report)
     if ((report->info & GAPM_REPORT_INFO_REPORT_TYPE_MASK) == GAPM_REPORT_TYPE_ADV_LEG)
     {
         const uint8_t *p_cursor = report->data;
-        const uint8_t *p_end_cusor = report->data + report->length;
+        const uint8_t *p_end_cursor = report->data + report->length;
 
-        while (p_cursor < p_end_cusor)
+        while (p_cursor < p_end_cursor)
         {
-            // Extract AD type
             uint8_t ad_type = *(p_cursor + 1);
 
             if (ad_type == GAP_AD_TYPE_APPEARANCE)
             {
-                uint16_t icon = read16p(p_cursor+2);
+                uint16_t icon = read16p(p_cursor + 2);
 
-                // Filter special appearance device
-                if ((icon == 0x03C1) || (icon == 0x03C5)) // HID Gamepad
+                // Filter HID Gamepad or Joystick appearance
+                if ((icon == APPEAR_HID_GAMEPAD) || (icon == APPEAR_HID_JOYSTICK))
                 {
                     app_scan_result(&report->trans_addr);
                     break;
                 }
             }
-            else if ((ad_type == GAP_AD_TYPE_COMPLETE_LIST_16_BIT_UUID) || (ad_type == GAP_AD_TYPE_MORE_16_BIT_UUID))
+            else if ((ad_type == GAP_AD_TYPE_COMPLETE_LIST_16_BIT_UUID) ||
+                     (ad_type == GAP_AD_TYPE_MORE_16_BIT_UUID))
             {
-                uint16_t uuid = read16p(p_cursor+2);
+                uint16_t uuid = read16p(p_cursor + 2);
 
-                // Filter special uuid device
-                if (((uuid == 0x18F0) || (uuid == 0xFF00)))// && (param->trans_addr.addr.addr[0] == 0x04))
+                // Filter specific UUID devices
+                if ((uuid == UUID_FILTER_18F0) || (uuid == UUID_FILTER_FF00))
                 {
                     app_scan_result(&report->trans_addr);
                     break;
@@ -547,10 +556,10 @@ void app_actv_report_ind(struct gapm_ext_adv_report_ind const* report)
             }
             else
             {
-                // Filter Rule more...
+                // Additional filter rules can be added here
             }
 
-            /* Go to next advertising info */
+            /* Go to next AD structure */
             p_cursor += (*p_cursor + 1);
         }
     }

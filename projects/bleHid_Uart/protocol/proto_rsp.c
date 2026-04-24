@@ -1,3 +1,9 @@
+/**
+ ****************************************************************************************
+ * @file proto_rsp.c
+ * @brief Protocol response builder and transmitter
+ ****************************************************************************************
+ */
 #include "drvs.h"
 #include "proto.h"
 #include "pt_env.h"
@@ -11,7 +17,16 @@
 #define debugHex(dat, len)
 #endif
 
-__STATIC_INLINE void pt_fill_rsp(pkt_t *pkt, uint8_t rsp, uint8_t len)
+__STATIC_INLINE /**
+ ****************************************************************************************
+ * @brief Fill response packet with header and payload
+ * @param[in]  pkt_hdr_t *pkt
+ * @param[in]  uint8_t cmd
+ * @param[in]  const uint8_t *data
+ * @param[in]  uint16_t len
+ ****************************************************************************************
+ */
+void pt_fill_rsp(pkt_t *pkt, uint8_t rsp, uint8_t len)
 {
     pkt->type = PT_TYPE_RSP;
     pkt->code = rsp;

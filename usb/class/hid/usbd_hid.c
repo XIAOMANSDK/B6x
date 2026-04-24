@@ -39,6 +39,13 @@ usbd_hid_t *find_hid_by_ep(uint8_t ep_addr)
     return NULL;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Initialize USB HID class with descriptor and callbacks
+ * @param[in]  const usbd_hid_desc_t *desc
+ * @param[in]  const usbd_hid_cb_t *cb
+ ****************************************************************************************
+ */
 void usbd_hid_init(uint8_t idx, const hid_intf_t *intf)
 {
     if (idx < HID_INST_CNT) {

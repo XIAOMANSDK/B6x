@@ -34,7 +34,7 @@ extern bool last_sta;
 extern uint16_t g_no_action_cnt;
 extern const struct gapc_conn_param dft_conn_param;
 extern bool key_press;
-extern uint8_t adv_dir_flag;
+extern bool adv_dir_flag;
 extern uint16_t voiceSendNB; 
 extern uint16_t voiceSendOK;
 

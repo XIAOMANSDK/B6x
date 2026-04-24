@@ -452,6 +452,8 @@ enum gapm_adv_prop_pos
     GAPM_ADV_PROP_PER_TX_PWR_POS      = 7,
     /// Indicate if application must be informed about received scan requests PDUs
     GAPM_ADV_PROP_SCAN_REQ_NTF_EN_POS = 8,
+    // 2.4G channel
+    GAPM_ADV_PROP_2G4_CHL_POS = 9,
 };
 
 /// Advertising properties bit field bit value
@@ -483,6 +485,8 @@ enum gapm_adv_prop
     GAPM_ADV_PROP_PER_TX_PWR_BIT      = (1 << GAPM_ADV_PROP_PER_TX_PWR_POS),
     /// Indicate if application must be informed about received scan requests PDUs
     GAPM_ADV_PROP_SCAN_REQ_NTF_EN_BIT = (1 << GAPM_ADV_PROP_SCAN_REQ_NTF_EN_POS),
+    /// 2.4G
+    GAPM_ADV_PROP_2G4_CHL_BIT = (1 << GAPM_ADV_PROP_2G4_CHL_POS),
 };
 
 /// Advertising filter policy

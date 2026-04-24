@@ -1,3 +1,9 @@
+/**
+ ****************************************************************************************
+ * @file pt_sch.c
+ * @brief Protocol scheduler for UART receive state machine
+ ****************************************************************************************
+ */
 #include "string.h"
 #include "proto.h"
 #include "pt_env.h"
@@ -12,6 +18,12 @@
 #endif
 
 /// Protocol Parse
+/**
+ ****************************************************************************************
+ * @brief Wait for protocol sync byte on UART
+ * @param[in]  proto_t *pt
+ ****************************************************************************************
+ */
 static void proto_read_sync(proto_t *pt)
 {
     pt->rx_state = PT_STATE_SYNC;

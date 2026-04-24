@@ -26,6 +26,11 @@
 static usbd_hid_t usbd_hids[HID_INST_CNT];
 
 /// Interface number convert to hid instance
+/**
+ ****************************************************************************************
+ * @brief Find HID instance by interface number
+ ****************************************************************************************
+ */
 static usbd_hid_t *find_hid_by_intf(uint8_t intf_num)
 {
     for (uint8_t i = 0; i < HID_INST_CNT; i++)
@@ -193,6 +198,11 @@ void usbd_hid_ep_in_handler(uint8_t ep)
  * @param len      Size of the buffer.
  *
  * @return  0 on success, errno code on fail.
+ */
+/**
+ ****************************************************************************************
+ * @brief Handle USB HID class control requests
+ ****************************************************************************************
  */
 uint8_t usbd_hid_class_handler(struct usb_setup_packet *setup, uint8_t **data, uint16_t *len)
 {

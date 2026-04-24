@@ -160,7 +160,7 @@ __TASKFN void* app_task_dispatch(msg_id_t msgid, uint8_t task_idx)
 
         #if (PRF_MESH)
         case TID_MESH:
-            status = app_mesh_msg_handler;
+            handler = app_mesh_msg_handler;
             break;
         #endif
 

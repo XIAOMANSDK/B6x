@@ -3,11 +3,10 @@
  *
  * @file main.c
  *
- * @brief 应用程序主入口
+ * @brief Main entry for RCO test application
  *
  * @details
- * 程序执行主流程：
- * 系统初始化 → 设备初始化 → RCO测试
+ * System init -> Device init -> RCO calibration test
  *
  ****************************************************************************************
  */
@@ -31,56 +30,48 @@
 
 /**
  ****************************************************************************************
- * @brief 系统初始化函数
- *
- * @details
- * 配置系统基础设置
+ * @brief System initialization
  ****************************************************************************************
  */
 static void sysInit(void)
 {
-    // Todo config, if need - 可在此添加系统时钟等配置
+    // TODO: Add system clock configuration if needed
 }
 
 /**
  ****************************************************************************************
- * @brief 设备初始化函数
+ * @brief Device initialization
  *
  * @details
- * 初始化外设模块：
- * - 读取复位原因
- * - 禁用看门狗
- * - 初始化调试接口
- * - 输出启动信息
+ * - Read reset reason
+ * - Disable watchdog
+ * - Initialize debug interface
+ * - Print startup banner
  ****************************************************************************************
  */
 static void devInit(void)
-{  
-    uint16_t rsn = rstrsn();  ///< 读取复位原因寄存器
-    
-    iwdt_disable();  ///< 禁用独立看门狗
-    
-    dbgInit();                    ///< 初始化调试接口
-    debug("Start(rsn:0x%X)...\\r\\n", rsn);  ///< 输出启动信息和复位原因
+{
+    uint16_t rsn = rstrsn();
+
+    iwdt_disable();
+
+    dbgInit();
+    debug("Start(rsn:0x%X)...\r\n", rsn);
 }
 
-extern void rcoTest(void);  ///< 声明RCO测试函数
+extern void rcoTest(void);
 
 /**
  ****************************************************************************************
- * @brief 主函数
+ * @brief Main entry
  *
- * @return int 程序退出状态
- *
- * @details
- * 程序执行主流程：
- * 系统初始化 → 设备初始化 → RCO测试
+ * @return int Program exit status
  ****************************************************************************************
  */
 int main(void)
 {
-    sysInit();    ///< 系统初始化
-    devInit();    ///< 设备初始化
-    
-    rcoTest();    ///< 执行RC振荡器测试
+    sysInit();
+    devInit();
+
+    rcoTest();
 }

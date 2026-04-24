@@ -23,6 +23,11 @@ from pathlib import Path
 from datetime import datetime
 from typing import Dict, Optional, List, Tuple
 
+try:
+    from src.common.path_utils import make_relative
+except ImportError:
+    from common.path_utils import make_relative
+
 logger = logging.getLogger(__name__)
 
 
@@ -74,11 +79,13 @@ class BuildCacheManager:
                 logger.warning(f"Failed to load cache: {e}, creating new cache")
 
         # Create new cache structure
+        # Note: sdk_root is NOT stored as absolute path for portability
+        # Instead, we store a marker indicating relative paths are used
         logger.info("Creating new build cache")
         return {
-            "version": "1.0",
+            "version": "1.1",  # Version 1.1 uses relative paths
             "last_updated": datetime.now().isoformat(),
-            "sdk_root": str(self.sdk_root),
+            "sdk_root": "<resolved_at_runtime>",  # Portable marker
             "file_hashes": {
                 "excel_constraints": {},
                 "documents": {},
@@ -225,14 +232,26 @@ class BuildCacheManager:
         if file_category not in self.cache_data["file_hashes"]:
             self.cache_data["file_hashes"][file_category] = {}
 
+        # Convert outputs to relative paths for portability
+        relative_outputs = []
+        if outputs:
+            for output_path in outputs:
+                try:
+                    output_path_obj = Path(output_path)
+                    relative_outputs.append(make_relative(output_path_obj, self.sdk_root))
+                except:
+                    relative_outputs.append(output_path)
+
         # Update cache entry
+        # Note: 'path' field stores relative path for portability
+        # Use make_relative to ensure consistent path format
         self.cache_data["file_hashes"][file_category][relative_path] = {
-            "path": str(file_path),
+            "path": make_relative(file_path, self.sdk_root),  # Relative path
             "md5": current_md5,
             "size_bytes": stat.st_size,
             "mtime": stat.st_mtime,
             "last_built": datetime.now().isoformat(),
-            "outputs": outputs or []
+            "outputs": relative_outputs
         }
 
         self._save_cache()
@@ -293,9 +312,9 @@ class BuildCacheManager:
         )
 
         self.cache_data = {
-            "version": "1.0",
+            "version": "1.1",  # Version 1.1 uses relative paths
             "last_updated": datetime.now().isoformat(),
-            "sdk_root": str(self.sdk_root),
+            "sdk_root": "<resolved_at_runtime>",  # Portable marker
             "file_hashes": {
                 "excel_constraints": {},
                 "documents": {},

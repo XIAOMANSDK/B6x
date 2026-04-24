@@ -1,15 +1,16 @@
 /**
  ****************************************************************************************
  *
- * @file app_actv.c
+ * @file app_actv_weChat.c
  *
- * @brief Application Activity(Advertising, Scanning and Initiating) - Example
+ * @brief Application Activity(Advertising, Scanning and Initiating) - WeChat
  *
  ****************************************************************************************
  */
 
 #include "app.h"
 #include "gapm_api.h"
+#include "weChat.h"
 
 #if (DBG_ACTV)
 #include "dbg.h"
@@ -173,8 +174,6 @@ static void app_adv_create(void)
 
     gapm_create_advertising(GAPM_STATIC_ADDR, &adv_param);
 }
-
-#include "weChat.h"
 
 static void app_adv_set_adv_data(void)
 {

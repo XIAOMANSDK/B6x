@@ -3,7 +3,7 @@
  *
  * @file main.c
  *
- * @brief Main Entry of the application.
+ * @brief Main entry of the BLE UART-to-USB bridge application.
  *
  ****************************************************************************************
  */
@@ -17,6 +17,9 @@
 #include "uartRb.h"
 #include "dbg.h"
 
+#include "cdc_uart.h"
+#include "proc.h"
+
 
 /*
  * DEFINES
@@ -29,9 +32,11 @@
  ****************************************************************************************
  */
 
-extern void usbdInit(void);
-extern void user_procedure(void);
-
+/**
+ ****************************************************************************************
+ * @brief Initialize system clocks and enable peripherals (48MHz for USB).
+ ****************************************************************************************
+ */
 static void sysInit(void)
 {
     iwdt_disable();
@@ -45,6 +50,11 @@ static void sysInit(void)
     rcc_fshclk_set(FSH_CLK_DPSC42);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Initialize device peripherals: UART debug, USB CDC, LEDs, and BLE app.
+ ****************************************************************************************
+ */
 static void devInit(void)
 {
     uint16_t rsn = rstrsn();
@@ -85,7 +95,7 @@ int main(void)
         // SoftTimer Polling
         sftmr_schedule();
         #endif //(LED_PLAY)
-		
+
         // User's Procedure
         user_procedure();
     }

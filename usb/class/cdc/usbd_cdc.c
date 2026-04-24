@@ -55,6 +55,13 @@ static void dflt_cdc_param(usbd_cdc_t *cdc)
     cdc->line_coding.bCharFormat = 0;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Initialize USB CDC class
+ * @param[in]  const usbd_cdc_desc_t *desc
+ * @param[in]  const usbd_cdc_cb_t *cb
+ ****************************************************************************************
+ */
 void usbd_cdc_init(uint8_t idx, uint8_t intf_num, uint8_t ep_in)
 {
     //usbd_cdc_t *cdc;

@@ -11,7 +11,7 @@ project(loader C ASM)
 set(LOCAL_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../src")
 aux_source_directory("${LOCAL_SRC_DIR}" SRC_LIST)
 
-# Use custom startup for DFU (runs from specific address)
+# Use custom startup for Loader (runs from SRAM)
 set(STARTUP_LD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/startup_gnu_ld.S")
 list(APPEND SRC_LIST
     ${STARTUP_LD_SRC}

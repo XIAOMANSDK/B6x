@@ -1,5 +1,5 @@
 {
-  "file_path": "./usb\\src\\demo_hid_feat.c",
+  "file_path": "usb/src/demo_hid_feat.c",
   "functions": [
     {
       "name": "usbd_hid_kbd_out_handler",
@@ -11,8 +11,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    uint8_t led_state;\n    \n    /*!< read the led data from host send */\n    usbd_ep_read(ep, KBD_OUT_EP_SIZE, &led_state);\n    USB_LOG_RAW(\"led_state:%02X\\r\\n\", led_state);\n    \n    /*!< here you can write the LED processing from the host */\n    usbd_hid_leds(led_state);\n}",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "function_body": "{\n    uint8_t led_state;\n\n    /*!< read the led data from host send */\n    usbd_ep_read(ep, KBD_OUT_EP_SIZE, &led_state);\n    USB_LOG_RAW(\"led_state:%02X\\r\\n\", led_state);\n\n    /*!< here you can write the LED processing from the host */\n    usbd_hid_leds(led_state);\n}",
+      "file_path": "usb/src/demo_hid_feat.c",
       "line_number": 311,
       "is_static": false
     },
@@ -26,8 +26,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    uint8_t custom_data[RAW_OUT_EP_SIZE];\n    \n    /*!< read the data from host send */\n    usbd_ep_read(RAW_OUT_EP, RAW_OUT_EP_SIZE, custom_data);\n\n    /*!< you can use the data do some thing you like */\n}",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "function_body": "{\n    uint8_t custom_data[RAW_OUT_EP_SIZE];\n\n    /*!< read the data from host send */\n    usbd_ep_read(RAW_OUT_EP, RAW_OUT_EP_SIZE, custom_data);\n\n    /*!< you can use the data do some thing you like */\n}",
+      "file_path": "usb/src/demo_hid_feat.c",
       "line_number": 323,
       "is_static": false
     },
@@ -47,7 +47,7 @@
         }
       ],
       "function_body": "{\n    switch (event) {\n        case USBD_EVENT_RESET:\n            usbd_hid_reset();\n            break;\n        case USBD_EVENT_RESUME:\n            break;\n        case USBD_EVENT_SUSPEND:\n            break;\n\n        default:\n            break;\n    }\n}",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "usb/src/demo_hid_feat.c",
       "line_number": 333,
       "is_static": false
     },
@@ -62,7 +62,7 @@
         }
       ],
       "function_body": "{\n    usbd_init();\n    usbd_register(hid_descriptor, hid_configuration);\n    #if (USBD_ADVANCE_API)\n    usbd_register_events(0xFF, usbd_notify_handler);\n    #endif\n    for (uint8_t idx = 0; idx < USB_HID_INTF_CNT; idx++) {\n        usbd_hid_init(idx, &hid_interface[idx]);\n    }\n}",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "usb/src/demo_hid_feat.c",
       "line_number": 355,
       "is_static": false
     },
@@ -76,8 +76,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    // circle polling to send report\n    static uint8_t keynum = 0;\n    \n    if (!usbd_is_configured())\n        return;\n    \n    if (hid_feature)\n    {\n        hid_feature = false;\n    /*!< keyboard test */\n    {\n        uint8_t sendbuffer1[KBD_IN_EP_SIZE] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; //A\n    \n        sendbuffer1[2] = HID_KEY_A + keynum;\n        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);\n        /*!< delay 10ms */\n        bootDelayMs(10);\n        /*!< send button up */\n        sendbuffer1[2] = 0;\n        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);\n    }\n    \n    /*!< delay 100ms the custom test */\n    {\n        bootDelayMs(100);\n        /*!< custom test */\n        uint8_t sendbuffer2[RAW_IN_EP_SIZE];\n        \n        memset(sendbuffer2, keynum, RAW_IN_EP_SIZE);\n        usbd_hid_send_report(RAW_IN_EP, RAW_IN_EP_SIZE, sendbuffer2);\n    }\n    \n    if (++keynum > 37) keynum = 0;\n    }\n}",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "function_body": "{\n    // circle polling to send report\n    static uint8_t keynum = 0;\n\n    if (!usbd_is_configured())\n        return;\n\n    if (hid_feature)\n    {\n        hid_feature = false;\n    /*!< keyboard test */\n    {\n        uint8_t sendbuffer1[KBD_IN_EP_SIZE] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }; //A\n\n        sendbuffer1[2] = HID_KEY_A + keynum;\n        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);\n        /*!< delay 10ms */\n        bootDelayMs(10);\n        /*!< send button up */\n        sendbuffer1[2] = 0;\n        usbd_hid_send_report(KBD_IN_EP, KBD_IN_EP_SIZE, sendbuffer1);\n    }\n\n    /*!< delay 100ms the custom test */\n    {\n        bootDelayMs(100);\n        /*!< custom test */\n        uint8_t sendbuffer2[RAW_IN_EP_SIZE];\n\n        memset(sendbuffer2, keynum, RAW_IN_EP_SIZE);\n        usbd_hid_send_report(RAW_IN_EP, RAW_IN_EP_SIZE, sendbuffer2);\n    }\n\n    if (++keynum > 37) keynum = 0;\n    }\n}",
+      "file_path": "usb/src/demo_hid_feat.c",
       "line_number": 367,
       "is_static": false
     }
@@ -88,7 +88,7 @@
       "value": "USB_2_0 // Version",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 7
     },
     {
@@ -96,7 +96,7 @@
       "value": "0x3839  // Vendor ID",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 8
     },
     {
@@ -104,7 +104,7 @@
       "value": "0x0001  // Product ID",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 9
     },
     {
@@ -112,7 +112,7 @@
       "value": "100     // unit in mA",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 10
     },
     {
@@ -120,7 +120,7 @@
       "value": "0x0409  // English(US)",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 11
     },
     {
@@ -128,7 +128,7 @@
       "value": "2",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 20
     },
     {
@@ -136,7 +136,7 @@
       "value": "(USB_HID_INTF_CNT - 1)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 21
     },
     {
@@ -144,7 +144,7 @@
       "value": "(9+(18+7+7)*USB_HID_INTF_CNT-14)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 24
     },
     {
@@ -152,7 +152,7 @@
       "value": "0",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 27
     },
     {
@@ -160,7 +160,7 @@
       "value": "0x81",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 28
     },
     {
@@ -168,7 +168,7 @@
       "value": "8",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 29
     },
     {
@@ -176,7 +176,7 @@
       "value": "10",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 30
     },
     {
@@ -184,7 +184,7 @@
       "value": "0x01",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 31
     },
     {
@@ -192,7 +192,7 @@
       "value": "1",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 32
     },
     {
@@ -200,7 +200,7 @@
       "value": "10",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 33
     },
     {
@@ -208,7 +208,7 @@
       "value": "sizeof(hid_kbd_report_desc)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 34
     },
     {
@@ -216,7 +216,7 @@
       "value": "1",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 37
     },
     {
@@ -224,7 +224,7 @@
       "value": "0x82",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 38
     },
     {
@@ -232,7 +232,7 @@
       "value": "64",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 39
     },
     {
@@ -240,7 +240,7 @@
       "value": "10",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 40
     },
     {
@@ -248,7 +248,7 @@
       "value": "0x02",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 41
     },
     {
@@ -256,7 +256,7 @@
       "value": "64",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 42
     },
     {
@@ -264,7 +264,7 @@
       "value": "10",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 43
     },
     {
@@ -272,13 +272,13 @@
       "value": "sizeof(hid_raw_report_desc)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_hid_feat.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_hid_feat.c",
       "line_number": 44
     }
   ],
   "parse_errors": [
-    "Line 265, Col 5: 'BCD == USB_2_0)\n    USB_Q'",
-    "Line 267, Col 5: ' \n    '",
-    "Line 333, Col 10: 'noti'"
+    "Line 265, Col 5: 'tor - EOF */\n    0x00\n};\n'",
+    "Line 267, Col 5: '******'",
+    "Line 333, Col 10: 'case'"
   ]
 }

@@ -171,15 +171,16 @@ class ProfileDependencyParser:
         # Extract profile name from file path
         profile_name = self._extract_profile_name(profile_file)
 
-        with open(profile_file, 'r', encoding='utf-8', errors='ignore') as f:
-            source_code = f.read()
+        with open(profile_file, 'rb') as f:
+            source_code_bytes = f.read()
+        source_code = source_code_bytes.decode('utf-8', errors='ignore')
 
         # Parse with TreeSitter
-        tree = parser.parse(bytes(source_code, 'utf8'))
+        tree = parser.parse(source_code_bytes)
         root = tree.root_node
 
         # Extract function calls
-        function_calls = self._extract_function_calls_from_ast(root, source_code)
+        function_calls = self._extract_function_calls_from_ast(root, source_code_bytes)
 
         # Categorize calls
         gatt_calls, driver_calls, ke_msg_calls = self._categorize_calls(function_calls)
@@ -229,29 +230,43 @@ class ProfileDependencyParser:
             return self._parser
 
         try:
-            # Try to use tree-sitter-languages package (easier installation)
+            # Method 1: tree-sitter + tree-sitter-c (PyPI packages, v0.21+)
+            try:
+                import tree_sitter
+                import tree_sitter_c as tsc
+                self._c_language = tree_sitter.Language(tsc.language())
+                self._parser = Parser(self._c_language)
+                logger.debug("Using tree-sitter + tree-sitter-c")
+                return self._parser
+            except ImportError:
+                pass
+
+            # Method 2: tree-sitter-languages package
             try:
                 from tree_sitter_languages import get_language
                 self._c_language = get_language('c')
                 self._parser = Parser(self._c_language)
+                logger.debug("Using tree-sitter-languages")
                 return self._parser
             except ImportError:
-                # Fallback: build from source if tree-sitter-c is available
-                vendor_path = Path(__file__).parent.parent.parent / 'vendor' / 'tree-sitter-c'
+                pass
 
-                if vendor_path.exists():
-                    # Build library
-                    build_path = Path(__file__).parent.parent / 'build'
-                    build_path.mkdir(exist_ok=True)
+            # Method 3: build from vendor directory
+            vendor_path = Path(__file__).parent.parent.parent / 'vendor' / 'tree-sitter-c'
+            if vendor_path.exists():
+                build_path = Path(__file__).parent.parent / 'build'
+                build_path.mkdir(exist_ok=True)
+                Language.build_library(
+                    str(build_path / 'languages.so'),
+                    [str(vendor_path)]
+                )
+                self._c_language = Language(str(build_path / 'languages.so'), 'c')
+                self._parser = Parser(self._c_language)
+                logger.debug("Using vendor tree-sitter-c")
+                return self._parser
 
-                    # Compile the language
-                    Language.build_library(
-                        str(build_path / 'languages.so'),
-                        [str(vendor_path)]
-                    )
-                    self._c_language = Language(str(build_path / 'languages.so'), 'c')
-                    self._parser = Parser(self._c_language)
-                    return self._parser
+            logger.warning("No tree-sitter C parser available. Install: pip install tree-sitter tree-sitter-c")
+            return None
 
         except Exception as e:
             logger.warning(f"Failed to initialize TreeSitter: {e}")

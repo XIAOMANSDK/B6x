@@ -13,6 +13,7 @@
 #include "iopad.h"
 #include "reg_i2c.h"
 #include "reg_gpio.h"
+#include "utils.h"
 #include "cmsis_compiler.h"
 
 /*
@@ -149,6 +150,7 @@ void i2c_stop(void)
  */
 uint16_t i2c_send(uint16_t len, const uint8_t *data)
 {
+    ASSERT_ERR(data != NULL);
     uint16_t cnt;
 
     for (cnt = 0; cnt < len; cnt++)

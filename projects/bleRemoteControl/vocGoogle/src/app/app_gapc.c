@@ -13,9 +13,9 @@
  * INCLUDE FILES
  ****************************************************************************************
  */
-#include "reg_sadc.h"
 #include "bledef.h"
 #include "app.h"
+#include "micphone.h"
 
 #if (DBG_GAPC)
 #include "dbg.h"
@@ -37,12 +37,22 @@
  ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief Handle GAPC command complete event
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_cmp_evt)
 {
     // Command complete, may ignore
     DEBUG("CMP_EVT(op:%d,sta:0x%x)", param->operation, param->status);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle BLE connection request indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_connection_req_ind)
 {
     #if (DBG_GAPC)
@@ -62,6 +72,11 @@ APP_MSG_HANDLER(gapc_connection_req_ind)
     //app_conn_fsm(BLE_CONNECTING, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle BLE connection established
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_connection_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
@@ -72,6 +87,11 @@ APP_MSG_HANDLER(gapc_connection_ind)
     app_conn_fsm(BLE_CONNECTED, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle BLE disconnection
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_disconnect_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
@@ -81,6 +101,11 @@ APP_MSG_HANDLER(gapc_disconnect_ind)
     app_conn_fsm(BLE_DISCONNECTED, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle connection parameter update request
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_param_update_req_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
@@ -91,7 +116,7 @@ APP_MSG_HANDLER(gapc_param_update_req_ind)
     // Connection param accept or reject
     gapc_param_update_rsp(conidx, true, 0x2, 0x4);
 
-    if ((!SADC->CTRL.SADC_DMAC_EN) && (param->intv_min > 6) && (param->latency))
+    if ((!mic_is_active()) && (param->intv_min > 6) && (param->latency))
     {
         ble_latency_applied(true);
     }
@@ -106,6 +131,11 @@ APP_MSG_HANDLER(gapc_param_updated_ind)
 
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle LE packet size indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_le_pkt_size_ind)
 {
     DEBUG("le_pkt_size_ind(cid:%d,txB:%d,txT:%d,rxB:%d,rxT:%d)", TASK_IDX(src_id),
@@ -113,6 +143,11 @@ APP_MSG_HANDLER(gapc_le_pkt_size_ind)
 }
 
 #if (BLE_EN_SMP)
+/**
+ ****************************************************************************************
+ * @brief Handle SMP bonding request
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_bond_req_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
@@ -218,6 +253,11 @@ APP_MSG_HANDLER(gapc_bond_req_ind)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle bonding result indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_bond_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
@@ -270,6 +310,11 @@ APP_MSG_HANDLER(gapc_bond_ind)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle encryption start request
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_encrypt_req_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
@@ -296,6 +341,11 @@ APP_MSG_HANDLER(gapc_encrypt_req_ind)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle encryption status indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_encrypt_ind)
 {
     uint8_t conidx = TASK_IDX(src_id);
@@ -305,6 +355,11 @@ APP_MSG_HANDLER(gapc_encrypt_ind)
     app_conn_fsm(BLE_ENCRYPTED, conidx, param);
 }
 
+/**
+ ****************************************************************************************
+ * @brief Handle security procedure indication
+ ****************************************************************************************
+ */
 APP_MSG_HANDLER(gapc_security_ind)
 {
     // slave request security
@@ -315,6 +370,11 @@ APP_MSG_HANDLER(gapc_security_ind)
 /**
  ****************************************************************************************
  * @brief SubTask Handler of GAP controller Message.
+ ****************************************************************************************
+ */
+/**
+ ****************************************************************************************
+ * @brief Main GAPC message subtask dispatcher
  ****************************************************************************************
  */
 APP_SUBTASK_HANDLER(gapc_msg)

@@ -36,6 +36,7 @@ from dataclasses import asdict
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
+from common.path_utils import make_relative, normalize_path
 from domain_config import DOMAIN_REGISTRY, DomainType, get_all_domains
 from core.knowledge_graph_schema import KnowledgeGraph, KnowledgeGraphEntry, EntryType, RelationType, CrossDomainRelation
 from core.relation_mapper import CrossDomainRelationMapper
@@ -54,6 +55,8 @@ from core.mesh_parser import MeshAPIParser, MeshErrorCodeParser, MeshModelParser
 from core.example_scanner import ExampleScanner
 from core.call_chain_extractor import CallChainExtractor
 from core.api_manifest_generator import APIUsageManifestBuilder
+from core.hardware_constraint_indexer import HardwareConstraintIndexer
+from core.dependency_graph_builder import DependencyGraphBuilder
 
 # Domain 4 enhancements (v0.2.0)
 from core.init_sequence_extractor import InitSequenceExtractor
@@ -109,6 +112,50 @@ class FourDimensionalKnowledgeGraphBuilder:
         # Relation mapper
         self.relation_mapper = CrossDomainRelationMapper()
 
+    def _convert_paths_to_relative(self, data):
+        """
+        Recursively convert absolute paths to relative paths in data structures.
+
+        This ensures portability of generated data files across different environments.
+
+        Args:
+            data: Any data structure (dict, list, str, etc.)
+
+        Returns:
+            Data structure with paths converted to relative
+        """
+        import re
+
+        if isinstance(data, dict):
+            return {k: self._convert_paths_to_relative(v) for k, v in data.items()}
+        elif isinstance(data, list):
+            return [self._convert_paths_to_relative(item) for item in data]
+        elif isinstance(data, str):
+            # Check if this looks like a Windows absolute path
+            if re.match(r'^[A-Z]:[/\\]', data):
+                # Try to extract relative part from SDK path
+                sdk_str = str(self.sdk_path)
+                # Handle both forward and backslash paths
+                data_normalized = data.replace('/', '\\')
+                sdk_normalized = sdk_str.replace('/', '\\')
+
+                if data_normalized.lower().startswith(sdk_normalized.lower()):
+                    # Extract relative part
+                    rel_part = data[len(sdk_str):].lstrip('/\\')
+                    return rel_part.replace('\\', '/')  # Normalize to forward slashes
+
+                # Try to find SDK root in path
+                for sdk_part in ['sdk6', 'sdk', 'bxx_DragonC1']:
+                    idx = data.lower().find(sdk_part.lower())
+                    if idx >= 0:
+                        remaining = data[idx + len(sdk_part):].lstrip('/\\')
+                        if remaining:
+                            return remaining.replace('\\', '/')
+
+            return data
+        else:
+            return data
+
     def load_constraint_json(self, constraint_name: str) -> Optional[Dict]:
         """
         Load constraint JSON from data/constraints/.
@@ -153,7 +200,7 @@ class FourDimensionalKnowledgeGraphBuilder:
         logger.info("\n[1.1] Parsing SVD file and BLE User Guide...")
 
         # SVD file is in parent directory of SDK
-        svd_path = self.sdk_path.parent / "gen" / "SVD" / "DragonC.svd"
+        svd_path = self.sdk_path.parent / "gen" / "SVD" / "B6x.svd"
         ble_guide_path = self.sdk_path / "doc" / "SW_Spec" / "B6x_BLE芯片使用指南_V1.0.1.docx"
 
         # Extract register descriptions from BLE User Guide
@@ -246,6 +293,10 @@ class FourDimensionalKnowledgeGraphBuilder:
         power_data = self.load_constraint_json("power_consumption.json")
         if power_data:
             domain_data["power_consumption"] = power_data["modes"]
+            # Ensure each entry has a 'name' field for domain node resolution
+            for entry in domain_data["power_consumption"]:
+                if "name" not in entry and "mode" in entry:
+                    entry["name"] = entry["mode"]
             domain_data["power_consumption_metadata"] = {
                 "constraint_type": power_data["constraint_type"],
                 "version": power_data["version"],
@@ -420,7 +471,7 @@ class FourDimensionalKnowledgeGraphBuilder:
                         "detailed": f.detailed_description,
                         "return_type": f.return_type,
                         "parameters": [{"type": p.type, "name": p.name} for p in f.parameters],
-                        "file_path": f.file_path,
+                        "file_path": make_relative(f.file_path, self.sdk_path) if f.file_path else "",
                         "has_implementation": f.has_implementation
                     }
                     for f in matched
@@ -428,14 +479,22 @@ class FourDimensionalKnowledgeGraphBuilder:
 
                 # Also extract macros and enums
                 domain_data["macros"] = []
+                macro_seen = {}  # name -> index in list
                 domain_data["enums"] = []
                 for header in all_headers:
                     for macro in header.macros:
-                        domain_data["macros"].append({
-                            "name": macro.name,
-                            "value": macro.value,
-                            "brief": macro.brief
-                        })
+                        if macro.name in macro_seen:
+                            existing = domain_data["macros"][macro_seen[macro.name]]
+                            variants = existing.get("variants", [])
+                            variants.append(macro.value)
+                            existing["variants"] = variants
+                        else:
+                            macro_seen[macro.name] = len(domain_data["macros"])
+                            domain_data["macros"].append({
+                                "name": macro.name,
+                                "value": macro.value,
+                                "brief": macro.brief
+                            })
                     for enum in header.enums:
                         domain_data["enums"].append({
                             "name": enum.name,
@@ -447,11 +506,15 @@ class FourDimensionalKnowledgeGraphBuilder:
             else:
                 logger.warning("  Failed to initialize TreeSitter parser")
                 domain_data["apis"] = []
+                domain_data["macros"] = []
+                domain_data["enums"] = []
         except Exception as e:
             logger.warning(f"  TreeSitter parsing failed: {e}")
             import traceback
             logger.debug(f"  Traceback: {traceback.format_exc()}")
             domain_data["apis"] = []
+            domain_data["macros"] = []
+            domain_data["enums"] = []
 
         # -------------------------------------------------------------------
         # 2.2 Struct Definitions
@@ -479,7 +542,10 @@ class FourDimensionalKnowledgeGraphBuilder:
             for struct_list in usb_structs_dict.values():
                 structs.extend(struct_list)
 
-            domain_data["structs"] = [s.to_dict() for s in structs]
+            domain_data["structs"] = [
+                self._convert_paths_to_relative(s.to_dict())
+                for s in structs
+            ]
             logger.info(f"  Extracted {len(structs)} struct definitions (including USB)")
         except Exception as e:
             logger.warning(f"  Struct extraction failed: {e}")
@@ -623,7 +689,7 @@ class FourDimensionalKnowledgeGraphBuilder:
                     {
                         "name": f.name,
                         "brief": f.brief_description,
-                        "file_path": f.file_path
+                        "file_path": make_relative(f.file_path, self.sdk_path) if f.file_path else ""
                     }
                     for f in matched
                 ]
@@ -643,7 +709,10 @@ class FourDimensionalKnowledgeGraphBuilder:
             profile_parser = ProfileParser()
             profiles = profile_parser.parse_directory(str(self.sdk_path / "ble" / "prf"))
 
-            domain_data["profiles"] = [p.to_dict() for p in profiles]
+            domain_data["profiles"] = [
+                self._convert_paths_to_relative(p.to_dict())
+                for p in profiles
+            ]
             logger.info(f"  Parsed {len(profiles)} GATT profiles")
         except Exception as e:
             logger.warning(f"  Profile parsing failed: {e}")
@@ -834,7 +903,7 @@ class FourDimensionalKnowledgeGraphBuilder:
 
                     processed_examples.append({
                         "name": ex.example_name,
-                        "file_path": ex.file_path,
+                        "file_path": make_relative(ex.file_path, self.sdk_path) if ex.file_path else "",
                         "used_apis": [fc.function_name for fc in ex.function_calls],
                         "type": ex.example_type,
                         "functions_defined": ex.functions_defined,
@@ -856,10 +925,20 @@ class FourDimensionalKnowledgeGraphBuilder:
         logger.info("\n[4.2] Building API manifest...")
         try:
             manifest_builder = APIUsageManifestBuilder()
-            # (Would use actual example results)
-            logger.info("  API manifest built")
+            if examples:
+                manifest = manifest_builder.build_manifest(
+                    examples, str(self.sdk_path), all_apis
+                )
+                manifest_path = self.output_dir / "api_manifest.json"
+                manifest_path.parent.mkdir(parents=True, exist_ok=True)
+                manifest.to_json(str(manifest_path))
+                logger.info(f"  API manifest exported to: {manifest_path}")
+            else:
+                logger.warning("  No examples scanned, API manifest skipped")
         except Exception as e:
             logger.warning(f"  API manifest build failed: {e}")
+            import traceback
+            logger.debug(f"  Traceback: {traceback.format_exc()}")
 
         # -------------------------------------------------------------------
         # 4.3 Init Sequence Extraction (NEW - Domain 4 Enhancement)
@@ -885,7 +964,10 @@ class FourDimensionalKnowledgeGraphBuilder:
                 )
 
             # Convert to dict format
-            domain_data["init_sequences"] = [seq.to_dict() for seq in init_sequences]
+            domain_data["init_sequences"] = [
+                self._convert_paths_to_relative(seq.to_dict())
+                for seq in init_sequences
+            ]
             logger.info(f"  Extracted {len(init_sequences)} init sequences")
         except Exception as e:
             logger.warning(f"  Init sequence extraction failed: {e}")
@@ -918,7 +1000,7 @@ class FourDimensionalKnowledgeGraphBuilder:
 
             # Convert to dict format
             domain_data["call_chains"] = {
-                name: chain.to_dict()
+                name: self._convert_paths_to_relative(chain.to_dict())
                 for name, chain in call_chains.items()
             }
 
@@ -927,7 +1009,7 @@ class FourDimensionalKnowledgeGraphBuilder:
             for chain in call_chains.values():
                 patterns = chain_extractor.find_patterns_in_chain(chain)
                 for p in patterns:
-                    all_patterns.append(p.to_dict())
+                    all_patterns.append(self._convert_paths_to_relative(p.to_dict()))
 
             domain_data["call_chain_patterns"] = all_patterns
             logger.info(f"  Extracted {len(call_chains)} project call chains")
@@ -954,14 +1036,14 @@ class FourDimensionalKnowledgeGraphBuilder:
 
             # Convert to dict format
             domain_data["project_configs"] = {
-                name: config.to_dict()
+                name: self._convert_paths_to_relative(config.to_dict())
                 for name, config in project_configs.items()
             }
 
             # Generate summary
             config_summary = []
             for name, config in project_configs.items():
-                summary = config.get_summary()
+                summary = self._convert_paths_to_relative(config.get_summary())
                 summary["project_name"] = name
                 summary["enabled_profiles"] = config.get_enabled_profiles()
                 config_summary.append(summary)
@@ -1001,6 +1083,96 @@ class FourDimensionalKnowledgeGraphBuilder:
         self._export_domain_data("applications", domain_data)
 
     # ========================================================================
+    # Supplementary Data Export (hardware_constraints, project_dependencies)
+    # ========================================================================
+
+    def export_supplementary_data(self) -> None:
+        """Export supplementary data files required by sdk_reference.py consumers."""
+        logger.info("="*70)
+        logger.info("Exporting Supplementary Data")
+        logger.info("="*70)
+
+        # CC-12: hardware_constraints.json
+        logger.info("\n[cc-12] Exporting hardware_constraints.json...")
+        cc12_ok = False
+        io_map_path = self.sdk_path / "doc" / "SW_Spec" / "B6x_IO_MAP.xlsx"
+        if io_map_path.exists():
+            try:
+                indexer = HardwareConstraintIndexer(
+                    io_map_path=str(io_map_path),
+                    flash_map_path=None
+                )
+                output_path = self.output_dir / "hardware_constraints.json"
+                indexer.export_to_json(str(output_path))
+                logger.info(f"  Exported: {output_path}")
+                cc12_ok = True
+            except Exception as e:
+                logger.error(f"  hardware_constraints.json export failed: {e}")
+                import traceback
+                logger.debug(f"  Traceback: {traceback.format_exc()}")
+        else:
+            logger.warning(f"  B6x_IO_MAP.xlsx not found: {io_map_path}, skipping Excel-based generation")
+
+        # CC-13: project_dependencies.json
+        logger.info("\n[cc-13] Exporting project_dependencies.json...")
+        cc13_ok = False
+        try:
+            dep_builder = DependencyGraphBuilder()
+
+            # Collect known SDK APIs
+            all_sdk_apis = set()
+            for api_data in self.domain_data.get("drivers", {}).get("apis", []):
+                all_sdk_apis.add(api_data.get("name", ""))
+            for api_data in self.domain_data.get("ble", {}).get("apis", []):
+                all_sdk_apis.add(api_data.get("name", ""))
+
+            # Extract call chains for all projects
+            chain_extractor = CallChainExtractor()
+            projects_path = self.sdk_path / "projects"
+
+            if projects_path.exists():
+                call_chains = chain_extractor.extract_all_project_chains(
+                    str(projects_path),
+                    all_sdk_apis
+                )
+
+                for proj_name, chain in call_chains.items():
+                    dep_builder.add_project(call_chain=chain)
+
+            total_projects = len(dep_builder.graph.projects_call_chains)
+            if total_projects > 0:
+                output_path = self.output_dir / "project_dependencies.json"
+                dep_builder.export_to_json(str(output_path))
+                logger.info(f"  Exported: {output_path} ({total_projects} projects)")
+                cc13_ok = True
+            else:
+                logger.warning("  No project call chains extracted, skipping export")
+        except Exception as e:
+            logger.error(f"  project_dependencies.json export failed: {e}")
+            import traceback
+            logger.debug(f"  Traceback: {traceback.format_exc()}")
+
+        # Fallback: generate from domain JSON if primary methods failed
+        if not cc12_ok or not cc13_ok:
+            logger.info("\n[cc-12/13 fallback] Generating from domain JSON...")
+            try:
+                import importlib.util
+                _gen_path = Path(__file__).parent / "generate_missing_data.py"
+                _spec = importlib.util.spec_from_file_location("generate_missing_data", _gen_path)
+                _mod = importlib.util.module_from_spec(_spec)
+                _spec.loader.exec_module(_mod)
+                if not cc12_ok:
+                    _mod.generate_hardware_constraints(self.output_dir)
+                    logger.info("  hardware_constraints.json generated from domain data (fallback)")
+                if not cc13_ok:
+                    _mod.generate_project_dependencies(self.output_dir)
+                    logger.info("  project_dependencies.json generated from domain data (fallback)")
+            except Exception as e:
+                logger.error(f"  Fallback generation also failed: {e}")
+                import traceback
+                logger.debug(f"  Traceback: {traceback.format_exc()}")
+
+    # ========================================================================
     # Cross-Domain Relations
     # ========================================================================
 
@@ -1017,10 +1189,14 @@ class FourDimensionalKnowledgeGraphBuilder:
         # Build relations
         logger.info("\n[r1] Hardware ↔ Drivers")
         self.relation_mapper.map_hardware_to_drivers()
+        self.relation_mapper.map_from_api_register_config()
         self.relation_mapper.map_structs_to_registers()
 
         logger.info("\n[r2] Drivers ↔ BLE")
         self.relation_mapper.map_ble_to_drivers()
+
+        logger.info("\n[r2b] BLE API Group Dependencies")
+        self.relation_mapper.map_ble_api_groups()
 
         logger.info("\n[r3] Applications → All")
         self.relation_mapper.map_examples_to_apis()
@@ -1042,6 +1218,31 @@ class FourDimensionalKnowledgeGraphBuilder:
 
         logger.info("\n[r6] P2: Power Consumption → API Mapping")
         self.relation_mapper.map_power_to_apis(str(self.sdk_path))
+
+        # ========================================================================
+        # Cross-reference completion: ensure all domain nodes are covered
+        # ========================================================================
+
+        logger.info("\n[r8] Driver Structs → APIs (config struct usage)")
+        self.relation_mapper.map_structs_to_apis()
+
+        logger.info("\n[r9] Driver Macros → APIs (macro-to-API grouping)")
+        self.relation_mapper.map_macros_to_apis()
+
+        logger.info("\n[r10] BLE Error Codes → APIs (error return mapping)")
+        self.relation_mapper.map_error_codes_to_apis()
+
+        logger.info("\n[r11] BLE Profiles → APIs (profile implementation)")
+        self.relation_mapper.map_profiles_to_apis()
+
+        logger.info("\n[r12] BLE Mesh APIs → BLE APIs (mesh dependencies)")
+        self.relation_mapper.map_mesh_apis_to_ble()
+
+        logger.info("\n[r13] BLE Mesh Models → Mesh APIs (model dependencies)")
+        self.relation_mapper.map_mesh_models_to_mesh_apis()
+
+        logger.info("\n[r14] Remaining Registers → Peripherals")
+        self.relation_mapper.map_remaining_registers()
 
         logger.info("\n[r7] Inferring transitive relations")
         self.relation_mapper.infer_transitive_relations()
@@ -1071,9 +1272,9 @@ class FourDimensionalKnowledgeGraphBuilder:
 
         unified_graph = {
             "metadata": {
-                "version": "2.2.0",
+                "version": "2.2.1",  # Version 2.2.1 uses relative paths for portability
                 "build_date": datetime.now().isoformat(),
-                "sdk_path": str(self.sdk_path),
+                "sdk_path": "<resolved_at_runtime>",  # Portable marker - SDK root resolved at runtime
                 "schema": "four_dimensional",
                 "changes": [
                     "Domain 4 (Applications) enhancement with INIT_SEQUENCE, CALL_CHAIN, PROJECT_CONFIG",
@@ -1083,17 +1284,22 @@ class FourDimensionalKnowledgeGraphBuilder:
                     "Added known_init_sequences.yaml with predefined patterns",
                     "Removed all hardcoded limits (linker scripts, startup files, examples)",
                     "Implemented full API dependency extraction with Tree-sitter call graphs",
-                    "Full register descriptions (no truncation)"
+                    "Full register descriptions (no truncation)",
+                    "v2.2.1: Changed to relative paths for portability across environments"
                 ]
             },
             "domains": {},
-            "relations": self.relation_mapper.graph.to_dict(),
+            "relations": self._convert_paths_to_relative(
+                self.relation_mapper.graph.to_dict()
+            ),
             "statistics": self._compute_statistics()
         }
 
-        # Add domain data
+        # Add domain data (convert paths in all domain data)
         for domain in ["hardware", "drivers", "ble", "applications"]:
-            unified_graph["domains"][domain] = self.domain_data.get(domain, {})
+            unified_graph["domains"][domain] = self._convert_paths_to_relative(
+                self.domain_data.get(domain, {})
+            )
 
         # Export
         output_path = self.output_dir / "knowledge_graph.json"
@@ -1107,7 +1313,7 @@ class FourDimensionalKnowledgeGraphBuilder:
     # ========================================================================
 
     def _export_domain_data(self, domain: str, data: Dict) -> None:
-        """Export domain-specific JSON files."""
+        """Export domain-specific JSON files with relative paths."""
         domain_dir = self.domain_output_dir / domain
         domain_dir.mkdir(parents=True, exist_ok=True)
 
@@ -1115,8 +1321,10 @@ class FourDimensionalKnowledgeGraphBuilder:
             # Export both lists and non-empty dicts
             if (isinstance(value, list) and len(value) > 0) or (isinstance(value, dict) and len(value) > 0):
                 output_file = domain_dir / f"{key}.json"
+                # Convert paths before exporting
+                relative_value = self._convert_paths_to_relative(value)
                 with open(output_file, 'w', encoding='utf-8') as f:
-                    json.dump(value, f, indent=2, ensure_ascii=False)
+                    json.dump(relative_value, f, indent=2, ensure_ascii=False)
                 logger.info(f"  Exported: {output_file}")
 
     def _extract_function_calls_from_implementation(self, parser, impl_file: str, func_name: str) -> List[str]:
@@ -1371,6 +1579,9 @@ def main():
 
             # Build cross-domain relations
             builder.build_cross_domain_relations()
+
+            # Export supplementary data files
+            builder.export_supplementary_data()
 
             # Export unified graph
             builder.export_unified_graph()

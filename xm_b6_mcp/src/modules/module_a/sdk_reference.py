@@ -2201,7 +2201,7 @@ def lookup_error_code(
     logger.info(f"Looking up error code: {error_code}")
 
     # Load error codes
-    error_codes_path = Path(__file__).parent.parent.parent.parent / "data" / "ble_error_codes.json"
+    error_codes_path = Path(__file__).parent.parent.parent.parent / "data" / "domain" / "ble" / "error_codes.json"
 
     if not error_codes_path.exists():
         return {
@@ -2289,7 +2289,7 @@ def get_possible_errors(
     logger.info(f"Getting possible errors for API: {api_name}")
 
     # Load error codes
-    error_codes_path = Path(__file__).parent.parent.parent.parent / "data" / "ble_error_codes.json"
+    error_codes_path = Path(__file__).parent.parent.parent.parent / "data" / "domain" / "ble" / "error_codes.json"
 
     if not error_codes_path.exists():
         return []

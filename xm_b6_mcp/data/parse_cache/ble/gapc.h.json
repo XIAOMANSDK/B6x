@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\gapc.h",
+  "file_path": "ble/api/gapc.h",
   "functions": [],
   "macros": [],
   "enums": [
@@ -229,7 +229,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 36
     },
     {
@@ -348,7 +348,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 166
     },
     {
@@ -412,7 +412,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 240
     },
     {
@@ -446,7 +446,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 273
     },
     {
@@ -480,7 +480,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 288
     },
     {
@@ -504,7 +504,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 303
     },
     {
@@ -538,7 +538,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 314
     },
     {
@@ -567,7 +567,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 329
     },
     {
@@ -586,7 +586,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 340
     },
     {
@@ -610,7 +610,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 348
     },
     {
@@ -634,7 +634,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapc.h",
+      "file_path": "ble/api/gapc.h",
       "line_number": 359
     }
   ],

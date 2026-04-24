@@ -2,7 +2,7 @@
   "constraint_type": "phone_compatibility_issues",
   "domain": "domain3",
   "version": "1.0",
-  "last_updated": "2026-03-17T18:05:45.842385",
+  "last_updated": "2026-04-22T16:18:56.914270",
   "total_issues": 147,
   "total_brands": 11,
   "brands": {
@@ -1800,5 +1800,5 @@
     "low": 0
   },
   "data_source": "excel_parsing",
-  "source_file": "./doc\\B6x BLE兼容性列表.xlsx"
+  "source_file": "doc/SW_Spec/B6x BLE兼容性列表.xlsx"
 }

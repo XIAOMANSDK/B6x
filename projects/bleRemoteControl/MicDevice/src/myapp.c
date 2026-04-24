@@ -94,7 +94,7 @@ void app_ltk_gen(uint8_t conidx, struct gapc_ltk *ltk)
 
     gLTK.ediv = rand_hword();
 
-    for (int i = 0; i < GAP_RAND_NB_LEN; i++)
+    for (uint8_t i = 0; i < GAP_RAND_NB_LEN; i++)
     {
         gLTK.ltk.key[i]     = (uint8_t)rand_word();
         gLTK.ltk.key[i + 8] = (uint8_t)rand_word();
@@ -151,11 +151,11 @@ const uint8_t *app_ltk_find(uint16_t ediv, const uint8_t *rand_nb)
         return NULL;
 }
 
-// 删除配对信息
+// Delete pairing information
 void deletePairInfo(void)
 {
     memset(&gLTK, 0xff, sizeof(struct gapc_ltk));
-    // 清空LTK的FLASH空间
+    // Clear LTK from FLASH
 //    flash_erase_write(LTK_STORE_OFFSET, (uint32_t *)ltk_Data);
     flash_page_erase(LTK_STORE_OFFSET);
 }

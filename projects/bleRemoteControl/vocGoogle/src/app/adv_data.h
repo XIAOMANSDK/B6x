@@ -1,3 +1,6 @@
+#ifndef ADV_DATA_H_
+#define ADV_DATA_H_
+
 #include "gap.h"
 #include "app_actv.h"
 
@@ -79,3 +82,5 @@ static const ble_adv_para_t ble_adv_params[ADV_TYPE_MAX] = {
         .timeout = 50 * 100,
     }
 };
+
+#endif // ADV_DATA_H_

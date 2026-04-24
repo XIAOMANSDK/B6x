@@ -1,3 +1,9 @@
+/**
+ ****************************************************************************************
+ * @file micphone.c
+ * @brief Microphone audio capture with SADC DMA and ADPCM encoding
+ ****************************************************************************************
+ */
 #include "app_user.h"
 #include "drvs.h"
 #include "regs.h"
@@ -19,10 +25,10 @@
 
 struct ADPCMBlock
 {
-    short sample0;
-    char index;
-    char RESERVED;
-    char sampledata[SAMPLE_DATA_SIZE];
+    int16_t sample0;
+    int8_t  index;
+    int8_t  reserved;
+    int8_t  sampledata[SAMPLE_DATA_SIZE];
 };
 
 #if (0)
@@ -44,6 +50,11 @@ __ATTR_SRAM struct ADPCMBlock adpcm_buff;
 
 struct adpcm_state state;
 
+/**
+ ****************************************************************************************
+ * @brief Send raw data bytes over UART for debug
+ ****************************************************************************************
+ */
 void uartTxSend(const uint8_t *data, uint16_t len)
 {
     while(len--)
@@ -56,6 +67,11 @@ uint16_t voiceSendNB;
 uint16_t voiceSendOK;
 uint8_t voiceSendFt;
 
+/**
+ ****************************************************************************************
+ * @brief Initialize microphone SADC DMA and ADPCM encoder
+ ****************************************************************************************
+ */
 void micInit(void)
 {
     GPIO_DIR_CLR(GPIO02 | GPIO03);
@@ -84,6 +100,11 @@ void micInit(void)
     voiceSendFt = 4;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Transmit ADPCM encoded voice via HID report
+ ****************************************************************************************
+ */
 void voice_send(uint16_t len, const uint8_t *data)
 {
     voiceSendNB++;
@@ -94,6 +115,11 @@ void voice_send(uint16_t len, const uint8_t *data)
 }
 
 #if  (MODE_SELECT)
+/**
+ ****************************************************************************************
+ * @brief Process DMA completion and send ADPCM voice data
+ ****************************************************************************************
+ */
 void micPut(void)
 {
     // primary or alternate transfer done
@@ -117,7 +143,7 @@ void micPut(void)
     {   
         if (voiceSendFt)
         {
-            // ¹ýÂË
+            // Warm up: discard initial frames
             dma_chnl_reload(DMA_PCM_CHAN);
             voiceSendFt--;
             return;

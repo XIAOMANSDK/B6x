@@ -45,6 +45,7 @@
     "DMA_CHNL_CTRL"
   ],
   "dma_chnl_remain_pingpong": [
+    "ASSERT_ERR",
     "DMA_CHNL_CTRL",
     "DMA_CHNL_CTRL"
   ],
@@ -83,6 +84,7 @@
     "GLOBAL_INT_RESTORE"
   ],
   "flash_write": [
+    "ASSERT_ERR",
     "GLOBAL_INT_DISABLE",
     "fshc_write",
     "GLOBAL_INT_RESTORE"
@@ -156,6 +158,7 @@
     "I2C_STOP"
   ],
   "i2c_send": [
+    "ASSERT_ERR",
     "I2C_PUTC",
     "I2C_STAT_GET",
     "I2C_STAT_GET"
@@ -408,6 +411,8 @@
     "SPIM_WAIT"
   ],
   "spim_duplex": [
+    "ASSERT_ERR",
+    "ASSERT_ERR",
     "SPIM_BGN",
     "SPIM_WAIT"
   ],
@@ -518,6 +523,7 @@
     "UART_PTR"
   ],
   "uart_send": [
+    "ASSERT_ERR",
     "UART_PTR"
   ],
   "uart_update_baud": [

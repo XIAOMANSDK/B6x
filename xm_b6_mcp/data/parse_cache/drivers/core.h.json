@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\core.h",
+  "file_path": "drivers/api/core.h",
   "functions": [
     {
       "name": "core_ldoset",
@@ -13,7 +13,7 @@
       ],
       "brief_description": "Set ldo register value. ",
       "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ctrl   PMU_ANA_CTRL[23:0] & ANAMISC_CTRL[29:24].\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 198,
       "is_exported": false,
       "implementation_file": "",
@@ -32,7 +32,7 @@
       ],
       "brief_description": "Get ldo register value. ",
       "detailed_description": "***************************************************************************************\n@return value. PMU_ANA_CTRL[23:0] & ANAMISC_CTRL[29:24].\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 207,
       "is_exported": false,
       "implementation_file": "",
@@ -51,7 +51,7 @@
       ],
       "brief_description": "Core Sleep Mode. ",
       "detailed_description": "***************************************************************************************\n@param[in] cfg_wkup  Bits field of value @see enum wkup_ctrl_bfs.\n@return wake-up status @see wkup_st_bfs.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 218,
       "is_exported": false,
       "implementation_file": "",
@@ -75,7 +75,7 @@
       ],
       "brief_description": "Set IO wake-up sleep or power off. ",
       "detailed_description": "***************************************************************************************\n@param[in] wkup_en  IO that supports wake-up(one bit one io).\n@param[in] pad_pu   IO that pull-up(one bit one io).\n@note pad_pu Corresponding bit 1:Falling edge wake-up, 0: Rising edge wake-up.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 230,
       "is_exported": false,
       "implementation_file": "",
@@ -94,7 +94,7 @@
       ],
       "brief_description": "Core Power Off Mode. ",
       "detailed_description": "***************************************************************************************\n@param[in] cfg_wkup  Bits field of value @see enum wkup_ctrl_bfs.\n@note PA19 Restore PULL-UP and Input Enable.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 241,
       "is_exported": false,
       "implementation_file": "",
@@ -113,7 +113,7 @@
       ],
       "brief_description": "Release IO Latch. *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 248,
       "is_exported": false,
       "implementation_file": "",
@@ -137,7 +137,7 @@
       ],
       "brief_description": "Get IC 128bits Unique ID. ",
       "detailed_description": "***************************************************************************************\n@param[in]  size        Length of Unique ID Buffer.\n@param[out] unique_id   Pointer of Unique ID buffer.\n@note size must be less than or equal to 16.\n@note IC Must have Flash.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 261,
       "is_exported": false,
       "implementation_file": "",
@@ -151,7 +151,7 @@
       "value": "(CFG_PMU_CLK_STB(0x3F))",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 58
     },
     {
@@ -159,7 +159,7 @@
       "value": "(0x1B)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 92
     },
     {
@@ -167,7 +167,7 @@
       "value": "(0x1B)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 93
     },
     {
@@ -175,7 +175,7 @@
       "value": "(0x030F)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 123
     },
     {
@@ -183,7 +183,7 @@
       "value": "(0xC00000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 124
     },
     {
@@ -191,7 +191,7 @@
       "value": "(1 << WKUP_BLE_SEL_LSB)",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 127
     },
     {
@@ -199,7 +199,7 @@
       "value": "(WKUP_RTC_EN_BIT)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 129
     },
     {
@@ -207,7 +207,7 @@
       "value": "(WKUP_IO_EN_BIT)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 131
     }
   ],
@@ -278,7 +278,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 24
     },
     {
@@ -357,7 +357,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 61
     },
     {
@@ -426,7 +426,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 96
     },
     {
@@ -575,7 +575,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\core.h",
+      "file_path": "drivers/api/core.h",
       "line_number": 134
     }
   ],

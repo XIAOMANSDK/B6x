@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\src\\i2c.c",
+  "file_path": "drivers/src/i2c.c",
   "functions": [
     {
       "name": "i2c_init",
@@ -22,8 +22,8 @@
         }
       ],
       "function_body": "{\r\n    // i2c_clk_en rst_req or soft_reset\r\n    RCC_APBCLK_EN(APB_I2C_BIT);                            /* 使能I2C时钟 */\r\n    //RCC_APBRST_REQ(APB_I2C_BIT);\r\n    I2C->SRST = 0x07;                                      /* SRST: 软件复位I2C */\r\n\r\n    uint32_t io_ctrl = IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_PULLUP | IOM_INPUT | IOM_OPENDRAIN;\r\n\r\n    iom_ctrl(io_sda, IOM_SEL_GPIO | IOM_PULLDOWN | IOM_INPUT);  /* 配置SDA引脚为上拉输入 */\r\n\r\n    /**********************************/\r\n    // 2024.10.23 --- wq.\r\n    uint16_t delay_cnt = 750;\r\n    // Delay for io cfg stable. 64M about 180us.\r\n    while (delay_cnt--)\r\n    {\r\n        __NOP();__NOP();\r\n        __NOP();__NOP();\r\n        __NOP();__NOP();\r\n        __NOP();__NOP();\r\n    }\r\n    /**********************************/\r\n\r\n    // if Extern Pull-Up, disable Internal Pull-Up\r\n    if ((GPIO->PIN >> io_sda) & 0x01)                      /* 检查外部上拉 */\r\n    {\r\n        io_ctrl = IOM_SEL_CSC | IOM_DRV_LVL1 | IOM_INPUT | IOM_OPENDRAIN;\r\n    }\r\n\r\n    // iocsc_i2c(io_scl, io_sda);\r\n    csc_output(io_scl, CSC_I2C_SCL);                       /* 配置SCL引脚为I2C时钟输出 */\r\n    csc_input(io_scl,  CSC_I2C_SCL);                       /* 配置SCL引脚为I2C时钟输入 */\r\n    csc_output(io_sda, CSC_I2C_SDA);                       /* 配置SDA引脚为I2C数据输出 */\r\n    csc_input(io_sda,  CSC_I2C_SDA);                       /* 配置SDA引脚为I2C数据输入 */\r\n\r\n    iom_ctrl(io_scl, io_ctrl);                             /* 配置SCL引脚IO模式 */\r\n    iom_ctrl(io_sda, io_ctrl);                             /* 配置SDA引脚IO模式 */\r\n\r\n    // SCL clock = PCLK/(2^clk_samp * (clk_scl+1) *10)\r\n    I2C->CLK.Word = sclk;                                  /* CLK: 设置I2C时钟分频 */\r\n    I2C_ENABLE();                                          /* CONSET: 使能I2C(I2CEN) */\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
-      "line_number": 67,
+      "file_path": "drivers/src/i2c.c",
+      "line_number": 66,
       "is_static": false
     },
     {
@@ -37,8 +37,8 @@
         }
       ],
       "function_body": "{\r\n    RCC_APBCLK_DIS(APB_I2C_BIT);                           /* 禁用I2C时钟 */\r\n    RCC_APBRST_REQ(APB_I2C_BIT);                           /* 请求I2C复位 */\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
-      "line_number": 114,
+      "file_path": "drivers/src/i2c.c",
+      "line_number": 113,
       "is_static": false
     },
     {
@@ -52,8 +52,8 @@
         }
       ],
       "function_body": "{\r\n    I2C_START();                                           /* 发送起始条件 */\r\n\r\n    // A start condition has been transmitted\r\n    if ((I2C_STAT_GET() == I2C_MS_START_OK) || (I2C_STAT_GET() == I2C_MS_RESTART_OK))\r\n    {\r\n        I2C_PUTC(slv_addr);                                /* DATA: 发送从设备地址 */\r\n    }\r\n\r\n    return I2C_STAT_GET();                                 /* SR: 返回状态寄存器值 */\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
-      "line_number": 125,
+      "file_path": "drivers/src/i2c.c",
+      "line_number": 124,
       "is_static": false
     },
     {
@@ -67,8 +67,8 @@
         }
       ],
       "function_body": "{\r\n    I2C_STOP();                                            /* 发送停止条件 */\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
-      "line_number": 141,
+      "file_path": "drivers/src/i2c.c",
+      "line_number": 140,
       "is_static": false
     },
     {
@@ -86,9 +86,9 @@
           "description": ""
         }
       ],
-      "function_body": "{\r\n    uint16_t cnt;\r\n\r\n    for (cnt = 0; cnt < len; cnt++)\r\n    {\r\n        I2C_PUTC(*data++);                                 /* DATA: 发送数据字节 */\r\n\r\n        if (I2C_STAT_GET() != I2C_MS_SEND_DAT_ACK)         /* SR: 检查ACK响应 */\r\n        {\r\n            if (I2C_STAT_GET() == I2C_MS_SEND_DAT_NAK)     /* SR: 检查NAK响应 */\r\n            {\r\n                cnt += 1; // last byte\r\n            }\r\n            break;\r\n        }\r\n    }\r\n\r\n    return cnt;\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
-      "line_number": 152,
+      "function_body": "{\r\n    ASSERT_ERR(data != NULL);\r\n    uint16_t cnt;\r\n\r\n    for (cnt = 0; cnt < len; cnt++)\r\n    {\r\n        I2C_PUTC(*data++);                                 /* DATA: 发送数据字节 */\r\n\r\n        if (I2C_STAT_GET() != I2C_MS_SEND_DAT_ACK)         /* SR: 检查ACK响应 */\r\n        {\r\n            if (I2C_STAT_GET() == I2C_MS_SEND_DAT_NAK)     /* SR: 检查NAK响应 */\r\n            {\r\n                cnt += 1; // last byte\r\n            }\r\n            break;\r\n        }\r\n    }\r\n\r\n    return cnt;\r\n}",
+      "file_path": "drivers/src/i2c.c",
+      "line_number": 151,
       "is_static": false
     },
     {
@@ -107,7 +107,7 @@
         }
       ],
       "function_body": "{\r\n    uint16_t cnt;\r\n\r\n    // All bytes are ACK'd except for the last one which is NACK'd. If only\r\n    // 1 byte is being read, a single NACK will be sent. Thus, we only want\r\n    // to enable ACK if more than 1 byte is going to be read.\r\n    if (len > 1)\r\n    {\r\n        I2C_SET_ACK();                                     /* CONSET: 设置应答位(AAK) */\r\n    }\r\n\r\n    for (cnt = 0; cnt < len; cnt++)\r\n    {\r\n        // slave devices require NACK to be sent after reading last byte\r\n        if (cnt + 1 == len)\r\n        {\r\n            I2C_SET_NAK();                                 /* CONCLR: 清除应答位(AAK) */\r\n        }\r\n\r\n        // read a byte from the I2C interface\r\n        I2C_GETC(*buff++);                                 /* DATA: 读取数据字节 */\r\n\r\n        if (I2C_STAT_GET() != I2C_MS_READ_DAT_ACK)         /* SR: 检查ACK响应 */\r\n        {\r\n            if (I2C_STAT_GET() == I2C_MS_READ_DAT_NAK)     /* SR: 检查NAK响应 */\r\n            {\r\n                cnt += 1; // count last byte\r\n            }\r\n            break;\r\n        }\r\n    }\r\n\r\n    return cnt;\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
+      "file_path": "drivers/src/i2c.c",
       "line_number": 179,
       "is_static": false
     },
@@ -132,7 +132,7 @@
         }
       ],
       "function_body": "{\r\n    uint16_t cnt = 0;\r\n\r\n    if (i2c_start(addr_r) == I2C_MS_ADDR_R_ACK)            /* 发送读地址并检查ACK */\r\n    {\r\n        cnt = i2c_recv(len, buff);                         /* 接收数据 */\r\n    }\r\n\r\n    i2c_stop();                                            /* 发送停止条件 */\r\n    return cnt;\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
+      "file_path": "drivers/src/i2c.c",
       "line_number": 222,
       "is_static": false
     },
@@ -157,7 +157,7 @@
         }
       ],
       "function_body": "{\r\n    uint16_t cnt = 0;\r\n\r\n    if (i2c_start(addr_w) == I2C_MS_ADDR_W_ACK)            /* 发送写地址并检查ACK */\r\n    {\r\n        cnt = i2c_send(len, data);                         /* 发送数据 */\r\n    }\r\n\r\n    i2c_stop();                                            /* 发送停止条件 */\r\n    return cnt;\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
+      "file_path": "drivers/src/i2c.c",
       "line_number": 242,
       "is_static": false
     },
@@ -187,7 +187,7 @@
         }
       ],
       "function_body": "{\r\n    uint16_t cnt = 0;\r\n\r\n    if (i2c_start(eep) == I2C_MS_ADDR_W_ACK)               /* 发送EEPROM地址并检查ACK */\r\n    {\r\n        #if (OPTM_FAST)\r\n        do {\r\n            I2C_PUTC((addr >> 8) & 0xff);                  /* DATA: 发送地址高字节 */\r\n            if (I2C_STAT_GET() != I2C_MS_SEND_DAT_ACK) break;\r\n\r\n            I2C_PUTC(addr & 0xff);                         /* DATA: 发送地址低字节 */\r\n            if (I2C_STAT_GET() != I2C_MS_SEND_DAT_ACK) break;\r\n\r\n            for (; cnt < len; cnt++)\r\n            {\r\n                I2C_PUTC(*data++);                         /* DATA: 发送数据字节 */\r\n\r\n                if (I2C_STAT_GET() != I2C_MS_SEND_DAT_ACK) /* SR: 检查ACK响应 */\r\n                {\r\n                    if (I2C_STAT_GET() == I2C_MS_SEND_DAT_NAK) /* SR: 检查NAK响应 */\r\n                    {\r\n                        cnt += 1; // last byte\r\n                    }\r\n                    break;\r\n                }\r\n            }\r\n        } while (0);\r\n        #else\r\n        addr = (addr >> 8) | (addr << 8); // send address in MSB\r\n        if (i2c_send(2, (uint8_t *)&addr) == 2)\r\n        {\r\n            cnt = i2c_send(len, data);\r\n        }\r\n        #endif\r\n    }\r\n\r\n    i2c_stop();                                            /* 发送停止条件 */\r\n    return cnt;\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
+      "file_path": "drivers/src/i2c.c",
       "line_number": 263,
       "is_static": false
     },
@@ -217,16 +217,17 @@
         }
       ],
       "function_body": "{\r\n    uint16_t cnt = 0;\r\n\r\n    if (i2c_start(eep) == I2C_MS_ADDR_W_ACK)               /* 发送EEPROM地址并检查ACK */\r\n    {\r\n        #if (OPTM_FAST)\r\n        do {\r\n            I2C_PUTC((addr >> 8) & 0xff);                  /* DATA: 发送地址高字节 */\r\n            if (I2C_STAT_GET() != I2C_MS_SEND_DAT_ACK) break;\r\n\r\n            I2C_PUTC(addr & 0xff);                         /* DATA: 发送地址低字节 */\r\n            if (I2C_STAT_GET() != I2C_MS_SEND_DAT_ACK) break;\r\n\r\n            if (i2c_start(eep | I2C_RD_OP) != I2C_MS_ADDR_R_ACK) break; /* 发送读操作 */\r\n\r\n            if (len > 1)\r\n            {\r\n                I2C_SET_ACK();                             /* CONSET: 设置应答位(AAK) */\r\n            }\r\n\r\n            for (; cnt < len; cnt++)\r\n            {\r\n                // slave devices require NACK to be sent after reading last byte\r\n                if (cnt + 1 == len)\r\n                {\r\n                    I2C_SET_NAK();                         /* CONCLR: 清除应答位(AAK) */\r\n                }\r\n\r\n                // read a byte from the I2C interface\r\n                I2C_GETC(buff[cnt]);                       /* DATA: 读取数据字节 */\r\n\r\n                if (I2C_STAT_GET() != I2C_MS_READ_DAT_ACK) /* SR: 检查ACK响应 */\r\n                {\r\n                    if (I2C_STAT_GET() == I2C_MS_READ_DAT_NAK) /* SR: 检查NAK响应 */\r\n                    {\r\n                        cnt += 1; // count last byte\r\n                    }\r\n                    break;\r\n                }\r\n            }\r\n        } while (0);\r\n        #else\r\n        addr = (addr >> 8) | (addr << 8); // send address in MSB\r\n        if (i2c_send(2, (uint8_t *)&addr) == 2)\r\n        {\r\n            if (i2c_start(eep | I2C_RD_OP) == I2C_MS_ADDR_R_ACK)\r\n            {\r\n                cnt = i2c_recv(len, buff);\r\n            }\r\n        }\r\n        #endif\r\n    }\r\n\r\n    i2c_stop();                                            /* 发送停止条件 */\r\n    return cnt;\r\n}",
-      "file_path": "./drivers\\src\\i2c.c",
+      "file_path": "drivers/src/i2c.c",
       "line_number": 312,
       "is_static": false
     }
   ],
   "macros": [],
   "parse_errors": [
-    "Line 30, Col 5: 'd'",
-    "Line 38, Col 5: '\r'",
-    "Line 46, Col 5: ' '",
-    "Line 54, Col 5: 'i'"
+    "Line 25, Col 9: '                          \\\r\n    dowl(                                                   \\\r\n            I2C->CONSET.Word = I2C_CR_START_BIT;                /* CONSET: 设置起始条件(STA) ,设置'",
+    "Line 28, Col 13: '位 */\\\r\n        )\r\n\r\n// 必须先设置STO再清除SI\r\n#define I2C_STOP()                                          \\\r\n    dowl(                             '",
+    "Line 37, Col 5: ' '",
+    "Line 45, Col 5: ' '",
+    "Line 53, Col 5: 'c'"
   ]
 }

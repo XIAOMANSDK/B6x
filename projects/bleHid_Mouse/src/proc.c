@@ -43,8 +43,11 @@ enum uart_cmd
     CMD_BATT_PWR_STA
 };
 
-#define CMD_MAX_LEN 20
-#define NULL_CNT 20
+#define CMD_MAX_LEN             20
+#define NULL_CNT                20
+
+/// Connection supervision timeout (unit in 10ms)
+#define CONN_SUPERVISION_TO     300
 
 static uint8_t buff[CMD_MAX_LEN];
 static uint16_t buff_len = 0;
@@ -59,7 +62,6 @@ void uart_proc(void)
 {
     static uint8_t null_cnt = 0;
     uint16_t len;
-    bool finish = true;
 
     len = uart1Rb_Read(&buff[buff_len], CMD_MAX_LEN - buff_len);
     if (len > 0)
@@ -74,7 +76,6 @@ void uart_proc(void)
     {
         if ((buff_len > 0) && (null_cnt++ > NULL_CNT))
         {
-            //finish = true;
             null_cnt = 0;
         }
         else
@@ -83,6 +84,9 @@ void uart_proc(void)
         }
     }
 
+    if (buff_len == 0)
+        return;
+
     if (app_state_get() == APP_CONNECTED)
     {
         switch (buff[0])
@@ -90,7 +94,7 @@ void uart_proc(void)
             case CMD_MOUSE_REP:
             {
                 DEBUG("MOUSE");
-                uint8_t mouse_data[] = {0, 10, 0, 0, 0, 0};
+                uint8_t mouse_data[MOUSE_RPT_LEN] = {0, MOUSE_MOVE_DX, 0, 0, 0, 0};
                 mouse_report_send(app_env.curidx, mouse_data);
                 mouse_report_send(app_env.curidx, NULL);
             } break;
@@ -109,24 +113,19 @@ void uart_proc(void)
 
             case CMD_CONN_INTERVAL:
             {
-                struct gapc_conn_param conn_pref =
+                if (buff_len >= 4)
                 {
-                    /// Connection interval minimum unit in 1.25ms
-                    .intv_min = 6,
-                    /// Connection interval maximum unit in 1.25ms
-                    .intv_max = 6,
-                    /// Slave latency
-                    .latency  = 0,
-                    /// Connection supervision timeout multiplier unit in 10ms
-                    .time_out = 300,
-                };
+                    struct gapc_conn_param conn_pref =
+                    {
+                        .intv_min = buff[1],
+                        .intv_max = buff[2],
+                        .latency  = buff[3],
+                        .time_out = CONN_SUPERVISION_TO,
+                    };
 
-                conn_pref.intv_min = buff[1];
-                conn_pref.intv_max = buff[2];
-                conn_pref.latency  = buff[3];
-
-                DEBUG("intvn:%d, intvm:%d, lat:%d", conn_pref.intv_min, conn_pref.intv_max, conn_pref.latency);
-                gapc_update_param(app_env.curidx, &conn_pref);
+                    DEBUG("intvn:%d, intvm:%d, lat:%d", conn_pref.intv_min, conn_pref.intv_max, conn_pref.latency);
+                    gapc_update_param(app_env.curidx, &conn_pref);
+                }
             } break;
 
             default:
@@ -135,10 +134,7 @@ void uart_proc(void)
         }
     }
 
-    if (finish)
-    {
-        buff_len = 0;
-    }
+    buff_len = 0;
 }
 #endif //(UART_CMD)
 

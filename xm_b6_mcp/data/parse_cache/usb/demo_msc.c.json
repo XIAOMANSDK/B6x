@@ -1,5 +1,5 @@
 {
-  "file_path": "./usb\\src\\demo_msc.c",
+  "file_path": "usb/src/demo_msc.c",
   "functions": [
     {
       "name": "msc_get_descriptor",
@@ -21,8 +21,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\n    bool found = true;\n    uint8_t type  = GET_DESC_TYPE(type_index);\n\n    switch (type) {\n        case USB_DESC_TYPE_DEVICE:\n        {\n            *data = (uint8_t *)msc_device_descriptor;\n            *len  = sizeof(msc_device_descriptor);\n        } break;\n\n        case USB_DESC_TYPE_CONFIGURATION:\n        {\n            *data = (uint8_t *)msc_config_descriptor;\n            *len  = sizeof(msc_config_descriptor);\n        } break;\n\n        case USB_DESC_TYPE_STRING:\n        {\n            uint8_t index = GET_DESC_INDEX(type_index);\n            if (index == USB_STRING_LANGID_INDEX) {\n                *data = (uint8_t *)msc_langid_string;\n                *len  = sizeof(msc_langid_string);\n            } else if (index == USB_STRING_MANUFACT_INDEX) {\n                *data = (uint8_t *)msc_manufact_string;\n                *len  = sizeof(msc_manufact_string);\n            } else if (index == USB_STRING_PRODUCT_INDEX){\n                *data = (uint8_t *)msc_product_string;\n                *len  = sizeof(msc_product_string);\n            } else {\n                found = false;\n            }\n        } break;\n        \n        default:\n        {\n            found = false;\n        } break;\n    }\n\n    return found;\n}",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "function_body": "{\n    bool found = true;\n    uint8_t type  = GET_DESC_TYPE(type_index);\n\n    switch (type) {\n        case USB_DESC_TYPE_DEVICE:\n        {\n            *data = (uint8_t *)msc_device_descriptor;\n            *len  = sizeof(msc_device_descriptor);\n        } break;\n\n        case USB_DESC_TYPE_CONFIGURATION:\n        {\n            *data = (uint8_t *)msc_config_descriptor;\n            *len  = sizeof(msc_config_descriptor);\n        } break;\n\n        case USB_DESC_TYPE_STRING:\n        {\n            uint8_t index = GET_DESC_INDEX(type_index);\n            if (index == USB_STRING_LANGID_INDEX) {\n                *data = (uint8_t *)msc_langid_string;\n                *len  = sizeof(msc_langid_string);\n            } else if (index == USB_STRING_MANUFACT_INDEX) {\n                *data = (uint8_t *)msc_manufact_string;\n                *len  = sizeof(msc_manufact_string);\n            } else if (index == USB_STRING_PRODUCT_INDEX){\n                *data = (uint8_t *)msc_product_string;\n                *len  = sizeof(msc_product_string);\n            } else {\n                found = false;\n            }\n        } break;\n\n        default:\n        {\n            found = false;\n        } break;\n    }\n\n    return found;\n}",
+      "file_path": "usb/src/demo_msc.c",
       "line_number": 142,
       "is_static": false
     },
@@ -42,7 +42,7 @@
         }
       ],
       "function_body": "{\n    DEBUG(\"evt:%d\", event);\n    switch (event) {\n        case USBD_EVENT_RESET:\n            break;\n        case USBD_EVENT_CONNECTED:\n            break;\n        case USBD_EVENT_DISCONNECTED:\n            break;\n        case USBD_EVENT_RESUME:\n            break;\n        case USBD_EVENT_SUSPEND:\n            break;\n        case USBD_EVENT_CONFIGURED:\n            break;\n        case USBD_EVENT_SET_REMOTE_WAKEUP:\n            break;\n        case USBD_EVENT_CLR_REMOTE_WAKEUP:\n            break;\n\n        default:\n            break;\n    }\n}",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "usb/src/demo_msc.c",
       "line_number": 214,
       "is_static": false
     },
@@ -57,7 +57,7 @@
         }
       ],
       "function_body": "{\n    usbd_init();\n    #if (USBD_LEGACY_API)\n    usbd_register(msc_descriptor, msc_configuration);\n    #else\n    usbd_register_device(msc_get_descriptor, msc_configuration);\n    usbd_register_events(0xFFFF, usbd_notify_handler);\n    #endif\n    usbd_msc_init(MSC_OUT_EP, MSC_IN_EP);\n}",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "usb/src/demo_msc.c",
       "line_number": 246,
       "is_static": false
     },
@@ -66,7 +66,7 @@
       "return_type": "void",
       "parameters": [],
       "function_body": "{\n    if (usbd_is_configured()) {\n\n    }\n}",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "usb/src/demo_msc.c",
       "line_number": 258,
       "is_static": false
     }
@@ -77,7 +77,7 @@
       "value": "0x13A9",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 15
     },
     {
@@ -85,7 +85,7 @@
       "value": "0x10CC",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 16
     },
     {
@@ -93,7 +93,7 @@
       "value": "0x0110",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 17
     },
     {
@@ -101,7 +101,7 @@
       "value": "300",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 18
     },
     {
@@ -109,7 +109,7 @@
       "value": "0x0409 // English(US)",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 19
     },
     {
@@ -117,7 +117,7 @@
       "value": "64",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 23
     },
     {
@@ -125,7 +125,7 @@
       "value": "0x81",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 25
     },
     {
@@ -133,7 +133,7 @@
       "value": "0x01",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 26
     },
     {
@@ -141,7 +141,7 @@
       "value": "(9 + MSC_DESCRIPTOR_LEN)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\demo_msc.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\demo_msc.c",
       "line_number": 42
     }
   ],

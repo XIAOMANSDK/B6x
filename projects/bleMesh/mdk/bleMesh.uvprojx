@@ -334,8 +334,8 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99 --thumb --gnu --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
-              <Define></Define>
+              <MiscControls>--c99 --thumb --gnu --bss_threshold=0 --preinclude=..\src\cfg.h --locale=english</MiscControls>
+              <Define>MESH_APP_MODE=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf;..\..\..\mesh\api;..\..\..\mesh\lib;..\..\..\mesh\genie;..\..\..\mesh\model\api</IncludePath>
             </VariousControls>
@@ -371,7 +371,7 @@
             <ScatterFile>..\..\..\core\mdk\link_xip_mesh.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--diag_suppress=L6312,L6314,L6329 --largeregions</Misc>
+            <Misc>--diag_suppress=L6312,L6314,L6329</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -453,7 +453,7 @@
                     <v6WtE>2</v6WtE>
                     <v6Rtti>2</v6Rtti>
                     <VariousControls>
-                      <MiscControls></MiscControls>
+                      <MiscControls>--locale=english</MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
@@ -922,8 +922,8 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99 --thumb --gnu --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
-              <Define></Define>
+              <MiscControls>--c99 --thumb --gnu --bss_threshold=0 --preinclude=..\src\cfg.h --locale=english</MiscControls>
+              <Define>MESH_APP_MODE = 1</Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf;..\..\..\mesh\api;..\..\..\mesh\lib;..\..\..\mesh\genie;..\..\..\mesh\model\api</IncludePath>
             </VariousControls>
@@ -959,7 +959,7 @@
             <ScatterFile>..\..\..\core\mdk\link_xip_mesh.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--diag_suppress=L6312,L6314,L6329 --largeregions</Misc>
+            <Misc>--diag_suppress=L6312,L6314,L6329</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -1046,7 +1046,7 @@
                     <v6WtE>2</v6WtE>
                     <v6Rtti>2</v6Rtti>
                     <VariousControls>
-                      <MiscControls></MiscControls>
+                      <MiscControls>--locale=english</MiscControls>
                       <Define></Define>
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>

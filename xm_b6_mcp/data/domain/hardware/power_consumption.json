@@ -20,7 +20,8 @@
         "power_mw": 6.029999999999999,
         "conditions": "interval: 1000ms; note: 未断开连接"
       }
-    ]
+    ],
+    "name": "SLEEP"
   },
   {
     "mode": "DEEP_SLEEP",
@@ -35,7 +36,8 @@
         "power_mw": 6.0,
         "conditions": "note: 睡眠>40ms"
       }
-    ]
+    ],
+    "name": "DEEP_SLEEP"
   },
   {
     "mode": "ACTIVE_ADVERTISING",
@@ -58,7 +60,8 @@
         "power_mw": 210.0,
         "conditions": "duration: 22.5ms; note: 持续30秒"
       }
-    ]
+    ],
+    "name": "ACTIVE_ADVERTISING"
   },
   {
     "mode": "ACTIVE_TX",
@@ -73,7 +76,8 @@
         "power_mw": 210.0,
         "conditions": "interval: 20ms; note: 按下按键时"
       }
-    ]
+    ],
+    "name": "ACTIVE_TX"
   },
   {
     "mode": "红外_红外发射/次,耗时95MS",
@@ -88,6 +92,7 @@
         "power_mw": 6000.0,
         "conditions": "note: 按下按键时"
       }
-    ]
+    ],
+    "name": "红外_红外发射/次,耗时95MS"
   }
 ]

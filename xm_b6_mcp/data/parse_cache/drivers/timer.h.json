@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\timer.h",
+  "file_path": "drivers/api/timer.h",
   "functions": [
     {
       "name": "ctmr_init",
@@ -18,7 +18,7 @@
       ],
       "brief_description": "Init Common Timer. ",
       "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] psc  configure prescaler\n@param[in] arr  configure Auto-reload\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 78,
       "is_exported": false,
       "implementation_file": "",
@@ -37,7 +37,7 @@
       ],
       "brief_description": "Deinit Common Timer.  *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 86,
       "is_exported": false,
       "implementation_file": "",
@@ -61,7 +61,7 @@
       ],
       "brief_description": "Common Timer control. ",
       "detailed_description": "***************************************************************************************\n@param[in] mode  Work Mode configure @see enum tmr_mode_def\n@param[in] intr  Interrupt configure @see enum tmr_intr_bfs\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 97,
       "is_exported": false,
       "implementation_file": "",
@@ -85,7 +85,7 @@
       ],
       "brief_description": "Init Advance Timer. ",
       "detailed_description": "***************************************************************************************\n@param[in] psc  configure prescaler\n@param[in] arr  configure Auto-reload\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 108,
       "is_exported": false,
       "implementation_file": "",
@@ -104,7 +104,7 @@
       ],
       "brief_description": "Deinit Advance Timer.  *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 116,
       "is_exported": false,
       "implementation_file": "",
@@ -128,7 +128,7 @@
       ],
       "brief_description": "Advance Timer control. ",
       "detailed_description": "***************************************************************************************\n@param[in] mode  Work Mode configure @see enum tmr_mode_def\n@param[in] intr  Interrupt configure @see enum tmr_intr_bfs\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 127,
       "is_exported": false,
       "implementation_file": "",
@@ -204,7 +204,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 23
     },
     {
@@ -278,7 +278,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 39
     },
     {
@@ -302,7 +302,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\timer.h",
+      "file_path": "drivers/api/timer.h",
       "line_number": 57
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\i2c.h",
+  "file_path": "drivers/api/i2c.h",
   "functions": [
     {
       "name": "i2c_init",
@@ -23,7 +23,7 @@
       ],
       "brief_description": "Init I2C Module. ",
       "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] io_scl  io used for I2C scl @see enum pad_idx.\n@param[in] io_sda  io used for I2C sda @see enum pad_idx.\n@param[in] sclk    i2c clk. Bits field of I2C Clock @see enumi2c_clk_bfs.\n@note sclk = CLK/(2^clk_samp * (clk_scl+1) *10). Macro SCLK_100K/SCLK_200K/SCLK_400K\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 146,
       "is_exported": false,
       "implementation_file": "",
@@ -42,7 +42,7 @@
       ],
       "brief_description": "Deinit I2C. Disable I2C Module. *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 153,
       "is_exported": false,
       "implementation_file": "",
@@ -61,7 +61,7 @@
       ],
       "brief_description": "I2C Send Start. ",
       "detailed_description": "***************************************************************************************\n@param[in] slv_addr  device Address.\n@return I2C status @see enum i2c_status_def.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 164,
       "is_exported": false,
       "implementation_file": "",
@@ -80,7 +80,7 @@
       ],
       "brief_description": "I2C Send Stop. *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 171,
       "is_exported": false,
       "implementation_file": "",
@@ -104,7 +104,7 @@
       ],
       "brief_description": "I2C Send data. ",
       "detailed_description": "***************************************************************************************\n@param[in] len    data length.\n@param[in] data   data pointer.\n@return send data cnt.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 183,
       "is_exported": false,
       "implementation_file": "",
@@ -128,7 +128,7 @@
       ],
       "brief_description": "I2C Receive data. ",
       "detailed_description": "***************************************************************************************\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return receive data cnt.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 195,
       "is_exported": false,
       "implementation_file": "",
@@ -157,7 +157,7 @@
       ],
       "brief_description": "I2C Read data. ",
       "detailed_description": "***************************************************************************************\n@param[in] addr_r device Address.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return read data cnt.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 208,
       "is_exported": false,
       "implementation_file": "",
@@ -186,7 +186,7 @@
       ],
       "brief_description": "I2C Write data. ",
       "detailed_description": "***************************************************************************************\n@param[in] addr_w device Address.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return write data cnt.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 221,
       "is_exported": false,
       "implementation_file": "",
@@ -220,7 +220,7 @@
       ],
       "brief_description": "I2C Read eeprom data. ",
       "detailed_description": "***************************************************************************************\n@param[in] eep    eeprom device Address.\n@param[in] addr   Where eeprom addr to read.\n@param[in] len    buff length.\n@param[in] buff   buff pointer.\n@return read data cnt.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 235,
       "is_exported": false,
       "implementation_file": "",
@@ -254,7 +254,7 @@
       ],
       "brief_description": "I2C Write eeprom data. ",
       "detailed_description": "***************************************************************************************\n@param[in] eep    eeprom device Address.\n@param[in] addr   Where eeprom addr to write.\n@param[in] len    data length.\n@param[in] data   data pointer.\n@return write data cnt.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 249,
       "is_exported": false,
       "implementation_file": "",
@@ -268,7 +268,7 @@
       "value": "(0x27)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 81
     },
     {
@@ -276,7 +276,7 @@
       "value": "(0x23)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 82
     },
     {
@@ -284,7 +284,7 @@
       "value": "(0x21)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 83
     },
     {
@@ -292,7 +292,7 @@
       "value": "(0x2B)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 85
     },
     {
@@ -300,7 +300,7 @@
       "value": "(0x25)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 86
     },
     {
@@ -308,7 +308,7 @@
       "value": "(0x22)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 87
     },
     {
@@ -316,7 +316,7 @@
       "value": "(0x2F)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 89
     },
     {
@@ -324,7 +324,7 @@
       "value": "(0x27)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 90
     },
     {
@@ -332,7 +332,7 @@
       "value": "(0x23)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 91
     },
     {
@@ -340,7 +340,7 @@
       "value": "(0x23)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 93
     },
     {
@@ -348,7 +348,7 @@
       "value": "(0x21)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 94
     },
     {
@@ -356,7 +356,7 @@
       "value": "(0x11)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 95
     },
     {
@@ -364,7 +364,7 @@
       "value": "(0x01)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 99
     }
   ],
@@ -525,7 +525,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 24
     },
     {
@@ -564,7 +564,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 59
     },
     {
@@ -593,7 +593,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\i2c.h",
+      "file_path": "drivers/api/i2c.h",
       "line_number": 70
     }
   ],

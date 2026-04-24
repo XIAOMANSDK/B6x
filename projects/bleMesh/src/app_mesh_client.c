@@ -69,7 +69,7 @@
  ****************************************************************************************
  */
 // 目标设备 Mesh 地址 (可修改为需要控制的设备地址)
-#define TARGET_MESH_ADDR       (0x0001)
+#define TARGET_MESH_ADDR       (0xC000)
 
 void app_mesh_print_mode(void)
 {
@@ -114,7 +114,7 @@ const tri_tuple_t genie_triple =
     /* key - 16B */
     .key = {0x4e, 0x14, 0x96, 0x96, 0xfc, 0x16, 0x41, 0xca, 0x3b, 0x8d, 0x0b, 0x5a, 0xaf, 0x5f, 0xee, 0xba},
     /* mac - 6B MSB */
-    .mac = {0xfc, 0x42, 0x65, 0x49, 0x1e, 0x2e}, // *MUST Changed for multi device
+    .mac = {0xfc, 0x42, 0x65, 0x49, 0x10, 0x2e}, // *MUST Changed for multi device
     /* crc - 2B */
     .crc = 0x0000,
 };
@@ -129,7 +129,10 @@ typedef enum
     MODEL_MAX
 } model_type_t;
 
+
 static model_type_t current_model = MODEL_ONOFF;
+static m_lid_t client_lid[MODEL_MAX];
+static uint8_t client_tid = 0;
 
 /*
  * FUNCTION DEFINITIONS
@@ -200,6 +203,26 @@ static void genie_oob_auth_conf(uint8_t *p_oob)
 
 /**
  ****************************************************************************************
+ * @brief Let the model publish a message over mesh network
+ *
+ * @note Message status will be reported with model callback (@see m_model_sent_cb)
+ *
+ * @param[in] model_id     Model ID.
+ * @param[in] opcode       Operation code of the message
+ * @param[in] tx_hdl       Handle value used by model to retrieve which message has been sent
+ * @param[in] trans_mic_64 1 = Segmented PDU force transport MIC to 64 bits ; 0 = 32 bits transport MIC
+ * @param[in] len          Message length
+ * @param[in] msg          Pointer to the message to publish
+ *
+ * @return Execution status code
+ ****************************************************************************************
+ */
+extern uint8_t m_model_publish(m_lid_t model_lid, uint32_t opcode, uint8_t tx_hdl, 
+                            bool trans_mic_64, uint16_t len, uint8_t *msg);
+
+
+/**
+ ****************************************************************************************
  * @brief 发送 Generic OnOff 控制命令
  *
  * @param dst_addr  目标设备地址
@@ -208,12 +231,20 @@ static void genie_oob_auth_conf(uint8_t *p_oob)
  */
 static void send_onoff_cmd(uint16_t dst_addr, uint8_t onoff)
 {
+    uint8_t status;
     // 使用 Generic OnOff Client 发送 Set 命令
     // 注意：具体 API 需要根据 SDK 实际定义调整
-    DEBUG("Send OnOff to 0x%04X: %d", dst_addr, onoff);
+    uint8_t msg[2];
+
+    msg[0] = onoff ? 0x01 : 0x00;
+    msg[1] = client_tid++;
+
+    status = m_model_publish(client_lid[MODEL_ONOFF], MM_MSG_GEN_OO_SET, 0, false, sizeof(msg), msg);
 
     // TODO: 调用 SDK API 发送 OnOff 命令
     // 例如: mm_genc_oo_set(dst_addr, onoff, false, 0, 0);
+    
+    DEBUG("Send OnOff to 0x%04X: %d (status:%X)", dst_addr, onoff, status);
 }
 
 /**
@@ -300,8 +331,6 @@ static void send_hsl_cmd(uint16_t dst_addr, uint16_t lightness, uint16_t hue, ui
  */
 void app_mesh_create(void)
 {
-    m_lid_t mdl_lid;  // 模型本地 ID
-
     // 初始化 Genie 三元组 (从存储读取)
     genie_triple_init();
 
@@ -314,29 +343,29 @@ void app_mesh_create(void)
     // 1. Generic OnOff Client 模型 (简单开关)
     // ========================================
     // 注册通用开关客户端模型 (Generic OnOff Client)
-    mdl_lid = mm_genc_oo_register();
-    DEBUG("mm_genc_oo, mdl_lid=%d", mdl_lid);
+    client_lid[MODEL_ONOFF] = mm_genc_oo_register();
+    DEBUG("mm_genc_oo, client_lid=%d", client_lid[MODEL_ONOFF]);
 
     // ========================================
     // 2. Lighting Lightness Client 模型 (亮度调节)
     // ========================================
     // 注册 Light Lightness 客户端模型
-    mdl_lid = mm_lightc_ln_register();
-    DEBUG("mm_lightc_ln, mdl_lid=%d", mdl_lid);
+    client_lid[MODEL_LIGHTNESS] = mm_lightc_ln_register();
+    DEBUG("mm_lightc_ln, client_lid=%d", client_lid[MODEL_LIGHTNESS]);
 
     // ========================================
     // 3. Lighting CTL Client 模型 (色温调节)
     // ========================================
     // 注册 Light CTL 客户端模型
-    mdl_lid = mm_lightc_ctl_register();
-    DEBUG("mm_lightc_ctl, mdl_lid=%d", mdl_lid);
+    client_lid[MODEL_CTL] = mm_lightc_ctl_register();
+    DEBUG("mm_lightc_ctl, client_lid=%d", client_lid[MODEL_CTL]);
 
     // ========================================
     // 4. Lighting HSL Client 模型 (颜色调节)
     // ========================================
     // 注册 Light HSL 客户端模型
-    mdl_lid = mm_lightc_hsl_register();
-    DEBUG("mm_lightc_hsl, mdl_lid=%d", mdl_lid);
+    client_lid[MODEL_HSL] = mm_lightc_hsl_register();
+    DEBUG("mm_lightc_hsl, client_lid=%d", client_lid[MODEL_HSL]);
 
     // Start Mesh Bearer - 启动 Mesh 传输层 (开始发送广告)
     mesh_enable();

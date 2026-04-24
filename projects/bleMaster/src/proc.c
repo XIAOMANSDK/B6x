@@ -51,6 +51,11 @@ enum uart_cmd
 #define CMD_MAX_LEN           20
 #define NULL_CNT              20
 
+#define DEF_CONN_INTV_MIN     8
+#define DEF_CONN_INTV_MAX     8
+#define DEF_CONN_LATENCY      247
+#define DEF_CONN_SUPERVISION_TO 1500
+
 static uint8_t buff[CMD_MAX_LEN];
 static uint16_t buff_len = 0;
 
@@ -116,8 +121,6 @@ static void uart_proc(void)
 
         case CMD_CONNECT:
         {
-//            app_init_action(ACTV_STOP);  //20211101
-
             if (buff_len == 1)
             {
                 DEBUG("CONN Dflt");
@@ -331,15 +334,16 @@ static void uart_proc(void)
             uint8_t conidx = app_env.curidx;
             struct gapc_conn_param long_latency =
             {
-                .intv_min = 8,
-                .intv_max = 8,
-                .latency  = 247,
-                .time_out = 1500,
+                .intv_min = DEF_CONN_INTV_MIN,
+                .intv_max = DEF_CONN_INTV_MAX,
+                .latency  = DEF_CONN_LATENCY,
+                .time_out = DEF_CONN_SUPERVISION_TO,
             };
 
             if (buff_len >= 5)
             {
                 conidx = buff[1];
+                if (conidx >= BLE_NB_MASTER) break;
                 long_latency.intv_min = buff[2];
                 long_latency.intv_max = buff[2];
                 long_latency.latency  = read16p(buff+3);

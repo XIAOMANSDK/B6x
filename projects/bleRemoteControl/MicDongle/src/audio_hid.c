@@ -1,3 +1,13 @@
+/**
+ ****************************************************************************************
+ *
+ * @file audio_hid.c
+ *
+ * @brief USB Audio + HID composite device for TV Box dongle
+ *
+ ****************************************************************************************
+ */
+
 #include "usbd.h"
 #include "usbd_hid.h"
 #include "usbd_audio.h"
@@ -422,7 +432,7 @@ volatile uint8_t mic_state = MIC_OFF;
 uint8_t pkt_mic[NB_MIC_MAX][MIC_LEN];
 volatile uint16_t pkt_mic_sidx, pkt_mic_eidx, pkt_mic_offset;
 volatile bool pkt_mic_dec;
-struct adpcm_state ADPCMstate;
+struct adpcm_state adpcm_state;
 int16_t pcm_buff[NB_PCM_16K];
 int16_t pcm_none[NB_PCM_INC] = {0};
 
@@ -430,9 +440,9 @@ static void mic_pcm_decode(void)
 {
     uint8_t *block_buf = pkt_mic[pkt_mic_eidx];
 
-    ADPCMstate.valprev = (block_buf[1] << 8) | block_buf[0];
-    ADPCMstate.index   = block_buf[2];
-    adpcm_decoder2((char*)&block_buf[4], pcm_buff, ADPCM_BLOCK_SIZE - 4, &ADPCMstate);
+    adpcm_state.valprev = (block_buf[1] << 8) | block_buf[0];
+    adpcm_state.index   = block_buf[2];
+    adpcm_decoder2((char*)&block_buf[4], pcm_buff, ADPCM_BLOCK_SIZE - 4, &adpcm_state);
 
     pkt_mic_offset = 0;
     pkt_mic_dec = true;
@@ -450,7 +460,7 @@ static uint8_t *micDataGet(void)
         if (pkt_mic_offset >= NB_PCM_16K)
         {
             pkt_mic_dec = false;
-            pkt_mic_eidx = (pkt_mic_eidx + 1)  % NB_MIC_MAX;
+            pkt_mic_eidx = (pkt_mic_eidx + 1) & (NB_MIC_MAX - 1);
         }
     }
     else
@@ -482,7 +492,6 @@ static void usbd_mic_send(void)
     {
         uint8_t status = 0;
 
-        //GPIO_DAT_SET(GPIO16);
         mic_state = MIC_BUSY;
         status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
 
@@ -490,11 +499,8 @@ static void usbd_mic_send(void)
             if (mic_state != MIC_OFF) {
                 mic_state = MIC_IDLE;
             }
-            USB_LOG_RAW("err:%d, tmp:%02X\r\n", status, mic_tmp);
-        } else {
-            USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
+            USB_LOG_RAW("err:%d\r\n", status);
         }
-        //GPIO_DAT_CLR(GPIO16);
     }
 }
 
@@ -511,8 +517,6 @@ void usbd_mic_report(void)
                 usbd_mic_send();
             }
         } else {
-            //GPIO_DAT_SET(GPIO14);
-            //GPIO_DAT_CLR(GPIO14);
         }
     }
 }
@@ -521,12 +525,17 @@ void usbd_mic_push(const uint8_t *apcm)
 {
     if (mic_state != MIC_OFF)
     {
-        //GPIO_DAT_SET(GPIO17);
+        // check if ring buffer is full before writing
+        uint16_t next_sidx = (pkt_mic_sidx + 1) & (NB_MIC_MAX - 1);
+        if (next_sidx == pkt_mic_eidx)
+        {
+            // buffer full, discard oldest
+            pkt_mic_eidx = (pkt_mic_eidx + 1) & (NB_MIC_MAX - 1);
+        }
         xmemcpy(pkt_mic[pkt_mic_sidx], apcm, MIC_LEN);
-        pkt_mic_sidx =  (pkt_mic_sidx + 1) % NB_MIC_MAX;
+        pkt_mic_sidx = next_sidx;
 
         usbd_mic_report();
-        //GPIO_DAT_CLR(GPIO17);
     }
 }
 
@@ -546,7 +555,6 @@ void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
 {
     if (intf_num == AUDIO_AS_INTF_NUM) {
         if (alt_setting == 1) {
-            //GPIO_DAT_SET(GPIO15);
             mic_state = MIC_IDLE;
             USB_LOG_RAW("Mic On\r\n");
             micInit();
@@ -554,7 +562,6 @@ void usbd_audio_onchange_handler(uint8_t intf_num, uint8_t alt_setting)
             mic_state = MIC_OFF;
             USB_LOG_RAW("Mic Off\r\n");
             micDeinit();
-            //GPIO_DAT_CLR(GPIO15);
         }
     }
 }
@@ -643,46 +650,5 @@ void usbd_kb_report(uint8_t len, const uint8_t *data)
         usbd_hid_send_report(HID_KBD_IN_EP, 9, buff);
     }
 }
-
-//#include "micphone.h"
-//bool mic_flag = false;
-//static uint8_t mic_tmp = 0;
-//static uint8_t mic_buffer[AUDIO_IN_EP_MPS];
-
-//void usbdTest()
-//{
-//    uint8_t *ptr = micDataGet();  // PCM_SAMPLE_NB = 8;
-
-//    if (ptr != NULL)
-//    {
-//        mic_flag = true;
-//        memcpy(mic_buffer, ptr, AUDIO_IN_EP_MPS);
-//    }
-//
-//    if (usbd_is_configured()) {
-//        if ((mic_state == MIC_IDLE) && mic_flag) {
-//            uint8_t status = 0;
-////            memset(mic_buffer, mic_tmp, AUDIO_IN_EP_MPS);
-
-//            GPIO_DAT_SET(GPIO16);
-//            mic_state = MIC_BUSY;
-//            status = usbd_ep_write(AUDIO_IN_EP, AUDIO_IN_EP_MPS, mic_buffer, NULL);
-
-//            if (status != USBD_OK) {
-//                if (mic_state != MIC_OFF) {
-//                    mic_state = MIC_IDLE;
-//                }
-//                USB_LOG_RAW("err:%d, tmp:%02X\r\n", status, mic_tmp);
-//            } else {
-//                USB_LOG_RAW("curr tmp:%02X\r\n", mic_tmp);
-//            }
-//            GPIO_DAT_CLR(GPIO16);
-//
-//            mic_tmp++;
-//
-//            mic_flag = false;
-//        }
-//    }
-//}
 
 #endif

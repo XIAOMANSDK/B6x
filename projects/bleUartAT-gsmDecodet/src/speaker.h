@@ -77,7 +77,7 @@ uint8_t speaker_is_ready(void);
  * @param buff Pointer to 16-bit PCM samples (signed)
  * @param samples Number of samples to play
  *
- * @details This function assumes dam_done is already set (speaker_is_ready() returned true).
+ * @details This function assumes dma_done is already set (speaker_is_ready() returned true).
  *          Does NOT wait for previous transfer to complete.
  *          Used for ping-pong buffer implementation.
  *

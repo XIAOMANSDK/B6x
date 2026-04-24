@@ -162,7 +162,7 @@ typedef struct
 //    uint32_t dataAddr;
 //    uint32_t macOffset;  // dataAddr @see firmInfo_t
 //    uint32_t macStart;
-//    uint32_t macConfig; //1byte:increment 3byte£ºcount
+//    uint32_t macConfig; //1byte:increment 3byteï¼šcount
 //    uint32_t chipBaud;   // chipSet uart2 baud   
 //    uint32_t firmCRC;
 //    

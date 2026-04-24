@@ -17,10 +17,10 @@
  ****************************************************************************************
  */
 
-//PWM+ -> PWM-, ÓïÒô·Ç²î·Ö·½Ê½, ÐèÒª±Ü¿ª²î·Ö×éÒý½Å.
-//PA07 -> PA11 (±Ü¿ªÒ»ÆðÊ¹ÓÃ)
-//PA08 -> PA12 (±Ü¿ªÒ»ÆðÊ¹ÓÃ)
-//PA09 -> PA13 (±Ü¿ªÒ»ÆðÊ¹ÓÃ)
+//PWM+ -> PWM-, è¯­éŸ³éžå·®åˆ†æ–¹å¼, éœ€è¦é¿å¼€å·®åˆ†ç»„å¼•è„š.
+//PA07 -> PA11 (é¿å¼€ä¸€èµ·ä½¿ç”¨)
+//PA08 -> PA12 (é¿å¼€ä¸€èµ·ä½¿ç”¨)
+//PA09 -> PA13 (é¿å¼€ä¸€èµ·ä½¿ç”¨)
 
 #ifndef PA_ATMR_P
 #define PA_ATMR_P             (7)           // PWM+ PA07
@@ -48,25 +48,25 @@
             dma_chnl_conf(chidx, (uint32_t)&(buff)[(len)-1], DMA_PTR_ATMR_CH4, TRANS_PER_WR(ccm, len, IN_BYTE, IN_BYTE))
 #define SPEAKER_DMA_ATMR_CHx_CONF_N_HALF(chidx, buff, len, ccm) \
             dma_chnl_conf(chidx, (uint32_t)&(buff)[(len)-1], DMA_PTR_ATMR_CH4, TRANS_PER_WR(ccm, len, IN_HALF, IN_HALF))
-//// 7KHz PCMÊý¾Ý PWMÅäÖÃ(·äÃùÉù, Ã÷ÏÔ)
-//#define SPEAKER_PWM_TMR_PSC      (16 - 1)   // ÏµÍ³²»·ÖÆµ   16MHz/16   = 1MHz
-//#define SPEAKER_PWM_TMR_ARR      (142 - 1)  // ÖØÔØÖµ       16MHz/142 = 7KHz  (ÒôÆµÊý¾Ý/ÖØÔØÖµ = Õ¼¿Õ±È)
-//#define SPEAKER_PWM_TMR_REP      (1 - 1)    // ÖÜÆÚ¼ÆÊý     7KHz/1 = 7KHz(²ÉÑùÂÊ-¸üÐÂÂÊ)
+//// 7KHz PCMæ•°æ® PWMé…ç½®(èœ‚é¸£å£°, æ˜Žæ˜¾)
+//#define SPEAKER_PWM_TMR_PSC      (16 - 1)   // ç³»ç»Ÿä¸åˆ†é¢‘   16MHz/16   = 1MHz
+//#define SPEAKER_PWM_TMR_ARR      (142 - 1)  // é‡è½½å€¼       16MHz/142 = 7KHz  (éŸ³é¢‘æ•°æ®/é‡è½½å€¼ = å ç©ºæ¯”)
+//#define SPEAKER_PWM_TMR_REP      (1 - 1)    // å‘¨æœŸè®¡æ•°     7KHz/1 = 7KHz(é‡‡æ ·çŽ‡-æ›´æ–°çŽ‡)
 
-// 7KHz PCMÊý¾Ý PWMÅäÖÃ
-//#define SPEAKER_PWM_TMR_PSC      (1 - 1)    // ÏµÍ³²»·ÖÆµ   16MHz/1   = 16MHz
-//#define SPEAKER_PWM_TMR_ARR      (254 - 1)  // ÖØÔØÖµ       16MHz/254 = 63KHz  (ÒôÆµÊý¾Ý/ÖØÔØÖµ = Õ¼¿Õ±È)
-//#define SPEAKER_PWM_TMR_REP      (9 - 1)    // ÖÜÆÚ¼ÆÊý     63KHz/9 = 7KHz(²ÉÑùÂÊ-¸üÐÂÂÊ)
+// 7KHz PCMæ•°æ® PWMé…ç½®
+//#define SPEAKER_PWM_TMR_PSC      (1 - 1)    // ç³»ç»Ÿä¸åˆ†é¢‘   16MHz/1   = 16MHz
+//#define SPEAKER_PWM_TMR_ARR      (254 - 1)  // é‡è½½å€¼       16MHz/254 = 63KHz  (éŸ³é¢‘æ•°æ®/é‡è½½å€¼ = å ç©ºæ¯”)
+//#define SPEAKER_PWM_TMR_REP      (9 - 1)    // å‘¨æœŸè®¡æ•°     63KHz/9 = 7KHz(é‡‡æ ·çŽ‡-æ›´æ–°çŽ‡)
 
-//// 16KHz PCMÊý¾Ý PWMÅäÖÃ
-//#define SPEAKER_PWM_TMR_PSC      (2 - 1)    // ÏµÍ³·ÖÆµ     16MHz/2   = 8MH
-//#define SPEAKER_PWM_TMR_ARR      (250 - 1)  // ÖØÔØÖµ       8MHz/250  = 32KHz  (ÒôÆµÊý¾Ý/ÖØÔØÖµ = Õ¼¿Õ±È)
-//#define SPEAKER_PWM_TMR_REP      (2 - 1)    // ÖÜÆÚ¼ÆÊý2    32KHz/2 = 16KHz(²ÉÑùÂÊ-¸üÐÂÂÊ)
+//// 16KHz PCMæ•°æ® PWMé…ç½®
+//#define SPEAKER_PWM_TMR_PSC      (2 - 1)    // ç³»ç»Ÿåˆ†é¢‘     16MHz/2   = 8MH
+//#define SPEAKER_PWM_TMR_ARR      (250 - 1)  // é‡è½½å€¼       8MHz/250  = 32KHz  (éŸ³é¢‘æ•°æ®/é‡è½½å€¼ = å ç©ºæ¯”)
+//#define SPEAKER_PWM_TMR_REP      (2 - 1)    // å‘¨æœŸè®¡æ•°2    32KHz/2 = 16KHz(é‡‡æ ·çŽ‡-æ›´æ–°çŽ‡)
 
-// 14KHz PCMÊý¾Ý PWMÅäÖÃ
-//#define SPEAKER_PWM_TMR_PSC      (3 - 1)    // ÏµÍ³·ÖÆµ     64MHz/3   = 21.3MH
-//#define SPEAKER_PWM_TMR_ARR      (254 - 1)  // ÖØÔØÖµ       21.3MHz/254  = 84KHz (ÒôÆµÊý¾Ý/ÖØÔØÖµ = Õ¼¿Õ±È)
-//#define SPEAKER_PWM_TMR_REP      (6 - 1)    // ÖÜÆÚ¼ÆÊý6    84KHz/6 = 14KHz   (²ÉÑùÂÊ)
+// 14KHz PCMæ•°æ® PWMé…ç½®
+//#define SPEAKER_PWM_TMR_PSC      (3 - 1)    // ç³»ç»Ÿåˆ†é¢‘     64MHz/3   = 21.3MH
+//#define SPEAKER_PWM_TMR_ARR      (254 - 1)  // é‡è½½å€¼       21.3MHz/254  = 84KHz (éŸ³é¢‘æ•°æ®/é‡è½½å€¼ = å ç©ºæ¯”)
+//#define SPEAKER_PWM_TMR_REP      (6 - 1)    // å‘¨æœŸè®¡æ•°6    84KHz/6 = 14KHz   (é‡‡æ ·çŽ‡)
 
 // 64KHz PCM
 #define SPEAKER_PWM_TMR_PSC (1 - 1)    // 64M
@@ -112,7 +112,7 @@ void pwmInit(void)
     ATMR->RCR = SPEAKER_PWM_TMR_REP;
     
     DMACHNL_INT_EN(SPEAKER_DMA_CHNL); 
-    NVIC_EnableIRQ(DMAC_IRQn);  ///< ???DMA???????§Ø?
+    NVIC_EnableIRQ(DMAC_IRQn);  ///< ???DMA???????Ð¶?
     GLOBAL_INT_START();
     
     dam_done = true;
@@ -134,7 +134,7 @@ void DMAC_IRQHandler(void)
     
 }
 
-// ·Ç²î·Ö·½Ê½,ÐèÒªÊý¾Ý×ª»».
+// éžå·®åˆ†æ–¹å¼,éœ€è¦æ•°æ®è½¬æ¢.
 uint16_t buffA[2][160], buffB[2][160];
 
 static uint8_t buffFlag = 0;
@@ -167,7 +167,7 @@ void pcmToAB(const uint16_t *data, uint32_t len)
 
 void speakerPlay(int16_t *buff, uint16_t samples)
 {
-    // »Ö¸´ PWM ¿ØÖÆÄ£Ê½
+    // æ¢å¤ PWM æŽ§åˆ¶æ¨¡å¼
     iom_ctrl(PA_ATMR_P, IOM_SEL_TIMER | IOM_DRV_LVL1);
     iom_ctrl(PA_ATMR_N, IOM_SEL_TIMER | IOM_DRV_LVL1);
     pwm_start(PWM_ATMR);
@@ -204,7 +204,7 @@ void speakerPlay(int16_t *buff, uint16_t samples)
 void speakerStop(void)
 {
     pwm_stop(PWM_ATMR);
-    // ¹Ø±ÕµçÔ´(INIT GPIO Default Out Put)
+    // å…³é—­ç”µæº(INIT GPIO Default Out Put)
     iom_ctrl(PA_ATMR_P, IOM_SEL_GPIO | IOM_DRV_LVL1);
     iom_ctrl(PA_ATMR_N, IOM_SEL_GPIO | IOM_DRV_LVL1);
 }

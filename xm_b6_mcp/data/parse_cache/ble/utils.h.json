@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\utils.h",
+  "file_path": "ble/api/utils.h",
   "functions": [
     {
       "name": "value",
@@ -7,8 +7,8 @@
       "parameters": [],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./ble\\api\\utils.h",
-      "line_number": 259,
+      "file_path": "ble/api/utils.h",
+      "line_number": 256,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -26,8 +26,8 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./ble\\api\\utils.h",
-      "line_number": 350,
+      "file_path": "ble/api/utils.h",
+      "line_number": 347,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -45,8 +45,8 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./ble\\api\\utils.h",
-      "line_number": 382,
+      "file_path": "ble/api/utils.h",
+      "line_number": 379,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -64,8 +64,8 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./ble\\api\\utils.h",
-      "line_number": 414,
+      "file_path": "ble/api/utils.h",
+      "line_number": 411,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
@@ -82,28 +82,42 @@
         }
       ],
       "brief_description": "Count '1' bits in a byte value, repalce NB_1BITS(byte)",
-      "detailed_description": "****************\n****************************************\n@return  Number of '1' bits in a byte\n***************************************************************************************\n/\nuint8_t popcnt8(uint8_t byte);\n**********",
-      "file_path": "./ble\\api\\utils.h",
-      "line_number": 438,
+      "detailed_description": "(USE_ARM_FUNC)\n***************************************************************************************\n@return  Number of '1' bits in a byte\n***************************************************************************************\n/",
+      "file_path": "ble/api/utils.h",
+      "line_number": 435,
       "is_exported": false,
       "implementation_file": "",
       "implementation_line": 0,
       "has_implementation": false
     }
   ],
-  "macros": [
-    {
-      "name": "__INLINE__",
-      "value": "__forceinline static",
-      "macro_type": "other",
-      "brief": "",
-      "file_path": "./ble\\api\\utils.h",
-      "line_number": 24
-    }
-  ],
+  "macros": [],
   "enums": [],
   "typedefs": [],
   "parse_errors": [
-    "Line 23, Col 16: 'E__\r\n#'"
+    "Line 148, Col 22: 'void'",
+    "Line 159, Col 22: 'uint8_t'",
+    "Line 170, Col 22: 'uint16_t'",
+    "Line 181, Col 22: 'uint32_t'",
+    "Line 194, Col 22: 'uint32_t'",
+    "Line 206, Col 22: 'uint16_t'",
+    "Line 218, Col 22: 'void'",
+    "Line 230, Col 22: 'void'",
+    "Line 242, Col 22: 'void'",
+    "Line 254, Col 22: 'uint16_t'",
+    "Line 267, Col 22: 'void'",
+    "Line 282, Col 22: 'uint32_t'",
+    "Line 297, Col 22: 'void'",
+    "Line 313, Col 22: 'uint32_t'",
+    "Line 328, Col 22: 'void'",
+    "Line 349, Col 22: 'uint32_t'",
+    "Line 381, Col 22: 'uint32_t'",
+    "Line 413, Col 22: 'uint8_t'",
+    "Line 443, Col 22: 'uint32_t'",
+    "Line 454, Col 22: 'int32_t'",
+    "Line 465, Col 22: 'uint32_t'",
+    "Line 476, Col 22: 'int'",
+    "Line 487, Col 22: 'uint32_t'",
+    "Line 499, Col 22: 'uint8_t'"
   ]
 }

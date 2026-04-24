@@ -40,8 +40,6 @@ typedef enum IRQn
     RF_IRQn               = 21,       /*  21      |               Interrupt                       */
 } IRQn_Type;
 
-#define __IRQFN            __attribute__((section("ram_func")))
-
 /*
  * ==========================================================================
  * ----------- Processor and Core Peripheral Section ------------------------
@@ -49,27 +47,11 @@ typedef enum IRQn
  */
 
 /* Configuration of the Cortex-M0 Processor and Core Peripherals */
-#define __MPU_PRESENT           0       /*!< cm0ikmcu does not provide a MPU present or not       */
-#define __NVIC_PRIO_BITS        2       /*!< cm0ikmcu Supports 2 Bits for the Priority Levels     */
-#define __Vendor_SysTickConfig  0       /*!< Set to 1 if different SysTick Config is used         */
-
-#define __VTOR_PRESENT 1
-#include "core_cm0plus.h"               /* Cortex-M0 plus processor and core peripherals               */
-
-#if   defined ( __CC_ARM )
-#pragma anon_unions
-#pragma diag_suppress 1296
-#endif
-
-/* SYSTICK - Cortex-M0 SysTick Register */
-typedef struct
-{
-    __IO uint32_t   CSR;            //0x0, Control and Status
-    __IO uint32_t   RVR;            //0x4, Reload Value
-    __IO uint32_t   CVR;            //0x8, Current Value
-    __IO uint32_t   CALIB;          //0xC, Calibration
-} TICK_TypeDef;
-
+#define __MPU_PRESENT           0       /*!< Cortex-M0 Processor does not provide a MPU present or not       */
+#define __NVIC_PRIO_BITS        2       /*!< Cortex-M0 Processor Supports 2 Bits for the Priority Levels     */
+#define __Vendor_SysTickConfig  0       /*!< Set to 1 if different SysTick Config is used                    */
+#define __VTOR_PRESENT          1
+#include "core_cm0plus.h"
 
 /***************************************************************************/
 /*                         Peripheral Memory map                           */
@@ -124,5 +106,7 @@ do {                                          \
 #define RD_32(addr)       (*(volatile uint32_t *)(addr))
 
 #include "rom.h"
+
+#include "compiler.h"
 
 #endif //_B6X_H_

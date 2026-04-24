@@ -79,14 +79,6 @@ __WEAK APP_SUBTASK_HANDLER(custom)
             DEBUG("rc32k_calib");
             rc32k_calib();
             ke_timer_set(APP_TIMER_RC32K_CORR, TASK_APP, RC32K_CALIB_PERIOD);
-
-            if (++g_no_action_cnt > G_NO_ACTION_CNT)
-            {
-//                if (app_state_get() < APP_CONNECTED)
-//                {
-//                    keys_sleep();
-//                }
-            }
         } break;
         #endif
 
@@ -116,8 +108,8 @@ __WEAK APP_SUBTASK_HANDLER(custom)
         {
             if (app_state_get() < APP_CONNECTED)
             {
-                // 取消定向广播
-                adv_dir_flag = false; // 取消定向广播
+                // Cancel directed advertising
+                adv_dir_flag = false; 
                 app_adv_action(ACTV_RELOAD);
             }
             ke_timer_clear(APP_TIMER_KEY_ADV_DIR, TASK_APP);

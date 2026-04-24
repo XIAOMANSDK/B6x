@@ -76,7 +76,7 @@ const uint8_t *ble_read_peer_addr(void)
 bool ble_is_paired(void)
 {
     bool ret = false;
-    uint8_t temp[34];
+    uint8_t temp[sizeof(ble_priv_data_t)];
     memset(temp, 0xff, sizeof(temp));
     ble_load_priv_data();
 

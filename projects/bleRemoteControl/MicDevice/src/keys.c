@@ -38,6 +38,11 @@
 /// Macro for key debounce (0-disable, else (1 << n) - 1)
 #define KEY_DEBOUNCE          (0x00)
 
+/// Media report bit positions (HID Consumer Control)
+#define MEDIA_KEY_HOME        (1 << 6)
+#define MEDIA_KEY_BACK        (1 << 3)
+#define MEDIA_KEY_MUTE        (1 << 0)
+
 const uint8_t Key_Row[KEY_ROW_NB] = { KEY_R0, KEY_R1, KEY_R2, KEY_R3 };
 
 const uint8_t Key_Col[KEY_COL_NB] = { KEY_C0, KEY_C1, KEY_C2, KEY_C3 };
@@ -162,6 +167,11 @@ static uint8_t keys_info(const keys_t *keys)
     return KI_GEKEY;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Encode pressed keys into HID report buffer
+ ****************************************************************************************
+ */
 static uint8_t keys_encode(const keys_t *keys, uint8_t *report)
 {
     uint8_t rep_idx = RPT_IDX_NONE;
@@ -189,21 +199,21 @@ static uint8_t keys_encode(const keys_t *keys, uint8_t *report)
         {
             // HOME
             rep_idx = RPT_IDX_MEDIA;
-            report[1] = 1 << 6;
+            report[1] = MEDIA_KEY_HOME;
         } break;
 
         case KI_HOTKEY_BACK:
         {
             // Back
             rep_idx = RPT_IDX_MEDIA;
-            report[1] = 1 << 3;
+            report[1] = MEDIA_KEY_BACK;
         } break;
 
         case KI_HOTKEY_MUTE:
         {
             // Mute
             rep_idx = RPT_IDX_MEDIA;
-            report[1] = 1 << 0;
+            report[1] = MEDIA_KEY_MUTE;
         } break;
 
         case KI_HOTKEY_VOICE:
@@ -260,6 +270,11 @@ static bool keys_send(uint8_t repidx, const uint8_t *report)
  ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief Initialize key scanning subsystem
+ ****************************************************************************************
+ */
 void keys_init(void)
 {
     rows_init();
@@ -279,6 +294,11 @@ void keys_init(void)
     #endif
 }
 
+/**
+ ****************************************************************************************
+ * @brief Enter low-power sleep with wakeup-on-keypress
+ ****************************************************************************************
+ */
 void keys_sleep(void)
 {
     DEBUG("Poweroff");
@@ -295,6 +315,11 @@ void keys_conf(uint8_t os)
 bool key_press = false;
 
 
+/**
+ ****************************************************************************************
+ * @brief Perform full matrix key scan with ghost detection
+ ****************************************************************************************
+ */
 static uint8_t keys_scan(void)
 {
     uint8_t r, c, colSta;
@@ -450,14 +475,12 @@ static bool keys_changed(void)
         return false;
     }
 }
-bool key_change;
 
 
 static void keys_report(void)
 {
     uint8_t rep_idx, report[RPT_LEN_KB];
-
-    key_change = keys_changed();
+    bool key_change = keys_changed();
 //    DEBUG("key_change:%d", key_change);
     app_conn_param_update(key_change);
 
@@ -510,7 +533,7 @@ static void hotkey_local(uint8_t info)
     DEBUG("hotkey_local:%d, app_sta:%d", info, app_state_get());
     switch (info)
     {
-        // 左右同时按下开始进配对模式
+        // Long press combo starts pairing mode
         case KI_HOTKEY_PAIR:
         {
             g_no_action_cnt = 0;
@@ -529,6 +552,11 @@ static void hotkey_local(uint8_t info)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief Main key processing entry point
+ ****************************************************************************************
+ */
 void keys_proc(void)
 {
     uint8_t info = keys_scan();

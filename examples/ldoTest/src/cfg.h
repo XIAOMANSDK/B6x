@@ -3,7 +3,7 @@
  *
  * @file cfg.h
  *
- * @brief App Configure MACRO, --preinclude
+ * @brief Application configuration macros (--preinclude)
  *
  ****************************************************************************************
  */
@@ -17,4 +17,4 @@
 #define BOD_TEST            (1)
 #define LVD_TEST            (1)
 
-#endif  //_APP_CFG_H_
+#endif /* _APP_CFG_H_ */

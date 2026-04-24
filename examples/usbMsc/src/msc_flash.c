@@ -3,7 +3,13 @@
  *
  * @file msc_flash.c
  *
- * @brief Function of USB MSC Flash driver
+ * @brief USB MSC flash backend driver
+ *
+ * @details
+ * Provides flash read/write/erase operations for the USB MSC class.
+ * Two backends are supported via cfg.h MSC_FLASH_TYPE:
+ * - 0: Internal flash (high-half of 256KB, 128KB visible to host)
+ * - 1: External SPI flash (SOP8, auto-detected size via JEDEC ID)
  *
  ****************************************************************************************
  */
@@ -47,8 +53,8 @@
 #define PAGE_WLEN             (64)      // 256>>2, in uint32_t
 #define SECTOR_SIZE           (4096)    // 4KB
 
-#define CO_WLEN(blen)         ((blen) >> 2) // conv len: uint8_t -> uint32_t
-#define CO_BLEN(wlen)         ((wlen) << 2) // conv len: uint32_t -> uint8_t
+#define CO_WLEN(blen)         ((blen) >> 2) ///< uint8_t len -> uint32_t len
+#define CO_BLEN(wlen)         ((wlen) << 2) ///< uint32_t len -> uint8_t len
 #define PAGE_NB(blen)         (((blen) + PAGE_SIZE-1) / PAGE_SIZE)
 
 
@@ -68,16 +74,16 @@ static uint32_t rd_buff[SECTOR_SIZE/sizeof(uint32_t)];
  */
 
 #if (MSC_FLASH_TYPE == INT_FLASH)
-/* internal Flash(2Mbits, 256KB), half part */
+/* Internal Flash(2Mbits, 256KB), high-half visible to host */
 #ifndef intFLASH_BASE
-#define intFLASH_BASE         (0x20000) // high-half
+#define intFLASH_BASE         (0x20000)
 #endif
 
 #ifndef intFLASH_SIZE
 #define intFLASH_SIZE         (0x20000) // 128KB
 #endif
 
-/* Wait cache idle, thene disable-flush cache */
+/* Wait cache idle, then disable-flush cache */
 #undef FSHC_CACHE_DISABLE
 #define FSHC_CACHE_DISABLE()                        \
 do {                                                \
@@ -97,7 +103,7 @@ do {                                                \
 
 static void msc_flash_init(void)
 {
-    // Nothing
+    /* Nothing required for internal flash */
 }
 
 static uint32_t msc_flash_size(void)
@@ -121,7 +127,7 @@ static void msc_flash_read(uint32_t offset, uint32_t *buff, uint32_t wlen)
     DEBUG("offset:%X, len:%d", offset, wlen);
 
     FSHC_CACHE_DISABLE();
-    fshc_read(intFLASH_BASE + offset, buff, wlen, FSH_CMD_RD); // FSH_CMD_DLRD, if need
+    fshc_read(intFLASH_BASE + offset, buff, wlen, FSH_CMD_RD);
     FSHC_CACHE_RESTORE();
 }
 
@@ -135,7 +141,7 @@ void msc_flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
     FSHC_CACHE_RESTORE();
 }
 
-#else //(MSB_SPI_FLASH)
+#else /* SPI Flash */
 
 /*    SOP8 SPI-Flash          */
 /*        +---------+         */
@@ -161,7 +167,7 @@ void msc_flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
 
 #define SPI_CS_L()            SPIM_CS_L(PIN_QCS_FLASH)
 #define SPI_CS_H()            SPIM_CS_H(PIN_QCS_FLASH)
-#define BSP_SPIM_CR           (SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)  // sys_clk/div2
+#define BSP_SPIM_CR           (SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)
 
 #define WIP_BIT               (0x01)
 
@@ -246,7 +252,7 @@ static void spi_flash_send(uint8_t *fcmd, uint32_t clen, uint8_t *data, uint32_t
     GLOBAL_INT_RESTORE();
 }
 
-// Write Enable
+/// Write Enable
 static void spi_flash_wren(void)
 {
     uint8_t fcmd = FSH_CMD_WR_EN;
@@ -254,7 +260,7 @@ static void spi_flash_wren(void)
     spi_flash_send(&fcmd, 1, NULL, 0);
 }
 
-// Read Status Register S07 ~ S00
+/// Read Status Register S07~S00
 static uint8_t spi_flash_sta0_get(void)
 {
     uint8_t status = 0;
@@ -266,12 +272,10 @@ static uint8_t spi_flash_sta0_get(void)
 
 static void msc_flash_init(void)
 {
-    // spim IO-init
     SET_QIO2_QIO3_HI();
     SPIM_CS_INIT(PIN_QCS_FLASH);
     spim_init(PIN_QSCK_FLASH, PIN_QIO1_FLASH, PIN_QIO0_FLASH);
 
-    // spim conf
     spim_conf(BSP_SPIM_CR);
 }
 
@@ -287,17 +291,15 @@ static void msc_flash_init(void)
  ******************************************************/
 static uint32_t msc_flash_size(void)
 {
-    // read FlashID
     uint8_t fshId[3];
     uint8_t fcmd = FSH_CMD_RD_ID;
 
     spi_flash_recv(&fcmd, 1, fshId, 3);
 
-    // calc FlashSize
     return (fshId[2] > 0x20 ? 0 : (0x01UL << fshId[2]));
 }
 
-// Read Flash Data Aligned(4)
+/// Read Flash Data (aligned to 4 bytes)
 static void msc_flash_read(uint32_t offset, uint32_t *buff, uint32_t wlen)
 {
     flash_op_t flash_op =
@@ -312,7 +314,7 @@ static void msc_flash_read(uint32_t offset, uint32_t *buff, uint32_t wlen)
     spi_flash_recv(flash_op.op_data, 4, (uint8_t *)buff, CO_BLEN(wlen));
 }
 
-// Write Flash Data
+/// Write Flash Data
 void msc_flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
 {
     uint8_t sta0;
@@ -333,7 +335,7 @@ void msc_flash_write(uint32_t offset, uint32_t *data, uint32_t wlen)
     } while (WIP_BIT & sta0);
 }
 
-// Erase Flash Data
+/// Erase Flash Sector
 static void msc_flash_erase(uint32_t offset)
 {
     uint8_t sta0;
@@ -354,7 +356,7 @@ static void msc_flash_erase(uint32_t offset)
     } while (WIP_BIT & sta0);
 }
 
-#endif
+#endif /* MSC_FLASH_TYPE */
 
 
 /*
@@ -362,6 +364,15 @@ static void msc_flash_erase(uint32_t offset)
  ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ * @brief Get MSC flash capacity
+ *
+ * @param[in]  lun        Logical unit number (unused)
+ * @param[out] block_num  Number of blocks
+ * @param[out] block_size Size of each block in bytes
+ ****************************************************************************************
+ */
 void usbd_msc_get_cap(uint8_t lun, uint32_t *block_num, uint32_t *block_size)
 {
     (void)lun;
@@ -371,17 +382,40 @@ void usbd_msc_get_cap(uint8_t lun, uint32_t *block_num, uint32_t *block_size)
     *block_size = SECTOR_SIZE;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Read sectors from flash
+ *
+ * @param[in]  lun     Logical unit number (unused)
+ * @param[in]  sector  Start sector index
+ * @param[out] buffer  Data buffer to read into
+ * @param[in]  length  Number of bytes to read
+ *
+ * @return true on success
+ ****************************************************************************************
+ */
 bool usbd_msc_sector_read(uint8_t lun, uint32_t sector, uint8_t *buffer, uint32_t length)
 {
     (void)lun;
     DEBUG("rd lun:%d, sector:%X, len:%d, p:%X", lun, sector, length, (uint32_t)buffer);
 
-    // read buffer
     msc_flash_read((sector * SECTOR_SIZE), (uint32_t *)buffer, CO_WLEN(length));
 
     return true;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Write sectors to flash
+ *
+ * @param[in] lun     Logical unit number (unused)
+ * @param[in] sector  Start sector index
+ * @param[in] data    Data to write
+ * @param[in] length  Number of bytes to write
+ *
+ * @return true on success
+ ****************************************************************************************
+ */
 bool usbd_msc_sector_write(uint8_t lun, uint32_t sector, const uint8_t *data, uint32_t length)
 {
     (void)lun;
@@ -395,7 +429,6 @@ bool usbd_msc_sector_write(uint8_t lun, uint32_t sector, const uint8_t *data, ui
         msc_flash_erase(sector * SECTOR_SIZE);
     }
 
-    // save data
     for (uint32_t page_idx = 0; page_idx < nb_page; ++page_idx)
     {
         msc_flash_write((sector * SECTOR_SIZE) + (page_idx * PAGE_SIZE), (uint32_t *)(data + (page_idx * PAGE_SIZE)), PAGE_WLEN);

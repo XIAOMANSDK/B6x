@@ -43,8 +43,6 @@ uint8_t pkt_bcc8(uint8_t *buff, uint16_t len);
 
 uint8_t pkt_hdr_valid(struct pt_pkt *p_hdr);
 
-uint8_t pkt_hdr_ota_valid(struct pt_pkt *p_hdr);
-
 /// pt_sch API
 void pt_sch_proc(proto_t *pt);
 void pt_sch_init(proto_t *pt, uint8_t *buf, read_fnct read, parse_fnct parse);

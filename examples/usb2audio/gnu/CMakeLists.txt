@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20.0)
 
-# 如果 SDK_ROOT 未定义，使用相对路径设置
+# Set SDK root via relative path if not defined
 if(NOT SDK_ROOT)
     set(SDK_ROOT "${CMAKE_CURRENT_LIST_DIR}/../../..")
 endif()
@@ -18,7 +18,7 @@ list(APPEND SRC_LIST
     ${SDK_USB_CLASS_DIR}/audio/usbd_audio.c
 )
 
-# 设置 __MODULE__ 宏定义
+# Set __MODULE__ macro definitions
 set_module_definitions(SRC_LIST)
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
@@ -31,7 +31,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     "${SDK_USB_CLASS_DIR}/audio"
 )
 
-# 链接静态库
+# Link static libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
     ${DRVS_LIB}
     ${USBD_LIB}

@@ -1,7 +1,7 @@
 /**
  ****************************************************************************************
  *
- * @file prf_sess.h
+ * @file prf_sess_weChat.h
  *
  * @brief Header file - Serial Service Profile (Server Role).
  *

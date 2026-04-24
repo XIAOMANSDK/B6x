@@ -70,7 +70,14 @@ struct usbd_audio_t {
 
 struct usbd_audio_t audio_mono;
 
-__WEAK void usbd_audio_init(void)
+__WEAK /**
+ ****************************************************************************************
+ * @brief Initialize USB Audio class with descriptor and callbacks
+ * @param[in]  const usbd_audio_desc_t *desc
+ * @param[in]  const usbd_audio_cb_t *cb
+ ****************************************************************************************
+ */
+void usbd_audio_init(void)
 {
     audio_mono.vol_cur  = AUDIO_VOL_CUR;
     audio_mono.vol_res  = AUDIO_VOL_RES;

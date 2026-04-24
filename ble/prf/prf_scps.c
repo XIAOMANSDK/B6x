@@ -146,6 +146,7 @@ const struct svc_decl scp_svc_db =
 /// Handles reception of the atts request from peer device
 static void scps_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const void *param)
 {
+    ASSERT_ERR(param != NULL);
     uint8_t att_idx = scps_get_att_idx(handle);
 
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,att:%d)", conidx, opcode, handle, att_idx);

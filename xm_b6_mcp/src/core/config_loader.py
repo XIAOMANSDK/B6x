@@ -309,6 +309,13 @@ class ConfigLoader:
         if api_name not in deps:
             return [api_name]
 
+        dep = deps[api_name]
+
+        # If call_sequence is defined in YAML, use it directly
+        if dep.call_sequence:
+            return dep.call_sequence
+
+        # Fallback: build from pre_requisites via topological sort
         sequence = []
         visited = set()
 
@@ -320,8 +327,8 @@ class ConfigLoader:
 
             # Get prerequisites
             if api in deps:
-                dep = deps[api]
-                for prereq in dep.pre_requisites:
+                dep_entry = deps[api]
+                for prereq in dep_entry.pre_requisites:
                     build_sequence(prereq)
 
             # Add this API

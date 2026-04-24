@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>B6x</Device>
           <Vendor>Generic</Vendor>
-          <PackID>Generic.B6x.1.0.1</PackID>
+          <PackID>Generic.B6x.1.0.0</PackID>
           <Cpu>CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -333,7 +333,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
+              <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h --locale=english</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf</IncludePath>

@@ -334,10 +334,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--gnu --thumb --bss_threshold=0</MiscControls>
+              <MiscControls>--gnu --thumb --bss_threshold=0 --locale=english</MiscControls>
               <Define>__NO_EMBEDDED_ASM</Define>
               <Undefine></Undefine>
-              <IncludePath>..\api;..\lib;..\model;..\model\api;..\..\core;..\..\ble\api</IncludePath>
+              <IncludePath>..\api;..\lib;..\model;..\model\api;..\..\core;..\..\ble\api;..\..\drivers\api</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

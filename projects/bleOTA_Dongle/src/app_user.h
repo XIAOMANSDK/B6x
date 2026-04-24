@@ -9,9 +9,11 @@ void user_init(void);
 void user_procedure(void);
 
 uint8_t *get_scan_name(uint8_t *len);
-uint8_t *get_conn_addr(void);
 uint8_t  get_auto_conn(void);
 uint8_t  get_scan_duration(void);
+
+void             scan_list_reset(void);
+const struct gap_bdaddr *scan_list_get(void);
 
 void init_timer_stop(void);
 void init_timer_start(void);

@@ -41,18 +41,16 @@
   },
   {
     "name": "SYS_CLK",
-    "value": "(3)",
+    "value": "(0)",
     "brief": ""
   },
   {
     "name": "RC32K_CAL_CYCLES",
     "value": "(9)",
-    "brief": ""
-  },
-  {
-    "name": "RC32K_CAL_CYCLES",
-    "value": "(7)",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "(7)"
+    ]
   },
   {
     "name": "__SRAMFN",
@@ -67,7 +65,10 @@
   {
     "name": "__RETENTION",
     "value": "__attribute__((section(\"user_retention\"), zero_init))",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "__attribute__((section(\"user_retention\")))"
+    ]
   },
   {
     "name": "FCM_MODE_DUAL",
@@ -107,62 +108,32 @@
   {
     "name": "SCLK_100K",
     "value": "(0x27)",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "(0x2B)",
+      "(0x2F)",
+      "(0x23)"
+    ]
   },
   {
     "name": "SCLK_200K",
     "value": "(0x23)",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "(0x25)",
+      "(0x27)",
+      "(0x21)"
+    ]
   },
   {
     "name": "SCLK_400K",
     "value": "(0x21)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_100K",
-    "value": "(0x2B)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_200K",
-    "value": "(0x25)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_400K",
-    "value": "(0x22)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_100K",
-    "value": "(0x2F)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_200K",
-    "value": "(0x27)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_400K",
-    "value": "(0x23)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_100K",
-    "value": "(0x23)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_200K",
-    "value": "(0x21)",
-    "brief": ""
-  },
-  {
-    "name": "SCLK_400K",
-    "value": "(0x11)",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "(0x22)",
+      "(0x23)",
+      "(0x11)"
+    ]
   },
   {
     "name": "I2C_RD_OP",
@@ -277,22 +248,12 @@
   {
     "name": "SPIM_CR_DFLT",
     "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x01))  // SPI 8MHz",
-    "brief": ""
-  },
-  {
-    "name": "SPIM_CR_DFLT",
-    "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x02))  // SPI 6MHz",
-    "brief": ""
-  },
-  {
-    "name": "SPIM_CR_DFLT",
-    "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x03))  // SPI 8MHz",
-    "brief": ""
-  },
-  {
-    "name": "SPIM_CR_DFLT",
-    "value": "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)  // SPI 8MHz",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x02))  // SPI 6MHz",
+      "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT | (SPIM_CR_CLK_RATE_MSK & 0x03))  // SPI 8MHz",
+      "(SPIM_CR_MSB_FST_BIT | SPIM_CR_RX_EN_BIT | SPIM_CR_TX_EN_BIT)  // SPI 8MHz"
+    ]
   },
   {
     "name": "SPIS_CR_DFLT",
@@ -306,7 +267,7 @@
   },
   {
     "name": "SVN_VER",
-    "value": "4242",
+    "value": "4325",
     "brief": ""
   },
   {
@@ -317,52 +278,22 @@
   {
     "name": "BRR_115200",
     "value": "BRR_DIV(115200, 32M) // default use SYS_FREQ_32M",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "BRR_DIV(115200, 48M) // default use SYS_FREQ_48M",
+      "BRR_DIV(115200, 64M) // default use SYS_FREQ_64M",
+      "BRR_DIV(115200, 16M) // default use SYS_FREQ_16M"
+    ]
   },
   {
     "name": "BRR_921600",
     "value": "BRR_DIV(921600, 32M) // default use SYS_FREQ_32M",
-    "brief": ""
-  },
-  {
-    "name": "BRR_115200",
-    "value": "BRR_DIV(115200, 48M) // default use SYS_FREQ_48M",
-    "brief": ""
-  },
-  {
-    "name": "BRR_921600",
-    "value": "BRR_DIV(921600, 48M) // default use SYS_FREQ_48M",
-    "brief": ""
-  },
-  {
-    "name": "BRR_115200",
-    "value": "BRR_DIV(115200, 64M) // default use SYS_FREQ_64M",
-    "brief": ""
-  },
-  {
-    "name": "BRR_921600",
-    "value": "BRR_DIV(921600, 64M) // default use SYS_FREQ_64M",
-    "brief": ""
-  },
-  {
-    "name": "BRR_115200",
-    "value": "BRR_DIV(115200, 16M) // default use SYS_FREQ_16M",
-    "brief": ""
-  },
-  {
-    "name": "BRR_921600",
-    "value": "BRR_DIV(921600, 16M) // default use SYS_FREQ_16M",
-    "brief": ""
-  },
-  {
-    "name": "__INLINE__",
-    "value": "static __forceinline",
-    "brief": ""
-  },
-  {
-    "name": "__INLINE__",
-    "value": "static inline __attribute__((always_inline))",
-    "brief": ""
+    "brief": "",
+    "variants": [
+      "BRR_DIV(921600, 48M) // default use SYS_FREQ_48M",
+      "BRR_DIV(921600, 64M) // default use SYS_FREQ_64M",
+      "BRR_DIV(921600, 16M) // default use SYS_FREQ_16M"
+    ]
   },
   {
     "name": "_USB_DEF_H",

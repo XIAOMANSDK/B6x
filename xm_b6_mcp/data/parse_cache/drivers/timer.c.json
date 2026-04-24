@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\src\\timer.c",
+  "file_path": "drivers/src/timer.c",
   "functions": [
     {
       "name": "btmr_delay",
@@ -17,7 +17,7 @@
         }
       ],
       "function_body": "{\r\n    // config Params\r\n    BTMR->CR1.Word = CR1_ONE_MODE;  /* CR1: 配置为单脉冲模式(OPM=1) */\r\n    BTMR->PSC = tpsc - 1;           /* PSC: 设置预分频器值 */\r\n    BTMR->ARR = tcnt - 1;           /* ARR: 设置自动重载值 */\r\n    BTMR->CNT = 0;                  /* CNT: 清零计数器 */\r\n    BTMR->EGR = 1;                  /* EGR: 产生更新事件，重新初始化计数器 */\r\n\r\n    // enable CEN, wait Time-Reach\r\n    BTMR->CR1.CEN = 1;              /* CR1: 使能计数器(CEN=1) */\r\n    while(!BTMR->RIF && BTMR->CR1.CEN);  /* 等待更新中断标志或计数器停止 */\r\n    BTMR->ICR = 1;                  /* ICR: 清除更新中断标志 */\r\n\r\n    // clear Mode\r\n    BTMR->CR1.Word = 0;             /* CR1: 禁用计数器 */\r\n}",
-      "file_path": "./drivers\\src\\timer.c",
+      "file_path": "drivers/src/timer.c",
       "line_number": 31,
       "is_static": false
     },
@@ -37,7 +37,7 @@
         }
       ],
       "function_body": "{\r\n    RCC_APBCLK_EN(APB_CTMR_BIT);    /* 使能通用定时器时钟 */\r\n    RCC_APBRST_REQ(APB_CTMR_BIT);   /* 请求通用定时器复位 */\r\n\r\n    CTMR->CR1.Word = 0;             /* CR1: 禁用计数器(CEN=0) */\r\n    CTMR->PSC = psc;                /* PSC: 设置预分频器值 */\r\n    CTMR->ARR = arr;                /* ARR: 设置自动重载值 */\r\n}",
-      "file_path": "./drivers\\src\\timer.c",
+      "file_path": "drivers/src/timer.c",
       "line_number": 55,
       "is_static": false
     },
@@ -52,7 +52,7 @@
         }
       ],
       "function_body": "{\r\n    RCC_APBCLK_DIS(APB_CTMR_BIT);   /* 禁用通用定时器时钟 */\r\n    RCC_APBRST_REQ(APB_CTMR_BIT);   /* 请求通用定时器复位 */\r\n}",
-      "file_path": "./drivers\\src\\timer.c",
+      "file_path": "drivers/src/timer.c",
       "line_number": 68,
       "is_static": false
     },
@@ -72,7 +72,7 @@
         }
       ],
       "function_body": "{\r\n    // clear interrupt, then enable\r\n    CTMR->ICR.Word = intr;          /* ICR: 清除指定中断标志 */\r\n    CTMR->IER.Word = intr;          /* IER: 使能指定中断 */\r\n    // event generation\r\n    CTMR->EGR.Word = intr | 0x01;   /* EGR: 产生更新事件(UG=1)和指定事件 */\r\n\r\n    // conf control (counter start from 0)\r\n    CTMR->CNT = 0;                  /* CNT: 清零计数器 */\r\n    CTMR->CR1.Word = mode;          /* CR1: 配置控制模式 */\r\n}",
-      "file_path": "./drivers\\src\\timer.c",
+      "file_path": "drivers/src/timer.c",
       "line_number": 79,
       "is_static": false
     },
@@ -92,7 +92,7 @@
         }
       ],
       "function_body": "{\r\n    RCC_APBCLK_EN(APB_ATMR_BIT);    /* 使能高级定时器时钟 */\r\n    RCC_APBRST_REQ(APB_ATMR_BIT);   /* 请求高级定时器复位 */\r\n\r\n    ATMR->CR1.Word = 0;             /* CR1: 禁用计数器(CEN=0) */\r\n    ATMR->PSC = psc;                /* PSC: 设置预分频器值 */\r\n    ATMR->ARR = arr;                /* ARR: 设置自动重载值 */\r\n}",
-      "file_path": "./drivers\\src\\timer.c",
+      "file_path": "drivers/src/timer.c",
       "line_number": 97,
       "is_static": false
     },
@@ -107,7 +107,7 @@
         }
       ],
       "function_body": "{\r\n    RCC_APBCLK_DIS(APB_ATMR_BIT);   /* 禁用高级定时器时钟 */\r\n    RCC_APBRST_REQ(APB_ATMR_BIT);   /* 请求高级定时器复位 */\r\n}",
-      "file_path": "./drivers\\src\\timer.c",
+      "file_path": "drivers/src/timer.c",
       "line_number": 110,
       "is_static": false
     },
@@ -127,7 +127,7 @@
         }
       ],
       "function_body": "{\r\n    // clear interrupt, then enable\r\n    ATMR->ICR.Word = intr;          /* ICR: 清除指定中断标志 */\r\n    ATMR->IER.Word = intr;          /* IER: 使能指定中断 */\r\n    // event generation\r\n    ATMR->EGR.Word = intr | 0x01;   /* EGR: 产生更新事件(UG=1)和指定事件 */\r\n\r\n    // conf control (counter start from 0)\r\n    ATMR->CNT = 0;                  /* CNT: 清零计数器 */\r\n    ATMR->CR1.Word = mode;          /* CR1: 配置控制模式 */\r\n}",
-      "file_path": "./drivers\\src\\timer.c",
+      "file_path": "drivers/src/timer.c",
       "line_number": 121,
       "is_static": false
     }

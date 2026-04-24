@@ -12,6 +12,7 @@
 #include "uart.h"
 #include "iopad.h"
 #include "rcc.h"
+#include "utils.h"
 
 /*
  * DEFINES
@@ -249,6 +250,7 @@ void uart_wait(uint8_t port)
  */
 void uart_send(uint8_t port, uint16_t len, const uint8_t *data)
 {
+    ASSERT_ERR(data != NULL);
     UART_TypeDef *uart = UART_PTR(port);
 
     while (len--)

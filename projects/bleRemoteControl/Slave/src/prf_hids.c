@@ -328,6 +328,11 @@ const struct svc_decl hid_svc_db =
  */
 
 /// Retrieve attribute index form handle
+/**
+ ****************************************************************************************
+ * @brief Get attribute index from ATT handle
+ ****************************************************************************************
+ */
 static uint8_t hids_get_att_idx(uint16_t handle)
 {
     ASSERT_ERR((handle >= hids_env.start_hdl) && (handle < hids_env.start_hdl + HID_IDX_NB));
@@ -545,11 +550,6 @@ static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle,
         gatt_write_cfm(conidx, status, handle);
 }
 
-const uint8_t hid_report_feature6[] =
-{
-    0x27, 0x17, 0x32, 0xb8, 0x36, 0x04, 0x64, 0x19, 0xa2, 0x00, 0x00, 0x00,
-};
-
 /// Confirm ATTS_READ_REQ
 static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
 {
@@ -761,8 +761,8 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
         case HID_IDX_MIC_IN_RPT_REF:
         {
             struct hid_report_ref refer;
-            refer.report_id = 6;
-            refer.report_type = HID_REPORT_FEATURE;
+            refer.report_id = RPT_ID_MIC;
+            refer.report_type = HID_REPORT_INPUT;
             gatt_read_cfm(conidx, LE_SUCCESS, handle, HID_REPORT_REF_SIZE, (uint8_t *)&refer);
         } break;
         #endif //(HID_RPT_MIC)
@@ -777,11 +777,16 @@ static void hids_att_read_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle)
 }
 
 /// Handles reception of the atts request from peer device
+/**
+ ****************************************************************************************
+ * @brief Main HID service ATT request handler
+ ****************************************************************************************
+ */
 static void hids_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const void *param)
 {
     uint8_t att_idx = hids_get_att_idx(handle);
 
-    ASSERT_ERR(coindx < HID_CONN_MAX);
+    ASSERT_ERR(conidx < HID_CONN_MAX);
     DEBUG("svc_func(cid:%d,op:0x%x,hdl:0x%x,att:%d)", conidx, opcode, handle, att_idx);
 
     switch (opcode)

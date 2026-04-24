@@ -1,7 +1,7 @@
 {
   "constraint_type": "power_consumption",
   "version": "1.0",
-  "last_updated": "2026-03-17T18:05:45.756947",
+  "last_updated": "2026-04-22T16:18:56.745223",
   "total_modes": 5,
   "modes": [
     {
@@ -98,5 +98,5 @@
   ],
   "domain": "domain3",
   "data_source": "excel_parsing",
-  "source_file": "./doc\\SW_Spec\\B6x_BLE-功耗参考.xlsx"
+  "source_file": "doc/SW_Spec/B6x_BLE-功耗参考.xlsx"
 }

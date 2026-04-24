@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\gpio.h",
+  "file_path": "drivers/api/gpio.h",
   "functions": [
     {
       "name": "bits",
@@ -7,7 +7,7 @@
       "parameters": [],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\gpio.h",
+      "file_path": "drivers/api/gpio.h",
       "line_number": 223,
       "is_exported": false,
       "implementation_file": "",
@@ -123,7 +123,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\gpio.h",
+      "file_path": "drivers/api/gpio.h",
       "line_number": 31
     },
     {
@@ -142,7 +142,7 @@
       ],
       "underlying_type": "",
       "brief": "GPIO输入类型定义 ",
-      "file_path": "./drivers\\api\\gpio.h",
+      "file_path": "drivers/api/gpio.h",
       "line_number": 58
     },
     {
@@ -166,7 +166,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\gpio.h",
+      "file_path": "drivers/api/gpio.h",
       "line_number": 67
     }
   ],

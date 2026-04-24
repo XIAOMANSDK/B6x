@@ -13,6 +13,7 @@
 #include "iopad.h"
 #include "reg_spim.h"
 #include "reg_spis.h"
+#include "utils.h"
 
 /*
  * DEFINES
@@ -94,6 +95,8 @@ void spim_wait(void)
  */
 void spim_duplex(const uint8_t *tx_data, uint8_t *rx_buff, uint16_t length)
 {
+    ASSERT_ERR(tx_data != NULL);
+    ASSERT_ERR(rx_buff != NULL);
     uint32_t tidx, ridx;
 
     SPIM_BGN(length); /* DAT_LEN: 设置数据长度，TXRX_BGN: 开始传输 */

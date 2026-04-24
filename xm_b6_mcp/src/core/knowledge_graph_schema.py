@@ -156,6 +156,22 @@ class RelationType(Enum):
     CONFLICTS_WITH = "conflicts_with"
     """Mutually exclusive with (e.g., pin conflict)"""
 
+    # ==================== Structural Relations ====================
+    USES_CONFIG = "uses_config"
+    """API uses a configuration struct"""
+
+    DEFINED_IN_HEADER = "defined_in_header"
+    """Macro/constant defined in a header"""
+
+    BELONGS_TO_PERIPHERAL = "belongs_to_peripheral"
+    """Register belongs to a hardware peripheral"""
+
+    CAN_RETURN = "can_return"
+    """API can return this error code"""
+
+    BELONGS_TO_MODULE = "belongs_to_module"
+    """Entity belongs to a software module"""
+
 
 # ============================================================================
 # Cross-Domain Relation

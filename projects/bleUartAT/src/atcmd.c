@@ -1,3 +1,9 @@
+/**
+ ****************************************************************************************
+ * @file atcmd.c
+ * @brief BLE AT command parser and handler
+ ****************************************************************************************
+ */
 #include "gap.h"
 #include "atcmd.h"
 #include "string.h"
@@ -17,7 +23,6 @@
 
 #if (DBG_ATCMD)
 #include "dbg.h"
-//#define DEBUG(format, ...)    debug("<%s,%d>" format , __MODULE__, __LINE__, ##__VA_ARGS__)
 #define DEBUG(format, ...)    debug(format, ##__VA_ARGS__)
 #else
 #define debug(format, ...)
@@ -32,12 +37,6 @@
 extern uint8_t           scan_cnt;
 extern struct gap_bdaddr scan_addr_list[];
 
-uint8_t BLE_ADDR_DEFAULT[GAP_BD_ADDR_LEN] = BLE_ADDR;
-//struct connected_result connected_list[BLE_NB_SLAVE + BLE_NB_MASTER];
-
-bool scan_time_out  = false;
-bool disconnect_all = false;
-
 volatile uint8_t g_cfg_change;
 
 enum cfg_chng_bits
@@ -47,7 +46,7 @@ enum cfg_chng_bits
     CFG_CHNG_RST = 0x04,
 };
 
-AT_CMD_FORMAT_T at_cmd_head_list[CMD_CODE_MAX] =
+const AT_CMD_FORMAT_T at_cmd_head_list[CMD_CODE_MAX] =
 {
     [CMD_ECHO]      = {5,  5,  "AT+\r\n"          },
     [CMD_ALL]       = {8,  8,  "AT+ALL\r\n"       },
@@ -82,7 +81,9 @@ AT_CMD_FORMAT_T at_cmd_head_list[CMD_CODE_MAX] =
  */
 void at_uart_baud_cfg(uint8_t port, uint32_t uart_baud)
 {
-    UART_TypeDef* uart = ((UART_TypeDef *)(UART1_BASE + (port) * 0x1000));
+    if (uart_baud == 0) return;
+
+    UART_TypeDef* uart = ((UART_TypeDef *)(UART1_BASE + (uint32_t)port * UART_PORT_OFFSET));
 
     uint16_t uart_baud_div = (uint16_t)((rcc_sysclk_freq() + ((uart_baud) >> 1)) / (uart_baud));
 
@@ -92,6 +93,11 @@ void at_uart_baud_cfg(uint8_t port, uint32_t uart_baud)
     uart->LCR.BRWEN  = 0;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Write AT configuration to flash storage
+ ****************************************************************************************
+ */
 void atConfigFlashWrite(uint32_t offset, uint8_t len, const uint32_t *data)
 {
     flash_page_erase(offset);
@@ -140,65 +146,8 @@ SYS_CONFIG sys_config =
     .rssi         = AT_DFT_RSSI,
 };
 
-// flag: All_FACTORY_REST:  全部恢复出厂设置
-// flag: PAIR_FACTORY_RESET: 清除配对信息
-void atSetBleDefault(PARA_SET_FACTORY flag)
-{
-//    uint8_t uuid16_idx = 12;
 
-    if (flag == All_FACTORY_REST)
-    {
-        //        sys_config;
-        memset(sys_config.adv_data, 0, sizeof(sys_config.adv_data));
-        for (uint8_t idx = 0; idx < sys_config.adv_data_len; idx++)
-        {
-            sys_config.adv_data[idx] = idx;
-        }
-
-//        sys_config.rssi = 0;                      //  RSSI 信号值
-
-//        sys_config.adv_intv_time = 20;    //min
-
-//        sys_config.uuid_len = ATT_UUID16_LEN;
-
-//        if (sys_config.uuid_len == ATT_UUID128_LEN) uuid16_idx = 0;
-
-//        memcpy(sys_config.uuids, &ses_uuid_s[uuid16_idx], sys_config.uuid_len);
-//        memcpy(sys_config.uuidn, &ses_uuid_n[uuid16_idx], sys_config.uuid_len);
-//        memcpy(sys_config.uuidw, &ses_uuid_w[uuid16_idx], sys_config.uuid_len);
-    }
-//    else if(flag == PAIR_FACTORY_RESET)
-//    {
-//        //sprintf((char*)sys_config.pass, "000000");      //密码
-////        memset(sys_config.mac_addr, 0, sizeof(sys_config.mac_addr));
-////        memcpy(sys_config.mac_addr, BLE_ADDR_DEFAULT, GAP_BD_ADDR_LEN);
-//        sys_config.ever_connect_peripheral_mac_addr_conut = 0;
-//        sys_config.ever_connect_peripheral_mac_addr_index = 0;
-//    }
-
-//    GAPBondMgr_SetParameter( GAPBOND_ERASE_ALLBONDS, 0, NULL ); //清除绑定信息
-
-    atConfigFlashWrite(SYS_CONFIG_OFFSET, sizeof(SYS_CONFIG), (uint32_t *)&sys_config);
-}
-
-#if (0)
-// 字符串对比
-static uint8_t strCmp(const uint8_t *p1, char *p2, uint8_t len)
-{
-    uint8_t i = 0;
-    while (i < len)
-    {
-        if (p1[i] != p2[i])
-        {
-            return 0;
-        }
-        i++;
-    }
-    return 1;
-}
-#endif
-
-// 字符串转数字
+// String to number conversion
 uint32_t str2Num(const uint8_t *numStr, uint8_t iLength)
 {
     uint32_t rtnInt = 0;
@@ -229,48 +178,44 @@ __STATIC_FORCEINLINE uint8_t co_hexstr2hex(uint8_t hex_str)
 
 void str2mac(const uint8_t *date)
 {
-    uint8_t *buff = (uint8_t *)date;
-    uint8_t  j    = (GAP_BD_ADDR_LEN - 1);
+    uint8_t j = (GAP_BD_ADDR_LEN - 1);
 
     for (uint8_t i = 0; i < 17; i++)
     {
-        buff[i] = co_hexstr2hex(buff[i]);
+        uint8_t val = co_hexstr2hex(date[i]);
 
         if ((i % 3) == 1)
         {
-            sys_config.connect_mac_addr[j--] = (buff[i - 1] << 4) + buff[i];
-            i++; //跳过:
+            uint8_t prev = co_hexstr2hex(date[i - 1]);
+            sys_config.connect_mac_addr[j--] = (prev << 4) | val;
+            i++; // skip ':'
         }
     }
 }
 
 void hexstr2hex(uint8_t str_len, const uint8_t *hex_str, uint8_t *hex)
 {
-    uint8_t *buff = (uint8_t *)hex_str;
-
     for (uint8_t i = 0; i < str_len; i++)
     {
-        buff[i] = co_hexstr2hex(buff[i]);
+        uint8_t val = co_hexstr2hex(hex_str[i]);
 
-        // 两个字符拼成一个hex
         if (i & 0x01)
         {
-            hex[i / 2] = (buff[i - 1] << 4) | buff[i];
+            uint8_t prev = co_hexstr2hex(hex_str[i - 1]);
+            hex[i / 2] = (prev << 4) | val;
         }
     }
 }
 void str2uuid(uint8_t str_len, const uint8_t *date, uint8_t *uuid)
 {
-    uint8_t *buff = (uint8_t *)date;
-
     for (uint8_t i = 0; i < str_len; i++)
     {
-        buff[i] = co_hexstr2hex(buff[i]);
+        uint8_t val = co_hexstr2hex(date[i]);
 
-        // 两个字符拼成一个hex
         if (i & 0x01)
         {
-            uuid[(str_len - i) / 2] = (buff[i - 1] << 4) + buff[i];
+            uint8_t prev = co_hexstr2hex(date[i - 1]);
+            uuid[(str_len - i) / 2] = (prev << 4) | val;
         }
     }
 }
@@ -294,7 +239,7 @@ void debugMAC(uint8_t *addr)
     }
 }
 
-// 打印所有存储的数据，方便调试代码
+// Print all stored config data for debugging
 void printAllConfigData(void)
 {
     DEBUG("Name       = %s\r\n", sys_config.name);
@@ -329,9 +274,7 @@ void printATHelp(void)
 {
     for (uint8_t idx = CMD_ECHO; idx < CMD_CODE_MAX; idx++)
     {
-//        sprintf((char *)&str_help, "\r\n");
-
-        DEBUG("%d:%s", idx,at_cmd_head_list[idx].str);
+        DEBUG("%d:%s", idx, at_cmd_head_list[idx].str);
 
         if (at_cmd_head_list[idx].str_len_min != at_cmd_head_list[idx].str_len_max)
         {
@@ -346,7 +289,7 @@ tmr_tk_t printScanMac(uint8_t id)
     for (uint8_t idx = 0; idx < scan_cnt; idx++)
     {
         DEBUG("[%d]", idx);
-        debugMAC((uint8_t *)&scan_addr_list[idx++].addr.addr);
+        debugMAC((uint8_t *)&scan_addr_list[idx].addr.addr);
     }
     DEBUG("[AT]Scan end\r\n");
     app_scan_action(ACTV_STOP);
@@ -369,7 +312,6 @@ void atBleTx(const uint8_t *buff, uint8_t buff_len)
 bool atProc(const uint8_t *buff, uint8_t buff_len)
 {
     uint8_t code_idx = CMD_NULL;
-//    debug("buff_len[%d]\r\n", buff_len);
 
     if (memcmp(buff, "AT+", 3) != 0)
     {
@@ -435,9 +377,16 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
 
         case CMD_NAME_S:
         {
+            uint8_t name_len = buff_len - 14; // "AT+DEV_NAME=" (12) + "\r\n" (2)
+            if (name_len > sizeof(sys_config.name))
+            {
+                DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
+                break;
+            }
+
             memset(sys_config.name, 0, sizeof(sys_config.name));
-            sys_config.name_len = buff_len - 14;
-            memcpy(sys_config.name, &buff[12], sys_config.name_len); //  "\r\n"
+            sys_config.name_len = name_len;
+            memcpy(sys_config.name, &buff[12], sys_config.name_len);
             DEBUG("[AT]OK %s\r\n", sys_config.name);
 
             g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
@@ -474,7 +423,6 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             if (app_state_get() == APP_CONNECTED)
             {
                 DEBUG("[AT]OK\r\n");
-                disconnect_all = true;
                 gapc_disconnect(app_env.curidx);
             }
             else
@@ -521,8 +469,6 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
                 if (con_num_bit & 0x01)
                 {
                     struct gap_bdaddr* peer_bdaddr = gapc_get_bdaddr(con_num, GAPC_SMP_INFO_PEER);
-//                    memcpy(&connected_list[con_num].paddr, peer_bdaddr, sizeof(struct gap_bdaddr));
-//                    debugMAC(connected_list[con_num].paddr.addr.addr);
                     debugMAC(peer_bdaddr->addr.addr);
                 }
 
@@ -533,7 +479,6 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
 
         case CMD_CON_MAC_S:
         {
-//            app_init_action(ACTV_STOP); // 20211101
             str2mac(&buff[11]);
 
             struct gap_bdaddr peer;
@@ -584,36 +529,14 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
         } break;
 
         case CMD_UUIDN_S:
-        {
-            uint8_t id_len = (buff_len - 11) / 2;
-
-            if (id_len == sys_config.uuid_len)
-            {
-                str2uuid(2 * id_len, &buff[9], sys_config.uuidn);
-                DEBUG("[AT]OK\r\n");
-
-                g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
-            }
-            else
-            {
-                DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
-            }
-        } break;
-
-        case CMD_UUIDW_R:
-        {
-            DEBUG("[AT]OK\r\n");
-            DEBUG("[DA]+UUIDW=0x");
-            debugHexB(sys_config.uuidw, sys_config.uuid_len);
-        } break;
-
         case CMD_UUIDW_S:
         {
             uint8_t id_len = (buff_len - 11) / 2;
+            uint8_t *uuid_dst = (code_idx == CMD_UUIDN_S) ? sys_config.uuidn : sys_config.uuidw;
 
             if (id_len == sys_config.uuid_len)
             {
-                str2uuid(2 * id_len, &buff[9], sys_config.uuidw);
+                str2uuid(2 * id_len, &buff[9], uuid_dst);
                 DEBUG("[AT]OK\r\n");
 
                 g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
@@ -663,18 +586,14 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
 
             if (len <= 30)
             {
-                #if (1)
                 if (len & 0x01)
                 {
                     DEBUG("[AT]ERR[%d]\r\n", ERR_INVALID);
                     break;
                 }
-                sys_config.adv_data_len = len/2;
+                sys_config.adv_data_len = len / 2;
                 hexstr2hex(len, (buff + 10), sys_config.adv_data);
 
-                #else
-                memcpy(sys_config.adv_data, &buff[10], sys_config.adv_data_len);
-                #endif
                 DEBUG("[AT]OK\r\n");
 
                 g_cfg_change = (CFG_CHNG_SYS | CFG_CHNG_BLE);
@@ -687,7 +606,6 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
 
         case CMD_RENEW_S:
         {
-//            atSetBleDefault(All_FACTORY_REST);
             flash_page_erase(SYS_CONFIG_OFFSET);
         }
 
@@ -695,7 +613,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
         case CMD_RESET_S:
         {
             DEBUG("[AT]OK\r\n");
-            g_cfg_change = CFG_CHNG_RST;// 直接重启即可
+            g_cfg_change = CFG_CHNG_RST;
         } break;
 
         case CMD_HELP:
@@ -706,8 +624,6 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
             DEBUG("[AT]ERR[%d]\r\n", ERR_PROTOCOL);
             break;
     }
-
-//    DEBUG("cfg:%X\r\n", g_cfg_change);
 
     if (g_cfg_change & CFG_CHNG_BLE)
     {
@@ -722,7 +638,7 @@ bool atProc(const uint8_t *buff, uint8_t buff_len)
     if (g_cfg_change & CFG_CHNG_RST)
     {
         #if ((LED_PLAY) || (CFG_SFT_TMR))
-        sftmr_wait(6); // 设置参数后，适当延时,以便上一次发送的数据正常发送出去
+        sftmr_wait(6); // Delay for UART TX to complete before reset
         #endif
         NVIC_SystemReset();
     }

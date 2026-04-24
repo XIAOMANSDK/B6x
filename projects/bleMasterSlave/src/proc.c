@@ -3,7 +3,11 @@
  *
  * @file proc.c
  *
- * @brief user procedure.
+ * @brief UART command processing for BLE multi-connection control.
+ *
+ * Parses binary commands from UART ring buffer and dispatches BLE
+ * operations including connect, disconnect, scan, GATT procedures,
+ * and connection parameter updates.
  *
  ****************************************************************************************
  */
@@ -51,12 +55,40 @@ enum uart_cmd
 #define CMD_MAX_LEN           20
 #define NULL_CNT              20
 
+#define DEF_CONN_INTV_MIN     8
+#define DEF_CONN_INTV_MAX     8
+#define DEF_CONN_LATENCY      247
+#define DEF_CONN_SUPERVISION_TO 1500
+
+/** @brief BLE UUID lengths in bytes */
+#define UUID_LEN_16           (2)
+#define UUID_LEN_32           (4)
+#define UUID_LEN_128          (16)
+
+/** @brief GATT handle range boundaries */
+#define GATT_HDL_RANGE_START  (0x0001)
+#define GATT_HDL_RANGE_END    (0xFFFF)
+
 static uint8_t buff[CMD_MAX_LEN];
 static uint16_t buff_len = 0;
 
 
 /*
  * FUNCTIONS
+ ****************************************************************************************
+ */
+
+/**
+ ****************************************************************************************
+ *
+ * @brief Process UART commands from ring buffer.
+ *
+ * Parses binary commands from UART and dispatches BLE operations
+ * including connect, disconnect, scan, GATT read/write/disc, and
+ * connection parameter updates.
+ *
+ * @note Called from user_procedure() in main loop.
+ *
  ****************************************************************************************
  */
 static void uart_proc(void)
@@ -78,7 +110,6 @@ static void uart_proc(void)
     {
         if ((buff_len > 0) && (null_cnt++ > NULL_CNT))
         {
-            //finish = true;
             null_cnt = 0;
         }
         else
@@ -91,33 +122,35 @@ static void uart_proc(void)
     {
         case CMD_DISCONNECT:
         {
-            if (0 == ONE_BITS(app_env.conbits))
+            uint8_t num_conn = ONE_BITS(app_env.conbits);
+            if (num_conn == 0)
             {
-                DEBUG("No connected(%d), disconnection not allowed.", ONE_BITS(app_env.conbits));
+                DEBUG("No connected(%d), disconnection not allowed.", num_conn);
             }
             else
             {
                 if (buff_len == 1)
                 {
-                    DEBUG("Disconnect ALL, num_conn:%d", ONE_BITS(app_env.conbits));
-                    for (uint8_t i = 0; i < ONE_BITS(app_env.conbits); ++i)
+                    DEBUG("Disconnect ALL, num_conn:%d", num_conn);
+                    for (uint8_t i = 0; i < (BLE_NB_MASTER + BLE_NB_SLAVE); i++)
                     {
-                        gapc_disconnect(i);
-                        DEBUG("Disconnect(cid:%d)", i);
+                        if (app_env.conbits & (1u << i))
+                        {
+                            gapc_disconnect(i);
+                            DEBUG("Disconnect(cid:%d)", i);
+                        }
                     }
                 }
                 else if (buff_len == 2)
                 {
                     gapc_disconnect(buff[1]);
-                    DEBUG("Disconnect(%d), num_conn:%d", buff[1], ONE_BITS(app_env.conbits));
+                    DEBUG("Disconnect(%d), num_conn:%d", buff[1], num_conn);
                 }
             }
         } break;
 
         case CMD_CONNECT:
         {
-//            app_init_action(ACTV_STOP);  //20211101
-
             if (buff_len == 1)
             {
                 DEBUG("CONN Dflt");
@@ -125,7 +158,7 @@ static void uart_proc(void)
             }
             else if (buff_len == 2)
             {
-                if (scan_cnt > buff[1])
+                if ((scan_cnt > 0) && (scan_cnt > buff[1]))
                 {
                     app_start_initiating(&scan_addr_list[buff[1]]);
                 }
@@ -133,18 +166,15 @@ static void uart_proc(void)
             else if (buff_len >= 8)
             {
                 struct gap_bdaddr peer;
-                for(int i = 0; i < 6; i++)
+                for (uint8_t i = 0; i < 6; i++)
                 {
-                    //peer.addr.addr[i] = buff[6-i];
-                    peer.addr.addr[i] = buff[i+1];
+                    peer.addr.addr[i] = buff[i + 1];
                 }
                 peer.addr_type = buff[7];
 
                 DEBUG("CONN Peer:");
                 debugHex((uint8_t *)&peer, sizeof(peer));
                 app_start_initiating(&peer);
-
-                finish = true;
             }
             else
             {
@@ -169,7 +199,7 @@ static void uart_proc(void)
                     if (buff_len >= 7)
                     {
                         uint8_t ulen = buff[6];
-                        if (ulen == 0x02 || ulen == 0x04 || ulen == 0x10)
+                        if (ulen == UUID_LEN_16 || ulen == UUID_LEN_32 || ulen == UUID_LEN_128)
                         {
                             if (buff_len >= 7 + ulen)
                             {
@@ -202,31 +232,31 @@ static void uart_proc(void)
                 }
                 else if (buff[1] == 0x01)
                 {
-                    uint8_t offset = (buff_len >= 6)? buff[5] : 0x00;
+                    uint8_t offset = (buff_len >= 6) ? buff[5] : 0x00;
                     DEBUG("GATT READ Long(hdl:0x%X,len:%d,oft:%d)", read16p(&buff[2]), buff[4], offset);
                     gatt_read_long(app_env.curidx, read16p(&buff[2]), buff[4], offset);
                 }
                 else if (buff[1] == 0x02)
                 {
                     uint8_t ulen = buff[2] & 0xFE;
-                    if (ulen == 0x02 || ulen == 0x04 || ulen == 0x10)
+                    if (ulen == UUID_LEN_16 || ulen == UUID_LEN_32 || ulen == UUID_LEN_128)
                     {
                         if (buff[2] & 0x01)
                         {
-                            if (buff_len >= ulen+7)
+                            if (buff_len >= ulen + 7)
                             {
-                                DEBUG("GATT READ Uuid(len:%d,shdl:0x%X,ehdl:0x%X)", ulen, read16p(&buff[ulen+3]), read16p(&buff[ulen+5]));
-                                gatt_read_by_uuid(app_env.curidx, ulen, &buff[3], read16p(&buff[ulen+3]), read16p(&buff[ulen+5]));
+                                DEBUG("GATT READ Uuid(len:%d,shdl:0x%X,ehdl:0x%X)", ulen, read16p(&buff[ulen + 3]), read16p(&buff[ulen + 5]));
+                                gatt_read_by_uuid(app_env.curidx, ulen, &buff[3], read16p(&buff[ulen + 3]), read16p(&buff[ulen + 5]));
                             }
                             else
                                 finish = false;
                         }
                         else
                         {
-                            if (buff_len >= ulen+3)
+                            if (buff_len >= ulen + 3)
                             {
                                 DEBUG("GATT READ Uuid(len:%d)", ulen);
-                                gatt_read_by_uuid(app_env.curidx, ulen, &buff[3], 0x0001, 0xFFFF);
+                                gatt_read_by_uuid(app_env.curidx, ulen, &buff[3], GATT_HDL_RANGE_START, GATT_HDL_RANGE_END);
                             }
                             else
                                 finish = false;
@@ -235,7 +265,7 @@ static void uart_proc(void)
                 }
                 else if (buff[1] == 0x03)
                 {
-                    if (buff_len >= buff[2]+3)
+                    if (buff_len >= buff[2] + 3)
                     {
                         DEBUG("GATT READ Multi(hdls:%d)", buff[2]);
                         gatt_read_by_multiple(app_env.curidx, buff[2], &buff[3]);
@@ -252,13 +282,13 @@ static void uart_proc(void)
             {
                 if (buff[1] <= 0x02)
                 {
-                    DEBUG("GATT WRITE(typ:%d,hdl:0x%X,len:%d)", buff[1], read16p(&buff[2]),buff_len-4);
-                    gatt_write(app_env.curidx, buff[1]+GATT_WRITE, read16p(&buff[2]), &buff[4], buff_len-4);
+                    DEBUG("GATT WRITE(typ:%d,hdl:0x%X,len:%d)", buff[1], read16p(&buff[2]), buff_len - 4);
+                    gatt_write(app_env.curidx, buff[1] + GATT_WRITE, read16p(&buff[2]), &buff[4], buff_len - 4);
                 }
                 else if (buff[1] == 0x03)
                 {
-                    DEBUG("GATT PreWR(hdl:0x%X,len:%d,oft:%d)", read16p(&buff[2]), buff[4], (buff_len == 5)?0x00:buff[5]);
-                    gatt_pre_write(app_env.curidx, read16p(&buff[2]), NULL, buff[4], (buff_len == 5)?0x00:buff[5]);
+                    DEBUG("GATT PreWR(hdl:0x%X,len:%d,oft:%d)", read16p(&buff[2]), buff[4], (buff_len == 5) ? 0x00 : buff[5]);
+                    gatt_pre_write(app_env.curidx, read16p(&buff[2]), NULL, buff[4], (buff_len == 5) ? 0x00 : buff[5]);
                 }
             }
         } break;
@@ -269,8 +299,8 @@ static void uart_proc(void)
             if (buff_len >= 2)
             {
                 uint8_t conidx = buff[1];
-                DEBUG("SESS NTF(cid:%d,len:%d)", conidx, buff_len-2);
-                sess_txd_send(conidx, buff_len-2, &buff[2]);
+                DEBUG("SESS NTF(cid:%d,len:%d)", conidx, buff_len - 2);
+                sess_txd_send(conidx, buff_len - 2, &buff[2]);
             }
         } break;
         #endif
@@ -306,7 +336,7 @@ static void uart_proc(void)
                 {
                     conidx = buff[1];
                 }
-                struct gap_bdaddr* peer_bdaddr = gapc_get_bdaddr(conidx, GAPC_SMP_INFO_PEER);
+                struct gap_bdaddr *peer_bdaddr = gapc_get_bdaddr(conidx, GAPC_SMP_INFO_PEER);
                 DEBUG("Peer BDaddr:");
                 debugHex((uint8_t *)peer_bdaddr, sizeof(struct gap_bdaddr));
 
@@ -325,18 +355,19 @@ static void uart_proc(void)
             uint8_t conidx = app_env.curidx;
             struct gapc_conn_param long_latency =
             {
-                .intv_min = 8,
-                .intv_max = 8,
-                .latency  = 247,
-                .time_out = 1500,
+                .intv_min = DEF_CONN_INTV_MIN,
+                .intv_max = DEF_CONN_INTV_MAX,
+                .latency  = DEF_CONN_LATENCY,
+                .time_out = DEF_CONN_SUPERVISION_TO,
             };
 
             if (buff_len >= 5)
             {
                 conidx = buff[1];
+                if (conidx >= (BLE_NB_MASTER + BLE_NB_SLAVE)) break;
                 long_latency.intv_min = buff[2];
                 long_latency.intv_max = buff[2];
-                long_latency.latency  = read16p(buff+3);
+                long_latency.latency  = read16p(buff + 3);
             }
 
             DEBUG("update param(cid:%d, intv:%d, latency:%d)", conidx, long_latency.intv_min, long_latency.latency);
@@ -355,6 +386,16 @@ static void uart_proc(void)
     }
 }
 
+/**
+ ****************************************************************************************
+ *
+ * @brief Main loop user procedure entry point.
+ *
+ * Called in each iteration of the main loop to process UART commands
+ * and scan hardware buttons.
+ *
+ ****************************************************************************************
+ */
 void user_procedure(void)
 {
     uart_proc();

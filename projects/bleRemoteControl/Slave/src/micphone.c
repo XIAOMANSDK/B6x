@@ -1,3 +1,9 @@
+/**
+ ****************************************************************************************
+ * @file micphone.c
+ * @brief Microphone audio capture with SADC DMA and ADPCM encoding
+ ****************************************************************************************
+ */
 #include "app_user.h"
 #include "drvs.h"
 #include "regs.h"
@@ -9,7 +15,6 @@
 #include "hid_desc.h"
 #include "app.h"
 #include "prf_sess.h"
-#include "app_user.h"
 
 #if (VOICE)
                                
@@ -44,6 +49,11 @@ __ATTR_SRAM struct ADPCMBlock adpcm_buff;
 
 struct adpcm_state state;
 
+/**
+ ****************************************************************************************
+ * @brief Send raw data bytes over UART for debug
+ ****************************************************************************************
+ */
 void uartTxSend(const uint8_t *data, uint16_t len)
 {
     while(len--)
@@ -56,6 +66,11 @@ uint16_t voiceSendNB;
 uint16_t voiceSendOK;
 uint8_t voiceSendFt;
 
+/**
+ ****************************************************************************************
+ * @brief Initialize microphone SADC DMA and ADPCM encoder
+ ****************************************************************************************
+ */
 void micInit(void)
 {
     GPIO_DIR_CLR(GPIO02 | GPIO03);
@@ -94,6 +109,11 @@ void voice_send(uint16_t len, const uint8_t *data)
 }
 
 #if  (MODE_SELECT)
+/**
+ ****************************************************************************************
+ * @brief Process DMA completion and send ADPCM voice data
+ ****************************************************************************************
+ */
 void micPut(void)
 {
     // primary or alternate transfer done
@@ -117,7 +137,7 @@ void micPut(void)
     {   
         if (voiceSendFt)
         {
-            // ¹ýÂË
+            // è¿‡æ»¤
             dma_chnl_reload(DMA_PCM_CHAN);
             voiceSendFt--;
             return;

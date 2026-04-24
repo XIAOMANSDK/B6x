@@ -310,7 +310,7 @@ __WEAK void app_init(uint16_t rsn)
         ble_drift_set(1200);
         #endif
 
-        adv_dir_flag = true;// ¶¨Ïò¹ã²¥
+        adv_dir_flag = true;// Direct advertising
     }
 
     // Init RF & Modem
@@ -422,8 +422,8 @@ __WEAK void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
             app_env.curidx = conidx;
             app_state_set(APP_CONNECTED);
 
-            gatt_exmtu(conidx, 247);
-            gapc_update_dle(app_env.curidx,247,LE_MAX_TIME);
+            gatt_exmtu(conidx, BLE_MTU);
+            gapc_update_dle(app_env.curidx, BLE_MTU, LE_MAX_TIME);
 
             gapc_connect_rsp(conidx, BLE_AUTH);
             // Enable profiles by role

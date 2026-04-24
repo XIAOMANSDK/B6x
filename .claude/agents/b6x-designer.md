@@ -2,7 +2,7 @@
 name: b6x-designer
 description: B6x 技术设计专家。通过分析现有代码库模式和约定来设计功能架构，然后提供包含具体创建/修改文件、组件设计、数据流和构建序列的综合实现蓝图。
 tools: Glob, Grep, LS, Read, NotebookRead, WebFetch, TaskCreate, TaskUpdate, TaskList, WebSearch, KillShell, BashOutput
-model: inherit
+model: opus
 color: green
 skills:
   - mcp-usage

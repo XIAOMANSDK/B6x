@@ -81,6 +81,33 @@ def _get_attr(obj, key, default=None):
         return obj.get(key, default)
     return getattr(obj, key, default)
 
+def _normalize_pin_name(pin_number: str, gpio_name: str = "") -> str:
+    """Normalize pin name to GPIO format (e.g., 'PADA2' -> 'PA02').
+
+    Uses the GPIO function name if available, otherwise converts
+    PAD naming convention to GPIO naming convention.
+
+    Args:
+        pin_number: Raw pin name from Excel (e.g., 'PADA2', 'PA00')
+        gpio_name: GPIO function name (e.g., 'PA02'), takes priority
+
+    Returns:
+        Normalized pin name in 'PAxx' format
+    """
+    if gpio_name:
+        return gpio_name
+
+    # Fallback: convert PADA0 -> PA00, PADA2 -> PA02
+    import re
+    m = re.match(r'PAD([A-Z])(\d+)', pin_number, re.IGNORECASE)
+    if m:
+        port = m.group(1).upper()
+        num = int(m.group(2))
+        return f"P{port}{num:02d}"
+
+    return pin_number
+
+
 def convert_pin_mux_to_json(entries: List[PinMuxEntry]) -> Dict[str, Any]:
     """Convert pin mux entries to JSON constraint format."""
     # Group by pin
@@ -88,13 +115,24 @@ def convert_pin_mux_to_json(entries: List[PinMuxEntry]) -> Dict[str, Any]:
 
     for entry in entries:
         if entry.pin_number not in pins_dict:
+            # Find GPIO function name for canonical pin name
+            gpio_name = ""
+            if entry.peripheral == "GPIO" and entry.alternate_function:
+                gpio_name = entry.alternate_function
+
             pins_dict[entry.pin_number] = {
-                "pin_name": entry.pin_number,
+                "pin_name": _normalize_pin_name(entry.pin_number, gpio_name),
                 "functions": [],
                 "default_function": None,
                 "peripherals": set(),
                 "constraints": []
             }
+        else:
+            # Update GPIO name if found in later entries
+            if entry.peripheral == "GPIO" and entry.alternate_function:
+                pins_dict[entry.pin_number]["pin_name"] = _normalize_pin_name(
+                    entry.pin_number, entry.alternate_function
+                )
 
         pin_data = pins_dict[entry.pin_number]
 
@@ -406,7 +444,7 @@ def load_flash_map_from_yaml(config_path: Path) -> Dict[str, Any]:
             "memory_mapping": config.get('memory_mapping', {}),
             "constraints": config.get('constraints', []),
             "data_source": "yaml_config",
-            "source_file": str(config_path)
+            "source_file": "config/flash_map.yaml"  # Relative path
         }
 
         logger.info(f"Loaded flash map from YAML: {len(regions)} regions for {len(variants)} variants")
@@ -521,7 +559,7 @@ def load_sram_map_from_yaml(config_path: Path) -> Tuple[Dict[str, Any], Dict[str
             "constraints": config.get('constraints', []),
             "ble_library_mapping": config.get('ble_library_mapping', {}),
             "data_source": "yaml_config",
-            "source_file": str(config_path)
+            "source_file": "config/sram_map.yaml"  # Relative path
         }
 
         # Build memory_boundaries.json result
@@ -539,7 +577,7 @@ def load_sram_map_from_yaml(config_path: Path) -> Tuple[Dict[str, Any], Dict[str
                 "blocks": sram_summary.get('blocks', [])
             },
             "data_source": "yaml_config",
-            "source_file": str(config_path)
+            "source_file": "config/sram_map.yaml"  # Relative path
         }
 
         logger.info(f"Loaded SRAM map from YAML: {len(sram_regions)} regions, {len(boundaries)} boundaries")
@@ -1106,7 +1144,7 @@ def build_excel_constraints():
             json_data["domain"] = domain
             if "data_source" not in json_data:
                 json_data["data_source"] = "excel_parsing" if entries else "default_generation"
-            json_data["source_file"] = str(excel_path)
+            json_data["source_file"] = f"doc/SW_Spec/{excel_path.name}"  # Relative path
 
             # Write JSON file
             with open(output_path, 'w', encoding='utf-8') as f:
@@ -1168,7 +1206,7 @@ def build_excel_constraints():
     report_path = output_dir / "build_report.json"
     report = {
         "build_date": datetime.now().isoformat(),
-        "sdk_root": str(sdk_root),
+        "sdk_root": "<resolved_at_runtime>",  # Portable marker
         "results": {
             "success_count": len(results['success']),
             "skipped_count": len(results['skipped']),

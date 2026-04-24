@@ -218,7 +218,7 @@ att_decl_t ses_atts[SES_ATT_IDX_MAX] =
 uint16_t ses_atts_perm[SESS_ENV_MAX*4] =
 {
     (PROP_IND),
-    (PROP_WC | PROP_WR),  // IOS APP –Ë“™"PROP_WR" Ù–‘.-20250514 WHL
+    (PROP_WC | PROP_WR),  // IOS APP ÈúÄË¶Å"PROP_WR"Â±ûÊÄß.-20250514 WHL
     (PROP_RD),  // 3
 
     (PROP_RD),
@@ -360,7 +360,7 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
 
                         if(cli_cfg && (ble_head_nSeq == 1))
                         {
-                            //÷˜∂Ø∑¢ÀÕµ«¬º«Î«Û ECI_REQ_AUTH  UUID:0xFEC8
+                            //‰∏ªÂä®ÂèëÈÄÅÁôªÂΩïËØ∑Ê±Ç ECI_REQ_AUTH  UUID:0xFEC8
 //                            ble_req_auth();
                             fee7_ind_cfg_timer_init();  // delay
                         }
@@ -432,7 +432,6 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
  * @return Result status, LE_SUCCESS or Error Reason
  ****************************************************************************************
  */
-#include "proto.h"
 
 static bool upHandle = true;
 

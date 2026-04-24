@@ -16,7 +16,7 @@ struct gsm_state {
     int16_t  e[50];         /* For code.c */
     int16_t  z1;            /* Preprocessing state */
     int32_t  L_z2;
-    int16_t  mp;
+    int      mp;
     int16_t  u[8];          /* LPC coefficients */
     int16_t  LARpp[2][8];   /* LAR parameters */
     int16_t  j;             /* Frame counter */
@@ -52,24 +52,10 @@ typedef gsm_byte gsm_frame[33];
 #define GSM_OPT_FRAME_INDEX 5
 #define GSM_OPT_FRAME_CHAIN 6
 
-/* Core decode function */
-void gsm_decode_frame(gsm_state_t *S, uint8_t *c, int16_t *target);
-
 /* GSM library interface functions */
 gsm gsm_create(void);
 void gsm_destroy(gsm S);
 int gsm_decode(gsm S, gsm_byte *c, gsm_signal *target);
-
-/* Helper function declarations */
-void gsm_unpack_bits(const uint8_t *c, int16_t *LARc, int16_t *Nc,
-                     int16_t *bc, int16_t *Mc, int16_t *xmaxc, int16_t *xmc);
-void gsm_lar_to_coefficients(gsm_state_t *S, const int16_t *LARc, int16_t *rp);
-void gsm_rpe_decode(gsm_state_t *S, int16_t xmaxc, int16_t Mc,
-                    const int16_t *xmc, int16_t *erp);
-void gsm_ltp_synthesis(gsm_state_t *S, int16_t Nc, int16_t bc, int16_t *drp);
-void gsm_short_term_synthesis_filter(gsm_state_t *S, const int16_t *rp,
-                                      int16_t *s);
-void gsm_post_processing(gsm_state_t *S, int16_t *s);
 
 #ifdef __cplusplus
 }

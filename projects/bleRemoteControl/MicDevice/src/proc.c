@@ -34,7 +34,7 @@ extern void kb_scan(void);
  * DEFINES
  ****************************************************************************************
  */
-uint8_t adv_dir_flag = 0;  // 定向广播
+bool adv_dir_flag = false;  // Direct advertising flag
 
 static void sleep_proc(void)
 {
@@ -45,7 +45,7 @@ static void sleep_proc(void)
         #if (VOICE)
         if (SADC->CTRL.SADC_DMAC_EN)
         {
-            // 语音不睡眠
+            // Mic active, skip sleep
             keys_proc();
             return;
         }

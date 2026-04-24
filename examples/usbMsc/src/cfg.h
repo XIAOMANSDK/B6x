@@ -26,7 +26,10 @@
 #define USB_DBG_LEVEL       (1)
 #endif
 
-/// Type 1=spi Flash, 0=internal Flash
+/// MSC Debug: 0=Disable, 1=Enable (verbose SCSI/CBW/CSW logging)
+#define DBG_MSC             (0)
+
+/// Flash Type: 0=Internal Flash, 1=SPI Flash
 #define MSC_FLASH_TYPE      (0)
 
 #endif  //_APP_CFG_H_

@@ -48,7 +48,7 @@ enum PT_ERR_CODE
 #define PAYL_DAT_MAX_SIZE  (0xFF)
 #define PKT_PAYL_MAX_SIZE  (PAYL_DAT_MAX_SIZE)
 
-#define PKT_MAX_SIZE       (((PKT_HDR_SIZE + PKT_PAYL_MAX_SIZE)+3)/4)*4
+#define PKT_MAX_SIZE       ((((PKT_HDR_SIZE + PKT_PAYL_MAX_SIZE)+3)/4)*4)
 
 enum PKT_FMT
 {

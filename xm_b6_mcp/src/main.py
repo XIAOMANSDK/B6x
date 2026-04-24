@@ -271,7 +271,9 @@ Register Search Patterns (scope="registers"):
     - Fuzzy: "baud" -> searches in register names and descriptions
 
 Next Steps:
-    After search, use inspect_node(item_id) to get detailed information""",
+    After search, use inspect_node(item_id) to get detailed information.
+    item_id format: "api:name", "reg:name", "ex:path", "macro:name", "doc:id"
+    All item_id values from search results can be passed directly to inspect_node.""",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -287,19 +289,29 @@ Next Steps:
         ),
         Tool(
             name="inspect_node",
-            description="""Inspect a specific SDK node (API, register, doc) with detailed view
+            description="""Inspect a specific SDK node (API, register, doc, example, macro) with detailed view
 
 Use this after search_sdk() to get detailed information about a specific item.
 
 Args:
-    node_id: Unique node identifier (e.g., "api:B6x_UART_Init", "reg:UART1_CTRL")
-    view_type: Type of view - "auto", "summary", "definition", "implementation", etc.
+    node_id: Unique node identifier in "type:identifier" format. MUST use the item_id from search_sdk results directly.
+        Examples: "api:B6x_UART_Init", "reg:UART1_CTRL", "ex:examples/spiMaster/src/main.c", "macro:SPIM_CR_DFLT", "doc:doc_xxx"
+    view_type: Type of view (default: "auto")
+        - All types: "auto", "summary"
+        - API: "definition", "implementation", "dependencies", "call_chain", "usage_examples", "full"
+        - Register: "register_info", "bit_fields", "memory_map", "full"
+        - Document: "doc_content", "doc_summary", "full"
+        - Example: "full"
+        - Macro: "definition"
     include_context: Include related nodes and context (default: true)""",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "node_id": {"type": "string", "description": "Node identifier"},
-                    "view_type": {"type": "string", "default": "auto"},
+                    "node_id": {"type": "string", "description": 'Node identifier in "type:id" format (e.g. "api:B6x_UART_Init"). Use item_id from search_sdk results.'},
+                    "view_type": {"type": "string", "default": "auto",
+                                  "enum": ["auto", "summary", "full", "definition", "implementation", "dependencies",
+                                           "call_chain", "usage_examples", "register_info", "bit_fields", "memory_map",
+                                           "doc_content", "doc_summary"]},
                     "include_context": {"type": "boolean", "default": True}
                 },
                 "required": ["node_id"]

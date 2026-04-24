@@ -29,9 +29,12 @@
  ****************************************************************************************
  */
 
-#define BLE_MAX_LEN  20
-#define NULL_CNT     20
-#define HOPPING_INV  _MS(200)
+#define BLE_MAX_LEN       20
+#define NULL_CNT          20
+#define HOPPING_INV       _MS(200)
+#define BLE_FREQ_CHAN_NUM 40    /**< BLE frequency channels (2402-2480 MHz) */
+#define TMR_ACTIVE_FLAG   0x80U /**< Bitmask flag for active hopping timer */
+#define XOSC_CAP_MASK     0x3FU /**< 6-bit mask for XOSC16M CAP trim */
 
 enum uart_cmd
 {
@@ -53,13 +56,26 @@ enum uart_cmd
 static uint8_t buff[BLE_MAX_LEN];
 static uint16_t buff_len = 0;
 
-volatile uint8_t g_hopping_idx, g_hopping_timer_id;
+volatile uint8_t g_hopping_idx = 0;
+volatile uint8_t g_hopping_timer_id = 0;
 
+/**
+ ****************************************************************************************
+ * @brief Hopping timer callback - cycles through BLE channels.
+ *
+ * @param[in] id    Timer ID (unused)
+ *
+ * @return Next timer interval in ticks
+ ****************************************************************************************
+ */
 static tmr_tk_t hopping_timer(uint8_t id)
 {
     (void)id;
-    // 0 ~ 39 (2402M ~ 2480M)
-    g_hopping_idx = (g_hopping_idx % 40);
+
+    if (g_hopping_idx >= BLE_FREQ_CHAN_NUM)
+    {
+        g_hopping_idx = 0;
+    }
 
     fcc_tx_carr(g_hopping_idx);
 
@@ -68,26 +84,36 @@ static tmr_tk_t hopping_timer(uint8_t id)
     return HOPPING_INV;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Start frequency hopping mode if not already active.
+ ****************************************************************************************
+ */
 static void hopping_mode(void)
 {
-    if ((g_hopping_timer_id & 0x80) == 0)
+    if ((g_hopping_timer_id & TMR_ACTIVE_FLAG) == 0)
     {
-        g_hopping_timer_id = sftmr_start(HOPPING_INV, hopping_timer);
+        uint8_t id = sftmr_start(HOPPING_INV, hopping_timer);
 
-        g_hopping_timer_id |= 0x80;
+        if (id != 0)
+        {
+            g_hopping_timer_id = id | TMR_ACTIVE_FLAG;
+        }
     }
 }
 /*
  * FUNCTIONS
  ****************************************************************************************
  */
-/// Uart Data procedure
+/**
+ ****************************************************************************************
+ * @brief Process UART data and dispatch FCC commands.
+ ****************************************************************************************
+ */
 static void data_proc(void)
 {
-    // Todo Loop-Proc
     static uint8_t null_cnt = 0;
     uint16_t len;
-    bool finish = true;
 
     len = uart1Rb_Read(&buff[buff_len], BLE_MAX_LEN - buff_len);
 
@@ -103,7 +129,6 @@ static void data_proc(void)
     {
         if ((buff_len > 0) && (null_cnt++ > NULL_CNT))
         {
-            //finish = true;
             null_cnt = 0;
         }
         else
@@ -114,7 +139,7 @@ static void data_proc(void)
 
     if ((buff[0] != CMD_FCC_TX_HOP) && (g_hopping_timer_id != 0))
     {
-        g_hopping_timer_id &= ~0x80U;
+        g_hopping_timer_id &= ~TMR_ACTIVE_FLAG;
         sftmr_clear(g_hopping_timer_id);
         g_hopping_timer_id = 0;
     }
@@ -136,7 +161,7 @@ static void data_proc(void)
         case CMD_FCC_TX_CARR:
         {
             DEBUG("fcc_tx_carr");
-            if (buff_len > 1)
+            if ((buff_len > 1) && (buff[1] < BLE_FREQ_CHAN_NUM))
             {
                 fcc_tx_carr(buff[1]);
             }
@@ -145,7 +170,7 @@ static void data_proc(void)
         case CMD_FCC_RX_CARR:
         {
             DEBUG("fcc_rx_carr");
-            if (buff_len > 1)
+            if ((buff_len > 1) && (buff[1] < BLE_FREQ_CHAN_NUM))
             {
                 fcc_rx_carr(buff[1]);
             }
@@ -154,7 +179,7 @@ static void data_proc(void)
         case CMD_FCC_TX_MOD:
         {
             DEBUG("fcc_tx_mod");
-            if (buff_len > 1)
+            if ((buff_len > 1) && (buff[1] < BLE_FREQ_CHAN_NUM))
             {
                 fcc_tx_mod(buff[1]);
             }
@@ -163,7 +188,7 @@ static void data_proc(void)
         case CMD_FCC_RX_MOD:
         {
             DEBUG("fcc_rx_mod");
-            if (buff_len > 1)
+            if ((buff_len > 1) && (buff[1] < BLE_FREQ_CHAN_NUM))
             {
                 fcc_rx_mod(buff[1]);
             }
@@ -181,7 +206,7 @@ static void data_proc(void)
             if (buff_len > 1)
             {
                 DEBUG("SET_XOSC_TR:0x%02x", buff[1]);
-                APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = buff[1];
+                APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = (buff[1] & XOSC_CAP_MASK);
             }
         } break;
 
@@ -196,12 +221,14 @@ static void data_proc(void)
         } break;
     }
 
-    if (finish)
-    {
-        buff_len = 0;
-    }
+    buff_len = 0;
 }
 
+/**
+ ****************************************************************************************
+ * @brief Main loop entry point for UART command processing.
+ ****************************************************************************************
+ */
 void user_procedure(void)
 {
     data_proc();

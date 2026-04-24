@@ -386,8 +386,13 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
             }
 
         total_indexed = 0
+        total_macros_indexed = 0
+        total_enums_indexed = 0
         total_files_processed = 0
         total_files_cached = 0
+
+        # Store all parse results for statistics
+        all_parse_results = []
 
         # 1. Parse and index Driver APIs
         if driver_api_dir.exists():
@@ -424,9 +429,16 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
                             # Parse only changed files
                             driver_parse_results = parse_directory_full(str(temp_path), "*.h")
                             logger.info(f"Parsed {len(driver_parse_results)} changed header files")
+                            all_parse_results.extend(driver_parse_results)
 
-                            # Build Whoosh index from parse results
-                            count = builder.build_from_parse_results(driver_parse_results, module="driver")
+                            # Build Whoosh index from parse results (including macros and enums)
+                            count = builder.build_from_parse_results(
+                                driver_parse_results,
+                                module="driver",
+                                index_macros=True,
+                                index_enums=True,
+                                sdk_root=paths["sdk_root"]
+                            )
                             total_indexed += count
                             logger.info(f"Indexed {count} driver API entries to Whoosh")
 
@@ -448,9 +460,16 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
 
                     driver_parse_results = parse_directory_full(str(driver_api_dir), "*.h")
                     logger.info(f"Tree-sitter parsed {len(driver_parse_results)} driver header files")
+                    all_parse_results.extend(driver_parse_results)
 
-                    # Build Whoosh index from parse results
-                    count = builder.build_from_parse_results(driver_parse_results, module="driver")
+                    # Build Whoosh index from parse results (including macros and enums)
+                    count = builder.build_from_parse_results(
+                        driver_parse_results,
+                        module="driver",
+                        index_macros=True,
+                        index_enums=True,
+                        sdk_root=paths["sdk_root"]
+                    )
                     total_indexed += count
                     logger.info(f"Indexed {count} driver API entries to Whoosh")
 
@@ -502,9 +521,16 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
                             # Parse only changed files
                             ble_parse_results = parse_directory_full(str(temp_path), "*.h")
                             logger.info(f"Parsed {len(ble_parse_results)} changed header files")
+                            all_parse_results.extend(ble_parse_results)
 
-                            # Build Whoosh index from parse results
-                            count = builder.build_from_parse_results(ble_parse_results, module="ble")
+                            # Build Whoosh index from parse results (including macros and enums)
+                            count = builder.build_from_parse_results(
+                                ble_parse_results,
+                                module="ble",
+                                index_macros=True,
+                                index_enums=True,
+                                sdk_root=paths["sdk_root"]
+                            )
                             total_indexed += count
                             logger.info(f"Indexed {count} BLE API entries to Whoosh")
 
@@ -526,9 +552,15 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
 
                     ble_parse_results = parse_directory_full(str(ble_api_dir), "*.h")
                     logger.info(f"Tree-sitter parsed {len(ble_parse_results)} BLE header files")
+                    all_parse_results.extend(ble_parse_results)
 
-                    # Build Whoosh index from parse results
-                    count = builder.build_from_parse_results(ble_parse_results, module="ble")
+                    # Build Whoosh index from parse results (including macros and enums)
+                    count = builder.build_from_parse_results(
+                        ble_parse_results,
+                        module="ble",
+                        index_macros=True,
+                        index_enums=True
+                    )
                     total_indexed += count
                     logger.info(f"Indexed {count} BLE API entries to Whoosh")
 
@@ -545,14 +577,26 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
         else:
             logger.warning(f"BLE API directory not found: {ble_api_dir}")
 
-        # Collect detailed statistics
+        # Collect detailed statistics from parse results
+        total_functions = 0
+        total_macros = 0
+        total_enums = 0
+
+        for result in all_parse_results:
+            # Count functions
+            total_functions += len(result.functions)
+            # Count macros
+            total_macros += len(result.macros)
+            # Count enums
+            total_enums += len(result.enums)
+
         api_stats = {
             "total_indexed": total_indexed,
             "by_peripheral": {},
             "by_type": {
-                "functions": total_indexed,
-                "macros": 0,
-                "enums": 0
+                "functions": total_functions,
+                "macros": total_macros,
+                "enums": total_enums
             },
             "incremental": incremental and cache_manager is not None,
             "files_processed": total_files_processed,
@@ -560,13 +604,7 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
         }
 
         # Classify by peripheral (only if we have parse results)
-        all_results = []
-        if 'driver_parse_results' in locals():
-            all_results.extend(driver_parse_results)
-        if 'ble_parse_results' in locals():
-            all_results.extend(ble_parse_results)
-
-        for result in all_results:
+        for result in all_parse_results:
             peripheral = classify_peripheral(result.file_path)
             api_stats["by_peripheral"][peripheral] = \
                 api_stats["by_peripheral"].get(peripheral, 0) + len(result.functions)
@@ -576,6 +614,8 @@ def build_api_index(paths: dict, cache_manager=None, incremental=False) -> dict:
         logger.info(f"API Index Statistics:")
         logger.info(f"  Total APIs: {api_stats['total_indexed']}")
         logger.info(f"  Functions: {api_stats['by_type']['functions']}")
+        logger.info(f"  Macros: {api_stats['by_type']['macros']}")
+        logger.info(f"  Enums: {api_stats['by_type']['enums']}")
 
         if api_stats["incremental"]:
             logger.info(f"  Build Mode: INCREMENTAL")

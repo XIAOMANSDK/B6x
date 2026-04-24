@@ -1,6 +1,6 @@
 {
-  "build_date": "2026-03-17T18:05:45.846636",
-  "sdk_root": ".",
+  "build_date": "2026-04-22T16:18:56.922622",
+  "sdk_root": "<resolved_at_runtime>",
   "results": {
     "success_count": 6,
     "skipped_count": 0,

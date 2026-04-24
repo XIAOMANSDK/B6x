@@ -21,19 +21,15 @@
     #define dowl(x)         do { x } while(__LINE__ == -1)
 #endif
 
-#if !defined(BIT)
-    #define BIT(n)          (1UL << (n))
-#endif
-
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <inttypes.h>
 #include "string.h"
-#include "compiler.h"
 
 #include "b6x.h"
 #include "rom.h"
+#include "utils.h"
 
 #include "core.h"
 #include "dma.h"

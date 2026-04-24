@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\rco.h",
+  "file_path": "drivers/api/rco.h",
   "functions": [
     {
       "name": "rc32k_conf",
@@ -18,7 +18,7 @@
       ],
       "brief_description": "Enable and Config rc32k ",
       "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] ref_clk   reference clock for calibration @see enum rc32k_ref_clk\n@param[in] cal_ctrl  config control for calibration @see enum rc32k_cal_ctrl\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 68,
       "is_exported": false,
       "implementation_file": "",
@@ -37,7 +37,7 @@
       ],
       "brief_description": "Start rc32k calibration, after rc32k_conf(). ",
       "detailed_description": "***************************************************************************************\n@return rc32k trim value\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 77,
       "is_exported": false,
       "implementation_file": "",
@@ -56,7 +56,7 @@
       ],
       "brief_description": "Direct Set trim value to calibrate rc32k. ",
       "detailed_description": "***************************************************************************************\n@param[in] value   calib-target value\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 87,
       "is_exported": false,
       "implementation_file": "",
@@ -75,7 +75,7 @@
       ],
       "brief_description": "Get current value of rc32k calibrated or used. ",
       "detailed_description": "***************************************************************************************\n@return calib-target value\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 97,
       "is_exported": false,
       "implementation_file": "",
@@ -94,7 +94,7 @@
       ],
       "brief_description": "Direct Set trim value to calibrate rc16m. ",
       "detailed_description": "***************************************************************************************\n@param[in] value   calib-target value 0~63\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 107,
       "is_exported": false,
       "implementation_file": "",
@@ -113,7 +113,7 @@
       ],
       "brief_description": "Get current value of rc16m calibrated or used. ",
       "detailed_description": "***************************************************************************************\n@return calib-target value 0~63\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 117,
       "is_exported": false,
       "implementation_file": "",
@@ -132,7 +132,7 @@
       ],
       "brief_description": "Start rc16m calibration in dichotomy. ",
       "detailed_description": "***************************************************************************************\n@return rc16m trim value (0~63)\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 127,
       "is_exported": false,
       "implementation_file": "",
@@ -163,7 +163,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 23
     },
     {
@@ -192,7 +192,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\rco.h",
+      "file_path": "drivers/api/rco.h",
       "line_number": 31
     }
   ],

@@ -13,7 +13,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "hidkey.h"
 
 
 void keys_init(void);

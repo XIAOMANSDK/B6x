@@ -24,7 +24,6 @@
 #define DEBUG(format, ...)    debug("<%s,%d>" format "\r\n", __MODULE__, (int)__LINE__, ##__VA_ARGS__)
 #else
 #define DEBUG(format, ...)
-#define debugHex(dat, len)
 #endif
 
 #define BLE_SLP_MS(ms)           ((ms) << 5)
@@ -34,7 +33,7 @@ extern void kb_scan(void);
  * DEFINES
  ****************************************************************************************
  */
-uint8_t adv_dir_flag = 0;  // ∂®œÚπ„≤•
+uint8_t adv_dir_flag = 0;  // ÂÆöÂêëÂπøÊí≠
 
 static void sleep_proc(void)
 {
@@ -45,7 +44,7 @@ static void sleep_proc(void)
         #if (VOICE)
         if (SADC->CTRL.SADC_DMAC_EN)
         {
-            // ”Ô“Ù≤ªÀØ√ﬂ
+            // ËØ≠Èü≥‰∏çÁù°Áú†
             keys_proc();
             return;
         }

@@ -24,7 +24,7 @@
 #define FONT_HEIGHT     18
 
 
-extern void delayMs(uint32_t ms);
+extern void delay_ms(uint32_t ms);
 
 void slide_loop(void)
 {
@@ -32,13 +32,13 @@ void slide_loop(void)
     lcd_wait_done();
     lcd_draw_image(87, 30, FONT_WIDTH, FONT_HEIGHT, gImage_steam_font);
     lcd_wait_done();
-    delayMs(1000);
+    delay_ms(1000);
 
     lcd_draw_image(0, 76, IMAGE_WIDTH, IMAGE_HEIGHT, gImage_coffee);
     lcd_wait_done();
     lcd_draw_image(87, 30, FONT_WIDTH, FONT_HEIGHT, gImage_coffee_font);
     lcd_wait_done();
-    delayMs(1000);
+    delay_ms(1000);
 }
 
 #endif

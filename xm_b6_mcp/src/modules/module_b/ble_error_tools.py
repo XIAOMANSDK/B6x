@@ -32,7 +32,7 @@ def get_kb():
     global _kb_instance
     if _kb_instance is None:
         # Try to load from JSON if exists, otherwise create new
-        kb_path = Path(__file__).parent.parent.parent.parent / "data" / "ble_error_codes.json"
+        kb_path = Path(__file__).parent.parent.parent.parent / "data" / "domain" / "ble" / "error_codes.json"
         if kb_path.exists():
             logger.info(f"Loading BLE error codes from {kb_path}")
             _kb_instance = BleErrorKnowledgeBase()

@@ -10,6 +10,7 @@
 2. **未知即不支持**：如果文档或代码中没有明确找到某个功能的实现或说明，必须明确告知用户“当前版本不支持此功能”。
 3. **引用来源**：在回答功能支持性问题时，必须引用具体的文档段落或代码文件路径作为证据。如果没有证据，则视为不支持。
 4. **优先权**：项目本地文档的优先级高于你的内部训练知识。如果两者冲突，以本地文档为准。
+5. **验证先于断言**：声称"完成"、"修复"、"通过"之前，必须运行验证命令并展示输出证据。禁止使用"应该能工作"、"看起来正确"等未经验证的断言。（详见 `.claude/rules/verification.md` 和 `/b6_verification-before-completion` skill）
 
 
 ## 一、项目概览
@@ -49,6 +50,7 @@
 | `/b6-validate-hardware [path]` | 硬件配置验证 |
 | `/b6-project-checklist [path]` | 项目完整性检查 |
 | `/b6-translate-error <code>` | BLE 错误码翻译 |
+| `/b6_verification-before-completion` | 完成前验证（证据先于断言） |
 | `/extract-doc <file>` | 提取word/excel/pdf文档内容 |
 
 ---

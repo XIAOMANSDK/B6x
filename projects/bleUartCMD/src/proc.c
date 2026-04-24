@@ -3,7 +3,7 @@
  *
  * @file proc.c
  *
- * @brief user procedure.
+ * @brief UART command processor for BLE UART CMD protocol.
  *
  ****************************************************************************************
  */
@@ -37,32 +37,315 @@
 #define SES_ATT_UUID128(uuid)     { 0x16, 0x0A, 0x10, 0x40, 0xD1, 0x9F, 0x4C, 0x6C, \
                                     0xB4, 0x55, 0xE3, 0xF7, (uuid) & 0xFF, (uuid >> 8) & 0xFF, 0x00, 0x00 }
 
+/// Magic number replacements
+#define BLE_STATUS_MASK           0x07   ///< Visibility/status bits mask (3 bits)
+#define UART_MCR_FLOW_MSK         0x0C   ///< UART MCR flow control bits (AFCEN | RTSCTRL)
+#define ADC_10BIT_MAX             0x3FF  ///< 10-bit ADC max value
+#define WAKE_PIN_MASK             0x1F   ///< Wake GPIO pin field mask (5 bits)
+#define WAKE_LEVEL_BIT            0x80   ///< Wake GPIO level bit (bit 7)
+#define GPIO_SWD_PIN_MAX          2      ///< PA00-PA01 are SWD pins
+#define GPIO_RESET_PIN            19     ///< PA19 is reset pin
+#define ADV_DATA_MAX_LEN          31     ///< BLE advertising data max length (GAP_ADV_DATA_LEN)
+#define BLE_HANDLE_LEN            2      ///< BLE attribute handle length in bytes
+#define VOLTAGE_DOUBLE            2      ///< Voltage divider multiplier
+
+/// Flash config write size (words)
+#define FLASH_CFG_WLEN            64
+
+/// Attribute property bit masks
+#define ATT_PROP_READ_MASK        0x03   ///< Broadcast & Read
+#define ATT_PROP_WRITE_MASK       0x0C   ///< WriteWithoutResponse & Write
+#define ATT_PROP_NOTIFY_MASK      0x30   ///< Notify & Indicate
+#define ATT_PROP_EXT_MASK         0xC0   ///< AuthenticatedSignedWrites & ExtendedProperties
+
 __attribute__((aligned (4)))
 SYS_CONFIG sysCfg =
 {
     .baudrate     = 115200,
     .tx_power     = TX_0DB_P,
-    // 1. union 需要一层括号，内部匿名 struct 需要一层括号
     .stauts       = { { .BLE_DIS = ADV_ENBLE } },
-
-    // 2. 数组初始化建议确保宏定义与结构体定义匹配
     .name_info    = { .len = sizeof(BLE_DEV_NAME), .name = BLE_DEV_NAME },
-
-    .addrL        = { BLE_ADDR }, // 如果 BLE_ADDR 是 {0x01, ...}，这里加一层括号
+    .addrL        = { BLE_ADDR },
     .uuid_len     = ATT_UUID128_LEN,
-
     .uuids        = SES_ATT_UUID128(0x0001),
     .uuidw        = SES_ATT_UUID128(0x0002),
     .uuidn        = SES_ATT_UUID128(0x0003),
-
     .vertion      = FIRM_VERTION,
     .wake_info    = { .iox = PA10 },
 };
 
 /*
+ * LOCAL FUNCTIONS
+ ****************************************************************************************
+ */
+
+/// @brief Handle SET_BLE_ADDR command
+static void cmd_set_ble_addr(struct pt_pkt *pkt)
+{
+    memcpy(sysCfg.addrL.addr, pkt->payl, PLEN_CMD_SET_BLE_ADDR);
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle SET_VISIBILITY command
+static void cmd_set_visibility(struct pt_pkt *pkt)
+{
+    sysCfg.stauts.value = pkt->payl[0] & BLE_STATUS_MASK;
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle SET_BLE_NAME command
+static void cmd_set_ble_name(struct pt_pkt *pkt)
+{
+    if (pkt->len > sizeof(sysCfg.name_info.name))
+    {
+        pt_rsp_cmd_res(pkt->code, PT_ERROR, 0, NULL);
+        return;
+    }
+    sysCfg.name_info.len = pkt->len;
+    memcpy(sysCfg.name_info.name, pkt->payl, pkt->len);
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle SEND_BLE_DATA command
+static void cmd_send_ble_data(struct pt_pkt *pkt)
+{
+    if (app_state_get() == APP_CONNECTED)
+    {
+        uint16_t handle = pkt->payl[0] | ((uint16_t)pkt->payl[1] << 8);
+
+        if (sess_txd_send1(handle, pkt->len - BLE_HANDLE_LEN, &pkt->payl[BLE_HANDLE_LEN]) == LE_SUCCESS)
+            pt_rsp_ok(pkt->code);
+    }
+}
+
+/// @brief Handle SET_UART_FLOW command
+static void cmd_set_uart_flow(struct pt_pkt *pkt)
+{
+    if (pkt->payl[0])
+        uart_hwfc(UART1_PORT, PA_UART1_RTS, PA_UART1_CTS);
+    else
+        UART1->MCR.Word &= ~(UART_MCR_FLOW_MSK);
+
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle SET_UART_BAUD command
+static void cmd_set_uart_baud(struct pt_pkt *pkt)
+{
+    int32_t baud = atoi((char *)&pkt->payl);
+    if (baud <= 0 || baud > 2000000)
+    {
+        pt_rsp_cmd_res(pkt->code, PT_ERROR, 0, NULL);
+        return;
+    }
+    sysCfg.baudrate = (uint32_t)baud;
+    UART1->LCR.BRWEN  = 1;
+    UART1->BRR        = BRR_DIV(sysCfg.baudrate, 16M);
+    UART1->LCR.BRWEN  = 0;
+
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle SET_ADV_DATA command (advertising + scan response)
+static void cmd_set_adv_data(struct pt_pkt *pkt)
+{
+    uint8_t lenA = (ADV_DATA_MAX_LEN < pkt->len) ? ADV_DATA_MAX_LEN : pkt->len;
+    uint8_t lenS = pkt->len - lenA;
+
+    sysCfg.adv_info.lenADV = lenA;
+    memcpy(sysCfg.adv_info.adv, pkt->payl, lenA);
+
+    if (lenS)
+    {
+        if (lenS > ADV_DATA_MAX_LEN)
+            lenS = ADV_DATA_MAX_LEN;
+
+        sysCfg.adv_info.lenSCAN = lenS;
+        memcpy(sysCfg.adv_info.scan, &pkt->payl[lenA], lenS);
+    }
+
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle POWER_REQ command - read battery voltage
+static void cmd_power_req(struct pt_pkt *pkt)
+{
+    (void)pkt;
+
+    if (SADC->SADC_ANA_CTRL.SADC_EN)
+    {
+        uint32_t vdd24 = get_trim_vdd12_voltage() * VOLTAGE_DOUBLE;
+        uint32_t value = (vdd24 * sadc_read(SADC_CH_AIN0, 0)) / ADC_10BIT_MAX;
+        uint8_t adc_data[2];
+        adc_data[0] = (uint8_t)(value / 1000);
+        adc_data[1] = (uint8_t)((value % 1000) / 10);
+        pt_rsp_cmd_res(pkt->code, PT_OK, PLEN_RSP_POWER, adc_data);
+    }
+    else
+    {
+        pt_rsp_cmd_res(pkt->code, PT_ERROR, 0, NULL);
+    }
+}
+
+/// @brief Handle POWER_SET command - enable/disable voltage measurement
+static void cmd_power_set(struct pt_pkt *pkt)
+{
+    if (pkt->payl[0])
+    {
+        GPIO_DIR_CLR(1UL << PA_POWER_ADC);
+        iom_ctrl(PA_POWER_ADC, IOM_ANALOG);
+        sadc_init(SADC_ANA_VREF_2V4);
+        sadc_conf(SADC_CR_DFLT);
+    }
+    else
+    {
+        SADC->SADC_ANA_CTRL.SADC_EN = 0;
+    }
+
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle SET_GPIO command
+static void cmd_set_gpio(struct pt_pkt *pkt)
+{
+    uint8_t io_mode = pkt->payl[0];
+    uint8_t io_x    = pkt->payl[1];
+    uint8_t io_lhud = pkt->payl[2];
+
+    if (io_x < GPIO_SWD_PIN_MAX)
+    {
+        iospc_swdpin();
+    }
+    else if (io_x == GPIO_RESET_PIN)
+    {
+        iospc_rstpin(true);
+    }
+
+    if (io_mode)
+    {
+        if (io_lhud == 0)
+            GPIO_DAT_CLR(BIT(io_x));
+        else
+            GPIO_DAT_SET(BIT(io_x));
+        GPIO_DIR_SET(BIT(io_x));
+    }
+    else
+    {
+        GPIO_DIR_CLR(BIT(io_x));
+        if (io_lhud == 0)
+            io_lhud = IOM_PULLUP;
+        else
+            io_lhud = IOM_PULLDOWN;
+        iom_ctrl(io_x, IOM_INPUT | io_lhud);
+    }
+
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle READ_GPIO command
+static void cmd_read_gpio(struct pt_pkt *pkt)
+{
+    gpio_info_t io_info;
+    io_info.iox = 0;
+
+    if (BIT(pkt->payl[0]) & GPIO_PIN_GET())
+        io_info.level = OE_HIGH;
+    else
+        io_info.level = OE_LOW;
+
+    pt_rsp_cmd_res(pkt->code, PT_OK, PLEN_RSP_GPIO, (uint8_t *)&io_info);
+}
+
+/// @brief Handle LE_SET_ADV_DATA command
+static void cmd_le_set_adv_data(struct pt_pkt *pkt)
+{
+    sysCfg.adv_info.lenADV = pkt->len;
+    memcpy(sysCfg.adv_info.adv, pkt->payl, pkt->len);
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle LE_SET_SCAN_DATA command
+static void cmd_le_set_scan_data(struct pt_pkt *pkt)
+{
+    sysCfg.adv_info.lenSCAN = pkt->len;
+    memcpy(sysCfg.adv_info.scan, pkt->payl, pkt->len);
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle LE_SEND_CONN_UPDATE_REQ command
+static void cmd_le_conn_update(struct pt_pkt *pkt)
+{
+    sysCfg.conn_info.intervalMIN = pkt->payl[0] | ((uint16_t)pkt->payl[1] << 8);
+    sysCfg.conn_info.intervalMAX = pkt->payl[2] | ((uint16_t)pkt->payl[3] << 8);
+    sysCfg.conn_info.latency     = pkt->payl[4] | ((uint16_t)pkt->payl[5] << 8);
+    sysCfg.conn_info.timeout     = pkt->payl[6] | ((uint16_t)pkt->payl[7] << 8);
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle SET_WAKE_GPIO command
+static void cmd_set_wake_gpio(struct pt_pkt *pkt)
+{
+    sysCfg.wake_info.iox      = pkt->payl[0] & WAKE_PIN_MASK;
+    sysCfg.wake_info.level    = pkt->payl[0] & WAKE_LEVEL_BIT;
+    sysCfg.wake_info.delay_us = RD_32(&pkt->payl[1]);
+
+    GPIO_DIR_SET(1UL << sysCfg.wake_info.iox);
+
+    if (sysCfg.wake_info.level)
+        GPIO_DAT_SET(1UL << sysCfg.wake_info.iox);
+    else
+        GPIO_DAT_CLR(1UL << sysCfg.wake_info.iox);
+
+    btmr_delay(16, sysCfg.wake_info.delay_us);
+
+    pt_rsp_ok(pkt->code);
+}
+
+/// @brief Handle ADD_CHARACTERISTIC_UUID command
+static void cmd_add_char_uuid(struct pt_pkt *pkt)
+{
+    uint8_t att_val = pkt->payl[0];
+
+    sess_uuid[sess_uuid_nmb].uuid[12] = pkt->payl[1];
+    sess_uuid[sess_uuid_nmb].uuid[13] = pkt->payl[2];
+    sess_uuid_nmb++;
+
+    pt_rsp_uuid_handle(sess_env[0].start_hdl + sess_inx_nmb + 1);
+
+    ses_atts_perm[ses_perm_nmb++] = ((uint16_t)att_val << 8);
+
+    if (att_val & ATT_PROP_READ_MASK)
+    {
+        SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_READ_CHAR;
+        SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_READ_VAL;
+
+        ses_read_info[sess_read_nmb].length = pkt->payl[3];
+        if (pkt->payl[3] <= sizeof(ses_read_info[0].data))
+        {
+            memcpy(ses_read_info[sess_read_nmb].data, &pkt->payl[4], pkt->payl[3]);
+        }
+        sess_read_nmb++;
+    }
+    else if (att_val & ATT_PROP_WRITE_MASK)
+    {
+        SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_RXD_CHAR;
+        SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_RXD_VAL;
+    }
+    else if (att_val & ATT_PROP_NOTIFY_MASK)
+    {
+        SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_TXD_CHAR;
+        SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_TXD_VAL;
+        SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_TXD_NTF_CFG;
+    }
+    /* else: ATT_PROP_EXT_MASK - no additional attributes */
+}
+
+
+/*
  * FUNCTIONS
  ****************************************************************************************
  */
+
 /// Override - Callback on received data from peer device
 void sess_cb_rxd1(uint16_t handle, uint16_t len, const uint8_t *data)
 {
@@ -72,8 +355,8 @@ void sess_cb_rxd1(uint16_t handle, uint16_t len, const uint8_t *data)
 
 void syscfgInit(void)
 {
-    uint32_t trim_data[64];
-    flash_read(ADDR_OFFSET_CFG, trim_data, 64);
+    uint32_t trim_data[FLASH_CFG_WLEN];
+    flash_read(ADDR_OFFSET_CFG, trim_data, FLASH_CFG_WLEN);
 
     if (trim_data[0] != 0xFFFFFFFF)
     {
@@ -81,443 +364,203 @@ void syscfgInit(void)
     }
 }
 
-/// Uart Data procedure
+/// @brief UART command dispatch table
 void uart_proc(struct pt_pkt *pkt, uint8_t status)
 {
-    // Todo Loop-Proc
     bool bleReset = true;
     bool cfgSave  = true;
 
     if (status != PT_OK)
     {
-        //pt_send_rsp(pkt); // debug
         pt_rsp_cmd_res(pkt->code, status, pkt->len, pkt->payl);
-
         return;
     }
 
     switch (pkt->code)
     {
         case PT_CMD_SET_BLE_ADDR:
-        {
-            memcpy(sysCfg.addrL.addr,  pkt->payl, PLEN_CMD_SET_BLE_ADDR);
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_ble_addr(pkt);
+            break;
 
         case PT_CMD_SET_VISIBILITY:
-        {
-            sysCfg.stauts.value = pkt->payl[0] & 0x07;
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_visibility(pkt);
+            break;
+
         case PT_CMD_SET_BLE_NAME:
-        {
-            sysCfg.name_info.len = pkt->len;
-            memcpy(sysCfg.name_info.name,  pkt->payl, pkt->len);
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_ble_name(pkt);
+            break;
+
         case PT_CMD_SEND_BLE_DATA:
-        {
             bleReset = false;
             cfgSave  = false;
-
-            if (app_state_get() == APP_CONNECTED)
-            {
-                uint16_t handle = pkt->payl[0] | ((uint16_t)pkt->payl[1] << 8);
-
-//                if (sess_txd_send(app_env.curidx, (pkt->len - 2), &pkt->payl[2]) == LE_SUCCESS)
-                if (sess_txd_send1(handle, (pkt->len - 2), &pkt->payl[2]) == LE_SUCCESS)
-                    pt_rsp_ok(pkt->code);
-            }
-        } break;
+            cmd_send_ble_data(pkt);
+            break;
 
         case PT_CMD_STATUS_REQUEST:
-        {
             bleReset = false;
             cfgSave  = false;
-
             pt_rsp_status_res(sysCfg.stauts.value);
-        } break;
+            break;
 
         case PT_CMD_SET_UART_FLOW:
-        {
             bleReset = false;
-
-            if (pkt->payl[0]) // ���� UART ����
-                uart_hwfc(UART1_PORT, PA_UART1_RTS, PA_UART1_CTS);
-            else // �ر� UART ���� bit[3:2] (.AFCEN=1, .RTSCTRL=1)
-                UART1->MCR.Word &= ~(0x0000000C);
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_uart_flow(pkt);
+            break;
 
         case PT_CMD_SET_UART_BAUD:
-        {
             bleReset = false;
-
-            sysCfg.baudrate = atoi((char *)&pkt->payl);
-            // update BaudRate
-            UART1->LCR.BRWEN  = 1;
-            UART1->BRR        = BRR_DIV(sysCfg.baudrate, 16M); // (rcc_sysclk_get() + (baud >> 1)) / baud
-            UART1->LCR.BRWEN  = 0;
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_uart_baud(pkt);
+            break;
 
         case PT_CMD_VERSION_REQUEST:
-        {
             bleReset = false;
             cfgSave  = false;
+            pt_rsp_cmd_res(pkt->code, PT_OK, PLEN_RSP_VERSION, (uint8_t *)&sysCfg.vertion);
+            break;
 
-            pt_rsp_cmd_res(pkt->code, PT_OK, PLEN_RSP_VERTION, (uint8_t *)&sysCfg.vertion);
-        } break;
         case PT_CMD_BLE_DISCONNECT:
-        {
             bleReset = false;
             cfgSave  = false;
-
             gapc_disconnect(app_env.curidx);
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
+
         case PT_CMD_CONFIRM_GKEY:
-        {
             bleReset = false;
             cfgSave  = false;
-
-            if (pkt->payl[0]) // ��Կ��ƥ��
-            {}
-            else // ��Կƥ��
-            {}
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_SET_ADV_DATA:
-        {
-            uint8_t lenA = (31 < pkt->len) ? 31 : pkt->len;
-            uint8_t lenS = pkt->len - lenA;
-
-            sysCfg.adv_info.lenADV = lenA;
-            memcpy(sysCfg.adv_info.adv, pkt->payl, lenA);
-
-            if (lenS)
-            {
-                sysCfg.adv_info.lenSCAN = lenS;
-                memcpy(sysCfg.adv_info.scan, &pkt->payl[lenA], lenS);
-            }
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_adv_data(pkt);
+            break;
 
         case PT_CMD_POWER_REQ:
-        {
             bleReset = false;
             cfgSave  = false;
-
-            if (SADC->SADC_ANA_CTRL.SADC_EN)
-            {
-                uint32_t vdd24    = get_trim_vdd12_voltage()*2;
-
-                uint32_t value;
-                uint8_t adc_data[2];
-                // ��ѹ��·��ѹֵ.  ��ص�ѹ����ݷ�ѹ�������ó�.
-                value = (vdd24*sadc_read(SADC_CH_AIN0, 0))/0x3FF; //((R1/(R1+R2))*VBAT = value)
-
-                adc_data[0] = value/1000;
-                adc_data[1] = value%1000/10;
-                pt_rsp_cmd_res(pkt->code, PT_OK, PLEN_RSP_VERTION, adc_data);
-            }
-            else
-            {
-                pt_rsp_cmd_res(pkt->code, PT_ERROR, 0, NULL);
-            }
-
-        } break;
+            cmd_power_req(pkt);
+            break;
 
         case PT_CMD_POWER_SET:
-        {
             bleReset = false;
-            if (pkt->payl[0])  // ������ѹ���
-            {
-                // Analog Enable
-                GPIO_DIR_CLR(1UL << PA_POWER_ADC);
-                // ADC
-                iom_ctrl(PA_POWER_ADC, IOM_ANALOG);
-                // sadc init
-                sadc_init(SADC_ANA_VREF_2V4);// �ο�Դѡ��2.4V. ������ֵ2.4V(0x3FF).
-
-                sadc_conf(SADC_CR_DFLT);
-            }
-            else  // �رյ�ѹ���
-            {
-                 SADC->SADC_ANA_CTRL.SADC_EN = 0;
-            }
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_power_set(pkt);
+            break;
 
         case PT_CMD_PASSKEY_ENTRY:
-        {
             bleReset = false;
             cfgSave  = false;
-        } break;
+            break;
 
         case PT_CMD_SET_GPIO:
-        {
             bleReset = false;
-
-            uint8_t IO_MODE = pkt->payl[0];
-            uint8_t IO_x    = pkt->payl[1];
-            uint8_t IO_LHUD = pkt->payl[2];
-
-            if (IO_x < 2)
-            {
-                //PA00 PA01
-                iospc_swdpin();
-            }
-            else if (IO_x == 19)
-            {
-                //PA19
-                iospc_rstpin(true);
-            }
-
-            if (IO_MODE)  // ���
-            {
-                IO_LHUD == 0 ? GPIO_DAT_CLR(BIT(IO_x)) : GPIO_DAT_SET(BIT(IO_x));
-                GPIO_DIR_SET(BIT(IO_x));
-            }
-            else // ����
-            {
-                GPIO_DIR_CLR(BIT(IO_x));
-                IO_LHUD == 0 ? (IO_LHUD = IOM_PULLUP) : (IO_LHUD = IOM_PULLDOWN);
-                iom_ctrl(IO_x, IOM_INPUT | IO_LHUD);
-            }
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_gpio(pkt);
+            break;
 
         case PT_CMD_READ_GPIO:
-        {
             bleReset = false;
             cfgSave  = false;
-
-            gpio_info_t io_info;
-            io_info.iox = 0; //pkt->payl[0]; //GPIOx
-
-            if (BIT(pkt->payl[0]) & GPIO_PIN_GET())
-                io_info.level = OE_HIGH;
-            else
-                io_info.level = OE_LOW;
-
-            pt_rsp_cmd_res(pkt->code, PT_OK, PLEN_RSP_GPIO, (uint8_t *)&io_info);
-        } break;
+            cmd_read_gpio(pkt);
+            break;
 
         case PT_CMD_LE_SET_PAIRING:
-        {
             bleReset = false;
-
-            // enum gap_auth
             sysCfg.pair_info.auth = pkt->payl[0];
-
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_LE_SET_ADV_DATA:
-        {
-            sysCfg.adv_info.lenADV = pkt->len;
-            memcpy(sysCfg.adv_info.adv, pkt->payl, pkt->len);
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_le_set_adv_data(pkt);
+            break;
 
         case PT_CMD_LE_SET_SCAN_DATA:
-        {
-            sysCfg.adv_info.lenSCAN = pkt->len;
-            memcpy(sysCfg.adv_info.scan, pkt->payl, pkt->len);
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_le_set_scan_data(pkt);
+            break;
 
         case PT_CMD_LE_SEND_CONN_UPDATE_REQ:
-        {
             bleReset = false;
             cfgSave  = false;
-
-            sysCfg.conn_info.intervalMIN = (pkt->payl[0] | (pkt->payl[1] << 8));
-            sysCfg.conn_info.intervalMAX = (pkt->payl[2] | (pkt->payl[3] << 8));
-            sysCfg.conn_info.latency = (pkt->payl[4] | (pkt->payl[5] << 8));
-            sysCfg.conn_info.timeout = (pkt->payl[6] | (pkt->payl[7] << 8));
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_le_conn_update(pkt);
+            break;
 
         case PT_CMD_LE_SET_ADV_PARM:
-        {
-            sysCfg.advr = (pkt->payl[0] | (pkt->payl[1] << 8));
+            sysCfg.advr = pkt->payl[0] | ((uint16_t)pkt->payl[1] << 8);
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_LE_START_PAIRING:
-        {
             cfgSave  = false;
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_SET_WAKE_GPIO:
-        {
             bleReset = false;
-            sysCfg.wake_info.iox = pkt->payl[0] & 0x1F;
-            sysCfg.wake_info.level = pkt->payl[0] & 0x80;
-            sysCfg.wake_info.delay_us = RD_32(&pkt->payl[1]);
-
-            //
-            GPIO_DIR_SET(1UL << sysCfg.wake_info.iox);
-
-            if (sysCfg.wake_info.level)
-            {
-                GPIO_DAT_SET(1UL << sysCfg.wake_info.iox);
-            }
-            else
-            {
-                GPIO_DAT_CLR(1UL << sysCfg.wake_info.iox);
-            }
-            // system 16M
-            btmr_delay(16, sysCfg.wake_info.delay_us);
-
-            pt_rsp_ok(pkt->code);
-        } break;
+            cmd_set_wake_gpio(pkt);
+            break;
 
         case PT_CMD_SET_TX_POWER:
-        {
             sysCfg.tx_power = pkt->payl[0];
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_LE_CONFIRM_GKEY:
-        {
             bleReset = false;
             cfgSave  = false;
-
-            if (pkt->payl[0]) // ��Կ��ƥ��
-            {
-
-            }
-            else // ��Կƥ��
-            {
-
-            }
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_REJECT_JUSTWORK:
-        {
             cfgSave  = false;
-
-            if (pkt->payl[0]) // �򿪾ܾ� justwork
-            {
-
-            }
-            else // �رվܾ� justwork
-            {
-
-            }
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_RESET_CHIP_REQ:
-        {
             bleReset = false;
             cfgSave  = false;
-
             NVIC_SystemReset();
-        } break;
+            break;
 
         case PT_CMD_LE_SET_FIXED_PASSKEY:
-        {
-
-        } break;
+            break;
 
         case PT_CMD_DELETE_CUSTOMIZE_SERVICE:
-        {
             cfgSave  = false;
             sess_inx_nmb = 8;
             sess_uuid_nmb = 4;
             sess_read_nmb = 1;
             ses_perm_nmb = 3;
-
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_ADD_SERVICE_UUID:
-        {
             cfgSave  = false;
-
             sess_uuid[sess_uuid_nmb].uuid[12] = pkt->payl[0];
-            sess_uuid[sess_uuid_nmb++].uuid[13] = pkt->payl[1];
-
+            sess_uuid[sess_uuid_nmb].uuid[13] = pkt->payl[1];
+            sess_uuid_nmb++;
             SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_SVC;
-
             pt_rsp_ok(pkt->code);
-        } break;
+            break;
 
         case PT_CMD_ADD_CHARACTERISTIC_UUID:
-        {
             cfgSave  = false;
-            uint8_t att_val =  pkt->payl[0];
-            sess_uuid[sess_uuid_nmb].uuid[12] = pkt->payl[1];
-            sess_uuid[sess_uuid_nmb++].uuid[13] = pkt->payl[2];
-
-            pt_rsp_uuid_handle(sess_env[0].start_hdl + sess_inx_nmb + 1);
-
-            ses_atts_perm[ses_perm_nmb++] = ((uint16_t)att_val << 8);
-
-            if (att_val & 0x03)
-            {
-                // Broadcast & Read
-                SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_READ_CHAR;
-                SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_READ_VAL;
-
-                ses_read_info[sess_read_nmb].length = pkt->payl[3];
-                memcpy(ses_read_info[sess_read_nmb++].data, &pkt->payl[4], pkt->payl[3]);
-            }
-            else if (att_val & 0x0C)
-            {
-                // WriteWithoutResponse & Write
-                SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_RXD_CHAR;
-                SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_RXD_VAL;
-            }
-            else if (att_val & 0x30)
-            {
-                // Notify & Indicate
-                SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_TXD_CHAR;
-                SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_TXD_VAL;
-                SES_ATT_IDX[sess_inx_nmb++] = SES_IDX_TXD_NTF_CFG;
-            }
-            else if (att_val & 0xC0)
-            {
-                // AuthenticatedSignedWrites & ExtendedProperties
-
-            }
-
-        } break;
+            cmd_add_char_uuid(pkt);
+            break;
 
         case PT_TEST_CMD_CLOSE_LPM:
-        {
             cfgSave  = false;
-        } break;
+            break;
 
-        default :
-        {
+        default:
             cfgSave  = false;
-        } break;
+            break;
     }
 
     if (bleReset)
-    gapm_reset();
+        gapm_reset();
 
     if (cfgSave)
     {
         flash_page_erase(ADDR_OFFSET_CFG);
-        flash_write(ADDR_OFFSET_CFG, (uint32_t *)&sysCfg, 64);
+        flash_write(ADDR_OFFSET_CFG, (uint32_t *)&sysCfg, FLASH_CFG_WLEN);
     }
 }
 
@@ -529,11 +572,7 @@ static void sleep_proc(void)
     if (lpsta == BLE_IN_SLEEP)
     {
         uint16_t lpret = core_sleep(CFG_WKUP_BLE_EN);
-        //DEBUG("ble sta:%d, wksrc:%X", lpsta, lpret);
-    }
-    else
-    {
-        //DEBUG("ble sta:%d", lpsta);
+        (void)lpret;
     }
 }
 #endif //(CFG_SLEEP)
@@ -553,31 +592,23 @@ void app_conf_fsm(uint8_t evt)
     if (evt == BLE_RESET)
     {
         memset(&app_env, 0, sizeof(app_env));
-
-        // Set device config
         gapm_set_dev(&ble_dev_config, &sysCfg.addrL, NULL);
     }
-    else /*if (evt == BLE_CONFIGURED)*/
+    else
     {
         #if (CFG_SLEEP)
-        // Set Sleep duration
-
         #if (RC32K_CALIB_PERIOD)
         ke_timer_set(APP_TIMER_RC32K_CORR, TASK_APP, RC32K_CALIB_PERIOD);
         #endif //(RC32K_CALIB_PERIOD)
         #endif //(CFG_SLEEP)
 
         app_state_set(APP_IDLE);
-
-        // Create Profiles
         app_prf_create();
 
-        // Create Activities
         if (sysCfg.stauts.BLE_DIS)
         {
             app_actv_create();
         }
-
     }
 }
 
@@ -588,7 +619,6 @@ void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
     {
         case BLE_CONNECTED:
         {
-            // Connected state, record Index
             app_env.curidx = conidx;
             app_state_set(APP_CONNECTED);
 
@@ -596,8 +626,6 @@ void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
             pt_rsp_le_conn_rep();
 
             gapc_connect_rsp(conidx, GAP_AUTH_REQ_NO_MITM_NO_BOND);
-
-            // Enable profiles by role
         } break;
 
         case BLE_DISCONNECTED:
@@ -608,20 +636,15 @@ void app_conn_fsm(uint8_t evt, uint8_t conidx, const void* param)
             pt_rsp_le_dis_rep();
 
             #if (BLE_EN_ADV)
-            // Slave role, Restart Advertising
             app_adv_action(ACTV_START);
             #endif //(BLE_EN_ADV)
         } break;
 
         case BLE_BONDED:
-        {
-            // todo, eg. save the generated slave's LTK to flash
-        } break;
+            break;
 
         case BLE_ENCRYPTED:
-        {
-            // todo
-        } break;
+            break;
 
         default:
             break;

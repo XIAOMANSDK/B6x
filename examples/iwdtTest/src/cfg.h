@@ -3,7 +3,7 @@
  *
  * @file cfg.h
  *
- * @brief App Configure MACRO, --preinclude
+ * @brief Application configuration macros (--preinclude)
  *
  ****************************************************************************************
  */
@@ -14,4 +14,4 @@
 /// Debug Mode: 0=Disable, 1=via UART, 2=RTT Viewer
 #define DBG_MODE            (1)
 
-#endif  //_APP_CFG_H_
+#endif /* _APP_CFG_H_ */

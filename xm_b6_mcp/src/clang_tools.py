@@ -331,6 +331,10 @@ def validate_analysis_request(arguments: dict) -> tuple:
     if not isinstance(code, str):
         return False, "Parameter 'code' must be a string"
 
+    MAX_CODE_LENGTH = 2000
+    if len(code) > MAX_CODE_LENGTH:
+        return False, f"Code exceeds maximum length of {MAX_CODE_LENGTH} characters (INPUT_TOO_LARGE)"
+
     analysis_type = arguments.get("type", "refs")
     valid_types = ["refs", "type", "check"]
     if analysis_type not in valid_types:

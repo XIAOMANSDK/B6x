@@ -84,6 +84,11 @@ uint16_t ble_head_nSeq = 1;
 
 #if !(DBG_SESS)
 /// Override - Callback on received data from peer device
+/**
+ ****************************************************************************************
+ * @brief BLE session data received callback
+ ****************************************************************************************
+ */
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     uart_send(UART1_PORT, len, data);
@@ -270,7 +275,7 @@ void ble_req_data(void)
     sess_ind_send(app_env.curidx, BLE_REQ_DATA_LEN, buff);
 }
 
-uint8_t buffR[BLE_DATA_LEN_MAX];
+static uint8_t buffR[BLE_DATA_LEN_MAX];
 
 void ble_parser_sch(void)
 {
@@ -281,7 +286,7 @@ void ble_parser_sch(void)
             uint16_t length = uart1_size();
             uint16_t pkt_len = (((uint16_t)uart1_rxd.data[(uart1_rxd.tail+2)%RXD_BUFF_SIZE] << 8) | uart1_rxd.data[(uart1_rxd.tail+3)%RXD_BUFF_SIZE]);
 
-            if (length >= pkt_len)
+            if (pkt_len <= sizeof(buffR) && length >= pkt_len)
             {
               uart1_read(buffR, pkt_len);
 
@@ -291,7 +296,7 @@ void ble_parser_sch(void)
         }
         else
         {
-            uart1_rxd.tail++;
+            uart1_rxd.tail = (uart1_rxd.tail + 1) % RXD_BUFF_SIZE;
         }
      }
 }
@@ -326,13 +331,7 @@ void ble_parser_rsp(struct pt_pkt *pkt, uint16_t status)
         } break;
 
         case ECI_push_recvData:
-        {
-        }
-
         case ECI_push_switchView:
-        {
-        }
-
         case ECI_push_switchBackgroud:
         {
             debugHex((uint8_t *)pkt, pkt_len);

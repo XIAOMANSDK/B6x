@@ -312,7 +312,13 @@ static void lcd_write_cmd(uint8_t cmd, uint8_t plen, const uint8_t *param)
     lcd_cs_high();
 }
 
-static void lcd_init_seq(const uint8_t *seq)
+static /**
+ ****************************************************************************************
+ * @brief Initialize LCD controller with configured orientation
+ * @param[in]  void
+ ****************************************************************************************
+ */
+void lcd_init_seq(const uint8_t *seq)
 {
     if (seq == NULL) return;
 
@@ -383,7 +389,7 @@ static void lcd_set_window(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 }
 
 /// Read flash data in words, faster than XIP
-__SRAMFN void flash_dread(uint32_t offset, uint32_t *buff, uint32_t wlen)
+__SRAMFN static void flash_dread(uint32_t offset, uint32_t *buff, uint32_t wlen)
 {
     GLOBAL_INT_DISABLE();
 
@@ -478,11 +484,6 @@ void lcd_wait_done(void)
 
 bool lcd_fill_color(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t rgb565)
 {
-    if (lcd_env.state == LS_BUSY) {
-        return  false;
-    }
-    //lcd_env.state = LS_BUSY;
-
     // Set axis window
     lcd_set_window(x, y, w, h);
 
@@ -502,17 +503,11 @@ bool lcd_fill_color(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t rgb
 
     lcd_cs_high();
 
-    //lcd_env.state = LS_IDLE;
     return true;
 }
 
 bool lcd_fill_pixel(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16_t *pixel)
 {
-    if (lcd_env.state == LS_BUSY) {
-        return  false;
-    }
-    //lcd_env.state = LS_BUSY;
-
     // Set axis window
     lcd_set_window(x, y, w, h);
 
@@ -535,7 +530,6 @@ bool lcd_fill_pixel(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const uint16
 
     lcd_cs_high();
 
-    //lcd_env.state = LS_IDLE;
     return true;
 }
 
@@ -586,12 +580,11 @@ bool lcd_draw_image(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const void *
 
 bool lcd_select(int id)
 {
-    if (lcd_env.state != LS_BUSY) {
-        lcd_env.selId = id;
-        return true;
-    } else {
+    if (lcd_env.state == LS_BUSY) {
         return false;
     }
+    lcd_env.selId = id;
+    return true;
 }
 
 void lcd_reset(void)

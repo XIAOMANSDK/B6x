@@ -14,7 +14,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\btmr.h",
+    "file_path": "drivers/api/btmr.h",
     "has_implementation": true
   },
   {
@@ -32,7 +32,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\btmr.h",
+    "file_path": "drivers/api/btmr.h",
     "has_implementation": true
   },
   {
@@ -46,7 +46,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\core.h",
+    "file_path": "drivers/api/core.h",
     "has_implementation": true
   },
   {
@@ -60,7 +60,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\core.h",
+    "file_path": "drivers/api/core.h",
     "has_implementation": true
   },
   {
@@ -74,7 +74,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\core.h",
+    "file_path": "drivers/api/core.h",
     "has_implementation": true
   },
   {
@@ -92,7 +92,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\core.h",
+    "file_path": "drivers/api/core.h",
     "has_implementation": true
   },
   {
@@ -106,7 +106,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\core.h",
+    "file_path": "drivers/api/core.h",
     "has_implementation": true
   },
   {
@@ -120,7 +120,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\core.h",
+    "file_path": "drivers/api/core.h",
     "has_implementation": true
   },
   {
@@ -138,7 +138,7 @@
         "name": "unique_id"
       }
     ],
-    "file_path": "./drivers\\api\\core.h",
+    "file_path": "drivers/api/core.h",
     "has_implementation": true
   },
   {
@@ -152,7 +152,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -166,7 +166,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -184,7 +184,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -198,7 +198,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -224,7 +224,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -238,7 +238,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -252,7 +252,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -270,7 +270,7 @@
         "name": "len"
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -288,7 +288,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -302,7 +302,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\dma.h",
+    "file_path": "drivers/api/dma.h",
     "has_implementation": true
   },
   {
@@ -316,7 +316,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\exti.h",
+    "file_path": "drivers/api/exti.h",
     "has_implementation": true
   },
   {
@@ -330,7 +330,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\exti.h",
+    "file_path": "drivers/api/exti.h",
     "has_implementation": true
   },
   {
@@ -348,7 +348,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\exti.h",
+    "file_path": "drivers/api/exti.h",
     "has_implementation": true
   },
   {
@@ -362,7 +362,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\exti.h",
+    "file_path": "drivers/api/exti.h",
     "has_implementation": true
   },
   {
@@ -376,7 +376,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -390,7 +390,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -404,7 +404,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -426,7 +426,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -448,7 +448,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -462,7 +462,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -484,7 +484,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -506,7 +506,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -520,7 +520,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\flash.h",
+    "file_path": "drivers/api/flash.h",
     "has_implementation": true
   },
   {
@@ -534,7 +534,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -556,7 +556,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -574,7 +574,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -604,7 +604,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -626,7 +626,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -656,7 +656,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -678,7 +678,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -700,7 +700,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -722,7 +722,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -740,7 +740,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -766,7 +766,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -792,7 +792,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -806,7 +806,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -832,7 +832,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\fshc.h",
+    "file_path": "drivers/api/fshc.h",
     "has_implementation": false
   },
   {
@@ -841,7 +841,7 @@
     "detailed": "",
     "return_type": "uint32_t",
     "parameters": [],
-    "file_path": "./drivers\\api\\gpio.h",
+    "file_path": "drivers/api/gpio.h",
     "has_implementation": false
   },
   {
@@ -863,7 +863,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -877,7 +877,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -891,7 +891,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -905,7 +905,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -923,7 +923,7 @@
         "name": "data"
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -941,7 +941,7 @@
         "name": "buff"
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -963,7 +963,7 @@
         "name": "buff"
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -985,7 +985,7 @@
         "name": "data"
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -1011,7 +1011,7 @@
         "name": "buff"
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -1037,7 +1037,7 @@
         "name": "data"
       }
     ],
-    "file_path": "./drivers\\api\\i2c.h",
+    "file_path": "drivers/api/i2c.h",
     "has_implementation": true
   },
   {
@@ -1059,7 +1059,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1081,7 +1081,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1099,7 +1099,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1121,13 +1121,13 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
     "name": "iocsc_spis",
     "brief": "配置USB DP/DM引脚（固定PA06 PA07，高阻模式）",
-    "detailed": "@param[in] pad   IO引脚编号\n@param[in] fsel  模拟功能选择 @see enum csc_fsel (17~24)\n@note 配置指定IO引脚为模拟观察输出功能\n/\nvoid iocsc_observe(uint8_t pad, uint8_t fsel);\n@param[in] clk  选择的时钟类型 @see enum clk_out\n@note 配置PA05引脚为时钟输出功能，支持多种时钟源选择\n/\nvoid iospc_clkout(uint8_t clk);\n@note 配置USB数据引脚为高阻模式，用于USB通信\n/\nvoid iospc",
+    "detailed": "@param[in] pad   IO引脚编号\n@param[in] fsel  模拟功能选择 @see enum csc_fsel (17~24)\n@note 配置指定IO引脚为模拟观察输出功能\n/\nvoid iocsc_observe(uint8_t pad, uint8_t fsel);\n@param[in] clk  选择的时钟类型 @see enum clk_out\n@note 配置PA05引脚为时钟输出功能，支持多种时钟源选择\n/\nvoid iospc_clkout(uint8_t clk);\n@note 配置USB数据引脚为高阻模式，用于USB通信\n/\nvoid iospc_",
     "return_type": "void",
     "parameters": [
       {
@@ -1147,13 +1147,13 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
     "name": "iocsc_ctmr_chnl",
     "brief": "配置复位引脚功能（固定PA19）",
-    "detailed": "void iospc_swdpin(void);\n@param[in] as_gpio  True-作为GPIO，False-作为nRESET\n@note 配置PA19引脚功能，可选择作为普通GPIO或系统复位引脚\n/\nvoid iospc_rstpin(bool as_gpio);\nMacro for Deprecated Functions {\n#define ioSelUartTxRx                iocsc_uart\n#define ioS",
+    "detailed": "void iospc_swdpin(void);\n@param[in] as_gpio  True-作为GPIO，False-作为nRESET\n@note 配置PA19引脚功能，可选择作为普通GPIO或系统复位引脚\n/\nvoid iospc_rstpin(bool as_gpio);\nMacro for Deprecated Functions {\n#define ioSelUartTxRx                iocsc_uart\n#define ioSe",
     "return_type": "void",
     "parameters": [
       {
@@ -1165,13 +1165,13 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
     "name": "iocsc_observe",
     "brief": "",
-    "detailed": "iocsc_i2c\n#define ioSelSpiMaster               iocsc_spim\n#define ioSelSpiSlave                iocsc_spis\n#define ioClkOut(clk)                iospc_clkout(clk)\n#define ioOscen(pa",
+    "detailed": "iocsc_i2c\n#define ioSelSpiMaster               iocsc_spim\n#define ioSelSpiSlave                iocsc_spis\n#define ioClkOut(clk)                iospc_clkout(clk)\n#define ioOscen(pad",
     "return_type": "void",
     "parameters": [
       {
@@ -1183,7 +1183,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1197,7 +1197,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1211,7 +1211,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1225,7 +1225,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1239,7 +1239,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iopad.h",
+    "file_path": "drivers/api/iopad.h",
     "has_implementation": true
   },
   {
@@ -1253,7 +1253,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iwdt.h",
+    "file_path": "drivers/api/iwdt.h",
     "has_implementation": true
   },
   {
@@ -1267,7 +1267,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iwdt.h",
+    "file_path": "drivers/api/iwdt.h",
     "has_implementation": true
   },
   {
@@ -1281,7 +1281,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iwdt.h",
+    "file_path": "drivers/api/iwdt.h",
     "has_implementation": true
   },
   {
@@ -1295,7 +1295,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\iwdt.h",
+    "file_path": "drivers/api/iwdt.h",
     "has_implementation": true
   },
   {
@@ -1317,7 +1317,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\pwm.h",
+    "file_path": "drivers/api/pwm.h",
     "has_implementation": true
   },
   {
@@ -1331,7 +1331,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\pwm.h",
+    "file_path": "drivers/api/pwm.h",
     "has_implementation": true
   },
   {
@@ -1353,7 +1353,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\pwm.h",
+    "file_path": "drivers/api/pwm.h",
     "has_implementation": true
   },
   {
@@ -1367,7 +1367,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\pwm.h",
+    "file_path": "drivers/api/pwm.h",
     "has_implementation": true
   },
   {
@@ -1381,7 +1381,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\pwm.h",
+    "file_path": "drivers/api/pwm.h",
     "has_implementation": true
   },
   {
@@ -1399,7 +1399,7 @@
         "name": "conf"
       }
     ],
-    "file_path": "./drivers\\api\\pwm.h",
+    "file_path": "drivers/api/pwm.h",
     "has_implementation": true
   },
   {
@@ -1417,7 +1417,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\pwm.h",
+    "file_path": "drivers/api/pwm.h",
     "has_implementation": true
   },
   {
@@ -1431,7 +1431,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1449,7 +1449,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1467,7 +1467,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1485,7 +1485,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1499,7 +1499,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1513,7 +1513,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1527,7 +1527,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1541,7 +1541,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1555,7 +1555,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1569,7 +1569,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1583,7 +1583,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1597,7 +1597,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1611,7 +1611,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rcc.h",
+    "file_path": "drivers/api/rcc.h",
     "has_implementation": true
   },
   {
@@ -1629,7 +1629,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rco.h",
+    "file_path": "drivers/api/rco.h",
     "has_implementation": true
   },
   {
@@ -1643,7 +1643,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rco.h",
+    "file_path": "drivers/api/rco.h",
     "has_implementation": true
   },
   {
@@ -1657,7 +1657,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rco.h",
+    "file_path": "drivers/api/rco.h",
     "has_implementation": true
   },
   {
@@ -1671,7 +1671,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rco.h",
+    "file_path": "drivers/api/rco.h",
     "has_implementation": true
   },
   {
@@ -1685,7 +1685,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rco.h",
+    "file_path": "drivers/api/rco.h",
     "has_implementation": true
   },
   {
@@ -1699,7 +1699,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rco.h",
+    "file_path": "drivers/api/rco.h",
     "has_implementation": true
   },
   {
@@ -1713,7 +1713,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rco.h",
+    "file_path": "drivers/api/rco.h",
     "has_implementation": true
   },
   {
@@ -1727,7 +1727,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1741,7 +1741,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1759,7 +1759,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1768,7 +1768,7 @@
     "detailed": "Read current alarm time, add ms_time to renew it.",
     "return_type": "uint32_t",
     "parameters": [],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": false
   },
   {
@@ -1777,7 +1777,7 @@
     "detailed": "",
     "return_type": "uint32_t",
     "parameters": [],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": false
   },
   {
@@ -1791,7 +1791,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1805,7 +1805,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1819,7 +1819,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1833,7 +1833,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1847,7 +1847,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\rtc.h",
+    "file_path": "drivers/api/rtc.h",
     "has_implementation": true
   },
   {
@@ -1861,7 +1861,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1875,7 +1875,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1889,7 +1889,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1907,7 +1907,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1925,7 +1925,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1939,7 +1939,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1957,7 +1957,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1971,7 +1971,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -1985,7 +1985,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sadc.h",
+    "file_path": "drivers/api/sadc.h",
     "has_implementation": true
   },
   {
@@ -2007,7 +2007,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2021,7 +2021,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2035,7 +2035,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2049,7 +2049,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2071,7 +2071,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2089,7 +2089,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2107,7 +2107,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2133,7 +2133,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2159,7 +2159,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2173,7 +2173,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2187,7 +2187,7 @@
         "name": "ch"
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2201,7 +2201,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\spi.h",
+    "file_path": "drivers/api/spi.h",
     "has_implementation": true
   },
   {
@@ -2215,7 +2215,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sysdbg.h",
+    "file_path": "drivers/api/sysdbg.h",
     "has_implementation": true
   },
   {
@@ -2233,7 +2233,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sysdbg.h",
+    "file_path": "drivers/api/sysdbg.h",
     "has_implementation": true
   },
   {
@@ -2251,7 +2251,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\sysdbg.h",
+    "file_path": "drivers/api/sysdbg.h",
     "has_implementation": true
   },
   {
@@ -2269,7 +2269,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\timer.h",
+    "file_path": "drivers/api/timer.h",
     "has_implementation": true
   },
   {
@@ -2283,7 +2283,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\timer.h",
+    "file_path": "drivers/api/timer.h",
     "has_implementation": true
   },
   {
@@ -2301,7 +2301,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\timer.h",
+    "file_path": "drivers/api/timer.h",
     "has_implementation": true
   },
   {
@@ -2319,7 +2319,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\timer.h",
+    "file_path": "drivers/api/timer.h",
     "has_implementation": true
   },
   {
@@ -2333,7 +2333,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\timer.h",
+    "file_path": "drivers/api/timer.h",
     "has_implementation": true
   },
   {
@@ -2351,7 +2351,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\timer.h",
+    "file_path": "drivers/api/timer.h",
     "has_implementation": true
   },
   {
@@ -2365,7 +2365,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\trim.h",
+    "file_path": "drivers/api/trim.h",
     "has_implementation": true
   },
   {
@@ -2379,7 +2379,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\trim.h",
+    "file_path": "drivers/api/trim.h",
     "has_implementation": true
   },
   {
@@ -2393,7 +2393,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\trim.h",
+    "file_path": "drivers/api/trim.h",
     "has_implementation": true
   },
   {
@@ -2415,7 +2415,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2429,7 +2429,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2451,7 +2451,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2473,7 +2473,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2499,7 +2499,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2517,7 +2517,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2535,7 +2535,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2549,7 +2549,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2563,7 +2563,7 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2585,7 +2585,7 @@
         "name": "data"
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
@@ -2607,13 +2607,13 @@
         "name": ""
       }
     ],
-    "file_path": "./drivers\\api\\uart.h",
+    "file_path": "drivers/api/uart.h",
     "has_implementation": true
   },
   {
     "name": "usbd_init",
-    "brief": "Init device con",
-    "detailed": "b=NULL,       .ep_cnt=0 }\nFUNCTION DECLARATION\n***************************************************************\n*********************\n/",
+    "brief": "Init device controller.",
+    "detailed": "FUNCTION DECLARATION\n***************************************************************************************\n/\n@return N/A.\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2621,13 +2621,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_deinit",
-    "brief": "Deinit device con",
-    "detailed": "/\nvoid usbd_init(void);",
+    "brief": "Deinit device controller.",
+    "detailed": "@return N/A.\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2635,13 +2635,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_resume",
-    "brief": "Resume request send, call twice as High(true)-10ms(delay)-Low",
-    "detailed": "/\nvoid usbd_deinit(void);",
+    "brief": "Resume request send, call twice as High(true)-10ms(delay)-Low(false).",
+    "detailed": "@return N/A.\n/",
     "return_type": "bool",
     "parameters": [
       {
@@ -2649,13 +2649,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_register",
     "brief": "Register Device Description and Configuration. ",
-    "detailed": "bool usbd_resume(bool en);\n@param[in] desc  Pointer of description array\n@param[in] conf  Pointer of configuration struct\n(USBD_LEGACY_API Deprecated, replaced",
+    "detailed": "@param[in] desc  Pointer of description array\n@param[in] conf  Pointer of configuration struct\n(USBD_LEGACY_API Deprecated, replaced by usbd_register_device)\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2667,13 +2667,13 @@
         "name": "conf"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_register_device",
     "brief": "Register Device Description and Configuration ",
-    "detailed": "onst usbd_config_t *conf);\n@param[in] desc  Callback for description request\n@param[in] conf  Pointer",
+    "detailed": "@param[in] desc  Callback for description request\n@param[in] conf  Pointer of configuration struct\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2685,13 +2685,13 @@
         "name": "conf"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_register_buffer",
     "brief": "Register Big-Buffer for EP0 received(excced MPS), eg. DFU Block ",
-    "detailed": "onst usbd_config_t *conf);\n@param[in] size      Buffer size\n@param[in] buff      B",
+    "detailed": "@param[in] size      Buffer size\n@param[in] buff      Buffer pointer, aligned 4\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2703,13 +2703,13 @@
         "name": "buff"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_register_events",
     "brief": "Register Handler for Application to notify events ",
-    "detailed": "16_t size, uint8_t *buff);\n@param[in] evt_msk   Event Mask for notified, bits of @see enum usbd_event_type\n@param[in]",
+    "detailed": "@param[in] evt_msk   Event Mask for notified, bits of @see enum usbd_event_type\n@param[in] ntf_hdl   Notify Handler\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2721,13 +2721,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_register_vendor",
     "brief": "Register Handler for Vendor requestes. ",
-    "detailed": "usbd_notify_cbk ntf_hdl);\n@param[in]",
+    "detailed": "@param[in] vendor    Vendor Handler\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2735,13 +2735,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_is_configured",
     "brief": "Device be configured or not.",
-    "detailed": "d_request_handler vendor);\n@return 0 o",
+    "detailed": "@return 0 on not, other on conf_num\n/",
     "return_type": "uint8_t",
     "parameters": [
       {
@@ -2749,13 +2749,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_is_suspend",
-    "brief": "Check if the device is in suspend state ",
-    "detailed": "usbd_is_configured(void);",
+    "brief": "Check if the device is in suspend state",
+    "detailed": "@return true or false\n/",
     "return_type": "bool",
     "parameters": [
       {
@@ -2763,13 +2763,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_ep_write",
     "brief": "Write data to the specified endpoint with poll mode.  This function is called to write data to the specified endpoint. The supplied usbd_endpoint_handler function will be called when data is transmitted out. ",
-    "detailed": "ool usbd_is_suspend(void);\n@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  data      Pointer to data to write\n@param[in]  data_len  Length of the data requested to write. This may\nbe zero for a zero length status packet.\n@param[out] wr_bytes  Bytes scheduled for transmission. This value\nmay be NULL if the application expects all\nbytes to be written\n@return 0 on succ",
+    "detailed": "@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  data      Pointer to data to write\n@param[in]  data_len  Length of the data requested to write. This may\nbe zero for a zero length status packet.\n@param[out] wr_bytes  Bytes scheduled for transmission. This value\nmay be NULL if the application expects all\nbytes to be written\n@return 0 on success, errno code on fail.\n/",
     "return_type": "uint8_t",
     "parameters": [
       {
@@ -2789,13 +2789,13 @@
         "name": "wr_bytes"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_ep_read",
     "brief": "Read data from the specified endpoint  This function is called by the endpoint handler function, after an OUT interrupt has been received for that EP. The application must only call this function through the supplied usbd_ep_callback function. This function clears the ENDPOINT NAK when max_data_len is 0, if all data in the endpoint FIFO has been read, so as to accept more data from host. ",
-    "detailed": "data, uint16_t *wr_bytes);\n@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  buff      Pointer to data buffer to write to\n@param[in]  max_len   Max length of data to read\n@retu",
+    "detailed": "@param[in]  ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in]  buff      Pointer to data buffer to write to\n@param[in]  max_len   Max length of data to read\n@return Number of bytes read.\n/",
     "return_type": "uint16_t",
     "parameters": [
       {
@@ -2811,13 +2811,13 @@
         "name": "buff"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_ep_stall",
     "brief": "Set/Clear stall condition for the selected endpoint ",
-    "detailed": "t max_len, uint8_t *buff);\n@param[in] ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in] set       Tru",
+    "detailed": "@param[in] ep        Endpoint address corresponding to the one\nlisted in the device configuration table\n@param[in] set       True as set, False as clear\n/",
     "return_type": "void",
     "parameters": [
       {
@@ -2829,13 +2829,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "USB_IRQHandler",
-    "brief": "USB interrupt",
-    "detailed": "all(uint8_t ep, bool set);",
+    "brief": "USB interrupt handler.",
+    "detailed": "@return N/A.\n/",
     "return_type": "__USBIRQ",
     "parameters": [
       {
@@ -2843,13 +2843,13 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_notify_handler",
     "brief": "",
-    "detailed": "oid USB_IRQHandler(void);\n__WEAK USB Handler (user override, USBD_LEGACY_API Deprecated)\n***************************************************\n*********************\n/\nHandler for App",
+    "detailed": "__WEAK USB Handler (user override, USBD_LEGACY_API Deprecated)\n***************************************************************************\n/\nHandler for Application to notify events",
     "return_type": "__USBIRQ",
     "parameters": [
       {
@@ -2861,13 +2861,13 @@
         "name": "arg"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": true
   },
   {
     "name": "usbd_vendor_handler",
     "brief": "",
-    "detailed": "uint8_t event, void *arg);\nHandler for USB",
+    "detailed": "Handler for USB Vendor specific commands",
     "return_type": "__USBIRQ",
     "parameters": [
       {
@@ -2883,13 +2883,13 @@
         "name": "dlen"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": false
   },
   {
     "name": "usbd_get_string_handler",
     "brief": "",
-    "detailed": "t **data, uint16_t *dlen);\nHandler for User's String descri",
+    "detailed": "Handler for User's String descriptors, eg. iSerial Number",
     "return_type": "__USBIRQ",
     "parameters": [
       {
@@ -2905,7 +2905,7 @@
         "name": "len"
       }
     ],
-    "file_path": "./usb\\api\\usbd.h",
+    "file_path": "usb/api/usbd.h",
     "has_implementation": true
   },
   {
@@ -2923,7 +2923,7 @@
         "name": ""
       }
     ],
-    "file_path": "./usb\\api\\usb_log.h",
+    "file_path": "usb/api/usb_log.h",
     "has_implementation": false
   }
 ]

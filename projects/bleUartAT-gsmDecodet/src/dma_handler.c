@@ -41,7 +41,7 @@
 extern volatile bool pong;
 
 // External DMA done flag from speaker.c (no longer used directly, kept for compatibility)
-extern volatile uint8_t dam_done;
+extern volatile uint8_t dma_done;
 
 // External function declarations
 #if (CFG_UART_DMA)

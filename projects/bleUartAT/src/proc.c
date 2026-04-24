@@ -44,6 +44,11 @@ static uint16_t buff_len = 0;
  */
 
 /// Override - Callback on received data from peer device
+/**
+ ****************************************************************************************
+ * @brief BLE session data received callback
+ ****************************************************************************************
+ */
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     (void)conidx;

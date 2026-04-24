@@ -29,13 +29,14 @@
  ****************************************************************************************
  */
 
-#define BLE_MAX_LEN (BLE_MTU - 3)
-#define NULL_CNT    20
+#define BLE_MAX_LEN     (BLE_MTU - 3)
+#define NULL_CNT        20
+#define CMD_DISCONNECT  (0xAA)
 
 static uint8_t  buff[BLE_MAX_LEN];
 static uint16_t buff_len = 0;
 
-bool speed_test = 0;
+UNUSED static bool speed_test = false;
 
 /*
  * FUNCTIONS
@@ -44,6 +45,11 @@ bool speed_test = 0;
 
 #if !(DBG_SESS)
 /// Override - Callback on received data from peer device
+/**
+ ****************************************************************************************
+ * @brief BLE session data received callback
+ ****************************************************************************************
+ */
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     (void)conidx;
@@ -71,7 +77,6 @@ static void data_proc(void)
     {
         if ((buff_len > 0) && (null_cnt++ > NULL_CNT))
         {
-            // finish = true;
             null_cnt = 0;
         }
         else
@@ -82,7 +87,7 @@ static void data_proc(void)
 
     if (app_state_get() == APP_CONNECTED)
     {
-        if (buff[0] == 0xAA)
+        if (buff[0] == CMD_DISCONNECT)
         {
             speed_test = false;
             DEBUG("GAP Disc!\r\n");
@@ -105,7 +110,7 @@ static void data_proc(void)
     else
     {
         // goto reset
-        if (buff[0] == 0xAA)
+        if (buff[0] == CMD_DISCONNECT)
         {
             DEBUG("GAP Reset!\r\n");
             gapm_reset();

@@ -49,7 +49,7 @@ struct actv_env_tag
 };
 
 /// Activities environment
-struct actv_env_tag actv_env;
+static struct actv_env_tag actv_env;
 
 /*
  * FUNCTION DEFINITIONS
@@ -365,6 +365,17 @@ uint8_t scan_cnt = 0;
 
 struct gap_bdaddr scan_addr_list[SCAN_NUM_MAX];
 
+void scan_list_reset(void)
+{
+    memset((uint8_t *)scan_addr_list, 0x00, (sizeof(struct gap_bdaddr) * SCAN_NUM_MAX));
+    scan_cnt = 0;
+}
+
+const struct gap_bdaddr *scan_list_get(void)
+{
+    return scan_addr_list;
+}
+
 /*
  * FUNCTION DEFINITIONS
  ****************************************************************************************
@@ -568,25 +579,29 @@ void app_actv_report_ind(struct gapm_ext_adv_report_ind const *report)
     {
         const uint8_t *p_cursor    = report->data;
         const uint8_t *p_end_cusor = report->data + report->length;
+        uint8_t  name_len;
+        uint8_t *p_adv_name = get_scan_name(&name_len);
 
         while (p_cursor < p_end_cusor)
         {
             // Extract AD type
             uint8_t  ad_type = *(p_cursor + 1);
-            uint8_t  name_len;
-            uint8_t *p_adv_name = get_scan_name(&name_len);
             if ((ad_type == GAP_AD_TYPE_COMPLETE_NAME) &&
                 (0 == memcmp(p_cursor + 2, p_adv_name, name_len)))
             {
-                uint8_t adv_name[GAP_SCAN_RSP_DATA_LEN] = { 0 };
-                memcpy(adv_name, p_cursor + 2, *p_cursor - 1);
+#if (DBG_ACTV)
+                uint8_t adv_name[GAP_SCAN_RSP_DATA_LEN] = {0};
+                uint8_t copy_len = (*p_cursor > 1) ? (*p_cursor - 1) : 0;
+                if (copy_len > sizeof(adv_name)) copy_len = sizeof(adv_name);
+                memcpy(adv_name, p_cursor + 2, copy_len);
                 DEBUG("Find[ %s ]", adv_name);
-                // debugHex(report->data, report->length);
+#endif
                 app_scan_result(&report->trans_addr);
                 break;
             }
 
             /* Go to next advertising info */
+            if (*p_cursor == 0) break;  // skip zero-length AD structure
             p_cursor += (*p_cursor + 1);
         }
     }

@@ -471,6 +471,6 @@ if __name__ == "__main__":
                 print(f"  ... and {len(category.error_codes) - 5} more")
 
     # Export to JSON
-    output_path = Path(__file__).parent.parent.parent / "data" / "ble_error_codes.json"
+    output_path = Path(__file__).parent.parent.parent / "data" / "domain" / "ble" / "error_codes.json"
     parser.export_to_json(str(output_path))
     print(f"\nExported to: {output_path}")

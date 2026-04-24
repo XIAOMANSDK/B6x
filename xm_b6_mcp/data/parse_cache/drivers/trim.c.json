@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\src\\trim.c",
+  "file_path": "drivers/src/trim.c",
   "functions": [
     {
       "name": "trim_load",
@@ -12,7 +12,7 @@
         }
       ],
       "function_body": "{\r\n    // 10ms iwdt rst.\r\n    // fixbug--Low temperature poweron run fly. 2024.06.27 --- 6vp.\r\n    iwdt_conf(160);\r\n\r\n    // adjust coreldo and aonldo voltage to 1.2v\r\n    // AONLDO VOL > CORELDO VOL, BKHOLD_CTRL defult:0x2008\r\n//    AON->BKHOLD_CTRL.CORELDO_TRIM_RUN      = 0x1B;\r\n//    AON->BKHOLD_CTRL.AONLDO_TRIM_RUN       = 0x01;\r\n\r\n    // LDO_UD_CTRL default:0x100\r\n    // deepsleep mode, coreldo auto undertension to 1.0v\r\n//    APBMISC->LDO_UD_CTRL.CORELDO_TRIM_DP   = 0x14;\r\n//    APBMISC->LDO_UD_CTRL.CORELDO_TRIM_STEP = 0x03;\r\n\r\n    // poweroff mode, aonldo auto undertension to 1.0v\r\n//    APBMISC->LDO_UD_CTRL.AONLDO_TRIM_OFF   = 0x04;\r\n//    APBMISC->LDO_UD_CTRL.AONLDO_UD_STEP    = 0x07;\r\n\r\n    // DBG_CTRL default:0x00\r\n//    SYSCFG->DBG_CTRL.IWDT_DEBUG            = 1;\r\n    SYSCFG->DBG_CTRL.Word = (0x01UL << SYSCFG_IWDT_DEBUG_POS);\r\n\r\n    // flash trim vaild judge\r\n    if (RD_32(FSH_TRIM_ADDR + 0x18) != TRIM_VALID_VALUE)\r\n    {\r\n        AON->BKHOLD_CTRL.Word     = (0x01B1UL << AON_AONLDO_TRIM_RUN_LSB) | (AON->BKHOLD_CTRL.Word & 0xFFFFUL);\r\n        APBMISC->LDO_UD_CTRL.Word = 0x00740314;\r\n        return ; // trim invaild\r\n    }\r\n\r\n    uint32_t i, values[TRIM_VAL_NUM]; // 'i' reduce size, 6vp 1118\r\n\r\n    // values[0]: VDD12 Voltage\r\n    TRIM_Typedef *trim = (TRIM_Typedef *)(values + 1);\r\n\r\n    for (i = 0; i < (TRIM_VAL_NUM - 1); i++)\r\n    {\r\n        values[i] = RD_32(FSH_TRIM_ADDR + (i << 2));\r\n    }\r\n\r\n    // val04\r\n//    AON->PMU_ANA_CTRL.BK_BOD_TRIM = trim->VAL04.BK_BOD_TRIM;\r\n//    AON->PMU_ANA_CTRL.LDO_LVD_SEL = trim->VAL04.LDO_LVD_SEL;\r\n\r\n    if ((trim->VAL04.Word != 0xFFFFFFFF) && (trim->VAL04.Word & 0x0A) == 0x0A)\r\n    {\r\n        AON->BKHOLD_CTRL.Word     = (trim->VAL04.CORELDO_TRIM_RUN << AON_CORELDO_TRIM_RUN_LSB)\r\n                                    | (trim->VAL04.AONLDO_TRIM_RUN << AON_AONLDO_TRIM_RUN_LSB)\r\n                                    | (AON->BKHOLD_CTRL.Word & 0xFFFFUL);\r\n\r\n        APBMISC->LDO_UD_CTRL.Word = (trim->VAL04.CORELDO_TRIM_DP << APBMISC_CORELDO_TRIM_DP_LSB)\r\n                                    | (trim->VAL04.AONLDO_TRIM_OFF << APBMISC_AONLDO_TRIM_OFF_LSB)\r\n                                    | (0x07 << APBMISC_AONLDO_UD_STEP_LSB) | (0x03 << APBMISC_CORELDO_TRIM_STEP_LSB);\r\n        // coreldo\r\n//        AON->BKHOLD_CTRL.CORELDO_TRIM_RUN    = trim->VAL04.CORELDO_TRIM_RUN;\r\n//        APBMISC->LDO_UD_CTRL.CORELDO_TRIM_DP = trim->VAL04.CORELDO_TRIM_DP;\r\n\r\n        // aonldo\r\n//        AON->BKHOLD_CTRL.AONLDO_TRIM_RUN     = trim->VAL04.AONLDO_TRIM_RUN;\r\n//        APBMISC->LDO_UD_CTRL.AONLDO_TRIM_OFF = trim->VAL04.AONLDO_TRIM_OFF;\r\n    }\r\n\r\n    if ((trim->VAL03.Word != 0xFFFFFFFF) && (trim->VAL03.Word & 0x0A) == 0x0A)\r\n    {\r\n        APBMISC->RC16M_FREQ_TRIM = trim->VAL03.RC16M_FREQ_TRIM;\r\n    }\r\n\r\n    if ((trim->VAL00.Word != 0xFFFFFFFF) && (trim->VAL00.Word & 0x0A) == 0x0A)\r\n    {\r\n        APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = trim->VAL00.XOSC16M_CAP_TRIM;\r\n    }\r\n\r\n    if ((trim->VAL02.Word != 0xFFFFFFFF) && (trim->VAL02.Word != 0x00))\r\n    {\r\n        uint32_t reg_val = RCC->APBCLK_EN_RUN.Word;\r\n        RCC_APBCLK_EN(APB_RF_BIT);\r\n        RF->ANA_TRIM.BG_RES_TRIM = (trim->VAL02.Word & 0x0001F000) >> 12;\r\n//        RCC_APBCLK_DIS(APB_RF_BIT);\r\n        RCC->APBCLK_EN_RUN.Word = reg_val;\r\n    }\r\n\r\n    // no used\r\n//    if ((trim->VAL03.Word & 0x0A000000) == 0x0A000000)\r\n//    {\r\n//        APBMISC->XOSC16M_CTRL.LDO_XOSC_TR = trim->VAL03.LDO_XOSC_TR;\r\n//    }\r\n    iwdt_conf(0x20000); //restore iwdt rst 8192ms.\r\n}",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "drivers/src/trim.c",
       "line_number": 111,
       "is_static": false
     },
@@ -27,7 +27,7 @@
         }
       ],
       "function_body": "{\r\n    uint32_t val = RD_32(FSH_TRIM_ADDR + 0x10); //0x001F35BA\r\n    uint32_t rc16m_freq = 0;\r\n\r\n    if ((val != 0xFFFFFFFF) && (val & 0x0A) == 0x0A)\r\n    {\r\n        rc16m_freq = (((val & 0x003E0000) >> 17) * 1000000) + (((val & 0x0001FC00) >> 10) * 10000);\r\n    }\r\n\r\n    return rc16m_freq;\r\n}",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "drivers/src/trim.c",
       "line_number": 202,
       "is_static": false
     },
@@ -42,7 +42,7 @@
         }
       ],
       "function_body": "{\r\n    uint32_t val = RD_32(FSH_TRIM_ADDR + 0x00);\r\n\r\n    return ((val == 0xFFFFFFFF) ? 1200 : (val - 4));\r\n}",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "drivers/src/trim.c",
       "line_number": 215,
       "is_static": false
     }
@@ -53,7 +53,7 @@
       "value": "0x18000F00",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\trim.c",
       "line_number": 17
     },
     {
@@ -61,7 +61,7 @@
       "value": "7 // vdd12_vol + VAL00~VAL05",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\trim.c",
       "line_number": 18
     },
     {
@@ -69,7 +69,7 @@
       "value": "6 // TRIM_VAL05",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\trim.c",
       "line_number": 20
     },
     {
@@ -77,7 +77,7 @@
       "value": "0xC8F5D5B6",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\trim.c",
       "line_number": 21
     },
     {
@@ -85,7 +85,7 @@
       "value": "(TRIM_VALID_IDX * sizeof(uint32_t)) // 0x14",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\trim.c",
       "line_number": 22
     },
     {
@@ -93,7 +93,7 @@
       "value": "(TRIM_VAL_NUM * sizeof(uint32_t)) // 0x18",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\src\\trim.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\trim.c",
       "line_number": 23
     }
   ],

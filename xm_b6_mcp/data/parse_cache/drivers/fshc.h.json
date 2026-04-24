@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\fshc.h",
+  "file_path": "drivers/api/fshc.h",
   "functions": [
     {
       "name": "fshc_en_cmd",
@@ -13,7 +13,7 @@
       ],
       "brief_description": "Send control/enable command without value ",
       "detailed_description": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_RST_EN FSH_CMD_RESET FSH_CMD_EXIT_HMP\nFSH_CMD_WR_EN FSH_CMD_WR_STA_EN)\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 273,
       "is_exported": false,
       "implementation_file": "",
@@ -42,7 +42,7 @@
       ],
       "brief_description": "Write value to flash state register ",
       "detailed_description": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_WR_STA)\n@param[in] len  Length of value, range 1~4 Bytes\n@param[in] val  State value, valid range 8/16/24/32bits by 'len'\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 285,
       "is_exported": false,
       "implementation_file": "",
@@ -66,7 +66,7 @@
       ],
       "brief_description": "Read value from flash state register ",
       "detailed_description": "***************************************************************************************\n@param[in] cmd  Command opcode(eg. FSH_CMD_RD_ID FSH_CMD_RD_STA0 FSH_CMD_RD_STA1)\n@param[in] len  Length of value, range 1~4 Bytes\n@return value  State value, valid range 8/16/24/32bits by 'len'\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 297,
       "is_exported": false,
       "implementation_file": "",
@@ -105,7 +105,7 @@
       ],
       "brief_description": "Perpare write data to flash ",
       "detailed_description": "***************************************************************************************\n@param[in] cmd     fshc access cmd (example read cmd: 0x03)\n@param[in] offset  access flash addr offset\n@param[in] len     access flash data len, unit is byte\n@param[in] sctrl   access flash mode config(example: spi mode, dual mode...)\n@param[in] acbit   dummy cycle\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 311,
       "is_exported": false,
       "implementation_file": "",
@@ -134,7 +134,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 313,
       "is_exported": false,
       "implementation_file": "",
@@ -173,7 +173,7 @@
       ],
       "brief_description": "Perpare read data from flash ",
       "detailed_description": "***************************************************************************************\n@param[in] cmd     fshc access cmd (example read cmd: 0x03)\n@param[in] offset  access flash addr offset\n@param[in] len     access flash data len, unit is byte\n@param[in] sctrl   access flash mode config(example: spi mode, dual mode...)\n@param[in] acbit   dummy cycle\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 327,
       "is_exported": false,
       "implementation_file": "",
@@ -202,7 +202,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 329,
       "is_exported": false,
       "implementation_file": "",
@@ -231,7 +231,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 331,
       "is_exported": false,
       "implementation_file": "",
@@ -260,7 +260,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 333,
       "is_exported": false,
       "implementation_file": "",
@@ -284,7 +284,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 335,
       "is_exported": false,
       "implementation_file": "",
@@ -318,7 +318,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 337,
       "is_exported": false,
       "implementation_file": "",
@@ -352,7 +352,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 339,
       "is_exported": false,
       "implementation_file": "",
@@ -371,7 +371,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 341,
       "is_exported": false,
       "implementation_file": "",
@@ -405,7 +405,7 @@
       ],
       "brief_description": "",
       "detailed_description": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 342,
       "is_exported": false,
       "implementation_file": "",
@@ -419,7 +419,7 @@
       "value": "(DUAL_MODE << FCM_MODE_LSB)",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 79
     },
     {
@@ -427,7 +427,7 @@
       "value": "(QUAD_MODE << FCM_MODE_LSB)",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 80
     },
     {
@@ -435,7 +435,7 @@
       "value": "(0)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 83
     },
     {
@@ -443,7 +443,7 @@
       "value": "(FCM_NOTWAIT_BIT)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 84
     },
     {
@@ -451,7 +451,7 @@
       "value": "(FCM_SUSPEND_BIT)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 85
     },
     {
@@ -459,7 +459,7 @@
       "value": "(FCM_PACKETS_BIT | FCM_NOTWAIT_BIT)",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 86
     },
     {
@@ -467,7 +467,7 @@
       "value": "(FCM_PACKETS_BIT | FCM_NEXTPKT_BIT)",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 87
     }
   ],
@@ -528,7 +528,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 26
     },
     {
@@ -552,7 +552,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 40
     },
     {
@@ -611,7 +611,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 51
     },
     {
@@ -635,7 +635,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 91
     },
     {
@@ -664,7 +664,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 101
     },
     {
@@ -723,7 +723,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 113
     },
     {
@@ -787,7 +787,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 143
     },
     {
@@ -816,7 +816,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 164
     },
     {
@@ -845,7 +845,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 177
     },
     {
@@ -869,7 +869,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 190
     },
     {
@@ -888,7 +888,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 203
     },
     {
@@ -927,7 +927,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 211
     },
     {
@@ -961,7 +961,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 233
     },
     {
@@ -990,7 +990,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\fshc.h",
+      "file_path": "drivers/api/fshc.h",
       "line_number": 248
     }
   ],

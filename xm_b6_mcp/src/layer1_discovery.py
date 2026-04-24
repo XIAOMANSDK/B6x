@@ -224,7 +224,15 @@ class SearchEngine(ABC):
         metadata: Dict[str, Any],
         quick_actions: List[str] = None
     ) -> SearchResult:
-        """Helper to create SearchResult"""
+        """Helper to create SearchResult with standardized item_id format."""
+        # Standardize item_id to "type:identifier" format
+        if create_node_id is not None and item_id and ":" not in item_id:
+            try:
+                node_id_obj = create_node_id(item_type, item_id)
+                item_id = node_id_obj.to_string()
+            except Exception:
+                pass  # Keep original item_id on error
+
         return SearchResult(
             domain=self.name.replace("Engine", "").lower(),
             item_type=item_type,
@@ -233,7 +241,7 @@ class SearchEngine(ABC):
             summary=summary,
             relevance_score=score,
             metadata=metadata,
-            quick_actions=quick_actions or ["inspect_node"]
+            quick_actions=["inspect_node"]
         )
 
 
@@ -288,7 +296,7 @@ class APIEngine(SearchEngine):
                     summary=self._extract_summary(result),
                     score=result.get("score", 0.5),
                     metadata={
-                        "header_file": result.get("header_file", ""),
+                        "header_file": result.get("file_path", ""),
                         "parameters": result.get("parameters", [])[:3],
                         "return_type": result.get("return_type", "void"),
                     },
@@ -546,37 +554,63 @@ class ExampleEngine(SearchEngine):
         self._init_scanner()
 
     def _init_scanner(self):
-        """Initialize example scanner"""
+        """Initialize example scanner from pre-built JSON data"""
         try:
-            examples_path = _get_base_path() / "examples"
+            # Load pre-built examples from JSON (faster and more reliable)
+            examples_path = _get_data_path("domain", "applications", "examples.json")
             if examples_path.exists():
-                self.scanner = ExampleScanner(str(examples_path))
-                logger.info("ExampleEngine: Example scanner initialized")
+                with open(examples_path, 'r', encoding='utf-8') as f:
+                    self._examples_data = json.load(f)
+                logger.info(f"ExampleEngine: Loaded {len(self._examples_data)} examples from JSON")
+                self.scanner = True  # Mark as initialized
+            else:
+                logger.warning(f"ExampleEngine: Examples JSON not found at {examples_path}")
+                self._examples_data = []
         except Exception as e:
-            logger.error(f"ExampleEngine: Failed to initialize scanner: {e}")
+            logger.error(f"ExampleEngine: Failed to load examples: {e}")
+            self._examples_data = []
 
     async def search(self, query: str, max_results: int) -> List[SearchResult]:
-        """Search example code"""
-        if not self.scanner:
+        """Search example code from pre-built JSON data"""
+        if not self._examples_data:
             return self._mock_examples(query, max_results)
 
         try:
-            results = self.scanner.search_examples(query, limit=max_results)
-
+            query_lower = query.lower()
             formatted_results = []
-            for result in results:
-                formatted_results.append(self._create_result(
-                    item_type="example",
-                    item_id=result.get("id", "unknown"),
-                    title=result.get("name", "Example"),
-                    summary=result.get("description", ""),
-                    score=0.7,
-                    metadata={
-                        "path": result.get("path", ""),
-                        "peripheral": result.get("peripheral", ""),
-                    },
-                    quick_actions=["view_example", "copy_code"]
-                ))
+
+            for example in self._examples_data:
+                # Search in name, path, and used APIs
+                name = example.get("name", "").lower()
+                path = example.get("file_path", "").lower()
+                apis = example.get("used_apis", [])
+
+                # Match if query is in name, path, or any used API
+                if (query_lower in name or
+                    query_lower in path or
+                    any(query_lower in api.lower() for api in apis)):
+
+                    # Extract example name from path
+                    path_parts = example.get("file_path", "").split("/")
+                    example_name = path_parts[1] if len(path_parts) > 1 else example.get("name", "Example")
+
+                    formatted_results.append(self._create_result(
+                        item_type="example",
+                        item_id=example.get("file_path", "unknown"),
+                        title=example_name,
+                        summary=f"Uses {len(apis)} APIs: {', '.join(apis[:5])}{'...' if len(apis) > 5 else ''}",
+                        score=0.7,
+                        metadata={
+                            "path": example.get("file_path", ""),
+                            "type": example.get("type", ""),
+                            "total_api_calls": example.get("total_api_calls", 0),
+                            "unique_apis": len(apis),
+                        },
+                        quick_actions=["view_example", "copy_code"]
+                    ))
+
+                    if len(formatted_results) >= max_results:
+                        break
 
             return formatted_results
 
@@ -660,31 +694,55 @@ class MacroEngine(SearchEngine):
         try:
             # Use Whoosh to search macro index
             # Macros are stored with entry_type='macro'
-            results = self.whoosh.search(
-                query,
-                limit=max_results,
-                fields=['name', 'brief', 'content'],
-                filter_entry_type='macro'
-            )
+            # Note: Macro names like CFG_PMU_DFLT_CNTL are indexed as single tokens
+            # Use wildcard query for better matching
+            import whoosh.query as wq
+            from whoosh.qparser import QueryParser, OrGroup
 
-            formatted_results = []
-            for result in results:
-                formatted_results.append(self._create_result(
-                    item_type="macro",
-                    item_id=result.get("name", "unknown"),
-                    title=result.get("name", "Macro"),
-                    summary=self._extract_macro_summary(result),
-                    score=result.get("score", 0.5),
-                    metadata={
-                        "value": result.get("macro_value", ""),
-                        "macro_type": result.get("macro_type", ""),
-                        "header_file": result.get("header_file", ""),
-                        "peripheral": result.get("peripheral", ""),
-                    },
-                    quick_actions=["inspect_definition"]
-                ))
+            # Build a query that matches prefix, wildcard and fuzzy
+            query_lower = query.lower()
 
-            return formatted_results
+            # Create multiple query types for better matching
+            # 1. Prefix: "cfg" matches "cfg_pmu..."
+            # 2. Wildcard: "wkup" matches "*wkup*" -> finds "cfg_wkup_..."
+            # 3. Fuzzy: allows minor typos
+            name_queries = [
+                wq.Prefix('name', query_lower),
+                wq.Wildcard('name', f'*{query_lower}*'),
+                wq.FuzzyTerm('name', query_lower),
+            ]
+
+            combined_query = wq.Or(name_queries)
+
+            # Add entry_type filter
+            final_query = wq.And([
+                combined_query,
+                wq.Term('entry_type', 'macro')
+            ])
+
+            # Execute search directly
+            with self.whoosh.index.searcher() as searcher:
+                results = searcher.search(final_query, limit=max_results)
+
+                formatted_results = []
+                for hit in results:
+                    result_dict = dict(hit)
+                    formatted_results.append(self._create_result(
+                        item_type="macro",
+                        item_id=result_dict.get("name", "unknown"),
+                        title=result_dict.get("name", "Macro"),
+                        summary=self._extract_macro_summary(result_dict),
+                        score=hit.score if hasattr(hit, 'score') else 0.5,
+                        metadata={
+                            "value": result_dict.get("macro_value", ""),
+                            "macro_type": result_dict.get("macro_type", ""),
+                            "header_file": result_dict.get("file_path", ""),
+                            "peripheral": result_dict.get("peripheral", ""),
+                        },
+                        quick_actions=["inspect_definition"]
+                    ))
+
+                return formatted_results
 
         except Exception as e:
             logger.error(f"MacroEngine: Search failed: {e}")
@@ -782,11 +840,15 @@ class SDKSearchComposer:
                 if engine and not getattr(engine, '_index_available', True):
                     domains_with_errors.append(domain)
 
+        # Reserve buffer for response metadata overhead (query, scopes, JSON structure)
+        metadata_buffer = 200  # tokens reserved for metadata wrapper
+        merge_token_limit = max(hard_token_limit - metadata_buffer, 1)
+
         # Merge results with token limit
         merged_results = self._merge_results(
             results_by_domain,
             mode=merge_mode,
-            hard_token_limit=hard_token_limit
+            hard_token_limit=merge_token_limit
         )
 
         # Estimate final token count
@@ -935,6 +997,12 @@ class SDKSearchComposer:
         Returns:
             Merged and truncated results
         """
+        # Filter out low-relevance results and deduplicate within each domain
+        MIN_RELEVANCE_SCORE = 0.5
+        for domain in results_by_domain:
+            filtered = [r for r in results_by_domain[domain] if r.relevance_score >= MIN_RELEVANCE_SCORE]
+            results_by_domain[domain] = self._deduplicate_domain(filtered)
+
         if mode == "group":
             # Group results by domain
             return self._merge_group(results_by_domain, hard_token_limit)
@@ -948,6 +1016,43 @@ class SDKSearchComposer:
             return self._merge_rank(results_by_domain, hard_token_limit)
 
         return []
+
+    def _deduplicate_domain(
+        self,
+        results: List[SearchResult]
+    ) -> List[SearchResult]:
+        """
+        Remove duplicate results within a single domain.
+
+        Dedup key: (item_id.lower(), item_type)
+        Keep strategy: retain the result with the highest relevance_score.
+        On tie, keep the first occurrence.
+
+        Args:
+            results: Search results from one domain
+
+        Returns:
+            Deduplicated list preserving order of first occurrence
+        """
+        if not results:
+            return results
+
+        seen: Dict[tuple, int] = {}  # dedup_key -> index in deduped list
+        deduped: List[SearchResult] = []
+
+        for result in results:
+            dedup_key = (result.item_id.lower(), result.item_type)
+
+            if dedup_key in seen:
+                existing_idx = seen[dedup_key]
+                existing_score = deduped[existing_idx].relevance_score
+                if result.relevance_score > existing_score:
+                    deduped[existing_idx] = result
+            else:
+                seen[dedup_key] = len(deduped)
+                deduped.append(result)
+
+        return deduped
 
     def _merge_group(
         self,

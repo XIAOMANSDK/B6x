@@ -54,4 +54,28 @@
 
 #define COMPILER_ARMCC                  (COMPILER_AC6 || COMPILER_AC5)
 
+/*============================================================================
+ *                        Unused Attribute Macros
+ *============================================================================*/
+
+/**
+ * @brief  Mark variable/function as unused to suppress compiler warnings
+ * @note   Usage: UNUSED static int val;
+ */
+#ifndef UNUSED
+    #if defined(__GNUC__) || defined(__clang__) || defined(__ARMCC_VERSION) || defined(__ICCARM__)
+        #define UNUSED              __attribute__((unused))
+    #else
+        #define UNUSED
+    #endif
+#endif
+
+/**
+ * @brief  Mark function parameter as unused
+ * @note   Usage: void func(int param) { UNUSED_PARAM(param); }
+ */
+#ifndef UNUSED_PARAM
+    #define UNUSED_PARAM(x)    ((void)(x))
+#endif
+
 #endif /* BX_COMPILER_H_ */

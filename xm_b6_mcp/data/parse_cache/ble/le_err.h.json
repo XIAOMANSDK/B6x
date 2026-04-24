@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\le_err.h",
+  "file_path": "ble/api/le_err.h",
   "functions": [],
   "macros": [
     {
@@ -7,7 +7,7 @@
       "value": "0x00",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 15
     }
   ],
@@ -93,7 +93,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 25
     },
     {
@@ -197,7 +197,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 61
     },
     {
@@ -291,7 +291,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 105
     },
     {
@@ -340,7 +340,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 145
     },
     {
@@ -499,7 +499,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 167
     },
     {
@@ -608,7 +608,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 248
     },
     {
@@ -912,7 +912,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\le_err.h",
+      "file_path": "ble/api/le_err.h",
       "line_number": 294
     }
   ],

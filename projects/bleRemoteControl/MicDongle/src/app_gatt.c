@@ -154,9 +154,7 @@ APP_MSG_HANDLER(gatt_event_ind)
     {
         if (param->length == MIC_LEN)
         {
-            //GPIO_DAT_SET(GPIO18);
             usbd_mic_push(param->value);
-            //GPIO_DAT_CLR(GPIO18);
         }
     }
 #endif

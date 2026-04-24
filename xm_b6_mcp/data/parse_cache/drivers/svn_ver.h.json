@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\svn_ver.h",
+  "file_path": "drivers/api/svn_ver.h",
   "functions": [],
   "macros": [
     {
@@ -7,15 +7,15 @@
       "value": "",
       "macro_type": "other",
       "brief": "",
-      "file_path": "./drivers\\api\\svn_ver.h",
+      "file_path": "drivers/api/svn_ver.h",
       "line_number": 2
     },
     {
       "name": "SVN_VER",
-      "value": "4242",
+      "value": "4325",
       "macro_type": "constant",
       "brief": "",
-      "file_path": "./drivers\\api\\svn_ver.h",
+      "file_path": "drivers/api/svn_ver.h",
       "line_number": 4
     }
   ],

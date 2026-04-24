@@ -32,6 +32,7 @@
 
 #define BLE_MAX_LEN           20
 #define NULL_CNT              20
+#define UART_CMD_DISCONNECT   0xAA
 
 static uint8_t buff[BLE_MAX_LEN];
 static uint16_t buff_len = 0;
@@ -44,6 +45,11 @@ static uint16_t buff_len = 0;
 
 #if !(DBG_SESS)
 /// Override - Callback on received data from peer device
+/**
+ ****************************************************************************************
+ * @brief BLE session data received callback
+ ****************************************************************************************
+ */
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     (void)conidx;(void)len;(void)data;
@@ -71,7 +77,6 @@ static void data_proc(void)
     {
         if ((buff_len > 0) && (null_cnt++ > NULL_CNT))
         {
-            //finish = true;
             null_cnt = 0;
         }
         else
@@ -80,9 +85,12 @@ static void data_proc(void)
         }
     }
 
+    if (buff_len == 0)
+        return;
+
     if (app_state_get() == APP_CONNECTED)
     {
-        if (buff[0] == 0xAA)
+        if (buff[0] == UART_CMD_DISCONNECT)
         {
             DEBUG("GAP Disc!\r\n");
             gapc_disconnect(app_env.curidx);
@@ -96,8 +104,7 @@ static void data_proc(void)
     }
     else
     {
-        // goto reset
-        if (buff[0] == 0xAA)
+        if (buff[0] == UART_CMD_DISCONNECT)
         {
             DEBUG("GAP Reset!\r\n");
             gapm_reset();
@@ -115,11 +122,7 @@ static void sleep_proc(void)
     if (lpsta == BLE_IN_SLEEP)
     {
         uint16_t lpret = core_sleep(CFG_WKUP_BLE_EN);
-        //DEBUG("ble sta:%d, wksrc:%X", lpsta, lpret);
-    }
-    else
-    {
-        //DEBUG("ble sta:%d", lpsta);
+        (void)lpret;
     }
 }
 #endif //(CFG_SLEEP)

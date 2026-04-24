@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\blelib.h",
+  "file_path": "ble/api/blelib.h",
   "functions": [],
   "macros": [
     {
@@ -7,248 +7,256 @@
       "value": "__attribute__((section(\"le_env_mem_area\"), zero_init))",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 20
+      "file_path": "ble/api/blelib.h",
+      "line_number": 22
+    },
+    {
+      "name": "__VAR_ENV",
+      "value": "__attribute__((section(\".bss.le_env_mem_area\")))",
+      "macro_type": "function_macro",
+      "brief": "",
+      "file_path": "ble/api/blelib.h",
+      "line_number": 24
     },
     {
       "name": "__TASKFN",
       "value": "__attribute__((section(\"le_task_hdl_func\")))",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 23
+      "file_path": "ble/api/blelib.h",
+      "line_number": 28
     },
     {
       "name": "BLE_CONNECTION_MAX",
       "value": "(1)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 29
+      "file_path": "ble/api/blelib.h",
+      "line_number": 34
     },
     {
       "name": "BLE_ACTIVITY_MAX",
       "value": "(2)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 31
+      "file_path": "ble/api/blelib.h",
+      "line_number": 36
     },
     {
       "name": "BLE_EXCH_BASE",
       "value": "(0x20008000)",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 34
+      "file_path": "ble/api/blelib.h",
+      "line_number": 39
     },
     {
       "name": "BLE_EXCH_SIZE",
       "value": "(0x0BAC)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 35
+      "file_path": "ble/api/blelib.h",
+      "line_number": 40
     },
     {
       "name": "BLE_EXCH_END",
       "value": "(BLE_EXCH_BASE + BLE_EXCH_SIZE)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 36
+      "file_path": "ble/api/blelib.h",
+      "line_number": 41
     },
     {
       "name": "BLE_HEAP_BASE",
       "value": "(BLE_EXCH_END)",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 39
+      "file_path": "ble/api/blelib.h",
+      "line_number": 44
     },
     {
       "name": "BLE_HEAP_ENV_SIZE",
       "value": "(0x600)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 40
+      "file_path": "ble/api/blelib.h",
+      "line_number": 45
     },
     {
       "name": "BLE_HEAP_MSG_SIZE",
       "value": "(0x600)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 41
+      "file_path": "ble/api/blelib.h",
+      "line_number": 46
     },
     {
       "name": "BLE_HEAP_SIZE",
       "value": "(BLE_HEAP_ENV_SIZE + BLE_HEAP_MSG_SIZE)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 42
+      "file_path": "ble/api/blelib.h",
+      "line_number": 47
     },
     {
       "name": "BLE_HEAP_END",
       "value": "(BLE_HEAP_BASE + BLE_HEAP_SIZE)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 43
+      "file_path": "ble/api/blelib.h",
+      "line_number": 48
     },
     {
       "name": "BLE_RWZI_BASE",
       "value": "(BLE_HEAP_END)",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 46
+      "file_path": "ble/api/blelib.h",
+      "line_number": 51
     },
     {
       "name": "BLE_RWZI_END",
       "value": "(0x2000A000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 47
+      "file_path": "ble/api/blelib.h",
+      "line_number": 52
     },
     {
       "name": "BLE_RWZI_SIZE",
       "value": "(BLE_RWZI_END - BLE_RWZI_BASE)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 48
+      "file_path": "ble/api/blelib.h",
+      "line_number": 53
     },
     {
       "name": "BLE_CONNECTION_MAX",
       "value": "(6)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 53
+      "file_path": "ble/api/blelib.h",
+      "line_number": 58
     },
     {
       "name": "BLE_ACTIVITY_MAX",
       "value": "(8)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 55
+      "file_path": "ble/api/blelib.h",
+      "line_number": 60
     },
     {
       "name": "BLE_EXCH_BASE",
       "value": "(0x20008000)",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 58
+      "file_path": "ble/api/blelib.h",
+      "line_number": 63
     },
     {
       "name": "BLE_EXCH_SIZE",
       "value": "(0x1590)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 59
+      "file_path": "ble/api/blelib.h",
+      "line_number": 64
     },
     {
       "name": "BLE_CONNECTION_MAX",
       "value": "(3)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 63
+      "file_path": "ble/api/blelib.h",
+      "line_number": 68
     },
     {
       "name": "BLE_ACTIVITY_MAX",
       "value": "(4)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 65
+      "file_path": "ble/api/blelib.h",
+      "line_number": 70
     },
     {
       "name": "BLE_EXCH_BASE",
       "value": "(0x20008000)",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 68
+      "file_path": "ble/api/blelib.h",
+      "line_number": 73
     },
     {
       "name": "BLE_EXCH_SIZE",
       "value": "(0x0FD8)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 69
+      "file_path": "ble/api/blelib.h",
+      "line_number": 74
     },
     {
       "name": "BLE_EXCH_END",
       "value": "(BLE_EXCH_BASE + BLE_EXCH_SIZE)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 71
+      "file_path": "ble/api/blelib.h",
+      "line_number": 76
     },
     {
       "name": "BLE_HEAP_BASE",
       "value": "(0x20004E00)",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 75
+      "file_path": "ble/api/blelib.h",
+      "line_number": 80
     },
     {
       "name": "BLE_HEAP_ENV_SIZE",
       "value": "(0xC00)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 78
+      "file_path": "ble/api/blelib.h",
+      "line_number": 83
     },
     {
       "name": "BLE_HEAP_MSG_SIZE",
       "value": "(0x2000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 81
+      "file_path": "ble/api/blelib.h",
+      "line_number": 86
     },
     {
       "name": "BLE_HEAP_SIZE",
       "value": "(BLE_HEAP_ENV_SIZE + BLE_HEAP_MSG_SIZE)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 83
+      "file_path": "ble/api/blelib.h",
+      "line_number": 88
     },
     {
       "name": "BLE_RWZI_BASE",
       "value": "(BLE_EXCH_END)",
       "macro_type": "register",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 86
+      "file_path": "ble/api/blelib.h",
+      "line_number": 91
     },
     {
       "name": "BLE_RWZI_END",
       "value": "(0x2000A000)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 87
+      "file_path": "ble/api/blelib.h",
+      "line_number": 92
     },
     {
       "name": "BLE_RWZI_SIZE",
       "value": "(BLE_RWZI_END - BLE_RWZI_BASE)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\blelib.h",
-      "line_number": 88
+      "file_path": "ble/api/blelib.h",
+      "line_number": 93
     }
   ],
   "enums": [],

@@ -333,7 +333,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99 --thumb --gnu --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
+              <MiscControls>--c99 --thumb --gnu --bss_threshold=0 --preinclude=..\src\cfg.h --locale=english</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\core;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf;..\src\custom</IncludePath>

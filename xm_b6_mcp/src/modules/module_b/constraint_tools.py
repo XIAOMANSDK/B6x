@@ -635,54 +635,48 @@ def list_phone_brands() -> Dict:
 
 def get_ble_feature_compatibility(feature_name: Optional[str] = None) -> Dict:
     """
-    Get BLE feature compatibility information.
+    Get BLE phone compatibility information.
 
     Args:
-        feature_name: Optional specific feature name (e.g., "BLE 5.0", "Mesh")
+        feature_name: Optional brand name to filter (e.g., "苹果", "华为", "Samsung")
 
     Returns:
         {
-            "total_features": 50,
-            "features": [
-                {
-                    "name": "BLE 5.0",
-                    "supported_libraries": ["standard", "full"],
-                    "min_sdk_version": "1.0.0",
-                    "max_sdk_version": "",
-                    "notes": "Requires standard or full library",
-                    "constraints": ["Not available in lite library"]
-                }
-            ]
+            "total_brands": 11,
+            "total_issues": 147,
+            "matched_brands": {
+                "brand_name": [
+                    {"phone_model": "...", "os_version": "...", "severity": "...", ...}
+                ]
+            }
         }
-
-    Example:
-        >>> get_ble_feature_compatibility("BLE 5.0")
-        Returns BLE 5.0 compatibility info
     """
     logger.info(f"Getting BLE feature compatibility: {feature_name}")
 
-    compat_data = load_constraint("ble_compatibility.json")
+    compat_data = load_constraint("phone_compatibility_issues.json")
     if not compat_data:
         return {
-            "error": "BLE compatibility constraints not loaded. Run build_excel_constraints.py first."
+            "error": "Phone compatibility constraints not loaded. Run build_excel_constraints.py first."
         }
 
-    features = compat_data.get("features", [])
+    brands = compat_data.get("brands", {})
+    total_issues = compat_data.get("total_issues", 0)
 
     if feature_name:
-        # Filter by feature name
-        filtered_features = [
-            f for f in features
-            if feature_name.lower() in f["name"].lower() or
-               f["name"].lower() in feature_name.lower()
-        ]
+        filtered_brands = {
+            brand: issues
+            for brand, issues in brands.items()
+            if feature_name.lower() in brand.lower() or
+               brand.lower() in feature_name.lower()
+        }
     else:
-        filtered_features = features
+        filtered_brands = brands
 
     return {
-        "total_features": len(features),
-        "matched_features": len(filtered_features),
-        "features": filtered_features
+        "total_brands": len(brands),
+        "total_issues": total_issues,
+        "matched_brands": filtered_brands,
+        "matched_brand_count": len(filtered_brands)
     }
 
 

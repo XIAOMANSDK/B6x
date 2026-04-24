@@ -1,3 +1,12 @@
+/**
+ ****************************************************************************************
+ *
+ * @file cdc_uart.c
+ *
+ * @brief USB CDC virtual serial port - descriptors, event handlers, and test functions.
+ *
+ ****************************************************************************************
+ */
 #include "usbd.h"
 #include "usbd_cdc.h"
 #include "uart.h"
@@ -141,8 +150,16 @@ static const usbd_config_t cdc_configuration[] = {
  ****************************************************************************
  */
 
-volatile uint8_t dtr_enable = 0;
+static volatile uint8_t dtr_enable = 0;
 
+/**
+ ****************************************************************************************
+ * @brief CDC line state / line coding update callback from USB stack.
+ *
+ * @param[in] cdc    CDC instance
+ * @param[in] type   Update type (CDC_LINE_STATE or coding change)
+ ****************************************************************************************
+ */
 void usbd_cdc_updated(usbd_cdc_t *cdc, uint8_t type)
 {
     if (type == CDC_LINE_STATE) {
@@ -156,6 +173,13 @@ void usbd_cdc_updated(usbd_cdc_t *cdc, uint8_t type)
     }
 }
 
+/**
+ ****************************************************************************************
+ * @brief CDC bulk OUT endpoint handler. Routes received USB data to BLE or UART.
+ *
+ * @param[in] ep    Endpoint number
+ ****************************************************************************************
+ */
 void usbd_cdc_bulk_out_handler(uint8_t ep)
 {
     uint16_t read_byte;
@@ -164,13 +188,9 @@ void usbd_cdc_bulk_out_handler(uint8_t ep)
     read_byte = usbd_ep_read(ep, CDC_BULK_EP_MPS, data);
     USB_LOG_RAW("CDC Bulk Out(ep:%d,len:%d)\r\n", ep, read_byte);
 
-    /*!< here you can output data to hardware */
-    //for (uint8_t i = 0; i < read_byte; i++) {
-    //    uart_putc(0, data[i]);
-    //}
     if (app_state_get() > APP_READY)
     {
-        sess_txd_send(app_env.curidx, read_byte, data);
+        (void)sess_txd_send(app_env.curidx, read_byte, data);
     }
     else
     {
@@ -199,8 +219,13 @@ __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 
 #define CDC_BULK_TX_SIZE  (CDC_BULK_EP_MPS-1)
 
-uint8_t cdc_bulk_buff[CDC_BULK_TX_SIZE];
+static uint8_t cdc_bulk_buff[CDC_BULK_TX_SIZE];
 
+/**
+ ****************************************************************************************
+ * @brief Initialize USB device stack, register CDC descriptors and endpoints.
+ ****************************************************************************************
+ */
 void usbdInit(void)
 {
     usbd_init();

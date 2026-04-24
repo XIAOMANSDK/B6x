@@ -426,6 +426,7 @@ static uint8_t hids_rpt_ntf_cfg(uint8_t conidx, uint8_t rpt_idx, const struct at
 /// Confirm ATTS_WRITE_REQ
 static void hids_att_write_cfm(uint8_t conidx, uint8_t att_idx, uint16_t handle, const struct atts_write_ind *ind)
 {
+    ASSERT_ERR(ind != NULL);
     uint8_t status = LE_SUCCESS;
 
     switch (att_idx)

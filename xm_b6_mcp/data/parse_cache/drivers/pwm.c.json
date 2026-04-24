@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\src\\pwm.c",
+  "file_path": "drivers/src/pwm.c",
   "functions": [
     {
       "name": "pwm_init",
@@ -22,7 +22,7 @@
         }
       ],
       "function_body": "{\r\n    TIMER_TypeDef* TIMx = TMR_USED(tmr);\r\n    uint32_t tmr_bit = 1UL << (1 + tmr); //APB_CTMR_BIT APB_ATMR_BIT\r\n\r\n    //enable clock, init PSC & Freq\r\n    RCC_APBCLK_EN(tmr_bit);           /* 使能定时器时钟 */\r\n    TIMx->CR1.CEN = 0;                /* CR1: 禁用计数器(CEN=0) */\r\n\r\n    //if (conf != NULL)\r\n    {\r\n        TIMx->CNT = 0;                /* CNT: 清零计数器 */\r\n        TIMx->PSC = psc;              /* PSC: 设置预分频器值 */\r\n        TIMx->ARR = arr;              /* ARR: 设置自动重载值 */\r\n    }\r\n\r\n    TIMx->CR1.DIR = 0;                /* CR1: 设置为向上计数模式(DIR=0) */\r\n    TIMx->CR1.CMS = 0;                /* CR1: 设置为边沿对齐模式(CMS=0) */\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 37,
       "is_static": false
     },
@@ -37,7 +37,7 @@
         }
       ],
       "function_body": "{\r\n    uint32_t tmr_bit = 1UL << (1 + tmr); //APB_CTMR_BIT APB_ATMR_BIT\r\n\r\n    RCC_APBCLK_DIS(tmr_bit);          /* 禁用定时器时钟 */\r\n    RCC_AHBRST_REQ(tmr_bit);          /* 请求定时器复位 */\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 61,
       "is_static": false
     },
@@ -62,7 +62,7 @@
         }
       ],
       "function_body": "{\r\n    TIMER_TypeDef* TIMx = TMR_USED(tmr);\r\n\r\n    TIMx->SMCR.Word = smcr;           /* SMCR: 配置从模式控制 */\r\n    TIMx->IER.Word  = intr;           /* IER: 使能中断 */\r\n    TIMx->ICR.Word  = intr;           /* ICR: 清除中断标志 */\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 75,
       "is_static": false
     },
@@ -77,7 +77,7 @@
         }
       ],
       "function_body": "{\r\n    TIMER_TypeDef* TIMx = TMR_USED(tmr);\r\n\r\n    if (tmr == PWM_ATMR)\r\n    {\r\n        TIMx->BDTR.MOE = 1;           /* BDTR: 使能主输出(MOE=1) */\r\n    }\r\n\r\n    TIMx->CR1.ARPE = 1;               /* CR1: 使能自动重载预装载(ARPE=1) */\r\n    TIMx->CR1.CEN = 1;                /* CR1: 使能计数器(CEN=1) */\r\n    TIMx->EGR.UG = 1;                 /* EGR: 产生更新事件重新初始化计数器 */\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 88,
       "is_static": false
     },
@@ -92,7 +92,7 @@
         }
       ],
       "function_body": "{\r\n    TIMER_TypeDef* TIMx = TMR_USED(tmr);\r\n    TIMx->CR1.CEN = 0;                /* CR1: 禁用计数器(CEN=0) */\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 106,
       "is_static": false
     },
@@ -112,7 +112,7 @@
         }
       ],
       "function_body": "{\r\n    uint8_t cidx = chnl % 4;\r\n    TIMER_TypeDef* TIMx = TMR_USED(chnl / 4);\r\n\r\n    // CCER&CCMR Clear\r\n    TIMx->CCER.Word    &= ~(0x0F << (cidx * 4)); // bit[3:0]\r\n    TIMx->DMAEN.Word   &= ~(0x01 << (cidx + 1)); // bit1 - CC1DE\r\n    TIMx->CCMR[cidx/2] &= ~(0xFF << ((cidx % 2) * 8)); // bit[7:0]\r\n\r\n    if (conf != NULL)\r\n    {\r\n        // CCR value\r\n        TIMx->CCR[cidx]     = conf->duty;\r\n        // CCMR conf\r\n        TIMx->CCMR[cidx/2] |= (conf->ccmr << ((cidx % 2) * 8));\r\n        // CCER enable\r\n        TIMx->DMAEN.Word   |= (((conf->ccer & PWM_CCxDE_BIT) >> PWM_CCxDE_POS) << (cidx + 1));\r\n        TIMx->CCER.Word    |= ((conf->ccer & 0x0F) << (cidx * 4));\r\n    }\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 118,
       "is_static": false
     },
@@ -132,7 +132,7 @@
         }
       ],
       "function_body": "{\r\n    uint8_t used_nchnl = (chnl > PWM_ATMR_CH4P) ? 2 : 0;  /* 判断是否为互补通道 */\r\n    uint8_t cidx = chnl % 4;                              /* 通道索引 (0-3) */\r\n    TIMER_TypeDef* TIMx = TMR_USED(chnl > PWM_CTMR_CH4);  /* 根据通道选择定时器 */\r\n\r\n    // CCER&CCMR Clear\r\n    TIMx->CCER.Word    &= ~(0x03 << ((cidx * 4) + used_nchnl)); /* CCER: 清除通道使能位 */\r\n    TIMx->DMAEN.Word   &= ~(0x01 << (cidx + 1));               /* DMAEN: 清除DMA请求使能 */\r\n    // CCMR在配置时清除\r\n\r\n    if (conf != NULL)\r\n    {\r\n        // CCR value\r\n        TIMx->CCR[cidx]     = conf->duty;                    /* CCR: 设置占空比值 */\r\n        // CCMR conf\r\n        TIMx->CCMR[cidx/2] &= ~(0xFF << ((cidx % 2) * 8));   /* CCMR: 清除通道模式配置 */\r\n        TIMx->CCMR[cidx/2] |= (conf->ccmr << ((cidx % 2) * 8)); /* CCMR: 设置通道模式 */\r\n        // CCER enable\r\n        TIMx->DMAEN.Word   |= (((conf->ccer & PWM_CCxDE_BIT) >> PWM_CCxDE_POS) << (cidx + 1)); /* DMAEN: 设置DMA请求使能 */\r\n        TIMx->CR2.CCDS      = !!(TIMx->DMAEN.Word & DMA_CCxDE_MASK); /* 0: dma的req启动条件是tim_cnt == ccr, 1: dma的req启动条件是tim_cnt == arr */\r\n        TIMx->CCER.Word    |= ((conf->ccer & 0x03) << ((cidx * 4) + used_nchnl)); /* CCER: 使能通道输出 */\r\n    }\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 141,
       "is_static": false
     },
@@ -152,7 +152,7 @@
         }
       ],
       "function_body": "{\r\n    uint8_t cidx = chnl % 4;\r\n    TIMER_TypeDef* TIMx = TMR_USED(chnl > PWM_CTMR_CH4);\r\n    TIMx->CCR[cidx]     = duty;                             /* CCR: 更新占空比值 */\r\n}",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "drivers/src/pwm.c",
       "line_number": 172,
       "is_static": false
     }
@@ -163,7 +163,7 @@
       "value": "(BIT(TIMER_CC1DE_POS) | BIT(TIMER_CC2DE_POS) | BIT(TIMER_CC3DE_POS) | BIT(TIMER_CC4DE_POS))",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./drivers\\src\\pwm.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\drivers\\src\\pwm.c",
       "line_number": 140
     }
   ],

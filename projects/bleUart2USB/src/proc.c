@@ -3,7 +3,8 @@
  *
  * @file proc.c
  *
- * @brief user procedure.
+ * @brief User procedure - UART data accumulation and routing to USB CDC or BLE
+ *        Serial Service based on command byte prefix.
  *
  ****************************************************************************************
  */
@@ -31,18 +32,32 @@
  ****************************************************************************************
  */
 
-enum uart_cmd
-{
-    CMD_USBD     = 0xA0,
-    CMD_BLE_SESS = 0xB0,
-};
+/** Command byte: route data to USB CDC endpoint */
+#define CMD_USBD                (0xA0)
 
-#define CDC0_IN_EP            0x81
-#define BLE_MAX_LEN           20
-#define NULL_CNT              20
+/** Command byte: route data to BLE Serial Service */
+#define CMD_BLE_SESS            (0xB0)
 
-static uint8_t buff[BLE_MAX_LEN];
-static uint16_t buff_len = 0;
+/** CDC bulk IN endpoint address (must match cdc_uart.c descriptor) */
+#define CDC0_IN_EP              (0x81)
+
+/**
+ * BLE maximum payload per packet.
+ * Fixed 20 bytes for BLE 4.0 compatibility (default MTU = 23, minus 3 ATT header).
+ */
+#define BLE_MAX_PAYLOAD         (20)
+
+/** Idle poll count threshold before flushing partial UART data */
+#define UART_IDLE_FLUSH_THRESHOLD   (20)
+
+
+/*
+ * VARIABLES
+ ****************************************************************************************
+ */
+
+static uint8_t  g_uart_rx_buf[BLE_MAX_PAYLOAD];
+static uint16_t g_uart_rx_len = 0;
 
 
 /*
@@ -50,71 +65,87 @@ static uint16_t buff_len = 0;
  ****************************************************************************************
  */
 
-/// Override - Callback on received data from peer device
+/**
+ ****************************************************************************************
+ * @brief Callback on data received from BLE peer. Forwards to UART1 and USB CDC.
+ *
+ * @param[in] conidx   Connection index
+ * @param[in] len      Data length
+ * @param[in] data     Pointer to received data
+ ****************************************************************************************
+ */
 void sess_cb_rxd(uint8_t conidx, uint16_t len, const uint8_t *data)
 {
     (void)conidx;
     uart_send(UART1_PORT, len, data);
-    usbd_cdc_ep_send(CDC0_IN_EP, len, data);
+    (void)usbd_cdc_ep_send(CDC0_IN_EP, len, data);
 }
 
-/// Uart Data procedure
+/**
+ ****************************************************************************************
+ * @brief Main user procedure called every loop iteration.
+ *
+ *        Reads UART ring buffer into g_uart_rx_buf. When the buffer is full or
+ *        UART has been idle for UART_IDLE_FLUSH_THRESHOLD polls, data is routed
+ *        based on the first byte:
+ *        - CMD_USBD (0xA0): send to USB CDC endpoint
+ *        - CMD_BLE_SESS (0xB0): send to BLE Serial Service (if connected)
+ *        - Other: discard
+ ****************************************************************************************
+ */
 void user_procedure(void)
 {
-    // Todo Loop-Proc
-    static uint8_t null_cnt = 0;
-    uint16_t len;
+    static uint8_t idle_poll_cnt = 0;
+    uint16_t read_len;
 
-    len = uart1Rb_Read(&buff[buff_len], BLE_MAX_LEN - buff_len);
-    if (len > 0)
+    read_len = uart1Rb_Read(&g_uart_rx_buf[g_uart_rx_len], BLE_MAX_PAYLOAD - g_uart_rx_len);
+    if (read_len > 0)
     {
-        buff_len += len;
-        if (buff_len < BLE_MAX_LEN)
+        g_uart_rx_len += read_len;
+        if (g_uart_rx_len < BLE_MAX_PAYLOAD)
         {
-            return; // wait full
+            return;
         }
     }
     else
     {
-        if ((buff_len > 0) && (null_cnt++ > NULL_CNT))
+        if ((g_uart_rx_len > 0) && (idle_poll_cnt++ > UART_IDLE_FLUSH_THRESHOLD))
         {
-            //finish = true;
-            null_cnt = 0;
+            idle_poll_cnt = 0;
         }
         else
         {
-            return; // wait again
+            return;
         }
     }
 
-    switch (buff[0])
+    switch (g_uart_rx_buf[0])
     {
         case CMD_USBD:
         {
-            uint8_t state = usbd_cdc_ep_send(CDC0_IN_EP, buff_len, buff);
-            (void)state;
-
-            DEBUG("USBD(sta:%x)", state);
-            debugHex(buff, buff_len);
-        } break;
+            uint8_t status = usbd_cdc_ep_send(CDC0_IN_EP, g_uart_rx_len, g_uart_rx_buf);
+            DEBUG("USBD(sta:%x)", status);
+            (void)status;
+            debugHex(g_uart_rx_buf, g_uart_rx_len);
+        }
+        break;
 
         case CMD_BLE_SESS:
         {
             if (app_state_get() > APP_READY)
             {
-                uint8_t state = sess_txd_send(app_env.curidx, buff_len, buff);
-                (void)state;
-
-                DEBUG("BLE_SESS(le_sta:%x, app_sta:%x)", state, app_state_get());
-                debugHex(buff, buff_len);
+                uint8_t status = sess_txd_send(app_env.curidx, g_uart_rx_len, g_uart_rx_buf);
+                DEBUG("BLE_SESS(le_sta:%x)", status);
+                (void)status;
+                debugHex(g_uart_rx_buf, g_uart_rx_len);
             }
-
-        } break;
+        }
+        break;
 
         default:
-        {
-        } break;
+            break;
     }
 
-    buff_len = 0;
+    g_uart_rx_len = 0;
+    idle_poll_cnt = 0;
 }

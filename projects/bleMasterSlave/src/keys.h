@@ -13,11 +13,25 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "hidkey.h"
 
-
+/**
+ ****************************************************************************************
+ *
+ * @brief Initialize GPIO for LEDs (output) and buttons (input with pull-up).
+ *
+ ****************************************************************************************
+ */
 void keys_init(void);
 
+/**
+ ****************************************************************************************
+ *
+ * @brief Poll button states and trigger BLE actions.
+ *
+ * @note Called from user_procedure() in main loop.
+ *
+ ****************************************************************************************
+ */
 void keys_scan(void);
 
 #endif  //_KEYS_H_

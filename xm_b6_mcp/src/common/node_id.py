@@ -234,6 +234,75 @@ def create_node_id(item_type: str, identifier: str) -> NodeId:
     return NodeId(node_type=node_type, identifier=identifier)
 
 
+# ---------------------------------------------------------------------------
+# 2-part <-> 3-part ID conversion (bridge between MCP API and relations)
+# ---------------------------------------------------------------------------
+
+# NodeType -> candidate domains for 3-part relation IDs
+_NODE_TYPE_DOMAINS: dict[NodeType, list[str]] = {
+    NodeType.API: ["drivers", "ble"],
+    NodeType.REGISTER: ["hardware"],
+    NodeType.MACRO: ["drivers"],
+    NodeType.EXAMPLE: ["applications"],
+    NodeType.DOCS: [],
+}
+
+# Relation entry type -> NodeType (reverse mapping)
+_RELATION_TYPE_TO_NODE_TYPE: dict[str, NodeType] = {
+    "api": NodeType.API,
+    "function": NodeType.API,       # legacy EntryType in drivers domain
+    "ble_api": NodeType.API,        # BLE domain variant
+    "register": NodeType.REGISTER,
+    "macro": NodeType.MACRO,
+    "macros": NodeType.MACRO,
+    "example": NodeType.EXAMPLE,
+}
+
+# NodeType -> relation entry type (first match wins)
+_NODE_TYPE_TO_RELATION_TYPE: dict[NodeType, str] = {
+    NodeType.API: "api",
+    NodeType.REGISTER: "register",
+    NodeType.MACRO: "macro",
+    NodeType.EXAMPLE: "example",
+}
+
+
+def node_id_to_relation_ids(node_id_str: str) -> list[str]:
+    """
+    Convert a 2-part node ID to candidate 3-part relation IDs.
+
+    Args:
+        node_id_str: 2-part node ID (e.g., "api:rtc_conf")
+
+    Returns:
+        List of 3-part candidates (e.g., ["drivers:api:rtc_conf", "ble:api:rtc_conf"])
+    """
+    parsed = NodeId.from_string(node_id_str)
+    domains = _NODE_TYPE_DOMAINS.get(parsed.node_type, [])
+    rel_type = _NODE_TYPE_TO_RELATION_TYPE.get(parsed.node_type, parsed.node_type.value)
+    return [f"{domain}:{rel_type}:{parsed.identifier}" for domain in domains]
+
+
+def relation_id_to_node_id(relation_id: str) -> str | None:
+    """
+    Convert a 3-part relation ID to a 2-part node ID.
+
+    Args:
+        relation_id: 3-part relation ID (e.g., "drivers:api:rtc_conf")
+
+    Returns:
+        2-part node ID (e.g., "api:rtc_conf"), or None if type has no NodeType mapping
+    """
+    parts = relation_id.split(":", 2)
+    if len(parts) != 3:
+        return None
+    _, entry_type, name = parts
+    node_type = _RELATION_TYPE_TO_NODE_TYPE.get(entry_type)
+    if node_type is None:
+        return None
+    return f"{node_type.value}:{name}"
+
+
 def normalize_node_id(node_id: str) -> str:
     """
     Normalize a node_id string to standard format.
@@ -267,4 +336,6 @@ __all__ = [
     "NodeType",
     "create_node_id",
     "normalize_node_id",
+    "node_id_to_relation_ids",
+    "relation_id_to_node_id",
 ]

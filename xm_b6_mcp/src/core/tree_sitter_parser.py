@@ -15,6 +15,8 @@ from pathlib import Path
 from typing import List, Dict, Optional, Tuple, Set, Any
 from dataclasses import dataclass, field, asdict
 
+from common.path_utils import make_relative, get_sdk_root
+
 logger = logging.getLogger(__name__)
 
 
@@ -2040,12 +2042,15 @@ class TreeSitterCParser:
 
         # Default search paths - try to locate SDK source directories
         if search_paths is None:
-            base_path = Path(__file__).parent.parent.parent.parent
+            try:
+                base_path = Path(get_sdk_root())
+            except RuntimeError:
+                base_path = Path(__file__).parent.parent.parent
             search_paths = [
-                str(base_path / "sdk6" / "drivers" / "src"),
-                str(base_path / "sdk6" / "ble" / "app"),
-                str(base_path / "sdk6" / "examples"),
-                str(base_path / "sdk6" / "projects"),
+                str(base_path / "drivers" / "src"),
+                str(base_path / "ble" / "app"),
+                str(base_path / "examples"),
+                str(base_path / "projects"),
             ]
 
         for search_path in search_paths:
@@ -2142,6 +2147,12 @@ def parse_directory_full(
     dir_path = Path(directory)
     cache_path = Path(cache_dir)
 
+    # Get SDK root for relative path conversion
+    try:
+        sdk_root = get_sdk_root()
+    except RuntimeError:
+        sdk_root = None
+
     # Determine cache subdirectory from directory name
     # "drivers/api" -> "drivers"
     # "ble/api" -> "ble"
@@ -2168,6 +2179,20 @@ def parse_directory_full(
             # Parse with Tree-sitter
             result = parser.parse_header_file_full(str(header_file))
             if result and use_cache:
+                # Convert file paths to relative before caching
+                if sdk_root and result.file_path:
+                    result.file_path = make_relative(result.file_path, sdk_root)
+                    # Also convert paths in functions, macros, enums
+                    for func in result.functions:
+                        if func.file_path:
+                            func.file_path = make_relative(func.file_path, sdk_root)
+                    for macro in result.macros:
+                        if macro.file_path:
+                            macro.file_path = make_relative(macro.file_path, sdk_root)
+                    for enum in result.enums:
+                        if enum.file_path:
+                            enum.file_path = make_relative(enum.file_path, sdk_root)
+
                 # Save to cache
                 try:
                     data = serialize_full_parse_result(result)
@@ -2210,6 +2235,12 @@ def parse_directory_source(
     dir_path = Path(directory)
     cache_path = Path(cache_dir)
 
+    # Get SDK root for relative path conversion
+    try:
+        sdk_root = get_sdk_root()
+    except RuntimeError:
+        sdk_root = None
+
     # Determine cache subdirectory from directory name
     # "drivers/src" -> "drivers"
     # "ble/app" -> "ble"
@@ -2236,6 +2267,14 @@ def parse_directory_source(
             # Parse with Tree-sitter
             result = parser.parse_source_file(str(source_file))
             if result and use_cache:
+                # Convert file paths to relative before caching
+                if sdk_root and result.file_path:
+                    result.file_path = make_relative(result.file_path, sdk_root)
+                    # Also convert paths in function definitions
+                    for func_def in result.functions:
+                        if func_def.file_path:
+                            func_def.file_path = make_relative(func_def.file_path, sdk_root)
+
                 # Save to cache
                 try:
                     data = serialize_source_parse_result(result)

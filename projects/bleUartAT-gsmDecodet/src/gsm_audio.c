@@ -107,9 +107,6 @@ extern void speakerStop(void);
  ****************************************************************************************
  */
 
-//static inline uint16_t le16_to_cpu(uint16_t val);
-//static inline uint32_t le32_to_cpu(uint32_t val);
-
 /*
  * FUNCTIONS
  ****************************************************************************************
@@ -266,7 +263,7 @@ int gsm_play_poll(void)
         case NB_STATE_PREFILL1:
             // Decode first frame to buffer[0]
             //debug("GSM: Decoding frame %d at 0x%08X\r\n", nb_frame_count, nb_flash_addr);
-            gsm_decode_frame(gsm_decoder, (uint8_t *)nb_flash_addr, pcm_buffer[0]);
+            gsm_decode(gsm_decoder, (gsm_byte *)nb_flash_addr, (gsm_signal *)pcm_buffer[0]);
             nb_frame_count++;
             nb_flash_addr += GSM_FRAME_SIZE;
 
@@ -284,7 +281,7 @@ int gsm_play_poll(void)
         case NB_STATE_PREFILL2:
             // Decode second frame to buffer[1]
             //debug("GSM: Decoding frame %d at 0x%08X\r\n", nb_frame_count, nb_flash_addr);
-            gsm_decode_frame(gsm_decoder, (uint8_t *)nb_flash_addr, pcm_buffer[1]);
+            gsm_decode(gsm_decoder, (gsm_byte *)nb_flash_addr, (gsm_signal *)pcm_buffer[1]);
 
             nb_frame_count++;
             nb_flash_addr += GSM_FRAME_SIZE;
@@ -311,7 +308,7 @@ int gsm_play_poll(void)
             // Decode next frame to OTHER buffer (not currently playing)
             nb_decode_buf_idx = buf_idx ^ 1;  // Toggle 0<->1
             //debug("GSM: Decoding frame %d at 0x%08X to index %d\r\n", nb_frame_count, nb_flash_addr, nb_decode_buf_idx);
-            gsm_decode_frame(gsm_decoder, (uint8_t *)nb_flash_addr, pcm_buffer[nb_decode_buf_idx]);
+            gsm_decode(gsm_decoder, (gsm_byte *)nb_flash_addr, (gsm_signal *)pcm_buffer[nb_decode_buf_idx]);
             nb_frame_count++;
             nb_flash_addr += GSM_FRAME_SIZE;
 

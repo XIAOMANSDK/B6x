@@ -3,19 +3,19 @@
  *
  * @file dma_test.c
  *
- * @brief DMA UART收发传输演示程序
+ * @brief DMA UART transfer demo.
  *
  * @details
- * 本示例演示DMA在UART通信中的应用：
- * - 接收通道：Ping-Pong模式，双缓冲区连续接收
- * - 发送通道：Basic模式，按需发送数据
- * - 支持中断和轮询两种工作模式
+ * This example demonstrates DMA usage in UART communication:
+ * - RX channel: Ping-Pong mode with dual-buffer continuous receive
+ * - TX channel: Basic mode, on-demand data transmission
+ * - Supports both interrupt and polling modes
  *
- * 工作原理：
- * 1. DMA接收：使用Ping-Pong模式在双半缓冲区间交替接收
- * 2. UART RTO：通过接收超时中断处理不完整数据包
- * 3. DMA发送：从接收缓冲区读取数据并发送
- * 4. 缓冲区管理：环形缓冲区实现数据存储和读取
+ * Operation:
+ * 1. DMA RX: Uses Ping-Pong mode to alternate between dual half-buffers
+ * 2. UART RTO: Handles incomplete data packets via receive timeout interrupt
+ * 3. DMA TX: Reads data from RX buffer and transmits
+ * 4. Buffer management: Ring buffer for data storage and retrieval
  *
  ****************************************************************************************
  */
@@ -30,31 +30,31 @@
  ****************************************************************************************
  */
 
-#define DMA_IRQ_MODE       (1) ///< 工作模式选择: 1-中断模式, 0-轮询模式
+#define DMA_IRQ_MODE       (1) ///< Mode select: 1=interrupt, 0=polling
 
-/// DMA通道配置
-#define DMA_CH_UART_RX     DMA_CH0 ///< UART接收通道，使用Ping-Pong模式
-#define DMA_CH_UART_TX     DMA_CH1 ///< UART发送通道，使用Basic模式
+/// DMA channel configuration
+#define DMA_CH_UART_RX     DMA_CH0 ///< UART RX channel, Ping-Pong mode
+#define DMA_CH_UART_TX     DMA_CH1 ///< UART TX channel, Basic mode
 
-/// UART端口和参数配置
+/// UART port and parameters
 #define TEST_PORT          0      ///< 0:UART1_PORT  1:UART2_PORT
-#define TEST_BAUD          BRR_DIV(115200, 16M)  ///< 波特率配置
-#define TEST_LCRS          LCR_BITS(8, 1, none)  ///< 数据位、停止位、校验位
+#define TEST_BAUD          BRR_DIV(115200, 16M)
+#define TEST_LCRS          LCR_BITS(8, 1, none)
 
-#define TEST_RTOR          (100)  ///< 接收超时时间 (n)SYM=(n/10)字节
-#define TEST_FCTL          (FCR_FIFOEN_BIT | FCR_RXTL_1BYTE)  ///< FIFO控制
-#define TEST_INTR          (UART_IR_RTO_BIT)     ///< 使能接收超时中断
+#define TEST_RTOR          (100)  ///< Receive timeout (n)SYM=(n/10)bytes
+#define TEST_FCTL          (FCR_FIFOEN_BIT | FCR_RXTL_1BYTE)
+#define TEST_INTR          (UART_IR_RTO_BIT)     ///< Enable receive timeout interrupt
 
-/// 避免与调试UART引脚冲突
-#define PA_UART_TX         (6)    ///< UART发送引脚
-#define PA_UART_RX         (7)    ///< UART接收引脚
+/// Avoid conflict with debug UART pins
+#define PA_UART_TX         (6)    ///< UART TX pin
+#define PA_UART_RX         (7)    ///< UART RX pin
 
-/// 用于状态指示的GPIO引脚
-#define GPIO_RUN           GPIO08 ///< 运行状态指示
-#define GPIO_TX_DONE       GPIO09 ///< 发送完成指示
-#define GPIO_RX_PING       GPIO10 ///< Ping缓冲区接收完成
-#define GPIO_RX_PONG       GPIO11 ///< Pong缓冲区接收完成
-#define GPIO_RX_RTOR       GPIO12 ///< 接收超时指示
+/// Status indicator GPIO pins
+#define GPIO_RUN           GPIO08 ///< Running status
+#define GPIO_TX_DONE       GPIO09 ///< TX complete
+#define GPIO_RX_PING       GPIO10 ///< Ping buffer RX complete
+#define GPIO_RX_PONG       GPIO11 ///< Pong buffer RX complete
+#define GPIO_RX_RTOR       GPIO12 ///< Receive timeout indicator
 
 
 /*
@@ -62,108 +62,105 @@
  ****************************************************************************************
  */
 
-/// *************** UART缓冲区管理函数 *************** 
-#define TXD_BUFF_SIZE      (0x10)   ///< 发送缓冲区大小
-#define RXD_BUFF_SIZE      (0x200)  ///< 接收缓冲区大小
-#define RXD_BUFF_HALF      (RXD_BUFF_SIZE / 2) ///< Ping-Pong模式半缓冲区大小
+/// *************** UART buffer management ***************
+#define TXD_BUFF_SIZE      (0x10)   ///< TX buffer size
+#define RXD_BUFF_SIZE      (0x200)  ///< RX buffer size
+#define RXD_BUFF_HALF      (RXD_BUFF_SIZE / 2) ///< Ping-Pong half-buffer size
 
-volatile uint16_t rxdHead;          ///< 接收缓冲区头指针(写入位置)
-volatile uint16_t rxdTail;          ///< 接收缓冲区尾指针(读取位置)
-uint8_t rxdBuffer[RXD_BUFF_SIZE];   ///< 接收数据缓冲区
-uint8_t txdBuffer[TXD_BUFF_SIZE];   ///< 发送数据缓冲区
+static volatile uint16_t rxdHead;          ///< RX buffer head pointer (write position)
+static volatile uint16_t rxdTail;          ///< RX buffer tail pointer (read position)
+static uint8_t rxdBuffer[RXD_BUFF_SIZE];   ///< RX data buffer
+static uint8_t txdBuffer[TXD_BUFF_SIZE];   ///< TX data buffer
 
 /**
  ****************************************************************************************
- * @brief 获取接收缓冲区中可读数据长度
+ * @brief Get readable data length in RX buffer.
  *
- * @return uint16_t 可读数据字节数
+ * @return Readable data byte count
  ****************************************************************************************
  */
-uint16_t uart_size(void)
+UNUSED static uint16_t uart_size(void)
 {
     return ((rxdHead + RXD_BUFF_SIZE - rxdTail) % RXD_BUFF_SIZE);
 }
 
 /**
  ****************************************************************************************
- * @brief 从接收缓冲区读取数据
+ * @brief Read data from RX buffer.
  *
- * @param[out] buff 数据输出缓冲区
- * @param[in]  max  最大读取长度
- * @return uint16_t 实际读取长度
+ * @param[out] buff Data output buffer
+ * @param[in]  max  Max read length
  *
- * @details
- * 实现环形缓冲区的数据读取，支持跨边界读取
+ * @return Actual read length
+ *
+ * @note Supports ring buffer wrap-around read.
  ****************************************************************************************
  */
-uint16_t uart_read(uint8_t *buff, uint16_t max)
+static uint16_t uart_read(uint8_t *buff, uint16_t max)
 {
     uint16_t head = rxdHead;
     uint16_t tail = rxdTail;
     uint16_t tlen, len;
-    
+
     if ((max == 0) || (head == tail))
     {
-        return 0; // 缓冲区为空
+        return 0; // Buffer empty
     }
 
-    // 计算可读数据长度
+    // Calculate readable length
     len = (head + RXD_BUFF_SIZE - tail) % RXD_BUFF_SIZE;
     if (len > max) len = max;
 
-    // 处理环形缓冲区边界情况
+    // Handle ring buffer boundary
     if ((head > tail) || (tail + len <= RXD_BUFF_SIZE))
     {
-        // 数据连续，直接拷贝
+        // Continuous data, direct copy
         memcpy(&buff[0], (const void *)&rxdBuffer[tail], len);
     }
     else
     {
-        // 数据跨越边界，分段拷贝
+        // Data wraps around, copy in two segments
         tlen = RXD_BUFF_SIZE - tail;
 
-        memcpy(&buff[0], (const void *)&rxdBuffer[tail], tlen);     // 尾部数据
-        memcpy(&buff[tlen], (const void *)&rxdBuffer[0], len - tlen); // 头部数据
+        memcpy(&buff[0], (const void *)&rxdBuffer[tail], tlen);        // Tail segment
+        memcpy(&buff[tlen], (const void *)&rxdBuffer[0], len - tlen);  // Head segment
     }
     rxdTail = (tail + len) % RXD_BUFF_SIZE;
 
-    return len; // 返回实际读取长度
+    return len;
 }
 
-/// *************** DMA事件处理函数 *************** 
-volatile bool rxChnlAlt  = false;   ///< 接收通道当前使用的缓冲区标识
-volatile bool txChnlBusy = false;   ///< 发送通道忙状态标志
+/// *************** DMA event handlers ***************
+static volatile bool rxChnlAlt  = false;   ///< RX channel active buffer flag
+static volatile bool txChnlBusy = false;   ///< TX channel busy flag
 
 /**
  ****************************************************************************************
- * @brief UART接收DMA完成处理函数
+ * @brief UART RX DMA completion handler.
  *
- * @details
- * 在Ping-Pong模式下，当半缓冲区接收完成时：
- * - 重新加载DMA配置继续接收
- * - 切换缓冲区标识
- * - 更新接收缓冲区头指针
- * - 产生脉冲信号指示完成
+ * @details In Ping-Pong mode, when a half-buffer receive completes:
+ *          reload DMA config, toggle buffer flag, update head pointer,
+ *          and generate a pulse indicator.
  ****************************************************************************************
  */
 static void dmaUartRxDone(void)
 {
-    // 重新加载DMA配置，返回是否切换到备用通道
+    // Reload DMA config, returns whether switched to alternate channel
     rxChnlAlt = dma_chnl_reload(DMA_CH_UART_RX);
-    
+
     if (rxChnlAlt)
     {
-        // 切换到Pong缓冲区
-        rxdHead = RXD_BUFF_HALF;  ///< 头指针指向后半部分
-        // Ping缓冲区接收完成脉冲
+        // Switched to Pong buffer
+        rxdHead = RXD_BUFF_HALF;
+        // Ping buffer complete pulse
         GPIO_DAT_SET(GPIO_RX_PING);
         GPIO_DAT_CLR(GPIO_RX_PING);
     }
     else
     {
-        // 切换到Ping缓冲区
-        rxdHead = 0;  ///< 头指针指向前半部分
-        // Pong缓冲区接收完成脉冲
+        // Switched to Ping buffer
+        rxdHead = 0;
+        // Pong buffer complete pulse
         GPIO_DAT_SET(GPIO_RX_PONG);
         GPIO_DAT_CLR(GPIO_RX_PONG);
     }
@@ -171,98 +168,91 @@ static void dmaUartRxDone(void)
 
 /**
  ****************************************************************************************
- * @brief UART接收超时处理函数
+ * @brief UART RX timeout handler.
  *
- * @details
- * 当UART接收数据流中断超过设定时间时：
- * - 检查接收超时中断标志
- * - 清除中断标志
- * - 根据当前DMA状态计算已接收数据长度
- * - 更新接收缓冲区头指针
+ * @details When UART RX data stream stalls beyond configured timeout:
+ *          check RTO flag, clear interrupt, compute received data length
+ *          from DMA state, and update head pointer.
  ****************************************************************************************
  */
 static void dmaUartRxRtor(void)
 {
     #if (TEST_PORT == 0)
-    uint32_t iflag = UART1->IFM.Word;  ///< 读取UART1中断标志
+    uint32_t iflag = UART1->IFM.Word;
     #else
-    uint32_t iflag = UART2->IFM.Word;  ///< 读取UART2中断标志
+    uint32_t iflag = UART2->IFM.Word;
     #endif
-    
-    if (iflag & UART_IR_RTO_BIT)  ///< 检查接收超时中断
+
+    if (iflag & UART_IR_RTO_BIT)
     {
-        GPIO_DAT_SET(GPIO_RX_RTOR);  ///< 超时指示
+        GPIO_DAT_SET(GPIO_RX_RTOR);
 
         #if (TEST_PORT == 0)
-            UART1->ICR.Word = UART_IR_RTO_BIT;  ///< 清除UART1超时中断
+            UART1->ICR.Word = UART_IR_RTO_BIT;
         #else
-            UART2->ICR.Word = UART_IR_RTO_BIT;  ///< 清除UART2超时中断
+            UART2->ICR.Word = UART_IR_RTO_BIT;
         #endif
-        
-        // 根据当前DMA通道计算已接收数据长度
+
+        // Calculate received data position from current DMA channel
         if (rxChnlAlt)
         {
-            // 当前使用备用通道(Pong)，计算已接收数据位置
+            // Currently on alternate channel (Pong)
             rxdHead = RXD_BUFF_HALF + (RXD_BUFF_HALF - dma_chnl_remain(DMA_CH_UART_RX | DMA_CH_ALT));
         }
         else
         {
-            // 当前使用主通道(Ping)，计算已接收数据位置
+            // Currently on primary channel (Ping)
             rxdHead = 0 + (RXD_BUFF_HALF - dma_chnl_remain(DMA_CH_UART_RX));
         }
-        
-        GPIO_DAT_CLR(GPIO_RX_RTOR);  ///< 清除超时指示
+
+        GPIO_DAT_CLR(GPIO_RX_RTOR);
     }
 }
 
 #if (DMA_IRQ_MODE)
 /**
  ****************************************************************************************
- * @brief DMA中断服务函数
+ * @brief DMA interrupt service routine.
  *
- * @details
- * 处理DMA通道完成中断：
- * - 读取中断标志寄存器
- * - 禁用相关中断
- * - 清除中断标志
- * - 根据通道标识调用相应处理函数
- * - 重新使能中断
+ * @details Handles DMA channel completion interrupts:
+ *          read IFR, disable triggered interrupts, clear flags,
+ *          dispatch to channel handlers, re-enable interrupts.
  ****************************************************************************************
  */
 void DMAC_IRQHandler(void)
 {
-    uint32_t iflag = DMACHCFG->IFLAG0;  ///< 读取DMA中断标志寄存器
-    
-    GPIO_DAT_SET(GPIO_RUN);  ///< 运行状态指示
-    
-    // 禁用已触发的中断
+    uint32_t iflag = DMACHCFG->IFLAG0;
+
+    GPIO_DAT_SET(GPIO_RUN);
+
+    // Disable triggered interrupts
     DMACHCFG->IEFR0 &= ~iflag;
-    // 清除中断标志
+    // Clear interrupt flags
     DMACHCFG->ICFR0 = iflag;
-    
-    // 处理接收通道中断
+
+    // Handle RX channel interrupt
     if (iflag & (1UL << DMA_CH_UART_RX))
     {
         dmaUartRxDone();
     }
-    
-    // 处理发送通道中断
+
+    // Handle TX channel interrupt
     if (iflag & (1UL << DMA_CH_UART_TX))
     {
-        txChnlBusy = false;  ///< 发送完成，清除忙状态
+        txChnlBusy = false;
         GPIO_DAT_SET(GPIO_TX_DONE);
         GPIO_DAT_CLR(GPIO_TX_DONE);
     }
-    
-    // 重新使能中断
+
+    // Re-enable interrupts
     DMACHCFG->IEFR0 |= iflag;
-    
-    GPIO_DAT_CLR(GPIO_RUN);  ///< 清除运行指示
+
+    GPIO_DAT_CLR(GPIO_RUN);
 }
 
 /**
  ****************************************************************************************
- * @brief UART1中断服务函数
+ * @brief UART1 interrupt service routine.
  ****************************************************************************************
  */
 void UART1_IRQHandler(void)
@@ -272,7 +262,7 @@ void UART1_IRQHandler(void)
 
 /**
  ****************************************************************************************
- * @brief UART2中断服务函数
+ * @brief UART2 interrupt service routine.
  ****************************************************************************************
  */
 void UART2_IRQHandler(void)
@@ -282,213 +272,199 @@ void UART2_IRQHandler(void)
 
 /**
  ****************************************************************************************
- * @brief DMA UART主循环处理函数（中断模式）
+ * @brief DMA UART main loop handler (interrupt mode).
  *
- * @details
- * 在中断模式下：
- * - 检查发送通道状态
- * - 从接收缓冲区读取数据
- * - 配置DMA发送数据
+ * @details Checks TX channel status, reads from RX buffer, configures DMA TX.
  ****************************************************************************************
  */
 static void dmaUartLoop(void)
 {
     uint16_t len;
-    
+
     if (txChnlBusy)
     {
-        return;  ///< 发送通道忙，等待完成
+        return;
     }
-    
+
     len = uart_read(txdBuffer, TXD_BUFF_SIZE);
     if (len > 0)
     {
-        txChnlBusy = true;  ///< 设置发送忙状态
-        
+        txChnlBusy = true;
+
         #if (TEST_PORT == 0)
-        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, txdBuffer, len, CCM_BASIC);  ///< 配置UART1发送
+        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, txdBuffer, len, CCM_BASIC);
         #else
-        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, txdBuffer, len, CCM_BASIC);  ///< 配置UART2发送
+        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, txdBuffer, len, CCM_BASIC);
         #endif
     }
 }
 
 /**
  ****************************************************************************************
- * @brief DMA UART数据发送函数（中断模式）
+ * @brief Send data via DMA UART (interrupt mode).
  *
- * @param[in] data 待发送数据指针
- * @param[in] len  发送数据长度
+ * @param[in] data Data to send
+ * @param[in] len  Data length
  ****************************************************************************************
  */
-void dmaUartSend(const uint8_t *data, uint16_t len)
+UNUSED static void dmaUartSend(const uint8_t *data, uint16_t len)
 {
     txChnlBusy = true;
 
     #if (TEST_PORT == 0)
-    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, data, len, CCM_BASIC);  ///< 配置UART1发送
+    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, data, len, CCM_BASIC);
     #else
-    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, data, len, CCM_BASIC);  ///< 配置UART2发送
+    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, data, len, CCM_BASIC);
     #endif
-    
-    while (txChnlBusy);  ///< 等待发送完成
-    //while (!(UART1->SR.TEM)); // 等待发送器空
+
+    while (txChnlBusy) {}
 }
 
-#else  // 轮询模式
+#else  // Polling mode
 
 /**
  ****************************************************************************************
- * @brief DMA轮询处理函数
+ * @brief DMA polling handler.
  *
- * @details
- * 在轮询模式下：
- * - 检查接收通道完成状态
- * - 处理接收完成或接收超时
+ * @details In polling mode: check RX channel completion, handle RX done or timeout.
  ****************************************************************************************
  */
 static void dmaPolling(void)
 {
-    if (dma_chnl_done(DMA_CH_UART_RX))  ///< 检查接收通道是否完成
+    if (dma_chnl_done(DMA_CH_UART_RX))
     {
         GPIO_DAT_SET(GPIO_RUN);
-        dmaUartRxDone();  ///< 处理接收完成
+        dmaUartRxDone();
         GPIO_DAT_CLR(GPIO_RUN);
     }
     else
     {
-        dmaUartRxRtor();  ///< 检查接收超时
+        dmaUartRxRtor();
     }
 }
 
 /**
  ****************************************************************************************
- * @brief DMA UART主循环处理函数（轮询模式）
+ * @brief DMA UART main loop handler (polling mode).
  *
- * @details
- * 在轮询模式下：
- * - 检查发送通道状态
- * - 从接收缓冲区读取数据
- * - 配置DMA发送数据
+ * @details Checks TX channel done status, reads from RX buffer, configures DMA TX.
  ****************************************************************************************
  */
 static void dmaUartLoop(void)
 {
     uint16_t len;
-    
+
     if (txChnlBusy)
     {
-        if (!dma_chnl_done(DMA_CH_UART_TX))  ///< 检查发送是否完成
+        if (!dma_chnl_done(DMA_CH_UART_TX))
         {
-            return;  ///< 发送未完成，继续等待
+            return;
         }
-        
-        txChnlBusy = false;  ///< 发送完成，清除忙状态
+
+        txChnlBusy = false;
         GPIO_DAT_SET(GPIO_TX_DONE);
         GPIO_DAT_CLR(GPIO_TX_DONE);
     }
-    
+
     len = uart_read(txdBuffer, TXD_BUFF_SIZE);
     if (len > 0)
     {
-        txChnlBusy = true;  ///< 设置发送忙状态
-        
+        txChnlBusy = true;
+
         #if (TEST_PORT == 0)
-        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, txdBuffer, len, CCM_BASIC);  ///< 配置UART1发送
+        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, txdBuffer, len, CCM_BASIC);
         #else
-        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, txdBuffer, len, CCM_BASIC);  ///< 配置UART2发送
+        DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, txdBuffer, len, CCM_BASIC);
         #endif
     }
 }
 
 /**
  ****************************************************************************************
- * @brief DMA UART数据发送函数（轮询模式）
+ * @brief Send data via DMA UART (polling mode).
  *
- * @param[in] data 待发送数据指针
- * @param[in] len  发送数据长度
+ * @param[in] data Data to send
+ * @param[in] len  Data length
  ****************************************************************************************
  */
-void dmaUartSend(const uint8_t *data, uint16_t len)
+UNUSED static void dmaUartSend(const uint8_t *data, uint16_t len)
 {
     #if (TEST_PORT == 0)
-    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, data, len, CCM_BASIC);  ///< 配置UART1发送
+    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 1, data, len, CCM_BASIC);
     #else
-    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, data, len, CCM_BASIC);  ///< 配置UART2发送
+    DMA_UARTx_TX_CONF(DMA_CH_UART_TX, 2, data, len, CCM_BASIC);
     #endif
-        
-    while (!dma_chnl_done(DMA_CH_UART_TX));  ///< 轮询等待发送完成
-    //while (!(UART1->SR.TEM)); // 等待发送器空
+
+    while (!dma_chnl_done(DMA_CH_UART_TX)) {}
 }
 
 #endif
 
 /**
  ****************************************************************************************
- * @brief DMA测试主函数
+ * @brief DMA test main function.
  *
- * @details
- * 执行DMA UART通信的完整测试流程：
- * 1. GPIO初始化：状态指示引脚
- * 2. DMA模块初始化
- * 3. UART和DMA通道配置
- * 4. 中断配置（中断模式）
- * 5. 主循环处理
+ * @details Complete DMA UART test flow:
+ *          1. GPIO init for status indicators
+ *          2. DMA module init
+ *          3. UART and DMA channel configuration
+ *          4. Interrupt configuration (interrupt mode)
+ *          5. Main loop processing
  ****************************************************************************************
  */
 void dmaTest(void)
 {
-    // 配置GPIO为输出模式，用于状态指示
+    // Configure GPIO as output for status indicators
     GPIO_DIR_SET_LO(GPIO_RUN | GPIO_TX_DONE | GPIO_RX_PING | GPIO_RX_PONG | GPIO_RX_RTOR);
-    
-    dma_init();  ///< 初始化DMA模块
-    
+
+    dma_init();
+
     #if (TEST_PORT == 0)
-    // 初始化DMA通道
-    DMA_UARTx_TX_INIT(DMA_CH_UART_TX, 1);  ///< 初始化UART1发送通道
-    DMA_UARTx_RX_INIT(DMA_CH_UART_RX, 1);  ///< 初始化UART1接收通道
-    
-    // 配置接收通道为Ping-Pong模式
-    DMA_UARTx_RX_CONF(DMA_CH_UART_RX, 1, &rxdBuffer[0], RXD_BUFF_HALF, CCM_PING_PONG);         ///< Ping缓冲区
-    DMA_UARTx_RX_CONF(DMA_CH_UART_RX | DMA_CH_ALT, 1, &rxdBuffer[RXD_BUFF_HALF], RXD_BUFF_HALF, CCM_PING_PONG); ///< Pong缓冲区
+    // Init DMA channels
+    DMA_UARTx_TX_INIT(DMA_CH_UART_TX, 1);
+    DMA_UARTx_RX_INIT(DMA_CH_UART_RX, 1);
+
+    // Configure RX channel in Ping-Pong mode
+    DMA_UARTx_RX_CONF(DMA_CH_UART_RX, 1, &rxdBuffer[0], RXD_BUFF_HALF, CCM_PING_PONG);
+    DMA_UARTx_RX_CONF(DMA_CH_UART_RX | DMA_CH_ALT, 1, &rxdBuffer[RXD_BUFF_HALF], RXD_BUFF_HALF, CCM_PING_PONG);
     #else
-    // 初始化DMA通道
-    DMA_UARTx_TX_INIT(DMA_CH_UART_TX, 2);  ///< 初始化UART2发送通道
-    DMA_UARTx_RX_INIT(DMA_CH_UART_RX, 2);  ///< 初始化UART2接收通道
-    
-    // 配置接收通道为Ping-Pong模式
-    DMA_UARTx_RX_CONF(DMA_CH_UART_RX, 2, &rxdBuffer[0], RXD_BUFF_HALF, CCM_PING_PONG);         ///< Ping缓冲区
-    DMA_UARTx_RX_CONF(DMA_CH_UART_RX | DMA_CH_ALT, 2, &rxdBuffer[RXD_BUFF_HALF], RXD_BUFF_HALF, CCM_PING_PONG); ///< Pong缓冲区
-    #endif
-    
-    #if !((DBG_MODE == 1) && (TEST_PORT == 0))
-    // 初始化UART参数
-    uart_init(TEST_PORT, PA_UART_TX, PA_UART_RX);     ///< 初始化UART引脚
-    uart_conf(TEST_PORT, TEST_BAUD, TEST_LCRS);       ///< 配置UART参数
+    // Init DMA channels
+    DMA_UARTx_TX_INIT(DMA_CH_UART_TX, 2);
+    DMA_UARTx_RX_INIT(DMA_CH_UART_RX, 2);
+
+    // Configure RX channel in Ping-Pong mode
+    DMA_UARTx_RX_CONF(DMA_CH_UART_RX, 2, &rxdBuffer[0], RXD_BUFF_HALF, CCM_PING_PONG);
+    DMA_UARTx_RX_CONF(DMA_CH_UART_RX | DMA_CH_ALT, 2, &rxdBuffer[RXD_BUFF_HALF], RXD_BUFF_HALF, CCM_PING_PONG);
     #endif
 
-    uart_fctl(TEST_PORT, TEST_FCTL, TEST_RTOR, TEST_INTR);  ///< 配置FIFO和接收超时
-    uart_mctl(TEST_PORT, 1);  ///< 使能UART DMA模式
-    
+    #if !((DBG_MODE == 1) && (TEST_PORT == 0))
+    // Init UART parameters
+    uart_init(TEST_PORT, PA_UART_TX, PA_UART_RX);
+    uart_conf(TEST_PORT, TEST_BAUD, TEST_LCRS);
+    #endif
+
+    uart_fctl(TEST_PORT, TEST_FCTL, TEST_RTOR, TEST_INTR);
+    uart_mctl(TEST_PORT, 1);  // Enable UART DMA mode
+
     #if (DMA_IRQ_MODE)
-    // 使能DMA中断
-    DMACHCFG->IEFR0 = (1UL << DMA_CH_UART_RX) | (1UL << DMA_CH_UART_TX);  ///< 使能接收和发送通道中断
-    NVIC_EnableIRQ(DMAC_IRQn);  ///< 使能DMA控制器中断
-    
+    // Enable DMA interrupts
+    DMACHCFG->IEFR0 = (1UL << DMA_CH_UART_RX) | (1UL << DMA_CH_UART_TX);
+    NVIC_EnableIRQ(DMAC_IRQn);
+
     #if (TEST_PORT == 0)
-    NVIC_EnableIRQ(UART1_IRQn);  ///< 使能UART1中断
+    NVIC_EnableIRQ(UART1_IRQn);
     #else
-    NVIC_EnableIRQ(UART2_IRQn);  ///< 使能UART2中断
+    NVIC_EnableIRQ(UART2_IRQn);
     #endif
-    
-    __enable_irq();  ///< 全局使能中断
+
+    __enable_irq();
     #endif
-    
+
     while (1)
     {
         #if !(DMA_IRQ_MODE)
-        dmaPolling();  ///< 轮询模式下的DMA状态检查
+        dmaPolling();
         #endif
-        dmaUartLoop();  ///< 主循环处理
+        dmaUartLoop();
     }
 }

@@ -54,31 +54,7 @@ static void sysInit(void)
     }
     /***************************************/
 
-    // 2414.000MHz
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x1C;
-
-//    // sop8-3,
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x1A;
-
-//    // shenzhen,shao XOSC, 2478MHz, +14KHz
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x10;
-
-    // QKIE, SOP8-1, 2440MHz, +4KHz
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x10;
-    
-    // SOP8-VDD12, 2440MHz, +2KHz
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x15;
-
-    // Dongle,QFN20, Rx-2144MHz, +1KHz
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x22;
-    
-    // Dongle V1.2,QFN20, Rx-2144MHz, +1KHz
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x20;
-    
-    // eSOP8-VDD12, 2440MHz, +0.7KHz
-//    APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x1E;
-
-    // eSOP8-VDD33+VDD12, 2144MHZ, +2.1KHz
+    // XOSC16M cap trim: eSOP8-VDD33+VDD12, ~2440MHz, +2.1KHz
     APBMISC->XOSC16M_CTRL.XOSC16M_CAP_TR = 0x20;
 }
 
@@ -102,7 +78,7 @@ static void devInit(void)
     
     // Init BLE App
     app_init(rsn);
-    rf_pa_set(0x0C);
+    rf_pa_set(0x0C);  // RF PA gain: 0x0C for Dongle
     
     #if (CFG_USB)
     bootDelayMs(4);
@@ -126,8 +102,6 @@ int main(void)
         
         #if (CFG_USB)
         usbd_mic_report();
-        //usbd_kb_report();
-
         #endif
     }
 }

@@ -24,6 +24,8 @@ from whoosh.query import Query, And, Or, Term
 from whoosh import scoring
 from whoosh.analysis import StemmingAnalyzer
 
+from common.path_utils import make_relative, get_sdk_root
+
 logger = logging.getLogger(__name__)
 
 
@@ -431,7 +433,7 @@ class WhooshIndexBuilder:
 
         try:
             writer = self.index.writer()
-            writer.add_document(**doc.to_dict())
+            writer.update_document(**doc.to_dict())
             writer.commit()
 
             logger.debug(f"Added document: {doc.api_id}")
@@ -462,7 +464,7 @@ class WhooshIndexBuilder:
 
             for i, doc in enumerate(docs):
                 try:
-                    writer.add_document(**doc.to_dict())
+                    writer.update_document(**doc.to_dict())
                     added_count += 1
 
                     # Commit in batches
@@ -489,7 +491,8 @@ class WhooshIndexBuilder:
         parse_results: List[Any],  # List[HeaderParseResult]
         module: str = "driver",
         index_macros: bool = True,
-        index_enums: bool = True
+        index_enums: bool = True,
+        sdk_root: Optional[Path] = None
     ) -> int:
         """
         Build index from Tree-sitter parse results.
@@ -499,17 +502,30 @@ class WhooshIndexBuilder:
             module: Module name (e.g., "driver", "ble")
             index_macros: Whether to index macro definitions
             index_enums: Whether to index enum definitions
+            sdk_root: SDK root directory for converting to relative paths
 
         Returns:
             Number of indexed entries (functions + macros + enums)
         """
         import json
 
+        # Get SDK root for relative path conversion
+        if sdk_root is None:
+            try:
+                sdk_root = get_sdk_root()
+            except RuntimeError:
+                sdk_root = None
+
         docs = []
         entries = []
 
         for result in parse_results:
             peripheral = self._extract_peripheral(result.file_path)
+
+            # Convert file path to relative for portability
+            result_file_path = result.file_path
+            if sdk_root and result_file_path:
+                result_file_path = make_relative(result_file_path, sdk_root)
 
             # 1. Index functions
             for func in result.functions:
@@ -525,7 +541,7 @@ class WhooshIndexBuilder:
                     detailed=func.detailed_description,
                     parameters=params_text,
                     return_type=func.return_type,
-                    file_path=result.file_path,
+                    file_path=result_file_path,
                     line_number=func.line_number,
                     peripheral=peripheral,
                     module=module,
@@ -536,11 +552,15 @@ class WhooshIndexBuilder:
             # 2. Index macros
             if index_macros:
                 for macro in result.macros:
+                    macro_file_path = macro.file_path or result.file_path
+                    if sdk_root and macro_file_path:
+                        macro_file_path = make_relative(macro_file_path, sdk_root)
+
                     entry = IndexEntry(
                         entry_type='macro',
                         name=macro.name,
                         brief=macro.brief,
-                        file_path=macro.file_path or result.file_path,
+                        file_path=macro_file_path,
                         line_number=macro.line_number,
                         peripheral=peripheral,
                         module=module,
@@ -552,6 +572,10 @@ class WhooshIndexBuilder:
             # 3. Index enums
             if index_enums:
                 for enum in result.enums:
+                    enum_file_path = enum.file_path or result.file_path
+                    if sdk_root and enum_file_path:
+                        enum_file_path = make_relative(enum_file_path, sdk_root)
+
                     # Convert enum values to JSON for storage
                     enum_values_json = json.dumps([
                         {"name": v.name, "value": v.value, "brief": v.brief}
@@ -562,7 +586,7 @@ class WhooshIndexBuilder:
                         entry_type='enum',
                         name=enum.name,
                         brief=enum.brief,
-                        file_path=enum.file_path or result.file_path,
+                        file_path=enum_file_path,
                         line_number=enum.line_number,
                         peripheral=peripheral,
                         module=module,
@@ -605,7 +629,7 @@ class WhooshIndexBuilder:
 
             for i, entry in enumerate(entries):
                 try:
-                    writer.add_document(**entry.to_dict())
+                    writer.update_document(**entry.to_dict())
                     added_count += 1
 
                     # Commit in batches
@@ -785,13 +809,13 @@ class WhooshSearcher:
         try:
             # Default fields to search
             if fields is None:
-                fields = ['name', 'brief', 'content']
+                fields = ['name', 'brief', 'detailed']
 
             # Create query parser
             parser = MultifieldParser(
                 fields,
                 schema=self.index.schema,
-                fieldboosts={'name': 2.0, 'brief': 1.5, 'content': 1.0},
+                fieldboosts={'name': 2.0, 'brief': 1.5, 'detailed': 1.0},
                 group=OrGroup
             )
 
@@ -816,15 +840,18 @@ class WhooshSearcher:
                     Term('entry_type', filter_entry_type)
                 ])
 
-            # Execute search
+            # Execute search with expanded limit to account for duplicates,
+            # then deduplicate before truncating
+            expanded_limit = limit * 5
             results = self.searcher.search(
                 query,
-                limit=limit,
+                limit=expanded_limit,
                 terms=True  # Include matched terms
             )
 
-            # Convert results to list of dicts
+            # Convert results to list of dicts, deduplicating by (name, entry_type)
             formatted_results = []
+            seen_keys = set()
             for hit in results:
                 result = {
                     'entry_id': hit.get('entry_id', ''),
@@ -851,9 +878,19 @@ class WhooshSearcher:
                 elif entry_type == 'function':
                     result['has_implementation'] = hit.get('has_implementation', False)
 
+                # Deduplicate by (name, entry_type) - keep highest scored
+                dedup_key = (result['name'], entry_type)
+                if dedup_key in seen_keys:
+                    continue
+                seen_keys.add(dedup_key)
+
                 formatted_results.append(result)
 
-            logger.info(f"Search '{query_str}': {len(formatted_results)} results")
+                # Stop once we have enough unique results
+                if len(formatted_results) >= limit:
+                    break
+
+            logger.info(f"Search '{query_str}': {len(formatted_results)} results (deduplicated)")
             return formatted_results
 
         except Exception as e:

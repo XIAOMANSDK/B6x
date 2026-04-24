@@ -7,7 +7,7 @@
 | 工具 | 用途 | 关键参数 |
 |------|------|----------|
 | `search_sdk` | 发现 SDK 内容 | `query`, `scope`: api/docs/registers/examples/all |
-| `inspect_node` | 查看节点详情 | `node_id`: api:XXX, `view_type`: summary/definition |
+| `inspect_node` | 查看节点详情 | `node_id`: api:/reg:/ex:/macro:/doc:XXX |
 | `validate_config` | 验证硬件配置 | `config_json`: {pins, clock, dma, interrupts} |
 | `clang_analyze` | C 代码语义分析 | `code`, `type`: refs/type/check, `files`[:3] |
 
@@ -36,11 +36,13 @@
 
 标准格式：`类型:标识符`
 
-| 类型 | 示例 |
-|------|------|
-| API | `api:B6x_UART_Init`, `api:gpio_put` |
-| 寄存器 | `reg:UART1_BRR`, `reg:GPIOA_ODR` |
-| 文档 | `docs:uart_guide` |
+| 类型 | 前缀 | 示例 |
+|------|------|------|
+| API | `api:` | `api:B6x_UART_Init`, `api:gpio_put` |
+| 寄存器 | `reg:` | `reg:UART1_BRR`, `reg:GPIOA_ODR` |
+| 文档 | `doc:` | `doc:uart_guide` |
+| 示例 | `ex:` | `ex:examples/spiMaster/src/main.c` |
+| 宏 | `macro:` | `macro:SPIM_CR_DFLT` |
 
 旧格式（自动转换）：`B6x_UART_Init` → `api:B6x_UART_Init`
 

@@ -16,7 +16,6 @@ aux_source_directory("${LOCAL_SRC_DIR}" SRC_LIST)
 list(APPEND SRC_LIST
     ${STARTUP_SRC}
     ${SDK_MODULES_SRC_DIR}/leds.c
-    ${SDK_MODULES_SRC_DIR}/leds.c
     ${SDK_MODULES_SRC_DIR}/sftmr.c
     ${SDK_MODULES_SRC_DIR}/uart1Rb.c
     ${SDK_MODULES_SRC_DIR}/debug.c

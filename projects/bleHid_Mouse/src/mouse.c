@@ -1,9 +1,9 @@
 /**
  ****************************************************************************************
  *
- * @file keys.c
+ * @file mouse.c
  *
- * @brief keys operation.
+ * @brief Mouse scanning and report.
  *
  ****************************************************************************************
  */
@@ -11,6 +11,8 @@
 #include "b6x.h"
 #include "drvs.h"
 #include "app.h"
+#include "mouse.h"
+#include "hidkey.h"
 #include "hid_desc.h"
 
 #if (DBG_KEYS)
@@ -40,6 +42,9 @@
 #define BTN1                BIT(PA_BTN1)
 #define BTN2                BIT(PA_BTN2)
 #define BTNS                (BTN0 | BTN1 | BTN2)
+
+/// Default mouse movement offset
+#define MOUSE_MOVE_DX       (10)
 
 
 /*
@@ -99,13 +104,13 @@ void mouse_scan(void)
         uint8_t code = 0;
 
         if ((chng & BTN0) && ((value & BTN0) == 0)) {
-            code = 40;//HID_KEY_ENTER;
+            code = KEY_ENTER;
         }
         if ((chng & BTN1) && ((value & BTN1) == 0)) {
-            code = 82;//HID_KEY_UP;
+            code = KEY_UP;
         }
         if ((chng & BTN2) && ((value & BTN2) == 0)) {
-            code = 81;//HID_KEY_DOWN;
+            code = KEY_DOWN;
         }
         
         DEBUG("keys(val:%X,chng:%X,code:%d)\r\n", btn_lvl, chng, code);
@@ -114,11 +119,11 @@ void mouse_scan(void)
         {
             if (code) {
                 GPIO_DAT_CLR(LED0);
-                hid_mouse_send_report(10);
+                hid_mouse_send_report(MOUSE_MOVE_DX);
             }
             else {
                 GPIO_DAT_SET(LED0);
-                hid_mouse_send_report(-10);
+                hid_mouse_send_report(-MOUSE_MOVE_DX);
             }
         }
     }

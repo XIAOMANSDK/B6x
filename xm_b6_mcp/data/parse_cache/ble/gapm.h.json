@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\gapm.h",
+  "file_path": "ble/api/gapm.h",
   "functions": [],
   "macros": [
     {
@@ -7,7 +7,7 @@
       "value": "(5)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 1660
     }
   ],
@@ -288,7 +288,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 33
     },
     {
@@ -542,7 +542,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 193
     },
     {
@@ -566,7 +566,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 340
     },
     {
@@ -595,7 +595,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 355
     },
     {
@@ -614,7 +614,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 377
     },
     {
@@ -643,7 +643,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 388
     },
     {
@@ -667,7 +667,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 401
     },
     {
@@ -701,7 +701,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 412
     },
     {
@@ -760,7 +760,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 427
     },
     {
@@ -819,7 +819,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 460
     },
     {
@@ -848,7 +848,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 493
     },
     {
@@ -882,7 +882,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 506
     },
     {
@@ -921,7 +921,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 520
     },
     {
@@ -960,7 +960,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 537
     },
     {
@@ -984,7 +984,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 555
     },
     {
@@ -1008,7 +1008,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 568
     },
     {
@@ -1042,7 +1042,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 579
     },
     {
@@ -1066,7 +1066,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 594
     },
     {
@@ -1085,7 +1085,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 605
     },
     {
@@ -1109,7 +1109,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 615
     },
     {
@@ -1148,7 +1148,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 625
     },
     {
@@ -1197,7 +1197,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 646
     },
     {
@@ -1236,7 +1236,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 667
     },
     {
@@ -1255,7 +1255,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 684
     },
     {
@@ -1304,7 +1304,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 693
     },
     {
@@ -1328,7 +1328,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gapm.h",
+      "file_path": "ble/api/gapm.h",
       "line_number": 714
     }
   ],

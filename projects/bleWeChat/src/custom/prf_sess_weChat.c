@@ -1,7 +1,7 @@
 /**
  ****************************************************************************************
  *
- * @file prf_sess.c
+ * @file prf_sess_weChat.c
  *
  * @brief Serial Service - Server Role Implementation.
  *
@@ -281,7 +281,7 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
                     DEBUG("  set txd_ntf(cid:%d,cfg:%d)", conidx, cli_cfg);
 
                     // update configuration if value for stop or NTF/IND start
-                    if (cli_cfg <= 3 /*PRF_CLI_START_IND*/)
+                    if (cli_cfg <= (PRF_CLI_START_NTF | PRF_CLI_START_IND))
                     {
 //                        DEBUG("  set txd_ntf(cid:%d,cfg:%d)", conidx, cli_cfg);
 
@@ -296,7 +296,7 @@ static void sess_svc_func(uint8_t conidx, uint8_t opcode, uint16_t handle, const
 
                         if(cli_cfg)
                         {
-                            //主动发送登录请求 ECI_REQ_AUTH  UUID:0xFEC8
+                            // Send auth login request via indicate
                             ble_req_auth();
                         }
 
@@ -398,11 +398,8 @@ uint8_t sess_svc_init(void)
  */
 void sess_set_ccc(uint8_t conidx, uint8_t cli_cfg)
 {
-    //if (gapc_get_conhdl(conidx) != GAP_INVALID_CONHDL)
-    {
-        // update configuration
-        SES_NTF_CFG_SET(conidx, cli_cfg);
-    }
+    // update configuration
+    SES_NTF_CFG_SET(conidx, cli_cfg);
 }
 
 /**

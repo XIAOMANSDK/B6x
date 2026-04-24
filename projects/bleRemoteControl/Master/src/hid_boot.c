@@ -313,7 +313,7 @@ void usbd_hid_raw_out_handler(uint8_t ep)
     /*!< you can use the data do some thing you like */
 }
 
-bool suspend;
+volatile bool suspend;
 
 __USBIRQ void usbd_notify_handler(uint8_t event, void *arg)
 {

@@ -74,13 +74,13 @@ allowed-tools: Read, Grep, Glob, Write, Bash
 
 ### Step 4: 分析 BLE 配置（如适用）
 
-从 `src/cfg.h` 分析:
+从 `src/cfg.h` 或 `inc/cfg.h` 读取 BLE 库配置:
 
 ```c
-// 查找 BLE 库配置
-#define BLE_LIBRARY_SEL        BLE_LIBRARY_6        // → ble6.lib
-#define BLE_LIBRARY_SEL        BLE_LIBRARY_6_LITE   // → ble6_lite.lib
-#define BLE_LIBRARY_SEL        BLE_LIBRARY_6_8A6C   // → ble6_8act_6con.lib
+// 实际宏名称（优先级从上到下匹配）
+#define BLE_LITELIB   (1)   // → ble6_lite.lib  (仅 Slave, 1 连接)
+#define BLE_LARGELIB  (1)   // → ble6_8act_6con.lib (6 连接)
+// 两者均为 0   → ble6.lib (标准库, 3 连接)
 ```
 
 识别 Profile 源文件:
@@ -262,8 +262,8 @@ generate_project_output(${PROJECT_NAME})
 --------------------------------------------------------------------------------
 
 1. 编译验证:
-   cd D:\svn\bxx_DragonC1\sdk6
-   cmake -B build -G Ninja -DTARGET_NAME=bleMyProject
+   cd <project_path>/gnu
+   cmake -B build -G Ninja
    cmake --build build
 
 2. 调试配置 (可选):
@@ -317,12 +317,3 @@ project/
 └── inc/
 ```
 
----
-
-## 与其他 Skill 协作
-
-| Skill | 协作方式 |
-|-------|----------|
-| `/b6-build` | 生成后编译验证 |
-| `/b6-auto-debug` | 生成后进行 GCC 编译 + 烧录调试 |
-| `/b6-project-checklist` | 验证项目完整性 |

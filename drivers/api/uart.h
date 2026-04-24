@@ -77,7 +77,7 @@ enum uart_fcr_bfs
     FCR_TXTL_1BYTE         = (0 << FCR_TXTL_LSB),
     FCR_TXTL_4BYTE         = (1 << FCR_TXTL_LSB),
     FCR_TXTL_8BYTE         = (2 << FCR_TXTL_LSB),
-    FCR_TXTL_14BBYTE       = (3 << FCR_TXTL_LSB),
+    FCR_TXTL_14BYTE        = (3 << FCR_TXTL_LSB),
 };
 
 /// Bits field of uart status @see UART_SR_TypeDef

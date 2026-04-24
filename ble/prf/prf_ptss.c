@@ -239,6 +239,7 @@ static uint16_t ptss_get_att_handle(uint8_t att_idx)
 /// Retrieve attribute index form handle or ATT_INVALID_IDX if nothing found
 static uint8_t ptss_get_att_idx(uint8_t *svr_idx, uint16_t handle)
 {
+    ASSERT_ERR(svr_idx != NULL);
     uint8_t att_idx = ATT_INVALID_IDX;
 
     if ((handle >= ptss_env.start_hdl) && (handle < ptss_env.start_hdl + PTS_IDX_NB))

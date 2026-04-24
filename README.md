@@ -29,17 +29,15 @@
 
 ## SDK获取更新渠道
 
-```markdown
-B6xSDK Github官方站: https://github.com/XIAOMANSDK/B6x
-```
+- B6xSDK Github: <https://github.com/XIAOMANSDK/B6x>
+- B6xSDK GitLab: <https://gitlab.com/xiao-man.com/B6x>
+- B6xSDK 官方站: <https://www.xiao-man.com/support>
 
 ---
 
 ## 在线文档
 
-```markdown
-B6x_Docs 官方文档: https://bx-docs.readthedocs.io/
-```
+- B6x_Docs 官方文档: <https://bx-docs.readthedocs.io/>
 
 ---
 
@@ -47,6 +45,11 @@ B6x_Docs 官方文档: https://bx-docs.readthedocs.io/
 
 ```markdown
 sdk6/
+├── 2g4/                    # [2.4G目录]
+│   ├── doc/                        # 2.4G设计参考文档
+│   ├── examples/                   # 2.4G参考demo
+│   └── proprietary/                # 2.4G底层实现
+│
 ├── ble/                    # [BLE协议栈核心目录]
 │   ├── api/                        # BLE协议层API头文件及说明
 │   ├── app/                        # BLE GATT层实现文件
@@ -281,8 +284,7 @@ ble/api/
 ├── le_err.h         # 错误码定义
 │                    # 包含: GAP/ATT/L2C/GATT/SMP/LL/Profile错误码
 ├── list.h           # 链表操作工具
-├── task.h           # 任务管理定义
-└── utils.h          # 工具函数
+└── task.h           # 任务管理定义
 ```
 
 ### [应用层] 应用层实现文件
@@ -378,7 +380,8 @@ drivers/api/
 ├── sysdbg.h                     # 系统调试
 ├── timer.h                      # 通用定时器
 ├── trim.h                       # 校准参数库，内部使用
-└── uart.h                       # UART通用异步收发传输器
+├── uart.h                       # UART通用异步收发传输器
+└── utils.h                      # 工具函数
 ```
 
 ### [源码层] 驱动源码文件
@@ -399,8 +402,7 @@ drivers/src/
 ├── sadc.c                       # SAR ADC驱动实现
 ├── spi.h                        # SPI驱动实现
 ├── timer.h                      # 通用定时器实现
-├── uart.c                       # UART驱动实现
-└── utils.h                      # 工具函数
+└── uart.c                       # UART驱动实现
 ```
 
 ---

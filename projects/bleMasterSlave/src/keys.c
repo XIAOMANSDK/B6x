@@ -3,7 +3,10 @@
  *
  * @file keys.c
  *
- * @brief keys operation.
+ * @brief Button and LED control for BLE multi-connection demo.
+ *
+ * BTN1 starts BLE scan, BTN2 initiates connection to first scan result.
+ * LED1/LED2 indicate button press states.
  *
  ****************************************************************************************
  */
@@ -44,10 +47,17 @@
  ****************************************************************************************
  */
 
+/**
+ ****************************************************************************************
+ *
+ * @brief Initialize GPIO for LEDs (output) and buttons (input with pull-up).
+ *
+ ****************************************************************************************
+ */
 void keys_init(void)
 {
     GPIO_DIR_SET_HI(LEDS);
-    
+
     GPIO_DAT_CLR(BTNS);
     GPIO_DIR_CLR(BTNS);
 
@@ -55,13 +65,25 @@ void keys_init(void)
     iom_ctrl(PA_BTN2, IOM_PULLUP | IOM_INPUT);
 }
 
+/**
+ ****************************************************************************************
+ *
+ * @brief Poll button states and trigger BLE actions.
+ *
+ * BTN1 press: start BLE scan. BTN2 press: connect to first scan result.
+ * Both LEDs reflect button active states.
+ *
+ * @note Must only be called when scan results are available for BTN2 action.
+ *
+ ****************************************************************************************
+ */
 void keys_scan(void)
 {
     static uint32_t btn_lvl = BTNS;
     uint32_t value = GPIO_PIN_GET() & BTNS;
     uint32_t chng = btn_lvl ^ value;
     btn_lvl = value;
-    
+
     if (chng)
     {
         if (chng & BTN1)
@@ -76,20 +98,27 @@ void keys_scan(void)
                 GPIO_DAT_SET(LED1);
             }
         }
-        
+
         if (chng & BTN2)
         {
             if ((value & BTN2) == 0)
             {
                 GPIO_DAT_CLR(LED2);
-                app_start_initiating(&scan_addr_list[0]);
+                if (scan_cnt > 0)
+                {
+                    app_start_initiating(&scan_addr_list[0]);
+                }
+                else
+                {
+                    DEBUG("No scan result");
+                }
             }
             else
             {
                 GPIO_DAT_SET(LED2);
             }
         }
-        
-        DEBUG("keys(val:%X,chng:%X,)\r\n", btn_lvl, chng);
+
+        DEBUG("keys(val:%" PRIX32 ",chng:%" PRIX32 ")\r\n", btn_lvl, chng);
     }
 }

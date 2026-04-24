@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\gatt.h",
+  "file_path": "ble/api/gatt.h",
   "functions": [],
   "macros": [],
   "enums": [
@@ -189,7 +189,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gatt.h",
+      "file_path": "ble/api/gatt.h",
       "line_number": 36
     },
     {
@@ -343,7 +343,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gatt.h",
+      "file_path": "ble/api/gatt.h",
       "line_number": 167
     },
     {
@@ -377,7 +377,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\gatt.h",
+      "file_path": "ble/api/gatt.h",
       "line_number": 256
     }
   ],

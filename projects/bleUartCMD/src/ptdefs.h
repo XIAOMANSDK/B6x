@@ -3,10 +3,12 @@
 
 #include <stdint.h>
 
+/// @note BIT() also available in ble/api/utils.h
 #ifndef BIT
 #define BIT(pos)             (0x01UL << (pos))
 #endif
 
+/// @note read32p()/write32p() in ble/api/utils.h provide safer alternatives
 #ifndef RD_32
 #define RD_32(addr)          (*(volatile uint32_t *)(addr))
 #define WR_32(addr,value)    (*(volatile uint32_t *)(addr)) = (value)
@@ -162,7 +164,7 @@ typedef struct
 //    uint32_t dataAddr;
 //    uint32_t macOffset;  // dataAddr @see firmInfo_t
 //    uint32_t macStart;
-//    uint32_t macConfig; //1byte:increment 3byte£ºcount
+//    uint32_t macConfig; //1byte:increment 3byte:count
 //    uint32_t chipBaud;   // chipSet uart2 baud   
 //    uint32_t firmCRC;
 //    

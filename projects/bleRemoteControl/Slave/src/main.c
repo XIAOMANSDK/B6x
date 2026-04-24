@@ -49,10 +49,10 @@ static void devInit(void)
     
     if (rsn & (RSN_POR12_BK_BIT | RSN_PIN_RSTN_BIT | RSN_SYSRST_BIT))
     {
-        // 上电延迟5s, Jlink调试接管
+        // 涓婄數寤惰繜5s, Jlink璋冭瘯鎺ョ
         bootDelayMs(5000);
         
-        // 上电进入PowerOFF
+        // 涓婄數杩涘叆PowerOFF
 //        keys_sleep();
 
         iospc_rstpin(true);

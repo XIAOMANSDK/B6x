@@ -142,7 +142,15 @@ class KnowledgeGraphQuery:
                 for json_file in dir_path.glob("*.json"):
                     with open(json_file, 'r', encoding='utf-8') as f:
                         data = json.load(f)
-                        self.domain_data[domain].update(data)
+                        key = json_file.stem
+                        if isinstance(data, dict):
+                            self.domain_data[domain].update(data)
+                        elif isinstance(data, list):
+                            self.domain_data[domain][key] = data
+                        else:
+                            logger.warning(
+                                f"Unexpected data type in {json_file.name}: {type(data)}"
+                            )
 
         # Load relations
         rel_path = base_path / "relations.json"
@@ -157,7 +165,7 @@ class KnowledgeGraphQuery:
         # Pin mux index
         if "pin_mux" in self.domain_data["hardware"]:
             for pin in self.domain_data["hardware"].get("pin_mux", []):
-                pin_name = pin.get("pin", "")
+                pin_name = pin.get("pin_name", "") or pin.get("pin", "")
                 if pin_name:
                     if pin_name not in self.pin_mux_index:
                         self.pin_mux_index[pin_name] = []

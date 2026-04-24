@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# B6x SessionStart Hook
+echo "[B6X_HOOK_TEST] SessionStart hook fired successfully"
+exit 0

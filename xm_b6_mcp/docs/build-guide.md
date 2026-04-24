@@ -362,19 +362,26 @@ data/
 │   └── build_report.json
 ├── domain/                       # 各域数据
 │   ├── hardware/
-│   │   ├── registers.json        # 368 个寄存器
 │   │   ├── pin_mux.json          # 引脚复用
+│   │   ├── interrupts.json       # 中断定义
+│   │   ├── memory_boundaries.json # 内存边界
 │   │   ├── memory_regions.json   # 内存区域
+│   │   ├── sram_regions.json     # SRAM 区域
 │   │   └── power_consumption.json
 │   ├── drivers/
-│   │   ├── macros.json           # 293 个宏定义
+│   │   ├── apis.json             # 171 个 API
+│   │   ├── structs.json          # 38 个结构体
+│   │   ├── macros.json           # 82 个宏定义
 │   │   ├── enums.json            # 81 个枚举定义
-│   │   └── structs.json          # 38 个结构体
+│   │   ├── dependencies.json     # API 依赖关系
+│   │   └── call_graph.json       # 调用图
 │   ├── ble/
+│   │   ├── apis.json             # 130 个 BLE API
+│   │   ├── profiles.json         # GATT Profile
+│   │   ├── error_codes.json      # 错误码
 │   │   ├── mesh_apis.json        # Mesh API
-│   │   ├── mesh_error_codes.json # Mesh 错误码
 │   │   └── mesh_models.json      # Mesh Model
-│   └── applications/             # (空目录)
+│   └── applications/             # 示例项目数据
 └── relations/                    # 跨域关系
     ├── relations.json            # 所有关系
     ├── relations_hardware.json   # Domain 1 关系

@@ -16,36 +16,36 @@
 #endif
 
 #ifndef BEEPER_IDLE_LEVEL
-#define BEEPER_IDLE_LEVEL      (0)          // ¿ÕÏĞ 0:µÍµçÆ½  1:¸ßµçÆ½
+#define BEEPER_IDLE_LEVEL      (0)          // ç©ºé—² 0:ä½ç”µå¹³  1:é«˜ç”µå¹³
 #endif
 
-#define BEEPER_PWM_TMR_PSC     ((80 * (SYS_CLK + 1)) - 1)   // 200KHz  16MHz/80 80·ÖÆµ
+#define BEEPER_PWM_TMR_PSC     ((80 * (SYS_CLK + 1)) - 1)   // 200KHz  16MHz/80 80åˆ†é¢‘
 
-#define BEEPER_PWM_4_7Khz      (42 - 1)  // 4.7KHz ÖØÔØÖµ
-#define BEEPER_PWM_4_2Khz      (47 - 1)  // 4.2KHz ÖØÔØÖµ
-#define BEEPER_PWM_3_7Khz      (54 - 1)  // 3.7KHz ÖØÔØÖµ
-#define BEEPER_PWM_3_2Khz      (62 - 1)  // 3.2KHz ÖØÔØÖµ
-#define BEEPER_PWM_2_7Khz      (74 - 1)  // 2.7KHz ÖØÔØÖµ
-#define BEEPER_PWM_2_2Khz      (90 - 1)  // 2.2KHz ÖØÔØÖµ
-#define BEEPER_PWM_1_7Khz      (118 - 1)  // 1.7KHz ÖØÔØÖµ
-#define BEEPER_PWM_1_2Khz      (166 - 1)  // 1.2KHz ÖØÔØÖµ
-#define BEEPER_PWM_1_1Khz      (182 - 1)  // 1.1KHz ÖØÔØÖµ
+#define BEEPER_PWM_4_7Khz      (42 - 1)  // 4.7KHz é‡è½½å€¼
+#define BEEPER_PWM_4_2Khz      (47 - 1)  // 4.2KHz é‡è½½å€¼
+#define BEEPER_PWM_3_7Khz      (54 - 1)  // 3.7KHz é‡è½½å€¼
+#define BEEPER_PWM_3_2Khz      (62 - 1)  // 3.2KHz é‡è½½å€¼
+#define BEEPER_PWM_2_7Khz      (74 - 1)  // 2.7KHz é‡è½½å€¼
+#define BEEPER_PWM_2_2Khz      (90 - 1)  // 2.2KHz é‡è½½å€¼
+#define BEEPER_PWM_1_7Khz      (118 - 1)  // 1.7KHz é‡è½½å€¼
+#define BEEPER_PWM_1_2Khz      (166 - 1)  // 1.2KHz é‡è½½å€¼
+#define BEEPER_PWM_1_1Khz      (182 - 1)  // 1.1KHz é‡è½½å€¼
 
-#define BEEPER_STOP_0MS        (0)   // Í£Ö¹²¥·Å0ms
-#define BEEPER_IDLE_5MS        (5)   // ¿ÕÏĞ5ms
-#define BEEPER_IDLE_10MS       (10)  // ¿ÕÏĞ10ms
-#define BEEPER_IDLE_80MS       (80)  // ¿ÕÏĞ80ms
-#define BEEPER_IDLE_600MS      (600) // ¿ÕÏĞ600ms
-#define BEEPER_PLAY_100MS      (100) // ÆµÂÊ²¥·ÅÊ±¼ä100ms
+#define BEEPER_STOP_0MS        (0)   // åœæ­¢æ’­æ”¾0ms
+#define BEEPER_IDLE_5MS        (5)   // ç©ºé—²5ms
+#define BEEPER_IDLE_10MS       (10)  // ç©ºé—²10ms
+#define BEEPER_IDLE_80MS       (80)  // ç©ºé—²80ms
+#define BEEPER_IDLE_600MS      (600) // ç©ºé—²600ms
+#define BEEPER_PLAY_100MS      (100) // é¢‘ç‡æ’­æ”¾æ—¶é—´100ms
 
-#define BEEPER_REPEAT_2T       (2)   // ÖØ¸´²¥·Å2´Î
-#define BEEPER_REPEAT_6T       (6)   // ÖØ¸´²¥·Å6´Î
+#define BEEPER_REPEAT_2T       (2)   // é‡å¤æ’­æ”¾2æ¬¡
+#define BEEPER_REPEAT_6T       (6)   // é‡å¤æ’­æ”¾6æ¬¡
 
-#define BEEPER_MUSIC1_NUM      (5)   // ÆµÂÊÊıÁ¿
-#define BEEPER_MUSIC2_NUM      (4)   // ÆµÂÊÊıÁ¿+2
-#define BEEPER_MUSIC3_NUM      (1)   // ÆµÂÊÊıÁ¿
-#define BEEPER_MUSIC4_NUM      (4)   // ÆµÂÊÊıÁ¿
-#define BEEPER_MUSIC5_NUM      (4)   // ÆµÂÊÊıÁ¿
+#define BEEPER_MUSIC1_NUM      (5)   // é¢‘ç‡æ•°é‡
+#define BEEPER_MUSIC2_NUM      (4)   // é¢‘ç‡æ•°é‡+2
+#define BEEPER_MUSIC3_NUM      (1)   // é¢‘ç‡æ•°é‡
+#define BEEPER_MUSIC4_NUM      (4)   // é¢‘ç‡æ•°é‡
+#define BEEPER_MUSIC5_NUM      (4)   // é¢‘ç‡æ•°é‡
 
 typedef struct
 {
@@ -104,7 +104,7 @@ beeper_t BEEPER =
  ****************************************************************************************
  */
 
-//// ³õÊ¼»¯PWMÏµÍ³·ÖÆµ200KHz,×Ô¶¯ÖØÔØÖµ182
+//// åˆå§‹åŒ–PWMç³»ç»Ÿåˆ†é¢‘200KHz,è‡ªåŠ¨é‡è½½å€¼182
 static void pwmInit(void)
 {
     gpio_set_hiz(BEEPER_PAD);
@@ -129,13 +129,13 @@ static void pwmInit(void)
     pwm_start(PWM_CTMR);
 }
 
-// ¿ÕÏĞ
+// ç©ºé—²
 void pwmIdle(void)
 {
     pwm_duty_upd(PWM_CTMR_CH1, 0);
 }
 
-// ÆµÂÊÉèÖÃ
+// é¢‘ç‡è®¾ç½®
 void pwmSetFrequency(uint8_t arr)
 {
     CTMR->ARR = arr;
@@ -229,7 +229,7 @@ tmr_tk_t beeperTmr(tmr_id_t tmid)
 
         default :
         {
-            idle_delay = BEEPER_STOP_0MS;  // ¹Ø±Õ
+            idle_delay = BEEPER_STOP_0MS;  // å…³é—­
         }break;
     }
 
@@ -255,7 +255,7 @@ tmr_tk_t beeperTmr(tmr_id_t tmid)
     #endif
 }
 
-// ·äÃùÆ÷²¥·Å
+// èœ‚é¸£å™¨æ’­æ”¾
 #if (USE_APP_TIMER)
 void beeperPlay(uint8_t musicId, uint16_t appTimeId)
 #else
@@ -278,7 +278,7 @@ void beeperPlay(uint8_t musicId)
     #endif
 }
 
-// »ñÈ¡µ±Ç°²¥·ÅÄÚÈİ
+// è·å–å½“å‰æ’­æ”¾å†…å®¹
 uint8_t beeperGet(void)
 {
     return BEEPER.MUSICID;

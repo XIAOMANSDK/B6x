@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\uart.h",
+  "file_path": "drivers/api/uart.h",
   "functions": [
     {
       "name": "uart_init",
@@ -23,7 +23,7 @@
       ],
       "brief_description": "Init uart port (enable clock, reset, IO func map). ",
       "detailed_description": "SYS_CLK\nFUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n@param[in] io_tx  iopad of TXD @see enum pad_idx\n@param[in] io_rx  iopad of RXD @see enum pad_idx\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 183,
       "is_exported": false,
       "implementation_file": "",
@@ -42,7 +42,7 @@
       ],
       "brief_description": "Deinit uart port(disable clock). ",
       "detailed_description": "***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 193,
       "is_exported": false,
       "implementation_file": "",
@@ -71,7 +71,7 @@
       ],
       "brief_description": "Config uart hardware flow control (IO func map, enable auto RTS). ",
       "detailed_description": "***************************************************************************************\n@param[in] port   uart port @see enum uart_port\n@param[in] io_rts  iopad of RTS @see enum pad_idx\n@param[in] io_cts  iopad of CTS @see enum pad_idx\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 205,
       "is_exported": false,
       "implementation_file": "",
@@ -100,7 +100,7 @@
       ],
       "brief_description": "Config uart params, baudrate and ctrl bits. ",
       "detailed_description": "***************************************************************************************\n@param[in] port     index of port @see enum uart_port\n@param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()\n@param[in] cfg_LCR  line-control bits @see LCR_BITS()\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 217,
       "is_exported": false,
       "implementation_file": "",
@@ -134,7 +134,7 @@
       ],
       "brief_description": "Config uart fifo level and receive timeout. ",
       "detailed_description": "***************************************************************************************\n@param[in] port      index of port @see enum uart_port\n@param[in] fifo_ctl  fifo control @see enum uart_fcr_bfs\n@param[in] bits_rto  rx timeout (unit in bits)\n@param[in] intr_en   interrupt enable @see enum uart_intr_bfs\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 230,
       "is_exported": false,
       "implementation_file": "",
@@ -158,7 +158,7 @@
       ],
       "brief_description": "Config uart mode control. ",
       "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] dma   enable DMA or not\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 241,
       "is_exported": false,
       "implementation_file": "",
@@ -182,7 +182,7 @@
       ],
       "brief_description": "Transmits one byte data through the UART port. ",
       "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] ch    the data transmited\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 252,
       "is_exported": false,
       "implementation_file": "",
@@ -201,7 +201,7 @@
       ],
       "brief_description": "Get the most recent received data by UART port. ",
       "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@return received data\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 263,
       "is_exported": false,
       "implementation_file": "",
@@ -220,7 +220,7 @@
       ],
       "brief_description": "Wait uart transmit finish, in idle state. ",
       "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 273,
       "is_exported": false,
       "implementation_file": "",
@@ -249,7 +249,7 @@
       ],
       "brief_description": "Transmits bytes data through the UART port(Blocking Mode). ",
       "detailed_description": "***************************************************************************************\n@param[in] port  index of port @see enum uart_port\n@param[in] len    data length\n@param[in] data   data pointer\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 285,
       "is_exported": false,
       "implementation_file": "",
@@ -278,7 +278,7 @@
       ],
       "brief_description": "Update uart baudrate. ",
       "detailed_description": "***************************************************************************************\n@param[in] port     index of port @see enum uart_port\n@param[in] io_rx    iopad of RXD @see enum pad_idx\n@param[in] cfg_BRR  baudrate divider @see BRR_DIV() or BRR_BAUD()\n@note This function will reset uart and restore uart params.\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 299,
       "is_exported": false,
       "implementation_file": "",
@@ -292,7 +292,7 @@
       "value": "LCR_BITS(8, 1, none) // default: 8 DataBits, 1 StopBits, None Parity",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 152
     },
     {
@@ -300,7 +300,7 @@
       "value": "BRR_DIV(115200, 32M) // default use SYS_FREQ_32M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 155
     },
     {
@@ -308,7 +308,7 @@
       "value": "BRR_DIV(921600, 32M) // default use SYS_FREQ_32M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 156
     },
     {
@@ -316,7 +316,7 @@
       "value": "BRR_DIV(115200, 48M) // default use SYS_FREQ_48M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 158
     },
     {
@@ -324,7 +324,7 @@
       "value": "BRR_DIV(921600, 48M) // default use SYS_FREQ_48M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 159
     },
     {
@@ -332,7 +332,7 @@
       "value": "BRR_DIV(115200, 64M) // default use SYS_FREQ_64M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 161
     },
     {
@@ -340,7 +340,7 @@
       "value": "BRR_DIV(921600, 64M) // default use SYS_FREQ_64M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 162
     },
     {
@@ -348,7 +348,7 @@
       "value": "BRR_DIV(115200, 16M) // default use SYS_FREQ_16M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 164
     },
     {
@@ -356,7 +356,7 @@
       "value": "BRR_DIV(921600, 16M) // default use SYS_FREQ_16M",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 165
     }
   ],
@@ -377,7 +377,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 25
     },
     {
@@ -456,7 +456,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 32
     },
     {
@@ -530,7 +530,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 59
     },
     {
@@ -619,7 +619,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 84
     },
     {
@@ -693,7 +693,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\uart.h",
+      "file_path": "drivers/api/uart.h",
       "line_number": 106
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "file_path": "./drivers\\api\\exti.h",
+  "file_path": "drivers/api/exti.h",
   "functions": [
     {
       "name": "exti_init",
@@ -13,7 +13,7 @@
       ],
       "brief_description": "Init EXTI, enable clk and rst, config debounce ",
       "detailed_description": "FUNCTION DECLARATION\n***************************************************************************************\n/\n***************************************************************************************\n@param[in] dbc  debounce for IO, @see EXTI_DBC(psc, cnt)\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\exti.h",
+      "file_path": "drivers/api/exti.h",
       "line_number": 59,
       "is_exported": false,
       "implementation_file": "",
@@ -32,7 +32,7 @@
       ],
       "brief_description": "Deinit EXTI Module. Diable EXTI Clock.  *************************************************************************************** /",
       "detailed_description": "***************************************************************************************",
-      "file_path": "./drivers\\api\\exti.h",
+      "file_path": "drivers/api/exti.h",
       "line_number": 67,
       "is_exported": false,
       "implementation_file": "",
@@ -56,7 +56,7 @@
       ],
       "brief_description": "Enable Bits Field of BUS Register ",
       "detailed_description": "***************************************************************************************\n@param[in] typ  Type of local src @see enum exti_loca_typ\n@param[in] loca Value Bits of local src @see EXTI_SRC(pa)\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\exti.h",
+      "file_path": "drivers/api/exti.h",
       "line_number": 78,
       "is_exported": false,
       "implementation_file": "",
@@ -75,7 +75,7 @@
       ],
       "brief_description": "Get EXTI local src value ",
       "detailed_description": "***************************************************************************************\n@param[in] typ  Type of local src @see enum exti_loca_typ\n@return local src value\n***************************************************************************************\n/",
-      "file_path": "./drivers\\api\\exti.h",
+      "file_path": "drivers/api/exti.h",
       "line_number": 89,
       "is_exported": false,
       "implementation_file": "",
@@ -146,7 +146,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./drivers\\api\\exti.h",
+      "file_path": "drivers/api/exti.h",
       "line_number": 30
     }
   ],

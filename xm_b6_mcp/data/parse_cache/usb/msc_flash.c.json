@@ -1,5 +1,5 @@
 {
-  "file_path": "./usb\\src\\msc_flash.c",
+  "file_path": "usb/src/msc_flash.c",
   "functions": [
     {
       "name": "msc_flash_init",
@@ -12,7 +12,7 @@
         }
       ],
       "function_body": "{\r\n    // Nothing\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 102,
       "is_static": true
     },
@@ -27,7 +27,7 @@
         }
       ],
       "function_body": "{\r\n    return intFLASH_SIZE;\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 107,
       "is_static": true
     },
@@ -42,7 +42,7 @@
         }
       ],
       "function_body": "{\r\n    DEBUG(\"offset:%X\", offset);\r\n\r\n    FSHC_CACHE_DISABLE();\r\n    fshc_erase(intFLASH_BASE + offset, FSH_CMD_ER_SECTOR);\r\n    FSHC_CACHE_RESTORE();\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 113,
       "is_static": true
     },
@@ -67,7 +67,7 @@
         }
       ],
       "function_body": "{\r\n    DEBUG(\"offset:%X, len:%d\", offset, wlen);\r\n\r\n    FSHC_CACHE_DISABLE();\r\n    fshc_read(intFLASH_BASE + offset, buff, wlen, FSH_CMD_RD); // FSH_CMD_DLRD, if need\r\n    FSHC_CACHE_RESTORE();\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 123,
       "is_static": true
     },
@@ -92,7 +92,7 @@
         }
       ],
       "function_body": "{\r\n    DEBUG(\"offset:%X, len:%d\", offset, wlen);\r\n\r\n    FSHC_CACHE_DISABLE();\r\n    fshc_write(intFLASH_BASE + offset, data, wlen, FSH_CMD_WR);\r\n    FSHC_CACHE_RESTORE();\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 133,
       "is_static": false
     },
@@ -122,7 +122,7 @@
         }
       ],
       "function_body": "{\r\n    uint32_t tidx, ridx;\r\n\r\n    SPIM->DAT_LEN  = tlen + rlen;\r\n    SPIM->TXRX_BGN = 1;\r\n\r\n    // send cmd\r\n    for (tidx = 0, ridx = 0; ridx < tlen; )\r\n    {\r\n        if ((tidx < tlen) && (SPIM->STATUS.SPIM_TX_FFULL == 0))\r\n        {\r\n            SPIM->TX_DATA = txd[tidx++];\r\n        }\r\n\r\n        if (SPIM->STATUS.SPIM_RX_FNUM)\r\n        {\r\n            SPIM->RX_DATA; // drop\r\n            ridx++;\r\n        }\r\n    }\r\n\r\n    // recv rsp\r\n    for (tidx = 0, ridx = 0; ridx < rlen; )\r\n    {\r\n        if ((tidx < rlen) && (SPIM->STATUS.SPIM_TX_FFULL == 0))\r\n        {\r\n            SPIM->TX_DATA = 0xFF;\r\n            tidx++;\r\n        }\r\n\r\n        if (SPIM->STATUS.SPIM_RX_FNUM)\r\n        {\r\n            rxd[ridx++] = SPIM->RX_DATA;\r\n        }\r\n    }\r\n\r\n    while (SPIM->STATUS.SPIM_BUSY);\r\n\r\n    SPIM->STATUS_CLR.Word = SPIM_STATUS_CLR_ALL;\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 185,
       "is_static": true
     },
@@ -152,7 +152,7 @@
         }
       ],
       "function_body": "{\r\n    GLOBAL_INT_DISABLE();\r\n    SPI_CS_L();\r\n\r\n    spi_flash_transmit(fcmd, clen, rsp, rlen);\r\n\r\n    SPI_CS_H();\r\n    GLOBAL_INT_RESTORE();\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 227,
       "is_static": true
     },
@@ -182,7 +182,7 @@
         }
       ],
       "function_body": "{\r\n    GLOBAL_INT_DISABLE();\r\n    SPI_CS_L();\r\n\r\n    spi_flash_transmit(fcmd, clen, NULL, 0);\r\n    if (dlen > 0)\r\n    {\r\n        spi_flash_transmit(data, dlen, NULL, 0);\r\n    }\r\n\r\n    SPI_CS_H();\r\n    GLOBAL_INT_RESTORE();\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 238,
       "is_static": true
     },
@@ -196,8 +196,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\r\n    uint8_t fcmd = FSH_CMD_WR_EN;\r\n    \r\n    spi_flash_send(&fcmd, 1, NULL, 0);\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "function_body": "{\r\n    uint8_t fcmd = FSH_CMD_WR_EN;\r\n\r\n    spi_flash_send(&fcmd, 1, NULL, 0);\r\n}",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 254,
       "is_static": true
     },
@@ -212,7 +212,7 @@
         }
       ],
       "function_body": "{\r\n    uint8_t status = 0;\r\n    uint8_t fcmd = FSH_CMD_RD_STA0;\r\n\r\n    spi_flash_recv(&fcmd, 1, &status, 1);\r\n    return status;\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 262,
       "is_static": true
     },
@@ -227,7 +227,7 @@
         }
       ],
       "function_body": "{\r\n    // spim IO-init\r\n    SET_QIO2_QIO3_HI();\r\n    SPIM_CS_INIT(PIN_QCS_FLASH);\r\n    spim_init(PIN_QSCK_FLASH, PIN_QIO1_FLASH, PIN_QIO0_FLASH);\r\n\r\n    // spim conf\r\n    spim_conf(BSP_SPIM_CR);\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 271,
       "is_static": true
     },
@@ -241,8 +241,8 @@
           "description": ""
         }
       ],
-      "function_body": "{\r\n    // read FlashID\r\n    uint8_t fshId[3];\r\n    uint8_t fcmd = FSH_CMD_RD_ID;\r\n    \r\n    spi_flash_recv(&fcmd, 1, fshId, 3);\r\n\r\n    // calc FlashSize\r\n    return (fshId[2] > 0x20 ? 0 : (0x01UL << fshId[2]));\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "function_body": "{\r\n    // read FlashID\r\n    uint8_t fshId[3];\r\n    uint8_t fcmd = FSH_CMD_RD_ID;\r\n\r\n    spi_flash_recv(&fcmd, 1, fshId, 3);\r\n\r\n    // calc FlashSize\r\n    return (fshId[2] > 0x20 ? 0 : (0x01UL << fshId[2]));\r\n}",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 292,
       "is_static": true
     },
@@ -267,7 +267,7 @@
         }
       ],
       "function_body": "{\r\n    flash_op_t flash_op =\r\n    {\r\n        .op_cmd  = FSH_CMD_RD,\r\n        .op_addr = offset,\r\n    };\r\n\r\n    flash_op.word = __REV(flash_op.word);\r\n\r\n    DEBUG(\"rd of:%X, %X, %d\", offset, flash_op.op_addr, CO_BLEN(wlen));\r\n    spi_flash_recv(flash_op.op_data, 4, (uint8_t *)buff, CO_BLEN(wlen));\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 305,
       "is_static": true
     },
@@ -292,7 +292,7 @@
         }
       ],
       "function_body": "{\r\n    uint8_t sta0;\r\n    flash_op_t flash_op =\r\n    {\r\n        .op_cmd = FSH_CMD_WR,\r\n        .op_addr = offset,\r\n    };\r\n\r\n    flash_op.word = __REV(flash_op.word);\r\n    DEBUG(\"wr of:%X, %X, %d\", offset, flash_op.op_addr, CO_BLEN(wlen));\r\n\r\n    spi_flash_wren();\r\n    spi_flash_send(flash_op.op_data, 4, (uint8_t *)data, CO_BLEN(wlen));\r\n\r\n    do {\r\n        sta0 = spi_flash_sta0_get();\r\n    } while (WIP_BIT & sta0);\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 320,
       "is_static": false
     },
@@ -307,7 +307,7 @@
         }
       ],
       "function_body": "{\r\n    uint8_t sta0;\r\n    flash_op_t flash_op =\r\n    {\r\n        .op_cmd = FSH_CMD_ER_SECTOR,\r\n        .op_addr = (offset & ~0xFFFUL),\r\n    };\r\n\r\n    flash_op.word = __REV(flash_op.word);\r\n    DEBUG(\"erase of:%X, %X\", offset, flash_op.op_addr);\r\n\r\n    spi_flash_wren();\r\n    spi_flash_send(flash_op.op_data, 4, NULL, 0);\r\n\r\n    do {\r\n        sta0 = spi_flash_sta0_get();\r\n    } while (WIP_BIT & sta0);\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 341,
       "is_static": true
     },
@@ -332,7 +332,7 @@
         }
       ],
       "function_body": "{\r\n    msc_flash_init();\r\n\r\n    *block_num  = msc_flash_size() / SECTOR_SIZE;\r\n    *block_size = SECTOR_SIZE;\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 369,
       "is_static": false
     },
@@ -362,7 +362,7 @@
         }
       ],
       "function_body": "{\r\n    DEBUG(\"rd lun:%d, sector:%X, len:%d, p:%X\", lun, sector, length, (uint32_t)buffer);\r\n\r\n    // read buffer\r\n    msc_flash_read((sector * SECTOR_SIZE), (uint32_t *)buffer, CO_WLEN(length));\r\n\r\n    return true;\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 377,
       "is_static": false
     },
@@ -392,7 +392,7 @@
         }
       ],
       "function_body": "{\r\n    uint32_t nb_page = PAGE_NB(length);\r\n    DEBUG(\"wr lun:%X, %d, sector:%X, len:%d, nb:%d, p:%X\", (uint32_t)rd_buff, sizeof(rd_buff), sector, length, nb_page, (uint32_t)data);\r\n\r\n    msc_flash_read((sector * SECTOR_SIZE), rd_buff, CO_WLEN(length));\r\n\r\n    if (xmemcmp(rd_buff, data, length))\r\n    {\r\n        msc_flash_erase(sector * SECTOR_SIZE);\r\n    }\r\n\r\n    // save data\r\n    for (uint32_t page_idx = 0; page_idx < nb_page; ++page_idx)\r\n    {\r\n        msc_flash_write((sector * SECTOR_SIZE) + (page_idx * PAGE_SIZE), (uint32_t *)(data + (page_idx * PAGE_SIZE)), PAGE_WLEN);\r\n    }\r\n\r\n    return true;\r\n}",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "usb/src/msc_flash.c",
       "line_number": 387,
       "is_static": false
     }
@@ -403,7 +403,7 @@
       "value": "(0)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\msc_flash.c",
       "line_number": 42
     },
     {
@@ -411,7 +411,7 @@
       "value": "(1)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\msc_flash.c",
       "line_number": 43
     },
     {
@@ -419,7 +419,7 @@
       "value": "(256) // 256Byte, aligned(4)",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\msc_flash.c",
       "line_number": 50
     },
     {
@@ -427,7 +427,7 @@
       "value": "(64) // 256>>2, in uint32_t",
       "macro_type": "bitmask",
       "brief": "",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\msc_flash.c",
       "line_number": 51
     },
     {
@@ -435,7 +435,7 @@
       "value": "(4096) // 4KB",
       "macro_type": "function_macro",
       "brief": "",
-      "file_path": "./usb\\src\\msc_flash.c",
+      "file_path": "D:\\svn\\bxx_DragonC1\\sdk6\\usb\\src\\msc_flash.c",
       "line_number": 52
     }
   ],

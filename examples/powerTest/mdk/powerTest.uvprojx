@@ -333,7 +333,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h</MiscControls>
+              <MiscControls>--c99 --gnu --thumb --bss_threshold=0 --preinclude=..\src\cfg.h --locale=english</MiscControls>
               <Define>RAM_CODE, SUPPORT_QUAD, EM_CODE</Define>
               <Undefine></Undefine>
               <IncludePath>..\src;..\..\..\core;..\..\..\core\mdk;..\..\..\core\reg;..\..\..\drivers\api;..\..\..\modules\api;..\..\..\ble\api;..\..\..\ble\app;..\..\..\ble\prf</IncludePath>

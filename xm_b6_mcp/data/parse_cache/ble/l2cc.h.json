@@ -1,5 +1,5 @@
 {
-  "file_path": "./ble\\api\\l2cc.h",
+  "file_path": "ble/api/l2cc.h",
   "functions": [],
   "macros": [],
   "enums": [
@@ -69,7 +69,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\l2cc.h",
+      "file_path": "ble/api/l2cc.h",
       "line_number": 30
     },
     {
@@ -103,7 +103,7 @@
       ],
       "underlying_type": "",
       "brief": "",
-      "file_path": "./ble\\api\\l2cc.h",
+      "file_path": "ble/api/l2cc.h",
       "line_number": 62
     }
   ],
