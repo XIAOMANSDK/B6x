@@ -1,0 +1,129 @@
+# Default: auto-detect text files, normalize to LF in repo
+* text=auto
+
+# Source code — ensure consistent line endings
+*.c text eol=lf
+*.h text eol=lf
+*.S text eol=lf
+*.s text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+*.ld text eol=lf
+*.m4 text eol=lf
+
+# Scripts
+*.py text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Keil project files
+*.uvprojx text eol=lf
+*.uvoptx text eol=lf
+*.uvmpw text eol=lf
+*.sct text eol=crlf
+*.ini text eol=crlf
+*.scvd text eol=crlf
+*.dep text eol=crlf
+*.htm text eol=crlf
+*.dbgconf text eol=crlf
+
+# IAR project files
+*.ewp text eol=crlf
+*.eww text eol=crlf
+*.icf text eol=crlf
+
+# Config / data files
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.xml text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.cmake text eol=lf
+*.mk text eol=lf
+Makefile text eol=lf
+Kconfig text eol=lf
+*.config text eol=lf
+*.map text eol=crlf
+
+# Binary: compiled objects, libraries, firmware
+*.lib binary
+*.a binary
+*.o binary
+*.obj binary
+*.bin binary
+*.hex binary
+*.elf binary
+*.axf binary
+*.flm binary
+*.FLM binary
+# Binary: executables and tools
+*.exe binary
+*.dll binary
+*.pdb binary
+*.pack binary
+
+# Binary: documents (Office, PDF)
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.pdf binary
+*.pptx binary
+*.vsdx binary
+*.wps binary
+
+# Binary: archives
+*.zip binary
+*.7z binary
+*.rar binary
+*.gz binary
+*.tar binary
+*.apk binary
+
+# Binary: media
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.psd binary
+*.wav binary
+*.mp3 binary
+*.mp4 binary
+*.opus binary
+*.gsm binary
+
+# Binary: other
+*.sfr binary
+*.SFR binary
+
+# Binary: EDA / hardware design
+*.SchDoc binary
+*.PcbDoc binary
+*.PcbLib binary
+*.PrjPcb binary
+*.dxf binary
+
+# Binary: capture / analysis data
+*.cfa binary
+*.scap binary
+*.bes binary
+*.frm binary
+*.fsc binary
+*.kvdat binary
+*.adv binary
+*.trace binary
+*.dat binary
+
+# Version Control
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# other Documentation
+LICENSE text eol=lf
+CONTRIBUTING text eol=lf
