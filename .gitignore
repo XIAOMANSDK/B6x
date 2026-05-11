@@ -37,3 +37,6 @@
 # ====================
 **/__pycache__/
 *.py[cod]
+
+# clangd cache
+**/.cache/

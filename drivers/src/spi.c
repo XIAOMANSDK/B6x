@@ -124,7 +124,7 @@ void spim_duplex(const uint8_t *tx_data, uint8_t *rx_buff, uint16_t length)
  */
 void spim_transimit(const uint8_t *tx_data, uint16_t length)
 {
-    uint32_t tidx, ridx;;
+    uint32_t tidx, ridx;
 
     SPIM_BGN(length); /* DAT_LEN: 设置数据长度，TXRX_BGN: 开始传输 */
 

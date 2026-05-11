@@ -47,7 +47,7 @@ void puya_enter_dual_read(void)
     // 保存缓存配置并禁用缓存
     uint32_t reg_val = (CACHE->CCR.Word);
     CACHE->CCR.Word  = 0;
-//    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
+    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
 
     // 禁用全局中断，确保Flash配置不被中断
     GLOBAL_INT_DISABLE();
@@ -77,7 +77,7 @@ void puya_exit_dual_read(void)
     // 保存缓存配置并禁用缓存
     uint32_t reg_val = (CACHE->CCR.Word);
     CACHE->CCR.Word  = 0;
-//    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
+    CACHE->CIR.Word  = (0x01 << CACHE_INV_ALL_POS);  // 使缓存无效
 
     // 禁用全局中断
     GLOBAL_INT_DISABLE();
