@@ -29,9 +29,9 @@
 
 ## SDK获取更新渠道
 
-- B6xSDK Github: <https://github.com/XIAOMANSDK/B6x>
-- B6xSDK GitLab: <https://gitlab.com/xiao-man.com/B6x>
-- B6xSDK 官方站: <https://www.xiao-man.com/support>
+- B6xSDK 官方站: <http://gitlab.xiao-man.com:8929/release/b6x>
+- B6xSDK Github(暂停维护): <https://github.com/XIAOMANSDK/B6x>
+- B6xSDK GitLab(暂停维护): <https://gitlab.com/xiao-man.com/B6x>
 
 ---
 
